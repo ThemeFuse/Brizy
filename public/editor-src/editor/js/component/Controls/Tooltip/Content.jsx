@@ -61,6 +61,7 @@ export default class TooltipContent extends React.Component {
   }
 
   repositionByToolbar(toolbar) {
+    // eslint-disable-next-line react/no-find-dom-node
     const toolbarTarget = ReactDOM.findDOMNode(toolbar);
     const {
       width: contentWidth,

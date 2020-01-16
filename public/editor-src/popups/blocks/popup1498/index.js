@@ -43,7 +43,7 @@ module.exports = {
                                                         "_styles": [
                                                             "richText"
                                                         ],
-                                                        "text": "<p class=\"brz-text-lg-center brz-tp-abovetitle\"><span class=\"brz-cp-color3\">THIS MOTHS ONLY DISCOUNT</span></p>"
+                                                        "text": "<p class=\"brz-tp-abovetitle brz-text-lg-center\"><span class=\"brz-cp-color3\">'THIS MONTH ONLY' DISCOUNT</span></p>"
                                                     }
                                                 }
                                             ]
@@ -340,11 +340,11 @@ module.exports = {
         ],
         "_blockVisibility": "unlisted",
         "bgColorPalette": "",
-        "bgColorHex": "#1c1c1c",
+        "bgColorHex": "#ffffff",
         "bgColorOpacity": 0,
-        "tempBgColorOpacity": 0.86,
+        "tempBgColorOpacity": 1,
         "popupId": "bihzghvtpdeyqexkoeoqcupgroxselutnccf",
-        "tempBgColorPalette": "color2",
+        "tempBgColorPalette": "color8",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,
         "borderTopRightRadius": 0,

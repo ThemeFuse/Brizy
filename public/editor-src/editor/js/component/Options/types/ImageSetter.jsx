@@ -13,6 +13,7 @@ class FocalPointOptionType extends React.Component {
     helper: false,
     helperContent: "",
     onlyPointer: false,
+    showPointer: true,
     display: "inline",
     population: {
       show: false,
@@ -48,10 +49,15 @@ class FocalPointOptionType extends React.Component {
   }
 
   renderImageSetter = () => {
-    const { value, onlyPointer, onChange } = this.props;
+    const { value, onlyPointer, showPointer, onChange } = this.props;
 
     return (
-      <ImageSetter {...value} onlyPointer={onlyPointer} onChange={onChange} />
+      <ImageSetter
+        {...value}
+        onlyPointer={onlyPointer}
+        showPointer={showPointer}
+        onChange={onChange}
+      />
     );
   };
 

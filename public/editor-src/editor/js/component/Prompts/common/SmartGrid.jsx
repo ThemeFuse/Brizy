@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import ReactList from "react-list";
 import ScrollPane from "visual/component/ScrollPane";
 
-export default class extends Component {
+export default class SmartGrid extends Component {
   static defaultProps = {
     height: 400
   };
@@ -16,6 +16,7 @@ export default class extends Component {
 
   scrollParentGetter() {
     // if we add this.refScroll to ScrollPane - it works wrong.
+    // eslint-disable-next-line react/no-find-dom-node
     return ReactDOM.findDOMNode(this).children[0];
   }
 

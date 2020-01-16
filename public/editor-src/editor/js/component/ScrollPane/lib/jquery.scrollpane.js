@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-(function($, window, document, undefined) {
+(function($) {
   var pluginName = "scrollPane";
 
   function Plugin(elem) {

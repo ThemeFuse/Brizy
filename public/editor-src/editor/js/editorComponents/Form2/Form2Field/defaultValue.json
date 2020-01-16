@@ -1,0 +1,31 @@
+{
+  "content": {
+    "type": "Text",
+    "label": "Enter Text",
+    "placeholder": null,
+    "labelType": "inside",
+    "required": "off",
+    "options": ["Option 1", "Option 2"],
+    "nativeHtml": "off",
+    "multipleSelection": "off",
+    "fileTypes": ".jpg, .png, .gif, .pdf",
+    "fileMaxSize": "1mb"
+  },
+
+  "style": {
+    "width": 100,
+    "height": 165,
+    "min": "",
+    "max": "",
+
+    "columns": 1,
+
+    "tabletColumns": null,
+    "tabletWidth": null,
+    "tabletHeight": null,
+
+    "mobileColumns": null,
+    "mobileWidth": null,
+    "mobileHeight": null
+  }
+}

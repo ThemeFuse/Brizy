@@ -8,6 +8,7 @@ import {
   updateFeaturedImageFocalPoint,
   removeFeaturedImage
 } from "visual/utils/api/editor";
+import { getImageFormat } from "visual/utils/image";
 
 const { page } = Config.get("wp");
 const debouncedUpdateFeaturedImageFocalPoint = _.debounce((...args) => {
@@ -125,6 +126,7 @@ export default class WPFeatureImage extends React.Component {
         <div>
           <ImageSetter
             src={url}
+            extension={getImageFormat(url)}
             customUrl={true}
             x={pointX}
             y={pointY}

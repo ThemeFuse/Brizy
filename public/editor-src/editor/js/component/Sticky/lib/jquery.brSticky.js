@@ -1,9 +1,9 @@
 import $ from "jquery";
 import { observer } from "../utils";
 
-(function($, window, document) {
-  var pluginName = "brzSticky";
-  var defaults = {
+(function($) {
+  const pluginName = "brzSticky";
+  const defaults = {
     type: "animated",
     refNode: function() {
       throw new Error("brzSticky refNode must be specified");
@@ -26,10 +26,10 @@ import { observer } from "../utils";
       observer.addListener(this.checkSticky.bind(this));
     },
     checkSticky: function() {
-      var type = this.settings.type;
-      var refNode = this.settings.refNode.call(this.element);
-      var refNodeRect = refNode.getBoundingClientRect();
-      var isSticky =
+      const type = this.settings.type;
+      const refNode = this.settings.refNode.call(this.element);
+      const refNodeRect = refNode.getBoundingClientRect();
+      const isSticky =
         type === "animated"
           ? -refNodeRect.top >= refNodeRect.height
           : refNodeRect.top <= 0;

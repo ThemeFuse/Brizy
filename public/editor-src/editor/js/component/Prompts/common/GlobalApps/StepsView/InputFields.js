@@ -13,12 +13,9 @@ import { t } from "visual/utils/i18n";
 class InputFields extends Component {
   static defaultProps = {
     id: "",
-    title: "",
-    shortTitle: "",
-    description: "",
     headTitle: "",
     headDescription: "",
-    img: "",
+    description: "",
     data: [
       {
         title: "",
@@ -89,14 +86,18 @@ class InputFields extends Component {
     );
   }
 
-  renderSearch({ name, choices }) {
+  renderSearch({ name, multiple, value, choices }) {
+    const nValue = Boolean(value) && multiple ? value.split(",") : value;
+
     return (
       <div className="brz-ed-popup-integrations-step__fields-select">
         <ReactSelect
           className="brz-control__select2--light"
+          multiple={multiple}
+          value={nValue}
           options={choices}
-          onChange={({ value }) => {
-            this.props.onActive(name, value);
+          onChange={value => {
+            this.props.onActive(name, multiple ? value.join(",") : value.value);
           }}
         />
       </div>
@@ -105,7 +106,7 @@ class InputFields extends Component {
 
   renderOptions() {
     const options = this.props.data.map((option, index) => {
-      const { title, type, helper } = option;
+      const { title, required, type, helper } = option;
 
       return (
         <div
@@ -113,7 +114,14 @@ class InputFields extends Component {
           className="brz-ed-popup-integrations-step__fields-option"
         >
           <div className="brz-d-xs-flex brz-align-items-xs-center">
-            <p className="brz-p">{title}</p>
+            <p className="brz-p">
+              {title}
+              {required && (
+                <strong className="brz-strong brz--required">
+                  *
+                </strong>
+              )}
+            </p>
             {helper && (
               <Tooltip
                 className="brz-ed-popup-integrations-fields__tooltip"

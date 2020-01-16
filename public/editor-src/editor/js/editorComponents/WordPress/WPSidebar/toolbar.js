@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import {
-  toolbarCustomCSS,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
 export default sidebars => {
   const sidebarsList = sidebars.map(sidebar => ({

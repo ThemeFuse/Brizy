@@ -87,3 +87,21 @@ export function styleContainerPopup2ClosePosition({ v, device, state }) {
 
   return dvv("closePosition");
 }
+
+export function styleContainerPopup2CustomHeightStyle({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("columnsHeightStyle");
+}
+
+export function styleContainerPopup2ColumnsHeight({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("columnsHeight");
+}
+
+export function styleContainerPopup2ColumnsHeightSuffix({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("columnsHeightSuffix");
+}

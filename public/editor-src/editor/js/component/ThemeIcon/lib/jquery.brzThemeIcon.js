@@ -41,7 +41,7 @@ const removeAttrs = (node, attrs) => {
             const node = removeAttrs($this.get(0), ["id"]);
             const attributes = node.attributes;
 
-            for (var i = 0; i < attributes.length; i++) {
+            for (let i = 0; i < attributes.length; i++) {
               $svg.attr(attributes[i].nodeName, attributes[i].nodeValue);
             }
 

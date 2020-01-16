@@ -56,7 +56,9 @@ class Items extends EditorArrayComponent {
   }
 
   handleRefSlider = node => {
+    /* eslint-disable react/no-find-dom-node */
     this.slider = ReactDOM.findDOMNode(node);
+    /* eslint-enabled react/no-find-dom-node */
   };
 
   handleSliderAfterChange = () => {

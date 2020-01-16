@@ -11,7 +11,6 @@ import {
   isInsideRect,
   rectCenter,
   clamp,
-  find,
   isArray,
   toArray
 } from "./utils";
@@ -208,7 +207,7 @@ class Sortable {
     }
   }
 
-  handlePendingEnd(e) {
+  handlePendingEnd() {
     this.detachPendingEvents();
     this.resetDragInfo();
     this.resetGlobalState();
@@ -239,7 +238,7 @@ class Sortable {
     // this.updatePlaceholder(e);
   }
 
-  handleSortEnd(e) {
+  handleSortEnd() {
     const { onSort, onEnd } = this.options;
     const {
       sourceSortable,
@@ -578,7 +577,7 @@ class Sortable {
   }
 
   updatePlaceholder(e) {
-    const { sourceElement, targetSortable, targetElement } = this.dragInfo;
+    const { targetSortable, targetElement } = this.dragInfo;
 
     if (
       targetSortable &&

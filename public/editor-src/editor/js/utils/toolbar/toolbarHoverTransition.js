@@ -16,7 +16,6 @@ export function toolbarHoverTransition({
     label: t("Hover Transition"),
     devices,
     position,
-    devices,
     type: "slider",
     slider: {
       min: 0,

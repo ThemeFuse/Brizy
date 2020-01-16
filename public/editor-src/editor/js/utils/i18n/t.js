@@ -1,1 +1,3 @@
-export const t = key => key;
+import { translate } from "./translate.js";
+
+export const t = key => translate({}, key);

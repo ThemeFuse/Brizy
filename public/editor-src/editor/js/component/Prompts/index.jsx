@@ -8,7 +8,7 @@ import Blocks from "./PromptBlocks";
 import Form from "./PromptForm";
 import KeyHelper from "./KeyHelper";
 import Fonts from "./PromptFonts";
-import Conditions from "./PromoptConditions";
+import Conditions from "./PromptConditions";
 import { CSSTransition } from "react-transition-group";
 
 class Prompts extends React.Component {

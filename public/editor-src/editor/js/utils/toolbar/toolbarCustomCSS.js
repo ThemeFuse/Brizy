@@ -28,7 +28,7 @@ export function toolbarCustomCSS({
     devices,
     helper: true,
     helperContent: helperHTML,
-    placeholder: "element { code goes here }",
+    placeholder: "element { CSS goes here }",
     value: dvv("customCSS")
   };
 }

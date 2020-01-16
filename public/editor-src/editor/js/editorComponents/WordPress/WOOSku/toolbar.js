@@ -195,10 +195,7 @@ export function getItems({ v, device }) {
       devices: "desktop",
       icon: {
         style: {
-          backgroundColor:
-            dvv("bgColorOpacity") > 0
-              ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
-              : hexToRgba(colorHex, dvv("colorOpacity"))
+          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
         }
       },
       options: [

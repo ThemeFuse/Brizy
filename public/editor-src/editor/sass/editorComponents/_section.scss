@@ -1,6 +1,5 @@
 // Section Full Height
 .brz-section {
-  background-color: #fff;
   position: relative;
   margin: 0;
   padding: 0;
@@ -101,14 +100,4 @@
 // Section Popup
 .brz-popup__inner {
   height: 100%;
-}
-
-// Responsive
-@include media-breakpoint-down(sm) {
-  &.brz-ed .brz-section__header {
-    &--animated {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
 }

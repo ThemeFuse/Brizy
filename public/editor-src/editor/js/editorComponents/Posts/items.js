@@ -29,7 +29,7 @@ class Items extends EditorArrayComponent {
     }, "");
   }
 
-  handleSortableAcceptElements = (from, to) => {
+  handleSortableAcceptElements = from => {
     const meta = this.props.meta;
 
     if (meta.row && meta.row.isInner) {
@@ -115,7 +115,7 @@ class Items extends EditorArrayComponent {
       <div className={className} style={style}>
         {`{{ brizy_dc_post_loop ${this.getLoopAttributes()} }}`}
         {super.renderItemsContainer(v)}
-        {`{{end_brizy_dc_post_loop}}`}
+        {"{{end_brizy_dc_post_loop}}"}
         {pagination &&
           `{{ brizy_dc_post_loop_pagination ${this.getLoopAttributes()} }}`}
       </div>

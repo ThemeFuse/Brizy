@@ -84,9 +84,7 @@ class CodeMirrorOptionType extends React.Component {
       mode: "css"
     };
 
-    const defaultElement = `element {
-  /* CSS goes here */
-}`;
+    const defaultElement = "";
 
     return (
       <div className={className} {...attr}>

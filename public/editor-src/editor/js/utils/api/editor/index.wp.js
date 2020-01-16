@@ -51,13 +51,18 @@ export function persistentRequest(ajaxSettings) {
         resolve(data);
       },
       error(jqXHR) {
-        this.failedAttempts++;
-        window.onbeforeunload = this.onbeforeunload;
+        const status = jqXHR.status;
 
-        if (this.failedAttempts <= 5) {
-          setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
-        } else {
-          reject(jqXHR);
+        // 0 - offline
+        if (status === 0) {
+          this.failedAttempts++;
+          window.onbeforeunload = this.onbeforeunload;
+
+          if (this.failedAttempts <= 5) {
+            setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
+          } else {
+            reject(jqXHR);
+          }
         }
       }
     });

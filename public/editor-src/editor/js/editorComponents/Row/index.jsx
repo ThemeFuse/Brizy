@@ -120,12 +120,7 @@ class Row extends EditorComponent {
   };
 
   renderContent(v, vs, vd) {
-    const {
-      customClassName,
-      className,
-      mobileReverseColumns,
-      tabletReverseColumns
-    } = v;
+    const { className, mobileReverseColumns, tabletReverseColumns } = v;
 
     const classNameBg = classnames(
       "brz-flex-xs-wrap",
@@ -211,18 +206,20 @@ class Row extends EditorComponent {
       animationDelay,
       linkType,
       linkPopup,
-      popups
+      popups,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
-      customClassName,
       css(
         `${this.constructor.componentId}-row`,
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
-      )
+      ),
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     if (showToolbar === "off") {
@@ -246,7 +243,7 @@ class Row extends EditorComponent {
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Animation
               className={classNameRowContainer}
-              customID={customID}
+              customID={cssIDPopulation === "" ? customID : cssIDPopulation}
               name={animationName !== "none" && animationName}
               duration={animationDuration}
               delay={animationDelay}
@@ -283,6 +280,7 @@ class Row extends EditorComponent {
   renderForView(v, vs, vd) {
     const {
       className,
+      tagName,
       animationName,
       animationDuration,
       animationDelay,
@@ -295,7 +293,9 @@ class Row extends EditorComponent {
       linkUpload,
       popups,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const linkHrefs = {
@@ -308,20 +308,21 @@ class Row extends EditorComponent {
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
-      customClassName,
       css(
         `${this.constructor.componentId}-row`,
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
-      )
+      ),
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
+            tagName={tagName}
             className={classNameRowContainer}
-            customID={customID}
+            customID={cssIDPopulation === "" ? customID : cssIDPopulation}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}

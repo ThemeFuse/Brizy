@@ -7,7 +7,7 @@ export default {
   title: t("Product"),
   icon: "nc-woo-2",
   position: 20,
-  hidden: !!!wp.plugins.woocommerce,
+  hidden: !wp.plugins.woocommerce,
   resolve: {
     type: "Wrapper",
     value: {

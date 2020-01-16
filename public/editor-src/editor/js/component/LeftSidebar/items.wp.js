@@ -87,7 +87,7 @@ export default {
         {
           type: "link",
           icon: "nc-back",
-          label: t("Back to Dashboard"),
+          label: t("Go to Dashboard"),
           link: urls.backToDashboard
         }
       ]

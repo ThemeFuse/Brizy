@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import _ from "underscore";
 import classnames from "classnames";
 import deepMerge from "deepmerge";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import UIState from "visual/global/UIState";
 import EditorIcon from "visual/component/EditorIcon";
 import { hideToolbar } from "visual/component/Toolbar";
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2";
-import { SectionPopupInstances } from "visual/editorComponents/SectionPopup";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
+import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { imageWrapperSize } from "visual/utils/image";
 import { uuid } from "visual/utils/uuid";
@@ -17,6 +16,7 @@ import {
   globalBlocksSelector
 } from "visual/redux/selectors";
 import { addFonts, updateGlobalBlock } from "visual/redux/actions";
+import { insertItem } from "visual/utils/models/insertItem";
 
 const MAX_CONTAINER_WIDTH = 140;
 
@@ -66,6 +66,7 @@ class PromptAddPopupOptionType extends React.Component {
           showSearch: false,
           blocksFilter: blocks => {
             return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
               ([_, block]) =>
                 block.type === "SectionPopup" || block.type === "SectionPopup2"
             );
@@ -76,6 +77,7 @@ class PromptAddPopupOptionType extends React.Component {
           showSearch: false,
           blocksFilter: blocks => {
             return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
               ([_, block]) =>
                 block.type === "SectionPopup" || block.type === "SectionPopup2"
             );
@@ -135,7 +137,7 @@ class PromptAddPopupOptionType extends React.Component {
 
     this.props.onChange({
       value: popupId,
-      popups: EditorArrayComponent.insertItem(popups, popups.length, blockData)
+      popups: insertItem(popups, popups.length, blockData)
     });
   };
 

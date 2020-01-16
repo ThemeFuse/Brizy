@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
-import { updateIntegration } from "../../api";
+import { updateSmtpIntegration } from "../../api";
 import { fakeRequest } from "../../../common/utils";
 import { InputFields } from "../../../common/GlobalApps/StepsView";
 
@@ -38,31 +38,34 @@ class Smtp extends Component {
   };
 
   handleNext = async () => {
-    const { app, formId, onChange, onChangeNext } = this.props;
+    const {
+      app: { id, data: appData },
+      formId,
+      apiKeys,
+      onChange,
+      onChangeNext
+    } = this.props;
     const { apiKeyValue } = this.state;
-    const keysValue = Object.values(apiKeyValue);
 
     this.setState({
       nextLoading: true,
       error: null
     });
 
-    if (keysValue.filter(key => typeof key === "boolean").some(key => !key)) {
+    if (apiKeys.find(({ required, name }) => required && !apiKeyValue[name])) {
       // Emitted fake request
       await fakeRequest();
 
       this.setState({
-        error: t("Fields are empty"),
+        error: t("All fields marked with an asterisk ( * ) must be completed."),
         nextLoading: false
       });
     } else {
-      const { status, data } = await updateIntegration({
+      const { status, data } = await updateSmtpIntegration({
+        ...appData,
+        ...apiKeyValue,
         formId,
-        body: {
-          ...app.data,
-          ...apiKeyValue,
-          completed: true
-        }
+        completed: true
       });
 
       if (status !== 200) {
@@ -71,7 +74,7 @@ class Smtp extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(app.id, { ...app.data, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     }

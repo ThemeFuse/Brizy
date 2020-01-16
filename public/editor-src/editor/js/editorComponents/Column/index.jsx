@@ -128,9 +128,7 @@ class Column extends EditorComponent {
   renderResizer(position) {
     const {
       meta: { row, inGrid },
-      popoverData,
-      onResize,
-      onResizeEnd
+      popoverData
     } = this.props;
 
     if (!inGrid) {
@@ -220,13 +218,15 @@ class Column extends EditorComponent {
       linkPopup,
       popups,
       customID,
-      customClassName
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
     const {
-      meta: { inGrid, posts },
-      path
+      meta: { inGrid, posts }
     } = this.props;
     const isInnerRow = this.isInnerRow();
+
     const classNameColumn = classnames(
       "brz-columns",
       { "brz-columns__posts": IS_EDITOR && posts },
@@ -236,7 +236,7 @@ class Column extends EditorComponent {
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
       ),
-      customClassName
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     return (
@@ -245,7 +245,7 @@ class Column extends EditorComponent {
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Animation
               className={classNameColumn}
-              customID={customID}
+              customID={cssIDPopulation === "" ? customID : cssIDPopulation}
               name={animationName !== "none" && animationName}
               duration={animationDuration}
               delay={animationDelay}
@@ -283,6 +283,7 @@ class Column extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const {
+      tagName,
       animationName,
       animationDuration,
       animationDelay,
@@ -295,7 +296,9 @@ class Column extends EditorComponent {
       linkUpload,
       popups,
       customID,
-      customClassName
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const linkHrefs = {
@@ -312,15 +315,16 @@ class Column extends EditorComponent {
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
       ),
-      customClassName
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     return (
       <>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
+            tagName={tagName}
             className={classNameColumn}
-            customID={customID}
+            customID={cssIDPopulation === "" ? customID : cssIDPopulation}
             name={animationName !== "none" && animationName}
             duration={animationDuration}
             delay={animationDelay}

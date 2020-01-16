@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
@@ -29,13 +32,15 @@ import {
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkAnchor,
-  toolbarVerticalAlign
+  toolbarVerticalAlign,
+  toolbarTags
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -780,14 +785,16 @@ export function getItems({ v, device }) {
                     toolbarCSSID({
                       v,
                       device,
+                      devices: "desktop",
                       state: "normal",
-                      devices: "desktop"
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarCustomCSSClass({
                       v,
                       device,
+                      devices: "desktop",
                       state: "normal",
-                      devices: "desktop"
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarEntranceAnimation({
                       v,
@@ -801,6 +808,11 @@ export function getItems({ v, device }) {
                       state: "normal",
                       position: 60,
                       devices: "desktop"
+                    }),
+                    toolbarTags({
+                      v,
+                      device,
+                      state: "normal"
                     })
                   ]
                 }

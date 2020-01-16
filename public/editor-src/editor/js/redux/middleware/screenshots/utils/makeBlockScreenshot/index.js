@@ -15,7 +15,9 @@ worker.onmessage = async e => {
   const r = await fetch(workerUrl);
   const base64 = await r.text();
 
+  /* eslint-disable no-unused-vars */
   const [resolve, reject, options, mainThreadUrl] = promises[id];
+  /* eslint-enabled no-unused-vars */
 
   URL.revokeObjectURL(mainThreadUrl);
   URL.revokeObjectURL(workerUrl);
@@ -71,7 +73,9 @@ export async function makeBlockScreenshot(block, options = {}) {
   try {
     cloned = await cloneAndInlineStyles(node);
   } catch (e) {
+    /* eslint-disable no-console */
     console.error("cloneinline", e);
+    /* eslint-enabled no-console */
   }
 
   const options_ = calcOptions(node);

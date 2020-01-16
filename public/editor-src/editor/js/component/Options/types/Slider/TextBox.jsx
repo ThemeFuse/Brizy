@@ -58,7 +58,7 @@ class TextBoxOptionType extends React.Component {
   renderSuffix() {
     const { suffixes, suffixValue } = this.props;
 
-    return suffixes.map((suffix, index) => {
+    return suffixes.map(suffix => {
       const { title, value } = suffix;
       const className = classnames("brz-ed-option__text-box__helper", {
         "brz-ed-option__text-box__helper--active": value === suffixValue

@@ -110,11 +110,12 @@ export function getItemsForDesktop(v) {
                   label: t("Font Family"),
                   type: "fontFamily",
                   value: fontFamily,
-                  onChange: ({ id, weights }) =>
+                  onChange: ({ id, weights, type }) =>
                     onChangeTypography(
                       {
                         fontFamily: id,
-                        fontWeight: getWeight(fontWeight, weights)
+                        fontWeight: getWeight(fontWeight, weights),
+                        fontFamilyType: type
                       },
                       v
                     )
@@ -371,7 +372,7 @@ export function getItemsForDesktop(v) {
       id: "horizontalAlign",
       type: "toggle",
       disabled: true
-    },
+    }
   ];
 }
 

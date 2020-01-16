@@ -21,13 +21,14 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
 
       Object.entries(defaultStyle.families || {}).forEach(fontKeys => {
         const [key, keyValue] = fontKeys;
+        const font = {
+          type: value[`${key}Type`] || defaultStyle[`${key}Type`],
+          family: value[key] || keyValue
+        };
 
-        fontFamilies.add(
-          splitFont({
-            type: value[`${key}Type`] || defaultStyle[`${key}Type`],
-            family: value[key] || keyValue
-          })
-        );
+        if (font.type && font.family) {
+          fontFamilies.add(splitFont(font));
+        }
       });
     },
     RichText({ type, value }) {
@@ -38,12 +39,16 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
       const text = value.text || defaultValue.text;
 
       while ((classes = classRgx.exec(text))) {
+        /* eslint-disable no-unused-vars */
         let [_, classList] = classes;
+        /* eslint-enabled no-unused-vars */
         let familyTypes;
         let font = {};
 
         while ((familyTypes = familyTypeRgx.exec(classList))) {
+          /* eslint-disable no-unused-vars */
           const [_, type, name] = familyTypes;
+          /* eslint-enabled no-unused-vars */
 
           if (type === "ft") {
             font.type = name;

@@ -23,8 +23,6 @@ export async function makeBlockScreenshot(block, options = {}) {
 
   const svg = makeForeignObjectSVG(cloned, options_);
 
-  debugger;
-
   const img = await loadSVGIntoImage(svg);
 
   const base64 = getBase64FromImage(img);

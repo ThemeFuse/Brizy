@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 import { getStore } from "visual/redux/store";
 import ClickOutside from "visual/component/ClickOutside";
@@ -86,6 +85,7 @@ class BoxResizer extends Component {
     this.startValue = null;
     this.startRect = null;
     this.cachedPoints = arrayToObject(props.points);
+    this.content = React.createRef();
 
     this.state = {
       showPoints: false
@@ -109,8 +109,12 @@ class BoxResizer extends Component {
   };
 
   handleDragStart = () => {
+    const node = this.content.current;
     this.startValue = this.props.value;
-    this.startRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+
+    if (node) {
+      this.startRect = node.getBoundingClientRect();
+    }
 
     hideToolbar();
   };
@@ -255,7 +259,11 @@ class BoxResizer extends Component {
 
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>
-        <div className="brz-ed-box__resizer" onClick={this.handleClick}>
+        <div
+          ref={this.content}
+          className="brz-ed-box__resizer"
+          onClick={this.handleClick}
+        >
           {children}
           {showPoints && topCenter && (
             <Draggable

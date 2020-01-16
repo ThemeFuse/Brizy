@@ -127,10 +127,12 @@ async function inlineImages($) {
     }
   });
 
-  $(`[style*="url"]`).each(async function() {
+  $("[style*='url']").each(async function() {
     const $this = $(this);
     const style = $this.attr("style");
+    /* eslint-disable no-useless-escape */
     const urlRegex = /(url\("?'?([^\"')]+)"?'?\))/;
+    /* eslint-enabled no-useless-escape */
     const urlMatch = urlRegex.exec(style);
     const [, url, src] = urlMatch || [];
 
@@ -155,19 +157,23 @@ function makeSvgDataUri(nodeString, options) {
 }
 
 function fetchResource(url) {
+  /* eslint-disable no-console */
   return fetch(url)
     .then(r => r.blob())
     .then(blobToDataUri)
     .catch(e => console.error("worker fetch", e));
+  /* eslint-enabled no-console */
 }
 
 function blobToDataUri(blob) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     var reader = new FileReader();
     reader.onload = function() {
       resolve(this.result);
     };
+    /* eslint-disable no-console */
     reader.onerror = () => console.error("failed to decode image");
+    /* eslint-enabled no-console */
     reader.readAsDataURL(blob);
   });
 }

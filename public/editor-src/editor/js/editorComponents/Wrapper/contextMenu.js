@@ -23,24 +23,29 @@ const translationsMap = {
   Column: t("Column"),
   WPSidebar: t("Sidebar"),
   WPCustomShortcode: t("Shortcode"),
+  WPPostsTitle: t("Post Title"),
   WPNavigation: t("Menu"),
-  Posts: t("Posts"),
+  WPPostExcerpt: t("Post Excerpt"),
   Archives: t("Archives"),
+  Posts: t("Posts"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
   FacebookComments: t("Facebook Comments"),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
   FacebookGroup: t("Facebook Group"),
-  WPBreadcrumbs: t("Breadcrumbs")
+  WPBreadcrumbs: t("Breadcrumbs"),
+  WPPostInfo: t("Post Info"),
+  WPPostContent: t("Post Content"),
   // WPPostInfo: t("Post info")
+  Audio: t("Audio")
 };
 
 export default {
   getItems
 };
 
-function getItems(v, component) {
+function getItems(v) {
   const { base } = Editor.getShortcodes();
 
   const { icon = "" } =

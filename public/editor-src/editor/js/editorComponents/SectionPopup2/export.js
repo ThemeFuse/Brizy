@@ -15,7 +15,7 @@ export default function() {
         if (!clickedOutSideToClose) {
           $this.addClass("brz-pointer-events-none");
           $this
-            .find(` .brz-bg > .brz-bg-content .brz-container__wrap`)
+            .find(".brz-bg > .brz-bg-content .brz-container__wrap")
             .addClass("brz-pointer-events-auto");
         }
 
@@ -43,13 +43,13 @@ export default function() {
     };
   };
 
-  $document.on("click", '[data-brz-link-type="popup"]', function(e) {
+  $document.on("click", "[data-brz-link-type='popup']", function(e) {
     e.preventDefault();
 
     const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
-      const $elem = $('[data-brz-popup="' + popupId + '"]');
+      const $elem = $(`[data-brz-popup="${popupId}"]`);
       if ($elem.hasClass("brz-popup2")) {
         const popup = $elem.popup();
         popup.show();

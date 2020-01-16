@@ -552,10 +552,6 @@ $option-color: #626b70;
     .brz-control__select-options {
       background-color: #fff;
     }
-    .brz-control__select-option .brz-strong {
-      color: #ff0e0e;
-      padding-left: 5px;
-    }
   }
   &-step__fields-select,
   &-step__fields-input {
@@ -665,7 +661,7 @@ $option-color: #626b70;
       .brz-textarea {
         display: block;
         width: 100%;
-        height: 120px;
+        height: 230px;
         max-height: 230px;
         min-height: 40px;
         font-size: 13px;

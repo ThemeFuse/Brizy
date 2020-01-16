@@ -9,12 +9,12 @@ const DEFAULT_SETTINGS = {
 
 const getYouTubeOptions = (
   key,
-  { autoplay, controls, loop, suggestedVideo }
+  { autoplay, controls, loop, suggestedVideo, start = 0 }
 ) => {
   let options = {
     autoplay: Number(autoplay),
     controls: Number(controls),
-    showinfo: 0,
+    start: Number(start),
     modestbranding: 1,
     wmode: "transparent",
     enablejsapi: 1,
@@ -33,7 +33,7 @@ const getYouTubeOptions = (
   };
 };
 
-const getVimeoOptions = (key, { autoplay, loop, quality }) => {
+const getVimeoOptions = (key, { autoplay, loop, quality, start = 0 }) => {
   return {
     url: `https://player.vimeo.com/video/${key}`,
     options: {
@@ -46,16 +46,17 @@ const getVimeoOptions = (key, { autoplay, loop, quality }) => {
       portrait: false,
       loop: Number(loop),
       quality
-    }
+    },
+    anchor: `#t=${Number(start)}s`
   };
 };
 
 export default function videoUrl({ type, key }, settings) {
   const newSettings = { ...DEFAULT_SETTINGS, ...settings };
-  const { url, options } =
+  const { url, options, anchor = "" } =
     type === "youtube"
       ? getYouTubeOptions(key, newSettings)
       : getVimeoOptions(key, newSettings);
 
-  return `${url}?${objectToQueryString(options)}`;
+  return `${url}?${objectToQueryString(options)}${anchor}`;
 }

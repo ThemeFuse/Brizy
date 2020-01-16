@@ -12,7 +12,9 @@ import {
 import iframePlaceholders from "./iframePlaceholders";
 
 onerror = e => {
+  /* eslint-disable no-console */
   console.error(e);
+  /* eslint-enabled no-console */
 };
 
 onmessage = async e => {
@@ -67,13 +69,15 @@ function removeUnwantedNodes(node) {
     { type: "className", value: "brz-popup2__button-go-to-editor" }
   ];
 
+  /* eslint-disable no-unused-vars */
   selectors.forEach(({ type, value, canDelete = node => true }) => {
     let nodes;
-
+    /* eslint-enabled no-unused-vars */
     switch (type) {
-      case "className":
+      case "className": {
         nodes = getElementsByClassName(node, value);
         break;
+      }
       default:
         throw new Error(`unsupported selector type ${type}`);
     }
@@ -216,7 +220,9 @@ async function inlineImages(node, config) {
       return;
     }
 
+    /* eslint-disable no-useless-escape */
     const urlRegex = /(url\("?'?([^\"')]+)"?'?\))/;
+    /* eslint-enabled no-useless-escape */
     const urlMatch = urlRegex.exec(style);
     const [, url, src] = urlMatch || [];
 
@@ -253,14 +259,6 @@ function deactivateBackgroundParallax(node) {
   );
 }
 
-function makeForeignObjectSvg(nodeString, options) {
-  const { width, height } = options;
-  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${foreignObject}</svg>`;
-
-  return svg;
-}
-
 function makeSvgDataUri(nodeString, options) {
   const { width, height } = options;
   const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
@@ -270,10 +268,12 @@ function makeSvgDataUri(nodeString, options) {
 }
 
 function fetchResource(url) {
+  /* eslint-disable no-console */
   return fetch(url, { credentials: "omit" })
     .then(r => r.blob())
     .then(blobToDataUri)
     .catch(e => console.error("worker fetch", e));
+  /* eslint-enabled no-console */
 }
 
 function getResourceDownloadUrl(src, { siteUrl, proxyUrl }) {
@@ -281,12 +281,14 @@ function getResourceDownloadUrl(src, { siteUrl, proxyUrl }) {
 }
 
 function blobToDataUri(blob) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     var reader = new FileReader();
     reader.onload = function() {
       resolve(this.result);
     };
+    /* eslint-disable no-console */
     reader.onerror = () => console.error("failed to decode image");
+    /* eslint-enabled no-console */
     reader.readAsDataURL(blob);
   });
 }

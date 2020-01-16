@@ -36,15 +36,22 @@ class SectionItem extends EditorComponent {
     this.mounted = true;
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldMetaUpdate(nextProps) {
     const {
       meta: {
-        section: { isSlider, showOnDesktop, showOnMobile, showOnTablet }
+        section: {
+          isSlider,
+          marginType,
+          showOnDesktop,
+          showOnMobile,
+          showOnTablet
+        }
       }
     } = this.props;
     const {
       meta: {
         section: {
+          marginType: newMarginType,
           showOnDesktop: newShowOnDesktop,
           showOnMobile: newShowOnMobile,
           showOnTablet: newShowOnTablet
@@ -56,8 +63,13 @@ class SectionItem extends EditorComponent {
       (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
       (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
       (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
+    const marginUpdate = marginType !== newMarginType;
 
-    return isSlider || deviceUpdate || this.optionalSCU(nextProps);
+    return isSlider || deviceUpdate || marginUpdate;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.shouldMetaUpdate(nextProps) || this.optionalSCU(nextProps);
   }
 
   componentWillUnmount() {

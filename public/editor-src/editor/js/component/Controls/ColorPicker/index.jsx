@@ -32,7 +32,12 @@ class ColorPicker extends React.Component {
   }
 
   handleChange = value => {
-    const { hex, rgb: { a: opacity }, wasChanged, opacityDragEnd } = value;
+    const {
+      hex,
+      rgb: { a: opacity },
+      wasChanged,
+      opacityDragEnd
+    } = value;
     this.lastValue = { hex, opacity };
 
     const newHex = hex.toLowerCase();
@@ -45,13 +50,17 @@ class ColorPicker extends React.Component {
   };
 
   getContentWindow = () => {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
 
     return node.ownerDocument.defaultView;
   };
 
   render() {
-    let { value: { hex, opacity }, disableOpacity } = this.props;
+    let {
+      value: { hex, opacity },
+      disableOpacity
+    } = this.props;
 
     hex = !isHex(hex) ? DEFAULT_HEX : hex;
     opacity = isNaN(Number(opacity)) ? DEFAULT_OPACITY : opacity;

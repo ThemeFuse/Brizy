@@ -53,7 +53,7 @@ class Items extends EditorArrayComponent {
     return {
       ...super.getItemProps(itemData, itemIndex, items),
       toolbarExtend
-    }
+    };
   }
 
   renderItemWrapper(item, itemKey) {

@@ -106,22 +106,22 @@ module.exports = {
                                         "value": {
                                             "_styles": [
                                                 "wrapper",
-                                                "wrapper--iconText"
+                                                "wrapper--form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "Form",
+                                                    "type": "Form2",
                                                     "value": {
                                                         "_styles": [
-                                                            "form"
+                                                            "form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "FormFields",
+                                                                "type": "Form2Fields",
                                                                 "value": {
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Email",
                                                                                 "label": "Type your email address",
@@ -129,25 +129,48 @@ module.exports = {
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "Type your email address"
                                                                             }
                                                                         }
                                                                     ],
                                                                     "fontStyle": "paragraph",
-                                                                    "padding": 10,
-                                                                    "paddingRight": 10,
-                                                                    "paddingBottom": 10,
-                                                                    "paddingLeft": 10,
-                                                                    "mobileFontSize": 16,
-                                                                    "mobileLineHeight": 2,
-                                                                    "mobileLetterSpacing": 0,
-                                                                    "mobileFontWeight": 400,
-                                                                    "mobileFontStyle": "",
+                                                                    "borderRadius": 5,
+                                                                    "borderTopLeftRadius": 5,
+                                                                    "borderTopRightRadius": 5,
+                                                                    "borderBottomLeftRadius": 5,
+                                                                    "borderBottomRightRadius": 5,
+                                                                    "tempBorderRadius": 5,
+                                                                    "tempBorderTopLeftRadius": 5,
+                                                                    "tempBorderTopRightRadius": 5,
+                                                                    "tempBorderBottomLeftRadius": 5,
+                                                                    "tempBorderBottomRightRadius": 5,
+                                                                    "borderStyle": "solid",
+                                                                    "borderWidth": 1,
+                                                                    "borderTopWidth": 1,
+                                                                    "borderRightWidth": 1,
+                                                                    "borderBottomWidth": 1,
+                                                                    "borderLeftWidth": 1,
+                                                                    "tempBorderTopWidth": 1,
+                                                                    "tempBorderRightWidth": 1,
+                                                                    "tempBorderBottomWidth": 1,
+                                                                    "tempBorderLeftWidth": 1,
+                                                                    "borderColorOpacity": 1,
+                                                                    "borderColorPalette": "",
+                                                                    "tabletFontStyle": "",
+                                                                    "tabletFontFamily": "noto_serif",
+                                                                    "tabletFontFamilyType": "google",
                                                                     "tabletFontSize": 16,
-                                                                    "tabletLineHeight": 1.5,
+                                                                    "tabletLineHeight": 1.6,
                                                                     "tabletLetterSpacing": 0,
                                                                     "tabletFontWeight": 400,
-                                                                    "tabletFontStyle": ""
+                                                                    "mobileFontStyle": "",
+                                                                    "mobileFontFamily": "noto_serif",
+                                                                    "mobileFontFamilyType": "google",
+                                                                    "mobileFontSize": 15,
+                                                                    "mobileLineHeight": 1.8,
+                                                                    "mobileLetterSpacing": 0,
+                                                                    "mobileFontWeight": 400
                                                                 }
                                                             },
                                                             {
@@ -157,6 +180,7 @@ module.exports = {
                                                                         "button",
                                                                         "submit"
                                                                     ],
+                                                                    "text": "Join Now",
                                                                     "size": "small",
                                                                     "fontSize": 11,
                                                                     "paddingTB": 11,
@@ -173,18 +197,6 @@ module.exports = {
                                                                     "tempPaddingLeft": 26,
                                                                     "borderRadius": 4,
                                                                     "borderWidth": 0,
-                                                                    "text": "Join Now",
-                                                                    "tabsState": "",
-                                                                    "tabsColor": "",
-                                                                    "hoverBgColorPalette": "color2",
-                                                                    "hoverBgColorOpacity": 1,
-                                                                    "hoverBorderColorPalette": "",
-                                                                    "tempHoverBorderColorPalette": "",
-                                                                    "hoverBgColorHex": "#1c1c1c",
-                                                                    "tempHoverBgColorOpacity": 1,
-                                                                    "tempHoverBgColorPalette": "color3",
-                                                                    "hoverBorderColorHex": "#1c1c1c",
-                                                                    "hoverBorderColorOpacity": 0.8,
                                                                     "tempBorderWidth": 2,
                                                                     "borderRadiusType": "custom",
                                                                     "fillType": "filled",
@@ -192,42 +204,28 @@ module.exports = {
                                                                     "borderColorPalette": 0,
                                                                     "bgColorOpacity": 1,
                                                                     "bgColorPalette": "color3",
+                                                                    "hoverBgColorOpacity": 1,
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
+                                                                    "hoverBgColorPalette": "color2",
+                                                                    "hoverBorderColorPalette": "",
+                                                                    "tempHoverBorderColorPalette": "",
+                                                                    "hoverBgColorHex": "#1c1c1c",
+                                                                    "tempHoverBgColorOpacity": 1,
+                                                                    "tempHoverBgColorPalette": "color3",
+                                                                    "hoverBorderColorHex": "#1c1c1c",
+                                                                    "hoverBorderColorOpacity": 0.8,
                                                                     "tempBorderRadiusType": "custom",
                                                                     "tempBorderRadius": 4,
-                                                                    "hoverTransition": 30,
-                                                                    "mobileSize": "medium",
-                                                                    "mobileFontSize": 12,
-                                                                    "mobilePaddingTB": 14,
-                                                                    "mobilePaddingTop": 14,
-                                                                    "mobilePaddingBottom": 14,
-                                                                    "tempMobilePaddingTB": 14,
-                                                                    "tempMobilePaddingTop": 14,
-                                                                    "tempMobilePaddingBottom": 14,
-                                                                    "mobilePaddingRL": 42,
-                                                                    "mobilePaddingRight": 42,
-                                                                    "mobilePaddingLeft": 42,
-                                                                    "tempMobilePaddingRL": 42,
-                                                                    "tempMobilePaddingRight": 42,
-                                                                    "tempMobilePaddingLeft": 42,
-                                                                    "mobileBorderRadius": 4,
-                                                                    "tabletSize": "medium",
-                                                                    "tabletFontSize": 12,
-                                                                    "tabletPaddingTB": 14,
-                                                                    "tabletPaddingTop": 14,
-                                                                    "tabletPaddingBottom": 14,
-                                                                    "tempTabletPaddingTB": 14,
-                                                                    "tempTabletPaddingTop": 14,
-                                                                    "tempTabletPaddingBottom": 14,
-                                                                    "tabletPaddingRL": 42,
-                                                                    "tabletPaddingRight": 42,
-                                                                    "tabletPaddingLeft": 42,
-                                                                    "tempTabletPaddingRL": 42,
-                                                                    "tempTabletPaddingRight": 42,
-                                                                    "tempTabletPaddingLeft": 42,
-                                                                    "tabletBorderRadius": 4
+                                                                    "tabletFontSize": 17,
+                                                                    "tabletLineHeight": 1.6,
+                                                                    "tabletLetterSpacing": 0,
+                                                                    "tabletFontWeight": 700,
+                                                                    "tabletFontStyle": ""
                                                                 }
                                                             }
                                                         ],
+                                                        "submitWidth": 45,
                                                         "horizontalAlign": "center"
                                                     }
                                                 }
@@ -358,7 +356,7 @@ module.exports = {
         "bgColorHex": "#191b21",
         "bgColorOpacity": 0.9,
         "tempBgColorOpacity": 0.9,
-        "popupId": "muucnetmoklsskbntczmuqttbsxpqyafszki",
+        "popupId": "bwlcijxlyystjgorvudokwxsomyovqhwvggl",
         "tempBgColorPalette": "color2",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

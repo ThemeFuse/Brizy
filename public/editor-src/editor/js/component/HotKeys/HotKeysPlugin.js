@@ -1,5 +1,5 @@
 import React from "react";
-import { toCode, fromCode, _modifier } from "./utils";
+import { toCode, _modifier } from "./utils";
 
 let listeningKeys = {};
 let downKeysMap = [];
@@ -123,6 +123,7 @@ class HotKeysPlugin extends React.Component {
     const pressedKeys = downKeysMap.join("+");
     if (listeningKeys[pressedKeys]) {
       // to think how to do it less hackly
+      /* eslint-disable no-unused-vars */
       const filteredItems = this.props.filterItems(listeningKeys[pressedKeys]);
       if (e.type === "keydown") {
         filteredItems.forEach(({ onKeyDown, onKeyUp, ...rest }) => {
@@ -135,6 +136,7 @@ class HotKeysPlugin extends React.Component {
             this.props.shouldKeyUpHandle(e, rest) && onKeyUp(e, rest)
         );
       }
+      /* eslint-enabled no-unused-vars */
     }
   }
 

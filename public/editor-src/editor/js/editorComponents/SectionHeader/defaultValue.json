@@ -6,6 +6,8 @@
 
     "anchorName": "",
 
+    "cssIDPopulation": "",
+
     "showOnDesktop": "on",
 
     "showOnTablet": "on",
@@ -18,6 +20,10 @@
 
     "customClassName": "",
 
-    "containerClassName": ""
+    "cssClassPopulation": "",
+
+    "containerClassName": "",
+
+    "customAttributes": ""
   }
 }

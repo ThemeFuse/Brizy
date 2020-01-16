@@ -1,4 +1,5 @@
 import React from "react";
+import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
@@ -16,6 +17,10 @@ class Carousel extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {

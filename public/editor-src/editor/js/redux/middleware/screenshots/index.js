@@ -293,7 +293,9 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
       screenshot = await makeBlockScreenshot(block);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        /* eslint-disable no-console */
         console.warn(e);
+        /* eslint-enabled no-console */
       }
       return;
     }
@@ -372,7 +374,9 @@ async function savedBlockTaskCb(
       screenshot = await makeBlockScreenshot(null, { node });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        /* eslint-disable no-console */
         console.warn(e);
+        /* eslint-enabled no-console */
       }
       return;
     }
@@ -462,7 +466,9 @@ async function globalBlockTaskCb(
       screenshot = await makeBlockScreenshot(null, { node });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        /* eslint-disable no-console */
         console.warn(e);
+        /* eslint-enabled no-console */
       }
       return;
     }
@@ -556,7 +562,9 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
       screenshot = await makeBlockScreenshot(null, { node });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        /* eslint-disable no-console */
         console.warn(e);
+        /* eslint-enabled no-console */
       }
       return;
     }
@@ -662,7 +670,9 @@ async function popupBlockInsideGlobalBlockTaskCb(
       screenshot = await makeBlockScreenshot(null, { node });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        /* eslint-disable no-console */
         console.warn(e);
+        /* eslint-enabled no-console */
       }
       return;
     }

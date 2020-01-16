@@ -63,6 +63,11 @@ export const pageDataSelector = createSelector(
   page => page.data || {}
 );
 
+export const pageSlugSelector = createSelector(
+  pageSelector,
+  page => page.slug
+);
+
 export const triggersSelector = createSelector(
   pageDataSelector,
   pageData => pageData.triggers || []
@@ -75,7 +80,8 @@ export const triggersAmountSelector = createSelector(
 
 export const rulesAmountSelector = createSelector(
   pageDataSelector,
-  pageData => pageData.rulesAmount || null
+  pageData =>
+    Number.isInteger(pageData.rulesAmount) ? pageData.rulesAmount : null
 );
 
 export const deviceModeSelector = createSelector(
@@ -318,6 +324,36 @@ export const rulesSelector = createSelector(
         },
         [`${color.id}__mobileMMenuIconColor`]: {
           mobileMMenuIconColorHex: color.hex
+        },
+        [`${color.id}__labelColor`]: {
+          labelColorHex: color.hex
+        },
+        [`${color.id}__checkboxColor`]: {
+          checkboxColorHex: color.hex
+        },
+        [`${color.id}__selectColor`]: {
+          selectColorHex: color.hex
+        },
+        [`${color.id}__hoverSelectColor`]: {
+          hoverSelectColorHex: color.hex
+        },
+        [`${color.id}__selectBg`]: {
+          selectBgColorHex: color.hex
+        },
+        [`${color.id}__hoverSelectBg`]: {
+          hoverSelectBgColorHex: color.hex
+        },
+        [`${color.id}__selectBorderColor`]: {
+          selectBorderColorHex: color.hex
+        },
+        [`${color.id}__hoverSelectBorderColor`]: {
+          hoverSelectBorderColorHex: color.hex
+        },
+        [`${color.id}__selectBoxShadow`]: {
+          selectBoxShadowColorHex: color.hex
+        },
+        [`${color.id}__hoverSelectBoxShadow`]: {
+          hoverSelectBoxShadowColorHex: color.hex
         }
       }),
       {}

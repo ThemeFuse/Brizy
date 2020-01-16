@@ -39,6 +39,8 @@ class RichText extends EditorComponent {
   toolbarRef = React.createRef();
 
   componentDidMount() {
+    // TODO NEED review and exclude ReactDOM.findDOMNode
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
 
     node.addEventListener(
@@ -121,13 +123,15 @@ class RichText extends EditorComponent {
       }
     }
 
+    // TODO NEED review and exclude ReactDOM.findDOMNode
+    // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
       prevActive.focus && prevActive.focus();
     }
   };
 
-  handleKeyDown(e, { keyName, id }) {}
-  handleKeyUp() {}
+  handleKeyDown = () => {};
+  handleKeyUp = () => {};
 
   getClassName(v) {
     return classNames("brz-rich-text", v.className);

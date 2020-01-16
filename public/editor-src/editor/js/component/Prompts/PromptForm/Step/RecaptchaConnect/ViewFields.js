@@ -91,6 +91,7 @@ class ViewFields extends Component {
 
   renderDescriptions() {
     return (
+      /* eslint-disable react/no-unescaped-entities */
       <div className="brz-ed-popup-recaptcha__confirmation">
         <label className="brz-label">
           <input
@@ -106,6 +107,7 @@ class ViewFields extends Component {
           Advanced Settings" in my Google reCAPTCHA page
         </label>
       </div>
+      /* eslint-enabled react/no-unescaped-entities */
     );
   }
 

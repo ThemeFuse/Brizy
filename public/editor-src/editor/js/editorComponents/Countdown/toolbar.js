@@ -1,4 +1,3 @@
-import _ from "underscore";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
@@ -18,8 +17,7 @@ import {
   toolbarColor2,
   toolbarColorHexField2,
   toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings,
-  toolbarCustomCSS
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";

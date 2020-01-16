@@ -3,6 +3,7 @@
     "items": [],
 
     "media": "image",
+    "tagName": "footer",
 
     "bgImageWidth": 0,
     "bgImageHeight": 0,
@@ -10,6 +11,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgImageExtension": "",
 
     "brightness": 100,
     "hue": 0,
@@ -31,6 +33,7 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+    "hoverBgImageExtension": null,
 
     "hoverBrightness": null,
     "hoverHue": null,
@@ -38,6 +41,8 @@
     "hoverContrast": null,
 
     "anchorName": "",
+
+    "cssIDPopulation": "",
 
     "multiPage": "off",
 
@@ -53,6 +58,7 @@
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+    "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -71,6 +77,7 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+    "mobileBgImageExtension": null,
 
     "mobileBrightness": null,
     "mobileHue": null,
@@ -90,6 +97,10 @@
     "className": "",
 
     "customClassName": "",
+
+    "cssClassPopulation": "",
+
+    "customAttributes": "",
 
     "borderStyle": "",
 
@@ -418,15 +429,15 @@
 
     "tabletPadding": 25,
     "tabletPaddingTop": 25,
-    "tabletPaddingRight": 0,
+    "tabletPaddingRight": 15,
     "tabletPaddingBottom": 25,
-    "tabletPaddingLeft": 0,
+    "tabletPaddingLeft": 15,
 
     "tempTabletPadding": 25,
     "tempTabletPaddingTop": 25,
-    "tempTabletPaddingRight": 0,
+    "tempTabletPaddingRight": 15,
     "tempTabletPaddingBottom": 25,
-    "tempTabletPaddingLeft": 0,
+    "tempTabletPaddingLeft": 15,
 
     "tabletPaddingSuffix": "px",
     "tabletPaddingTopSuffix": "px",
@@ -575,15 +586,15 @@
 
     "mobilePadding": 25,
     "mobilePaddingTop": 25,
-    "mobilePaddingRight": 0,
+    "mobilePaddingRight": 15,
     "mobilePaddingBottom": 25,
-    "mobilePaddingLeft": 0,
+    "mobilePaddingLeft": 15,
 
     "tempMobilePadding": 25,
     "tempMobilePaddingTop": 25,
-    "tempMobilePaddingRight": 0,
+    "tempMobilePaddingRight": 15,
     "tempMobilePaddingBottom": 25,
-    "tempMobilePaddingLeft": 0,
+    "tempMobilePaddingLeft": 15,
 
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",

@@ -124,7 +124,7 @@ $slider-handle-icon: 7px; // 7
 .brz-ed-option__slider--brightness,
 .brz-ed-option__slider--contrast {
   .brz-icon-svg {
-    color: #ffffff;
+    color: #fff;
   }
 }
 .brz-ed-option__slider--hue {
@@ -165,7 +165,6 @@ $slider-handle-icon: 7px; // 7
   width: calc(100% - 18px);
   margin-left: $slider-handle-size / 2;
   border-radius: $slider-horizontal-height;
-  -ms-touch-action: none;
   touch-action: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -190,11 +189,11 @@ $slider-handle-icon: 7px; // 7
   position: absolute;
   display: inline-block;
   outline: 0;
-  top: 50%;
   width: $slider-handle-size;
   height: $slider-handle-size;
+  top: 50%;
   left: 50%;
-  transform: translateY(-50%);
+  margin-top: -($slider-handle-size / 2);
   margin-left: -($slider-handle-size / 2);
   cursor: pointer;
   background: #fff;
@@ -226,7 +225,6 @@ $slider-handle-icon: 7px; // 7
 .rc-slider-handle:active {
   border-color: #57c5f7;
   box-shadow: 0 0 5px #57c5f7;
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 .rc-slider-handle:focus {
@@ -307,7 +305,6 @@ $slider-handle-icon: 7px; // 7
 .rc-slider-vertical .rc-slider-handle {
   margin-left: -5px;
   margin-bottom: -7px;
-  -ms-touch-action: pan-y;
   touch-action: pan-y;
 }
 .rc-slider-vertical .rc-slider-mark {
@@ -331,106 +328,33 @@ $slider-handle-icon: 7px; // 7
 }
 .rc-slider-tooltip-zoom-down-enter,
 .rc-slider-tooltip-zoom-down-appear {
-  -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
-  -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   display: block !important;
-  -webkit-animation-play-state: paused;
   animation-play-state: paused;
 }
 .rc-slider-tooltip-zoom-down-leave {
-  -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
-  -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   display: block !important;
-  -webkit-animation-play-state: paused;
   animation-play-state: paused;
 }
 .rc-slider-tooltip-zoom-down-enter.rc-slider-tooltip-zoom-down-enter-active,
 .rc-slider-tooltip-zoom-down-appear.rc-slider-tooltip-zoom-down-appear-active {
-  -webkit-animation-name: rcSliderTooltipZoomDownIn;
-  animation-name: rcSliderTooltipZoomDownIn;
-  -webkit-animation-play-state: running;
+  animation-name: brz-rcSliderTooltipZoomDownIn;
   animation-play-state: running;
 }
 .rc-slider-tooltip-zoom-down-leave.rc-slider-tooltip-zoom-down-leave-active {
-  -webkit-animation-name: rcSliderTooltipZoomDownOut;
-  animation-name: rcSliderTooltipZoomDownOut;
-  -webkit-animation-play-state: running;
+  animation-name: brz-rcSliderTooltipZoomDownOut;
   animation-play-state: running;
 }
 .rc-slider-tooltip-zoom-down-enter,
 .rc-slider-tooltip-zoom-down-appear {
-  -webkit-transform: scale(0, 0);
   transform: scale(0, 0);
-  -webkit-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 .rc-slider-tooltip-zoom-down-leave {
-  -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-}
-@-webkit-keyframes rcSliderTooltipZoomDownIn {
-  0% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(0, 0);
-    transform: scale(0, 0);
-  }
-  100% {
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-}
-@keyframes rcSliderTooltipZoomDownIn {
-  0% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(0, 0);
-    transform: scale(0, 0);
-  }
-  100% {
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-}
-@-webkit-keyframes rcSliderTooltipZoomDownOut {
-  0% {
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(0, 0);
-    transform: scale(0, 0);
-  }
-}
-@keyframes rcSliderTooltipZoomDownOut {
-  0% {
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scale(0, 0);
-    transform: scale(0, 0);
-  }
 }
 .rc-slider-tooltip {
   position: absolute;
@@ -448,7 +372,7 @@ $slider-handle-icon: 7px; // 7
   display: none;
 }
 .rc-slider-tooltip-placement-top {
-  padding: 4px 0 8px 0;
+  padding: 4px 0 8px;
 }
 .rc-slider-tooltip-inner {
   padding: 6px 2px;

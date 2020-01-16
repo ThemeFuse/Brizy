@@ -7,12 +7,28 @@ const apiKeys = [
   {
     name: "emailTo",
     title: t("Email To"),
+    required: true,
     helper: `<p class="brz-p">If you need to have multiple emails you can separate them by commas:</p>
              <p class="brz-p"><span class="brz-span">me@email.com,</span> <span class="brz-span">hi@email.com</span></p>`
   },
+  { name: "subject", title: t("Subject") },
+  { name: "fromEmail", title: t("From Email") },
+  { name: "fromName", title: t("From Name") },
+  { name: "replayTo", title: t("Reply-To") },
+  { name: "cc", title: t("Cc") },
+  { name: "bcc", title: t("Bcc") },
   {
-    name: "subject",
-    title: t("Subject")
+    name: "metaData",
+    title: t("Meta Data"),
+    type: "search",
+    multiple: true,
+    choices: [
+      { label: "Time", value: "time" },
+      { label: "Page URL", value: "pageUrl" },
+      { label: "User Agent", value: "userAgent" },
+      { label: "Remote IP", value: "remoteIp" },
+      { label: "Credit", value: "credit" }
+    ]
   }
 ];
 
@@ -20,7 +36,9 @@ class WPFields extends Component {
   static contextType = Context;
 
   render() {
-    return <Smtp {...this.props} {...this.context} apiKeys={apiKeys} />;
+    return (
+      <Smtp {...this.context} apiKeys={apiKeys} onClose={this.props.onClose} />
+    );
   }
 }
 

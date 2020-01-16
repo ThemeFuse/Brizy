@@ -10,7 +10,11 @@ import {
   mobileSyncOnChange
 } from "visual/utils/onChange";
 
-import { toolbarColor2, toolbarColorHexField2 } from "visual/utils/toolbar";
+import {
+  toolbarColor2,
+  toolbarColorHexField2,
+  toolbarDisabledToolbarSettings
+} from "visual/utils/toolbar";
 
 import { t } from "visual/utils/i18n";
 
@@ -255,6 +259,7 @@ const getItemsForDesktop = menuList => v => {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device, state: "normal" }),
     {
       id: "toolbarSettings",
       type: "popover",
@@ -411,6 +416,7 @@ const getItemsForTablet = v => {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device: "tablet", state: "normal" }),
     {
       id: "tabletToolbarSettings",
       type: "popover",
@@ -567,6 +573,7 @@ const getItemsForMobile = v => {
         }
       ]
     },
+    toolbarDisabledToolbarSettings({ device: "mobile", state: "normal" }),
     {
       id: "mobileToolbarSettings",
       type: "popover",

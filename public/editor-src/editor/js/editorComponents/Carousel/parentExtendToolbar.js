@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import {
   getOptionColorHexByPalette,
@@ -14,7 +15,8 @@ import {
   toolbarColor2,
   toolbarColorHexField2,
   toolbarDisabledToolbarSettings,
-  toolbarDisabledHorizontalAlign
+  toolbarDisabledHorizontalAlign,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -25,7 +27,7 @@ export function getItemsForDesktop(v) {
     defaultValueValue({ v, key: "sliderArrowsColorPalette", device })
   );
 
-  const state = "normal";
+  const wordpress = Boolean(Config.get("wp"));
 
   return [
     {
@@ -247,6 +249,7 @@ export function getItemsForDesktop(v) {
       icon: "nc-dynamic",
       title: t("Dynamic Content"),
       roles: ["admin"],
+      disabled: !wordpress,
       position: 80,
       options: [
         {
@@ -421,7 +424,11 @@ export function getItemsForDesktop(v) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      position: 110,
+      title: t("Settings"),
       roles: ["admin"],
+      icon: "nc-cog",
       options: [
         {
           id: "settingsTabs",
@@ -430,6 +437,7 @@ export function getItemsForDesktop(v) {
           tabs: [
             {
               id: "settingsStyling",
+              label: t("Styling"),
               tabIcon: "nc-styling",
               options: [
                 {
@@ -688,6 +696,12 @@ export function getItemsForDesktop(v) {
                   }
                 }
               ]
+            },
+            {
+              id: "moreSettingsAdvanced",
+              label: t("Advanced"),
+              tabIcon: "nc-cog",
+              options: [toolbarCustomCSS({ v })]
             }
           ]
         }
@@ -761,6 +775,9 @@ export function getItemsForTablet(v) {
     {
       id: "tabletAdvancedSettings",
       type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      title: t("Settings"),
+      icon: "nc-cog",
       roles: ["admin"],
       options: [
         {
@@ -1071,6 +1088,9 @@ export function getItemsForMobile(v) {
     {
       id: "mobileAdvancedSettings",
       type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      title: t("Settings"),
+      icon: "nc-cog",
       roles: ["admin"],
       options: [
         {

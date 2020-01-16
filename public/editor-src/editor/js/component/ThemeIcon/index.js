@@ -15,6 +15,8 @@ export default class ThemeIcon extends React.Component {
     icon: null
   };
 
+  isUnmounted = false;
+
   componentDidMount() {
     const { name, type, suffix } = this.props;
 
@@ -47,6 +49,10 @@ export default class ThemeIcon extends React.Component {
     );
   }
 
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
+
   fetchIcon(type, name, suffix) {
     const url = templateIconUrl(type, name, suffix);
     const headers = new Headers({
@@ -62,9 +68,11 @@ export default class ThemeIcon extends React.Component {
   async getSvg(type, name, suffix) {
     const res = await this.fetchIcon(type, name, suffix);
 
-    this.setState({
-      icon: responseToSvg(res)
-    });
+    if (!this.isUnmounted) {
+      this.setState({
+        icon: responseToSvg(res)
+      });
+    }
   }
 
   renderForEdit() {

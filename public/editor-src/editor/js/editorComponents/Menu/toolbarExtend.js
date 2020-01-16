@@ -1,3 +1,4 @@
+import _ from "underscore";
 import { hexToRgba } from "visual/utils/color";
 import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
 import { getOptionColorHexByPalette } from "visual/utils/options";
@@ -86,22 +87,13 @@ const renameKeys = (keysMap, obj) =>
     {}
   );
 
-const invert = obj => {
-  let newObj = {};
-
-  for (const prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      newObj[obj[prop]] = prop;
-    }
-  }
-
-  return newObj;
-};
-
 const onChangeCustomTypography = (oldValue, newValue, onChange, keysMap) => {
-  const newKey = invert(keysMap);
-  const newV = renameKeys(newKey, oldValue);
-  const onChangeTypography = onChange(newValue, newV);
+  const newKey = _.invert(keysMap);
+  const valueByKeyMap = _.pick(oldValue, ...Object.values(keysMap));
+  const onChangeTypography = onChange(
+    newValue,
+    renameKeys(newKey, valueByKeyMap)
+  );
 
   return renameKeys(keysMap, onChangeTypography);
 };
@@ -213,7 +205,7 @@ const getMMenuToolbarColor = v => {
                           v,
                           device,
                           state: "normal",
-                          prefix: "mMenuBorder",
+                          prefix: "mMenu",
                           showSelect: false,
                           onChangeHex: ["onChangeBorderColorHexMMenu2"],
                           onChangePalette: ["onChangeBorderColorPaletteMMenu2"]
@@ -228,7 +220,7 @@ const getMMenuToolbarColor = v => {
                                 toolbarBorderColorHexField2({
                                   v,
                                   device,
-                                  prefix: "mMenuBorder",
+                                  prefix: "mMenu",
                                   state: "normal",
                                   onChange: ["onChangeBorderColorFieldsMMenu2"]
                                 })
@@ -1247,7 +1239,7 @@ const getToolbar = v => {
                           v,
                           device,
                           state: "normal",
-                          prefix: "subMenuBorder",
+                          prefix: "subMenu",
                           showSelect: false,
                           onChangeHex: ["onChangeBorderColorHexSubMenu2"],
                           onChangePalette: [
@@ -1264,7 +1256,7 @@ const getToolbar = v => {
                                 toolbarBorderColorHexField2({
                                   v,
                                   device,
-                                  prefix: "subMenuBorder",
+                                  prefix: "subMenu",
                                   state: "normal",
                                   onChange: [
                                     "onChangeBorderColorFieldsSubMenu2"

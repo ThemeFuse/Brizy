@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
+import CustomTag from "visual/component/CustomTag";
 
 let observerInstances = new Map();
 let observer = null;
@@ -9,6 +9,7 @@ export default class Animation extends Component {
   static defaultProps = {
     className: "",
     customID: "",
+    tagName: "div",
 
     style: {},
 
@@ -24,6 +25,8 @@ export default class Animation extends Component {
   state = {
     isVisible: false
   };
+
+  content = React.createRef();
 
   initObserver = () => {
     const {
@@ -41,8 +44,6 @@ export default class Animation extends Component {
   };
 
   componentDidMount() {
-    this.node = ReactDOM.findDOMNode(this);
-
     if (!this.props.name) {
       return;
     }
@@ -51,8 +52,12 @@ export default class Animation extends Component {
       this.initObserver();
     }
 
-    observer.observe(this.node);
-    observerInstances.set(this.node, this);
+    const node = this.content.current;
+
+    if (node) {
+      observer.observe(node);
+      observerInstances.set(node, this);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,9 +66,11 @@ export default class Animation extends Component {
         this.initObserver();
       }
 
-      if (!observerInstances.has(this.node)) {
-        observer.observe(this.node);
-        observerInstances.set(this.node, this);
+      const node = this.content.current;
+
+      if (!observerInstances.has(node)) {
+        observer.observe(node);
+        observerInstances.set(node, this);
       }
     }
   }
@@ -73,8 +80,12 @@ export default class Animation extends Component {
       return;
     }
 
-    observer.unobserve(this.node);
-    observerInstances.delete(this.node);
+    const node = this.content.current;
+
+    if (node) {
+      observer.unobserve(node);
+      observerInstances.delete(node);
+    }
 
     if (observerInstances.size === 0) {
       observer.disconnect();
@@ -93,8 +104,10 @@ export default class Animation extends Component {
   };
 
   renderForEdit() {
+    /* eslint-disable no-unused-vars */
     const {
       className: _className,
+      tagName,
       customID,
       style: _style,
       name,
@@ -106,6 +119,7 @@ export default class Animation extends Component {
       children,
       ...otherProps
     } = this.props;
+    /* eslint-enabled no-unused-vars */
     const { isVisible } = this.state;
     const hasName = Boolean(name);
     const isActive = isVisible && hasName;
@@ -127,14 +141,27 @@ export default class Animation extends Component {
       ...(customID ? { id: customID } : {}),
       className,
       style,
-      ...otherProps
+      ...otherProps,
+      ref: this.content
     };
 
-    return <div {...props}>{children}</div>;
+    return (
+      <CustomTag tagName={tagName} {...props}>
+        {children}
+      </CustomTag>
+    );
   }
 
   renderForView() {
-    const { className, customID, name, delay, duration, children } = this.props;
+    const {
+      className,
+      customID,
+      tagName,
+      name,
+      delay,
+      duration,
+      children
+    } = this.props;
     const hasName = Boolean(name);
     const props = {
       ...(customID ? { id: customID } : {}),
@@ -150,7 +177,11 @@ export default class Animation extends Component {
         : {})
     };
 
-    return <div {...props}>{children}</div>;
+    return (
+      <CustomTag tagName={tagName} {...props}>
+        {children}
+      </CustomTag>
+    );
   }
 
   render() {

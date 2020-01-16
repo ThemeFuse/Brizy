@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarDisabledMedia,
-  toolbarContainerPopup2CloseFill,
   toolbarContainerPopup2CloseBorderRadius,
   toolbarContainerPopup2CloseCustomSize,
   toolbarContainerPopup2CloseBgSize,
@@ -19,7 +18,9 @@ import {
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
-export function getItems({ v, device }) {
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
+export function getItems({ v, device, state }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -94,102 +95,46 @@ export function getItems({ v, device }) {
       },
       options: [
         {
-          id: dvk("tabsState"),
-          tabsPosition: "left",
+          id: dvk("tabsColor"),
           type: "tabs",
-          value: dvv("tabsState"),
           tabs: [
             {
-              id: "tabNormal",
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: dvk("tabIcon"),
+              label: t("Icon"),
               options: [
+                toolbarColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  prefix: "closeColor",
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
-                  value: dvv("tabsColor"),
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: dvk("tabIcon"),
-                      label: t("Icon"),
+                      width: 100,
                       options: [
-                        toolbarColor2({
+                        toolbarColorHexField2({
                           v,
                           device,
-                          state: "normal",
+                          state,
+                          states: [NORMAL, HOVER],
                           prefix: "closeColor",
-                          onChangeHex: [
+                          onChange: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "closeColor",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: dvk("tabBackground"),
-                      label: t("Background"),
-                      options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "closeBg",
-                          showSelect: false,
-                          onChangeHex: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "closeBg",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -197,100 +142,43 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabHover"),
-              tabIcon: "nc-hover",
-              title: t("Hover"),
+              id: dvk("tabBackground"),
+              label: t("Background"),
               options: [
+                toolbarBgColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  prefix: "closeBg",
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2"
+                  ]
+                }),
                 {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
-                  value: dvv("tabsColor"),
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: dvk("tabIcon"),
-                      label: t("Icon"),
+                      width: 30,
                       options: [
-                        toolbarColor2({
+                        toolbarBgColorHexField2({
                           v,
                           device,
-                          state: "hover",
-                          devices: "desktop",
-                          prefix: "closeColor",
-                          onChangeHex: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  devices: "desktop",
-                                  prefix: "closeColor",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: dvk("tabBackground"),
-                      label: t("Background"),
-                      options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "hover",
-                          devices: "desktop",
+                          state,
+                          states: [NORMAL, HOVER],
                           prefix: "closeBg",
-                          showSelect: false,
-                          onChangeHex: [
+                          onChange: [
                             "onChangeBgColorHexAndOpacity2",
                             "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  devices: "desktop",
-                                  prefix: "closeBg",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -299,11 +187,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState"),
-        [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
-      })
+      ]
     },
     toolbarContainerPopup2ClosePosition({
       v,

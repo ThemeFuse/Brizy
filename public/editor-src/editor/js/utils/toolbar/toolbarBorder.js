@@ -11,52 +11,44 @@ export function toolbarBorder2({
   v,
   device,
   state,
-  devices = "all",
-  prefix = "border",
-  showSelect = true,
-  choices = [
-    {
-      title: t("None"),
-      value: ""
-    },
-    {
-      value: "solid",
-      icon: "nc-solid"
-    },
-    {
-      value: "dashed",
-      icon: "nc-dashed"
-    },
-    {
-      value: "dotted",
-      icon: "nc-dotted"
-    }
-  ],
+  states,
   onChangeStyle,
   onChangeHex,
-  onChangePalette
+  onChangePalette,
+  devices = "all",
+  prefix = "",
+  showSelect = true,
+  choices = [
+    { title: t("None"), value: "" },
+    { value: "solid", icon: "nc-solid" },
+    { value: "dashed", icon: "nc-dashed" },
+    { value: "dotted", icon: "nc-dotted" }
+  ]
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const { hex } = getOptionColorHexByPalette(
-    dvv(capByPrefix(prefix, "colorHex")),
-    dvv(capByPrefix(prefix, "colorPalette"))
-  );
+  const border = capByPrefix(prefix, "border");
+  const color = capByPrefix(border, "color");
+  const colorHex = capByPrefix(border, "colorHex");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const colorPalette = capByPrefix(border, "colorPalette");
+  const style = capByPrefix(border, "style");
+  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
 
   return {
-    id: dvk(capByPrefix(prefix, "color")),
-    type: "colorPicker2",
     devices,
+    id: dvk(color),
+    type: "colorPicker2",
+    states,
     select: {
       show: showSelect,
       choices
     },
     value: {
       hex,
-      opacity: dvv(capByPrefix(prefix, "colorOpacity")),
-      palette: dvv(capByPrefix(prefix, "colorPalette")),
-      select: dvv(capByPrefix(prefix, "style"))
+      opacity: dvv(colorOpacity),
+      palette: dvv(colorPalette),
+      select: dvv(style)
     },
     onChange: ({
       hex,
@@ -112,25 +104,27 @@ export function toolbarBorderColorHexField2({
   v,
   device,
   state,
+  states,
+  onChange,
   devices = "all",
-  prefix = "border",
-  onChange
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const { hex } = getOptionColorHexByPalette(
-    dvv(capByPrefix(prefix, "colorHex")),
-    dvv(capByPrefix(prefix, "colorPalette"))
-  );
+  const border = capByPrefix(prefix, "border");
+  const colorHex = capByPrefix(border, "colorHex");
+  const colorOpacity = capByPrefix(border, "colorOpacity");
+  const colorPalette = capByPrefix(border, "colorPalette");
+  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
 
   return {
-    id: dvk(capByPrefix(prefix, "borderColorField")),
-    type: "colorFields",
     devices,
+    id: dvk(capByPrefix(border, "colorField")),
+    type: "colorFields",
+    states,
     value: {
       hex,
-      opacity: dvv(capByPrefix(prefix, "colorOpacity"))
+      opacity: dvv(colorOpacity)
     },
     onChange: ({ hex }) => {
       const values = {
@@ -146,23 +140,26 @@ export function toolbarBorderWidthOneField2({
   v,
   device,
   state,
+  onChange,
   devices = "all",
-  onChange
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const border = capByPrefix(prefix, "border");
+  const width = capByPrefix(border, "width");
 
   return {
-    id: dvk("borderWidth"),
+    devices,
+    id: dvk(width),
     label: t("Size"),
     type: "inputNumber",
-    devices,
     min: 0,
     max: 360,
-    value: dvv("borderWidth"),
+    value: dvv(width),
     onChange: value => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{ value }
       };
       return saveOnChanges(values);
@@ -174,37 +171,41 @@ export function toolbarBorderWidthFourFields2({
   v,
   device,
   state,
-  devices = "all",
+  states,
   onChangeType,
   onChangeGrouped,
-  onChangeUngrouped
+  onChangeUngrouped,
+  devices = "all",
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const borderWidthKeys = {
-    grouped: ["borderWidth"],
-    ungrouped: [
-      "borderTopWidth",
-      "borderRightWidth",
-      "borderBottomWidth",
-      "borderLeftWidth"
-    ]
+  const border = capByPrefix(prefix, "border");
+  const width = capByPrefix(border, "width");
+  const type = capByPrefix(width, "type");
+  const topWidth = capByPrefix(border, "topWidth");
+  const rightWidth = capByPrefix(border, "rightWidth");
+  const bottomWidth = capByPrefix(border, "bottomWidth");
+  const leftWidth = capByPrefix(border, "leftWidth");
+  const widthKeys = {
+    grouped: [width],
+    ungrouped: [topWidth, rightWidth, bottomWidth, leftWidth]
   };
 
   return {
-    id: dvk("borderWidth"),
-    type: "multiInputPicker",
-    label: dvv("borderWidthType") === "grouped" ? t("Size") : false,
     devices,
+    id: dvk(width),
+    type: "multiInputPicker",
+    states,
+    label: dvv(type) === "grouped" && t("Size"),
     value: {
-      type: dvv("borderWidthType"),
-      grouped: [dvv("borderWidth")],
+      type: dvv(type),
+      grouped: [dvv(width)],
       ungrouped: [
-        dvv("borderTopWidth"),
-        dvv("borderRightWidth"),
-        dvv("borderBottomWidth"),
-        dvv("borderLeftWidth")
+        dvv(topWidth),
+        dvv(rightWidth),
+        dvv(bottomWidth),
+        dvv(leftWidth)
       ]
     },
     onChange: ({ type, isChanged, isChangedIndex, ...others }) => {
@@ -213,6 +214,7 @@ export function toolbarBorderWidthFourFields2({
           v,
           device,
           state,
+          prefix,
           onChange: onChangeType
         },
         ...{ type }
@@ -223,10 +225,11 @@ export function toolbarBorderWidthFourFields2({
           v,
           device,
           state,
+          prefix,
           onChange: type === "grouped" ? onChangeGrouped : onChangeUngrouped
         },
         ...{
-          current: borderWidthKeys[type][isChangedIndex],
+          current: widthKeys[type][isChangedIndex],
           value: others[type][isChangedIndex]
         }
       };

@@ -35,6 +35,29 @@ export function styleClassName(v) {
         "& .brz-tabs__items": {
           borderWidth: "var(--borderWidth)"
         },
+        "& .brz-tabs__nav--button": {
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "nowrap",
+          alignItems: "center",
+        },
+        "& .brz-tabs__nav--button--right": {
+          display: "flex",
+          flexDirection: "row-reverse",
+          flexWrap: "nowrap",
+          alignItems: "center",
+          justifyContent: "flex-end"
+        },
+        "& .brz-tabs__nav--button .brz-icon-svg": {
+          marginLeft: 0,
+          fontSize: "var(--iconCustomSize)",
+          marginRight: "var(--iconSpacing)"
+        },
+        "& .brz-tabs__nav--button--right .brz-icon-svg": {
+          marginRight: 0,
+          fontSize: "var(--iconCustomSize)",
+          marginLeft: "var(--iconSpacing)"
+        },
         "& .brz-tabs__nav--active .brz-tabs__nav--button": {
           borderBottomColor: "var(--backgroundColor)"
         },
@@ -128,6 +151,8 @@ export function styleClassName(v) {
       paddingRight,
       paddingBottom,
       paddingLeft,
+      iconCustomSize,
+      iconSpacing,
 
       // Tablet
       tabletPaddingType,
@@ -191,7 +216,28 @@ export function styleClassName(v) {
           borderWidth
         },
         "& .brz-tabs__nav--button": {
-          borderBottomColor: "transparent"
+          borderBottomColor: "transparent",
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "nowrap",
+          alignItems: "center",
+        },
+        "& .brz-tabs__nav--button--right": {
+          display: "flex",
+          flexDirection: "row-reverse",
+          flexWrap: "nowrap",
+          alignItems: "center",
+          justifyContent: "flex-end"
+        },
+        "& .brz-tabs__nav--button .brz-icon-svg": {
+          marginLeft: 0,
+          fontSize: `${iconCustomSize}px`,
+          marginRight: `${iconSpacing}px`
+        },
+        "& .brz-tabs__nav--button--right .brz-icon-svg": {
+          marginRight: 0,
+          fontSize: `${iconCustomSize}px`,
+          marginLeft: `${iconSpacing}px`
         },
         "& .brz-tabs__nav--active .brz-tabs__nav--button": {
           borderBottomColor: styleBgColor({
@@ -350,7 +396,6 @@ export function styleCSSVars(v) {
     fontWeight,
     lineHeight,
     letterSpacing,
-    borderWidth,
     horizontalAlign,
     paddingType,
     padding,
@@ -358,6 +403,12 @@ export function styleCSSVars(v) {
     paddingRight,
     paddingBottom,
     paddingLeft,
+
+    //icon
+    iconSize,
+    iconCustomSize,
+    iconPosition,
+    iconSpacing,
 
     // Tablet
     tabletPaddingType,
@@ -392,6 +443,12 @@ export function styleCSSVars(v) {
     "--fontSize": `${fontSize}px`,
     "--lineHeight": lineHeight,
     "--letterSpacing": `${letterSpacing}px`,
+
+    //icon
+    "--iconSize": iconSize,
+    "--iconCustomSize": `${iconCustomSize}px`,
+    "--iconPosition": iconPosition,
+    "--iconSpacing": `${iconSpacing}px`,
 
     // Colors
     "--color": styleColor({ v, device: "desktop", state: "normal" }),

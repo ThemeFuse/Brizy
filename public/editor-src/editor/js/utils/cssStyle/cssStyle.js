@@ -40,7 +40,7 @@ function loopStyles({ v, vs, vd, styles, props }) {
   let legacyVS = {};
   let legacyVD = {};
   let mode = "";
-
+  /* eslint-disable no-unused-vars */
   Object.entries(devices).forEach(function([device, deviceValue]) {
     Object.entries(states).forEach(function([state, stateValue]) {
       if (device === "desktop" || state === "normal") {
@@ -51,14 +51,20 @@ function loopStyles({ v, vs, vd, styles, props }) {
           ]) {
             styleValueValue.forEach(function(currentStyle) {
               const currentStyleArray = currentStyle.split("|||");
-
+              /* eslint-enabled no-unused-vars */
               if (currentStyleArray.length === 2) {
                 mode = currentStyleArray[1];
               } else {
                 mode = "";
               }
 
-              outV = onStyles[currentStyleArray[0]]({
+              const styleFn = currentStyleArray[0];
+
+              if (!onStyles[styleFn]) {
+                throw `The style function ${styleFn} is missing`;
+              }
+
+              outV = onStyles[styleFn]({
                 v,
                 device,
                 state,
@@ -73,7 +79,7 @@ function loopStyles({ v, vs, vd, styles, props }) {
                 currentStyle
               });
 
-              outVS = onStyles[currentStyleArray[0]]({
+              outVS = onStyles[styleFn]({
                 v: vs,
                 device,
                 state,
@@ -88,7 +94,7 @@ function loopStyles({ v, vs, vd, styles, props }) {
                 currentStyle
               });
 
-              outVD = onStyles[currentStyleArray[0]]({
+              outVD = onStyles[styleFn]({
                 v: vd,
                 device,
                 state,
@@ -390,23 +396,6 @@ export function css(
     ...(rulesData ? [rulesData.className] : []),
     ...(elementData ? [elementData.className] : [])
   ].join(" ");
-}
-
-export function renderStatic(cb) {
-  cssDiff.isServer = true;
-  cssCache.clear();
-
-  const html = cb();
-  let css = "";
-
-  for (const type of ["default", "rules", "custom"]) {
-    for (const { cssText } of cssOrdered[type]) {
-      css += cssText;
-      css += "\n";
-    }
-  }
-
-  return { html, css };
 }
 
 export function tmpCSSFromCache() {

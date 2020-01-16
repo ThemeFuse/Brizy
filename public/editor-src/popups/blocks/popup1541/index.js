@@ -209,60 +209,60 @@ module.exports = {
                                                         "tempBoxShadowSpread": 0,
                                                         "tempBoxShadowVertical": 2,
                                                         "tempBoxShadowHorizontal": 1,
-                                                        "hoverBoxShadow": null,
-                                                        "tempHoverBoxShadow": null,
-                                                        "hoverBoxShadowColorHex": null,
-                                                        "hoverBoxShadowColorOpacity": null,
-                                                        "hoverBoxShadowColorPalette": null,
-                                                        "tempHoverBoxShadowColorPalette": null,
-                                                        "tempHoverBoxShadowColorOpacity": null,
-                                                        "hoverBoxShadowBlur": null,
-                                                        "hoverBoxShadowSpread": null,
-                                                        "hoverBoxShadowVertical": null,
-                                                        "hoverBoxShadowHorizontal": null,
-                                                        "tempHoverBoxShadowBlur": null,
-                                                        "tempHoverBoxShadowSpread": null,
-                                                        "tempHoverBoxShadowVertical": null,
-                                                        "tempHoverBoxShadowHorizontal": null,
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                         "strokeWidth": 1,
                                                         "customCSS": "",
                                                         "tabletSize": "custom",
                                                         "tabletCustomSize": 52,
-                                                        "tabletPadding": null,
-                                                        "tabletBoxShadow": null,
-                                                        "tabletBoxShadowColorHex": null,
-                                                        "tabletBoxShadowColorOpacity": null,
-                                                        "tabletBoxShadowColorPalette": null,
-                                                        "tempTabletBoxShadowColorPalette": null,
-                                                        "tempTabletBoxShadowColorOpacity": null,
-                                                        "tabletBoxShadowBlur": null,
-                                                        "tabletBoxShadowSpread": null,
-                                                        "tabletBoxShadowVertical": null,
-                                                        "tabletBoxShadowHorizontal": null,
-                                                        "tempTabletBoxShadowBlur": null,
-                                                        "tempTabletBoxShadowSpread": null,
-                                                        "tempTabletBoxShadowVertical": null,
-                                                        "tempTabletBoxShadowHorizontal": null,
-                                                        "mobileSize": null,
-                                                        "mobileCustomSize": null,
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                         "mobilePadding": 27,
                                                         "tempMobilePadding": 20,
-                                                        "mobileBorderRadius": null,
+                                                        
                                                         "tempMobileBorderRadius": 4,
-                                                        "mobileBoxShadow": null,
-                                                        "mobileBoxShadowColorHex": null,
-                                                        "mobileBoxShadowColorOpacity": null,
-                                                        "mobileBoxShadowColorPalette": null,
-                                                        "tempMobileBoxShadowColorPalette": null,
-                                                        "tempMobileBoxShadowColorOpacity": null,
-                                                        "mobileBoxShadowBlur": null,
-                                                        "mobileBoxShadowSpread": null,
-                                                        "mobileBoxShadowVertical": null,
-                                                        "mobileBoxShadowHorizontal": null,
-                                                        "tempMobileBoxShadowBlur": null,
-                                                        "tempMobileBoxShadowSpread": null,
-                                                        "tempMobileBoxShadowVertical": null,
-                                                        "tempMobileBoxShadowHorizontal": null
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                     }
                                                 },
                                                 {
@@ -381,60 +381,60 @@ module.exports = {
                                                         "tempBoxShadowSpread": 0,
                                                         "tempBoxShadowVertical": 2,
                                                         "tempBoxShadowHorizontal": 1,
-                                                        "hoverBoxShadow": null,
-                                                        "tempHoverBoxShadow": null,
-                                                        "hoverBoxShadowColorHex": null,
-                                                        "hoverBoxShadowColorOpacity": null,
-                                                        "hoverBoxShadowColorPalette": null,
-                                                        "tempHoverBoxShadowColorPalette": null,
-                                                        "tempHoverBoxShadowColorOpacity": null,
-                                                        "hoverBoxShadowBlur": null,
-                                                        "hoverBoxShadowSpread": null,
-                                                        "hoverBoxShadowVertical": null,
-                                                        "hoverBoxShadowHorizontal": null,
-                                                        "tempHoverBoxShadowBlur": null,
-                                                        "tempHoverBoxShadowSpread": null,
-                                                        "tempHoverBoxShadowVertical": null,
-                                                        "tempHoverBoxShadowHorizontal": null,
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                         "strokeWidth": 1,
                                                         "customCSS": "",
                                                         "tabletSize": "custom",
                                                         "tabletCustomSize": 52,
-                                                        "tabletPadding": null,
-                                                        "tabletBoxShadow": null,
-                                                        "tabletBoxShadowColorHex": null,
-                                                        "tabletBoxShadowColorOpacity": null,
-                                                        "tabletBoxShadowColorPalette": null,
-                                                        "tempTabletBoxShadowColorPalette": null,
-                                                        "tempTabletBoxShadowColorOpacity": null,
-                                                        "tabletBoxShadowBlur": null,
-                                                        "tabletBoxShadowSpread": null,
-                                                        "tabletBoxShadowVertical": null,
-                                                        "tabletBoxShadowHorizontal": null,
-                                                        "tempTabletBoxShadowBlur": null,
-                                                        "tempTabletBoxShadowSpread": null,
-                                                        "tempTabletBoxShadowVertical": null,
-                                                        "tempTabletBoxShadowHorizontal": null,
-                                                        "mobileSize": null,
-                                                        "mobileCustomSize": null,
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                         "mobilePadding": 27,
                                                         "tempMobilePadding": 20,
-                                                        "mobileBorderRadius": null,
+                                                        
                                                         "tempMobileBorderRadius": 4,
-                                                        "mobileBoxShadow": null,
-                                                        "mobileBoxShadowColorHex": null,
-                                                        "mobileBoxShadowColorOpacity": null,
-                                                        "mobileBoxShadowColorPalette": null,
-                                                        "tempMobileBoxShadowColorPalette": null,
-                                                        "tempMobileBoxShadowColorOpacity": null,
-                                                        "mobileBoxShadowBlur": null,
-                                                        "mobileBoxShadowSpread": null,
-                                                        "mobileBoxShadowVertical": null,
-                                                        "mobileBoxShadowHorizontal": null,
-                                                        "tempMobileBoxShadowBlur": null,
-                                                        "tempMobileBoxShadowSpread": null,
-                                                        "tempMobileBoxShadowVertical": null,
-                                                        "tempMobileBoxShadowHorizontal": null
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
                                                     }
                                                 }
                                             ],

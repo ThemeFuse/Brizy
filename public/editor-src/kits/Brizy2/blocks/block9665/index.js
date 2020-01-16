@@ -67,6 +67,26 @@ module.exports = {
                             "value": {
                                 "_styles": [
                                     "wrapper",
+                                    "wrapper--spacer"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Spacer",
+                                        "value": {
+                                            "_styles": [
+                                                "spacer"
+                                            ],
+                                            "height": 50
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
                                     "wrapper--richText"
                                 ],
                                 "items": [
@@ -76,7 +96,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center brz-mt-lg-20 brz-mb-lg-20\"><span class=\"brz-cp-color6\"><span>If you are in the market for a computer, there are a number of factors to consider and sign-up.</span></span></p>"
+                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle brz-mb-lg-0 brz-mt-lg-0\"><span class=\"brz-cp-color6\">If you are in the market for a computer, there are a number of factors to consider and sign-up.</span></p>"
                                         }
                                     }
                                 ],
@@ -94,22 +114,42 @@ module.exports = {
                             "value": {
                                 "_styles": [
                                     "wrapper",
-                                    "wrapper--iconText"
+                                    "wrapper--spacer"
                                 ],
                                 "items": [
                                     {
-                                        "type": "Form",
+                                        "type": "Spacer",
                                         "value": {
                                             "_styles": [
-                                                "form"
+                                                "spacer"
+                                            ],
+                                            "height": 30
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--form2"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Form2",
+                                        "value": {
+                                            "_styles": [
+                                                "form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "FormFields",
+                                                    "type": "Form2Fields",
                                                     "value": {
                                                         "items": [
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
                                                                     "type": "Email",
                                                                     "label": "Email Address",
@@ -117,38 +157,51 @@ module.exports = {
                                                                     "options": [
                                                                         "Option 1",
                                                                         "Option 2"
-                                                                    ]
+                                                                    ],
+                                                                    "placeholder": "Email Address",
+                                                                    "width": 60,
+                                                                    "mobileWidth": 50
                                                                 }
                                                             }
                                                         ],
-                                                        "padding": 20,
-                                                        "paddingRight": 20,
-                                                        "paddingBottom": 20,
-                                                        "paddingLeft": 20,
                                                         "fontStyle": "paragraph",
+                                                        "size": "small",
+                                                        "paddingTop": 10,
+                                                        "paddingRight": 20,
+                                                        "paddingBottom": 10,
+                                                        "paddingLeft": 20,
+                                                        "tabsState": "",
+                                                        "tabsColor": "",
                                                         "colorPalette": "color2",
                                                         "tempColorPalette": "color2",
-                                                        "colorOpacity": 0.55,
-                                                        "borderColorHex": "#dcdee1",
-                                                        "borderColorOpacity": 0,
-                                                        "tempBorderColorOpacity": 1,
-                                                        "borderColorPalette": "",
-                                                        "tempBorderColorPalette": "",
-                                                        "borderStyle": "",
-                                                        "borderWidth": 0,
-                                                        "borderTopWidth": 0,
-                                                        "borderRightWidth": 0,
-                                                        "borderBottomWidth": 0,
-                                                        "borderLeftWidth": 0,
+                                                        "colorOpacity": 0.5,
+                                                        "borderColorPalette": "color2",
+                                                        "tempBorderColorPalette": "color2",
+                                                        "borderColorOpacity": 0.5,
+                                                        "borderStyle": "solid",
+                                                        "borderWidth": 1,
+                                                        "borderTopWidth": 1,
+                                                        "borderRightWidth": 1,
+                                                        "borderBottomWidth": 1,
+                                                        "borderLeftWidth": 1,
                                                         "tempBorderTopWidth": 1,
                                                         "tempBorderRightWidth": 1,
                                                         "tempBorderBottomWidth": 1,
                                                         "tempBorderLeftWidth": 1,
+                                                        "borderColorHex": "#1c1c1c",
+                                                        "tempBorderColorOpacity": 0.5,
+                                                        "borderRadius": 5,
+                                                        "borderTopLeftRadius": 5,
+                                                        "borderTopRightRadius": 5,
+                                                        "borderBottomLeftRadius": 5,
+                                                        "borderBottomRightRadius": 5,
+                                                        "tempBorderRadius": 5,
+                                                        "tempBorderTopLeftRadius": 5,
+                                                        "tempBorderTopRightRadius": 5,
+                                                        "tempBorderBottomLeftRadius": 5,
+                                                        "tempBorderBottomRightRadius": 5,
                                                         "colorHex": "#1c1c1c",
-                                                        "tempColorOpacity": 0.55,
-                                                        "bgColorPalette": "color8",
-                                                        "tempBgColorPalette": "color8",
-                                                        "bgColorOpacity": 1
+                                                        "tempColorOpacity": 0.5
                                                     }
                                                 },
                                                 {
@@ -161,74 +214,111 @@ module.exports = {
                                                         "text": "Subscribe to Newsletter",
                                                         "iconName": "",
                                                         "iconType": "",
-                                                        "tabsState": "",
-                                                        "tabsColor": "",
-                                                        "colorPalette": "color2",
-                                                        "colorOpacity": 1,
+                                                        "size": "custom",
+                                                        "fontSize": 15,
+                                                        "paddingTB": 14,
+                                                        "paddingTop": 14,
+                                                        "paddingBottom": 14,
+                                                        "tempPaddingTB": 14,
+                                                        "tempPaddingTop": 14,
+                                                        "tempPaddingBottom": 14,
+                                                        "paddingRL": 44,
+                                                        "paddingRight": 44,
+                                                        "paddingLeft": 44,
+                                                        "tempPaddingRL": 44,
+                                                        "tempPaddingRight": 44,
+                                                        "tempPaddingLeft": 44,
+                                                        "borderRadius": 5,
                                                         "borderWidth": 0,
-                                                        "tempBorderWidth": 2,
-                                                        "paddingRight": 42,
-                                                        "paddingLeft": 42,
                                                         "borderRadiusType": "custom",
+                                                        "tempBorderRadiusType": "custom",
                                                         "fillType": "filled",
-                                                        "borderRadius": 4,
                                                         "borderColorOpacity": 0,
                                                         "borderColorPalette": 0,
                                                         "bgColorOpacity": 1,
                                                         "bgColorPalette": "color3",
                                                         "hoverBgColorOpacity": 1,
-                                                        "tempBorderRadiusType": "custom",
                                                         "hoverBorderColorOpacity": 0.8,
-                                                        "tempBorderRadius": 4,
+                                                        "tempBorderRadius": 5,
+                                                        "tempBorderWidth": 2,
+                                                        "tabsState": "",
+                                                        "tabsColor": "",
                                                         "hoverBgColorPalette": "color8",
                                                         "hoverBorderColorPalette": "",
                                                         "tempHoverBorderColorPalette": "",
-                                                        "hoverBgColorHex": "#ffffff",
+                                                        "hoverBgColorHex": "#1c1c1c",
                                                         "tempHoverBgColorOpacity": 1,
                                                         "tempHoverBgColorPalette": "color3",
-                                                        "hoverBorderColorHex": "#ffffff",
+                                                        "hoverBorderColorHex": "#1c1c1c",
+                                                        "colorPalette": "color2",
+                                                        "colorOpacity": 1,
                                                         "hoverColorPalette": "color2",
                                                         "hoverColorOpacity": 1,
-                                                        "tabletSize": "medium",
-                                                        "tabletFontSize": 12,
-                                                        "tabletPaddingTB": 14,
-                                                        "tabletPaddingTop": 14,
-                                                        "tabletPaddingBottom": 14,
-                                                        "tempTabletPaddingTB": 14,
-                                                        "tempTabletPaddingTop": 14,
-                                                        "tempTabletPaddingBottom": 14,
-                                                        "tabletPaddingRL": 42,
-                                                        "tabletPaddingRight": 42,
-                                                        "tabletPaddingLeft": 42,
-                                                        "tempTabletPaddingRL": 42,
-                                                        "tempTabletPaddingRight": 42,
-                                                        "tempTabletPaddingLeft": 42,
-                                                        "tabletBorderRadius": 4,
-                                                        "hoverTransition": 30
+                                                        "tabletSize": "custom",
+                                                        "tabletFontSize": 11,
+                                                        "tabletPaddingTB": 13,
+                                                        "tabletPaddingTop": 13,
+                                                        "tabletPaddingBottom": 13,
+                                                        "tempTabletPaddingTB": 11,
+                                                        "tempTabletPaddingTop": 13,
+                                                        "tempTabletPaddingBottom": 13,
+                                                        "tabletPaddingRL": 26,
+                                                        "tabletPaddingRight": 26,
+                                                        "tabletPaddingLeft": 26,
+                                                        "tempTabletPaddingRL": 26,
+                                                        "tempTabletPaddingRight": 26,
+                                                        "tempTabletPaddingLeft": 26,
+                                                        "tabletBorderRadius": 5,
+                                                        "mobileSize": "custom",
+                                                        "mobileFontSize": 11,
+                                                        "mobilePaddingTB": 9,
+                                                        "mobilePaddingTop": 9,
+                                                        "mobilePaddingBottom": 9,
+                                                        "tempMobilePaddingTB": 11,
+                                                        "tempMobilePaddingTop": 9,
+                                                        "tempMobilePaddingBottom": 9,
+                                                        "mobilePaddingRL": 26,
+                                                        "mobilePaddingRight": 26,
+                                                        "mobilePaddingLeft": 26,
+                                                        "tempMobilePaddingRL": 26,
+                                                        "tempMobilePaddingRight": 26,
+                                                        "tempMobilePaddingLeft": 26,
+                                                        "mobileBorderRadius": 5
                                                     }
                                                 }
                                             ],
-                                            "horizontalAlign": "center"
+                                            "submitWidth": 40,
+                                            "mobileSubmitWidth": 50
                                         }
                                     }
                                 ],
-                                "paddingType": "ungrouped",
-                                "paddingRightSuffix": "%",
-                                "paddingRight": 30,
                                 "padding": 0,
+                                "paddingTop": 0,
+                                "paddingRight": 20,
+                                "paddingBottom": 0,
+                                "paddingLeft": 20,
                                 "paddingSuffix": "px",
+                                "paddingTopSuffix": "px",
+                                "paddingRightSuffix": "%",
+                                "paddingBottomSuffix": "px",
                                 "paddingLeftSuffix": "%",
-                                "paddingLeft": 30,
+                                "tempPaddingSuffix": "px",
+                                "tempPaddingTopSuffix": "px",
+                                "tempPaddingRightSuffix": "%",
+                                "tempPaddingBottomSuffix": "px",
+                                "tempPaddingLeftSuffix": "%",
+                                "paddingType": "ungrouped",
+                                "tempPaddingRight": 20,
+                                "tempPaddingLeft": 20,
                                 "tabletPaddingType": "ungrouped",
                                 "tabletPaddingRight": 100,
-                                "tabletPadding": 0,
-                                "tabletPaddingSuffix": "px",
+                                "tabletPaddingRightSuffix": "px",
+                                "tempTabletPaddingRightSuffix": "px",
+                                "tempTabletPaddingRight": 100,
                                 "tabletPaddingLeft": 100,
-                                "mobilePaddingType": "ungrouped",
-                                "mobilePaddingRight": 50,
-                                "mobilePadding": 0,
-                                "mobilePaddingSuffix": "px",
-                                "mobilePaddingLeft": 50
+                                "tabletPaddingLeftSuffix": "px",
+                                "tempTabletPaddingLeftSuffix": "px",
+                                "tempTabletPaddingLeft": 100
                             }
                         },
                         {
@@ -404,8 +494,8 @@ module.exports = {
                     "bgImageWidth": 1440,
                     "bgImageHeight": 800,
                     "bgImageSrc": "d08-Bicycle-copy.jpg",
-                    "bgColorOpacity": 0,
-                    "tempBgColorOpacity": 1,
+                    "bgColorOpacity": 0.35,
+                    "tempBgColorOpacity": 0.35,
                     "borderRadius": 0,
                     "borderTopLeftRadius": 0,
                     "borderTopRightRadius": 0,
@@ -416,7 +506,7 @@ module.exports = {
                     "tempBorderBottomLeftRadius": 0,
                     "tempBorderBottomRightRadius": 0,
                     "tabsState": "tabNormal",
-                    "tabsColor": "tabOverlay",
+                    "tabsColor": "",
                     "paddingType": "ungrouped",
                     "paddingTop": 180,
                     "paddingBottom": 180,
@@ -429,7 +519,10 @@ module.exports = {
                     "mobilePadding": 25,
                     "mobileBgPositionX": 73,
                     "mobileBgPositionY": 46,
-                    "mobileBorderRadius": 0
+                    "mobileBorderRadius": 0,
+                    "bgColorPalette": "color2",
+                    "tempBgColorPalette": "color2",
+                    "bgColorHex": "#1c1c1c"
                 }
             }
         ]

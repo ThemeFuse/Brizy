@@ -29,7 +29,7 @@ class ColorPalette2Picker extends React.Component {
       className
     );
     const colors = propColors || getColorPaletteColors();
-    const squares = colors.map((color, index) => {
+    const squares = colors.map(color => {
       const className = classnames("brz-ed-option__color-palette2__item", {
         active: color.id === value
       });

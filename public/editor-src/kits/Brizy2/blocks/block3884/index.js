@@ -246,7 +246,7 @@ module.exports = {
                                                         "marginBottomSuffix": "px",
                                                         "marginLeftSuffix": "px",
                                                         "customClassName": "",
-                                                        "tabletHorizontalAlign": null,
+                                                        
                                                         "tabletPaddingType": "ungrouped",
                                                         "tabletPadding": 0,
                                                         "tabletPaddingTop": 0,
@@ -269,7 +269,7 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        "mobileHorizontalAlign": null,
+                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
                                                         "mobilePaddingTop": 0,
@@ -656,7 +656,7 @@ module.exports = {
                     "tabsColor": "tabOverlay",
                     "bgImageWidth": 1440,
                     "bgImageHeight": 800,
-                    "bgImageSrc": "d08-ElementeFundal2.png",
+                    "bgImageSrc": "d08-d08-ElementeFundal2.jpg",
                     "bgColorOpacity": 0,
                     "tempBgColorOpacity": 1,
                     "borderRadius": 0,

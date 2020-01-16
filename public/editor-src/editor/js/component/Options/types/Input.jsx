@@ -2,8 +2,8 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import Population from "./common/Population";
 import Tooltip from "visual/component/Controls/Tooltip";
+import Population from "./common/Population";
 
 const DEBOUNCE_WAIT = 1000;
 
@@ -14,6 +14,7 @@ class InputOptionType extends React.Component {
     placeholder: "",
     helper: false,
     helperContent: "",
+    helperPlacement: "top-center",
     display: "inline",
     value: {
       value: "",
@@ -101,37 +102,51 @@ class InputOptionType extends React.Component {
   };
 
   renderLabel() {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <Tooltip
-          placement="bottom-center"
-          openOnClick={false}
-          overlay={
-            <div
-              className="brz-ed-option__helper__content"
-              dangerouslySetInnerHTML={{ __html: helperContent }}
-            />
-          }
-        >
-          <EditorIcon icon="nc-alert-circle-que" />
-        </Tooltip>
-      </div>
-    ) : null;
+    const {
+      label,
+      helper,
+      helperContent,
+      helperPlacement,
+      population
+    } = this.props;
 
     return (
-      <div className="brz-ed-option__label brz-ed-option__input__label">
+      <div
+        className={classnames(
+          "brz-ed-option__label brz-ed-option__input__label",
+          {
+            "brz-ed-option__input__label--dynamic":
+              population && population.show
+          }
+        )}
+      >
         {label}
-        {helper}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <Tooltip
+              placement={helperPlacement}
+              openOnClick={false}
+              overlay={
+                <div
+                  className="brz-ed-option__helper__content"
+                  dangerouslySetInnerHTML={{ __html: helperContent }}
+                />
+              }
+            >
+              <EditorIcon icon="nc-alert-circle-que" />
+            </Tooltip>
+          </div>
+        )}
       </div>
     );
   }
 
   renderInput = () => {
-    const { inputSize, inputType, placeholder } = this.props;
+    const { inputSize, inputType, placeholder, population } = this.props;
     const inputClassName = classnames(
       "brz-input brz-ed-control__input",
-      `brz-ed-control__input--${inputSize}`
+      `brz-ed-control__input--${inputSize}`,
+      { "brz-ed-control__input--dynamic": population && population.show }
     );
 
     return (
@@ -159,16 +174,19 @@ class InputOptionType extends React.Component {
     const className = classnames(
       "brz-ed-option__input",
       `brz-ed-option__${display}`,
-      _className
+      _className,
+      { "brz-ed-option-input--dynamic": populationShow }
     );
 
     const content = populationShow ? (
-      <Population
-        choices={populationChoices}
-        value={populationValue}
-        renderUnset={this.renderInput}
-        onChange={this.handlePopulationChange}
-      />
+      <div className="brz-d-xs-flex brz-align-items-xs-center">
+        <Population
+          choices={populationChoices}
+          value={populationValue}
+          renderUnset={this.renderInput}
+          onChange={this.handlePopulationChange}
+        />
+      </div>
     ) : (
       this.renderInput()
     );

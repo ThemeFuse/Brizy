@@ -75,8 +75,9 @@ const changeShadow = (shadow, value) => {
           opacity: value.opacity
         })
       };
-    default:
+    default: {
       const { hex } = getColorPaletteColor(value.palette);
+
       return {
         shadow: shadowToString({
           ...newShadow,
@@ -84,6 +85,7 @@ const changeShadow = (shadow, value) => {
         }),
         shadowColorPalette: value.palette
       };
+    }
   }
 };
 
@@ -381,6 +383,7 @@ function getSimpleColorOptions(v, { device }, onChange) {
     population = null,
     x = null,
     y = null,
+    extension = null,
     width = null,
     height = null
   } = v.backgroundImage || {};
@@ -639,14 +642,31 @@ function getSimpleColorOptions(v, { device }, onChange) {
                 width,
                 height,
                 x,
-                y
+                y,
+                extension
               },
-              onChange: ({ width, height, src, x, y, population }) => {
+              onChange: ({
+                width,
+                height,
+                src,
+                x,
+                y,
+                population,
+                extension
+              }) => {
                 x = x || 50;
                 y = y || 50;
 
                 return onChange({
-                  backgroundImage: { src, population, x, y, width, height }
+                  backgroundImage: {
+                    src,
+                    population,
+                    x,
+                    y,
+                    extension,
+                    width,
+                    height
+                  }
                 });
               }
             }

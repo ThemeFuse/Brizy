@@ -41,7 +41,7 @@ export function styleClassName(v) {
   }
 
   const glamorClassName = String(css(glamorObj));
-  return classnames("brz-form", glamorClassName);
+  return classnames("brz-forms", glamorClassName);
 }
 
 export function styleCSSVars(v) {
@@ -62,28 +62,28 @@ export function fieldsStyleClassName(v) {
 
   if (IS_EDITOR) {
     glamorObj = {
-      ".brz & .brz-form__item": {
+      ".brz & .brz-forms__item": {
         fontFamily: "var(--fontFamily)",
         color: "var(--color)",
 
-        "& .brz-form__field": {
+        "& .brz-forms__field": {
           backgroundColor: "var(--backgroundColor)",
           borderColor: "var(--borderColor)",
           borderWidth: "var(--borderWidth)",
           borderStyle: "var(--borderStyle)"
         },
-        "& .brz-form__select-item__input": {
+        "& .brz-forms__select-item__input": {
           color: "var(--color)"
         }
       },
       ".brz & .form-alert": {
         fontFamily: "var(--fontFamily)"
       },
-      ".brz-ed--desktop &.brz-form__fields": {
+      ".brz-ed--desktop &.brz-forms__fields": {
         marginRight: "var(--marginRight)",
         marginLeft: "var(--marginLeft)"
       },
-      ".brz-ed--desktop & .brz-form__item": {
+      ".brz-ed--desktop & .brz-forms__item": {
         fontSize: "var(--fontSize)",
         lineHeight: "var(--lineHeight)",
         fontWeight: "var(--fontWeight)",
@@ -92,11 +92,11 @@ export function fieldsStyleClassName(v) {
         paddingBottom: "var(--paddingBottom)",
         paddingLeft: "var(--paddingLeft)"
       },
-      ".brz-ed--tablet &.brz-form__fields": {
+      ".brz-ed--tablet &.brz-forms__fields": {
         marginRight: "var(--tabletMarginRight)",
         marginLeft: "var(--tabletMarginLeft)"
       },
-      ".brz-ed--tablet & .brz-form__item": {
+      ".brz-ed--tablet & .brz-forms__item": {
         fontSize: "var(--tabletFontSize)",
         lineHeight: "var(--tabletLineHeight)",
         fontWeight: "var(--tabletFontWeight)",
@@ -105,11 +105,11 @@ export function fieldsStyleClassName(v) {
         paddingBottom: "var(--tabletPaddingBottom)",
         paddingLeft: "var(--tabletPaddingLeft)"
       },
-      ".brz-ed--mobile &.brz-form__fields": {
+      ".brz-ed--mobile &.brz-forms__fields": {
         marginRight: "var(--mobileMarginRight)",
         marginLeft: "var(--mobileMarginLeft)"
       },
-      ".brz-ed--mobile & .brz-form__item": {
+      ".brz-ed--mobile & .brz-forms__item": {
         fontSize: "var(--mobileFontSize)",
         lineHeight: "var(--mobileLineHeight)",
         fontWeight: "var(--mobileFontWeight)",
@@ -130,6 +130,7 @@ export function fieldsStyleClassName(v) {
       paddingRight,
       paddingBottom,
       paddingLeft,
+      borderWidth,
 
       // Tablet
       tabletFontSize,
@@ -148,7 +149,7 @@ export function fieldsStyleClassName(v) {
       marginRight: `-${paddingRight / 2}px`,
       marginLeft: `-${paddingLeft / 2}px`,
 
-      ".brz & .brz-form__item": {
+      ".brz & .brz-forms__item": {
         fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
           .family,
         fontSize,
@@ -160,7 +161,7 @@ export function fieldsStyleClassName(v) {
         paddingBottom: `${paddingBottom}px`,
         paddingLeft: `${paddingLeft / 2}px`,
 
-        "& .brz-form__field, .brz-control__select-current": {
+        "& .brz-forms__field, .brz-control__select-current": {
           backgroundColor: styleBgColor({
             v,
             device: "desktop",
@@ -182,6 +183,17 @@ export function fieldsStyleClassName(v) {
           "&::placeholder": {
             color: styleColor({ v, device: "desktop", state: "normal" })
           }
+        },
+        "&.brz-forms__item--error .brz-forms__field": {
+          borderWidth:
+            borderWidth === 0
+              ? "2px"
+              : styleBorderWidth({
+                  v,
+                  device: "desktop",
+                  state: "normal",
+                  current: "borderWidth"
+                })
         }
       },
       ".brz & .form-alert": {
@@ -189,11 +201,11 @@ export function fieldsStyleClassName(v) {
           .family
       },
       "@media (max-width: 991px)": {
-        ".brz &.brz-form__fields": {
+        ".brz &.brz-forms__fields": {
           marginRight: `-${tabletSyncOnChange(v, "paddingRight") / 2}px`,
           marginLeft: `-${tabletSyncOnChange(v, "paddingLeft") / 2}px`
         },
-        ".brz & .brz-form__item": {
+        ".brz & .brz-forms__item": {
           fontSize: `${tabletFontSize}px`,
           lineHeight: tabletLineHeight,
           fontWeight: tabletFontWeight,
@@ -204,11 +216,11 @@ export function fieldsStyleClassName(v) {
         }
       },
       "@media (max-width: 767px)": {
-        ".brz &.brz-form__fields": {
+        ".brz &.brz-forms__fields": {
           marginRight: `-${mobileSyncOnChange(v, "paddingRight") / 2}px`,
           marginLeft: `-${mobileSyncOnChange(v, "paddingLeft") / 2}px`
         },
-        ".brz & .brz-form__item": {
+        ".brz & .brz-forms__item": {
           fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
@@ -223,7 +235,7 @@ export function fieldsStyleClassName(v) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-form__fields", glamorClassName);
+  return classnames("brz-forms__fields", glamorClassName);
 }
 
 export function fieldsStyleCSSVars(v) {

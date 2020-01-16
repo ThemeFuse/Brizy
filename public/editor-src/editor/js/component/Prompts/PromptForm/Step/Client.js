@@ -24,11 +24,10 @@ class Client extends Component {
   }
 
   getActiveClient(app) {
-    const { usedAccount, accounts } = app;
-    const { folders } = accounts.find(({ id }) => id === usedAccount);
+    const { usedFolder, folders } = app;
     const useFirsFolder = folders.length ? folders[0].id : "";
 
-    return app.usedFolder || useFirsFolder;
+    return usedFolder || useFirsFolder;
   }
 
   handleActive = active => {
@@ -39,7 +38,7 @@ class Client extends Component {
 
   handleNext = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeNext
@@ -54,12 +53,9 @@ class Client extends Component {
 
     if (active !== appData.usedFolder) {
       const { status, data } = await updateIntegration({
-        appId: appData.id,
+        ...appData,
         formId,
-        body: {
-          ...appData,
-          usedFolder: active
-        }
+        usedFolder: active
       });
 
       if (status !== 200) {
@@ -68,7 +64,7 @@ class Client extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(appData.id, { ...appData, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     } else {
@@ -96,8 +92,7 @@ class Client extends Component {
 
   render() {
     const { app } = this.context;
-    const { accounts, usedAccount, accountPro } = app.data;
-    const { folders } = accounts.find(({ id }) => id === usedAccount);
+    const { folders, accountPro } = app.data;
 
     return (
       <RadioFields

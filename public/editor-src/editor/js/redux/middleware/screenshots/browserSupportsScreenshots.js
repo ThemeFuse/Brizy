@@ -1,5 +1,3 @@
-import _ from "underscore";
-
 // mainly inspired by html2canvas
 export const browserSupportsScreenshots = () => {
   const canvas = document.createElement("canvas");
@@ -46,7 +44,7 @@ export const browserSupportsScreenshots = () => {
       // Edge does not render background-images
       return isGreenPixel(data);
     })
-    .catch(e => false);
+    .catch(() => false);
 };
 
 const createForeignObjectSVG = (width, height, x, y, node) => {

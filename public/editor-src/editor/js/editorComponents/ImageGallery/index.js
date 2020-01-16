@@ -1,6 +1,6 @@
 import React from "react";
-import _ from "underscore";
 import { mergeIn } from "timm";
+import { noop } from "underscore";
 import Isotope from "isotope-layout";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -17,6 +17,10 @@ class ImageGallery extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
 
   node = null;
 

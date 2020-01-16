@@ -3,8 +3,15 @@ import {
   styleElementSectionHeight,
   styleElementSectionContainerType,
   styleElementSectionContainerSize,
-  styleColor
+  styleColor,
+  styleMarginType,
+  styleMarginUngrouped,
+  styleMarginGrouped,
+  styleMarginGroupedSuffix,
+  styleMarginUngroupedSuffix
 } from "visual/utils/style2";
+
+const validation = k => k !== undefined;
 
 export function cssStyleSectionMaxWidth({ v }) {
   const containerType = styleElementSectionContainerType({ v });
@@ -27,7 +34,7 @@ export function cssStyleSectionSliderHeight({ v }) {
     styleElementSectionSliderHeight({ v }) === "on" ? "height" : "min-height";
   const height = styleElementSectionHeight({ v }) === "on" ? "100vh" : "100%";
 
-  return height === undefined ? "" : `${sliderHeight}: ${height};`;
+  return validation(height) ? `${sliderHeight}: ${height};` : "";
 }
 
 export function cssStyleSectionColorDots({
@@ -37,7 +44,7 @@ export function cssStyleSectionColorDots({
   prefix = "sliderDotsColor"
 }) {
   const colorDots = styleColor({ v, device, state, prefix });
-  return colorDots === undefined ? "" : `color: ${colorDots};`;
+  return validation(colorDots) ? `color: ${colorDots};` : "";
 }
 
 export function cssStyleSectionColorArrows({
@@ -47,9 +54,51 @@ export function cssStyleSectionColorArrows({
   prefix = "sliderArrowsColor"
 }) {
   const colorArrows = styleColor({ v, device, state, prefix });
-  return colorArrows === undefined ? "" : `color: ${colorArrows};`;
+  return validation(colorArrows) ? `color: ${colorArrows};` : "";
 }
 
 export function cssStyleSectionPropertyHoverTransition() {
-  return `transition-property: filter, background, border, border-radius;`;
+  return "transition-property: filter, background, border, border-radius;";
+}
+
+export function cssStyleSectionToolbarOffset({ v, device, state }) {
+  const toolbarSpacing = 44;
+  const marginType = styleMarginType({ v, device, state });
+  let marginTop = 0;
+  let marginTopSuffix = "";
+
+  if (marginType === "grouped") {
+    marginTop = styleMarginGrouped({ v, device, state });
+    marginTopSuffix = styleMarginGroupedSuffix({ v, device, state });
+  } else {
+    marginTop = styleMarginUngrouped({
+      v,
+      device,
+      state,
+      current: "marginTop"
+    });
+    marginTopSuffix = styleMarginUngroupedSuffix({
+      v,
+      device,
+      state,
+      current: "marginTopSuffix"
+    });
+  }
+
+  if (!validation(marginTop)) {
+    return "";
+  } else if (marginTop < 0) {
+    let height = toolbarSpacing + -marginTop;
+
+    if (marginTopSuffix === "%") {
+      // need rapport percentage to px
+      const section = document.querySelector(`[data-uid="${v._id}"]`);
+      const sectionWidth = section.getBoundingClientRect().width;
+      height = toolbarSpacing + (sectionWidth / 100) * -marginTop;
+    }
+
+    return `grid-template-rows: minmax(calc(100% - 42px), ${height}px) 42px;`;
+  }
+
+  return `grid-template-rows: minmax(calc(100% - 42px), ${toolbarSpacing}px) 42px;`;
 }

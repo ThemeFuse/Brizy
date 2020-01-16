@@ -4,7 +4,7 @@ export default {
   getItems
 };
 
-function getItems(v, component) {
+function getItems() {
   return [
     {
       id: "main",

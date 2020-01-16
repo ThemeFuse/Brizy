@@ -7,19 +7,19 @@ export default {
   resolve: {
     type: "Wrapper",
     value: {
-      _styles: ["wrapper", "wrapper--iconText"],
+      _styles: ["wrapper", "wrapper--form2"],
       items: [
         {
-          type: "Form",
+          type: "Form2",
           value: {
-            _styles: ["form"],
+            _styles: ["form2"],
             items: [
               {
-                type: "FormFields",
+                type: "Form2Fields",
                 value: {
                   items: [
                     {
-                      type: "FormField",
+                      type: "Form2Field",
                       value: {
                         type: "Email",
                         label: "Email",
@@ -28,7 +28,7 @@ export default {
                       }
                     },
                     {
-                      type: "FormField",
+                      type: "Form2Field",
                       value: {
                         type: "Select",
                         label: "Select",
@@ -37,7 +37,7 @@ export default {
                       }
                     },
                     {
-                      type: "FormField",
+                      type: "Form2Field",
                       value: {
                         type: "Paragraph",
                         label: "Paragraph",

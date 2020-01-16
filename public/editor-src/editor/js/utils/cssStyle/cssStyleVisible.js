@@ -47,7 +47,7 @@ export function cssStyleVisibleEditorDisplayNoneOrFlex({
   });
 
   return IS_EDITOR && mode === "editor" && filter !== ""
-    ? `display:var(--elements-visibility, flex);`
+    ? "display:var(--elements-visibility, flex);"
     : "";
 }
 
@@ -64,7 +64,7 @@ export function cssStyleVisibleEditorDisplayNoneOrInlineFlex({
   });
 
   return IS_EDITOR && mode === "editor" && filter !== ""
-    ? `display:var(--elements-visibility, inline-flex);`
+    ? "display:var(--elements-visibility, inline-flex);"
     : "";
 }
 
@@ -81,7 +81,7 @@ export function cssStyleVisibleEditorDisplayNoneOrBlock({
   });
 
   return IS_EDITOR && mode === "editor" && filter !== ""
-    ? `display:var(--elements-visibility, block);`
+    ? "display:var(--elements-visibility, block);"
     : "";
 }
 

@@ -48,7 +48,7 @@ class ToolbarItems extends React.Component {
   };
 
   render() {
-    const { arrow, items, onMouseEnter, onMouseLeave } = this.props;
+    const { arrow, items, onClick, onMouseEnter, onMouseLeave } = this.props;
     const { itemsRenderer } = this.state;
     const filteredItems = filterOptionsData(items);
 
@@ -59,6 +59,7 @@ class ToolbarItems extends React.Component {
     return (
       <div
         className="brz-ed-toolbar"
+        onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >

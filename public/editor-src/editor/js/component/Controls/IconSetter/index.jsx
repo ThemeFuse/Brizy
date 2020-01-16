@@ -81,7 +81,7 @@ export default class IconSetter extends React.Component {
 
     return (
       <div className={className}>
-        {Boolean(name) ? this.renderIcon() : this.renderSelectIcon()}
+        {name ? this.renderIcon() : this.renderSelectIcon()}
       </div>
     );
   }

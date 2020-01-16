@@ -1,7 +1,7 @@
 import _ from "underscore";
 
 export default function mergeOptions(options1, options2) {
-  var merge = false;
+  let merge = false;
   // has columns
   for (let i = 0; i < options2.length; i++) {
     for (let j = 0; j < options1.length; j++) {
@@ -28,14 +28,14 @@ function canMergeOption(option1, option2) {
 }
 
 function mergeOption(option1, option2) {
-  for (var prop of ["columns", "options", "tabs"]) {
+  for (let prop of ["columns", "options", "tabs"]) {
     if (option1[prop] && option2[prop]) {
       option1[prop] = mergeOptions(option1[prop], option2[prop]);
       //option1[prop] = option1[prop].concat(option2[prop]);
     }
   }
 
-  for (var prop of ["disabled"]) {
+  for (let prop of ["disabled"]) {
     if (option2[prop]) {
       option1[prop] = option2[prop];
     }

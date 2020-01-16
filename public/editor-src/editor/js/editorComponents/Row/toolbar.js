@@ -1,7 +1,10 @@
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementContainerTypeAll,
@@ -40,7 +43,8 @@ import {
   toolbarSizeWidthSizePercent,
   toolbarElementRowColumnsHeightStyle,
   toolbarElementRowColumnsHeight,
-  toolbarVerticalAlign
+  toolbarVerticalAlign,
+  toolbarTags
 } from "visual/utils/toolbar";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
@@ -49,6 +53,7 @@ export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
+  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -914,13 +919,15 @@ export function getItems({ v, device, component }) {
                       v,
                       device,
                       devices: "desktop",
-                      state: "normal"
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarCSSID({
                       v,
                       device,
                       devices: "desktop",
-                      state: "normal"
+                      state: "normal",
+                      population: cssIDDynamicContentChoices
                     }),
                     toolbarEntranceAnimation({
                       v,
@@ -934,6 +941,11 @@ export function getItems({ v, device, component }) {
                       position: 60,
                       devices: "desktop",
                       state: "normal"
+                    }),
+                    toolbarTags({
+                      v,
+                      device,
+                      state: "normal"
                     })
                   ]
                 }
@@ -944,43 +956,63 @@ export function getItems({ v, device, component }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
+      id: dvk("toolbarSettings"),
+      type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
-      position: 110,
+      position: 100,
       devices: "responsive",
       options: [
-        toolbarPaddingFourFields({
-          v,
-          device,
-          state: "normal",
-          devices: "responsive"
-        }),
-        toolbarMargin({
+        toolbarSizeWidthSizePercent({
           v,
           device,
           state: "normal",
           devices: "responsive",
-          disabled: inPopup,
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
+          min: 40,
+          max: 100,
+          disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP
         }),
-        toolbarBorderRadius({
-          v,
-          device,
+        {
+          id: dvk("advancedSettings"),
+          type: "advancedSettings",
+          label: t("More Settings"),
+          sidebarLabel: t("More Settings"),
+          icon: "nc-cog",
+          title: t("Settings"),
+          position: 110,
           devices: "responsive",
-          state: "normal",
-          onChangeGrouped: [
-            "onChangeBorderRadiusGrouped",
-            "onChangeBorderRadiusGroupedDependencies"
-          ],
-          onChangeUngrouped: [
-            "onChangeBorderRadiusUngrouped",
-            "onChangeBorderRadiusUngroupedDependencies"
+          options: [
+            toolbarPaddingFourFields({
+              v,
+              device,
+              state: "normal",
+              devices: "responsive"
+            }),
+            toolbarMargin({
+              v,
+              device,
+              state: "normal",
+              devices: "responsive",
+              disabled: inPopup,
+              onChangeGrouped: ["onChangeMarginGrouped"],
+              onChangeUngrouped: ["onChangeMarginUngrouped"]
+            }),
+            toolbarBorderRadius({
+              v,
+              device,
+              devices: "responsive",
+              state: "normal",
+              onChangeGrouped: [
+                "onChangeBorderRadiusGrouped",
+                "onChangeBorderRadiusGroupedDependencies"
+              ],
+              onChangeUngrouped: [
+                "onChangeBorderRadiusUngrouped",
+                "onChangeBorderRadiusUngroupedDependencies"
+              ]
+            })
           ]
-        })
+        }
       ]
     }
   ];

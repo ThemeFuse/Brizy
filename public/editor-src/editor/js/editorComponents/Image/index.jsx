@@ -10,7 +10,7 @@ import Placeholder from "visual/component/Placeholder";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl, svgUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
@@ -28,7 +28,8 @@ import {
   wrapperStyleClassName,
   wrapperStyleCSSVars,
   imgStyleClassName,
-  imgStyleCSSVars
+  imgStyleCSSVars,
+  pictureStyleClassName
 } from "./styles";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
@@ -41,7 +42,8 @@ const resizerPoints = {
     "bottomCenter",
     "bottomRight"
   ],
-  gallery: ["bottomCenter"]
+  gallery: ["bottomCenter"],
+  svg: ["topLeft", "topRight", "bottomLeft", "bottomRight"]
 };
 
 const resizerTransformValue = v => {
@@ -72,6 +74,8 @@ const resizerTransformPatch = patch => {
 
   return patch;
 };
+
+const isSVG = extension => extension === "svg";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -264,22 +268,35 @@ class Image extends EditorComponent {
     };
   };
 
-  getImageOptions({ iW, iH, oX, oY, cW, cH }, imagePopulation, multiplier = 1) {
-    if (imagePopulation) {
-      return {
-        cW: cW * multiplier,
-        cH: cH * multiplier
-      };
-    }
+  getImageUrlsFor(wrapperSizes, device) {
+    const v = this.getValue();
+    const { desktopW } = this.props.meta;
+
+    const { width: cW, height: cH } = wrapperSizes[device];
+
+    const imageSizes = this.getImageSizes(v, desktopW);
+    let { width: iW, height: iH, marginLeft: oX, marginTop: oY } = imageSizes[
+      device
+    ];
+
+    oX = Math.abs(oX);
+    oY = Math.abs(oY);
+
+    const urlFn = v.imagePopulation ? imagePopulationUrl : imageUrl;
+    const src = v.imagePopulation ? v.imagePopulation : v.imageSrc;
+    const options = v.imagePopulation ? { cW, cH } : { iW, iH, oX, oY, cW, cH };
 
     return {
-      iW: iW * multiplier,
-      iH: iH * multiplier,
-      oX: oX * multiplier,
-      oY: oY * multiplier,
-      cW: cW * multiplier,
-      cH: cH * multiplier
+      source: urlFn(src, options),
+      url: `${urlFn(src, options)} 1x, ${urlFn(src, multiplier(options, 2))} 2x`
     };
+
+    function multiplier(data, num) {
+      return Object.entries(data).reduce((acc, [key, value]) => {
+        acc[key] = value * num;
+        return acc;
+      }, {});
+    }
   }
 
   renderPopups() {
@@ -320,6 +337,7 @@ class Image extends EditorComponent {
       imageWidth,
       imageHeight,
       imageSrc,
+      imageExtension,
       imagePopulation,
       positionX,
       positionY,
@@ -336,7 +354,7 @@ class Image extends EditorComponent {
       linkUpload,
       popups
     } = v;
-    const { desktopW, tabletW, mobileW, inGallery = false } = this.props.meta;
+    const { tabletW, mobileW, inGallery = false } = this.props.meta;
     const {
       containerWidth,
       maxDesktopContainerWidth,
@@ -346,51 +364,69 @@ class Image extends EditorComponent {
 
     const imageSizes = this.getImageSizes(v, containerWidth);
 
-    // Mobile
-    const mobileImageOptions = { iW: maxMobileContainerWidth, iH: "any" };
-    const mobileImageOptions2X = { iW: maxMobileContainerWidth * 2, iH: "any" };
-    const mobileSrcSet = `${imageUrl(
-      imageSrc,
-      mobileImageOptions
-    )} 1x, ${imageUrl(imageSrc, mobileImageOptions2X)} 2x`;
-
-    // Tablet
-    const tabletImageOptions = { iW: maxTabletContainerWidth, iH: "any" };
-    const tabletImageOptions2X = { iW: maxTabletContainerWidth * 2, iH: "any" };
-    const tabletSrcSet = `${imageUrl(
-      imageSrc,
-      tabletImageOptions
-    )} 1x, ${imageUrl(imageSrc, tabletImageOptions2X)} 2x`;
-
-    // Desktop
-    const desktopImageOptions = { iW: maxDesktopContainerWidth, iH: "any" };
-    const desktopImageOptions2X = {
-      iW: maxDesktopContainerWidth * 2,
-      iH: "any"
-    };
-    const desktopSrcSet = `${imageUrl(
-      imageSrc,
-      desktopImageOptions
-    )} 1x, ${imageUrl(imageSrc, desktopImageOptions2X)} 2x`;
-
     let content;
 
     if (imagePopulation) {
       content = <Placeholder icon="dynamic-img" />;
     } else if (imageSrc) {
-      content = (
-        <picture>
-          <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
-          <source srcSet={tabletSrcSet} media="(min-width: 768px)" />
+      if (isSVG(imageExtension)) {
+        content = (
           <img
             className={imgStyleClassName(v)}
-            style={imgStyleCSSVars(v, imageSizes)}
-            srcSet={mobileSrcSet}
-            src={imageUrl(imageSrc, mobileImageOptions)}
+            src={svgUrl(imageSrc)}
             draggable={false}
+            loading="lazy"
           />
-        </picture>
-      );
+        );
+      } else {
+        // Mobile
+        const mobileImageOptions = { iW: maxMobileContainerWidth, iH: "any" };
+        const mobileImageOptions2X = {
+          iW: maxMobileContainerWidth * 2,
+          iH: "any"
+        };
+        const mobileSrcSet = `${imageUrl(
+          imageSrc,
+          mobileImageOptions
+        )} 1x, ${imageUrl(imageSrc, mobileImageOptions2X)} 2x`;
+
+        // Tablet
+        const tabletImageOptions = { iW: maxTabletContainerWidth, iH: "any" };
+        const tabletImageOptions2X = {
+          iW: maxTabletContainerWidth * 2,
+          iH: "any"
+        };
+        const tabletSrcSet = `${imageUrl(
+          imageSrc,
+          tabletImageOptions
+        )} 1x, ${imageUrl(imageSrc, tabletImageOptions2X)} 2x`;
+
+        // Desktop
+        const desktopImageOptions = { iW: maxDesktopContainerWidth, iH: "any" };
+        const desktopImageOptions2X = {
+          iW: maxDesktopContainerWidth * 2,
+          iH: "any"
+        };
+        const desktopSrcSet = `${imageUrl(
+          imageSrc,
+          desktopImageOptions
+        )} 1x, ${imageUrl(imageSrc, desktopImageOptions2X)} 2x`;
+
+        content = (
+          <picture className="brz-picture">
+            <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
+            <source srcSet={tabletSrcSet} media="(min-width: 768px)" />
+            <img
+              className={imgStyleClassName(v)}
+              style={imgStyleCSSVars(v, imageSizes)}
+              srcSet={mobileSrcSet}
+              src={imageUrl(imageSrc, mobileImageOptions)}
+              draggable={false}
+              loading="lazy"
+            />
+          </picture>
+        );
+      }
     } else {
       content = <Placeholder icon="img" />;
     }
@@ -403,6 +439,8 @@ class Image extends EditorComponent {
       upload: linkUpload,
       lightBox: imagePopulation
         ? imagePopulationUrl(imagePopulation)
+        : isSVG(imageExtension)
+        ? svgUrl(imageSrc)
         : imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
     if (linkHrefs[linkType] !== "") {
@@ -476,9 +514,13 @@ class Image extends EditorComponent {
         max: getMaxSize()
       }
     };
-    const resizerPoints_ = inGallery
-      ? resizerPoints.gallery
-      : resizerPoints.default;
+
+    let resizerPoints_ = resizerPoints.default;
+    if (inGallery) {
+      resizerPoints_ = resizerPoints.gallery;
+    } else if (isSVG(imageExtension)) {
+      resizerPoints_ = resizerPoints.svg;
+    }
 
     return (
       <Fragment>
@@ -525,6 +567,7 @@ class Image extends EditorComponent {
       imagePopulation,
       imageWidth,
       imageHeight,
+      imageExtension,
       imageSrc,
       linkAnchor,
       linkExternalBlank,
@@ -556,114 +599,15 @@ class Image extends EditorComponent {
         height: mobileSyncOnChange(v, "height")
       })
     };
-    const imageSizes = this.getImageSizes(v, desktopW);
 
-    // Desktop
-    const { width: cW, height: cH } = wrapperSizes.desktop;
-    let {
-      width: iW,
-      height: iH,
-      marginLeft: oX,
-      marginTop: oY
-    } = imageSizes.desktop;
-
-    oX = Math.abs(oX);
-    oY = Math.abs(oY);
-    const options = { iW, iH, oX, oY, cW, cH };
-    const imageOptions = this.getImageOptions(options, imagePopulation);
-    const imageOptions2X = this.getImageOptions(options, imagePopulation, 2);
-
-    // Tablet
-    const { width: tCW, height: tCH } = wrapperSizes.tablet;
-    let {
-      width: tIW,
-      height: tIH,
-      marginLeft: tOX,
-      marginTop: tOY
-    } = imageSizes.tablet;
-
-    tOX = Math.abs(tOX);
-    tOY = Math.abs(tOY);
-    const tOptions = {
-      iW: tIW,
-      iH: tIH,
-      oX: tOX,
-      oY: tOY,
-      cW: tCW,
-      cH: tCH
-    };
-    const tabletImageOptions = this.getImageOptions(tOptions, imagePopulation);
-    const tabletImageOptions2X = this.getImageOptions(
-      tOptions,
-      imagePopulation,
-      2
+    const { source: sourceSrc, url: desktopSrc } = this.getImageUrlsFor(
+      wrapperSizes,
+      "desktop"
     );
 
-    // Mobile
-    const { width: mCW, height: mCH } = wrapperSizes.mobile;
-    let {
-      width: mIW,
-      height: mIH,
-      marginLeft: mOX,
-      marginTop: mOY
-    } = imageSizes.mobile;
+    const { url: tabletSrc } = this.getImageUrlsFor(wrapperSizes, "tablet");
 
-    mOX = Math.abs(mOX);
-    mOY = Math.abs(mOY);
-    const mOptions = {
-      iW: mIW,
-      iH: mIH,
-      oX: mOX,
-      oY: mOY,
-      cW: mCW,
-      cH: mCH
-    };
-    const mobileImageOptions = this.getImageOptions(mOptions, imagePopulation);
-    const mobileImageOptions2X = this.getImageOptions(
-      mOptions,
-      imagePopulation,
-      2
-    );
-
-    let sourceSrcSet;
-    let desktopSrc;
-    let tabletSrc;
-    let mobileSrc;
-    if (imagePopulation) {
-      sourceSrcSet = `${imagePopulationUrl(
-        imagePopulation,
-        imageOptions
-      )} 1x, ${imagePopulationUrl(imagePopulation, imageOptions2X)} 2x`;
-
-      desktopSrc = imagePopulationUrl(imagePopulation, mobileImageOptions);
-
-      tabletSrc = `${imagePopulationUrl(
-        imagePopulation,
-        tabletImageOptions
-      )} 1x, ${imagePopulationUrl(imagePopulation, tabletImageOptions2X)} 2x`;
-
-      mobileSrc = `${imagePopulationUrl(
-        imagePopulation,
-        mobileImageOptions
-      )} 1x, ${imagePopulationUrl(imagePopulation, mobileImageOptions2X)} 2x`;
-    } else {
-      sourceSrcSet = `${imageUrl(imageSrc, imageOptions)} 1x, ${imageUrl(
-        imageSrc,
-        imageOptions2X
-      )} 2x`;
-
-      desktopSrc = imageUrl(imageSrc, mobileImageOptions);
-
-      tabletSrc = `${imageUrl(imageSrc, tabletImageOptions)} 1x, ${imageUrl(
-        imageSrc,
-        tabletImageOptions2X
-      )} 2x`;
-
-      mobileSrc = `${imageUrl(imageSrc, mobileImageOptions)} 1x, ${imageUrl(
-        imageSrc,
-        mobileImageOptions2X
-      )} 2x`;
-    }
+    const { url: mobileSrc } = this.getImageUrlsFor(wrapperSizes, "mobile");
 
     let content;
     if (imagePopulation || imageSrc) {
@@ -672,18 +616,33 @@ class Image extends EditorComponent {
         ? this.getExtraImageProps(v)
         : {};
 
-      content = (
-        <picture>
-          <source srcSet={sourceSrcSet} media="(min-width: 992px)" />
-          <source srcSet={tabletSrc} media="(min-width: 768px)" />
-          <img
-            {...extraImgProps}
-            className="brz-img"
-            src={desktopSrc}
-            srcSet={mobileSrc}
-          />
-        </picture>
-      );
+      if (isSVG(imageExtension) && !imagePopulation) {
+        content = (
+          <picture className={pictureStyleClassName(wrapperSizes)}>
+            {" "}
+            <img
+              {...extraImgProps}
+              className="brz-img brz-p-absolute"
+              src={svgUrl(imageSrc)}
+              loading="lazy"
+            />
+          </picture>
+        );
+      } else {
+        content = (
+          <picture className={pictureStyleClassName(wrapperSizes)}>
+            <source srcSet={desktopSrc} media="(min-width: 992px)" />
+            <source srcSet={tabletSrc} media="(min-width: 768px)" />
+            <img
+              {...extraImgProps}
+              className="brz-img brz-p-absolute"
+              src={sourceSrc}
+              srcSet={mobileSrc}
+              loading="lazy"
+            />
+          </picture>
+        );
+      }
     } else {
       content = <Placeholder icon="img" />;
     }
@@ -696,6 +655,8 @@ class Image extends EditorComponent {
       upload: linkUpload,
       lightBox: imagePopulation
         ? imagePopulationUrl(imagePopulation)
+        : isSVG(imageExtension)
+        ? svgUrl(imageSrc)
         : imageUrl(imageSrc, { iW: 1200, iH: "any" })
     };
     if (linkHrefs[linkType] !== "") {

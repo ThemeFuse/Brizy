@@ -9,14 +9,6 @@ export default itemIndex => ({
 const os = detectOS();
 const isMac = os === "MacOS";
 
-const getKeyModifier = isInSubMenu => {
-  if (isMac) {
-    return isInSubMenu ? "Alt" : "⌘";
-  } else {
-    return isInSubMenu ? "Alt" : "Ctrl";
-  }
-};
-
 const getItems = itemIndex => (v, component) => {
   const copiedElement = component.getCurrentCopiedElement();
 

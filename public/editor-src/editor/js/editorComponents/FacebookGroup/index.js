@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import { style } from "./styles";

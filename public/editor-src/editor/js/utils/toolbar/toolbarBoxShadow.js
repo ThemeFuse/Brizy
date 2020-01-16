@@ -5,66 +5,49 @@ import {
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarBoxShadow2({
   v,
   device,
   state,
-  devices = "all",
-  choices = "all",
+  states,
   onChangeType,
   onChangeHex,
-  onChangePalette
+  onChangePalette,
+  prefix = "",
+  devices = "all",
+  choices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const { hex } = getOptionColorHexByPalette(
-    dvv("boxShadowColorHex"),
-    dvv("boxShadowColorPalette")
-  );
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const colorHex = capByPrefix(boxShadow, "colorHex");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
+  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
 
   const choicesAll = [
-    {
-      title: t("None"),
-      value: ""
-    },
-    {
-      title: t("Inset"),
-      value: "inset"
-    },
-    {
-      title: t("Outset"),
-      value: "on"
-    }
+    { title: t("None"), value: "" },
+    { title: t("Inset"), value: "inset" },
+    { title: t("Outset"), value: "on" }
   ];
 
   const choicesInset = [
-    {
-      title: t("None"),
-      value: ""
-    },
-    {
-      title: t("Inset"),
-      value: "inset"
-    }
+    { title: t("None"), value: "" },
+    { title: t("Inset"), value: "inset" }
   ];
 
   const choicesOutset = [
-    {
-      title: t("None"),
-      value: ""
-    },
-    {
-      title: t("Outset"),
-      value: "on"
-    }
+    { title: t("None"), value: "" },
+    { title: t("Outset"), value: "on" }
   ];
 
   return {
-    id: dvk("boxShadow"),
-    type: "colorPicker2",
     devices,
+    states,
+    id: dvk(boxShadow),
+    type: "colorPicker2",
     select: {
       choices:
         choices === "all"
@@ -75,9 +58,9 @@ export function toolbarBoxShadow2({
     },
     value: {
       hex,
-      opacity: dvv("boxShadowColorOpacity"),
-      palette: dvv("boxShadowColorPalette"),
-      select: dvv("boxShadow")
+      opacity: dvv(colorOpacity),
+      palette: dvv(colorPalette),
+      select: dvv(boxShadow)
     },
     onChange: ({
       hex,
@@ -88,39 +71,18 @@ export function toolbarBoxShadow2({
       opacityDragEnd
     }) => {
       const valuesBoxShadowType = {
-        ...{ v, device, state, onChange: onChangeType },
-        ...{
-          boxShadowType,
-          isChanged
-        }
+        ...{ v, device, state, prefix, onChange: onChangeType },
+        ...{ boxShadowType, isChanged }
       };
 
       const valuesBoxShadowHex = {
-        ...{
-          v,
-          device,
-          state,
-          onChange: onChangeHex
-        },
-        ...{
-          hex,
-          opacity,
-          isChanged,
-          opacityDragEnd
-        }
+        ...{ v, device, state, prefix, onChange: onChangeHex },
+        ...{ hex, opacity, isChanged, opacityDragEnd }
       };
 
       const valuesBoxShadowPalette = {
-        ...{
-          v,
-          device,
-          state,
-          onChange: onChangePalette
-        },
-        ...{
-          opacity,
-          palette
-        }
+        ...{ v, device, state, prefix, onChange: onChangePalette },
+        ...{ opacity, palette }
       };
 
       return isChanged === "select"
@@ -136,28 +98,32 @@ export function toolbarBoxShadowHexField2({
   v,
   device,
   state,
-  devices = "all",
-  onChange
+  states,
+  onChange,
+  prefix = "",
+  devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const { hex } = getOptionColorHexByPalette(
-    dvv("boxShadowColorHex"),
-    dvv("boxShadowColorPalette")
-  );
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const field = capByPrefix(boxShadow, "field");
+  const colorHex = capByPrefix(boxShadow, "colorHex");
+  const colorPalette = capByPrefix(boxShadow, "colorPalette");
+  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
+  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
 
   return {
-    id: dvk("boxShadowColorField"),
-    type: "colorFields",
     devices,
+    id: dvk(field),
+    type: "colorFields",
+    states,
     value: {
       hex,
-      opacity: dvv("boxShadowColorOpacity")
+      opacity: dvv(colorOpacity)
     },
     onChange: ({ hex }) => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{ hex }
       };
 
@@ -170,26 +136,30 @@ export function toolbarBoxShadowFields2({
   v,
   device,
   state,
-  devices = "all",
-  onChange
+  states,
+  onChange,
+  prefix = "",
+  devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const boxShadow = capByPrefix(prefix, "boxShadow");
+  const fields = capByPrefix(boxShadow, "fields");
+  const blur = capByPrefix(boxShadow, "blur");
+  const spread = capByPrefix(boxShadow, "spread");
+  const vertical = capByPrefix(boxShadow, "vertical");
+  const horizontal = capByPrefix(boxShadow, "horizontal");
 
   return {
-    id: dvk("boxShadowFields"),
-    type: "multiInput",
     devices,
+    states,
+    id: dvk(fields),
+    type: "multiInput",
     config: {
       defaultIcon: ["nc-shadow"],
       icons: ["nc-blur", "nc-size", "nc-vertical", "nc-horizontal"]
     },
-    value: [
-      dvv("boxShadowBlur"),
-      dvv("boxShadowSpread"),
-      dvv("boxShadowVertical"),
-      dvv("boxShadowHorizontal")
-    ],
+    value: [dvv(blur), dvv(spread), dvv(vertical), dvv(horizontal)],
     onChange: ([
       boxShadowBlur,
       boxShadowSpread,
@@ -197,7 +167,7 @@ export function toolbarBoxShadowFields2({
       boxShadowHorizontal
     ]) => {
       const values = {
-        ...{ v, device, state, onChange },
+        ...{ v, device, state, prefix, onChange },
         ...{
           boxShadowBlur,
           boxShadowSpread,

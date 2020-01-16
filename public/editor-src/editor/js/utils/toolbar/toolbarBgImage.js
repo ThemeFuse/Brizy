@@ -35,12 +35,16 @@ export function toolbarBgImage({
       src: dvv("bgImageSrc"),
       x: dvv("bgPositionX"),
       y: dvv("bgPositionY"),
+      extension: dvv("bgImageExtension"),
       population: dvv("bgPopulation")
     },
-    onChange: ({ width, height, src, x, y, population }, { isChanged }) => {
+    onChange: (
+      { width, height, src, x, y, population, extension },
+      { isChanged }
+    ) => {
       const values = {
         ...{ v, device, state, onChange },
-        ...{ width, height, src, x, y, population, isChanged }
+        ...{ width, height, src, x, y, population, extension, isChanged }
       };
 
       return saveOnChanges(values);

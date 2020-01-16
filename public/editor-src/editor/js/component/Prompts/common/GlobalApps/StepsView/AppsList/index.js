@@ -16,29 +16,33 @@ class AppList extends Component {
   static defaultProps = {
     apps: [],
     height: "100%",
-    proExceptions: false
+    proExceptions: false,
+    error: null
   };
 
   state = {
     loadingApp: "",
-    error: null,
     onConnectApp: _.noop
   };
+
+  componentDidUpdate(nextProps) {
+    if (this.props.error !== nextProps.error && this.state.loadingApp) {
+      this.setState({ loadingApp: "" });
+    }
+  }
 
   handleChangeApp(appData) {
     const { onConnectApp } = this.context;
 
     onConnectApp(appData);
 
-    this.setState({
-      loadingApp: appData.id
-    });
+    this.setState({ loadingApp: appData.id });
   }
 
   renderError() {
     return (
       <div className="brz-ed-alert brz-ed-alert-error">
-        <span className="brz-span">{this.state.error}</span>
+        <span className="brz-span">{this.props.error}</span>
       </div>
     );
   }
@@ -51,6 +55,7 @@ class AppList extends Component {
         </span>
         <a
           className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
+          rel="noopener noreferrer"
           href={ConfigUrls.upgradeToPro}
           target="_blank"
         >
@@ -62,9 +67,9 @@ class AppList extends Component {
   }
 
   render() {
-    const { apps, height, proExceptions } = this.props;
+    const { apps, height, proExceptions, error } = this.props;
     const { connectedApps } = this.context;
-    const { loadingApp, error } = this.state;
+    const { loadingApp } = this.state;
 
     return (
       <Scrollbars style={{ height }}>

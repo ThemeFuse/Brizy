@@ -1,4 +1,5 @@
 import React from "react";
+import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -15,6 +16,10 @@ class Form extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
+
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
       allowExtend: false,
@@ -27,9 +32,7 @@ class Form extends EditorComponent {
     e.preventDefault();
   };
 
-  renderForEdit(v) {
-    const action = Config.get("form").submitUrl;
-    const projectId = Config.get("project").id;
+  renderItems() {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
@@ -43,20 +46,53 @@ class Form extends EditorComponent {
       }
     });
 
+    return <EditorArrayComponent {...itemsProps} />;
+  }
+
+  renderForEdit(v) {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={styleClassName(v)} style={styleCSSVars(v)}>
+          <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
+            {this.renderItems(v)}
+          </form>
+        </div>
+      </CustomCSS>
+    );
+  }
+
+  renderForView(v) {
+    const { _id, messageSuccess, messageError, messageRedirect, customCSS } = v;
+    const { submitUrl, recaptcha } = Config.get("applications").form;
+    const projectId = Config.get("project").id;
+    const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
+        <div
+          className={styleClassName(v)}
+          style={styleCSSVars(v)}
+          data-form-version="1"
+        >
           <form
+            className="brz-form"
+            action={submitUrl}
             noValidate
-            action={action}
+            data-form-id={_id}
             data-project-id={projectId}
-            data-form-id={v._id}
-            data-success={v.messageSuccess}
-            data-error={v.messageError}
-            data-redirect={v.messageRedirect}
+            data-success={messageSuccess}
+            data-error={messageError}
+            data-redirect={messageRedirect}
             onSubmit={this.handleSubmit}
           >
-            <EditorArrayComponent {...itemsProps} />
+            {this.renderItems(v)}
+            {recaptchaSiteKey && (
+              <div
+                className="brz-g-recaptcha"
+                data-sitekey={recaptchaSiteKey}
+                data-size="invisible"
+              />
+            )}
           </form>
         </div>
       </CustomCSS>
