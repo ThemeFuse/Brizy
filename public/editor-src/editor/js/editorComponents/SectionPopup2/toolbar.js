@@ -102,33 +102,19 @@ export function getItems({ v, device, component }) {
       position: 80,
       options: [
         {
-          id: dvk("tabsState"),
+          id: dvk("tabsMedia"),
           type: "tabs",
           tabs: [
             {
-              id: dvk("tabNormal"),
+              id: dvk("tabMedia"),
+              label: t("Image"),
               options: [
-                {
-                  id: dvk("tabsMedia"),
-                  type: "tabs",
-                  tabs: [
-                    {
-                      id: dvk("tabMedia"),
-                      label: t("Image"),
-                      options: [
-                        toolbarBgImage({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBgImage",
-                            "onChangeBgImageBgOpacity"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
-                }
+                toolbarBgImage({
+                  v,
+                  device,
+                  state: "normal",
+                  onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
+                })
               ]
             }
           ]

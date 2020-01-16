@@ -1,6 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import CustomTag from "visual/component/CustomTag";
 import classnames from "classnames";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
@@ -106,7 +107,26 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  renderToolbar(_v) {
+  getAttributes = customAttributes => {
+    let myAttributes = customAttributes
+      .split(" ")
+      .join("")
+      .split(":")
+      .join(" ")
+      .split("\n")
+      .join(" ");
+
+    let atributesToObj = [];
+    let atributesToMas = myAttributes.split(" ");
+
+    for (let i = 0; i < atributesToMas.length; i += 2) {
+      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
+    }
+
+    return Object.assign({}, atributesToObj);
+  };
+
+  renderToolbar() {
     const { globalBlockId } = this.props.meta;
 
     return (
@@ -164,25 +184,30 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      customClassName,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-footer",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
         styleSection(v, vs, vd)
       )
     );
-
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <footer
           id={this.getId()}
           className={classNameSection}
           data-block-id={this.props.blockId}
+          {...this.getAttributes(customAttributes)}
         >
           <Roles
             allow={["admin"]}
@@ -199,12 +224,19 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      tagName,
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-footer",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
@@ -214,13 +246,19 @@ class SectionFooter extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <footer
-          id={v.anchorName || this.getId()}
+        <CustomTag
+          tagName={tagName}
+          id={
+            cssIDPopulation === ""
+              ? v.anchorName || this.getId()
+              : cssIDPopulation
+          }
           className={classNameSection}
           data-uid={this.getId()}
+          {...this.getAttributes(customAttributes)}
         >
           {this.renderItems(v, vs, vd)}
-        </footer>
+        </CustomTag>
       </CustomCSS>
     );
   }

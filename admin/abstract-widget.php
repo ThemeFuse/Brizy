@@ -20,7 +20,7 @@ abstract class Brizy_Admin_AbstractWidget {
 	 * @return string
 	 * @throws Exception
 	 */
-	private function internalGetId() {
+	protected function internalGetId() {
 		$id = $this->getId();
 
 		if ( empty( $id ) ) {

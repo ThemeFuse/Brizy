@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import _ from "underscore";
 
 class SelectOptgroup extends Component {
   static defaultProps = {

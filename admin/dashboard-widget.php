@@ -14,6 +14,20 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 		}
 	}
 
+	public function __construct() {
+		parent::__construct();
+
+		global $wp_meta_boxes;
+
+		$dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+		$widget_id = $this->internalGetId();
+		$ours      = [
+			$widget_id => $dashboard[ $widget_id ],
+		];
+
+		$wp_meta_boxes['dashboard']['normal']['core'] = array_merge( $ours, $dashboard );
+	}
+
 	/**
 	 * @return string
 	 */

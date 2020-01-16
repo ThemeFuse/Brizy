@@ -108,13 +108,7 @@ export function toolbarMarginGrouped({
   };
 }
 
-export function toolbarMarginUngrouped({
-  v,
-  device,
-  state,
-  marginType,
-  onChange
-}) {
+export function toolbarMarginUngrouped({ v, device, state, onChange }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 

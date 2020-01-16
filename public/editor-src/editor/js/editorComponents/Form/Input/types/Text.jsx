@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import TextField from "./common/TextField";
 import { t } from "visual/utils/i18n";
 
@@ -11,6 +11,6 @@ export default class Text extends TextField {
   }
 
   renderForEdit = props => {
-    return <input className="brz-input brz-form__field" {...props} />;
+    return <input className="brz-input brz-forms__field" {...props} />;
   };
 }

@@ -42,7 +42,7 @@ class Page extends EditorComponent {
     this.props.onChange(newValue);
   };
 
-  renderForEdit(v) {
+  renderForEdit() {
     const blocksProps = this.makeSubcomponentProps({
       bindWithKey: "items"
     });

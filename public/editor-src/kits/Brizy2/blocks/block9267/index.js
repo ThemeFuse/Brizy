@@ -119,8 +119,8 @@ module.exports = {
                                             "bgColorOpacity": 1,
                                             "bgColorHex": "#50912c",
                                             "tempBgColorOpacity": 1,
-                                            "hoverBgColorPalette": "color5",
-                                            "tempHoverBgColorPalette": "color5",
+                                            "hoverBgColorPalette": "color2",
+                                            "tempHoverBgColorPalette": "color2",
                                             "hoverBgColorOpacity": 1,
                                             "hoverBgColorHex": "#ff7700",
                                             "tempHoverBgColorOpacity": 1,
@@ -154,7 +154,13 @@ module.exports = {
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
                                             "borderColorOpacity": 0,
-                                            "borderColorPalette": ""
+                                            "borderColorPalette": "",
+                                            "colorPalette": "color8",
+                                            "tempColorPalette": "color8",
+                                            "colorOpacity": 1,
+                                            "hoverColorPalette": "color8",
+                                            "tempHoverColorPalette": "color8",
+                                            "hoverColorOpacity": 1
                                         }
                                     }
                                 ],

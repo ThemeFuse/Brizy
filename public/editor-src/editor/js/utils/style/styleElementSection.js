@@ -5,7 +5,7 @@ import { styleState } from "visual/utils/style";
 
 export function styleElementSectionContainerSize({ v }) {
   const { containerType, containerSize } = v;
-  return containerType === "boxed" ? `${containerSize}%` : `100%`;
+  return containerType === "boxed" ? `${containerSize}%` : "100%";
 }
 
 export function styleElementSectionBoxShadow({ v, device, state }) {

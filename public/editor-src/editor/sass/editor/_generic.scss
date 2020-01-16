@@ -7,11 +7,16 @@
     overflow: hidden;
   }
 }
-
 #brz-ed-home-page {
   width: 100%;
   min-height: 100vh;
   position: absolute;
+}
+
+// at .brz.brz-height
+&.brz-height--100vh,
+.brz-height--100vh {
+  height: 100vh !important;
 }
 
 // Scroll For Body

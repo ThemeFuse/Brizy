@@ -4,7 +4,8 @@ import {
   toolbarElementImageGallerySpacing,
   toolbarElementImageGalleryLightBox,
   toolbarDisabledToolbarSettings,
-  toolbarDisabledHorizontalAlign
+  toolbarDisabledHorizontalAlign,
+  toolbarCustomCSS
 } from "visual/utils/toolbar";
 import { defaultValueKey } from "visual/utils/onChange";
 
@@ -39,19 +40,37 @@ export function getItems({ v, device }) {
       icon: "nc-cog",
       options: [
         {
-          id: "settingsTabs",
+          id: defaultValueKey({ key: "settingsTabs", device, state: "normal" }),
           type: "tabs",
           align: "start",
           tabs: [
+            {
+              id: defaultValueKey({
+                key: "settingsStyling",
+                device,
+                state: "normal"
+              }),
+              label: t("Styling"),
+              tabIcon: "nc-styling",
+              options: []
+            },
             {
               id: defaultValueKey({
                 key: "moreSettingsAdvanced",
                 device,
                 state: "normal"
               }),
+              devices: "desktop",
               label: t("Advanced"),
               tabIcon: "nc-cog",
-              options: []
+              options: [
+                toolbarCustomCSS({
+                  v,
+                  device,
+                  state: "normal",
+                  devices: "desktop"
+                })
+              ]
             }
           ]
         }

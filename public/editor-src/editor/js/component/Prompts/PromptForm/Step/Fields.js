@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { replaceAt } from "timm";
 import { t } from "visual/utils/i18n";
-import { updateIntegration, getIntegrationFields } from "../api";
+import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { SelectFields } from "../../common/GlobalApps/StepsView";
 import {
@@ -31,25 +31,6 @@ class Fields extends Component {
     };
   }
 
-  static async onBeforeLoad(context) {
-    const {
-      app: { data: appData },
-      formId,
-      onChange,
-      onError
-    } = context;
-    let { data, status } = await getIntegrationFields({
-      appId: appData.id,
-      formId
-    });
-
-    if (status !== 200) {
-      onError(t("Something went wrong"));
-    } else {
-      onChange(appData.id, { ...appData, fields: data });
-    }
-  }
-
   handleActive = (id, target) => {
     const { formFields } = this.state;
     const index = formFields.findIndex(({ sourceId }) => sourceId === id);
@@ -73,7 +54,7 @@ class Fields extends Component {
 
   handleNext = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeNext
@@ -95,12 +76,10 @@ class Fields extends Component {
       });
     } else {
       const { status, data } = await updateIntegration({
+        ...appData,
         formId,
-        body: {
-          ...appData,
-          fieldsMap: formFields,
-          completed: true
-        }
+        fieldsMap: JSON.stringify(formFields),
+        completed: true
       });
 
       if (status !== 200) {
@@ -109,7 +88,7 @@ class Fields extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(appData.id, { ...appData, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     }

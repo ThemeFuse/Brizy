@@ -1,0 +1,139 @@
+// --- Form Filed cursor on Editor
+.brz-forms2 {
+  .brz-input,
+  .brz-textarea {
+    cursor: default;
+
+    &.brz-ed-dd-cancel {
+      cursor: text;
+    }
+  }
+  &__field-label .brz-input {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: inherit;
+  }
+
+  // Select
+  &__select {
+    position: relative;
+  }
+  &__select-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+
+    .brz-span {
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+  &__select-list {
+    border-top-width: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: z("forms-select");
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+  }
+  &__select-item {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 0;
+
+    &__input {
+      height: 47px;
+      flex: 1 1 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+      font-size: 16px;
+      line-height: 1;
+      font-family: inherit;
+      font-weight: inherit;
+
+      .brz-input {
+        border-width: 0;
+        height: 100%;
+        width: 100%;
+        color: inherit;
+
+        @include placeholder {
+          color: inherit;
+          font-style: italic;
+        }
+        &.brz-input {
+          cursor: text;
+          outline: none;
+          background: inherit;
+        }
+      }
+    }
+    &__icon {
+      flex-basis: 52px;
+      text-align: center;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: 0.2s linear opacity;
+    }
+    &__icon:hover {
+      opacity: 1;
+      transition: 0.2s linear opacity;
+    }
+  }
+  &__select--arrow {
+    font-size: 14px;
+  }
+
+  // Radio | Checkbox
+  &__checkbox,
+  &__radio {
+    border-color: transparent;
+  }
+  &__checkbox-option,
+  &__radio-option {
+    position: relative;
+  }
+  &__checkbox-option-new .brz-input,
+  &__radio-option-new .brz-input {
+    line-height: 1.2;
+  }
+  &__checkbox-option-icon,
+  &__radio-option-icon {
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s linear opacity;
+  }
+  &__checkbox-option-icon:hover,
+  &__radio-option-icon:hover {
+    opacity: 1;
+    transition: 0.2s linear opacity;
+  }
+  &__radio-option-name,
+  &__checkbox-option-name {
+    position: relative;
+
+    .brz-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

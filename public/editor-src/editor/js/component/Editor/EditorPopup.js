@@ -6,6 +6,10 @@ import { pageBlocksSelector } from "visual/redux/selectors";
 import { updateBlocks } from "visual/redux/actions";
 
 class EditorPopup extends Component {
+  componentDidMount() {
+    document.body.classList.add("brz-ow-hidden", "brz-height--100vh");
+  }
+
   handlePageChange = ({ items: blocks }, meta) => {
     this.props.reduxDispatch(updateBlocks({ blocks, meta }));
   };

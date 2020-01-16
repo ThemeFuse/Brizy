@@ -418,6 +418,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$result[] = (object) array(
 				'ID'              => $post->ID,
+				'uid'             => $this->create_uid( $post->ID ),
 				'post_type'       => $post->post_type,
 				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
 				'title'           => apply_filters( 'the_title', $post->post_title )
@@ -427,6 +428,18 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		remove_filter( 'posts_where', 'brizy_post_title_filter', 10 );
 
 		return $result;
+	}
+
+	private function create_uid( $postId ) {
+
+		$uid = get_post_meta( $postId, 'brizy_post_uid', true );
+
+		if ( ! $uid ) {
+			$uid = md5( $postId . time() );
+			update_post_meta( $postId, 'brizy_post_uid', $uid );
+		}
+
+		return $uid;
 	}
 
 	public function brizy_post_title_filter( $where, $wp_query = null ) {

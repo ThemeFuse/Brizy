@@ -60,13 +60,19 @@ export function persistentRequest(ajaxSettings) {
         resolve(data);
       },
       error(jqXHR) {
-        this.failedAttempts++;
-        window.onbeforeunload = this.onbeforeunload;
+        const status = jqXHR.status;
 
-        if (this.failedAttempts <= 5) {
-          setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
-        } else {
-          reject(jqXHR);
+        // 0   - offline
+        // 503 - service unavailable
+        if (status === 0 || status === 503) {
+          this.failedAttempts++;
+          window.onbeforeunload = this.onbeforeunload;
+
+          if (this.failedAttempts <= 5) {
+            setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
+          } else {
+            reject(jqXHR);
+          }
         }
       }
     });
@@ -166,11 +172,10 @@ export function createPage(data, meta = {}) {
 }
 
 export function updatePage(page, meta = {}) {
-  const { id, data, is_index, status } = stringifyPage(page);
+  const { id, data, status } = stringifyPage(page);
   const { is_autosave = 1 } = meta;
   const requestData = {
     data,
-    is_index,
     status,
     is_autosave
   };

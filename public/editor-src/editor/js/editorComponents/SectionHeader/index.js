@@ -144,6 +144,25 @@ class SectionHeader extends EditorComponent {
     return v.type === "fixed" ? { height: this.state.height } : null;
   }
 
+  getAttributes = customAttributes => {
+    let myAttributes = customAttributes
+      .split(" ")
+      .join("")
+      .split(":")
+      .join(" ")
+      .split("\n")
+      .join(" ");
+
+    let atributesToObj = [];
+    let atributesToMas = myAttributes.split(" ");
+
+    for (let i = 0; i < atributesToMas.length; i += 2) {
+      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
+    }
+
+    return Object.assign({}, atributesToObj);
+  };
+
   renderAnimated({ v, vs, vd }) {
     let sticky = (
       <Sticky
@@ -249,11 +268,17 @@ class SectionHeader extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      customClassName,
+      cssClassPopulation,
+      customAttributes
+    } = v;
+
     const classNameSection = classnames(
       "brz-section brz-section__header",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -267,6 +292,7 @@ class SectionHeader extends EditorComponent {
         className={classNameSection}
         style={this.getStyle(v)}
         ref={this.sectionNode}
+        {...this.getAttributes(customAttributes)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
@@ -274,11 +300,18 @@ class SectionHeader extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes
+    } = v;
+
     const classNameSection = classnames(
       "brz-section brz-section__header",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -288,9 +321,14 @@ class SectionHeader extends EditorComponent {
 
     return (
       <section
-        id={v.anchorName || this.getId()}
+        id={
+          cssIDPopulation === ""
+            ? v.anchorName || this.getId()
+            : cssIDPopulation
+        }
         className={classNameSection}
         data-uid={this.getId()}
+        {...this.getAttributes(customAttributes)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="87px" height="74px" viewBox="0 0 87 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Brizy logo</title>
+    <g id="Brizy-logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(5.000000, 5.000000)">
+            <path d="M0,23.3212886 L38.4152832,3.55271368e-15 L76.8305664,23.3212886 L38.4152832,46.6425772 L0,23.3212886 Z M13.7901017,23.8765574 L38.4152832,38.8688143 L63.0404647,23.8765574 L38.4152832,8.88430041 L13.7901017,23.8765574 Z" id="Top-element" fill="#181C25" fill-rule="nonzero"></path>
+            <polygon id="Bottom-el" fill="#A7B2DD" points="0 40.1772962 6.88092406 36 38.4152832 55.1225586 70.1540838 36.124113 76.8305664 40.1772962 38.4152832 63.4985848"></polygon>
+        </g>
+    </g>
+</svg>

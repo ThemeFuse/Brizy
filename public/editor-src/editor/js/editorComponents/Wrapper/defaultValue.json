@@ -8,9 +8,15 @@
 
     "zIndex": 0,
 
+    "hoverZIndex": null,
+
     "showOnTablet": "on",
 
-    "showOnMobile": "on"
+    "tabletZIndex": null,
+
+    "showOnMobile": "on",
+
+    "mobileZIndex": null
   },
 
   "style": {
@@ -88,6 +94,10 @@
     "customClassName": "",
 
     "customID": "",
+
+    "cssIDPopulation": "",
+
+    "cssClassPopulation": "",
 
     "tabletHorizontalAlign": null,
 

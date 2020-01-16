@@ -1,4 +1,21 @@
-import { capitalize } from "visual/utils/string";
+import { camelCase, capitalize } from "visual/utils/string";
+import { defaultMode, toMode } from "visual/utils/responsiveMode";
+import { defaultState, valueToState } from "visual/utils/stateMode";
+
+/**
+ * Returns default device
+ *
+ * @return {string}
+ */
+export const defaultDevice = () => "desktop";
+
+/**
+ * Check if the device is the default device;
+ *
+ * @param {string} device
+ * @return {boolean}
+ */
+export const isDefault = device => device === defaultDevice();
 
 function syncOnChange(device, v, key) {
   const capKey =
@@ -33,6 +50,31 @@ export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
     : key;
 }
 
+/**
+ * Create model key based on device and state
+ *  - Always prefix the id is with device|state keys
+ *  - If the device is equal with default responsive mode it does not prefix
+ *  - If the state is equal with default state it does not prefix
+ *  - The result key is a  string in camelCase style
+ *  - The prefixes are added in this strict order: {state}{device}{key} => "stateDeviceKey"
+ *
+ *  Note: It is similar to `defaultValueKey`, the difference is that it does treat `temp` prefixes
+ *
+ * @param {string} key
+ * @param {string} device
+ * @param {string} state
+ * @returns {string}
+ */
+export function defaultValueKey2({ key, device, state }) {
+  const _state = valueToState(state);
+  const _device = toMode(device);
+
+  const statePrefix = _state === defaultState() ? "" : _state;
+  const devicePrefix = _device === defaultMode() ? "" : _device;
+
+  return camelCase([statePrefix, devicePrefix, key]);
+}
+
 export function defaultValueValue({
   v,
   key,
@@ -40,6 +82,24 @@ export function defaultValueValue({
   state = "normal"
 }) {
   const deviceKey = defaultValueKey({ key, device, state });
+
+  return v[deviceKey] === null ? v[key] : v[deviceKey];
+}
+
+/**
+ * Returns specific value from model based on key, device and state
+ *  - If the result value from specifies device or state is null, return value from base original key
+ *
+ * Note: This is similar to `defaultValueValue`, but uses `defaultValueKey2` instead of `defaultValueKey`
+ *
+ * @param {object} v
+ * @param {string} key
+ * @param {string} device
+ * @param {string} state
+ * @returns {*}
+ */
+export function defaultValueValue2({ v, key, device, state }) {
+  const deviceKey = defaultValueKey2({ key, device, state });
 
   return v[deviceKey] === null ? v[key] : v[deviceKey];
 }

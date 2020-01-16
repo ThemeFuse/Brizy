@@ -6,13 +6,19 @@ import {
   styleBorderWidthUngrouped
 } from "visual/utils/style2";
 
-export function cssStyleBorder({ v, device, state, borderColor = "color" }) {
+export function cssStyleBorder({
+  v,
+  device,
+  state,
+  prefix = "",
+  borderColor = "color"
+}) {
   let r = "";
-  let borderWidthType = "";
   let borderTopWidth = 0;
   let borderRightWidth = 0;
   let borderBottomWidth = 0;
   let borderLeftWidth = 0;
+  let borderWidthType = styleBorderWidthType({ v, device, state, prefix });
 
   let hoverBorderWidthType = "";
   let hoverBorderTopWidth = 0;
@@ -24,106 +30,104 @@ export function cssStyleBorder({ v, device, state, borderColor = "color" }) {
   let hoverBorderStyle = "";
   let hoverBorderColor = "";
 
-  const borderStyle = styleBorderStyle({ v, device, state });
+  const borderStyle = styleBorderStyle({ v, device, state, prefix });
 
   borderColor =
     borderColor === "transparent"
       ? "transparent"
-      : styleBorderColor({
-          v,
-          device,
-          state
-        });
-
-  borderWidthType = styleBorderWidthType({ v, device, state });
+      : styleBorderColor({ v, device, state, prefix });
 
   if (borderWidthType === "grouped") {
-    borderTopWidth = borderRightWidth = borderBottomWidth = borderLeftWidth = styleBorderWidthGrouped(
-      {
-        v,
-        device,
-        state
-      }
-    );
+    const borderWidth = styleBorderWidthGrouped({ v, device, state, prefix });
+
+    borderTopWidth = borderWidth;
+    borderRightWidth = borderWidth;
+    borderBottomWidth = borderWidth;
+    borderLeftWidth = borderWidth;
   } else {
     borderTopWidth = styleBorderWidthUngrouped({
       v,
       device,
       state,
-      current: "borderTopWidth"
+      prefix,
+      current: "top"
     });
-
     borderRightWidth = styleBorderWidthUngrouped({
       v,
       device,
       state,
-      current: "borderRightWidth"
+      prefix,
+      current: "right"
     });
-
     borderBottomWidth = styleBorderWidthUngrouped({
       v,
       device,
       state,
-      current: "borderBottomWidth"
+      prefix,
+      current: "bottom"
     });
-
     borderLeftWidth = styleBorderWidthUngrouped({
       v,
       device,
       state,
-      current: "borderLeftWidth"
+      prefix,
+      current: "left"
     });
   }
 
   if (state === "normal") {
-    hoverBorderStyle = styleBorderStyle({ v, device, state: "hover" });
+    hoverBorderStyle = styleBorderStyle({ v, device, prefix, state: "hover" });
 
     hoverBorderColor =
       borderColor === "transparent"
         ? "transparent"
-        : styleBorderColor({
-            v,
-            device,
-            state: "hover"
-          });
-
-    hoverBorderWidthType = styleBorderWidthType({ v, device, state: "hover" });
+        : styleBorderColor({ v, device, prefix, state: "hover" });
+    hoverBorderWidthType = styleBorderWidthType({
+      v,
+      device,
+      prefix,
+      state: "hover"
+    });
 
     if (hoverBorderWidthType === "grouped") {
-      hoverBorderTopWidth = hoverBorderRightWidth = hoverBorderBottomWidth = hoverBorderLeftWidth = styleBorderWidthGrouped(
-        {
-          v,
-          device,
-          state: "hover"
-        }
-      );
+      const borderWidth = styleBorderWidthGrouped({
+        v,
+        device,
+        state: "hover"
+      });
+
+      hoverBorderTopWidth = borderWidth;
+      hoverBorderRightWidth = borderWidth;
+      hoverBorderBottomWidth = borderWidth;
+      hoverBorderLeftWidth = borderWidth;
     } else {
       hoverBorderTopWidth = styleBorderWidthUngrouped({
         v,
         device,
+        prefix,
         state: "hover",
-        current: "borderTopWidth"
+        current: "top"
       });
-
       hoverBorderRightWidth = styleBorderWidthUngrouped({
         v,
         device,
+        prefix,
         state: "hover",
-        current: "borderRightWidth"
+        current: "right"
       });
-
       hoverBorderBottomWidth = styleBorderWidthUngrouped({
         v,
         device,
+        prefix,
         state: "hover",
-        current: "borderBottomWidth"
+        current: "bottom"
       });
-
       hoverBorderLeftWidth = styleBorderWidthUngrouped({
         v,
         device,
+        prefix,
         state: "hover",
-        current: "borderLeftWidth"
+        current: "left"
       });
     }
     normalByHoverNoEmptyUngrouped =
@@ -179,7 +183,8 @@ export function cssStyleBorderTransparentColor({
   v,
   device,
   state,
+  prefix = "",
   borderColor = "transparent"
 }) {
-  return cssStyleBorder({ v, device, state, borderColor });
+  return cssStyleBorder({ v, device, state, prefix, borderColor });
 }

@@ -2,7 +2,6 @@ import _ from "underscore";
 import * as types from "./types/index";
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarCustomCSS } from "visual/utils/toolbar";
 
 const getTypeChoices = _.map(types, item => {
   return {

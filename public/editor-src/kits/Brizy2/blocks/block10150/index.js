@@ -798,60 +798,13 @@ module.exports = {
                                                                                             "tempBoxShadowSpread": 0,
                                                                                             "tempBoxShadowVertical": 2,
                                                                                             "tempBoxShadowHorizontal": 1,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "strokeWidth": 1,
                                                                                             "customCSS": "",
-                                                                                            
                                                                                             "tabletCustomSize": 14,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "mobileCustomSize": 12,
-                                                                                            
                                                                                             "tempMobilePadding": 20,
-                                                                                            
-                                                                                            "tempMobileBorderRadius": 4,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                                                                                                                    }
+                                                                                            "tempMobileBorderRadius": 4
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "Icon",
@@ -968,59 +921,12 @@ module.exports = {
                                                                                             "tempBoxShadowSpread": 0,
                                                                                             "tempBoxShadowVertical": 2,
                                                                                             "tempBoxShadowHorizontal": 1,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "strokeWidth": 1,
                                                                                             "customCSS": "",
-                                                                                            
                                                                                             "tabletCustomSize": 14,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "tempMobilePadding": 20,
-                                                                                            
-                                                                                            "tempMobileBorderRadius": 4,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                                                                                                                    }
+                                                                                            "tempMobileBorderRadius": 4
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "Icon",
@@ -1137,59 +1043,12 @@ module.exports = {
                                                                                             "tempBoxShadowSpread": 0,
                                                                                             "tempBoxShadowVertical": 2,
                                                                                             "tempBoxShadowHorizontal": 1,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "strokeWidth": 1,
                                                                                             "customCSS": "",
-                                                                                            
                                                                                             "tabletCustomSize": 14,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "tempMobilePadding": 20,
-                                                                                            
-                                                                                            "tempMobileBorderRadius": 4,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                                                                                                                    }
+                                                                                            "tempMobileBorderRadius": 4
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "Icon",
@@ -1306,59 +1165,12 @@ module.exports = {
                                                                                             "tempBoxShadowSpread": 0,
                                                                                             "tempBoxShadowVertical": 2,
                                                                                             "tempBoxShadowHorizontal": 1,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "strokeWidth": 1,
                                                                                             "customCSS": "",
-                                                                                            
                                                                                             "tabletCustomSize": 14,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "tempMobilePadding": 20,
-                                                                                            
-                                                                                            "tempMobileBorderRadius": 4,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                                                                                                                    }
+                                                                                            "tempMobileBorderRadius": 4
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "Icon",
@@ -1475,59 +1287,12 @@ module.exports = {
                                                                                             "tempBoxShadowSpread": 0,
                                                                                             "tempBoxShadowVertical": 2,
                                                                                             "tempBoxShadowHorizontal": 1,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "strokeWidth": 1,
                                                                                             "customCSS": "",
-                                                                                            
                                                                                             "tabletCustomSize": 14,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
                                                                                             "tempMobilePadding": 20,
-                                                                                            
-                                                                                            "tempMobileBorderRadius": 4,
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                                                                                                                    }
+                                                                                            "tempMobileBorderRadius": 4
+                                                                                        }
                                                                                     }
                                                                                 ],
                                                                                 "itemPadding": 4,

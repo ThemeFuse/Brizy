@@ -72,7 +72,7 @@ class SectionMegaMenu extends EditorComponent {
     };
   }
 
-  renderToolbar(_v) {
+  renderToolbar() {
     return (
       <CollapsibleToolbar
         {...this.makeToolbarPropsFromConfig(toolbarConfig)}

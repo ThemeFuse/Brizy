@@ -287,7 +287,7 @@ export function styleMenuClassName(v, hasMMenu) {
           fontSize: "var(--mMenuIconSize)"
         },
         "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
-          height: `calc(var(--mMenuLineHeight) * var(--mMenuFontSize) + 19px)`
+          height: "calc(var(--mMenuLineHeight) * var(--mMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item
@@ -341,7 +341,8 @@ export function styleMenuClassName(v, hasMMenu) {
           fontSize: "var(--tabletMMenuIconSize)"
         },
         "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
-          height: `calc(var(--tabletMMenuLineHeight) * var(--tabletMMenuFontSize) + 19px)`
+          height:
+            "calc(var(--tabletMMenuLineHeight) * var(--tabletMMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item
@@ -395,7 +396,8 @@ export function styleMenuClassName(v, hasMMenu) {
           fontSize: "var(--mobileMMenuIconSize)"
         },
         "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
-          height: `calc(var(--mobileMMenuLineHeight) * var(--mobileMMenuFontSize) + 19px)`
+          height:
+            "calc(var(--mobileMMenuLineHeight) * var(--mobileMMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item

@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-(function($, window, document) {
+(function($) {
   var pluginName = "countdown";
 
   function Plugin(settings) {

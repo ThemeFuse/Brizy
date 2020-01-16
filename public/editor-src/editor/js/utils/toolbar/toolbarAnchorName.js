@@ -9,7 +9,8 @@ export function toolbarAnchorName({
   device,
   devices = "all",
   position = 30,
-  state
+  state,
+  population
 }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const dvk = key => defaultValueKey({ key, device, state });
@@ -23,11 +24,17 @@ export function toolbarAnchorName({
     devices,
     helper: true,
     helperContent: helperHTML,
-    value: {
-      value: dvv("anchorName")
+    population: {
+      show: population.length > 0,
+      choices: population
     },
-    onChange: ({ value: anchorName }) => ({
-      [dvk("anchorName")]: anchorName
+    value: {
+      value: dvv("anchorName"),
+      population: dvv("cssIDPopulation")
+    },
+    onChange: ({ value: anchorName, population }) => ({
+      [dvk("anchorName")]: anchorName,
+      [dvk("cssIDPopulation")]: population
     })
   };
 }

@@ -12,6 +12,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgImageExtension": "",
 
     "brightness": 100,
     "hue": 0,
@@ -26,6 +27,7 @@
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
+    "hoverBgImageExtension": null,
 
     "hoverBrightness": null,
     "hoverHue": null,
@@ -40,6 +42,7 @@
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
+    "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -54,6 +57,7 @@
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
+    "mobileBgImageExtension": null,
 
     "mobileBrightness": null,
     "mobileHue": null,
@@ -62,7 +66,7 @@
   },
 
   "toolbar": {
-    "tabsState": "",
+    "tabsState": "",	
     "tabsColor": "",
 
     "tabletTabsState": null,

@@ -7,6 +7,8 @@ import { uuid } from "visual/utils/uuid";
 
 export default class RadioItem extends React.Component {
   static defaultProps = {
+    checkIcon: "check",
+    unCheckIcon: "uncheck",
     className: "",
     active: false,
     value: "",
@@ -15,7 +17,14 @@ export default class RadioItem extends React.Component {
   };
 
   renderForEdit() {
-    const { active, className: _className, children, onClick } = this.props;
+    const {
+      active,
+      className: _className,
+      checkIcon,
+      unCheckIcon,
+      children,
+      onClick
+    } = this.props;
     const className = classnames(
       "brz-control__radio-option",
       { "brz-control__radio-option--active": active },
@@ -29,7 +38,7 @@ export default class RadioItem extends React.Component {
       <div className={className} onClick={onClick}>
         <EditorIcon
           className={iconClassName}
-          icon={active ? "nc-check" : "nc-uncheck"}
+          icon={active ? `nc-${checkIcon}` : `nc-${unCheckIcon}`}
         />
         {children}
       </div>
@@ -42,6 +51,8 @@ export default class RadioItem extends React.Component {
       className: _className,
       value,
       name,
+      checkIcon,
+      unCheckIcon,
       required,
       children,
       onClick
@@ -71,12 +82,12 @@ export default class RadioItem extends React.Component {
           <ThemeIcon
             className="brz-control__radio-icon brz-control__radio--check"
             type="editor"
-            name="check"
+            name={checkIcon}
           />
           <ThemeIcon
             className="brz-control__radio-icon brz-control__radio--uncheck"
             type="editor"
-            name="uncheck"
+            name={unCheckIcon}
           />
           {children}
         </label>

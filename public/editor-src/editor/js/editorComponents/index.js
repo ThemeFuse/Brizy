@@ -7,10 +7,14 @@ import Column from "./Column";
 import Form from "./Form";
 import FormFields from "./Form/Item";
 import FormField from "./Form/Input/index";
+import Form2 from "./Form2";
+import Form2Fields from "./Form2/Form2Fields";
+import Form2Field from "./Form2/Form2Field";
 import Wrapper from "./Wrapper";
 import Cloneable from "./Cloneable";
 import RichText from "./RichText";
 import Video from "./Video";
+import Audio from "./Audio";
 import Icon from "./Icon";
 import Image from "./Image";
 import Line from "./Line";
@@ -24,7 +28,7 @@ import ProgressBar from "./ProgressBar";
 import IconText from "./IconText";
 import Countdown from "./Countdown";
 import Tabs from "./Tabs";
-import Tab from "./Tabs/Item";
+import Tab from "./Tabs/Tab";
 import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/Item";
 import SectionFooter from "./SectionFooter";
@@ -36,6 +40,7 @@ import ImageGallery from "./ImageGallery";
 import SectionPopup from "./SectionPopup";
 import SectionPopup2 from "./SectionPopup2";
 import Carousel from "./Carousel";
+import StarRating from "./StarRating";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 // import SectionMegaMenu from "./Menu/SectionMegaMenu";
@@ -59,9 +64,13 @@ export default {
   Form,
   FormFields,
   FormField,
+  Form2,
+  Form2Fields,
+  Form2Field,
   Wrapper,
   Cloneable,
   RichText,
+  Audio,
   Video,
   Icon,
   Image,
@@ -84,6 +93,7 @@ export default {
   SectionPopup,
   SectionPopup2,
   Carousel,
+  StarRating,
   Menu,
   MenuItem,
   // SectionMegaMenu

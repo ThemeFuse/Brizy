@@ -86,22 +86,22 @@ module.exports = {
                             "value": {
                                 "_styles": [
                                     "wrapper",
-                                    "wrapper--iconText"
+                                    "wrapper--form2"
                                 ],
                                 "items": [
                                     {
-                                        "type": "Form",
+                                        "type": "Form2",
                                         "value": {
                                             "_styles": [
-                                                "form"
+                                                "form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "FormFields",
+                                                    "type": "Form2Fields",
                                                     "value": {
                                                         "items": [
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
                                                                     "type": "Text",
                                                                     "label": "First Name",
@@ -110,11 +110,12 @@ module.exports = {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
+                                                                    "placeholder": "First Name",
                                                                     "width": 50
                                                                 }
                                                             },
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
                                                                     "type": "Text",
                                                                     "label": "Last Name",
@@ -123,11 +124,12 @@ module.exports = {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
+                                                                    "placeholder": "Last Name",
                                                                     "width": 50
                                                                 }
                                                             },
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
                                                                     "type": "Email",
                                                                     "label": "Email Address",
@@ -136,24 +138,26 @@ module.exports = {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
+                                                                    "placeholder": "Email Address",
                                                                     "width": 50
                                                                 }
                                                             },
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
-                                                                    "type": "Text",
+                                                                    "type": "Email",
                                                                     "label": "Subject",
                                                                     "required": "on",
                                                                     "options": [
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
+                                                                    "placeholder": "Subject",
                                                                     "width": 50
                                                                 }
                                                             },
                                                             {
-                                                                "type": "FormField",
+                                                                "type": "Form2Field",
                                                                 "value": {
                                                                     "type": "Paragraph",
                                                                     "label": "Write Your Message",
@@ -162,25 +166,55 @@ module.exports = {
                                                                         "Option 1",
                                                                         "Option 2"
                                                                     ],
+                                                                    "placeholder": "Write Your Message",
                                                                     "width": 100
                                                                 }
                                                             }
                                                         ],
-                                                        "borderColorHex": "#666666",
-                                                        "borderColorOpacity": 0.3,
-                                                        "borderColorPalette": "color7",
                                                         "fontStyle": "paragraph",
-                                                        "colorPalette": "color7",
-                                                        "colorHex": "#666666",
-                                                        "colorOpacity": 0.7,
-                                                        "padding": 30,
-                                                        "paddingRight": 30,
-                                                        "paddingBottom": 30,
-                                                        "paddingLeft": 30,
-                                                        "tabletPadding": 20,
-                                                        "tabletPaddingRight": 20,
-                                                        "tabletPaddingBottom": 20,
-                                                        "tabletPaddingLeft": 20
+                                                        "tabsState": "",
+                                                        "tabsColor": "",
+                                                        "colorPalette": "color2",
+                                                        "tempColorPalette": "color2",
+                                                        "colorOpacity": 0.51,
+                                                        "colorHex": "#1c1c1c",
+                                                        "tempColorOpacity": 0.51,
+                                                        "borderColorHex": "#1c1c1c",
+                                                        "borderColorOpacity": 0.2,
+                                                        "tempBorderColorOpacity": 0.2,
+                                                        "borderColorPalette": "color2",
+                                                        "tempBorderColorPalette": "color2",
+                                                        "borderStyle": "solid",
+                                                        "borderWidth": 1,
+                                                        "borderTopWidth": 1,
+                                                        "borderRightWidth": 1,
+                                                        "borderBottomWidth": 1,
+                                                        "borderLeftWidth": 1,
+                                                        "tempBorderTopWidth": 1,
+                                                        "tempBorderRightWidth": 1,
+                                                        "tempBorderBottomWidth": 1,
+                                                        "tempBorderLeftWidth": 1,
+                                                        "size": "small",
+                                                        "paddingTop": 10,
+                                                        "paddingRight": 20,
+                                                        "paddingBottom": 10,
+                                                        "paddingLeft": 20,
+                                                        "borderRadius": 5,
+                                                        "borderTopLeftRadius": 5,
+                                                        "borderTopRightRadius": 5,
+                                                        "borderBottomLeftRadius": 5,
+                                                        "borderBottomRightRadius": 5,
+                                                        "tempBorderRadius": 5,
+                                                        "tempBorderTopLeftRadius": 5,
+                                                        "tempBorderTopRightRadius": 5,
+                                                        "tempBorderBottomLeftRadius": 5,
+                                                        "tempBorderBottomRightRadius": 5,
+                                                        "tempBorderWidth": 1,
+                                                        "bgColorHex": "#ffffff",
+                                                        "bgColorOpacity": 0,
+                                                        "tempBgColorOpacity": 1,
+                                                        "bgColorPalette": "",
+                                                        "tempBgColorPalette": ""
                                                     }
                                                 },
                                                 {
@@ -190,10 +224,27 @@ module.exports = {
                                                             "button",
                                                             "submit"
                                                         ],
-                                                        "text": "\u00a0 \u00a0 \u00a0Send Message\u00a0 \u00a0 \u00a0",
+                                                        "text": "Send Message",
                                                         "iconName": "",
                                                         "iconType": "",
                                                         "iconPosition": "left",
+                                                        "tabsState": "",
+                                                        "tabsColor": "",
+                                                        "borderRadiusType": "custom",
+                                                        "tempBorderRadiusType": "custom",
+                                                        "paddingRight": 42,
+                                                        "paddingLeft": 42,
+                                                        "fillType": "filled",
+                                                        "borderRadius": 5,
+                                                        "borderWidth": 0,
+                                                        "borderColorOpacity": 0,
+                                                        "borderColorPalette": 0,
+                                                        "bgColorOpacity": 1,
+                                                        "bgColorPalette": "color3",
+                                                        "hoverBgColorOpacity": 1,
+                                                        "hoverBorderColorOpacity": 0.8,
+                                                        "tempBorderRadius": 5,
+                                                        "tempBorderWidth": 2,
                                                         "size": "medium",
                                                         "fontSize": 12,
                                                         "paddingTB": 14,
@@ -203,25 +254,10 @@ module.exports = {
                                                         "tempPaddingTop": 14,
                                                         "tempPaddingBottom": 14,
                                                         "paddingRL": 42,
-                                                        "paddingRight": 42,
-                                                        "paddingLeft": 42,
                                                         "tempPaddingRL": 42,
                                                         "tempPaddingRight": 42,
                                                         "tempPaddingLeft": 42,
-                                                        "borderRadius": 4,
-                                                        "borderWidth": 0,
-                                                        "borderRadiusType": "custom",
-                                                        "tempBorderRadiusType": "custom",
-                                                        "fillType": "filled",
-                                                        "borderColorOpacity": 0,
-                                                        "borderColorPalette": 0,
-                                                        "bgColorOpacity": 1,
-                                                        "bgColorPalette": "color3",
-                                                        "hoverBgColorOpacity": 1,
-                                                        "hoverBorderColorOpacity": 0,
-                                                        "tempBorderRadius": 4,
-                                                        "tempBorderWidth": 2,
-                                                        "hoverBgColorPalette": "color2",
+                                                        "hoverBgColorPalette": "color3",
                                                         "hoverBorderColorPalette": "",
                                                         "tempHoverBorderColorPalette": "",
                                                         "hoverBgColorHex": "#1c1c1c",
@@ -229,35 +265,56 @@ module.exports = {
                                                         "tempHoverBgColorPalette": "color3",
                                                         "hoverBorderColorHex": "#1c1c1c",
                                                         "colorPalette": "color2",
-                                                        "colorOpacity": 1
+                                                        "colorOpacity": 1,
+                                                        "hoverColorPalette": "color8",
+                                                        "hoverColorOpacity": 1
                                                     }
                                                 }
                                             ],
-                                            "horizontalAlign": "center"
+                                            "submitWidth": 20,
+                                            "padding": 25,
+                                            "paddingRight": 25,
+                                            "paddingBottom": 25,
+                                            "paddingLeft": 25,
+                                            "horizontalAlign": "right",
+                                            "tabletSubmitWidth": 30,
+                                            "mobileSubmitWidth": 100
                                         }
                                     }
                                 ],
                                 "paddingType": "ungrouped",
-                                "paddingRightSuffix": "px",
                                 "paddingRight": 100,
-                                "padding": 0,
+                                "paddingRightSuffix": "px",
+                                "tempPaddingRightSuffix": "px",
                                 "paddingSuffix": "px",
-                                "paddingLeftSuffix": "px",
+                                "tempPaddingSuffix": "px",
+                                "tempPaddingRight": 100,
                                 "paddingLeft": 100,
+                                "paddingLeftSuffix": "px",
+                                "tempPaddingLeftSuffix": "px",
+                                "tempPaddingLeft": 100,
                                 "tabletPaddingType": "ungrouped",
                                 "tabletPaddingRightSuffix": "px",
-                                "tabletPaddingRight": 20,
-                                "tabletPadding": 0,
+                                "tempTabletPaddingRightSuffix": "px",
                                 "tabletPaddingSuffix": "px",
+                                "tempTabletPaddingSuffix": "px",
+                                "tabletPaddingRight": 35,
+                                "tempTabletPaddingRight": 35,
                                 "tabletPaddingLeftSuffix": "px",
-                                "tabletPaddingLeft": 20,
+                                "tempTabletPaddingLeftSuffix": "px",
+                                "tabletPaddingLeft": 35,
+                                "tempTabletPaddingLeft": 35,
                                 "mobilePaddingType": "ungrouped",
                                 "mobilePaddingRightSuffix": "px",
-                                "mobilePaddingRight": 20,
-                                "mobilePadding": 0,
+                                "tempMobilePaddingRightSuffix": "px",
                                 "mobilePaddingSuffix": "px",
+                                "tempMobilePaddingSuffix": "px",
+                                "mobilePaddingRight": 15,
+                                "tempMobilePaddingRight": 15,
                                 "mobilePaddingLeftSuffix": "px",
-                                "mobilePaddingLeft": 20
+                                "tempMobilePaddingLeftSuffix": "px",
+                                "mobilePaddingLeft": 15,
+                                "tempMobilePaddingLeft": 15
                             }
                         }
                     ],

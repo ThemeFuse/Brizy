@@ -502,7 +502,7 @@ module.exports = {
                                                                     "mMenuItemHorizontalAlign": "left",
                                                                     "mobileMMenuIconColorPalette": "color8",
                                                                     "mobileMMenuIconColorHex": "",
-                                                                    "mobileMMenuIconColorOpacity": null
+                                                                    
                                                                 }
                                                             }
                                                         ],

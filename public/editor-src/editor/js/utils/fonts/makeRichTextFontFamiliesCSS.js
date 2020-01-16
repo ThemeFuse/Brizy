@@ -13,7 +13,9 @@ export const makeRichTextFontGoogleCSS = fonts => {
       const { id, family, deleted = false } = getGoogleFontDetails(font) || {};
 
       if (!id || !family) {
+        /* eslint-disable no-console */
         console.warn(`There isn't family: ${JSON.stringify(font)}`);
+        /* eslint-enabled no-console */
         return "";
       }
 
@@ -37,7 +39,9 @@ export const makeRichTextFontUploadCSS = fonts => {
       const { id, family, deleted = false } = getUploadFontDetails(font) || {};
 
       if (!id || !family) {
+        /* eslint-disable no-console */
         console.warn(`There isn't family: ${JSON.stringify(font)}`);
+        /* eslint-enabled no-console */
         return "";
       }
 

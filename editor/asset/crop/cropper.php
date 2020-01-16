@@ -188,6 +188,10 @@ class Brizy_Editor_Asset_Crop_Cropper {
 
 		$imageEditor = wp_get_image_editor( $source );
 
+		if($imageEditor instanceof WP_Error) {
+			throw new Exception('No image editor returned');
+		}
+
 		parse_str( strtolower( $filter ), $output );
 		$configuration                 = array();
 		$configuration['format']       = pathinfo( basename( $source ), PATHINFO_EXTENSION );

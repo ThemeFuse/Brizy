@@ -67,6 +67,7 @@ class Sortable extends React.Component {
       onSort,
       onEnd
     } = this.props;
+    // eslint-disable-next-line react/no-find-dom-node
     const node = findDOMNode(this);
 
     this.plugin = new SortablePlugin(node, {

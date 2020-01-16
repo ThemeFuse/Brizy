@@ -9,9 +9,15 @@
 
     "zIndex": 0,
 
+    "hoverZIndex": null,
+
     "showOnTablet": "on",
 
+    "tabletZIndex": null,
+
     "showOnMobile": "on",
+
+    "mobileZIndex": null,
 
     "items": []
   },
@@ -98,6 +104,10 @@
     "customClassName": "",
 
     "customID": "",
+
+    "cssIDPopulation": "",
+
+    "cssClassPopulation": "",
 
     "tabletHorizontalAlign": null,
 

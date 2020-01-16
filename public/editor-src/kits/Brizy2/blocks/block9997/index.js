@@ -122,86 +122,97 @@ module.exports = {
                                                     "value": {
                                                         "_styles": [
                                                             "wrapper",
-                                                            "wrapper--iconText"
+                                                            "wrapper--form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "Form",
+                                                                "type": "Form2",
                                                                 "value": {
                                                                     "_styles": [
-                                                                        "form"
+                                                                        "form2"
                                                                     ],
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormFields",
+                                                                            "type": "Form2Fields",
                                                                             "value": {
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "FormField",
+                                                                                        "type": "Form2Field",
                                                                                         "value": {
                                                                                             "type": "Select",
-                                                                                            "label": "Depart From",
+                                                                                            "label": "Depart from",
                                                                                             "required": "on",
                                                                                             "options": [
-                                                                                                "Bruxelles"
+                                                                                                "London",
+                                                                                                "New York"
                                                                                             ],
-                                                                                            "width": 50,
-                                                                                            "mobileWidth": 100
+                                                                                            "placeholder": "Bruxelles",
+                                                                                            "width": 50
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "FormField",
+                                                                                        "type": "Form2Field",
                                                                                         "value": {
                                                                                             "type": "Select",
-                                                                                            "label": "Arrive At",
+                                                                                            "label": "Arrive at",
                                                                                             "required": "on",
                                                                                             "options": [
-                                                                                                "London"
+                                                                                                "Bruxelles",
+                                                                                                "New York"
                                                                                             ],
-                                                                                            "width": 50,
-                                                                                            "mobileWidth": 100
+                                                                                            "placeholder": "London",
+                                                                                            "width": 50
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "FormField",
+                                                                                        "type": "Form2Field",
                                                                                         "value": {
-                                                                                            "type": "Select",
+                                                                                            "type": "Date",
                                                                                             "label": "Departure Date",
                                                                                             "required": "on",
                                                                                             "options": [
-                                                                                                "2019-04-23"
+                                                                                                "Bruxelles",
+                                                                                                "New York"
                                                                                             ],
+                                                                                            "placeholder": "2019-04-23",
                                                                                             "width": 50,
-                                                                                            "mobileWidth": 100
+                                                                                            "min": "2019-04-23",
+                                                                                            "max": "2020-04-22"
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "FormField",
+                                                                                        "type": "Form2Field",
                                                                                         "value": {
-                                                                                            "type": "Select",
+                                                                                            "type": "Date",
                                                                                             "label": "Return Date",
                                                                                             "required": "on",
                                                                                             "options": [
-                                                                                                "2019-05-12"
+                                                                                                "Bruxelles",
+                                                                                                "New York"
                                                                                             ],
+                                                                                            "placeholder": "2019-05-12",
                                                                                             "width": 50,
-                                                                                            "mobileWidth": 100
+                                                                                            "min": "2019-04-23",
+                                                                                            "max": "2020-04-22"
                                                                                         }
                                                                                     }
                                                                                 ],
                                                                                 "fontStyle": "paragraph",
-                                                                                "colorPalette": "color6",
-                                                                                "tempColorPalette": "color6",
-                                                                                "colorOpacity": 0.75,
-                                                                                "colorHex": "#ebebeb",
-                                                                                "tempColorOpacity": 0.75,
-                                                                                "padding": 20,
+                                                                                "tabsState": "",
+                                                                                "tabsColor": "",
+                                                                                "size": "small",
+                                                                                "paddingTop": 10,
                                                                                 "paddingRight": 20,
-                                                                                "paddingBottom": 20,
+                                                                                "paddingBottom": 10,
                                                                                 "paddingLeft": 20,
-                                                                                "borderColorPalette": "color6",
-                                                                                "tempBorderColorPalette": "color6",
-                                                                                "borderColorOpacity": 0.75,
+                                                                                "colorPalette": "color8",
+                                                                                "tempColorPalette": "color8",
+                                                                                "colorOpacity": 0.6,
+                                                                                "colorHex": "#1c1c1c",
+                                                                                "tempColorOpacity": 0.6,
+                                                                                "borderColorPalette": "color8",
+                                                                                "tempBorderColorPalette": "color8",
+                                                                                "borderColorOpacity": 0.5,
                                                                                 "borderStyle": "solid",
                                                                                 "borderWidth": 1,
                                                                                 "borderTopWidth": 1,
@@ -212,8 +223,24 @@ module.exports = {
                                                                                 "tempBorderRightWidth": 1,
                                                                                 "tempBorderBottomWidth": 1,
                                                                                 "tempBorderLeftWidth": 1,
-                                                                                "borderColorHex": "#ebebeb",
-                                                                                "tempBorderColorOpacity": 0.75,
+                                                                                "borderColorHex": "#1c1c1c",
+                                                                                "tempBorderColorOpacity": 0.5,
+                                                                                "labelFontStyle": "paragraph",
+                                                                                "labelColorPalette": "color8",
+                                                                                "tempLabelColorPalette": "color8",
+                                                                                "labelColorOpacity": 0.5,
+                                                                                "labelColorHex": "#1c1c1c",
+                                                                                "tempLabelColorOpacity": 0.5,
+                                                                                "borderRadius": 5,
+                                                                                "borderTopLeftRadius": 5,
+                                                                                "borderTopRightRadius": 5,
+                                                                                "borderBottomLeftRadius": 5,
+                                                                                "borderBottomRightRadius": 5,
+                                                                                "tempBorderRadius": 5,
+                                                                                "tempBorderTopLeftRadius": 5,
+                                                                                "tempBorderTopRightRadius": 5,
+                                                                                "tempBorderBottomLeftRadius": 5,
+                                                                                "tempBorderBottomRightRadius": 5,
                                                                                 "bgColorHex": "#ffffff",
                                                                                 "bgColorOpacity": 0,
                                                                                 "tempBgColorOpacity": 1,
@@ -228,14 +255,14 @@ module.exports = {
                                                                                     "button",
                                                                                     "submit"
                                                                                 ],
-                                                                                "text": "SEARCH FLIGHTS",
-                                                                                "iconName": "",
-                                                                                "iconType": "",
+                                                                                "text": "SEARCH FLIGHT",
                                                                                 "tabsState": "",
                                                                                 "tabsColor": "",
                                                                                 "colorPalette": "color2",
                                                                                 "colorOpacity": 1,
-                                                                                "hoverBgColorPalette": "color1",
+                                                                                "iconName": "",
+                                                                                "iconType": "",
+                                                                                "hoverBgColorPalette": "color2",
                                                                                 "hoverBgColorOpacity": 1,
                                                                                 "hoverBorderColorPalette": "",
                                                                                 "tempHoverBorderColorPalette": "",
@@ -244,65 +271,27 @@ module.exports = {
                                                                                 "tempHoverBgColorPalette": "color3",
                                                                                 "hoverBorderColorHex": "#1c1c1c",
                                                                                 "hoverBorderColorOpacity": 0.8,
-                                                                                "borderRadiusType": "custom",
-                                                                                "tempBorderRadiusType": "custom",
-                                                                                "paddingRight": 150,
-                                                                                "paddingLeft": 150,
-                                                                                "fillType": "filled",
-                                                                                "borderRadius": 4,
                                                                                 "borderWidth": 0,
+                                                                                "tempBorderWidth": 5,
+                                                                                "paddingRight": 42,
+                                                                                "paddingLeft": 42,
+                                                                                "borderRadiusType": "custom",
+                                                                                "fillType": "filled",
+                                                                                "borderRadius": 5,
                                                                                 "borderColorOpacity": 0,
                                                                                 "borderColorPalette": 0,
                                                                                 "bgColorOpacity": 1,
                                                                                 "bgColorPalette": "color3",
-                                                                                "tempBorderRadius": 4,
-                                                                                "tempBorderWidth": 2,
-                                                                                "size": "custom",
-                                                                                "fontSize": 15,
-                                                                                "paddingTB": 14,
-                                                                                "paddingTop": 14,
-                                                                                "paddingBottom": 14,
-                                                                                "tempPaddingTB": 14,
-                                                                                "tempPaddingTop": 14,
-                                                                                "tempPaddingBottom": 14,
-                                                                                "paddingRL": 150,
-                                                                                "tempPaddingRL": 150,
-                                                                                "tempPaddingRight": 150,
-                                                                                "tempPaddingLeft": 150,
-                                                                                "tabletSize": "custom",
-                                                                                "tabletFontSize": 12,
-                                                                                "tabletPaddingTB": 14,
-                                                                                "tabletPaddingTop": 14,
-                                                                                "tabletPaddingBottom": 14,
-                                                                                "tempTabletPaddingTB": 14,
-                                                                                "tempTabletPaddingTop": 14,
-                                                                                "tempTabletPaddingBottom": 14,
-                                                                                "tabletPaddingRL": 117,
-                                                                                "tabletPaddingRight": 117,
-                                                                                "tabletPaddingLeft": 117,
-                                                                                "tempTabletPaddingRL": 42,
-                                                                                "tempTabletPaddingRight": 117,
-                                                                                "tempTabletPaddingLeft": 117,
-                                                                                "tabletBorderRadius": 4,
-                                                                                "mobileSize": "custom",
-                                                                                "mobileFontSize": 12,
-                                                                                "mobilePaddingTB": 14,
-                                                                                "mobilePaddingTop": 14,
-                                                                                "mobilePaddingBottom": 14,
-                                                                                "tempMobilePaddingTB": 14,
-                                                                                "tempMobilePaddingTop": 14,
-                                                                                "tempMobilePaddingBottom": 14,
-                                                                                "mobilePaddingRL": 89,
-                                                                                "mobilePaddingRight": 89,
-                                                                                "mobilePaddingLeft": 89,
-                                                                                "tempMobilePaddingRL": 42,
-                                                                                "tempMobilePaddingRight": 89,
-                                                                                "tempMobilePaddingLeft": 89,
-                                                                                "mobileBorderRadius": 4
+                                                                                "tempBorderRadiusType": "custom",
+                                                                                "tempBorderRadius": 5
                                                                             }
                                                                         }
                                                                     ],
-                                                                    "horizontalAlign": "left"
+                                                                    "label": "on",
+                                                                    "padding": 20,
+                                                                    "paddingRight": 20,
+                                                                    "paddingBottom": 20,
+                                                                    "paddingLeft": 20
                                                                 }
                                                             }
                                                         ]
@@ -431,7 +420,8 @@ module.exports = {
                                             "mobileMarginBottom": 15,
                                             "mobileMarginLeft": 15,
                                             "mobileTabsState": "",
-                                            "mobileTabsColor": ""
+                                            "mobileTabsColor": "",
+                                            "mobilePaddingType": "ungrouped"
                                         }
                                     },
                                     {
@@ -477,7 +467,7 @@ module.exports = {
                     "tabsCurrentElement": "tabCurrentElement",
                     "bgImageWidth": 1440,
                     "bgImageHeight": 800,
-                    "bgImageSrc": "d08-background3.png",
+                    "bgImageSrc": "d08-d08-background3.jpg",
                     "bgColorOpacity": 0.75,
                     "tempBgColorOpacity": 0.75,
                     "borderRadius": 0,

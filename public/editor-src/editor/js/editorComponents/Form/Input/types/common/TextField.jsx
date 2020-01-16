@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 export default class TextField extends Component {
   static get componentTitle() {
@@ -16,23 +15,27 @@ export default class TextField extends Component {
     type: "Text"
   };
 
+  content = React.createRef();
+
   handleTextChange = ({ target: { value: label } }) => {
     this.props.onChange({ label });
   };
 
   handleClick = e => {
     e.preventDefault();
-    const node = ReactDOM.findDOMNode(this);
-    node.classList.add("brz-ed-dd-cancel");
+    const node = this.content.current;
+
+    node && node.classList.add("brz-ed-dd-cancel");
   };
 
   handleBlur = () => {
-    const node = ReactDOM.findDOMNode(this);
-    node.classList.remove("brz-ed-dd-cancel");
+    const node = this.content.current;
+
+    node && node.classList.remove("brz-ed-dd-cancel");
   };
 
   renderForEdit(props) {
-    return <input className="brz-input brz-form__field" {...props} />;
+    return <input className="brz-input brz-forms__field" {...props} />;
   }
 
   renderForView(v) {
@@ -45,6 +48,7 @@ export default class TextField extends Component {
     let props;
     if (IS_EDITOR) {
       props = {
+        ref: this.content,
         type: "text",
         value: label,
         onChange: this.handleTextChange,
@@ -63,15 +67,6 @@ export default class TextField extends Component {
       };
     }
 
-    let content;
-    if (IS_EDITOR) {
-      content = this.renderForEdit(props);
-    }
-
-    if (IS_PREVIEW) {
-      content = this.renderForView(props);
-    }
-
-    return content;
+    return IS_EDITOR ? this.renderForEdit(props) : this.renderForView(props);
   }
 }

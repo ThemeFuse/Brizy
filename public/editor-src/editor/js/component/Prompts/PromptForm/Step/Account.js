@@ -48,7 +48,7 @@ class Account extends Component {
 
   handleDisconnect = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onDisconnectApp,
@@ -61,12 +61,9 @@ class Account extends Component {
     });
 
     const { status, data } = await updateIntegration({
-      appId: appData.id,
+      ...appData,
       formId,
-      body: {
-        ...appData,
-        usedAccount: null
-      }
+      usedAccount: null
     });
 
     if (status !== 200) {
@@ -80,9 +77,9 @@ class Account extends Component {
         nextLoading: false
       });
 
-      onChange(appData.id, { ...appData, ...data });
+      onChange(id, { ...appData, ...data });
       onChangeProgress({ showProgress: true });
-      onDisconnectApp(appData.id);
+      onDisconnectApp(id);
     }
   };
 
@@ -122,7 +119,7 @@ class Account extends Component {
 
   handleNext = async () => {
     const {
-      app: { data: appData },
+      app: { id, data: appData },
       formId,
       onChange,
       onChangeNext
@@ -137,12 +134,9 @@ class Account extends Component {
 
     if (active !== appData.usedAccount) {
       const { status, data } = await updateIntegration({
-        appId: appData.id,
+        ...appData,
         formId,
-        body: {
-          ...appData,
-          usedAccount: active
-        }
+        usedAccount: active
       });
 
       if (status !== 200) {
@@ -151,7 +145,7 @@ class Account extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(appData.id, { ...appData, ...data });
+        onChange(id, { ...appData, ...data });
         onChangeNext();
       }
     } else {
@@ -192,9 +186,7 @@ class Account extends Component {
       <ViewDisconnect
         {...app}
         {...this.state}
-        descriptions={`Subscribers are automatically synced to your ${
-          app.title
-        } list`}
+        descriptions={`Subscribers are automatically synced to your ${app.title} list`}
         onPrev={this.handleAccountMode}
         onNext={this.handleDisconnect}
       />

@@ -5,3 +5,7 @@ export default function CustomOption(props) {
 
   return <Component />;
 }
+
+CustomOption.defaultProps = {
+  Component: () => {}
+};

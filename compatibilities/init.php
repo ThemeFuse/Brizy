@@ -28,7 +28,7 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_WPML();
 		}
 
-		if ( class_exists( 'LiteSpeed_Cache_Config' ) ) {
+		if ( $this->is_plugin_active( 'litespeed-cache/litespeed-cache.php' ) ) {
 			new Brizy_Compatibilities_LiteSpeed();
 		}
 

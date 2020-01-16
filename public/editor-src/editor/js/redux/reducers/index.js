@@ -361,7 +361,9 @@ export function savedBlocks(state = {}, action) {
     }
     case DELETE_SAVED_BLOCK: {
       const { id } = action.payload;
+      /* eslint-disable no-unused-vars */
       const { [id]: deleted, ...remaining } = state;
+      /* eslint-enabled no-unused-vars */
 
       return remaining;
     }

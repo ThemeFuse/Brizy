@@ -1,4 +1,5 @@
 import React from "react";
+import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
@@ -15,16 +16,20 @@ class Accordion extends EditorComponent {
   }
 
   static defaultProps = {
-    meta: {}
+    meta: {},
+    extendParentToolbar: noop
   };
 
   static defaultValue = defaultValue;
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      parentToolbarExtend,
+      {
+        allowExtend: false,
+        filterExtendName: `${this.constructor.componentId}_parent`
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
   }
 
@@ -47,7 +52,7 @@ class Accordion extends EditorComponent {
       handleNav: this.handleNav,
       activeAccordionItem,
       meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarConfig, {
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
         allowExtend: false
       })
     });

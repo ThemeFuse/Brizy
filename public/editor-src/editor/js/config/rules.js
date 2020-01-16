@@ -2,6 +2,9 @@ export default {
   "wrapper--iconText": {
     showToolbar: "on"
   },
+  "wrapper--form2": {
+    showToolbar: "on"
+  },
   "wrapper--tabs": {
     showToolbar: "on"
   },

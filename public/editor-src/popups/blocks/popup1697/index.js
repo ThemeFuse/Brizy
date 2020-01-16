@@ -75,28 +75,28 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            "hoverPaddingType": null,
-                                            "tempHoverPaddingType": null,
-                                            "hoverPadding": null,
-                                            "hoverPaddingTop": null,
-                                            "hoverPaddingRight": null,
-                                            "hoverPaddingBottom": null,
-                                            "hoverPaddingLeft": null,
-                                            "tempHoverPadding": null,
-                                            "tempHoverPaddingTop": null,
-                                            "tempHoverPaddingRight": null,
-                                            "tempHoverPaddingBottom": null,
-                                            "tempHoverPaddingLeft": null,
-                                            "hoverPaddingSuffix": null,
-                                            "hoverPaddingTopSuffix": null,
-                                            "hoverPaddingRightSuffix": null,
-                                            "hoverPaddingBottomSuffix": null,
-                                            "hoverPaddingLeftSuffix": null,
-                                            "tempHoverPaddingSuffix": null,
-                                            "tempHoverPaddingTopSuffix": null,
-                                            "tempHoverPaddingRightSuffix": null,
-                                            "tempHoverPaddingBottomSuffix": null,
-                                            "tempHoverPaddingLeftSuffix": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "marginType": "ungrouped",
                                             "margin": 0,
                                             "marginTop": 10,
@@ -110,7 +110,7 @@ module.exports = {
                                             "marginLeftSuffix": "px",
                                             "customClassName": "",
                                             "customID": "",
-                                            "tabletHorizontalAlign": null,
+                                            
                                             "tabletPaddingType": "grouped",
                                             "tempTabletPaddingType": "grouped",
                                             "tabletPadding": 0,
@@ -144,7 +144,7 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            "mobileHorizontalAlign": null,
+                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 0,
@@ -325,28 +325,28 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            "hoverPaddingType": null,
-                                            "tempHoverPaddingType": null,
-                                            "hoverPadding": null,
-                                            "hoverPaddingTop": null,
-                                            "hoverPaddingRight": null,
-                                            "hoverPaddingBottom": null,
-                                            "hoverPaddingLeft": null,
-                                            "tempHoverPadding": null,
-                                            "tempHoverPaddingTop": null,
-                                            "tempHoverPaddingRight": null,
-                                            "tempHoverPaddingBottom": null,
-                                            "tempHoverPaddingLeft": null,
-                                            "hoverPaddingSuffix": null,
-                                            "hoverPaddingTopSuffix": null,
-                                            "hoverPaddingRightSuffix": null,
-                                            "hoverPaddingBottomSuffix": null,
-                                            "hoverPaddingLeftSuffix": null,
-                                            "tempHoverPaddingSuffix": null,
-                                            "tempHoverPaddingTopSuffix": null,
-                                            "tempHoverPaddingRightSuffix": null,
-                                            "tempHoverPaddingBottomSuffix": null,
-                                            "tempHoverPaddingLeftSuffix": null,
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             "marginType": "ungrouped",
                                             "margin": 0,
                                             "marginTop": 10,
@@ -360,7 +360,7 @@ module.exports = {
                                             "marginLeftSuffix": "px",
                                             "customClassName": "",
                                             "customID": "",
-                                            "tabletHorizontalAlign": null,
+                                            
                                             "tabletPaddingType": "grouped",
                                             "tempTabletPaddingType": "grouped",
                                             "tabletPadding": 0,
@@ -394,7 +394,7 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            "mobileHorizontalAlign": null,
+                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 0,

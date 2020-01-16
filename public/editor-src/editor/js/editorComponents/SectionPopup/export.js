@@ -3,13 +3,13 @@ import $ from "jquery";
 export default function() {
   const $document = $(document);
 
-  $document.on("click", '[data-brz-link-type="popup"]', function(e) {
+  $document.on("click", "[data-brz-link-type='popup']", function(e) {
     e.preventDefault();
 
     const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
-      $('[data-brz-popup="' + popupId + '"]').addClass("brz-popup--opened");
+      $(`[data-brz-popup="${popupId}"]`).addClass("brz-popup--opened");
       $("html").addClass("brz-ow-hidden");
     }
   });

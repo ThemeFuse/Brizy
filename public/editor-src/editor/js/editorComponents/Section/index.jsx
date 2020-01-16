@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import CustomTag from "visual/component/CustomTag";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -19,6 +20,7 @@ import * as toolbarExtendConfig from "./toolbarExtend";
 import { styleSection } from "./styles";
 import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
+import { styleMarginType } from "visual/utils/style2";
 
 class Section extends EditorComponent {
   static get componentId() {
@@ -30,6 +32,8 @@ class Section extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  marginType = null;
 
   getMeta(v) {
     const { meta } = this.props;
@@ -64,7 +68,8 @@ class Section extends EditorComponent {
         isSlider: slider === "on",
         showOnDesktop: showOnDesktop === "on",
         showOnMobile: showOnMobile === "on",
-        showOnTablet: showOnTablet === "on"
+        showOnTablet: showOnTablet === "on",
+        marginType: this.marginType
       }
     });
   }
@@ -91,7 +96,31 @@ class Section extends EditorComponent {
         super.handleValueChange(value, meta);
       }
     }
+
+    // need rerender sectionItem when the margin type changed
+    const { deviceMode: device } = getStore().getState().ui;
+    const marginType = styleMarginType({ device, v: value, state: "normal" });
+    this.marginType = `${device}-${marginType}`;
   }
+
+  getAttributes = customAttributes => {
+    let myAttributes = customAttributes
+      .split(" ")
+      .join("")
+      .split(":")
+      .join(" ")
+      .split("\n")
+      .join(" ");
+
+    let atributesToObj = [];
+    let atributesToMas = myAttributes.split(" ");
+
+    for (let i = 0; i < atributesToMas.length; i += 2) {
+      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
+    }
+
+    return Object.assign({}, atributesToObj);
+  };
 
   renderItems(v) {
     const {
@@ -118,12 +147,17 @@ class Section extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      customClassName,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-section",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -136,6 +170,8 @@ class Section extends EditorComponent {
         id={this.getId()}
         className={classNameSection}
         data-block-id={this.props.blockId}
+        data-uid={this.getId()}
+        {...this.getAttributes(customAttributes)}
       >
         {this.renderItems(v)}
       </section>
@@ -143,12 +179,19 @@ class Section extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const {
+      className,
+      tagName,
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes
+    } = v;
 
     const classNameSection = classnames(
       "brz-section",
       className,
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -157,13 +200,19 @@ class Section extends EditorComponent {
     );
 
     return (
-      <section
-        id={v.anchorName || this.getId()}
+      <CustomTag
+        tagName={tagName}
+        id={
+          cssIDPopulation === ""
+            ? v.anchorName || this.getId()
+            : cssIDPopulation
+        }
         className={classNameSection}
         data-uid={this.getId()}
+        {...this.getAttributes(customAttributes)}
       >
         {this.renderItems(v)}
-      </section>
+      </CustomTag>
     );
   }
 

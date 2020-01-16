@@ -1,0 +1,63 @@
+// --- StarRating
+.brz-starrating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &-color{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    overflow: hidden;
+
+  }
+
+  &-icon-wrap {
+    position: relative;
+  }
+
+  .brz-icon-svg{
+    top: 0.1em;
+    &:last-child {
+      margin-right: 0 !important;
+    }
+  }
+  &-color-full{
+    width: 100%;
+  }
+  &-color-w1{
+    width: 10%;
+  }
+  &-color-w2{
+    width: 20%;
+  }
+  &-color-w3{
+    width: 30%;
+  }
+  &-color-w4{
+    width: 40%;
+  }
+  &-color-w5{
+    width: 50%;
+  }
+  &-color-w6{
+    width: 60%;
+  }
+  &-color-w7{
+    width: 70%;
+  }
+  &-color-w8{
+    width: 80%;
+  }
+  &-color-w9{
+    width: 90%;
+  }
+
+}

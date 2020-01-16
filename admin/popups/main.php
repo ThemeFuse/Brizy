@@ -199,7 +199,11 @@ class Brizy_Admin_Popups_Main {
 			'post_status' => 'publish'
 		) );
 
-		$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups );
+		$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups, [
+			'type'         => $applyFor,
+			'entityType'   => $entityType,
+			'entityValues' => $entityValues
+		] );
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		foreach ( $allPopups as $aPopup ) {

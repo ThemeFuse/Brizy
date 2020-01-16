@@ -694,12 +694,12 @@ module.exports = {
                             }
                         }
                     ],
-                    "tabsCurrentElement": "tabCurrentElement",
+                    "tabsCurrentElement": "",
                     "bgImageWidth": 1440,
                     "bgImageHeight": 800,
-                    "bgImageSrc": "d08-background4.png",
-                    "bgColorOpacity": 0,
-                    "tempBgColorOpacity": 1,
+                    "bgImageSrc": "d08-d08-background4.jpg",
+                    "bgColorOpacity": 0.7,
+                    "tempBgColorOpacity": 0.7,
                     "borderRadius": 0,
                     "borderTopLeftRadius": 0,
                     "borderTopRightRadius": 0,
@@ -710,7 +710,7 @@ module.exports = {
                     "tempBorderBottomLeftRadius": 0,
                     "tempBorderBottomRightRadius": 0,
                     "tabsState": "tabNormal",
-                    "tabsColor": "tabOverlay",
+                    "tabsColor": "",
                     "paddingType": "ungrouped",
                     "paddingTop": 150,
                     "paddingBottom": 150,
@@ -719,7 +719,10 @@ module.exports = {
                     "mobilePaddingType": "ungrouped",
                     "mobilePaddingTop": 25,
                     "mobilePaddingBottom": 40,
-                    "mobilePadding": 25
+                    "mobilePadding": 25,
+                    "bgColorHex": "#162872",
+                    "bgColorPalette": "",
+                    "tempBgColorPalette": ""
                 }
             }
         ]

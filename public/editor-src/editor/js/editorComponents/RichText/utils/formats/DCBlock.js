@@ -10,7 +10,7 @@ class DCBlock extends Block {
     return node;
   }
 
-  static formats(domNode) {
+  static formats() {
     return true;
   }
 

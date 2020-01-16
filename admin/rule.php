@@ -258,7 +258,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	}
 
 
-	public function getRuleWeight() {
+	public function getRuleWeight( $context ) {
 
 		$weight = 0;
 
@@ -285,6 +285,18 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		}
 
 		$weight += count( $values );
+
+		if ( isset( $context['type'] ) && $this->getAppliedFor() === $context['type'] ) {
+			$weight += 1;
+		}
+
+		if ( isset( $context['entityType'] ) && $this->getEntityType() === $context['entityType'] ) {
+			$weight += 1;
+		}
+
+		if ( isset( $context['entityValues'] ) && $intersection = count( array_intersect( $context['entityValues'], $this->getEntityValues() ) ) ) {
+			$weight += $intersection;
+		}
 
 		return $weight;
 	}
@@ -318,7 +330,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	static public function createFromRequestData( $data ) {
 
-		if ( is_null( $data )  ) {
+		if ( is_null( $data ) ) {
 			throw new Exception( 'Invalid parameter provided' );
 		}
 
@@ -360,6 +372,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string
 	 */
 	private function generateId() {
-		return md5( implode( '', func_get_args() ) .time() );
+		return md5( implode( '', func_get_args() ) . time() );
 	}
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
@@ -20,11 +21,18 @@ class Tabs extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static defaultProps = {
+    extendParentToolbar: noop
+  };
+
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      parentToolbarExtend,
+      {
+        allowExtend: false,
+        filterExtendName: `${this.constructor.componentId}_parent`
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
   }
 
@@ -39,23 +47,47 @@ class Tabs extends EditorComponent {
       _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
     ]);
 
-    const { activeTab } = v;
-    const itemProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      className: styleClassName(v),
-      style: styleCSSVars(v),
-      handleNav: this.handleNav,
+    const { activeTab, iconName, iconType, iconPosition } = v;
+    const itemNavProps = this.makeSubcomponentProps({
       activeTab,
+      iconName,
+      iconType,
+      iconPosition,
+      bindWithKey: "items",
+      renderType: "nav",
+      onChangeNav: this.handleNav,
       meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarConfig, {
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
         allowExtend: false
       })
     });
+    const itemContentProps = this.makeSubcomponentProps({
+      activeTab,
+      iconName,
+      iconType,
+      iconPosition,
+      bindWithKey: "items",
+      renderType: "content",
+      onChangeNav: this.handleNav,
+      meta: this.props.meta,
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
+        allowExtend: false
+      })
+    });
+    const className = styleClassName(v);
+    const style = styleCSSVars(v);
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <Items {...itemProps} />
+          <div className={className} style={style}>
+            <ul className="brz-tabs__nav">
+              <Items {...itemNavProps} />
+            </ul>
+            <div className="brz-tabs__content">
+              <Items {...itemContentProps} />
+            </div>
+          </div>
         </ContextMenu>
       </CustomCSS>
     );

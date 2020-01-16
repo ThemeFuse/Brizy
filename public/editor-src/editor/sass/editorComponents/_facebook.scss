@@ -18,6 +18,7 @@
 .brz-fb-embed,
 .brz-fb-group {
   position: relative;
+  width: 100%;
 
   &::before {
     content: "";

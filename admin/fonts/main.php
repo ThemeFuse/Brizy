@@ -10,6 +10,7 @@
 class Brizy_Admin_Fonts_Main {
 
 	const CP_FONT = 'brizy-font';
+	const SVG_MIME = 'image/svg+xml';
 
 	/**
 	 * @return Brizy_Admin_Fonts_Main
@@ -29,39 +30,45 @@ class Brizy_Admin_Fonts_Main {
 	 */
 	public function __construct() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'upload_mimes', array( $this, 'addFOntTypes' ) );
+		add_filter( 'upload_mimes', array( $this, 'addFontTypes' ) );
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
 	}
 
-	/**
-	 *
-	 */
 	public function initializeActions() {
 		Brizy_Admin_Fonts_Api::_init();
 	}
 
-	public function addFOntTypes( $mime_types ) {
+	public function addFontTypes( $mime_types ) {
 
 		$mime_types['ttf']   = 'application/x-font-ttf';
 		$mime_types['eot']   = 'application/vnd.ms-fontobject';
 		$mime_types['woff']  = 'application/x-font-woff';
 		$mime_types['woff2'] = 'application/x-font-woff2';
-		$mime_types['svg']   = 'image/svg+xml';
 
 		return $mime_types;
 	}
 
+	/**
+	 * @param $data
+	 * @param $file
+	 * @param $filename
+	 * @param $mimes
+	 * @param $real_mime
+	 *
+	 * @return array
+	 */
 	public function wp_check_filetype_and_ext( $data, $file, $filename, $mimes ) {
 
-		if ( is_null( $data['ext'] ) ) {
+		if ( ! $data['ext'] ) {
 
 			// Do basic extension validation and MIME mapping
 			$wp_filetype = wp_check_filetype( $filename, $mimes );
 			$ext         = $wp_filetype['ext'];
 			$type        = $wp_filetype['type'];
+
 
 			if ( $ext === 'ttf' ) {
 				return array( 'ext' => $ext, 'type' => 'application/x-font-ttf', 'proper_filename' => false );
@@ -80,7 +87,8 @@ class Brizy_Admin_Fonts_Main {
 		return $data;
 	}
 
-	static public function registerCustomPosts() {
+
+	public static function registerCustomPosts() {
 
 		$labels = array(
 			'name' => _x( 'Fonts', 'post type general name' ),

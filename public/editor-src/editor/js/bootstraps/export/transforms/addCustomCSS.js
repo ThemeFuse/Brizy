@@ -1,6 +1,6 @@
 export default function addCustomCSS($) {
   let styles = "";
-  $(`[data-custom-css]`).each(function() {
+  $("[data-custom-css]").each(function() {
     const $this = $(this);
     const id = $this.attr("data-custom-id");
 

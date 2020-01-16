@@ -57,18 +57,12 @@ class FirstBlockAdder extends React.Component {
         prompt: "blocks",
         tabProps: {
           blocks: {
-            categoriesFilter: categories => {
-              return TARGET === "WP"
-                ? categories
-                : categories.filter(
-                    ({ slug }) => slug !== "header" && slug !== "footer"
-                  );
-            },
             onAddBlocks: this.handleBlockAdd
           },
           saved: {
             blocksFilter: blocks => {
               return blocks.filter(
+                // eslint-disable-next-line no-unused-vars
                 ([_, block]) => block.type !== "SectionPopup"
               );
             },
@@ -77,6 +71,7 @@ class FirstBlockAdder extends React.Component {
           global: {
             blocksFilter: blocks => {
               return blocks.filter(
+                // eslint-disable-next-line no-unused-vars
                 ([_, block]) => block.type !== "SectionPopup"
               );
             },

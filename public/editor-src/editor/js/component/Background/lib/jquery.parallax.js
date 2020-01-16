@@ -4,12 +4,12 @@ import $ from "jquery";
 (function(window, document) {
   function c(b, c, g, h) {
     var o = function(b) {
-      !b && (b = a.event);
+      !b && (b = h.event);
       var c = {
         originalEvent: b,
         target: b.target || b.srcElement,
         type: "wheel",
-        deltaMode: "MozMousePixelScroll" == b.type ? 0 : 1,
+        deltaMode: "MozMousePixelScroll" === b.type ? 0 : 1,
         deltaX: 0,
         deltaZ: 0,
         notRealWheel: 1,
@@ -18,14 +18,14 @@ import $ from "jquery";
         }
       };
       return (
-        "mousewheel" == event
+        "mousewheel" === event
           ? ((c.deltaY = (-1 / 40) * b.wheelDelta),
             b.wheelDeltaX && (c.deltaX = (-1 / 40) * b.wheelDeltaX))
           : (c.deltaY = b.detail / 3),
         g(c)
       );
     };
-    b[d](f + c, "wheel" == event ? g : o, h || !1);
+    b[d](f + c, "wheel" === event ? g : o, h || !1);
   }
 
   var d,
@@ -44,12 +44,12 @@ import $ from "jquery";
 
   window.addWheelListener = function(window, document, d) {
     c(window, event, document, d);
-    "DOMMouseScroll" == event && c(window, "MozMousePixelScroll", document, d);
+    "DOMMouseScroll" === event && c(window, "MozMousePixelScroll", document, d);
   };
 })(window, document);
 
 // Parallax
-(function($, window, document, undefined) {
+(function($, window, document) {
   var pluginName = "parallax";
   var dataKey = "plugin_" + pluginName;
 
@@ -115,7 +115,7 @@ import $ from "jquery";
       window.removeEventListener("wheel", this._handleWheelBound, false);
       window.removeEventListener("resize", this._handleResizeBound, false);
     },
-    _handleScroll: function(event) {
+    _handleScroll: function() {
       this.options.F = true;
     },
     _handleWheel: function(event) {
@@ -134,7 +134,7 @@ import $ from "jquery";
       event.preventDefault && event.preventDefault(),
         (this.options.v = event.notRealWheel
           ? -event.deltaY / 4
-          : 1 == event.deltaMode
+          : 1 === event.deltaMode
           ? -event.deltaY / 3
           : 100 === Math.abs(event.deltaY)
           ? -event.deltaY / 120
@@ -239,10 +239,10 @@ import $ from "jquery";
     },
 
     // api
-    refresh: function(elem) {
+    refresh: function() {
       this.profileParallaxElements();
     },
-    destroy: function(elem) {
+    destroy: function() {
       this._detachEvents();
 
       this.$elem.removeData(dataKey);

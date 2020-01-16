@@ -23,7 +23,7 @@ class PublishButton extends Component {
         .then(() => {
           this.setState({ loading: false });
         })
-        .catch(e => {
+        .catch(() => {
           if (process.env.NODE_ENV === "development") {
             console.error("could not publish or save page");
           }

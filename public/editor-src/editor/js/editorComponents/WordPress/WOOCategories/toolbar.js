@@ -6,8 +6,7 @@ import {
   toolbarElementWOOCategoriesOrderBy,
   toolbarElementWOOCategoriesOrder,
   toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings,
-  toolbarCustomCSS
+  toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {

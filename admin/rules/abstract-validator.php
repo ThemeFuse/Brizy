@@ -123,9 +123,8 @@ abstract class Brizy_Admin_Rules_AbstractValidator implements Brizy_Admin_Rules_
 			 * @var Brizy_Admin_Rule $a ;
 			 * @var Brizy_Admin_Rule $b ;
 			 */
-
-			$la = $a->getRuleWeight();
-			$lb = $b->getRuleWeight();
+			$la = $a->getRuleWeight([]);
+			$lb = $b->getRuleWeight([]);
 			if ( $lb == $la ) {
 				return 0;
 			}

@@ -4,6 +4,8 @@ import EditorIcon from "visual/component/EditorIcon";
 import { getAttachmentById } from "visual/utils/api/editor";
 
 class FileUploadWP extends FileUpload {
+  wpMediaFrame = null;
+
   handleChange = () => {
     const wp = global.wp || global.parent.wp;
 
@@ -17,45 +19,58 @@ class FileUploadWP extends FileUpload {
       );
     }
 
-    const frame = wp.media({
-      library: {
-        type: "image"
-      },
-      states: new wp.media.controller.Library({
-        library: wp.media.query({ type: "image" }),
-        multiple: false,
-        title: "Upload media",
-        filterable: "uploaded",
-        priority: 20
-      })
-    });
-    frame.on("select", () => {
-      const attachment = frame
-        .state()
-        .get("selection")
-        .first();
-
-      getAttachmentById(attachment.get("id"))
-        .then(({ uid }) => {
-          const filename = attachment.get("filename");
-          const value = `${uid}|||${filename}`;
-
-          if (this.mounted) {
-            this.setState({
-              value,
-              loading: false
-            });
-          }
-
-          this.props.onChange(value);
+    if (!this.wpMediaFrame) {
+      this.wpMediaFrame = wp.media({
+        library: {
+          type: "image"
+        },
+        states: new wp.media.controller.Library({
+          library: wp.media.query({ type: "image" }),
+          multiple: false,
+          title: "Upload media",
+          filterable: "uploaded",
+          priority: 20
         })
-        .catch(e => {
-          console.error("failed to get attachment uid", e);
-        });
-    });
+      });
+      this.wpMediaFrame.on("select", () => {
+        const attachment = this.wpMediaFrame
+          .state()
+          .get("selection")
+          .first();
 
-    frame.open();
+        getAttachmentById(attachment.get("id"))
+          .then(({ uid }) => {
+            const filename = attachment.get("filename");
+            const value = `${uid}|||${filename}`;
+
+            if (this.mounted) {
+              this.setState({
+                value,
+                loading: false
+              });
+            }
+
+            this.props.onChange(value);
+          })
+          .catch(e => {
+            console.error("failed to get attachment uid", e);
+          });
+      });
+    }
+
+    this.wpMediaFrame.open();
   };
+
+  componentWillUnmount() {
+    if (super.componentWillUnmount) {
+      super.componentWillUnmount();
+    }
+
+    if (this.wpMediaFrame) {
+      this.wpMediaFrame.detach();
+      this.wpMediaFrame = null;
+    }
+  }
 
   renderUploadButton() {
     return (

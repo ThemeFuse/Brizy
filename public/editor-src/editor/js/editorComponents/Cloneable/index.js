@@ -258,8 +258,11 @@ class Cloneable extends EditorComponent {
       animationDuration,
       animationDelay,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
+
     const className = classnames(
       "brz-wrapper-clone",
       css(
@@ -267,14 +270,14 @@ class Cloneable extends EditorComponent {
         `${this.getId()}`,
         style(v, vs, vd)
       ),
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       propsClassName
     );
 
     return (
       <Animation
         className={className}
-        customID={customID}
+        customID={cssIDPopulation === "" ? customID : cssIDPopulation}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}
@@ -300,7 +303,9 @@ class Cloneable extends EditorComponent {
       animationDuration,
       animationDelay,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const { propsClassName } = this.props;
@@ -312,14 +317,14 @@ class Cloneable extends EditorComponent {
         `${this.getId()}`,
         style(v, vs, vd)
       ),
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       propsClassName
     );
 
     return (
       <Animation
         className={className}
-        customID={customID}
+        customID={cssIDPopulation === "" ? customID : cssIDPopulation}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}

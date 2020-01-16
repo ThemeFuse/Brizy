@@ -36,8 +36,13 @@ import {
   styleContainerPopup2ContainerWidthSuffix
 } from "visual/utils/style2";
 import { getContainerW } from "visual/utils/meta";
+import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
 
-export let SectionPopup2Instances = new Map();
+/**
+ * @deprecated use import {SectionPopup2Instances} from "visual/editorComponents/SectionPopup2/instances"
+ * @type {*|Map|Map|"default"}
+ */
+export const SectionPopup2Instances = Instances;
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
@@ -81,7 +86,7 @@ class SectionPopup2 extends EditorComponent {
 
   componentDidMount() {
     this.popupsContainer.appendChild(this.el);
-    SectionPopup2Instances.set(this.instanceKey, this);
+    Instances.set(this.instanceKey, this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -95,7 +100,7 @@ class SectionPopup2 extends EditorComponent {
     this.el = null;
 
     document.documentElement.classList.remove("brz-ow-hidden");
-    SectionPopup2Instances.delete(this.instanceKey);
+    Instances.delete(this.instanceKey);
   }
 
   handleValueChange(newValue, meta) {

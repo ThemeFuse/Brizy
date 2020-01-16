@@ -11,9 +11,7 @@ import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { clamp } from "visual/utils/math";
-import { defaultValueValue } from "visual/utils/onChange";
 import { getStore } from "visual/redux/store";
-import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { normalizeRowColumns } from "./utils";
 
@@ -231,6 +229,7 @@ class RowItems extends EditorArrayComponent {
   };
 
   getColumnWidthsInPx = () => {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
 
     return _.map(node.children, elem => elem.getBoundingClientRect().width);

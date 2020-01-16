@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import _ from "underscore";
 
 export default class Scrollable extends Component {
-  constructor(props) {
-    super(props);
-
-    this.updateDOM = this.updateDOM.bind(this);
-  }
+  content = React.createRef();
 
   componentDidMount() {
     this.updateDOM();
@@ -23,38 +18,44 @@ export default class Scrollable extends Component {
 
   math(client, offset, scroll, position, track) {
     // In Google Chrome, sometimes scrollSize is less than clientSize by 1
-    scroll = Math.max(scroll, client);
-    var overflow = scroll - client,
-      thumb = client / scroll * track,
-      piece = track - thumb,
-      shift = overflow == 0 ? 0 : position / overflow * piece;
+    const scrollMax = Math.max(scroll, client);
+    const overflow = scrollMax - client;
+    const thumb = (client / scrollMax) * track;
+    const piece = track - thumb;
+    const shift = overflow === 0 ? 0 : (position / overflow) * piece;
+
     return {
-      client: client,
-      offset: offset,
-      scroll: scroll,
-      overflow: overflow,
-      position: position,
-      track: track,
-      thumb: thumb,
-      piece: piece,
-      shift: shift
+      client,
+      offset,
+      position,
+      track,
+      overflow,
+      thumb,
+      piece,
+      shift,
+      scroll: scrollMax
     };
   }
 
-  updateDOM() {
+  updateDOM = () => {
     // XXX Have no idea why does it work...
     setTimeout(() => {
       if (this.unmounted) {
         return;
       }
 
-      this.props.onUpdateDOM(this.math, ReactDOM.findDOMNode(this));
+      const node = this.content.current;
+
+      if (node) {
+        this.props.onUpdateDOM(this.math, node);
+      }
     }, 0);
-  }
+  };
 
   render() {
     return (
       <div
+        ref={this.content}
         className={this.props.className}
         style={this.props.style}
         onScroll={this.updateDOM}

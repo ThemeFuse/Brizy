@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import { addLast, removeLast, removeAt } from "timm";
 import Downshift from "downshift";
 import classnames from "classnames";
 import FuzzySearch from "fuzzy-search";
@@ -7,6 +8,7 @@ import { Manager, Reference, Popper } from "react-popper";
 import Portal from "visual/component/Portal";
 import ScrollPane from "visual/component/ScrollPane";
 import { t } from "visual/utils/i18n";
+import EditorIcon from "visual/component/EditorIcon";
 
 const getDropdownHeight = (itemsCount, itemHeight, minItems, maxItems) => {
   const minHeight = itemHeight * minItems;
@@ -19,26 +21,109 @@ const getDropdownHeight = (itemsCount, itemHeight, minItems, maxItems) => {
 class ReactSelect extends Component {
   static defaultProps = {
     className: "",
-    value: "",
-    options: [],
+    value: null,
+    options: [{ label: "Test", value: "test" }],
     placement: "bottom",
     placeholder: "",
     fixed: false,
     minItems: 1,
     maxItems: 5,
     itemHeight: 30,
+    multiple: false,
     onChange: _.noop
+  };
+
+  state = {
+    inputValue: ""
   };
 
   selectRef = React.createRef();
 
+  inputRef = React.createRef();
+
+  handleChange = (changes, downshiftStateAndHelpers) => {
+    const { multiple, value, onChange } = this.props;
+
+    if (multiple) {
+      if (!downshiftStateAndHelpers.isOpen) {
+        this.setState({ inputValue: "" });
+      }
+
+      if (changes.hasOwnProperty("value")) {
+        const newValue = Array.isArray(value) ? value : [];
+        onChange(addLast(newValue, changes.value));
+      }
+    } else {
+      this.setState({
+        inputValue: changes.value
+      });
+      onChange(changes);
+    }
+  };
+
+  handleInputChange = e => {
+    this.setState({
+      inputValue: e.target.value
+    });
+  };
+
+  handleRemoveTag = index => {
+    const { value, onChange } = this.props;
+
+    onChange(removeAt(value, index));
+  };
+
+  handleInputKeyDown = e => {
+    const { value, multiple, onChange } = this.props;
+
+    // remove last item when trigger backspace
+    if (multiple && e.keyCode === 8 && !this.state.inputValue) {
+      onChange(removeLast(value));
+    }
+  };
+
+  itemToString(i) {
+    return i ? i.label : "";
+  }
+
+  renderTags(items) {
+    if (!Array.isArray(items)) {
+      return null;
+    }
+
+    return items.map((tag, index) => (
+      <div key={index} className="brz-control__select2-tag">
+        {tag}
+        <EditorIcon
+          icon="nc-trash"
+          onClick={() => {
+            this.handleRemoveTag(index);
+          }}
+        />
+      </div>
+    ));
+  }
+
   renderInput(props) {
+    const { multiple, selectedItem, isOpen, toggleMenu, inputProps } = props;
+    const className = multiple
+      ? "brz-control__select2-value-container-tag"
+      : "brz-control__select2-value-container";
+
     return (
       <Reference>
         {({ ref }) => (
-          <div ref={ref} className="brz-control__select2-value-container">
+          <div
+            ref={ref}
+            className={className}
+            onClick={() => {
+              toggleMenu();
+              !isOpen && this.inputRef.current.focus();
+            }}
+          >
+            {multiple && this.renderTags(selectedItem)}
             <input
-              {...props}
+              {...inputProps}
               className="brz-input brz-control__select2-value"
             />
           </div>
@@ -50,7 +135,9 @@ class ReactSelect extends Component {
   renderDropdown(props) {
     const {
       className: _className,
-      options,
+      options: _options,
+      value,
+      multiple,
       placement,
       fixed,
       itemHeight,
@@ -68,25 +155,32 @@ class ReactSelect extends Component {
       return;
     }
 
+    const options =
+      Array.isArray(value) && multiple
+        ? _options.filter(option =>
+            value.every(value => value !== option.value)
+          )
+        : _options;
     const container = this.selectRef.current;
     const menuWidth = container.getBoundingClientRect().width;
     const node = container.ownerDocument.body;
     const className = classnames("brz-ed-select2-portal", _className);
+    const searcher = new FuzzySearch(options, ["value"]);
 
     return (
       <Portal node={node} className={className}>
         <Popper placement={placement} positionFixed={fixed}>
           {({ ref, style, placement }) => {
-            const searcher = new FuzzySearch(options, ["value"]);
             const items = searcher.search(inputValue).map((item, index) => (
               <li
+                key={item.value}
                 {...getItemProps({
-                  key: item.value,
                   index,
                   item
                 })}
                 className={classnames("brz-li brz-control__select2-option", {
-                  "brz-control__select2-option--active": selectedItem === item
+                  "brz-control__select2-option--active":
+                    selectedItem === item || highlightedIndex === index
                 })}
               >
                 {item.value}
@@ -133,7 +227,8 @@ class ReactSelect extends Component {
   }
 
   render() {
-    const { className: _className, placeholder, value, onChange } = this.props;
+    const { className: _className, placeholder, multiple, value } = this.props;
+    const { inputValue } = this.state;
     const className = classnames("brz-control__select2-container", _className);
 
     return (
@@ -141,24 +236,37 @@ class ReactSelect extends Component {
         <Manager>
           <Downshift
             initialSelectedItem={value}
-            onChange={onChange}
-            itemToString={item => (item ? item.label : "")}
+            selectedItem={value}
+            onChange={this.handleChange}
+            itemToString={this.itemToString}
           >
             {({
               getInputProps,
               getItemProps,
               getMenuProps,
               isOpen,
-              inputValue,
               highlightedIndex,
-              selectedItem
+              selectedItem,
+              toggleMenu
             }) => (
               <div className="brz-control__select2">
-                {this.renderInput(getInputProps({ placeholder }))}
+                {this.renderInput({
+                  inputProps: getInputProps({
+                    ref: this.inputRef,
+                    placeholder,
+                    value: inputValue,
+                    onKeyDown: this.handleInputKeyDown,
+                    onChange: this.handleInputChange
+                  }),
+                  multiple,
+                  selectedItem,
+                  isOpen,
+                  toggleMenu
+                })}
                 {this.renderDropdown({
                   ...this.props,
-                  isOpen,
                   inputValue,
+                  isOpen,
                   highlightedIndex,
                   selectedItem,
                   getMenuProps,

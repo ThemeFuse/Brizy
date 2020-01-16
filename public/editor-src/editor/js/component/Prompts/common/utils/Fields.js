@@ -15,7 +15,7 @@ const bundleEmailField = (integrationFields, editorFields) => {
 };
 
 export const getFields = (fieldsMap, fields, formFields, restrictions) => {
-  let integrationFields = fieldsMap || [];
+  let integrationFields = (fieldsMap && JSON.parse(fieldsMap)) || [];
   const appFieldsLength = (fields && fields.length) || 0;
   let requiredAppFieldLength = fields.filter(item => item.required).length;
 
@@ -70,7 +70,9 @@ export const getEmptyField = (appFields, integrationFields, step) => {
 
 export const substrString = name => {
   if (name.length > 22) {
+    /* eslint-disable no-useless-escape */
     const re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    /* eslint-enabled no-useless-escape */
     return re.test(name)
       ? `...${name.substr(-19, 19)}`
       : `${name.substr(0, 19)}...`;

@@ -1,0 +1,101 @@
+{
+  "content": {
+    "messageSuccess": "",
+    "messageError": "",
+    "messageRedirect": "",
+    "items": []
+  },
+  "style": {
+    "horizontalAlign": "left",
+
+    "label": "off",
+    "placeholder": "on",
+    "width": 50,
+    "submitWidth": 100,
+
+    "padding": 15,
+    "paddingTop": 0,
+    "paddingRight": 15,
+    "paddingBottom": 15,
+    "paddingLeft": 15,
+
+    "tempPadding": 15,
+    "tempPaddingTop": 0,
+    "tempPaddingRight": 15,
+    "tempPaddingBottom": 15,
+    "tempPaddingLeft": 15,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "tabletHorizontalAlign": null,
+    "tabletWidth": null,
+    "tabletSubmitWidth": null,
+
+    "tabletPaddingType": "ungrouped",
+    "tempTabletPaddingType": "ungrouped",
+
+    "tabletPadding": null,
+    "tabletPaddingTop": null,
+    "tabletPaddingRight": null,
+    "tabletPaddingBottom": null,
+    "tabletPaddingLeft": null,
+
+    "tempTabletPadding": null,
+    "tempTabletPaddingTop": null,
+    "tempTabletPaddingRight": null,
+    "tempTabletPaddingBottom": null,
+    "tempTabletPaddingLeft": null,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
+
+    "mobileHorizontalAlign": null,
+    "mobileSubmitWidth": null,
+
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
+
+    "mobilePadding": null,
+    "mobilePaddingTop": null,
+    "mobilePaddingRight": null,
+    "mobilePaddingBottom": null,
+    "mobilePaddingLeft": null,
+
+    "tempMobilePadding": null,
+    "tempMobilePaddingTop": null,
+    "tempMobilePaddingRight": null,
+    "tempMobilePaddingBottom": null,
+    "tempMobilePaddingLeft": null,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px"
+  }
+}

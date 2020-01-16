@@ -17,6 +17,7 @@ export const createFont = ({ id, name, files }) => {
   const { id: containerId } = Config.get("container");
   const formData = new FormData();
 
+  formData.append("container", containerId);
   formData.append("uid", id);
   formData.append("family", name);
   formData.append("container", containerId);

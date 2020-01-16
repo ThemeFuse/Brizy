@@ -35,11 +35,12 @@ export default class ScrollPane extends Component {
     this.handleRef.current.removeEventListener("wheel", this.handleWheel);
   }
 
-  captureStart = event => {
+  captureStart = () => {
     this._start = false;
   };
 
   handleChange = ({ left = null, top = null }) => {
+    // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this.scrollable);
 
     this.props.onChange({
@@ -49,23 +50,27 @@ export default class ScrollPane extends Component {
   };
 
   handleMouseDown = event => {
+    // eslint-disable-next-line react/no-find-dom-node
     const track = ReactDOM.findDOMNode(this.wideTrack);
     const rect = track.getBoundingClientRect();
     const mouse = event.clientX - rect.left;
     const shift = mouse - this._wide.thumb / 2;
     const position = (shift / this._wide.piece) * this._wide.overflow;
     if (event.target === track) {
+      // eslint-disable-next-line react/no-find-dom-node
       ReactDOM.findDOMNode(this.scrollable).scrollLeft = position;
     }
   };
 
   handleMouseDown2 = event => {
+    // eslint-disable-next-line react/no-find-dom-node
     const track = ReactDOM.findDOMNode(this.tallTrack);
     const rect = track.getBoundingClientRect();
     const mouse = event.clientY - rect.top;
     const shift = mouse - this._tall.thumb / 2;
     const position = (shift / this._tall.piece) * this._tall.overflow;
     if (event.target === track) {
+      // eslint-disable-next-line react/no-find-dom-node
       ReactDOM.findDOMNode(this.scrollable).scrollTop = position;
       this.handleChange({
         top: position
@@ -79,6 +84,7 @@ export default class ScrollPane extends Component {
     }
     const shift = offset.left + this._start;
     const position = (shift / this._wide.piece) * this._wide.overflow;
+    // eslint-disable-next-line react/no-find-dom-node
     ReactDOM.findDOMNode(this.scrollable).scrollLeft = position;
     this.handleChange({
       left: position
@@ -91,6 +97,7 @@ export default class ScrollPane extends Component {
     }
     const shift = offset.top + this._start;
     const position = (shift / this._tall.piece) * this._tall.overflow;
+    // eslint-disable-next-line react/no-find-dom-node
     ReactDOM.findDOMNode(this.scrollable).scrollTop = position;
     this.handleChange({
       top: Math.min(this._tall.overflow, Math.max(0, position))
@@ -106,9 +113,11 @@ export default class ScrollPane extends Component {
   }
 
   handleUpdateDOM = (math, c) => {
+    // eslint-disable-next-line react/no-find-dom-node
     let wideTrack = ReactDOM.findDOMNode(this.wideTrack),
       wideTrackHeight,
       wideThumb = this.wideThumb,
+      // eslint-disable-next-line react/no-find-dom-node
       tallTrack = ReactDOM.findDOMNode(this.tallTrack),
       tallTrackWidth,
       tallThumb = this.tallThumb,
@@ -170,6 +179,7 @@ export default class ScrollPane extends Component {
 
   handleWheel = event => {
     event.stopPropagation();
+    // eslint-disable-next-line react/no-find-dom-node
     let a = ReactDOM.findDOMNode(this.scrollable);
     const top = a.scrollTop;
     const left = a.scrollLeft;

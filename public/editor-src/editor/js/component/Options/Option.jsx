@@ -1,9 +1,16 @@
 import React from "react";
-import _ from "underscore";
+import T from "prop-types";
 import classnames from "classnames";
 import optionTypes from "./types";
 
 class Option extends React.Component {
+  static propTypes = {
+    data: T.object,
+    className: T.string,
+    toolbar: T.object,
+    location: T.string
+  };
+
   static defaultProps = {
     className: "",
     data: null,

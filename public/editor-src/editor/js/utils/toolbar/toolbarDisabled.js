@@ -13,9 +13,13 @@ export function toolbarDisabledHorizontalAlign({
   };
 }
 
-export function toolbarDisabledAdvancedSettings({ device, devices = "all" }) {
+export function toolbarDisabledAdvancedSettings({
+  device,
+  devices = "all",
+  state
+}) {
   return {
-    id: defaultValueKey({ key: "advancedSettings", device }),
+    id: defaultValueKey({ key: "advancedSettings", device, state }),
     type: "advancedSettings",
     devices,
     disabled: true

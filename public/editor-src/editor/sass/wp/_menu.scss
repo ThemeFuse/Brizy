@@ -196,9 +196,6 @@
             }
           }
         }
-        &__icon {
-          display: inline-block;
-        }
 
         & > div:not(.brz-wp-shortcode__menu__toggle) {
           .menu .sub-menu li[class*="menu-item"] a {
@@ -209,6 +206,9 @@
               background: rgba(36, 36, 53, 0.94);
             }
           }
+        }
+        .brz-wp-shortcode__menu__icon {
+          display: inline-block;
         }
       }
     }
@@ -255,7 +255,7 @@
             }
           }
         }
-        &__icon {
+        .brz-wp-shortcode__menu__icon {
           display: inline-block;
         }
       }

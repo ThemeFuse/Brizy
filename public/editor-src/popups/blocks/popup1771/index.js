@@ -373,22 +373,22 @@ module.exports = {
                                         "value": {
                                             "_styles": [
                                                 "wrapper",
-                                                "wrapper--iconText"
+                                                "wrapper--form2"
                                             ],
                                             "items": [
                                                 {
-                                                    "type": "Form",
+                                                    "type": "Form2",
                                                     "value": {
                                                         "_styles": [
-                                                            "form"
+                                                            "form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "FormFields",
+                                                                "type": "Form2Fields",
                                                                 "value": {
                                                                     "items": [
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Email",
                                                                                 "label": "Email",
@@ -400,7 +400,7 @@ module.exports = {
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Select",
                                                                                 "label": "Subject",
@@ -408,11 +408,12 @@ module.exports = {
                                                                                 "options": [
                                                                                     "Option 1",
                                                                                     "Option 2"
-                                                                                ]
+                                                                                ],
+                                                                                "placeholder": "Subject"
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "FormField",
+                                                                            "type": "Form2Field",
                                                                             "value": {
                                                                                 "type": "Paragraph",
                                                                                 "label": "Message",
@@ -421,31 +422,30 @@ module.exports = {
                                                                                     "Option 1",
                                                                                     "Option 2"
                                                                                 ],
-                                                                                "height": 80,
-                                                                                "tabletHeight": 100
+                                                                                "placeholder": "Message"
                                                                             }
                                                                         }
                                                                     ],
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
                                                                     "bgColorHex": "#ffffff",
                                                                     "bgColorOpacity": 0,
+                                                                    "tempBgColorOpacity": 1,
                                                                     "bgColorPalette": "",
+                                                                    "tempBgColorPalette": "",
+                                                                    "borderRadius": 4,
+                                                                    "borderTopLeftRadius": 4,
+                                                                    "borderTopRightRadius": 4,
+                                                                    "borderBottomLeftRadius": 4,
+                                                                    "borderBottomRightRadius": 4,
+                                                                    "tempBorderTopLeftRadius": 4,
+                                                                    "tempBorderTopRightRadius": 4,
+                                                                    "tempBorderBottomLeftRadius": 4,
+                                                                    "tempBorderBottomRightRadius": 4,
                                                                     "borderColorHex": "#dcdee1",
                                                                     "borderColorOpacity": 0.6,
-                                                                    "borderColorPalette": "",
-                                                                    "padding": 15,
-                                                                    "paddingRight": 15,
-                                                                    "paddingBottom": 15,
-                                                                    "paddingLeft": 15,
-                                                                    "colorPalette": "",
-                                                                    "colorHex": "#7e94d8",
-                                                                    "colorOpacity": 1,
-                                                                    "fontSize": 13,
-                                                                    "fontFamily": "montserrat",
-                                                                    "lineHeight": 1.7,
-                                                                    "letterSpacing": 0,
-                                                                    "fontWeight": 400,
-                                                                    "fontStyle": "",
                                                                     "tempBorderColorOpacity": 0.6,
+                                                                    "borderColorPalette": "",
                                                                     "tempBorderColorPalette": "",
                                                                     "borderStyle": "solid",
                                                                     "borderWidth": 1,
@@ -456,7 +456,20 @@ module.exports = {
                                                                     "tempBorderTopWidth": 1,
                                                                     "tempBorderRightWidth": 1,
                                                                     "tempBorderBottomWidth": 1,
-                                                                    "tempBorderLeftWidth": 1
+                                                                    "tempBorderLeftWidth": 1,
+                                                                    "tempBorderRadius": 4,
+                                                                    "fontStyle": "",
+                                                                    "fontFamily": "montserrat",
+                                                                    "fontFamilyType": "google",
+                                                                    "fontSize": 13,
+                                                                    "lineHeight": 1.7,
+                                                                    "letterSpacing": 0,
+                                                                    "fontWeight": 400,
+                                                                    "colorHex": "#7e94d8",
+                                                                    "colorOpacity": 1,
+                                                                    "tempColorOpacity": 1,
+                                                                    "colorPalette": "",
+                                                                    "tempColorPalette": ""
                                                                 }
                                                             },
                                                             {
@@ -466,34 +479,23 @@ module.exports = {
                                                                         "button",
                                                                         "submit"
                                                                     ],
-                                                                    "borderRadiusType": "square",
-                                                                    "tempBorderRadiusType": "square",
-                                                                    "paddingRight": 42,
-                                                                    "paddingLeft": 42,
-                                                                    "fillType": "filled",
-                                                                    "borderRadius": 0,
-                                                                    "borderWidth": 2,
-                                                                    "borderColorOpacity": 0,
-                                                                    "borderColorPalette": 0,
+                                                                    "text": "SEND NOW",
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
+                                                                    "bgColorPalette": "color8",
+                                                                    "tempBgColorPalette": "color8",
                                                                     "bgColorOpacity": 1,
-                                                                    "bgColorPalette": "",
+                                                                    "borderRadiusType": "custom",
+                                                                    "fillType": "filled",
+                                                                    "borderColorPalette": "color8",
+                                                                    "tempBorderColorPalette": "color8",
                                                                     "hoverBgColorOpacity": 0.8,
-                                                                    "hoverBorderColorOpacity": 0.8,
-                                                                    "tempBorderRadius": 0,
-                                                                    "tempMobileBorderRadius": 0,
-                                                                    "bgColorHex": "#ffffff",
-                                                                    "tempBgColorPalette": "",
-                                                                    "tempBgColorOpacity": 1,
-                                                                    "borderColorHex": "#ffffff",
-                                                                    "tempBorderColorPalette": "",
-                                                                    "hoverBorderColorHex": "#ffffff",
                                                                     "colorPalette": "",
                                                                     "colorHex": "#7e94d8",
-                                                                    "colorOpacity": 1,
-                                                                    "text": "SEND NOW",
-                                                                    "size": "medium",
-                                                                    "mobileSize": "small",
-                                                                    "fontSize": 12,
+                                                                    "hoverBgColorPalette": "",
+                                                                    "hoverBgColorHex": "#7e94d8",
+                                                                    "size": "custom",
+                                                                    "fontSize": 15,
                                                                     "paddingTB": 14,
                                                                     "paddingTop": 14,
                                                                     "paddingBottom": 14,
@@ -501,53 +503,46 @@ module.exports = {
                                                                     "tempPaddingTop": 14,
                                                                     "tempPaddingBottom": 14,
                                                                     "paddingRL": 42,
+                                                                    "paddingRight": 42,
+                                                                    "paddingLeft": 42,
                                                                     "tempPaddingRL": 42,
                                                                     "tempPaddingRight": 42,
                                                                     "tempPaddingLeft": 42,
-                                                                    "mobilePaddingTop": 11,
-                                                                    "mobilePaddingRight": 26,
-                                                                    "mobilePaddingBottom": 11,
-                                                                    "mobilePaddingLeft": 26,
-                                                                    "hoverBgColorPalette": "",
-                                                                    "hoverBgColorHex": "#7e94d8",
-                                                                    "hoverColorHex": "#ffffff",
-                                                                    "hoverColorOpacity": 1,
-                                                                    "hoverColorPalette": "",
-                                                                    "tempBorderWidth": 2,
-                                                                    "boxShadow": "on",
-                                                                    "boxShadowBlur": 52,
-                                                                    "boxShadowColorOpacity": 0.45,
-                                                                    "boxShadowSpread": -15,
-                                                                    "boxShadowVertical": 11,
-                                                                    "boxShadowColorHex": "#000000",
-                                                                    "boxShadowColorPalette": "",
-                                                                    "tabletSize": "small",
+                                                                    "borderRadius": 0,
+                                                                    "borderWidth": 2,
+                                                                    "tempBorderRadiusType": "custom",
+                                                                    "borderColorOpacity": 1,
+                                                                    "hoverBorderColorOpacity": 0.8,
+                                                                    "tempBorderRadius": 0,
                                                                     "tabletFontSize": 15,
-                                                                    "tabletPaddingTB": 11,
-                                                                    "tabletPaddingTop": 11,
-                                                                    "tabletPaddingBottom": 11,
-                                                                    "tempTabletPaddingTB": 11,
-                                                                    "tempTabletPaddingTop": 11,
-                                                                    "tempTabletPaddingBottom": 11,
-                                                                    "tabletPaddingRL": 26,
-                                                                    "tabletPaddingRight": 26,
-                                                                    "tabletPaddingLeft": 26,
-                                                                    "tempTabletPaddingRL": 26,
-                                                                    "tempTabletPaddingRight": 26,
-                                                                    "tempTabletPaddingLeft": 26,
-                                                                    "tabletBorderRadius": 0,
                                                                     "tabletLineHeight": 1.6,
                                                                     "tabletLetterSpacing": 1,
                                                                     "tabletFontWeight": 700,
-                                                                    "tabletFontStyle": ""
+                                                                    "tabletFontStyle": "",
+                                                                    "mobileSize": "custom",
+                                                                    "mobileFontSize": 11,
+                                                                    "mobilePaddingTB": 10,
+                                                                    "mobilePaddingTop": 10,
+                                                                    "mobilePaddingBottom": 10,
+                                                                    "tempMobilePaddingTB": 11,
+                                                                    "tempMobilePaddingTop": 10,
+                                                                    "tempMobilePaddingBottom": 10,
+                                                                    "mobilePaddingRL": 24,
+                                                                    "mobilePaddingRight": 24,
+                                                                    "mobilePaddingLeft": 24,
+                                                                    "tempMobilePaddingRL": 26,
+                                                                    "tempMobilePaddingRight": 24,
+                                                                    "tempMobilePaddingLeft": 24,
+                                                                    "mobileBorderRadius": 0
                                                                 }
                                                             }
                                                         ],
-                                                        "horizontalAlign": "left"
+                                                        "submitWidth": 75,
+                                                        "tabletSubmitWidth": 65,
+                                                        "mobileSubmitWidth": 55
                                                     }
                                                 }
-                                            ],
-                                            "tabletMarginType": "grouped"
+                                            ]
                                         }
                                     }
                                 ],
@@ -596,7 +591,7 @@ module.exports = {
                                 "padding": 15,
                                 "paddingLeft": 25,
                                 "paddingLeftSuffix": "px",
-                                "paddingBottom": 5,
+                                "paddingBottom": 15,
                                 "paddingBottomSuffix": "px",
                                 "mobilePaddingRightSuffix": "px",
                                 "mobilePadding": 0,
@@ -648,7 +643,13 @@ module.exports = {
                                 "mobilePaddingBottomSuffix": "px",
                                 "tempMobilePaddingBottomSuffix": "px",
                                 "mobilePaddingBottom": 20,
-                                "tempMobilePaddingBottom": 20
+                                "tempMobilePaddingBottom": 20,
+                                "paddingTopSuffix": "px",
+                                "tempPaddingTopSuffix": "px",
+                                "paddingTop": 15,
+                                "tempPaddingTop": 15,
+                                "tempPaddingBottomSuffix": "px",
+                                "tempPaddingBottom": 15
                             }
                         },
                         {
@@ -671,7 +672,8 @@ module.exports = {
                                                     "value": {
                                                         "_styles": [
                                                             "map"
-                                                        ]
+                                                        ],
+                                                        "height": 428
                                                     }
                                                 }
                                             ],
@@ -838,7 +840,7 @@ module.exports = {
         "colorPalette": "",
         "colorHex": "#313044",
         "colorOpacity": 1,
-        "popupId": "jfbwlpupfxvmgnlhienfqhzxgwjddvdzrybz",
+        "popupId": "blxxzhexbqmftrbbjhddnvrwshyldjpdiguj",
         "closeSize": "custom",
         "closeCustomSize": 20,
         "closeHorizontalPosition": -20,

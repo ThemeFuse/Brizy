@@ -59,7 +59,9 @@ const parseShadow = str => {
   return {};
 };
 
+/* eslint-disable no-unused-vars */
 const getTagName = ({ header, pre }, $elem) => {
+  /* eslint-enabled no-unused-vars */
   const preElem = $elem.closest("pre");
   const preTagName = preElem.prop("tagName")
     ? preElem.prop("tagName").toLowerCase()

@@ -86,10 +86,11 @@ trait Brizy_Editor_AutoSaveAware {
 		$user_id      = get_current_user_id();
 
 		$wpdb->query( $wpdb->prepare( "
-										DELETE FROM {$wpdb->posts} 
-										WHERE post_author = %d and 
-											  post_parent = %d and 
-											  post_type = 'revision' and 
-											  post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
+										DELETE p, pm FROM {$wpdb->posts} p  
+										INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id
+										WHERE p.post_author = %d and 
+											  p.post_parent = %d and 
+											  p.post_type = 'revision' and 
+											  p.post_name LIKE %s", $user_id, $postParentId, "{$postParentId}-autosave%" ) );
 	}
 }

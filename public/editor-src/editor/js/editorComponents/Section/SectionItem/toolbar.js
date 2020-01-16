@@ -9,6 +9,7 @@ import {
   toolbarBgVideoUrl,
   toolbarBgVideoQuality,
   toolbarBgVideoLoop,
+  toolbarBgVideoStart,
   toolbarBgMapAddress,
   toolbarBgMapZoom,
   toolbarGradientType,
@@ -121,6 +122,13 @@ export function getItems({ v, device, component }) {
                           state: "normal"
                         }),
                         toolbarBgVideoLoop({
+                          v,
+                          device,
+                          devices: "desktop",
+                          disabled: dvv("media") !== "video",
+                          state: "normal"
+                        }),
+                        toolbarBgVideoStart({
                           v,
                           device,
                           devices: "desktop",

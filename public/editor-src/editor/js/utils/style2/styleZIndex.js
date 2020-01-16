@@ -1,5 +1,7 @@
-export function styleZIndex({ v }) {
-  const { zIndex } = v;
+import { defaultValueValue } from "visual/utils/onChange";
 
-  return zIndex === 0 ? 0 : zIndex;
+export function styleZIndex({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("zIndex");
 }

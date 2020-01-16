@@ -24,8 +24,7 @@ export default class IconToggle extends React.Component {
     );
   };
 
-  onClick = event => {
-    // event.stopPropagation();
+  onClick = () => {
     const { children, onChange } = this.props;
 
     const currentIndex = this.getCurrentIndex();
@@ -39,10 +38,7 @@ export default class IconToggle extends React.Component {
   render() {
     const { className: _className, title, children } = this.props;
     const current = children[this.getCurrentIndex()];
-    const className = classnames(
-      "brz-ed-control__icon-carousel",
-      _className
-    );
+    const className = classnames("brz-ed-control__icon-carousel", _className);
 
     return (
       <div className={className} title={title} onClick={this.onClick}>

@@ -118,8 +118,8 @@ module.exports = {
                                             "bgColorOpacity": 1,
                                             "bgColorHex": "#0ad1bd",
                                             "tempBgColorOpacity": 1,
-                                            "hoverBgColorPalette": "color5",
-                                            "tempHoverBgColorPalette": "color5",
+                                            "hoverBgColorPalette": "color1",
+                                            "tempHoverBgColorPalette": "color1",
                                             "hoverBgColorOpacity": 1,
                                             "hoverBgColorHex": "#ff7700",
                                             "tempHoverBgColorOpacity": 1,
@@ -150,7 +150,11 @@ module.exports = {
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
                                             "borderColorOpacity": 0,
-                                            "borderColorPalette": ""
+                                            "borderColorPalette": "",
+                                            "colorPalette": "color8",
+                                            "tempColorPalette": "color8",
+                                            "colorOpacity": 1,
+                                            "size": 100
                                         }
                                     }
                                 ],
@@ -176,10 +180,10 @@ module.exports = {
                     "padding": 75,
                     "containerSize": 60,
                     "tabsState": "tabNormal",
-                    "tabsCurrentElement": "tabCurrentElement",
+                    "tabsCurrentElement": "",
                     "tabsColor": "tabOverlay",
-                    "bgImageWidth": 1440,
-                    "bgImageHeight": 810,
+                    "bgImageWidth": 1920,
+                    "bgImageHeight": 1080,
                     "bgImageSrc": "d03-Img-Tents.jpg",
                     "bgColorOpacity": 0,
                     "tempBgColorOpacity": 1,

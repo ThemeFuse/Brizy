@@ -47,7 +47,25 @@ module.exports = {
                                 "padding": 0,
                                 "paddingSuffix": "px",
                                 "paddingLeftSuffix": "%",
-                                "paddingLeft": 18
+                                "paddingLeft": 18,
+                                "mobilePaddingType": "ungrouped",
+                                "mobilePaddingRightSuffix": "%",
+                                "tempMobilePaddingRightSuffix": "%",
+                                "mobilePaddingRight": 10,
+                                "tempMobilePaddingRight": 10,
+                                "mobilePaddingLeftSuffix": "%",
+                                "tempMobilePaddingLeftSuffix": "%",
+                                "mobilePaddingLeft": 10,
+                                "tempMobilePaddingLeft": 10,
+                                "tabletPaddingType": "ungrouped",
+                                "tabletPaddingRightSuffix": "%",
+                                "tempTabletPaddingRightSuffix": "%",
+                                "tabletPaddingRight": 10,
+                                "tabletPaddingLeftSuffix": "%",
+                                "tempTabletPaddingLeftSuffix": "%",
+                                "tabletPaddingLeft": 10,
+                                "tempTabletPaddingRight": 10,
+                                "tempTabletPaddingLeft": 10
                             }
                         },
                         {
@@ -92,134 +110,190 @@ module.exports = {
                                                     "value": {
                                                         "_styles": [
                                                             "wrapper",
-                                                            "wrapper--iconText"
+                                                            "wrapper--form2"
                                                         ],
                                                         "items": [
                                                             {
-                                                                "type": "IconText",
+                                                                "type": "Form2",
                                                                 "value": {
                                                                     "_styles": [
-                                                                        "iconText"
+                                                                        "form2"
                                                                     ],
                                                                     "items": [
                                                                         {
-                                                                            "type": "Icon",
+                                                                            "type": "Form2Fields",
                                                                             "value": {
-                                                                                "_styles": [
-                                                                                    "icon",
-                                                                                    "iconText--icon"
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "Form2Field",
+                                                                                        "value": {
+                                                                                            "type": "Email",
+                                                                                            "label": "Enter your email address:",
+                                                                                            "required": "on",
+                                                                                            "options": [
+                                                                                                "Option 1",
+                                                                                                "Option 2"
+                                                                                            ],
+                                                                                            "placeholder": "Enter your email address:",
+                                                                                            "width": 60,
+                                                                                            "mobileWidth": 100
+                                                                                        }
+                                                                                    }
                                                                                 ],
-                                                                                "name": "email-83",
-                                                                                "type": "glyph",
+                                                                                "fontStyle": "heading5",
+                                                                                "size": "small",
+                                                                                "paddingTop": 10,
+                                                                                "paddingRight": 20,
+                                                                                "paddingBottom": 10,
+                                                                                "paddingLeft": 20,
+                                                                                "tabsState": "",
+                                                                                "tabsColor": "",
                                                                                 "colorPalette": "color8",
+                                                                                "tempColorPalette": "color8",
                                                                                 "colorOpacity": 1,
-                                                                                "hoverColorPalette": "color8",
-                                                                                "hoverColorOpacity": 1,
-                                                                                "hoverColorHex": "#ffffff",
-                                                                                "size": "custom",
-                                                                                "customSize": 18,
+                                                                                "borderColorPalette": "",
+                                                                                "tempBorderColorPalette": "color2",
+                                                                                "borderColorOpacity": 0,
+                                                                                "borderStyle": 0,
+                                                                                "borderWidth": 0,
+                                                                                "borderTopWidth": 0,
+                                                                                "borderRightWidth": 0,
+                                                                                "borderBottomWidth": 0,
+                                                                                "borderLeftWidth": 0,
+                                                                                "tempBorderTopWidth": 1,
+                                                                                "tempBorderRightWidth": 1,
+                                                                                "tempBorderBottomWidth": 1,
+                                                                                "tempBorderLeftWidth": 1,
+                                                                                "borderColorHex": "#1c1c1c",
+                                                                                "tempBorderColorOpacity": 0.4,
                                                                                 "borderRadius": 0,
-                                                                                "customCSS": "element {\npadding-top: 6px;\n}"
+                                                                                "borderTopLeftRadius": 0,
+                                                                                "borderTopRightRadius": 0,
+                                                                                "borderBottomLeftRadius": 0,
+                                                                                "borderBottomRightRadius": 0,
+                                                                                "tempBorderRadius": 0,
+                                                                                "tempBorderTopLeftRadius": 0,
+                                                                                "tempBorderTopRightRadius": 0,
+                                                                                "tempBorderBottomLeftRadius": 0,
+                                                                                "tempBorderBottomRightRadius": 0,
+                                                                                "colorHex": "#ffffff",
+                                                                                "tempColorOpacity": 1,
+                                                                                "bgColorHex": "#ffffff",
+                                                                                "bgColorOpacity": 0,
+                                                                                "tempBgColorOpacity": 1,
+                                                                                "bgColorPalette": "",
+                                                                                "tempBgColorPalette": "color8"
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "RichText",
+                                                                            "type": "Button",
                                                                             "value": {
                                                                                 "_styles": [
-                                                                                    "text",
-                                                                                    "iconText--text"
+                                                                                    "button",
+                                                                                    "submit"
                                                                                 ],
-                                                                                "text": "<h5 class=\"brz-text-xs-justify brz-tp-heading5\"><span class=\"brz-cp-color8\"><span>Enter your email address: </span></span></h5>"
+                                                                                "text": "Subscribe to Newsletter",
+                                                                                "iconName": "",
+                                                                                "iconType": "",
+                                                                                "size": "custom",
+                                                                                "fontSize": 15,
+                                                                                "paddingTB": 14,
+                                                                                "paddingTop": 14,
+                                                                                "paddingBottom": 14,
+                                                                                "tempPaddingTB": 14,
+                                                                                "tempPaddingTop": 14,
+                                                                                "tempPaddingBottom": 14,
+                                                                                "paddingRL": 44,
+                                                                                "paddingRight": 44,
+                                                                                "paddingLeft": 44,
+                                                                                "tempPaddingRL": 44,
+                                                                                "tempPaddingRight": 44,
+                                                                                "tempPaddingLeft": 44,
+                                                                                "borderRadius": 5,
+                                                                                "borderWidth": 0,
+                                                                                "borderRadiusType": "custom",
+                                                                                "tempBorderRadiusType": "custom",
+                                                                                "fillType": "filled",
+                                                                                "borderColorOpacity": 0,
+                                                                                "borderColorPalette": 0,
+                                                                                "bgColorOpacity": 1,
+                                                                                "bgColorPalette": "color2",
+                                                                                "hoverBgColorOpacity": 1,
+                                                                                "hoverBorderColorOpacity": 0.8,
+                                                                                "tempBorderRadius": 5,
+                                                                                "tempBorderWidth": 2,
+                                                                                "tabsState": "",
+                                                                                "tabsColor": "",
+                                                                                "hoverBgColorPalette": "color8",
+                                                                                "hoverBorderColorPalette": "",
+                                                                                "tempHoverBorderColorPalette": "",
+                                                                                "hoverBgColorHex": "#1c1c1c",
+                                                                                "tempHoverBgColorOpacity": 1,
+                                                                                "tempHoverBgColorPalette": "color3",
+                                                                                "hoverBorderColorHex": "#1c1c1c",
+                                                                                "tempBgColorPalette": "color2",
+                                                                                "tempBorderColorPalette": 0,
+                                                                                "hoverColorPalette": "color2",
+                                                                                "hoverColorOpacity": 1,
+                                                                                "colorPalette": "color8",
+                                                                                "colorOpacity": 1,
+                                                                                "tabletSize": "custom",
+                                                                                "tabletFontSize": 11,
+                                                                                "tabletPaddingTB": 13,
+                                                                                "tabletPaddingTop": 13,
+                                                                                "tabletPaddingBottom": 13,
+                                                                                "tempTabletPaddingTB": 11,
+                                                                                "tempTabletPaddingTop": 13,
+                                                                                "tempTabletPaddingBottom": 13,
+                                                                                "tabletPaddingRL": 26,
+                                                                                "tabletPaddingRight": 26,
+                                                                                "tabletPaddingLeft": 26,
+                                                                                "tempTabletPaddingRL": 26,
+                                                                                "tempTabletPaddingRight": 26,
+                                                                                "tempTabletPaddingLeft": 26,
+                                                                                "tabletBorderRadius": 5
                                                                             }
                                                                         }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ],
-                                                        "mobilePaddingType": "ungrouped",
-                                                        "mobilePaddingLeftSuffix": "px",
-                                                        "mobilePaddingLeft": 70,
-                                                        "mobilePadding": 0,
-                                                        "mobilePaddingSuffix": "px"
-                                                    }
-                                                }
-                                            ],
-                                            "verticalAlign": "center"
-                                        }
-                                    },
-                                    {
-                                        "type": "Column",
-                                        "value": {
-                                            "_styles": [
-                                                "column"
-                                            ],
-                                            "items": [
-                                                {
-                                                    "type": "Cloneable",
-                                                    "value": {
-                                                        "_styles": [
-                                                            "wrapper-clone",
-                                                            "wrapper-clone--button"
-                                                        ],
-                                                        "items": [
-                                                            {
-                                                                "type": "Button",
-                                                                "value": {
-                                                                    "_styles": [
-                                                                        "button"
                                                                     ],
-                                                                    "text": "\u00a0 \u00a0 \u00a0Subscribe to Newsletter\u00a0 \u00a0\u00a0",
-                                                                    "iconName": "",
-                                                                    "iconType": "",
-                                                                    "colorPalette": "color2",
-                                                                    "colorOpacity": 1,
-                                                                    "bgColorPalette": "color8",
-                                                                    "tempBgColorPalette": "color8",
-                                                                    "bgColorOpacity": 1,
-                                                                    "borderRadiusType": "custom",
-                                                                    "fillType": "filled",
-                                                                    "borderColorPalette": 0,
-                                                                    "tempBorderColorPalette": 0,
-                                                                    "hoverBgColorOpacity": 1,
-                                                                    "hoverBgColorPalette": "color2",
-                                                                    "hoverBorderColorPalette": "",
-                                                                    "tempHoverBorderColorPalette": "",
-                                                                    "hoverBgColorHex": "#1c1c1c",
-                                                                    "tempHoverBgColorOpacity": 1,
-                                                                    "tempHoverBgColorPalette": "color3",
-                                                                    "hoverBorderColorHex": "#1c1c1c",
-                                                                    "hoverBorderColorOpacity": 0.8,
-                                                                    "tempBorderRadiusType": "custom",
-                                                                    "paddingRight": 26,
-                                                                    "paddingLeft": 26,
-                                                                    "borderRadius": 4,
-                                                                    "borderWidth": 0,
-                                                                    "borderColorOpacity": 0,
-                                                                    "tempBorderRadius": 4,
-                                                                    "tempBorderWidth": 2,
-                                                                    "size": "small",
-                                                                    "fontSize": 11,
-                                                                    "paddingTB": 11,
-                                                                    "paddingTop": 11,
-                                                                    "paddingBottom": 11,
-                                                                    "tempPaddingTB": 11,
-                                                                    "tempPaddingTop": 11,
-                                                                    "tempPaddingBottom": 11,
-                                                                    "paddingRL": 26,
-                                                                    "tempPaddingRL": 26,
-                                                                    "tempPaddingRight": 26,
-                                                                    "tempPaddingLeft": 26,
-                                                                    "hoverColorPalette": "color8",
-                                                                    "hoverColorOpacity": 1
+                                                                    "submitWidth": 28,
+                                                                    "horizontalAlign": "right",
+                                                                    "tabletSubmitWidth": 38,
+                                                                    "mobileSubmitWidth": 100
                                                                 }
                                                             }
                                                         ],
-                                                        "horizontalAlign": "right",
-                                                        "mobileHorizontalAlign": "center",
-                                                        "mobileMarginType": "grouped"
+                                                        "paddingType": "grouped",
+                                                        "paddingRight": 25,
+                                                        "paddingRightSuffix": "%",
+                                                        "tempPaddingRightSuffix": "%",
+                                                        "paddingSuffix": "px",
+                                                        "tempPaddingSuffix": "px",
+                                                        "tempPaddingRight": 25,
+                                                        "padding": 0,
+                                                        "paddingLeft": 25,
+                                                        "paddingLeftSuffix": "%",
+                                                        "tempPaddingLeftSuffix": "%",
+                                                        "tempPaddingLeft": 25,
+                                                        "marginLeftSuffix": "px",
+                                                        "marginLeft": -20,
+                                                        "margin": 0,
+                                                        "marginSuffix": "px"
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "verticalAlign": "center",
+                                            "width": 100,
+                                            "mobilePaddingType": "ungrouped",
+                                            "mobilePaddingRightSuffix": "px",
+                                            "tempMobilePaddingRightSuffix": "px",
+                                            "mobilePaddingSuffix": "px",
+                                            "tempMobilePaddingSuffix": "px",
+                                            "mobilePaddingRight": 25,
+                                            "tempMobilePaddingRight": 25,
+                                            "mobilePaddingLeftSuffix": "px",
+                                            "tempMobilePaddingLeftSuffix": "px",
+                                            "mobilePaddingLeft": 25,
+                                            "tempMobilePaddingLeft": 25
                                         }
                                     }
                                 ],

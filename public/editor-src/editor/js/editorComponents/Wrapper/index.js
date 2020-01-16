@@ -252,7 +252,9 @@ class Wrapper extends EditorComponent {
       animationDuration,
       animationDelay,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const componentId = v.items[0].type;
@@ -264,14 +266,14 @@ class Wrapper extends EditorComponent {
         `${this.getId()}`,
         styleWrapper(v, vs, vd)
       ),
-      customClassName
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     return (
       <SortableElement type="shortcode">
         <Animation
           className={classNameWrapper}
-          customID={customID}
+          customID={cssIDPopulation === "" ? customID : cssIDPopulation}
           name={animationName !== "none" && animationName}
           duration={animationDuration}
           delay={animationDelay}
@@ -309,7 +311,9 @@ class Wrapper extends EditorComponent {
       animationDuration,
       animationDelay,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const classNameWrapper = classnames(
@@ -319,13 +323,13 @@ class Wrapper extends EditorComponent {
         `${this.getId()}`,
         styleWrapper(v, vs, vd)
       ),
-      customClassName
+      cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
     return (
       <Animation
         className={classNameWrapper}
-        customID={customID}
+        customID={cssIDPopulation === "" ? customID : cssIDPopulation}
         name={animationName !== "none" && animationName}
         duration={animationDuration}
         delay={animationDelay}

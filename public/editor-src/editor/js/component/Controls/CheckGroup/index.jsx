@@ -1,5 +1,5 @@
-import _ from "underscore";
 import React from "react";
+import _ from "underscore";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
@@ -9,8 +9,8 @@ export default class CheckGroup extends React.Component {
   static propTypes = {
     name: PropTypes.string,
     className: PropTypes.string,
-    defaultValue: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    defaultValue: PropTypes.object,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {

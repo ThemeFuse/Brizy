@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "underscore";
 import jQuery from "jquery";
 import classnames from "classnames";
 import Globals from "visual/global/Globals";
@@ -64,7 +63,7 @@ class Share extends React.Component {
     jQuery(this.inputFile).val("");
   };
 
-  uploadImage = files => {
+  uploadImage = () => {
     const _this = this;
     UploadImage({
       accept: ["jpeg", "jpg", "png", "gif"],
@@ -122,7 +121,10 @@ class Share extends React.Component {
               <h4 className="brz-h4">Thumbnail Image</h4>
               <div className="brz-ed-popup-image-inner">
                 {removeImage}
-                <label className="brz-label brz-ed-popup-image-label" onClick={this.uploadImage}>
+                <label
+                  className="brz-label brz-ed-popup-image-label"
+                  onClick={this.uploadImage}
+                >
                   <div className="brz-ed-loading">
                     <div
                       ref={el => {

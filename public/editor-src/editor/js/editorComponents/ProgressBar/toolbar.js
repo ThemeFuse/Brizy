@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementProgressBarPercentage,
   toolbarElementProgressBarShowPercentage,
@@ -22,10 +22,12 @@ import {
   toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
-  const maxBorderRadius = Math.round(
-    (v.fontSize * v.lineHeight + v.paddingTop * 2) / 2
-  );
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
+export function getItems({ v, device, state }) {
+  // const maxBorderRadius = Math.round(
+  //   (v.fontSize * v.lineHeight + v.paddingTop * 2) / 2
+  // );
 
   return [
     {
@@ -176,202 +178,44 @@ export function getItems({ v, device }) {
       },
       options: [
         {
-          id: "tabsState",
-          tabsPosition: "left",
+          id: "tabsColor",
           type: "tabs",
-          value: v.tabsState,
           tabs: [
             {
-              id: "tabNormal",
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: "tabText",
+              label: t("Text"),
               options: [
+                toolbarColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  onChangeHex: [
+                    "onChangeColorHexAndOpacity",
+                    "onChangeColorHexAndOpacityPalette"
+                  ],
+                  onChangePalette: [
+                    "onChangeColorPalette",
+                    "onChangeColorPaletteOpacity"
+                  ]
+                }),
                 {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabText",
-                      label: t("Text"),
+                      width: 100,
                       options: [
-                        toolbarColor2({
+                        toolbarColorHexField2({
                           v,
                           device,
-                          state: "normal",
-                          onChangeHex: [
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
                             "onChangeColorHexAndOpacity",
                             "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: "tabBar",
-                      label: t("Bar"),
-                      options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          showSelect: false,
-                          onChangeHex: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: "tabBg",
-                      label: t("Bg"),
-                      options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix: "bg2",
-                          showSelect: false,
-                          onChangeHex: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix: "bg2",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: "tabBoxShadow",
-                      label: t("Shadow"),
-                      options: [
-                        toolbarBoxShadow2({
-                          v,
-                          device,
-                          state: "normal",
-                          showSelect: false,
-                          choices: "outset",
-                          onChangeStyle: [
-                            "onChangeBoxShadowType2",
-                            "onChangeBoxShadowTypeDependencies2"
-                          ],
-                          onChangeHex: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBoxShadowPalette2",
-                            "onChangeBoxShadowPaletteOpacity2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 41,
-                              options: [
-                                toolbarBoxShadowHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowHexAndOpacity2",
-                                    "onChangeBoxShadowHexAndOpacityPalette2",
-                                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                                  ]
-                                })
-                              ]
-                            },
-                            {
-                              width: 59,
-                              options: [
-                                toolbarBoxShadowFields2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowFields2",
-                                    "onChangeBoxShadowFieldsDependencies2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -379,196 +223,150 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: "tabHover",
-              tabIcon: "nc-hover",
-              title: t("Hover"),
+              id: "tabBar",
+              label: t("Bar"),
               options: [
+                toolbarBgColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2"
+                  ]
+                }),
                 {
-                  id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  tabs: [
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabText",
-                      label: t("Text"),
+                      width: 30,
                       options: [
-                        toolbarColor2({
+                        toolbarBgColorHexField2({
                           v,
                           device,
-                          state: "hover",
-                          onChangeHex: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ],
-                          onChangePalette: [
-                            "onChangeColorPalette",
-                            "onChangeColorPaletteOpacity"
-                          ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeColorHexAndOpacity",
-                                    "onChangeColorHexAndOpacityPalette"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: "tabBar",
-                      label: t("Bar"),
-                      options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "hover",
-                          showSelect: false,
-                          onChangeHex: [
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
                             "onChangeBgColorHexAndOpacity2",
                             "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
-                    },
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabBg",
+              label: t("Bg"),
+              options: [
+                toolbarBgColor2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  prefix: "bg2",
+                  showSelect: false,
+                  onChangeHex: [
+                    "onChangeBgColorHexAndOpacity2",
+                    "onChangeBgColorHexAndOpacityPalette2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBgColorPalette2",
+                    "onChangeBgColorPaletteOpacity2"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabBg",
-                      label: t("Bg"),
+                      width: 30,
                       options: [
-                        toolbarBgColor2({
+                        toolbarBgColorHexField2({
                           v,
                           device,
-                          state: "hover",
+                          state,
+                          states: [NORMAL, HOVER],
                           prefix: "bg2",
-                          showSelect: false,
-                          onChangeHex: [
+                          onChange: [
                             "onChangeBgColorHexAndOpacity2",
                             "onChangeBgColorHexAndOpacityPalette2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  prefix: "bg2",
-                                  onChange: [
-                                    "onChangeBgColorHexAndOpacity2",
-                                    "onChangeBgColorHexAndOpacityPalette2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
-                        }
+                        })
                       ]
-                    },
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabBoxShadow",
+              label: t("Shadow"),
+              options: [
+                toolbarBoxShadow2({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  showSelect: false,
+                  choices: "outset",
+                  onChangeStyle: [
+                    "onChangeBoxShadowType2",
+                    "onChangeBoxShadowTypeDependencies2"
+                  ],
+                  onChangeHex: [
+                    "onChangeBoxShadowHexAndOpacity2",
+                    "onChangeBoxShadowHexAndOpacityPalette2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                  ],
+                  onChangePalette: [
+                    "onChangeBoxShadowPalette2",
+                    "onChangeBoxShadowPaletteOpacity2",
+                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                  ]
+                }),
+                {
+                  type: "grid",
+                  className: "brz-ed-grid__color-fileds",
+                  columns: [
                     {
-                      id: "tabBoxShadow",
-                      label: t("Shadow"),
+                      width: 41,
                       options: [
-                        toolbarBoxShadow2({
+                        toolbarBoxShadowHexField2({
                           v,
                           device,
-                          state: "hover",
-                          showSelect: false,
-                          choices: "outset",
-                          onChangeStyle: [
-                            "onChangeBoxShadowType2",
-                            "onChangeBoxShadowTypeDependencies2"
-                          ],
-                          onChangeHex: [
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
                             "onChangeBoxShadowHexAndOpacity2",
                             "onChangeBoxShadowHexAndOpacityPalette2",
                             "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBoxShadowPalette2",
-                            "onChangeBoxShadowPaletteOpacity2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
                           ]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 41,
-                              options: [
-                                toolbarBoxShadowHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeBoxShadowHexAndOpacity2",
-                                    "onChangeBoxShadowHexAndOpacityPalette2",
-                                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                                  ]
-                                })
-                              ]
-                            },
-                            {
-                              width: 59,
-                              options: [
-                                toolbarBoxShadowFields2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: [
-                                    "onChangeBoxShadowFields2",
-                                    "onChangeBoxShadowFieldsDependencies2"
-                                  ]
-                                })
-                              ]
-                            }
+                        })
+                      ]
+                    },
+                    {
+                      width: 59,
+                      options: [
+                        toolbarBoxShadowFields2({
+                          v,
+                          device,
+                          state,
+                          states: [NORMAL, HOVER],
+                          onChange: [
+                            "onChangeBoxShadowFields2",
+                            "onChangeBoxShadowFieldsDependencies2"
                           ]
-                        }
+                        })
                       ]
                     }
                   ]
@@ -577,11 +375,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState,
-        tabsColor: !isOpen ? "" : v.tabsColor
-      })
+      ]
     },
     toolbarDisabledAdvancedSettings({ device }),
     {

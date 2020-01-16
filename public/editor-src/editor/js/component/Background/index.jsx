@@ -69,6 +69,7 @@ export default function BackgroundContainer({
     bgVideo,
     bgVideoLoop,
     bgVideoQuality,
+    bgVideoStart,
     bgMapZoom,
     bgMapAddress,
     shapeTopType,
@@ -82,6 +83,7 @@ export default function BackgroundContainer({
     opacity,
     children,
     image: media && getImage(value),
+    imageExtension: value.bgImageExtension,
     border: getBorder(value),
     boxShadow: getBoxShadow(value),
     parallax: getParallax(value, meta),
@@ -92,6 +94,7 @@ export default function BackgroundContainer({
   if (currentMedia === "video") {
     props.video = media && videoData(bgVideo);
     props.bgVideoQuality = bgVideoQuality;
+    props.bgVideoStart = bgVideoStart;
     props.bgVideoLoop = bgVideoLoop === "on";
   }
 

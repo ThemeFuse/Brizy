@@ -7,7 +7,7 @@ import {
   toolbarDisabledShowOnTablet
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
 
   return [

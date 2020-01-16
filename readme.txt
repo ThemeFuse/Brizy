@@ -2,15 +2,15 @@
 Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.2.3
+Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.0.108
+Stable tag: 1.0.109
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Creating WordPress pages should be fast & easy. Brizy is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
 
-More details on: https://brizy.io 
+More details on: https://brizy.io
 
 
 == Description ==
@@ -138,6 +138,22 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.109 - 2020-01-16 =
+* New: Forms added new Fields
+* New: SVG Upload Feature
+* New: Lazy load for image ( Chrome Only )
+* Improved: Images search for optimization
+* Improved: Icons for Tabs was added
+* Improved: WordPress Dynamic content ( Title, Excerpt, Content )
+* Fixed: Pagination on front page
+* Fixed: Dashboard Brizy Box
+* Fixed: Template rules match
+* Fixed: Popup compilation
+* Fixes: Popup scroll fixes
+* Fixes: Incompatibility with LiteSpeed Cache
+* Fixes: Incompatibility with Unicon core plugin
+* Fixes: Remove unnecessary SEO, Social entries
 
 = 1.0.108 - 2019-12-18 =
 * Fixed: Editor config cache
@@ -460,7 +476,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
 * Fixed: Changed signature of do_action of register API methods brizy_register_api_methods
 * Fixed: Added config texts filter
-* Fixed: Version check for Gutenberg compatibility 
+* Fixed: Version check for Gutenberg compatibility
 
 = 1.0.54 - 2019-01-11 =
 * New: Added block screenshots in browsers that support it
@@ -619,7 +635,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: The conflict with Live composer builder
 * Fixed: The conflict with Wp copyright plugin
 * Fixed: The insert content filter
-* Fixed: Changed the UrlBuilder and CromMedia classe to depend on post id 
+* Fixed: Changed the UrlBuilder and CromMedia classe to depend on post id
 * Fixed: Filter the texonomies that does not have any terms
 * Fixed: Image crop on dynamic content placeholders
 
@@ -710,7 +726,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Corrected Countdown preview bug
 * Fixed: Corrected Form integration url
 * Fixed: Fixed the upload urls
-* Fixed: Fixed https value in 
+* Fixed: Fixed https value in
 * Fixed: Other minor bugs
 
 = 1.0.18 - 2018-06-28 =
@@ -719,7 +735,7 @@ The progress you're making while building your page is always backed up in the c
 = 1.0.17 - 2018-06-27 =
 * Fixed: Form email field validation
 * Fixed: Section auto generated ids anchor problems
-* Fixed: Video not being able to go full screen 
+* Fixed: Video not being able to go full screen
 * Fixed: Other minor bugs
 
 = 1.0.16 - 2018-06-25 =

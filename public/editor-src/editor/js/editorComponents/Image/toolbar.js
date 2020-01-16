@@ -36,6 +36,8 @@ export const getMaxHeight = (cW, v) => {
 
 const imageDynamicContentChoices = getDynamicContentChoices("image");
 
+const isSVG = extension => extension === "svg";
+
 export default ({
   desktopWrapperSizes,
   desktopContainerWidth,
@@ -93,6 +95,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   id: "image",
                   label: t("Image"),
                   type: "imageSetter",
+                  showPointer: !isSVG(v.imageExtension),
                   population: {
                     show: imageDynamicContentChoices.length > 0 && !inGallery,
                     choices: imageDynamicContentChoices
@@ -100,12 +103,21 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   value: {
                     width: v.imageWidth,
                     height: v.imageHeight,
+                    extension: v.imageExtension,
                     src: v.imageSrc,
                     x: v.positionX,
                     y: v.positionY,
                     population: v.imagePopulation
                   },
-                  onChange: ({ width, height, src, x, y, population }) => {
+                  onChange: ({
+                    width,
+                    height,
+                    src,
+                    x,
+                    y,
+                    population,
+                    extension
+                  }) => {
                     if (population) {
                       return {
                         imagePopulation: population
@@ -121,17 +133,21 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                       width: v.width,
                       height: 100
                     });
-                    const newHeight =
-                      src === v.imageSrc
-                        ? v.height
-                        : Math.round(
-                            (wrapperSizes.height / newWrapperSize.height) * 100
-                          );
+
+                    let newHeight = v.height;
+                    if (isSVG(extension)) {
+                      newHeight = 100;
+                    } else if (src !== v.imageSrc) {
+                      newHeight = Math.round(
+                        (wrapperSizes.height / newWrapperSize.height) * 100
+                      );
+                    }
 
                     return {
                       imageWidth: width,
                       imageHeight: height,
                       imageSrc: src,
+                      imageExtension: extension,
                       height: newHeight,
                       positionX: x,
                       positionY: y,
@@ -143,7 +159,8 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                   id: "zoom",
                   label: t("Zoom"),
                   type: "slider",
-                  disabled: Boolean(v.imagePopulation),
+                  disabled:
+                    Boolean(v.imagePopulation) || isSVG(v.imageExtension),
                   slider: {
                     min: 100,
                     max: 200
@@ -434,6 +451,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
           id: "height",
           label: t("Height"),
           type: "slider",
+          disabled: isSVG(v.imageExtension),
           slider: {
             min: getMinHeight(),
             max: getMaxHeight(cW, v)
@@ -569,6 +587,7 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
           label: t("Image"),
           type: "imageSetter",
           onlyPointer: true,
+          showPointer: !isSVG(v.imageExtension),
           population: {
             show: imageDynamicContentChoices.length > 0 && !inGallery,
             choices: imageDynamicContentChoices
@@ -576,12 +595,13 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
           value: {
             width: v.imageWidth,
             height: v.imageHeight,
+            extension: v.imageExtension,
             src: v.imageSrc,
             x: tabletSyncOnChange(v, "positionX"),
             y: tabletSyncOnChange(v, "positionY"),
             population: v.imagePopulation
           },
-          onChange: ({ width, height, x, y, population }) => {
+          onChange: ({ width, height, x, y, population, extension }) => {
             if (population) {
               return {
                 imagePopulation: population
@@ -597,13 +617,15 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
               width: tabletSyncOnChange(v, "width"),
               height: 100
             });
-            const newHeight = Math.round(
-              (wrapperSizes.height / newWrapperSize.height) * 100
-            );
+
+            let newHeight = isSVG(extension)
+              ? 100
+              : Math.round((wrapperSizes.height / newWrapperSize.height) * 100);
 
             return {
               imageWidth: width,
               imageHeight: height,
+              imageExtension: extension,
               tabletPositionX: x,
               tabletPositionY: y,
               tabletHeight: newHeight,
@@ -718,6 +740,7 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                   label: t("Image"),
                   type: "imageSetter",
                   onlyPointer: true,
+                  showPointer: !isSVG(v.imageExtension),
                   population: {
                     show: imageDynamicContentChoices.length > 0 && !inGallery,
                     choices: imageDynamicContentChoices
@@ -725,12 +748,20 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                   value: {
                     width: v.imageWidth,
                     height: v.imageHeight,
+                    extension: v.imageExtension,
                     src: v.imageSrc,
                     x: mobileSyncOnChange(v, "positionX"),
                     y: mobileSyncOnChange(v, "positionY"),
                     population: v.imagePopulation
                   },
-                  onChange: ({ width, height, x, y, population }) => {
+                  onChange: ({
+                    width,
+                    height,
+                    x,
+                    y,
+                    population,
+                    extension
+                  }) => {
                     if (population) {
                       return {
                         imagePopulation: population
@@ -746,13 +777,16 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
                       width: mobileSyncOnChange(v, "width"),
                       height: 100
                     });
-                    const newHeight = Math.round(
-                      (wrapperSizes.height / newWrapperSize.height) * 100
-                    );
+                    const newHeight = isSVG(extension)
+                      ? 100
+                      : Math.round(
+                          (wrapperSizes.height / newWrapperSize.height) * 100
+                        );
 
                     return {
                       imageWidth: width,
                       imageHeight: height,
+                      imageExtension: extension,
                       mobilePositionX: x,
                       mobilePositionY: y,
                       mobileHeight: newHeight,

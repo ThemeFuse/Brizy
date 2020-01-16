@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import produce from "immer";
 import EditorIcon from "visual/component/EditorIcon";
 import { Context } from "./Context";
 import Steppers from "../Steppers";
@@ -25,7 +26,8 @@ class BaseIntegration extends Component {
     stages: this.props.stages,
     oldStage: "",
     data: {},
-    error: null
+    error: null,
+    appError: null
   };
 
   appsData = [];
@@ -64,26 +66,24 @@ class BaseIntegration extends Component {
   getConnectedApps(data) {
     const { connectedApps } = this.state;
 
-    return data.reduce((acc, cur) => {
-      return cur.completed ? [...acc, cur.id] : acc;
-    }, connectedApps);
+    if (Array.isArray(data)) {
+      return data.reduce((acc, cur) => {
+        return cur.completed ? [...acc, cur.id] : acc;
+      }, connectedApps);
+    }
+
+    return connectedApps;
   }
 
   handleConnectApp = async appData => {
-    const appId = appData.id;
-    const { stages } = this.appsData.find(app => app.id === appId);
+    const { id, stages } = appData;
 
     this.setState(
-      {
-        stages,
-        connectedApp: appId,
-        data: {
-          ...this.state.data,
-          [`${appId}`]: {
-            ...appData
-          }
-        }
-      },
+      produce(draft => {
+        draft.stages = stages;
+        draft.connectedApp = id;
+        draft.data[id] = appData;
+      }),
       () => {
         this.handleNext();
       }
@@ -105,15 +105,11 @@ class BaseIntegration extends Component {
   };
 
   handleChange = (id, appData) => {
-    this.setState(({ data }) => ({
-      data: {
-        ...data,
-        [`${id}`]: {
-          ...data[id],
-          data: appData
-        }
-      }
-    }));
+    this.setState(
+      produce(draft => {
+        draft.data[id].data = appData;
+      })
+    );
   };
 
   handleNext = async _nextStage => {
@@ -166,9 +162,7 @@ class BaseIntegration extends Component {
   };
 
   handleError = error => {
-    this.setState({
-      error
-    });
+    this.setState({ error });
   };
 
   renderLoading() {
@@ -188,10 +182,16 @@ class BaseIntegration extends Component {
   }
 
   renderApps() {
+    const { error, appError } = this.state;
+
     return (
       <Fragment>
-        {this.state.error && this.renderError()}
-        <AppList apps={this.appsData} proExceptions={this.proExceptions} />
+        {error && this.renderError()}
+        <AppList
+          apps={this.appsData}
+          proExceptions={this.proExceptions}
+          error={appError}
+        />
       </Fragment>
     );
   }
@@ -208,7 +208,6 @@ class BaseIntegration extends Component {
       _showProgress && !stages.some(el => el.type === stage).hideProgress;
     const progress = stages.reduce((acc, cur, index, arr) => {
       let props = {
-        key: index,
         num: cur.type
       };
       const firstNormalIndex = arr.findIndex(it => it.title);
@@ -219,7 +218,9 @@ class BaseIntegration extends Component {
         props.text = cur.title;
       }
 
-      return cur.title ? [...acc, <Steppers.Stage {...props} />] : acc;
+      return cur.title
+        ? [...acc, <Steppers.Stage key={index} {...props} />]
+        : acc;
     }, []);
 
     return (

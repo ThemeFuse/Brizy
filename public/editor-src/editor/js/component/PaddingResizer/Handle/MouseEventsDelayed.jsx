@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ReactDOM from "react-dom";
 import _ from "underscore";
 
@@ -20,6 +20,7 @@ export default class MouseOverElement extends Component {
   componentDidMount() {
     this.isMounted = true;
 
+    // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this);
 
     elem.addEventListener("mouseenter", this.handleMouseEnter);
@@ -29,6 +30,7 @@ export default class MouseOverElement extends Component {
   componentWillUnmount() {
     this.isMounted = false;
 
+    // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this);
 
     elem.removeEventListener("mouseenter", this.handleMouseEnter);

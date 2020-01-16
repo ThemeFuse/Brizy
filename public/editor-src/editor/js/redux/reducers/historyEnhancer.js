@@ -122,14 +122,15 @@ export default function historyEnhancer(reducer, config) {
           historyTravelling: true
         };
       }
-      case ActionTypes.REDO:
+      case ActionTypes.REDO: {
         const redoSnapshot = redoHistory();
         return {
           ...state,
           ...redoSnapshot,
           historyTravelling: true
         };
-      default:
+      }
+      default: {
         state && delete state.historyTravelling;
         const newState = reducer(state, action);
 
@@ -140,6 +141,7 @@ export default function historyEnhancer(reducer, config) {
         }
 
         return newState;
+      }
     }
   };
 }

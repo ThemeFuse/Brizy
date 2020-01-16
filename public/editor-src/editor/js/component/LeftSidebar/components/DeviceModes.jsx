@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import classnames from "classnames";
 import UIEvents from "visual/global/UIEvents";
 import HotKeys from "visual/component/HotKeys";
@@ -125,24 +125,24 @@ function handleHotKeys(e, { keyName }) {
   }, 300);
 }
 
+const DevicesRender = element => (
+  <>
+    {element}
+    <HotKeys
+      keyNames={[...plusShortcuts, ...minusShortcuts]}
+      id="key-helper-device-modes"
+      onKeyDown={handleHotKeys}
+    />
+  </>
+);
+
 export const DeviceModes = {
   id: "deviceModes",
   type: "popover",
   title: t("Mobile view"),
   className: "brz-ed-sidebar__popover--deviceMode",
   options: [DeviceModeDesktop, DeviceModeTablet, DeviceModeMobile],
-  render: element => {
-    return (
-      <Fragment>
-        {element}
-        <HotKeys
-          keyNames={[...plusShortcuts, ...minusShortcuts]}
-          id="key-helper-device-modes"
-          onKeyDown={handleHotKeys}
-        />
-      </Fragment>
-    );
-  },
+  render: DevicesRender,
   extraProps: () => {
     const icon =
       getCurrentDeviceMode() === "mobile"

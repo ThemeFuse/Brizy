@@ -4,64 +4,68 @@ import {
   styleBorderRadiusUngrouped
 } from "visual/utils/style2";
 
-export function cssStyleBorderRadius({ v, device, state }) {
-  let r = "";
-  let borderRadiusType = "";
-  let borderTopLeftRadius = 0;
-  let borderTopRightRadius = 0;
-  let borderBottomLeftRadius = 0;
-  let borderBottomRightRadius = 0;
+export function cssStyleBorderRadius({ v, device, state, prefix = "" }) {
+  let topLeftRadius = 0;
+  let topRightRadius = 0;
+  let bottomLeftRadius = 0;
+  let bottomRightRadius = 0;
+  let radiusType = styleBorderRadiusType({ v, device, state, prefix });
 
-  borderRadiusType = styleBorderRadiusType({ v, device, state });
+  if (radiusType === "grouped") {
+    const radius = styleBorderRadiusGrouped({ v, device, state, prefix });
 
-  if (borderRadiusType === "grouped") {
-    borderTopLeftRadius = borderTopRightRadius = borderBottomLeftRadius = borderBottomRightRadius = styleBorderRadiusGrouped(
-      { v, device, state }
-    );
+    topLeftRadius = radius;
+    topRightRadius = radius;
+    bottomLeftRadius = radius;
+    bottomRightRadius = radius;
   } else {
-    borderTopLeftRadius = styleBorderRadiusUngrouped({
+    topLeftRadius = styleBorderRadiusUngrouped({
       v,
       device,
       state,
-      current: "borderTopLeftRadius"
+      prefix,
+      current: "topLeft"
     });
-    borderTopRightRadius = styleBorderRadiusUngrouped({
+    topRightRadius = styleBorderRadiusUngrouped({
       v,
       device,
       state,
-      current: "borderTopRightRadius"
+      prefix,
+      current: "topRight"
     });
-    borderBottomLeftRadius = styleBorderRadiusUngrouped({
+    bottomLeftRadius = styleBorderRadiusUngrouped({
       v,
       device,
       state,
-      current: "borderBottomLeftRadius"
+      prefix,
+      current: "bottomLeft"
     });
-    borderBottomRightRadius = styleBorderRadiusUngrouped({
+    bottomRightRadius = styleBorderRadiusUngrouped({
       v,
       device,
       state,
-      current: "borderBottomRightRadius"
+      prefix,
+      current: "bottomRight"
     });
   }
 
-  const noEmptyGrouped =
-    borderTopLeftRadius === borderTopRightRadius &&
-    borderTopLeftRadius === borderBottomLeftRadius &&
-    borderTopLeftRadius === borderBottomRightRadius &&
-    borderTopLeftRadius > 0;
-
-  const noEmptyUngrouped =
-    borderTopLeftRadius > 0 ||
-    borderTopRightRadius > 0 ||
-    borderBottomLeftRadius > 0 ||
-    borderBottomRightRadius > 0;
-
-  if (borderTopLeftRadius === undefined) r = "";
-  else if (noEmptyGrouped) r = `border-radius: ${borderTopLeftRadius}px;`;
-  else if (noEmptyUngrouped)
-    r = `border-radius:${borderTopLeftRadius}px ${borderTopRightRadius}px ${borderBottomRightRadius}px ${borderBottomLeftRadius}px;`;
-  else r = "border-radius:0;";
-
-  return r;
+  if (topLeftRadius === undefined) {
+    return "";
+  } else if (
+    topLeftRadius === topRightRadius &&
+    topLeftRadius === bottomLeftRadius &&
+    topLeftRadius === bottomRightRadius &&
+    topLeftRadius > 0
+  ) {
+    return `border-radius: ${topLeftRadius}px;`;
+  } else if (
+    topLeftRadius > 0 ||
+    topRightRadius > 0 ||
+    bottomLeftRadius > 0 ||
+    bottomRightRadius > 0
+  ) {
+    return `border-radius:${topLeftRadius}px ${topRightRadius}px ${bottomRightRadius}px ${bottomLeftRadius}px;`;
+  } else {
+    return "border-radius:0;";
+  }
 }

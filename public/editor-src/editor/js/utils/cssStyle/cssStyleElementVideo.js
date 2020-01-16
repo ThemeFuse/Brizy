@@ -96,5 +96,5 @@ export function cssStyleElementVideoCoverPosition({ v, device, state }) {
 }
 
 export function cssStyleElementVideoPropertyHoverTransition() {
-  return `transition-property: box-shadow, border, border-radius;`;
+  return "transition-property: box-shadow, border, border-radius;";
 }

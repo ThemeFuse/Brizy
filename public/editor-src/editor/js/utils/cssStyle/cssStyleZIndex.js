@@ -3,11 +3,7 @@ import { styleZIndex } from "visual/utils/style2";
 export function cssStyleZIndex({ v, device, state }) {
   const zIndex = styleZIndex({ v, device, state });
 
-  return zIndex === undefined
-    ? ""
-    : zIndex === 0
-    ? "z-index:auto;"
-    : `z-index:${zIndex};`;
+  return zIndex === 0 ? "z-index:auto;" : `z-index:${zIndex};`;
 }
 
 export function cssStyleZIndexMode({ v, device, state, mode = "editor" }) {

@@ -5,21 +5,41 @@ const parser = require("@babel/parser");
 const traverse = require("@babel/traverse").default;
 const readRecursive = util.promisify(require("recursive-readdir"));
 
-exports.wpTranslations = async function wpTranslations(path) {
-  const translations = await extractTranslations(path);
-  const wPFileContent = generateWPFileContent(translations);
+exports.wpTranslations = async function wpTranslations({
+  paths,
+  IS_PRODUCTION,
+  VERSION
+}) {
+  let translationsArr = [];
 
-  return wPFileContent;
+  if (IS_PRODUCTION) {
+    const translationSets = [
+      await extractFromEditor(paths),
+      extractFromKits(paths),
+      extractFromTemplates(paths)
+    ];
+
+    const translations = new Set();
+    for (const set of translationSets) {
+      for (const translation of set) {
+        translations.add(translation);
+      }
+    }
+
+    translationsArr = [...translations];
+    translationsArr.sort();
+  }
+
+  return generateWPFileContent({
+    translations: translationsArr,
+    IS_PRODUCTION,
+    VERSION
+  });
 };
 
-exports.wpTranslationsDev = async function wpTranslationsDev() {
-  const wPFileContent = generateWPFileContent([]);
-
-  return wPFileContent;
-};
-
-async function extractTranslations(path_) {
-  const files = await readRecursive(path_, [
+async function extractFromEditor(paths) {
+  const editorJSFolderPath = path.resolve(paths.editor, "./js");
+  const files = await readRecursive(editorJSFolderPath, [
     (file, stats) => {
       if (stats.isDirectory()) {
         return false;
@@ -35,15 +55,43 @@ async function extractTranslations(path_) {
   for (const file of files) {
     const fileString = fs.readFileSync(file, "utf8");
 
-    for (const translation of extractTranslationsFromString(fileString)) {
+    for (const translation of extractTranslationsFromT(fileString)) {
       translations.add(translation);
     }
   }
 
-  return [...translations].sort();
+  return translations;
 }
 
-function extractTranslationsFromString(code) {
+function extractFromKits(paths) {
+  const kitsIndexFilePath = path.resolve(paths.kits, "./index.js");
+  const kits = require(kitsIndexFilePath);
+
+  return kits.reduce((acc, kit) => {
+    for (const type of kit.types) {
+      acc.add(type.title);
+    }
+
+    for (const category of kit.categories) {
+      acc.add(category.title);
+    }
+
+    return acc;
+  }, new Set());
+}
+
+function extractFromTemplates(paths) {
+  const templateIndexFilePath = path.resolve(paths.templates, "./index.js");
+  const templates = require(templateIndexFilePath);
+
+  return templates.categories.reduce((acc, category) => {
+    acc.add(category.title);
+
+    return acc;
+  }, new Set());
+}
+
+function extractTranslationsFromT(code) {
   const ast = parser.parse(code, {
     sourceType: "unambiguous",
     plugins: ["classProperties", "jsx"]
@@ -52,7 +100,12 @@ function extractTranslationsFromString(code) {
   const t = new Set();
   traverse(ast, {
     CallExpression({ node }) {
-      if (node.callee.name === "t") {
+      if (
+        node.callee.name === "t" &&
+        // In rare cases the function is called with a variable instead of a string literal.
+        // Omit those here because those require to customize the build individually
+        node.arguments[0].type === "StringLiteral"
+      ) {
         t.add(node.arguments[0].value);
       }
     }
@@ -61,14 +114,21 @@ function extractTranslationsFromString(code) {
   return t;
 }
 
-function generateWPFileContent(translations) {
+function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
+  const className = `Brizy_Public_EditorBuild_${
+    IS_PRODUCTION
+      ? VERSION.split("-")
+          .map(capitalize)
+          .join("")
+      : "Dev"
+  }_Texts`;
   const arrBody = translations
     .map(t => `\t\t\t"${t}" => __("${t}", "brizy")`)
     .join(",\n");
   const arr = [
     "<?php",
     "",
-    "class Brizy_Public_EditorBuild_Texts {",
+    `class ${className} {`,
     "\tpublic static function get_editor_texts() {",
     "\t\treturn apply_filters('brizy_editor_config_texts', array(",
     arrBody,
@@ -79,4 +139,8 @@ function generateWPFileContent(translations) {
   ].join("\n");
 
   return arr;
+}
+
+function capitalize(s) {
+  return s[0].toUpperCase() + s.slice(1);
 }

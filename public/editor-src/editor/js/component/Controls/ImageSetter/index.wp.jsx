@@ -4,10 +4,13 @@ import Config from "visual/global/Config";
 import ImageSetter from "./index.jsx";
 import EditorIcon from "visual/component/EditorIcon";
 import { getImageUid } from "visual/utils/api/editor";
+import { getImageFormat, preloadImage } from "visual/utils/image";
 
 const { pageAttachments } = Config.get("wp");
 
 export default class WPImageSetter extends ImageSetter {
+  wpMediaFrame = null;
+
   handleWpImageChange = () => {
     const wp = global.wp || global.parent.wp;
 
@@ -21,47 +24,70 @@ export default class WPImageSetter extends ImageSetter {
       );
     }
 
-    const frame = wp.media({
-      library: {
-        type: "image"
-      },
-      states: new wp.media.controller.Library({
-        library: wp.media.query({ type: "image" }),
-        multiple: false,
-        title: "Upload media",
-        filterable: "uploaded",
-        priority: 20
-      })
-    });
-    frame.on("select", () => {
-      const attachment = frame
-        .state()
-        .get("selection")
-        .first();
-
-      getImageUid(attachment.get("id"))
-        .then(r => {
-          // a little hacky because it mutates the config
-          pageAttachments.images[r.uid] = true;
-
-          const newValue = this.getNewValue({
-            src: r.uid,
-            width: attachment.get("width"),
-            height: attachment.get("height")
-          });
-
-          if (this.mounted) {
-            this.setState(newValue);
-          }
-          this.props.onChange(newValue, { isChanged: "image" });
+    if (!this.wpMediaFrame) {
+      this.wpMediaFrame = wp.media({
+        library: {
+          type: "image"
+        },
+        states: new wp.media.controller.Library({
+          library: wp.media.query({ type: "image" }),
+          multiple: false,
+          title: "Upload media",
+          filterable: "uploaded",
+          priority: 20
         })
-        .catch(e => {
-          console.error("failed to get attachment uid", e);
-        });
-    });
+      });
+      this.wpMediaFrame.on("select", () => {
+        const attachment = this.wpMediaFrame
+          .state()
+          .get("selection")
+          .first();
 
-    frame.open();
+        getImageUid(attachment.get("id"))
+          .then(r => {
+            const { x, y } = this.props;
+            // a little hacky because it mutates the config
+            pageAttachments.images[r.uid] = true;
+
+            const { url } = attachment.toJSON();
+
+            // we use preloadImage function not attachment.get("width"), because
+            // for some svg it returns wrong sizes(width/height = 0)
+            preloadImage(url).then(({ width, height }) => {
+              const newValue = {
+                x,
+                y,
+                src: r.uid,
+                width,
+                height,
+                extension: getImageFormat(url)
+              };
+
+              if (this.mounted) {
+                this.setState(newValue);
+              }
+              this.props.onChange(newValue, { isChanged: "image" });
+            });
+          })
+          .catch(e => {
+            console.error("failed to get attachment uid", e);
+          });
+      });
+    }
+
+    this.wpMediaFrame.open();
   };
+
+  componentWillUnmount() {
+    if (super.componentWillUnmount) {
+      super.componentWillUnmount();
+    }
+
+    if (this.wpMediaFrame) {
+      this.wpMediaFrame.detach();
+      this.wpMediaFrame = null;
+    }
+  }
 
   renderUpload() {
     const { onlyPointer, onUpload } = this.props;

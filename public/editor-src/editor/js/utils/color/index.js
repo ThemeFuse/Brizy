@@ -1,4 +1,5 @@
-const hexRegex = /^#(?:[A-Fa-f0-9]{3}){1,2}$/; // taken from http://stackoverflow.com/questions/32673760/how-can-i-know-if-a-given-string-is-hex-rgb-rgba-or-hsl-color-using-javascipt#answer-32685393
+import {isHex as _isHex} from "visual/utils/color/isHex";
+
 const rgbRegex = /^rgb\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*[)]$/;
 const rgbaRegex = /^rgba\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0*(?:\.\d+)?|1(?:\.0*)?)\s*[)]$/;
 
@@ -29,9 +30,7 @@ export function parseColorString(colorString) {
   return null;
 }
 
-export function isHex(colorString) {
-  return hexRegex.test(colorString);
-}
+export const isHex = _isHex;
 
 export function hexToRgba(hex, opacity) {
   if (isHex(hex)) {

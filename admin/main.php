@@ -255,7 +255,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-css',
 			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' ),
 			array(),
-			true
+			Brizy_Editor::get()->get_version()
 		);
 		wp_enqueue_style(
 			Brizy_Editor::get()->get_slug() . '-select2',
@@ -286,7 +286,7 @@ class Brizy_Admin_Main {
 			Brizy_Editor::get()->get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
-				'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+				'url'           => admin_url( 'admin-ajax.php' ),
 				'pluginUrl'     => BRIZY_PLUGIN_URL,
 				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'            => get_the_ID(),
@@ -299,6 +299,11 @@ class Brizy_Admin_Main {
 				),
 				'editorVersion' => BRIZY_EDITOR_VERSION,
 				'pluginVersion' => BRIZY_VERSION,
+				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
+				'l10n'          => [
+					'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
+					'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
+				]
 			)
 		);
 	}

@@ -1,5 +1,6 @@
 // Image Component
 .brz-image {
+  position: relative;
   display: inherit;
   justify-content: inherit;
   align-items: inherit;
@@ -11,7 +12,7 @@
     border-radius: inherit;
   }
   .brz-a,
-  picture {
+  .brz-picture {
     outline: none;
     border-radius: inherit;
   }
@@ -41,18 +42,15 @@
   .brz-img {
     max-width: none;
     user-select: none;
-    -webkit-user-drag: none;
     display: block;
   }
-  picture {
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+  .brz-picture:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
   &::before {
     content: "";
@@ -94,9 +92,14 @@
   .brz-image {
     .brz-a,
     .brz-img,
-    picture {
+    .brz-picture {
       width: 100%;
       height: auto;
+    }
+    .brz-img {
+      top: 0;
+      left: 0;
+      height: 100%;
     }
     &__lightbox * {
       cursor: zoom-in;
