@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.107<br>
+Stable tag: 1.0.109<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,22 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.109 - 2020-01-16 ###
+* New: Forms added new Fields
+* New: SVG Upload Feature
+* New: Lazy load for image ( Chrome Only )
+* Improved: Images search for optimization
+* Improved: Icons for Tabs was added
+* Improved: WordPress Dynamic content ( Title, Excerpt, Content )
+* Fixed: Pagination on front page
+* Fixed: Dashboard Brizy Box
+* Fixed: Template rules match
+* Fixed: Popup compilation
+* Fixes: Popup scroll fixes
+* Fixes: Incompatibility with LiteSpeed Cache
+* Fixes: Incompatibility with Unicon core plugin
+* Fixes: Remove unnecessary SEO, Social entries
 
 ### 1.0.107 - 2019-12-11 ###
 * Fixed: Compile if there is no autosave post on vew page

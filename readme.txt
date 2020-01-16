@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.0.107
+Stable tag: 1.0.109
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,22 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.109 - 2020-01-16 =
+* New: Forms added new Fields
+* New: SVG Upload Feature
+* New: Lazy load for image ( Chrome Only )
+* Improved: Images search for optimization
+* Improved: Icons for Tabs was added
+* Improved: WordPress Dynamic content ( Title, Excerpt, Content )
+* Fixed: Pagination on front page
+* Fixed: Dashboard Brizy Box
+* Fixed: Template rules match
+* Fixed: Popup compilation
+* Fixes: Popup scroll fixes
+* Fixes: Incompatibility with LiteSpeed Cache
+* Fixes: Incompatibility with Unicon core plugin
+* Fixes: Remove unnecessary SEO, Social entries
 
 = 1.0.107 - 2019-12-11 =
 * Fixed: Compile if there is no autosave post on vew page
