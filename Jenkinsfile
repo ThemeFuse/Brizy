@@ -175,6 +175,7 @@ pipeline {
                 expression { return params.gitMerge }
             }
             steps {
+                sh 'git add ./public/editor-build/'+params.editorVersion
                 sh 'git commit -a -m "Build '+params.buildVersion+'"'
 
                 sshagent (credentials: ['Git']) {
