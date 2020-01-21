@@ -421,7 +421,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				'uid'             => $this->create_uid( $post->ID ),
 				'post_type'       => $post->post_type,
 				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
-				'title'           => apply_filters( 'the_title', $post->post_title )
+				'title'           => apply_filters( 'the_title', $post->post_title ),
+				'post_title'      => apply_filters( 'the_title', $post->post_title )
 			);
 		}
 
