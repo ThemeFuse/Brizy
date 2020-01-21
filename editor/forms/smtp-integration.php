@@ -54,17 +54,20 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	 */
 	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
 		add_action( 'phpmailer_init', array( $this, 'decoratePhpMailer' ) );
+		add_action( 'wp_mail_failed', array( $this, 'handleFailToSendMessage' ) );
 
-		return parent::handleSubmit( $form, $fields );
+		$result = parent::handleSubmit( $form, $fields );
 	}
+
 
 	public function decoratePhpMailer( $phpmailer ) {
 		$phpmailer->isSMTP();
-		$phpmailer->Host     = $this->getHost();
-		$phpmailer->SMTPAuth = $this->getAuthentication();
-		$phpmailer->Port     = $this->getPort();
-		$phpmailer->Username = $this->getUsername();
-		$phpmailer->Password = $this->getPassword();
+		$phpmailer->Host       = $this->getHost();
+		$phpmailer->SMTPSecure = $this->getEncryption();
+		$phpmailer->SMTPAuth   = $this->getAuthentication();
+		$phpmailer->Port       = $this->getPort();
+		$phpmailer->Username   = $this->getUsername();
+		$phpmailer->Password   = $this->getPassword();
 	}
 
 	/**
