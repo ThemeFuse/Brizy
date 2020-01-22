@@ -1748,7 +1748,7 @@ to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .brz .brz-posts ul.page-numbers .page-numbers:before{content:"";width:28px;height:28px;position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);border:2px solid transparent;-webkit-transition:.2s linear border-color;transition:.2s linear border-color;opacity:.75}
 .brz .brz-posts ul.page-numbers .page-numbers:hover{-webkit-transition:.2s linear color;transition:.2s linear color}
 .brz .brz-posts ul.page-numbers .page-numbers.current:before{border-color:currentColor;-webkit-transition:.2s linear border-color;transition:.2s linear border-color}
-.brz .brz-menu__container{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:inherit;-ms-flex-pack:inherit;justify-content:inherit}
+.brz .brz-menu__container{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:inherit;-ms-flex-pack:inherit;justify-content:inherit;width:100%}
 .brz .brz-menu__container .brz-mm-menu__icon:hover{cursor:pointer}
 .brz .brz-menu:not(.mm-menu){position:relative;width:100%;-webkit-box-pack:inherit;-ms-flex-pack:inherit;justify-content:inherit}
 .brz .brz-menu:not(.mm-menu) .brz-menu__item{list-style:none;padding-left:5px;padding-right:5px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}
