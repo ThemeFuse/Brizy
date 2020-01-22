@@ -98,7 +98,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function getLayoutsForSync() {
 		global $wpdb;
 
-		$meta_key       = Brizy_Editor_Layout::BRIZY_CLOUD_UPDATE_REQUIRED;
+		$meta_key       = 'brizy-cloud-update-required';
 		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
 
 		$postIds = $wpdb->get_results(
@@ -114,7 +114,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function getBlocksForSync() {
 		global $wpdb;
 
-		$meta_key       = Brizy_Editor_Block::BRIZY_CLOUD_UPDATE_REQUIRED;
+		$meta_key       = 'brizy-cloud-update-required';
 		$savedBlockType = Brizy_Admin_Blocks_Main::CP_SAVED;
 
 		$postIds = $wpdb->get_results(

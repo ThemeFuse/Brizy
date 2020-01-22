@@ -241,10 +241,11 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	public function createOrUpdateBlock( Brizy_Editor_Block $block ) {
 
 		$cloudBlockData = array(
-			'container' => $this->brizyProject->getCloudContainer(),
-			'meta'      => $block->getMeta(),
-			'data'      => $block->get_editor_data(),
-			'uid'       => $block->getUid()
+			'container'   => $this->brizyProject->getCloudContainer(),
+			'meta'        => $block->getMeta(),
+			'data'        => $block->get_editor_data(),
+			'uid'         => $block->getUid(),
+			'dataVersion' => 1
 		);
 
 		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
@@ -311,7 +312,9 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			'meta'        => $popup->getMeta(),
 			'data'        => $popup->get_editor_data(),
 			'is_autosave' => 0,
-			'uid'         => $popup->getUid()
+			'uid'         => $popup->getUid(),
+			'dataVersion' => 1
+
 		);
 
 		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS;
@@ -377,7 +380,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			'container' => $this->brizyProject->getCloudContainer(),
 			'meta'      => $layout->getMeta(),
 			'data'      => $layout->get_editor_data(),
-			'uid'       => $layout->getUid()
+			'uid'       => $layout->getUid(),
+			'dataVersion' => 1
 		);
 
 		$url = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS;

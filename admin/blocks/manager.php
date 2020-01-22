@@ -21,13 +21,15 @@ class Brizy_Admin_Blocks_Manager {
 			foreach ( (array) $cloudBlocks as $cblock ) {
 				$existingBlock = false;
 				foreach ( $blocks as $block ) {
-					if ( $cblock['uid'] == $block['uid'] ) {
+					if ( $cblock->uid == $block['uid'] ) {
 						$existingBlock = true;
 					}
 				}
 
 				if ( ! $existingBlock ) {
-					$blocks[] = $cblock;
+					$cblock->synchronizable = true;
+					$cblock->synchronized   = true;
+					$blocks[]               = (array) $cblock;
 				}
 			}
 		}
@@ -39,14 +41,8 @@ class Brizy_Admin_Blocks_Manager {
 		$block = $this->getLocalBlock( $type, $uid );
 
 		if ( ! $block && $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
-			$blocks = $this->cloud->getBlocks( [ 'filter' => [ 'uid' => $uid ] ] );
-			if ( isset( $blocks[0] ) ) {
-
-				$bridge = new Brizy_Admin_Cloud_BlockBridge( $this->cloud );
-				$bridge->import( $blocks[0]['uid'] );
-
-				$block = $blocks[0];
-			}
+			$bridge = new Brizy_Admin_Cloud_BlockBridge( $this->cloud );
+			$bridge->import( $uid );
 		}
 
 		return $block;

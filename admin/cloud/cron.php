@@ -40,17 +40,19 @@ class Brizy_Admin_Cloud_Cron {
 	}
 
 	public function syncLayoutsAction() {
+		Brizy_Logger::instance()->debug('Sync layouts cron called');
 		return $this->syncLayouts();
 	}
 
 	public function syncBlocksAction() {
+		Brizy_Logger::instance()->debug('Sync blocks cron called');
 		return $this->syncBlocks();
 	}
 
 	public function addBrizyCloudCronSchedules( $schedules ) {
 		// Adds once weekly to the existing schedules.
 		$schedules['5minute'] = array(
-			'interval' => 300,
+			'interval' => 10,
 			'display'  => __( 'Once in 5 minutes' )
 		);
 
