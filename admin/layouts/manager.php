@@ -34,8 +34,15 @@ class Brizy_Admin_Layouts_Manager {
 			}
 
 			if ( ! $existingBlock ) {
+				$localLayout = $this->getLayoutByUid(  $cblock->uid );
+
+				if ( $localLayout ) {
+					$cblock->synchronized = $localLayout->isSynchronized( $this->cloud->getBrizyProject()->getCloudAccountId() );
+				} else {
+					$cblock->synchronized = false;
+				}
+
 				$cblock->synchronizable = true;
-				$cblock->synchronized   = true;
 				$blocks[]               = (array) $cblock;
 			}
 		}
@@ -44,12 +51,11 @@ class Brizy_Admin_Layouts_Manager {
 	}
 
 	/**
-	 * @param $type
 	 * @param array $arags
 	 * @param array $fields
 	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Exception
 	 */
 	public function getLocalLayouts( $arags = array(), $fields = array() ) {
 		$filterArgs = array(
@@ -74,9 +80,10 @@ class Brizy_Admin_Layouts_Manager {
 
 	/**
 	 * @param $uid
+	 * @param array $fields
 	 *
-	 * @return Brizy_Editor_Layout|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return array|mixed|null
+	 * @throws Exception
 	 */
 	public function getLayoutByUid( $uid, $fields = array() ) {
 

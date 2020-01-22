@@ -27,8 +27,16 @@ class Brizy_Admin_Blocks_Manager {
 				}
 
 				if ( ! $existingBlock ) {
+
+					$localBlock = $this->getLocalBlock( Brizy_Admin_Blocks_Main::CP_SAVED, $cblock->uid );
+
+					if ( $localBlock ) {
+						$cblock->synchronized = $localBlock->isSynchronized( $this->cloud->getBrizyProject()->getCloudAccountId() );
+					} else {
+						$cblock->synchronized = false;
+					}
+
 					$cblock->synchronizable = true;
-					$cblock->synchronized   = true;
 					$blocks[]               = (array) $cblock;
 				}
 			}
