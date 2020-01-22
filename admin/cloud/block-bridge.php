@@ -53,7 +53,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $blockId ) {
-		$blocks = $this->client->getBlocks( [ 'filter' => [ 'uid' => $blockId ] ] );
+		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ]  );
 
 		if ( ! isset( $blocks[0] ) ) {
 			return;

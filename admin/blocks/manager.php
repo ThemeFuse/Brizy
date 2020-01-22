@@ -51,6 +51,8 @@ class Brizy_Admin_Blocks_Manager {
 		if ( ! $block && $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
 			$bridge = new Brizy_Admin_Cloud_BlockBridge( $this->cloud );
 			$bridge->import( $uid );
+
+			$block = $this->getLocalBlock( $type, $uid );
 		}
 
 		return $block;

@@ -265,6 +265,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 		if ( $code >= 400 ) {
 			throw new Exception( 'Invalid code return by cloud api' );
+			Brizy_Logger::instance()->critical('Cloud api exception', [$response]);
 		}
 
 		return json_decode( wp_remote_retrieve_body( $response ) );
