@@ -59,6 +59,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 	 */
 	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
 
+		$this->exception = null;
 		///$recipients = explode( ',', $this->getEmailTo() );
 
 		$headers   = array();

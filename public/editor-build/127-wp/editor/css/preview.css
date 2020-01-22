@@ -9554,7 +9554,8 @@ body.modal-open .mm-slideout {
         flex-wrap: wrap;
     -webkit-box-pack: inherit;
         -ms-flex-pack: inherit;
-            justify-content: inherit; }
+            justify-content: inherit;
+    width: 100%; }
     .brz .brz-menu__container .brz-mm-menu__icon:hover {
       cursor: pointer; }
   .brz .brz-menu:not(.mm-menu) {

@@ -241,16 +241,22 @@ class Brizy_Editor_Forms_Api {
 			$form   = apply_filters( 'brizy_form', $form );
 			$fields = apply_filters( 'brizy_form_submit_data', $fields, $form );
 
-
+			$result = null;
 			foreach ( $form->getIntegrations() as $integration ) {
+
+				if ( ! $integration->isCompleted() ) {
+					continue;
+				}
+
 				try {
-					if ( ! $integration->isCompleted() ) {
-						continue;
-					}
-					$integration->handleSubmit( $form, $fields );
+					$result = $integration->handleSubmit( $form, $fields );
 				} catch ( Exception $e ) {
 					Brizy_Logger::instance()->exception( $e );
 					$this->error( 500, 'Member was not created.' );
+				} finally {
+					if(!$result && $integration->getException()) {
+						throw new Exception( $integration->getException()->get_error_message() );
+					}
 				}
 			}
 

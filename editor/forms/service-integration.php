@@ -69,6 +69,9 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 	 * @throws Exception
 	 */
 	public function handleSubmit( Brizy_Editor_Forms_Form $form, $fields ) {
+
+		$this->exception = null;
+
 		/**
 		 * @var \BrizyForms\Service\Service $service ;
 		 */
