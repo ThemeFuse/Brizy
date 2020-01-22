@@ -28,13 +28,15 @@ class Brizy_Admin_Layouts_Manager {
 		foreach ( (array) $cloudBlocks as $cblock ) {
 			$existingBlock = false;
 			foreach ( $blocks as $block ) {
-				if ( $cblock['uid'] == $block['uid'] ) {
+				if ( $cblock->uid == $block['uid'] ) {
 					$existingBlock = true;
 				}
 			}
 
 			if ( ! $existingBlock ) {
-				$blocks[] = $cblock;
+				$cblock->synchronizable = true;
+				$cblock->synchronized   = true;
+				$blocks[]               = (array) $cblock;
 			}
 		}
 

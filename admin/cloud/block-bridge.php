@@ -59,7 +59,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			return;
 		}
 
-		$block = $blocks[0];
+		$block = (array)$blocks[0];
 
 		$name = md5( time() );
 		$post = wp_insert_post( array(
