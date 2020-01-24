@@ -68,6 +68,41 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		$this->http         = $http;
 	}
 
+	/**
+	 * @param $uid
+	 *
+	 * @return string
+	 */
+	public function getScreenshotUrl( $uid ) {
+		$url = Brizy_Config::getEditorBaseUrls() . Brizy_Config::CLOUD_SCREENSHOT;
+
+		return sprintf( $url, $uid );
+	}
+
+	/**
+	 * @param $screenUid
+	 * @param $filePath
+	 *
+	 * @return bool
+	 */
+	public function createScreenshot( $screenUid, $filePath ) {
+		$data    = array(
+			'uid'        => $screenUid,
+			'attachment' => base64_encode( file_get_contents( $filePath ) )
+		);
+		$response = $this->http->post( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SCREENSHOTS, array(
+			'headers' => $this->getHeaders(),
+			'body'    => $data
+		) );
+
+		$code = wp_remote_retrieve_response_code( $response );
+
+		if ( $code >= 200 && $code <= 300 ) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private function getHeaders( $aditional = null ) {
 		return array_merge( array(
@@ -265,7 +300,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 		if ( $code >= 400 ) {
 			throw new Exception( 'Invalid code return by cloud api' );
-			Brizy_Logger::instance()->critical('Cloud api exception', [$response]);
+			Brizy_Logger::instance()->critical( 'Cloud api exception', [ $response ] );
 		}
 
 		return json_decode( wp_remote_retrieve_body( $response ) );
@@ -378,10 +413,10 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	public function createOrUpdateLayout( Brizy_Editor_Layout $layout ) {
 
 		$cloudBlockData = array(
-			'container' => $this->brizyProject->getCloudContainer(),
-			'meta'      => $layout->getMeta(),
-			'data'      => $layout->get_editor_data(),
-			'uid'       => $layout->getUid(),
+			'container'   => $this->brizyProject->getCloudContainer(),
+			'meta'        => $layout->getMeta(),
+			'data'        => $layout->get_editor_data(),
+			'uid'         => $layout->getUid(),
 			'dataVersion' => 1
 		);
 

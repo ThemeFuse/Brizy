@@ -354,12 +354,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->success( null );
 		}
 
-		if ( $this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED ) ) {
-			do_action( 'brizy_saved_block_deleted', $this->param( 'uid' ) );
-			do_action( 'brizy_saved_data_deleted' );
-			$this->success( null );
-		}
-
 		$this->error( '404', 'Block not found' );
 	}
 
@@ -455,7 +449,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	private function getBlock( $id, $postType ) {
 		$postId = $this->getBlockIdByUidAndBlockType( $id, $postType );
 
-		return Brizy_Editor_Block::get( $postId );
+		if ( $postId ) {
+			return Brizy_Editor_Block::get( $postId );
+		}
+
+		return null;
 	}
 
 	/**
@@ -498,7 +496,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$postId = $this->getBlockIdByUidAndBlockType( $postUid, $postType );
 
-		return wp_delete_post( $postId );
+		if($postId)
+		{
+			return wp_delete_post( $postId );
+		}
 	}
 
 

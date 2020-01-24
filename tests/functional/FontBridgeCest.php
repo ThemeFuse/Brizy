@@ -77,7 +77,6 @@ class FontBridgeCest {
 		$bridge->export( $fontUid );
 	}
 
-
 	public function testInvalidExport( FunctionalTester $I ) {
 
 		$client = $this->getCloudClientObserver();
