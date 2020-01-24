@@ -18,7 +18,7 @@ import { t } from "visual/utils/i18n";
 import { normalizeFonts } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
 
-const proEnabled = Config.get("pro");
+const IS_PRO = Config.get("pro");
 const urls = Config.get("urls");
 const TRANSITION_DELAY = 500;
 
@@ -156,7 +156,7 @@ class Details extends Component {
       );
     });
     const transition = currentPage.thumbnailHeight / TRANSITION_DELAY;
-    const pageIsPro = proEnabled && pro;
+    const pageIsPro = !IS_PRO && pro;
 
     return (
       <Fragment>
@@ -220,36 +220,31 @@ class Details extends Component {
                     Replace existing content
                   </div> */}
 
-                  {pageIsPro && styles.length > 0 && !existingTemplate && (
-                    <div
-                      className="brz-ed-popup-two-details-footer-radio-button"
-                      onClick={() => {
-                        this.setState({
-                          importStyles: !importStyles
-                        });
-                      }}
-                    >
-                      <EditorIcon
-                        icon={importStyles ? "nc-check" : "nc-uncheck"}
-                        className="brz-ed-popup-two-details-footer-radio-icon"
-                      />
-                      {t("Replace global styling")}
-                    </div>
-                  )}
-                  {!pageIsPro && (
+                  {pageIsPro ? (
                     <div className="brz-ed-popup-two-details-footer-radio-button brz-ed-popup-two-details-footer-radio-button--pro">
                       {t("Upgrade to PRO to use this layout")}
                     </div>
+                  ) : (
+                    styles.length > 0 &&
+                    !existingTemplate && (
+                      <div
+                        className="brz-ed-popup-two-details-footer-radio-button"
+                        onClick={() => {
+                          this.setState({
+                            importStyles: !importStyles
+                          });
+                        }}
+                      >
+                        <EditorIcon
+                          icon={importStyles ? "nc-check" : "nc-uncheck"}
+                          className="brz-ed-popup-two-details-footer-radio-icon"
+                        />
+                        {t("Replace global styling")}
+                      </div>
+                    )
                   )}
                 </div>
                 {pageIsPro ? (
-                  <div
-                    className="brz-ed-popup-two-details-footer-render-button"
-                    onClick={this.handleThumbnailAdd}
-                  >
-                    {t("Import This Layout")}
-                  </div>
-                ) : (
                   <a
                     className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
                     href={urls.upgradeToPro}
@@ -259,6 +254,13 @@ class Details extends Component {
                     <EditorIcon icon="nc-lock" />
                     {t("Get Brizy PRO")}
                   </a>
+                ) : (
+                  <div
+                    className="brz-ed-popup-two-details-footer-render-button"
+                    onClick={this.handleThumbnailAdd}
+                  >
+                    {t("Import This Layout")}
+                  </div>
                 )}
               </div>
             </div>
@@ -277,7 +279,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Details);
+export default connect(mapStateToProps, mapDispatchToProps)(Details);
