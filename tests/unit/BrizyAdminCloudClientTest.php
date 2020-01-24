@@ -72,6 +72,48 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->getLibraries();
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testGetScreenshotByUid() {
+
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$uid = 'some-uid';
+		$url = $client->getScreenshotUrl( $uid );
+
+		$this->assertEquals( $url, sprintf( Brizy_Config::getEditorBaseUrls() . Brizy_Config::CLOUD_SCREENSHOT, $uid ), 'It should return the correct screenshot url' );
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testCreateScreenshot() {
+
+		$projectObserver = $this->getProjectObjserver();
+		$httpObserver    = $this->getHttpObjserver();
+		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$uid            = 'some-uid';
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SCREENSHOTS;
+		$httpObserver->post( $apiEndpointUrl,
+			Argument::exact( [
+				'headers' => [
+					'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+					'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				],
+				'body'    => [
+					'uid'        => $uid,
+					'attachment' => base64_encode( file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ) )
+				]
+			] )
+		)->shouldBeCalled();
+
+		$client->createScreenshot( $uid, codecept_data_dir( 'images/cat.jpeg' ) );
+	}
+
 
 	public function testSignIn() {
 		$projectObserver = $this->getProjectObjserver();
@@ -273,7 +315,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'container'   => 'container',
 			'meta'        => array(),
 			'data'        => $block->get_editor_data(),
-			'uid'         => $block->getUid()
+			'uid'         => $block->getUid(),
+			'dataVersion' => 1
 		);
 
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS;
@@ -311,7 +354,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'container'   => 'container',
 			'meta'        => array(),
 			'data'        => $block->get_editor_data(),
-			'uid'         => $block->getUid()
+			'uid'         => $block->getUid(),
+			'dataVersion' => 1
 		);
 
 		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SAVEDBLOCKS ), Argument::exact( [
@@ -518,7 +562,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'meta'        => array(),
 			'data'        => $popup->get_editor_data(),
 			'is_autosave' => 0,
-			'uid'         => $popup->getUid()
+			'uid'         => $popup->getUid(),
+			'dataVersion' => 1
 		);
 
 
@@ -554,7 +599,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'meta'        => '{}',
 			'data'        => $popup->get_editor_data(),
 			'is_autosave' => 0,
-			'uid'         => $popup->getUid()
+			'uid'         => $popup->getUid(),
+			'dataVersion' => 1
+
 		);
 
 		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS ), Argument::exact( [
@@ -636,7 +683,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'container'   => 'container',
 			'meta'        => '{}',
 			'data'        => $layout->get_editor_data(),
-			'uid'         => $layout->getUid()
+			'uid'         => $layout->getUid(),
+			'dataVersion' => 1
 		);
 
 
@@ -674,7 +722,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'container'   => 'container',
 			'meta'        => '{}',
 			'data'        => $layout->get_editor_data(),
-			'uid'         => $layout->getUid()
+			'uid'         => $layout->getUid(),
+			'dataVersion' => 1
 		);
 
 

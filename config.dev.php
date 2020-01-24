@@ -43,6 +43,8 @@ class Brizy_Config {
 	const CLOUD_FONTS = '/api/fonts';
 	const CLOUD_POPUPS = '/api/saved_popups';
 	const CLOUD_LAYOUTS = '/api/layouts';
+	const CLOUD_SCREENSHOT = '/screenshot/%s/uid';
+	const CLOUD_SCREENSHOTS = '/api/screenshots';
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

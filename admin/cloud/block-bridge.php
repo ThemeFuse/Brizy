@@ -39,6 +39,9 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			$bridge->export( $fontUid );
 		}
 
+		$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $this->client );
+		$bridge->export( $block );
+
 		$cloudBlockObject = $this->client->createOrUpdateBlock( $block );
 
 		$block->setSynchronized( Brizy_Editor_Project::get()->getCloudAccountId(), $cloudBlockObject->uid );
@@ -53,13 +56,13 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $blockId ) {
-		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ]  );
+		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ] );
 
 		if ( ! isset( $blocks[0] ) ) {
 			return;
 		}
 
-		$block = (array)$blocks[0];
+		$block = (array) $blocks[0];
 
 		$name = md5( time() );
 		$post = wp_insert_post( array(
@@ -78,6 +81,9 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			$brizyPost->setDataVersion( 1 );
 			$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
 			$brizyPost->save();
+
+			$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $this->client );
+			$bridge->import( $brizyPost );
 		}
 	}
 
