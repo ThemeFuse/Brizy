@@ -58,13 +58,19 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 			case 'post_content':
 				$GLOBALS['post'] = $post;
 				setup_postdata($post);
+
 				add_filter( 'the_content', 'wpautop' );
+				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
+
 				$content = get_the_content( null, null, $post );
-				$content = wpautop($content);
-				//$content = apply_filters( 'the_content', $content );
+				$content = apply_filters( 'the_content', $content );
 				$content = str_replace( ']]>', ']]&gt;', $content );
+
 				remove_filter( 'the_content', 'wpautop' );
+				add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
+
 				wp_reset_postdata();
+
 				return $content;
 			case 'post_password':
 				return '';
@@ -72,7 +78,6 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 				return $post->{$property};
 		}
 	}
-
 
 	/**
 	 * It rewrite the wodpress function wp_trim_excerpt.
