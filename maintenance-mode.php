@@ -20,12 +20,7 @@ class Brizy_MaintenanceMode {
 	 * Brizy_Maintenance_Mode constructor.
 	 */
 	private function __construct() {
-		$args = wp_parse_args( Brizy_Editor_Storage_Common::instance()->get( 'maintenance', false ), [
-			'mode'  => '',
-			'who'   => 'logged',
-			'roles' => [],
-			'ips'   => [],
-		] );
+		$args = self::get_settings();
 
 		if ( 'maintenance' === $args['mode'] ) {
 			add_action( 'template_redirect', [ $this, '_action_template_redirect' ], 11 );
@@ -117,5 +112,14 @@ class Brizy_MaintenanceMode {
 			in_array( ABSPATH . 'wp-register.php', $files ) ||
 			$_SERVER['PHP_SELF'] == '/wp-login.php' ||
 			( isset( $_GLOBALS['pagenow'] ) && $GLOBALS['pagenow'] === 'wp-login.php' );
+	}
+
+	public static function get_settings() {
+		return wp_parse_args( Brizy_Editor_Storage_Common::instance()->get( 'maintenance', false ), [
+			'mode'  => '',
+			'who'   => 'logged',
+			'roles' => [],
+			'ips'   => [],
+		] );
 	}
 }

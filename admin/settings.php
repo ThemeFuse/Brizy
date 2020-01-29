@@ -195,8 +195,7 @@ class Brizy_Admin_Settings {
 
 	private function get_maintenance_tab() {
 
-		$args = (array) Brizy_Editor_Storage_Common::instance()->get( 'maintenance', false );
-
+		$args                    = Brizy_MaintenanceMode::get_settings();
 		$args['pages']           = wp_list_pluck( get_pages(), 'post_title', 'ID' );
 		$args['available_roles'] = $this->list_wp_roles();
 
