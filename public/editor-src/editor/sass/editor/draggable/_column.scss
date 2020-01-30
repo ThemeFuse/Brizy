@@ -69,6 +69,11 @@ $resize-width: 20px;
   }
 }
 
+// containerBorder button
+.brz-ed-draggable__column ~ .brz-ed-border__button {
+  z-index: z("column-resize");
+}
+
 // Hide Resize for last-child on desktop
 &.brz-ed--desktop {
   .brz-columns:last-child .brz-ed-draggable__column--right {

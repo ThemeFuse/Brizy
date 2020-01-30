@@ -11303,6 +11303,7 @@ body.brz::after,body.brz::before{display:none}
 .brz-ed .brz-ed-draggable__column-popover{position:absolute;top:-18px;left:50%;-webkit-transform:translate(-50%,-100%);transform:translate(-50%,-100%);text-align:center;padding:15px 18px;min-width:135px;height:42px;border-radius:21px;color:#fff;font-family:pn,"Open Sans",Arial,sans-serif;font-weight:600;font-size:14px;line-height:1;background-color:rgba(3,8,15,.92);-webkit-box-shadow:0 0 5px 0 rgba(0,0,0,.5);box-shadow:0 0 5px 0 rgba(0,0,0,.5)}
 .brz-ed .brz-ed-draggable__column-popover:after{content:"";display:block;position:absolute;left:50%;margin-left:-6px;bottom:-6px;border-top:6px solid rgba(3,8,15,.92);border-left:6px solid transparent;border-right:6px solid transparent}
 .brz-ed .brz-ed-draggable__column-popover__divider{margin:0 7px;color:#6e787f}
+.brz-ed .brz-ed-draggable__column~.brz-ed-border__button{z-index:1055}
 .brz-ed.brz-ed--desktop .brz-columns:last-child .brz-ed-draggable__column--right{display:none}
 .brz-ed.brz-ed--mobile .brz-ed-draggable__column-popover,.brz-ed.brz-ed--tablet .brz-ed-draggable__column-popover{min-width:85px}
 .brz-ed.brz-ed--mobile .brz-ed-draggable__column--left,.brz-ed.brz-ed--tablet .brz-ed-draggable__column--left{display:none}
