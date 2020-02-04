@@ -339,9 +339,10 @@ class Brizy_Admin_Templates {
 			'post_status' => $is_preview ? 'any' : 'publish'
 		) );
 
-		$templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $templates, [ 'type'         => $applyFor,
-		                                                                                'entityType'   => $entityType,
-		                                                                                'entityValues' => $entityValues
+		$templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $templates, [
+			'type'         => $applyFor,
+			'entityType'   => $entityType,
+			'entityValues' => $entityValues
 		] );
 
 		foreach ( $templates as $atemplate ) {
@@ -367,7 +368,7 @@ class Brizy_Admin_Templates {
 
 		$templateName = self::getTemplate()->get_template();
 
-		if ( ! $templateName ) {
+		if ( ! $templateName || $templateName == 'default' ) {
 			return path_join( BRIZY_PLUGIN_PATH, 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
 		}
 
