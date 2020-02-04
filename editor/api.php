@@ -691,7 +691,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 		foreach ( $taxonomies as $tax ) {
 			$groups[] = array(
-				'title' => $tax->label,
+				'title' => __("From",'brizy')." ".$tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::ALL_FROM_TAXONOMY,
 				'items' => array_map( $closure, get_terms( [ 'taxonomy' => $tax->name, 'hide_empty' => false ] ) )
 			);
