@@ -12,6 +12,13 @@ class Brizy_Compatibilities_BrokenLinkChecker {
 
 		global $blc_config_manager;
 
-		$blc_config_manager->options['exclusion_list'][] = 'brizy';
+		// Don't show in the "Exclusion list" textarea our exclusion keyword.
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'link-checker-settings' ) {
+			return;
+		}
+
+		if ( isset( $blc_config_manager->options['exclusion_list'] ) && ! in_array( 'brizy', $blc_config_manager->options['exclusion_list'] ) ) {
+			$blc_config_manager->options['exclusion_list'][] = 'brizy';
+		}
 	}
 }
