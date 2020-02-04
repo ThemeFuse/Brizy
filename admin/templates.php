@@ -409,7 +409,8 @@ class Brizy_Admin_Templates {
 					try {
 						self::getTemplate()->compile_page();
 						if ( ! $is_preview && $needs_compile ) {
-							self::getTemplate()->save();
+							self::getTemplate()->saveStorage();
+							self::getTemplate()->savePost();
 						}
 					} catch ( Exception $e ) {
 						//ignore
