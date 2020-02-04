@@ -205,6 +205,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'post_content' => $brizy_compiled_page->get_body() ?: '<div class="brz-root__container"></div>'
 		);
 
+		$params['post_content'] .= "<!-- t:" . time() . " -->";
+
 		if ( $can_publish ) {
 			$params['post_status'] = $post_status;
 		}
