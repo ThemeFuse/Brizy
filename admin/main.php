@@ -341,7 +341,7 @@ class Brizy_Admin_Main {
 			do_action( 'brizy_before_disable_for_post', $p );
 			Brizy_Editor_Post::get( $p->ID )
 			                 ->disable_editor()
-			                 ->save();
+			                 ->saveStorage();
 
 			do_action( 'brizy_after_disable_for_post', $p );
 		} catch ( Brizy_Editor_Exceptions_Exception $exception ) {
@@ -500,8 +500,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );
-			$post->setDataVersion(1);
-			$post->save();
+			$post->saveStorage();
 			do_action( 'brizy_after_enabled_for_post', $p );
 			// redirect
 			wp_redirect( $post->edit_url() );
