@@ -12,13 +12,11 @@ class Brizy_Compatibilities_BrokenLinkChecker {
 
 		global $blc_config_manager;
 
-		// Don't show in the "Exclusion list" textarea our exclusion keyword.
-		if ( isset( $_GET['page'] ) && $_GET['page'] === 'link-checker-settings' ) {
+		if ( ! isset( $blc_config_manager->options['exclusion_list'] ) ) {
 			return;
 		}
 
-		if ( isset( $blc_config_manager->options['exclusion_list'] ) && ! in_array( 'brizy', $blc_config_manager->options['exclusion_list'] ) ) {
-			$blc_config_manager->options['exclusion_list'][] = 'brizy';
-		}
+		$excludeRules = array_diff( [ '_dc_', 'SITE_URL_PLACEHOLDER' ], $blc_config_manager->options['exclusion_list'] );
+		$blc_config_manager->options['exclusion_list'] = array_merge( $blc_config_manager->options['exclusion_list'], $excludeRules );
 	}
 }

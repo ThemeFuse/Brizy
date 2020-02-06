@@ -52,8 +52,10 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_YoastSeo();
 		}
 
-		if ( class_exists( 'blcConfigurationManager' ) && is_admin() ) {
-			new Brizy_Compatibilities_BrokenLinkChecker();
+		if ( is_admin() ) {
+			if ( class_exists( 'blcConfigurationManager' ) ) {
+				new Brizy_Compatibilities_BrokenLinkChecker();
+			}
 		}
 	}
 
