@@ -119,7 +119,7 @@ class Brizy_MaintenanceMode {
 			'mode'  => '',
 			'who'   => 'logged',
 			'roles' => [],
-			'ips'   => [],
+			'ips'   => '',
 		] );
 	}
 }

@@ -51,6 +51,7 @@
                 <td>
 	                <?php if ( $pages ) : ?>
                         <select name="brizy-maintenance[page]" id="brizy-maintenance-page">
+                            <option value=""<?php selected( $page, '' ); ?>><?php _e( 'Select a page', 'brizy' ); ?></option>
 			                <?php foreach ( $pages as $id => $title ) : ?>
                                 <option value="<?php echo $id; ?>"<?php selected( $page, $id ); ?>><?php echo $title; ?></option>
 			                <?php endforeach; ?>
