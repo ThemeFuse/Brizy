@@ -9,16 +9,14 @@
 
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
-	/**
-	 * @var Brizy_Editor_BlockPosition[]
-	 */
+
 	use Brizy_Editor_AutoSaveAware, Brizy_Editor_Synchronizable;
 
 	const BRIZY_META = 'brizy-meta';
 	const BRIZY_MEDIA = 'brizy-media';
 
 	/**
-	 * @var object
+	 * @var Brizy_Editor_BlockPosition
 	 */
 	protected $position;
 
@@ -93,11 +91,11 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$global = array();
 
 		if ( in_array( 'uid', $fields ) ) {
-			$global['uid'        ] = $this->getUid();
+			$global['uid'] = $this->getUid();
 		}
 
 		if ( in_array( 'status', $fields ) ) {
-			$global['status'     ] = get_post_status( $this->getWpPostId() );
+			$global['status'] = get_post_status( $this->getWpPostId() );
 		}
 
 		if ( in_array( 'dataVersion', $fields ) ) {
@@ -126,7 +124,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
 			if ( in_array( 'position', $fields ) ) {
-				$global['position'] = $this->getPosition();
+				$data['position'] = $this->getPosition()->convertToOptionValue();
 			}
 			if ( in_array( 'rules', $fields ) ) {
 				$ruleManager     = new Brizy_Admin_Rules_Manager();
@@ -256,10 +254,13 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
 
-		$data['rules']    = $ruleManager->getRules( $this->getWpPostId() );
-		$data['position'] = $this->getPosition();
-		$data['meta']     = $this->getMeta();
+		$data['rules'] = $ruleManager->getRules( $this->getWpPostId() );
 
+		if ( $this->getPosition() ) {
+			$data['position'] = $this->getPosition()->convertToOptionValue();
+		}
+
+		$data['meta']           = $this->getMeta();
 		$data['cloudId']        = $this->getCloudId();
 		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media']          = $this->getMedia();
@@ -291,17 +292,19 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 	public function convertToOptionValue() {
 
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-
 		$data = parent::convertToOptionValue();
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
-		$data['position']       = $this->getPosition();
+		$data['position'] = null;
+		if ( $this->getPosition() ) {
+			$data['position'] = $this->getPosition()->convertToOptionValue();
+		}
+
 		$data['cloudId']        = $this->getCloudId();
 		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media']          = $this->getMedia();
-		$data['rules']    = $ruleManager->getRules( $this->getWpPostId() );
+		$data['rules']          = $ruleManager->getRules( $this->getWpPostId() );
 
 		if ( $this->isSavedBlock() ) {
 			$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
