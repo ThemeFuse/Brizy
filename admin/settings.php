@@ -39,8 +39,9 @@ class Brizy_Admin_Settings {
 		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
 
 		if ( ! is_network_admin() ) {
-			add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
-			add_action( 'admin_menu', array( $this, 'actionRegisterGoProPage' ), 20 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 9 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGetHelpLink' ), 20 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
 		} else {
 			add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
 		}
@@ -98,7 +99,7 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	function actionRegisterRoleManagerPage() {
+	function actionRegisterSubMenuSettingsPage() {
 		add_submenu_page( self::menu_slug(), __( 'Settings', 'brizy' ), __( 'Settings', 'brizy' ), 'manage_options', self::menu_slug(), array(
 			$this,
 			'render'
@@ -108,7 +109,26 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	public function actionRegisterGoProPage() {
+	function actionRegisterSubMenuGetHelpLink() {
+
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			return;
+		}
+
+		add_submenu_page(
+			self::menu_slug(),
+			'',
+			__( 'Get Help', 'brizy' ),
+			'manage_options',
+			'https://support.brizy.io/hc/en-us',
+			[]
+		);
+	}
+
+	/**
+	 * @internal
+	 */
+	public function actionRegisterSubMenuGoProPage() {
 
 		if ( class_exists( 'BrizyPro_Main' ) ) {
 			return;
