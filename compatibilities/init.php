@@ -51,6 +51,12 @@ class Brizy_Compatibilities_Init {
 		if ( function_exists( 'wpseo_auto_load' ) ) {
 			new Brizy_Compatibilities_YoastSeo();
 		}
+
+		if ( is_admin() ) {
+			if ( class_exists( 'blcConfigurationManager' ) ) {
+				new Brizy_Compatibilities_BrokenLinkChecker();
+			}
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {
