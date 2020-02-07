@@ -45,18 +45,28 @@ class Brizy_Compatibilities_Init {
 		if ( $this->is_plugin_active( 'sg-cachepress/sg-cachepress.php' ) ) {
 			new Brizy_Compatibilities_SgOptimizer();
 		}
+
+		if ( defined( 'SEOPRESS_VERSION' ) ) {
+			new Brizy_Compatibilities_SeoPress();
+		}
 	}
 
 	public function action_plugins_loaded() {
 		if ( function_exists( 'wpseo_auto_load' ) ) {
 			new Brizy_Compatibilities_YoastSeo();
 		}
+
+		if ( is_admin() ) {
+			if ( class_exists( 'blcConfigurationManager' ) ) {
+				new Brizy_Compatibilities_BrokenLinkChecker();
+			}
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {
 
 		$apply_filters = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
-		if (  is_array($apply_filters) &&  in_array( $plugin_file, $apply_filters ) ) {
+		if ( is_array( $apply_filters ) && in_array( $plugin_file, $apply_filters ) ) {
 			return true;
 		}
 
