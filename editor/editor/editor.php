@@ -132,7 +132,7 @@ class Brizy_Editor_Editor_Editor {
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
-				'ruleMatches'     => $this->getTempalteRuleMatches( $isTemplate, $wp_post_id ),
+				'ruleMatches'     => $this->getTempalteRuleMatches( $mode === 'template', $wp_post_id ),
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
