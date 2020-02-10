@@ -27,7 +27,7 @@ class Brizy_Compatibilities_RankMathSeo {
 		register_rest_route( 'rankmath/v1', '/briz_post_content', array(
 			'methods' => 'GET',
 			[
-				'methods'  => WP_REST_Server::READABLE,
+				'methods'  => WP_REST_Server::ALLMETHODS,
 				'callback' => [ $this, 'get_post_content' ],
 				'args'     => [
 					'postId' => [
@@ -48,7 +48,7 @@ class Brizy_Compatibilities_RankMathSeo {
 		try {
 			$post = Brizy_Editor_Post::get( $request->get_param( 'postId' ) );
 			if ( $post->uses_editor() ) {
-				return apply_filters( 'brizy_content', $post->post_content, Brizy_Editor_Project::get(), $post->getWpPost() );
+				return wp_send_json_success( [ 'content' => apply_filters( 'brizy_content', $post->get_compiled_page()->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() ) ] );
 			} else {
 				wp_send_json_error( 'This post does not use Brizy.', 204 );
 			}
