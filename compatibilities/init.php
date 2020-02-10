@@ -49,6 +49,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'SEOPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_SeoPress();
 		}
+
+		if ( function_exists( 'rank_math' ) ) {
+			new Brizy_Compatibilities_RankMathSEO();
+		}
 	}
 
 	public function action_plugins_loaded() {
