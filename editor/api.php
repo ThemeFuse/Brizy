@@ -2,6 +2,7 @@
 
 class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
+
 	const nonce = 'brizy-api';
 	const AJAX_GET_POST_INFO = 'brizy_get_post_info';
 	const AJAX_GET = 'brizy_editor_get_items';
@@ -33,6 +34,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_SET_FEATURED_IMAGE_FOCAL_POINT = 'brizy_set_featured_image_focal_point';
 	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
 	const AJAX_TIMESTAMP = 'brizy_timestamp';
+	const AJAX_SET_TEMPLATE_TYPE = 'brizy_set_template_type';
 
 
 	const RULE_GROUP_LIST = 'brizy_rule_group_list';
@@ -90,6 +92,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			) );
 			add_action( 'wp_ajax_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
 			add_action( 'wp_ajax_nopriv_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
+			add_action( 'wp_ajax_' . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
 		}
 
 		if ( is_admin() ) {
@@ -336,7 +339,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 
-			$postId        = (int) $this->param( 'post_id' ) ;
+			$postId        = (int) $this->param( 'post_id' );
 			$defaultFields = [ 'ID', 'post_title', 'post_content' ];
 			$post_fields   = array_intersect( $this->param( 'fields' ), $defaultFields );
 
@@ -350,7 +353,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$post = get_post( $postId, ARRAY_A );
 
-			if(!$post) {
+			if ( ! $post ) {
 				$this->error( 404, 'Invalid post id' );
 			}
 
@@ -499,7 +502,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				'uid'             => $this->create_uid( $post->ID ),
 				'post_type'       => $post->post_type,
 				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
-				'title'      => apply_filters( 'the_title', $post->post_title ),
+				'title'           => apply_filters( 'the_title', $post->post_title ),
 				'post_title'      => apply_filters( 'the_title', $post->post_title )
 			);
 		}
@@ -684,14 +687,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$closure = function ( $v ) {
 			return array(
 				'title'      => $v->name,
-				'value'      => $v->taxonomy."|".$v->term_id,
+				'value'      => $v->taxonomy . "|" . $v->term_id,
 				'groupValue' => $v->taxonomy
 			);
 		};
 
 		foreach ( $taxonomies as $tax ) {
 			$groups[] = array(
-				'title' => __("From",'brizy')." ".$tax->labels->singular_name,
+				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::ALL_FROM_TAXONOMY,
 				'items' => array_map( $closure, get_terms( [ 'taxonomy' => $tax->name, 'hide_empty' => false ] ) )
 			);
@@ -765,6 +768,35 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		return $list;
+	}
+
+	public function setTemplateType() {
+		try {
+
+			$this->verifyNonce( self::nonce );
+			$templateId   = $this->param( 'template_id' );
+			$templateType = $this->param( 'template_type' );
+
+			if ( get_post_type( $templateId ) != Brizy_Admin_Templates::CP_TEMPLATE ) {
+				$this->error( 400, 'Invalid template' );
+			}
+
+			$allowedTypes = [ Brizy_Admin_Templates::TYPE_SINGLE, Brizy_Admin_Templates::TYPE_ARCHIVE ];
+
+			if ( ! in_array( $templateType, $allowedTypes, true ) ) {
+				$this->error( 400, 'Invalid template type' );
+			}
+
+			update_post_meta( $templateId, Brizy_Admin_Templates::TEMPLATE_TYPE_KEY, $templateType );
+
+			$this->success( [] );
+
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+			$this->error( 500, $e->getMessage() );
+
+			return;
+		}
 	}
 
 
