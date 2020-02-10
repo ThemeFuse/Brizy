@@ -5,8 +5,7 @@ class BlockApiCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
-		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_GLOBAL ] );
-		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Admin_Blocks_Main::CP_SAVED ] );
+		$I->dontHavePostInDatabase( [  ] );
 		$I->haveManyPostsInDatabase( 2, [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global {{n}}',
@@ -256,7 +255,8 @@ class BlockApiCest {
 			'position' => '{"align": "top","top": 1,"bottom":2}',
 			'rules'    => '[]',
 			'meta'     => $meta,
-			'media'    => $media
+			'media'    => $media,
+			'status'   => 'draft'
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -269,6 +269,7 @@ class BlockApiCest {
 		$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
 		$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+		$I->assertEquals(  'draft', $block->status, 'Block status should be draft' );
 		$I->assertEquals( $block->position->align, 'top', 'Block position should contain updated align property' );
 		$I->assertEquals( $block->meta, $meta, 'Block should contain the meta property and the correct value' );
 		$I->assertEquals( $block->position->top, 1, 'Block position should contain updated top property' );
@@ -292,7 +293,7 @@ class BlockApiCest {
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global',
 			'post_name'   => 'Global',
-			'post_status' => 'publish',
+			'post_status' => 'draft',
 			'meta_input'  => [
 				'brizy'                       => serialize( [
 						"brizy-post" => [
@@ -328,6 +329,7 @@ class BlockApiCest {
 			'is_autosave' => 1,
 			'version'     => BRIZY_EDITOR_VERSION,
 			'dataVersion' => 1,
+			'status'      => 'publish',
 		] );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -336,7 +338,7 @@ class BlockApiCest {
 		$block = $block->data;
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
-		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
+		$I->assertEquals( $block->status, 'draft', 'Block should contain property:  status' );
 		$I->assertEquals( $block->data, $newBlockData, 'Block should contain updated data' );
 
 		$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
@@ -468,6 +470,7 @@ class BlockApiCest {
 			json_encode( (object) $blocks )
 		);
 		$I->seeResponseCodeIsSuccessful();
+
 		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
 
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
@@ -479,14 +482,14 @@ class BlockApiCest {
 		$jsonResponse = $I->grabResponse();
 		$array        = json_decode( $jsonResponse );
 
-		foreach ( $array->data as  $block ) {
+		foreach ( $array->data as $block ) {
 			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertEquals( $block->position->align, $blocks[$block->uid]['align'], 'Block position should contain updated align property' );
-			$I->assertEquals( $block->position->top, $blocks[$block->uid]['top'], 'Block position should contain updated top property' );
-			$I->assertEquals( $block->position->bottom, $blocks[$block->uid]['bottom'], 'Block position should contain updated bottom property' );
+			$I->assertEquals( $block->position->align, $blocks[ $block->uid ]['align'], 'Block position should contain updated align property' );
+			$I->assertEquals( $block->position->top, $blocks[ $block->uid ]['top'], 'Block position should contain updated top property' );
+			$I->assertEquals( $block->position->bottom, $blocks[ $block->uid ]['bottom'], 'Block position should contain updated bottom property' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}
@@ -523,9 +526,9 @@ class BlockApiCest {
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertNotEquals( $block->position->align, $blocks[$block->uid]['align'], 'Block position should contain updated align property' );
-			$I->assertNotEquals( $block->position->top, $blocks[$block->uid]['top'], 'Block position should contain updated top property' );
-			$I->assertNotEquals( $block->position->bottom, $blocks[$block->uid]['bottom'], 'Block position should contain updated bottom property' );
+			$I->assertNotEquals( $block->position->align, $blocks[ $block->uid ]['align'], 'Block position should contain updated align property' );
+			$I->assertNotEquals( $block->position->top, $blocks[ $block->uid ]['top'], 'Block position should contain updated top property' );
+			$I->assertNotEquals( $block->position->bottom, $blocks[ $block->uid ]['bottom'], 'Block position should contain updated bottom property' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}

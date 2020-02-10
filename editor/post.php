@@ -209,7 +209,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$post_type        = $this->getWpPost()->post_type;
 		$post_type_object = get_post_type_object( $post_type );
 		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-		$post_status      = $can_publish ? 'publish' : 'pending';
+		$post_status      = $this->getWpPost()->post_status;
 
 		$brizy_compiled_page = $this->get_compiled_page();
 
