@@ -252,12 +252,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
-
-
 		$data['rules'] = $ruleManager->getRules( $this->getWpPostId() );
 
 		if ( $this->getPosition() ) {
-			$data['position'] = $this->getPosition()->convertToOptionValue();
+			$data['position'] = $this->getPosition()->jsonSerialize();
 		}
 
 		$data['meta']           = $this->getMeta();

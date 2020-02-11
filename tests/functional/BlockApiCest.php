@@ -23,7 +23,7 @@ class BlockApiCest {
 							'editor_data'        => 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=',
 							'brizy-use-brizy'    => true,
 							'position'           => [ 'top' => 0, 'bottom' => 1, 'align' => "top" ],
-							'rules'              => []
+							'rules'              => '{}'
 						],
 					]
 				),
@@ -32,7 +32,7 @@ class BlockApiCest {
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
 				'brizy-need-compile'          => 0,
-				'brizy-rules'                 => '{}',
+				'brizy-rules'                 => 'a:1:{i:0;a:5:{s:2:"id";s:32:"753f11de43bb70bbaa116943077ce45c";s:4:"type";i:1;s:10:"appliedFor";i:1;s:10:"entityType";s:4:"page";s:12:"entityValues";a:1:{i:0;i:7;}}}',
 			],
 		] );
 
@@ -131,6 +131,11 @@ class BlockApiCest {
 			$I->assertEquals( $block->position->top, 0, 'Block position should contain updated top property' );
 			$I->assertEquals( $block->position->bottom, 1, 'Block position should contain updated bottom property' );
 			$I->assertFalse( isset( $block->rules ), 'Block should not contain property:  rules and must be array' );
+			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be equal to 1 ' );
+			$I->assertEquals( $block->rules[0]->appliedFor, 1, 'The rule property [appliedFor] should be equal to  1 ' );
+			$I->assertEquals( $block->rules[0]->entityType, 'page', 'The rule property [entityType] should be equal to  "page" ' );
+			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be 1 ' );
+			$I->assertEquals( $block->rules[0]->id, '753f11de43bb70bbaa116943077ce45c', 'The rule property [id] should be 753f11de43bb70bbaa116943077ce45c ' );
 		}
 	}
 
@@ -459,7 +464,7 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsTest( FunctionalTester $I ) {
 
 		$blocks = [
-			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "left" ],
+			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "top" ],
 			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
 		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
