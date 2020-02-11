@@ -46,7 +46,7 @@ modules:
       dbPassword: "%TEST_SITE_DB_PASSWORD%"
       tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
       wpDebug: true
-      plugins: ['brizy/brizy.php']
-      activatePlugins: ['brizy/brizy.php']
+      plugins: ['brizy/brizy.php','brizy-pro/brizy-pro.php']
+      activatePlugins: ['brizy/brizy.php','brizy-pro/brizy-pro.php']
     WPFilesystem:
       wpRootFolder: "%WP_ROOT_FOLDER%"
