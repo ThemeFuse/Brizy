@@ -100,7 +100,18 @@ class BlockApiCest {
 			$I->assertFalse( isset( $block->synchronizable ), 'Block should not contain property:  synchronizable' );
 			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
 			$I->assertTrue( isset( $block->position ), 'Block should contain property:  position and must be object' );
+			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+			$I->assertEquals( $block->position->align, 'top', 'Block position should contain updated align property' );
+			$I->assertEquals( $block->position->top, 0, 'Block position should contain updated top property' );
+			$I->assertEquals( $block->position->bottom, 1, 'Block position should contain updated bottom property' );
+
 			$I->assertTrue( isset( $block->rules ), 'Block should contain property:  rules and must be array' );
+			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be equal to 1 ' );
+			$I->assertEquals( $block->rules[0]->appliedFor, 1, 'The rule property [appliedFor] should be equal to  1 ' );
+			$I->assertEquals( $block->rules[0]->entityType, 'page', 'The rule property [entityType] should be equal to  "page" ' );
+			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be 1 ' );
+			$I->assertEquals( $block->rules[0]->id, '753f11de43bb70bbaa116943077ce45c', 'The rule property [id] should be 753f11de43bb70bbaa116943077ce45c ' );
+
 		}
 
 
@@ -126,16 +137,7 @@ class BlockApiCest {
 			$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
 			$I->assertEquals( $block->meta, '{"_thumbnailSrc": "","_thumbnailWidth": 0}', 'Block should contain correct meta value' );
 			$I->assertFalse( isset( $block->position ), 'Block should not contain property:  position and must be object' );
-			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertEquals( $block->position->align, 'top', 'Block position should contain updated align property' );
-			$I->assertEquals( $block->position->top, 0, 'Block position should contain updated top property' );
-			$I->assertEquals( $block->position->bottom, 1, 'Block position should contain updated bottom property' );
 			$I->assertFalse( isset( $block->rules ), 'Block should not contain property:  rules and must be array' );
-			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be equal to 1 ' );
-			$I->assertEquals( $block->rules[0]->appliedFor, 1, 'The rule property [appliedFor] should be equal to  1 ' );
-			$I->assertEquals( $block->rules[0]->entityType, 'page', 'The rule property [entityType] should be equal to  "page" ' );
-			$I->assertEquals( $block->rules[0]->type, 1, 'The rule property [type] should be 1 ' );
-			$I->assertEquals( $block->rules[0]->id, '753f11de43bb70bbaa116943077ce45c', 'The rule property [id] should be 753f11de43bb70bbaa116943077ce45c ' );
 		}
 	}
 

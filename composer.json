@@ -17,7 +17,7 @@
     "squizlabs/php_codesniffer": "^3.0@dev"
   },
   "require": {
-    "twig/twig": "1.42.0",
+    "twig/twig": "1.42.5",
     "shortpixel/shortpixel-php": "^1.5",
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.3",

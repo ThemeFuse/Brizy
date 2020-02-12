@@ -71,8 +71,6 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	}
 
 	public function createResponse( $fields = array() ) {
-
-
 		if ( empty( $fields ) ) {
 			$fields = array(
 				'uid',
@@ -124,7 +122,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
 			if ( in_array( 'position', $fields ) ) {
-				$data['position'] = $this->getPosition()->convertToOptionValue();
+				$global['position'] = $this->getPosition()->convertToOptionValue();
 			}
 			if ( in_array( 'rules', $fields ) ) {
 				$ruleManager     = new Brizy_Admin_Rules_Manager();
@@ -279,6 +277,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$storage      = $this->getStorage();
 		$storage_post = $storage->get( self::BRIZY_POST, false );
 
+		$this->position = null;
 		if ( isset( $storage_post['position'] ) ) {
 			$this->position = Brizy_Editor_BlockPosition::createFromSerializedData( $storage_post['position'] );
 		}
@@ -302,12 +301,12 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		$data['position'] = null;
 		$data['rules'] = [];
+
 		if ( $this->getPosition() ) {
 			$data['position'] = $this->getPosition()->convertToOptionValue();
 		}
 
 		$rules = $ruleManager->getRules( $this->getWpPostId() );
-
 		foreach ( $rules as $rule ) {
 			$data['rules'][] = $rule->convertToOptionValue();
 		}
