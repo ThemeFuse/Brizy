@@ -118,7 +118,7 @@ class Brizy_Admin_Settings {
 		add_submenu_page(
 			self::menu_slug(),
 			'',
-			__( 'Get Help', 'brizy' ),
+			'<span class="brz-get-help-add-target-blank">' . __( 'Get Help', 'brizy' ) . '</span>',
 			'manage_options',
 			'https://support.brizy.io/hc/en-us',
 			[]

@@ -151,6 +151,9 @@ jQuery(document).ready(function ($) {
         window.location = $(this).attr('href');
     });
 
+    // Open our submenu link "Get Help" in a new tab.
+    $( '.brz-get-help-add-target-blank' ).parent().attr( 'target', '_blank' );
+
     var BrizyGutenberg = {
 
         insertBrizyBtn: function () {
