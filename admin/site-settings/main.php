@@ -72,10 +72,10 @@ class Brizy_Admin_SiteSettings_Main {
 
 	private function handleSettingsTabSubmit() {
 		if ( isset( $_POST['title'] ) ) {
-			update_option( 'blogname', wp_unslash( $_POST['title'] ) );
+			update_option( 'blogname', sanitize_text_field( $_POST['title'] ) );
 		}
 		if ( isset( $_POST['description'] ) ) {
-			update_option( 'blogdescription', wp_unslash( $_POST['description'] ) );
+			update_option( 'blogdescription', sanitize_text_field( $_POST['description'] ) );
 		}
 
 		if ( isset( $_FILES['favicon'] ) ) {
@@ -103,10 +103,10 @@ class Brizy_Admin_SiteSettings_Main {
 
 	public function handleSocialSharingSubmit() {
 		if ( isset( $_POST['title'] ) ) {
-			update_option( 'brizy-social-title', wp_unslash( $_POST['title'] ) );
+			update_option( 'brizy-social-title', sanitize_text_field( $_POST['title'] ) );
 		}
 		if ( isset( $_POST['description'] ) ) {
-			update_option( 'brizy-social-description', wp_unslash( $_POST['description'] ) );
+			update_option( 'brizy-social-description', sanitize_text_field( $_POST['description'] ) );
 		}
 
 		if ( isset( $_FILES['thumbnail'] ) ) {
