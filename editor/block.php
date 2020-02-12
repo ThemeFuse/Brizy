@@ -250,19 +250,25 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
+		$data['rules']       = [];
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
-		$data['rules'] = $ruleManager->getRules( $this->getWpPostId() );
 
+		$rules = $ruleManager->getRules( $this->getWpPostId() );
+		foreach ( $rules as $rule ) {
+			$data['rules'][] = $rule->jsonSerialize();
+		}
+
+
+		$data['position'] = null;
 		if ( $this->getPosition() ) {
 			$data['position'] = $this->getPosition()->jsonSerialize();
 		}
 
 		$data['meta']           = $this->getMeta();
+		$data['media']          = $this->getMedia();
 		$data['cloudId']        = $this->getCloudId();
 		$data['cloudAccountId'] = $this->getCloudAccountId();
-		$data['media']          = $this->getMedia();
-
 		unset( $data['wp_post'] );
 
 		return $data;
@@ -295,14 +301,20 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
 		$data['position'] = null;
+		$data['rules'] = [];
 		if ( $this->getPosition() ) {
 			$data['position'] = $this->getPosition()->convertToOptionValue();
+		}
+
+		$rules = $ruleManager->getRules( $this->getWpPostId() );
+
+		foreach ( $rules as $rule ) {
+			$data['rules'][] = $rule->convertToOptionValue();
 		}
 
 		$data['cloudId']        = $this->getCloudId();
 		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media']          = $this->getMedia();
-		$data['rules']          = $ruleManager->getRules( $this->getWpPostId() );
 
 		if ( $this->isSavedBlock() ) {
 			$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
