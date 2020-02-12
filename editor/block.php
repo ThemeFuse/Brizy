@@ -121,7 +121,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		}
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
-			if ( in_array( 'position', $fields ) ) {
+			if ( in_array( 'position', $fields ) && $this->getPosition() ) {
 				$global['position'] = $this->getPosition()->convertToOptionValue();
 			}
 			if ( in_array( 'rules', $fields ) ) {
@@ -300,7 +300,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
 		$data['position'] = null;
-		$data['rules'] = [];
+		$data['rules']    = [];
 
 		if ( $this->getPosition() ) {
 			$data['position'] = $this->getPosition()->convertToOptionValue();
