@@ -26,6 +26,12 @@ class Brizy_MaintenanceMode {
 			add_action( 'template_redirect', [ $this, '_action_template_redirect' ], 11 );
 		}
 
+		if ( ( 'maintenance' === $args['mode'] || 'coming_soon' === $args['mode'] ) && ! empty( $args['page'] ) ) {
+			add_action( 'admin_bar_menu', [ $this, 'action_add_menu_in_admin_bar' ], 301 );
+			add_action( 'admin_head', [ $this, 'print_style' ] );
+			add_action( 'wp_head', [ $this, 'print_style' ] );
+		}
+
 		$this->set_query( $args );
 	}
 
@@ -82,6 +88,56 @@ class Brizy_MaintenanceMode {
 		header( "$protocol 503 Service Unavailable", true, 503 );
 		header( 'Content-Type: text/html; charset=utf-8' );
 		header( 'Retry-After: 600' );
+	}
+
+	/**
+	 * Add menu in admin bar.
+	 *
+	 * Adds "Maintenance Mode" items to the WordPress admin bar.
+	 *
+	 * Fired by `admin_bar_menu` filter.
+	 *
+	 * @access public
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar WP_Admin_Bar instance, passed by reference.
+	 */
+	public function action_add_menu_in_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
+
+		$args = self::get_settings();
+
+		$wp_admin_bar->add_node( [
+			'id'    => 'brizy-maintenance-on',
+			'title' => __( 'Maintenance Mode ON', 'brizy' ),
+			'href'  => esc_url( add_query_arg( [ 'page' => Brizy_Admin_Settings::menu_slug(), 'tab' => 'maintenance' ], admin_url() ) ),
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => 'brizy-maintenance-edit',
+			'parent' => 'brizy-maintenance-on',
+			'title'  => __( 'Edit Page', 'brizy' ),
+			'href'   => add_query_arg(
+				[ Brizy_Editor_Constants::EDIT_KEY => '' ],
+				get_permalink( $args['page'] )
+			),
+		] );
+	}
+
+	/**
+	 * Print css style.
+	 *
+	 * Adds custom CSS to the HEAD html tag. The CSS that emphasise the maintenance
+	 * mode with red colors.
+	 *
+	 * Fired by `admin_head` and `wp_head` filters.
+	 *
+	 * @access public
+	 */
+	public function print_style() {
+		?>
+		<style>#wp-admin-bar-brizy-maintenance-on > a { background-color: #dc3232; }
+			#wp-admin-bar-brizy-maintenance-on > .ab-item:before { content: "\f160"; top: 2px; }
+		</style>
+		<?php
 	}
 
 	private function get_user_ip() {
