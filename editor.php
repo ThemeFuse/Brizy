@@ -53,7 +53,7 @@ class Brizy_Editor {
 
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
 		//add_action( 'wp_head', array( $this, 'brizy_settings_header' ) );
-		add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
+		//add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
 
 	}
 
