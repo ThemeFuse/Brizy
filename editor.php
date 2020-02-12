@@ -518,7 +518,7 @@ class Brizy_Editor {
 
 		$feedback = true;
 
-		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) ) {
 
 			$whiteLabel = BrizyPro_Admin_WhiteLabel::_init();
 			$callable   = is_callable( [ $whiteLabel, 'getEnabled' ] );
