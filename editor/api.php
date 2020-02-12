@@ -369,6 +369,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$data        = stripslashes( $this->param( 'data' ) );
 			$atemplate   = $this->param( 'template' );
 			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
+			$status = stripslashes( $this->param( 'status' ) );
+
+			if ( ! in_array( $status, [ 'publish', 'draft','pending','private','future' ] ) ) {
+				$this->error( 400, "Invalid post type" );
+			}
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
@@ -379,6 +384,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 				$this->post->set_needs_compile( true );
 			}
+
+			$this->post->getWpPost()->post_status = $status;
 
 			if ( (int) $this->param( 'is_autosave' ) == 1 ) {
 				$this->post->save( 1 );
