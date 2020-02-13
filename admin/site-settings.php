@@ -5,9 +5,9 @@
 require_once( '../../../../wp-load.php' );
 require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
-if(!is_user_logged_in() || !current_user_can('administrator') ) {
-    wp_redirect(admin_url());
-    exit;
+if ( ! current_user_can( 'manage_options' ) ) {
+	wp_redirect( admin_url() );
+	exit;
 }
 
 if ( class_exists( 'Brizy_Admin_SiteSettings_Main' ) ) {
