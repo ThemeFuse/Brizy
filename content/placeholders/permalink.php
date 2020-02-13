@@ -29,6 +29,4 @@ class Brizy_Content_Placeholders_Permalink extends Brizy_Content_Placeholders_Si
 
 		return '';
 	}
-
-
 }

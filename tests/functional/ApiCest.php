@@ -398,6 +398,31 @@ class ApiCest {
 		$I->seeResponseCodeIs( 404 );
 	}
 
+	public function getPlaceholderContentTest( FunctionalTester $I ) {
+
+		$postId = $I->havePostInDatabase( [
+			'post_type'    => 'page',
+			'post_title'   => 'Title {{n}}',
+			'post_content' => 'Page content'
+		] );
+
+		$permalink = get_permalink($postId);
+
+		// test with invalid attachment
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'post'        => $postId,
+				'action'      => 'brizy_placeholder_content',
+				'version'     => BRIZY_EDITOR_VERSION,
+				'placeholder' => '{{brizy_dc_permalink post_id=\''.$postId.'\'}}'
+			] ) );
+		$I->seeResponseCodeIsSuccessful();
+
+		$response = $I->grabResponse();
+		$response = json_decode( $response );
+
+		$I->assertStringNotContainsString('{{brizy_dc_permalink post_id=\''.$postId.'\'}}',$response->data->placeholder,'Is should replace the place holder with the post permalink');
+	}
+
 	public function setTemplateTypeTest( FunctionalTester $I ) {
 		$postId = $I->havePostInDatabase( [
 			'post_type'   => 'brizy_template',
