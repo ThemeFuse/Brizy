@@ -34,30 +34,36 @@ var apiCache = {
 };
 
 var api = {
-    getGroupList: function () {
+    getGroupList: function (templateType) {
 
-        if (apiCache.groupList)
-            return apiCache.groupList;
+        if (!apiCache.groupList) {
+            apiCache.groupList = [];
+        }
 
-        return apiCache.groupList = jQuery.getJSON(Brizy_Admin_Rules.url, {
+        if (apiCache.groupList && apiCache.groupList[templateType])
+            return apiCache.groupList[templateType];
+
+        return apiCache.groupList[templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_group_list",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
-            context: 'template-rules'
+            context: 'template-rules',
+            templateType: templateType
         })
     },
 
-    getPostsGroupList: function (postType) {
+    getPostsGroupList: function (postType, templateType) {
 
-        if (apiCache.postGroupListPromise[postType])
-            return apiCache.postGroupListPromise[postType];
+        if (apiCache.postGroupListPromise[postType + templateType])
+            return apiCache.postGroupListPromise[postType + templateType];
 
-        return apiCache.postGroupListPromise[postType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
+        return apiCache.postGroupListPromise[postType + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_posts_group_list",
             postType: postType,
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
-            context: 'template-rules'
+            context: 'template-rules',
+            templateType: templateType
         })
     },
 
@@ -103,11 +109,17 @@ var actions = {
 
     updateGroups: function (value) {
         return function (state) {
-            return {groups: value.data};
+            return {groups: value};
         };
     },
 
     rule: {
+        update: function (rule) {
+            return function (state) {
+                return rule;
+            };
+        },
+
         setType: function (value) {
             return function (state) {
                 return {type: value};
@@ -147,32 +159,36 @@ var actions = {
     },
     addSingleRule: function (rule) {
         return function (state) {
-            return {singleRules: [...state.singleRules, rule
-        ]
-        }
-            ;
+            return {
+                singleRules: [...state.singleRules, rule
+                ]
+            }
+                ;
         };
     },
     addArchiveRule: function (rule) {
         return function (state) {
-            return {archiveRules: [...state.archiveRules, rule
-        ]
-        }
-            ;
+            return {
+                archiveRules: [...state.archiveRules, rule]
+            }
+                ;
         };
     },
     removeSingleRule: function (rule) {
         return function (state) {
             return {
-                singleRules: state.singleRules.filter(arule => arule != rule)
-            }
-                ;
+                singleRules: state.singleRules.filter(function (arule) {
+                    return arule != rule;
+                })
+            };
         };
     },
     removeArchiveRule: function (rule) {
         return function (state) {
             return {
-                archiveRules: state.archiveRules.filter(arule => arule != rule)
+                archiveRules: state.archiveRules.filter(function (arule) {
+                    return arule != rule;
+                })
             }
                 ;
         };
@@ -248,8 +264,6 @@ var BrzSelect2 = function (params) {
                 el.trigger("change");
             }
         }
-
-
     };
 
     var onremove = function (element, done) {
@@ -339,7 +353,7 @@ var RulePostsGroupSelectField = function (params) {
             style: params.style ? params.style : {width: "200px"},
             name: params.name,
             optionRequest: function () {
-                return api.getPostsGroupList(entityType);
+                return api.getPostsGroupList(entityType, params.type);
             },
             convertResponseToOptions: convertResponseToOptions,
             onChange: params.onChange,
@@ -379,8 +393,10 @@ var RuleApplyGroupField = function (params) {
             class: "brizy-rule-select--options[]",
             onchange: function (e) {
                 var values = e.target.value.split("|");
-                actions.rule.setAppliedFor(values[0]);
-                actions.rule.setEntityType(values[1]);
+                actions.rule.update({
+                    appliedFor: values[0],
+                    entityType: values[1],
+                });
             }
         };
 
@@ -388,6 +404,8 @@ var RuleApplyGroupField = function (params) {
             h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
         ];
 
+
+        console.log(appliedFor);
 
         switch (appliedFor) {
             case RULE_POSTS:
@@ -437,7 +455,7 @@ var RuleForm = function (params) {
     var elements = [
         h("h4", {}, "Add New Condition"),
         h(RuleTypeField, {value: String(params.rule.type)}),
-        h(RuleApplyGroupField, {rule: params.rule, groups: params.groups}),
+        h(RuleApplyGroupField, {rule: params.rule, groups: params.groups, type: params.type}),
         h("input", {
             type: "button",
             class: "button",
@@ -499,9 +517,9 @@ var RuleList = function (params) {
 
 var TemplateTypeSelect = function (params) {
     return h(
-        "fieldset", {class:'brizy-template-type'}, [
-            h('h4',{},'Template Type'),
-            h('label', {  }, [
+        "fieldset", {class: 'brizy-template-type'}, [
+            h('h4', {}, 'Template Type'),
+            h('label', {}, [
                 h('input', {
                     type: 'radio',
                     name: 'brizy-template-type',
@@ -530,17 +548,24 @@ var ruleView = function (state, actions) {
         "div",
         {
             oncreate: function () {
-                api.getGroupList().done(actions.updateGroups);
-            }
+                if (state.templateType != '')
+                    api.getGroupList(state.templateType).done(function (response) {
+                        actions.updateGroups(response.data)
+                    });
+            },
         },
         [
             h(
                 TemplateTypeSelect, {
                     value: state.templateType,
                     onChange: function (e) {
-                        actions.setTemplateType(e.target.value && e.target.value != "null"
+                        const type = e.target.value && e.target.value != "null"
                             ? e.target.value
-                            : null);
+                            : null;
+                        actions.setTemplateType(type);
+                        api.getGroupList(type).done(function (response) {
+                            actions.updateGroups(response.data);
+                        });
                     }
                 }, []
             ),
@@ -558,8 +583,8 @@ var ruleView = function (state, actions) {
             }),
             state.templateType ? [
                     h(RuleForm, {
+                        type: state.templateType,
                         rule: state.rule,
-                        onChange: actions.ruleChange,
                         groups: state.groups,
                         errors: state.errors,
                         onSubmit: function () {
