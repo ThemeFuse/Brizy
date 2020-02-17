@@ -51,7 +51,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( "<b></b>" );
 		$stub->set_template( "atemplate" );
-		$stub->setDataVersion(1);
+		$stub->setDataVersion( 1 );
 		$stub->save();
 
 		$storage = Brizy_Editor_Storage_Post::instance( $postId );
@@ -151,12 +151,13 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( $html );
 		$stub->set_template( "atemplate" );
+		$stub->setDataVersion( 1 );
 		$stub->savePost();
 
-		$I->canSeePostInDatabase( [
-			'ID'           => $postId,
-			'post_content' => $htmlBody,
-		] );
+		global $wpdb;
+		$wpdb->flush();
+
+		$I->canSeePostContentContainsString( $postId, $htmlBody );
 
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,
@@ -194,7 +195,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( "<b></b>" );
 		$stub->set_template( "atemplate" );
-		$stub->setDataVersion(1);
+		$stub->setDataVersion( 1 );
 		$stub->save( 0 );
 
 
@@ -206,7 +207,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data2 );
 		$stub->set_compiled_html( "<b>autosav</b>" );
 		$stub->set_template( "atemplate2" );
-		$stub->setDataVersion(2);
+		$stub->setDataVersion( 2 );
 
 		$stub->save( 1 );
 
@@ -248,7 +249,7 @@ class Brizy_Editor_PostCest {
 		$stub->set_editor_data( $editor_data );
 		$stub->set_compiled_html( $html );
 		$stub->set_template( "atemplate" );
-		$stub->setDataVersion(1);
+		$stub->setDataVersion( 1 );
 		$stub->save();
 		$stub->savePost();
 

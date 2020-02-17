@@ -199,7 +199,10 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postId   = (int) $this->param( 'post' );
 		$postType = get_post_type( $postId );
 
-		if ( ! $postId ) {
+		if ( ! $postId || !in_array( $postType, [
+				Brizy_Admin_Templates::CP_TEMPLATE,
+				Brizy_Admin_Popups_Main::CP_POPUP
+			] ) ) {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
