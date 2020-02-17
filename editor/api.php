@@ -426,7 +426,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 			$placeholder = '';
-			$postId      = $this->param( 'post' );
+			$postId      = $this->param( 'post_id' );
 			$placeholder = stripslashes( $this->param( 'placeholder' ) );
 			if ( ! $placeholder ) {
 				throw new Exception( 'Placeholder string not provided.', 400 );

@@ -410,7 +410,7 @@ class ApiCest {
 
 		// test with invalid attachment
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'post'        => $postId,
+				'post_id'        => $postId,
 				'action'      => 'brizy_placeholder_content',
 				'version'     => BRIZY_EDITOR_VERSION,
 				'placeholder' => '{{brizy_dc_permalink post_id=\''.$postId.'\'}}'
