@@ -200,6 +200,30 @@ var actions = {
     }
 };
 
+function arr_diff(a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}
+
+
 var RuleTypeField = function (params) {
     return function (state, action) {
         return h(
@@ -562,9 +586,13 @@ var ruleView = function (state, actions) {
                         const type = e.target.value && e.target.value != "null"
                             ? e.target.value
                             : null;
+
                         actions.setTemplateType(type);
                         api.getGroupList(type).done(function (response) {
                             actions.updateGroups(response.data);
+
+                            actions.rule.setAppliedFor(String(response.data[0].value));
+                            actions.rule.setEntityType(String(response.data[0].items[0].value));
                         });
                     }
                 }, []
@@ -588,6 +616,27 @@ var ruleView = function (state, actions) {
                         groups: state.groups,
                         errors: state.errors,
                         onSubmit: function () {
+
+                            var rules = state.templateType === 'single' ? state.singleRules : state.archiveRules;
+
+                            try {
+
+                                rules.forEach(rule => {
+
+                                    if (rule.type !== state.rule.type) return;
+                                    if (rule.appliedFor !== state.rule.appliedFor) return;
+                                    if (rule.entityType !== state.rule.entityType) return;
+                                    if (arr_diff(rule.entityValues, state.rule.entityValues).length > 0) return;
+
+                                    throw 'This rule already exist';
+
+                                });
+                            } catch (error) {
+                                actions.addFormErrors('This rule already exist');
+
+                                return;
+                            }
+
                             api
                                 .validateRule(state.rule)
                                 .done(function () {
@@ -609,7 +658,7 @@ var ruleView = function (state, actions) {
                                 });
                         }
                     })] :
-                []
+                [],
         ]
     );
 };
@@ -617,3 +666,4 @@ var ruleView = function (state, actions) {
 jQuery(document).ready(function ($) {
     hyperapp.app(state, actions, ruleView, document.getElementById("rules"));
 });
+
