@@ -677,6 +677,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				'items' => $items
 			);
 		}
+
 		$groups = array_values(array_filter( $groups, function($o) { return !is_null($o); } ));
 		wp_send_json_success( $groups, 200 );
 	}
