@@ -587,4 +587,95 @@ class Brizy_Admin_Templates {
 			Brizy_Admin_Flash::instance()->add_error( 'Conflict of rules: Some rules have been deleted for restored posts. Please check them.' );
 		}
 	}
+
+
+	public static function getPostSample( $templateId ) {
+		$wp_post = get_post( $templateId );
+		if ( $wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE &&
+		     $wp_post->post_type !== Brizy_Admin_Popups_Main::CP_POPUP ) {
+			return $wp_post;
+		}
+
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$rules       = $ruleManager->getRules( $wp_post->ID );
+		$rule        = null;
+
+		// find first include rule
+		foreach ( $rules as $rule ) {
+			/**
+			 * @var Brizy_Admin_Rule $rule ;
+			 */
+			if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
+				break;
+			}
+		}
+
+		if ( $rule ) {
+
+			switch ( $rule->getAppliedFor() ) {
+				case  Brizy_Admin_Rule::POSTS :
+					$args = array(
+						'post_type' => $rule->getEntityType(),
+					);
+
+					if ( count( $rule->getEntityValues() ) ) {
+						$args['post__in'] = $rule->getEntityValues();
+					}
+					$array = get_posts( $args );
+
+					return array_pop( $array );
+					break;
+				case Brizy_Admin_Rule::TAXONOMY :
+					$args = array(
+						'taxonomy'   => $rule->getEntityType(),
+						'hide_empty' => false,
+					);
+					if ( count( $rule->getEntityValues() ) ) {
+						$args['term_taxonomy_id'] = $rule->getEntityValues();
+					}
+
+					$array = get_terms( $args );
+
+					return array_pop( $array );
+					break;
+				case  Brizy_Admin_Rule::ARCHIVE :
+					return null;
+					break;
+				case  Brizy_Admin_Rule::TEMPLATE :
+
+					switch ( $rule->getEntityType() ) {
+						case 'author':
+							$authors = get_users();
+
+							return array_pop( $authors );
+							break;
+
+						case '404':
+						case 'search':
+							return null;
+							break;
+						case 'home_page':
+							$get_option = get_option( 'page_for_posts' );
+
+							if ( $get_option ) {
+								return get_post( $get_option );
+							}
+							break;
+						case 'front_page':
+							$get_option = get_option( 'page_on_front' );
+
+							if ( $get_option ) {
+								return get_post( $get_option );
+							}
+							break;
+					}
+
+					break;
+			}
+
+		}
+	}
 }
+
+

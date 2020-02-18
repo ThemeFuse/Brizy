@@ -41,12 +41,13 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 	protected function getPost( $atts ) {
 
 		if ( isset( $atts['post'] ) ) {
-			return get_post( (int) $atts['post'] );
+			return Brizy_Admin_Templates::getPostSample((int) $atts['post']);
 		} else {
-			$post = get_posts();
-
-			return isset( $post[0] ) ? $post[0] : null;
+			$posts = get_posts();
+			$post  = isset( $posts[0] ) ? $posts[0] : null;
 		}
+
+		return $post;
 	}
 
 	protected function filterData( $property, $post ) {
@@ -57,7 +58,7 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 				return self::wp_trim_excerpt( $post->post_excerpt, $post );
 			case 'post_content':
 				$GLOBALS['post'] = $post;
-				setup_postdata($post);
+				setup_postdata( $post );
 
 				add_filter( 'the_content', 'wpautop' );
 				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
