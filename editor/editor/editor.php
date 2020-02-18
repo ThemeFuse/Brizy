@@ -598,14 +598,14 @@ class Brizy_Editor_Editor_Editor {
 			// Start with post_max_size.
 			$post_max_size = $this->parseSize( ini_get( 'post_max_size' ) );
 			if ( $post_max_size > 0 ) {
-				$max_size = number_format( $post_max_size / 1048576, 2 );
+				$max_size = number_format( $post_max_size / 1048576, 2, '.', '' );
 			}
 
 			// If upload_max_size is less, then reduce. Except if upload_max_size is
 			// zero, which indicates no limit.
 			$upload_max = $this->parseSize( ini_get( 'upload_max_filesize' ) );
 			if ( $upload_max > 0 && $upload_max < $max_size ) {
-				$max_size = number_format( $upload_max / 1048576, 2 );
+				$max_size = number_format( $upload_max / 1048576, 2, '.', '' );
 			}
 		}
 
