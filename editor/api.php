@@ -628,7 +628,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	public function getGroupList() {
 
-		$context = $_REQUEST['template-rules'];
+		$context = $_REQUEST['context'];
 
 		$closure = function ( $v ) {
 			return array(
