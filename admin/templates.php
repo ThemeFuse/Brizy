@@ -612,7 +612,6 @@ class Brizy_Admin_Templates {
 		}
 
 		if ( $rule ) {
-
 			switch ( $rule->getAppliedFor() ) {
 				case  Brizy_Admin_Rule::POSTS :
 					$args = array(
@@ -622,6 +621,14 @@ class Brizy_Admin_Templates {
 					if ( count( $rule->getEntityValues() ) ) {
 						$args['post__in'] = $rule->getEntityValues();
 					}
+
+					$args["meta_query"] = array(
+						array(
+							"key"     => "brizy",
+							'compare' => 'NOT EXISTS'
+						)
+					);
+
 					$array = get_posts( $args );
 
 					return array_pop( $array );
@@ -650,7 +657,6 @@ class Brizy_Admin_Templates {
 
 							return array_pop( $authors );
 							break;
-
 						case '404':
 						case 'search':
 							return null;
@@ -659,22 +665,36 @@ class Brizy_Admin_Templates {
 							$get_option = get_option( 'page_for_posts' );
 
 							if ( $get_option ) {
-								return get_post( $get_option );
+								$post = Brizy_Editor_Post::get( $get_option );
+								return $post->uses_editor() ? null : get_post( $get_option );
 							}
 							break;
 						case 'front_page':
 							$get_option = get_option( 'page_on_front' );
 
 							if ( $get_option ) {
-								return get_post( $get_option );
+
+								$post = Brizy_Editor_Post::get( $get_option );
+
+								return $post->uses_editor() ? null : get_post( $get_option );
 							}
 							break;
 					}
-
 					break;
 			}
-
 		}
+	}
+
+	private static function getFirsNonBrizyPost() {
+		global $wpdb;
+		$postId = $wpdb->get_var(
+			"SELECT p.ID FROM {$wpdb->posts} p 
+                    LEFT JOIN {$wpdb->postmeta} pm  ON p.ID=pm.post_id and pm.meta_key='brizy'
+					WHERE p.post_type='post' or p.post_type='page' and pm.meta_value is null
+					LIMIT 1
+					" );
+
+		return get_post( $postId );
 	}
 }
 
