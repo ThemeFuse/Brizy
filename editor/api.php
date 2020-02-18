@@ -502,18 +502,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					switch ( $rule->getEntityType() ) {
 						case 'author':
 							$authors = get_users();
-							$author  = array_pop( $authors );
-							$link    = get_author_posts_url( $author->ID );
-
-							return addQueryStringToUrl( $link, 'preview=1' );
+							return array_pop( $authors );
 							break;
 
 						case '404':
 						case 'search':
 							return null;
-							break;
-
-							return addQueryStringToUrl( get_home_url( null, (string) time() ), 'preview=1' );
 							break;
 						case 'home_page':
 							$get_option = get_option( 'page_for_posts' );
