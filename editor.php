@@ -73,6 +73,7 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
+		Brizy_Editor_Asset_Cleaner::_init();
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
@@ -176,7 +177,7 @@ class Brizy_Editor {
 
 		$this->registerCustomPostTemplates();
 
-		if(defined('BRIZY_PRO_VERSION')) {
+		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
 			$mainInstance = new BrizyPro_Main();
 			$mainInstance->registerCustomPosts();
 		}
@@ -247,7 +248,7 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
-			new Brizy_Editor_RestExtend(  );
+			new Brizy_Editor_RestExtend();
 			new Brizy_Editor_API( $post );
 			new Brizy_Editor_BlockScreenshotApi( $post );
 			new Brizy_Editor_Forms_Api( $post );
