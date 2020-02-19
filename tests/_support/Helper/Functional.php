@@ -63,6 +63,11 @@ class Functional extends \Codeception\Module {
 				}
 			}
 		}
+	}
 
+	public function canSeePostContentContainsString( $postid, $string ) {
+		$post = get_post( $postid );
+
+		return strpos( $post->post_content, $string ) !== false;
 	}
 }

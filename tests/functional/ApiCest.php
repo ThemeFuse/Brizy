@@ -130,7 +130,7 @@ class ApiCest {
 		$I->assertArrayHasKey( 'dataVersion', $project, 'It should return the project dataVersion' );
 
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
-		$I->assertFalse( $check!==false, 'It should be return false as the project is not locked' );
+		$I->assertFalse( $check !== false, 'It should be return false as the project is not locked' );
 	}
 
 	/**
@@ -281,7 +281,7 @@ class ApiCest {
 		$I->seeResponseCodeIs( 200 );
 
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
-		$I->assertTrue( $check!==false, 'It should be return true as the project is locked' );
+		$I->assertTrue( $check !== false, 'It should be return true as the project is locked' );
 	}
 
 	public function removeLockTest( FunctionalTester $I ) {
@@ -340,7 +340,7 @@ class ApiCest {
 		$I->assertFalse( $data->lockedBy, 'LockedBy should be false' );
 	}
 
-	public function getPostInfo( FunctionalTester $I ) {
+	public function getPostInfoTest( FunctionalTester $I ) {
 		$postId = $I->havePostInDatabase( [
 			'post_type'    => 'page',
 			'post_title'   => 'Title {{n}}',
@@ -385,7 +385,7 @@ class ApiCest {
 		$I->assertEqualsCanonicalizing( array_intersect( $returnedKeys, $fields ), $fields, 'It should return the requested fields' );
 	}
 
-	public function getInvalidPostInfo( FunctionalTester $I ) {
+	public function getInvalidPostInfoTest( FunctionalTester $I ) {
 
 		// test with invalid attachment
 		$fields = [ 'ID', 'post_title', 'post_content' ];
@@ -399,4 +399,67 @@ class ApiCest {
 		$I->seeResponseCodeIs( 404 );
 	}
 
+	public function setTemplateTypeTest( FunctionalTester $I ) {
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => 'brizy_template',
+			'post_title'  => 'Template',
+			'post_name'   => 'Template',
+			'post_status' => 'publish',
+
+		] );
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'template_id'   => $postId,
+				'template_type' => 'single',
+				'action'        => 'brizy_set_template_type',
+				'version'       => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+		$I->seePostMetaInDatabase( [ 'post_id'    => $postId,
+		                             'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
+		                             'meta_value' => 'single'
+		] );
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'template_id'   => $postId,
+				'template_type' => 'archive',
+				'action'        => 'brizy_set_template_type',
+				'version'       => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIsSuccessful();
+		$I->seePostMetaInDatabase( [ 'post_id'    => $postId,
+		                             'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
+		                             'meta_value' => 'archive'
+		] );
+	}
+
+	public function setTemplateTypeFailsTest( FunctionalTester $I ) {
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => 'brizy_template',
+			'post_title'  => 'Template',
+			'post_name'   => 'Template',
+			'post_status' => 'publish',
+
+		] );
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'template_id'   => 54645,
+				'template_type' => 'single',
+				'action'        => 'brizy_set_template_type',
+				'version'       => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs(400);
+
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'template_id'   => $postId,
+				'template_type' => 'unknown_type',
+				'action'        => 'brizy_set_template_type',
+				'version'       => BRIZY_EDITOR_VERSION
+			] ) );
+
+		$I->seeResponseCodeIs(400);
+	}
 }

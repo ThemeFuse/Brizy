@@ -90,7 +90,6 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostParentId() . '&action=_brizy_change_template' ) );
 		$templates           = $this->post->get_templates();
 
-
 		$mode = $this->getMode( $parent_post_type );
 
 
@@ -132,7 +131,7 @@ class Brizy_Editor_Editor_Editor {
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
-				'ruleMatches'     => $this->getTempalteRuleMatches( $mode === 'template', $wp_post_id ),
+				'ruleMatches'     => $this->getTemplateRuleMatches( $mode === 'template', $wp_post_id ),
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
@@ -238,7 +237,6 @@ class Brizy_Editor_Editor_Editor {
 		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
 		$config = $this->addRecaptchaAccounts( $manager, $config );
-
 		$config = $this->addSocialAccounts( $manager, $config );
 
 		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
@@ -763,7 +761,7 @@ class Brizy_Editor_Editor_Editor {
 	 * @return array
 	 * @throws Exception
 	 */
-	private function getTempalteRuleMatches( $isTemplate, $wp_post_id ) {
+	private function getTemplateRuleMatches( $isTemplate, $wp_post_id ) {
 
 		$ruleMatches = array();
 

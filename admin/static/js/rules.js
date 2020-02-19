@@ -17,8 +17,10 @@ var defaultRule = {
 };
 
 var state = {
+    templateType: Brizy_Admin_Rules.templateType,
     rule: defaultRule,
-    rules: Brizy_Admin_Rules.rules,
+    singleRules: Brizy_Admin_Rules.templateType === 'single' ? Brizy_Admin_Rules.rules : [],
+    archiveRules: Brizy_Admin_Rules.templateType === 'archive' ? Brizy_Admin_Rules.rules : [],
     errors: "",
     groups: [],
 };
@@ -32,50 +34,39 @@ var apiCache = {
 };
 
 var api = {
-    getGroupList: function () {
+    getGroupList: function (templateType) {
 
-        if (apiCache.groupList)
-            return apiCache.groupList;
+        if (!apiCache.groupList) {
+            apiCache.groupList = [];
+        }
 
-        return apiCache.groupList = jQuery.getJSON(Brizy_Admin_Rules.url, {
+        if (apiCache.groupList && apiCache.groupList[templateType])
+            return apiCache.groupList[templateType];
+
+        return apiCache.groupList[templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_group_list",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
-            context: 'template-rules'
+            context: 'template-rules',
+            templateType: templateType
         })
     },
 
-    getPostsGroupList: function (postType) {
+    getPostsGroupList: function (postType, templateType) {
 
-        if (apiCache.postGroupListPromise[postType])
-            return apiCache.postGroupListPromise[postType];
+        if (apiCache.postGroupListPromise[postType + templateType])
+            return apiCache.postGroupListPromise[postType + templateType];
 
-        return apiCache.postGroupListPromise[postType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
+        return apiCache.postGroupListPromise[postType + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_posts_group_list",
             postType: postType,
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
-            context: 'template-rules'
+            context: 'template-rules',
+            templateType: templateType
         })
     },
 
-    getPosts: function (postType, filter, exclude) {
-
-        var cachekey = postType + filter;
-        if (apiCache.postList[cachekey])
-            return apiCache.postList[cachekey];
-
-        return jQuery.getJSON(Brizy_Admin_Rules.url, {
-            action: "brizy_get_posts",
-            excludePostTypes: exclude,
-            postType: postType,
-            filterTerm: filter,
-            hash: Brizy_Admin_Rules.hash,
-            version: Brizy_Admin_Data.editorVersion
-        }).done(function (data) {
-            apiCache.postList[cachekey] = jQuery.Deferred().resolve(data);
-        });
-    },
 
     getTerms: function (taxonomy) {
         if (apiCache.termList[taxonomy])
@@ -91,10 +82,10 @@ var api = {
         });
     },
 
-    createRule: function (rule) {
+    validateRule: function (rule) {
 
         var url = new URL(Brizy_Admin_Rules.url);
-        url.searchParams.append('action', 'brizy_add_rule');
+        url.searchParams.append('action', 'brizy_validate_rule');
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
         url.searchParams.append('version', Brizy_Admin_Data.editorVersion);
@@ -104,27 +95,9 @@ var api = {
             url: url.toString(),
             data: JSON.stringify(rule),
             contentType: "application/json; charset=utf-8"
-        });
+        })
     },
 
-    deleteRule: function (ruleId) {
-        return jQuery.post(Brizy_Admin_Rules.url, {
-            action: "brizy_delete_rule",
-            rule: ruleId,
-            hash: Brizy_Admin_Rules.hash,
-            version: Brizy_Admin_Data.editorVersion,
-            post: Brizy_Admin_Rules.id
-        });
-    },
-
-    getRuleList: function () {
-        return jQuery.post(Brizy_Admin_Rules.url, {
-            action: "brizy_list_rules",
-            hash: Brizy_Admin_Rules.hash,
-            version: Brizy_Admin_Data.editorVersion,
-            post: Brizy_Admin_Rules.id
-        });
-    }
 };
 
 var actions = {
@@ -136,11 +109,17 @@ var actions = {
 
     updateGroups: function (value) {
         return function (state) {
-            return {groups: value.data};
+            return {groups: value};
         };
     },
 
     rule: {
+        update: function (rule) {
+            return function (state) {
+                return rule;
+            };
+        },
+
         setType: function (value) {
             return function (state) {
                 return {type: value};
@@ -177,8 +156,73 @@ var actions = {
         return function (state) {
             return {rules: rules};
         };
+    },
+    addSingleRule: function (rule) {
+        return function (state) {
+            return {
+                singleRules: [...state.singleRules, rule
+                ]
+            }
+                ;
+        };
+    },
+    addArchiveRule: function (rule) {
+        return function (state) {
+            return {
+                archiveRules: [...state.archiveRules, rule]
+            }
+                ;
+        };
+    },
+    removeSingleRule: function (rule) {
+        return function (state) {
+            return {
+                singleRules: state.singleRules.filter(function (arule) {
+                    return arule != rule;
+                })
+            };
+        };
+    },
+    removeArchiveRule: function (rule) {
+        return function (state) {
+            return {
+                archiveRules: state.archiveRules.filter(function (arule) {
+                    return arule != rule;
+                })
+            }
+                ;
+        };
+    },
+    setTemplateType: function (type) {
+        return function (state) {
+            return {templateType: type, rules: []};
+        };
     }
 };
+
+function arr_diff(a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}
+
 
 var RuleTypeField = function (params) {
     return function (state, action) {
@@ -188,7 +232,7 @@ var RuleTypeField = function (params) {
             h(
                 "select",
                 {
-                    disabled: params.disabled,
+                    name: params.name,
                     onchange: function (e) {
                         action.rule.setType(e.target.value);
                     }
@@ -216,15 +260,14 @@ var RuleTypeField = function (params) {
     };
 };
 
-BrzSelect2 = function (params) {
+var BrzSelect2 = function (params) {
 
     var oncreate = function (element) {
 
         var el = jQuery(element);
-        if (!params.disabled) {
-            el.select2();
-            el.on("change", params.onChange);
-        }
+        el.on("change", params.onChange);
+        el.select2();
+
         if (typeof params.optionRequest === 'function') {
             const optionRequest = params.optionRequest();
 
@@ -234,24 +277,21 @@ BrzSelect2 = function (params) {
                     options.forEach(function (option) {
                         el.append(option);
                     });
+                    el.trigger("change");
                 });
             } else {
                 var options = params.convertResponseToOptions(optionRequest);
                 options.forEach(function (option) {
                     el.append(option);
                 });
-            }
-        }
 
-        if (!params.disabled) {
-            el.trigger("change");
+                el.trigger("change");
+            }
         }
     };
 
     var onremove = function (element, done) {
-        if (!params.disabled) {
-            jQuery(element).select2("destroy");
-        }
+        jQuery(element).select2("destroy");
         done();
     };
 
@@ -261,39 +301,15 @@ BrzSelect2 = function (params) {
             key: params.id + '|' + params.value,
             akey: params.id + '|' + params.value,
             style: params.style,
-            disabled: params.disabled,
             oncreate: oncreate,
             onremove: onremove,
-            onchange: params.onChange
+            onchange: params.onChange,
+            name: params.name,
         },
         []
     );
 };
 
-// var PostSelect2Field = function (params) {
-//     var convertResponseToOptions = function (response) {
-//         var options = [new Option("All", null, false, false)];
-//         response.data.posts.forEach(function (post) {
-//             var selected = params.value.includes(post.ID + "") || params.value.includes(post.ID);
-//             options.push(new Option(post.title, post.ID, false, selected));
-//         });
-//         return options;
-//     };
-//
-//     return h(
-//         BrzSelect2,
-//         {
-//             id: params.id,
-//             value: params.value,
-//             disabled: params.disabled,
-//             style: params.style ? params.style : {width: "200px"},
-//             optionRequest: params.optionRequest,
-//             convertResponseToOptions: convertResponseToOptions,
-//             onChange: params.onChange
-//         },
-//         []
-//     );
-// };
 
 var RuleTaxonomySearchField = function (params) {
     var convertResponseToOptions = function (response) {
@@ -315,7 +331,7 @@ var RuleTaxonomySearchField = function (params) {
             },
             convertResponseToOptions: convertResponseToOptions,
             onChange: params.onChange,
-            disabled: params.disabled
+            value: params.value
         },
         []
     );
@@ -359,12 +375,12 @@ var RulePostsGroupSelectField = function (params) {
         {
             id: "post-groups-" + entityType,
             style: params.style ? params.style : {width: "200px"},
+            name: params.name,
             optionRequest: function () {
-                return api.getPostsGroupList(entityType);
+                return api.getPostsGroupList(entityType, params.type);
             },
             convertResponseToOptions: convertResponseToOptions,
             onChange: params.onChange,
-            disabled: params.disabled
         },
         []
     );
@@ -397,24 +413,23 @@ var RuleApplyGroupField = function (params) {
         });
 
         const attributes = {
-            class: "brizy-rule-select--options",
+            name: params.type ? 'brizy-' + params.type + '-rule-group[]' : '',
+            class: "brizy-rule-select--options[]",
             onchange: function (e) {
-                if (!params.disabled) {
-                    var values = e.target.value.split("|");
-                    actions.rule.setAppliedFor(values[0]);
-                    actions.rule.setEntityType(values[1]);
-                }
+                var values = e.target.value.split("|");
+                actions.rule.update({
+                    appliedFor: values[0],
+                    entityType: values[1],
+                });
             }
         };
-
-        if (params.disabled) {
-            attributes.disabled = "disabled";
-        }
 
         var elements = [
             h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
         ];
 
+
+        console.log(appliedFor);
 
         switch (appliedFor) {
             case RULE_POSTS:
@@ -423,15 +438,14 @@ var RuleApplyGroupField = function (params) {
                         h(RulePostsGroupSelectField, {
                             id: appliedFor + value,
                             rule: params.rule,
-                            disabled: params.disabled,
+                            type: params.type,
+                            name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                if (!params.disabled) {
-                                    var values = e.target.value.split("|");
-                                    if (values.length === 1) {
-                                        actions.rule.setEntityValues(values);
-                                    } else {
-                                        actions.rule.setEntityValues([e.target.value]);
-                                    }
+                                var values = e.target.value.split("|");
+                                if (values.length === 1) {
+                                    actions.rule.setEntityValues(values);
+                                } else {
+                                    actions.rule.setEntityValues([e.target.value]);
                                 }
                             }
                         })
@@ -443,15 +457,15 @@ var RuleApplyGroupField = function (params) {
                         h(RuleTaxonomySearchField, {
                             id: appliedFor + value,
                             rule: params.rule,
+                            type: params.type,
                             taxonomy: entityType,
-                            disabled: params.disabled,
+                            name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                if (!params.disabled)
-                                    actions.rule.setEntityValues(
-                                        e.target.value && e.target.value != "null"
-                                            ? [e.target.value]
-                                            : []
-                                    );
+                                actions.rule.setEntityValues(
+                                    e.target.value && e.target.value != "null"
+                                        ? [e.target.value]
+                                        : []
+                                );
                             }
                         })
                     ]));
@@ -465,7 +479,7 @@ var RuleForm = function (params) {
     var elements = [
         h("h4", {}, "Add New Condition"),
         h(RuleTypeField, {value: String(params.rule.type)}),
-        h(RuleApplyGroupField, {rule: params.rule, groups: params.groups}),
+        h(RuleApplyGroupField, {rule: params.rule, groups: params.groups, type: params.type}),
         h("input", {
             type: "button",
             class: "button",
@@ -483,12 +497,15 @@ var RuleForm = function (params) {
 
 var RuleListItem = function (params) {
     return h("div", {class: "rule", key: params.index}, [
-        h(RuleTypeField, {value: String(params.rule.type), disabled: true}),
-        h(RuleApplyGroupField, {
-            rule: params.rule,
-            groups: params.groups,
-            disabled: true
-        }),
+        h("span", {class: 'rule-fields'}, [
+            h(RuleTypeField, {value: String(params.rule.type), name: 'brizy-' + params.type + '-rule-type[]'}),
+            h(RuleApplyGroupField, {
+                rule: params.rule,
+                groups: params.groups,
+                type: params.type
+            }),
+            h('div', {class: 'overlay'}, [])
+        ]),
         h("input", {
             class: "brizy-delete-rule ",
             type: "button",
@@ -512,7 +529,8 @@ var RuleList = function (params) {
                 index: index,
                 rule: rule,
                 groups: params.groups,
-                onDelete: params.onDelete
+                onDelete: params.onDelete,
+                type: params.type
             })
         );
     });
@@ -520,53 +538,132 @@ var RuleList = function (params) {
     return h("div", {}, elements);
 };
 
-var view = function (state, actions) {
+
+var TemplateTypeSelect = function (params) {
+    return h(
+        "fieldset", {class: 'brizy-template-type'}, [
+            h('h4', {}, 'Template Type'),
+            h('label', {}, [
+                h('input', {
+                    type: 'radio',
+                    name: 'brizy-template-type',
+                    onchange: params.onChange,
+                    value: 'single',
+                    checked: 'single' === params.value
+                }),
+                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.single),
+            ]),
+            h('label', {}, [
+                h('input', {
+                    type: 'radio',
+                    name: 'brizy-template-type',
+                    onchange: params.onChange,
+                    value: 'archive',
+                    checked: 'archive' === params.value
+                }),
+                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.archive),
+            ]),
+        ]
+    );
+};
+
+var ruleView = function (state, actions) {
     return h(
         "div",
         {
             oncreate: function () {
-                api.getGroupList().done(actions.updateGroups);
-            }
+                if (state.templateType != '')
+                    api.getGroupList(state.templateType).done(function (response) {
+                        actions.updateGroups(response.data)
+                    });
+            },
         },
         [
+            h(
+                TemplateTypeSelect, {
+                    value: state.templateType,
+                    onChange: function (e) {
+                        const type = e.target.value && e.target.value != "null"
+                            ? e.target.value
+                            : null;
+
+                        actions.setTemplateType(type);
+                        api.getGroupList(type).done(function (response) {
+                            actions.updateGroups(response.data);
+
+                            actions.rule.setAppliedFor(String(response.data[0].value));
+                            actions.rule.setEntityType(String(response.data[0].items[0].value));
+                        });
+                    }
+                }, []
+            ),
             h(RuleList, {
-                rules: state.rules,
+                type: state.templateType,
+                rules: state.templateType === 'single' ? state.singleRules : state.archiveRules,
                 groups: state.groups,
                 onDelete: function (rule) {
-                    api.deleteRule(rule.id).done(function () {
-                        api.getRuleList().done(function (response) {
-                            actions.setRuleList(response.data);
-                        });
-                    });
+                    if (state.templateType === 'single') {
+                        actions.removeSingleRule(rule);
+                    } else if (state.templateType === 'archive') {
+                        actions.removeArchiveRule(rule);
+                    }
                 }
             }),
-            h(RuleForm, {
-                rule: state.rule,
-                onChange: actions.ruleChange,
-                groups: state.groups,
-                errors: state.errors,
-                onSubmit: function () {
-                    api
-                        .createRule(state.rule)
-                        .done(function () {
-                            api.getRuleList().done(function (response) {
-                                actions.setRuleList(response.data);
-                            });
-                            actions.resetRule();
-                        })
-                        .fail(function (response) {
-                            if (response.responseJSON && response.responseJSON.data) {
-                                if (response.responseJSON.data.message)
-                                    actions.addFormErrors(response.responseJSON.data.message);
-                                else actions.addFormErrors("Failed to add the rule");
+            state.templateType ? [
+                    h(RuleForm, {
+                        type: state.templateType,
+                        rule: state.rule,
+                        groups: state.groups,
+                        errors: state.errors,
+                        onSubmit: function () {
+
+                            var rules = state.templateType === 'single' ? state.singleRules : state.archiveRules;
+
+                            try {
+
+                                rules.forEach(rule => {
+
+                                    if (rule.type !== state.rule.type) return;
+                                    if (rule.appliedFor !== state.rule.appliedFor) return;
+                                    if (rule.entityType !== state.rule.entityType) return;
+                                    if (arr_diff(rule.entityValues, state.rule.entityValues).length > 0) return;
+
+                                    throw 'This rule already exist';
+
+                                });
+                            } catch (error) {
+                                actions.addFormErrors('This rule already exist');
+
+                                return;
                             }
-                        });
-                }
-            })
+
+                            api
+                                .validateRule(state.rule)
+                                .done(function () {
+                                    if (state.templateType === 'single') {
+                                        actions.addSingleRule(state.rule);
+                                        actions.resetRule();
+                                    } else if (state.templateType === 'archive') {
+                                        actions.addArchiveRule(state.rule);
+                                        actions.resetRule();
+                                    }
+                                })
+                                .fail(function (response) {
+                                    if (response.responseJSON && response.responseJSON.data) {
+                                        if (response.responseJSON.data.message)
+                                            actions.addFormErrors(response.responseJSON.data.message);
+                                        else
+                                            actions.addFormErrors("Failed to add the rule");
+                                    }
+                                });
+                        }
+                    })] :
+                [],
         ]
     );
 };
 
 jQuery(document).ready(function ($) {
-    hyperapp.app(state, actions, view, document.getElementById("rules"));
+    hyperapp.app(state, actions, ruleView, document.getElementById("rules"));
 });
+

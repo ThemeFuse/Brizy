@@ -172,7 +172,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	 * @param array $arags
 	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Exception
 	 */
 	public static function getBlocksByType( $type, $arags = array() ) {
 
