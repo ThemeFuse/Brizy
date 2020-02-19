@@ -51,7 +51,7 @@ export function persistentRequest(ajaxSettings) {
         resolve(data);
       },
       error(jqXHR) {
-        const status = jqXHR.status;
+        const { status, responseJSON } = jqXHR;
 
         // 0 - offline
         if (status === 0) {
@@ -60,9 +60,9 @@ export function persistentRequest(ajaxSettings) {
 
           if (this.failedAttempts <= 5) {
             setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
-          } else {
-            reject(jqXHR);
           }
+        } else {
+          reject(responseJSON);
         }
       }
     });
@@ -93,17 +93,50 @@ export function getProject() {
 export function updateProject(project, meta = {}) {
   const { setProject } = Config.get("wp").api;
   const { is_autosave = 1 } = meta;
-  const { data } = stringifyProject(project);
+  const { data, dataVersion } = stringifyProject(project);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
-      action: setProject,
       data,
-      is_autosave
+      dataVersion,
+      is_autosave,
+      action: setProject
     }
   });
+}
+
+export function addProjectLockedBeacon() {
+  const { lockProject } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
+
+  return request2(apiUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      version,
+      action: lockProject
+    })
+  })
+    .then(r => r.json())
+    .then(rj => {
+      if (rj.success) {
+        return rj.data;
+      }
+
+      throw rj;
+    });
+}
+
+export function removeProjectLockedSendBeacon() {
+  const { removeLock } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
+  const url = new URL(apiUrl);
+
+  url.searchParams.append("action", removeLock);
+  url.searchParams.append("version", version);
+
+  return navigator.sendBeacon(`${url}`);
 }
 
 // page
@@ -187,17 +220,19 @@ export function getGlobalBlocks() {
     dataType: "json",
     data: { action: getGlobalBlockList }
   }).then(({ data }) => {
-    return data.map(parseGlobalBlock).reduce((acc, { uid, data }) => {
-      acc[uid] = data;
+    return data
+      .map(parseGlobalBlock)
+      .reduce((acc, { uid, data, dataVersion }) => {
+        acc[uid] = { id: uid, data, dataVersion };
 
-      return acc;
-    }, {});
+        return acc;
+      }, {});
   });
 }
 
 export function createGlobalBlock(globalBlock) {
   const { createGlobalBlock } = Config.get("wp").api;
-  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
+  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
 
   return persistentRequest({
     type: "POST",
@@ -205,7 +240,8 @@ export function createGlobalBlock(globalBlock) {
     data: {
       action: createGlobalBlock,
       uid,
-      data
+      data,
+      dataVersion
     }
   });
 }
@@ -213,7 +249,7 @@ export function createGlobalBlock(globalBlock) {
 export function updateGlobalBlock(globalBlock, meta = {}) {
   const { updateGlobalBlock } = Config.get("wp").api;
   const { is_autosave = 1 } = meta;
-  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
+  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
 
   return persistentRequest({
     type: "POST",
@@ -222,6 +258,7 @@ export function updateGlobalBlock(globalBlock, meta = {}) {
       action: updateGlobalBlock,
       uid,
       data,
+      dataVersion,
       is_autosave
     }
   });
@@ -237,17 +274,29 @@ export function getSavedBlocks() {
     dataType: "json",
     data: { action: getSavedBlockList }
   }).then(({ data }) => {
-    return data.map(parseSavedBlock).reduce((acc, { uid, data }) => {
-      acc[uid] = data;
+    return data
+      .map(parseSavedBlock)
+      .reduce((acc, { uid, data, dataVersion }) => {
+        acc[uid] = { uid, data, dataVersion };
 
-      return acc;
-    }, {});
+        return acc;
+      }, {});
   });
+}
+
+export function comments() {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.getComments, {});
+}
+
+export function buildContent(id) {
+  const apiConfig = Config.get("wp").api;
+  return request(apiConfig.buildContent, { id });
 }
 
 export function createSavedBlock(savedBlock) {
   const { createSavedBlock } = Config.get("wp").api;
-  const { id: uid, data } = stringifySavedBlock(savedBlock);
+  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
 
   return persistentRequest({
     type: "POST",
@@ -255,7 +304,8 @@ export function createSavedBlock(savedBlock) {
     data: {
       action: createSavedBlock,
       uid,
-      data
+      data,
+      dataVersion
     }
   });
 }
@@ -263,7 +313,7 @@ export function createSavedBlock(savedBlock) {
 export function updateSavedBlock(savedBlock, meta = {}) {
   const { updateSavedBlock } = Config.get("wp").api;
   const { is_autosave = 0 } = meta;
-  const { id: uid, data } = stringifySavedBlock(savedBlock);
+  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
 
   return persistentRequest({
     type: "POST",
@@ -272,6 +322,7 @@ export function updateSavedBlock(savedBlock, meta = {}) {
       action: updateSavedBlock,
       uid,
       data,
+      dataVersion,
       is_autosave
     }
   });
@@ -439,6 +490,44 @@ export function updateBlockScreenshot({ id, base64, blockType }) {
       throw rj;
     });
 }
+
+// dynamic content
+
+export function getDynamicContent({ placeholder, signal }) {
+  const {
+    page,
+    api: { placeholderContent }
+  } = Config.get("wp");
+  const version = Config.get("editorVersion");
+
+  return request2(apiUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      action: placeholderContent,
+      version,
+      post_id: page,
+      placeholder
+    }),
+    signal
+  })
+    .then(r => {
+      if (!r.ok) {
+        // TODO: add proper error handling
+        throw new Error("fetch dynamic content error");
+      }
+
+      return r.json();
+    })
+    .then(rj => {
+      if (rj.success) {
+        return rj.data.placeholder;
+      } else {
+        // TODO: add proper error handling
+        throw new Error("fetch dynamic content error");
+      }
+    });
+}
+
 export function getPostObjects(postType) {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.getPostObjects, { postType }).then(
@@ -449,4 +538,48 @@ export function getPostObjects(postType) {
 export function getConditions() {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.getRuleGroupList, {}).then(({ data }) => data);
+}
+
+// heartBeat
+export function sendHeartBeat() {
+  const { heartBeat } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
+
+  return request2(apiUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      version,
+      action: heartBeat
+    })
+  })
+    .then(r => r.json())
+    .then(rj => {
+      if (rj.success) {
+        return rj.data;
+      }
+
+      throw rj;
+    });
+}
+
+// take over
+export function sendHearBeatTakeOver() {
+  const { takeOver } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
+
+  return request2(apiUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      version,
+      action: takeOver
+    })
+  })
+    .then(r => r.json())
+    .then(rj => {
+      if (rj.success) {
+        return rj.data;
+      }
+
+      throw rj;
+    });
 }

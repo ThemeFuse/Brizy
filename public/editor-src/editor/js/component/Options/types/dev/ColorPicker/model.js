@@ -1,7 +1,7 @@
 import { isHex } from "visual/utils/color/isHex";
 import { toOpacity } from "visual/utils/cssProps/opacity";
 import { toObject } from "visual/utils/object";
-import { apply, get, set } from "visual/utils/model";
+import { _apply, get, set } from "visual/utils/model";
 import { toPalette } from "./entities/palette";
 
 /**
@@ -22,8 +22,8 @@ import { toPalette } from "./entities/palette";
  * @param {Color} v
  * @returns {number}
  */
-export const getOpacity = (orElse, v = {}) =>
-  toOpacity(orElse, toObject(v).opacity);
+export const getOpacity = (v = {}, orElse = undefined) =>
+  toOpacity(toObject(v).opacity, orElse);
 
 /**
  * Set opacity value in the colorPicker model.
@@ -40,15 +40,15 @@ export const getOpacity = (orElse, v = {}) =>
  */
 export const setOpacity = (v, m = {}) => {
   const i = {};
-  if (toOpacity(i, v) === i || getOpacity(i, m) === v) {
+  if (toOpacity(v, i) === i || getOpacity(m, i) === v) {
     return m;
   }
 
-  const p = getPalette(undefined, m) || get("", "tempPalette", m);
+  const p = getPalette(m) || get("tempPalette", m, "");
 
-  return apply(
+  return _apply(
     [
-      [set, "tempOpacity", v === 0 ? getOpacity(undefined, m) : undefined],
+      [set, "tempOpacity", v === 0 ? getOpacity(m) : undefined],
       [set, "opacity", v],
       [set, "palette", v ? p : ""],
       [set, "tempPalette", !v ? p : undefined]
@@ -65,7 +65,7 @@ export const setOpacity = (v, m = {}) => {
  * @param {Color} v
  * @returns {string}
  */
-export const getHex = (orElse, v = {}) =>
+export const getHex = (v = {}, orElse = undefined) =>
   isHex(toObject(v).hex) ? toObject(v).hex : orElse;
 
 /**
@@ -86,7 +86,7 @@ export const setHex = (hex, v = {}) => {
   }
   const object = toObject(v);
 
-  return apply(
+  return _apply(
     [
       [set, "hex", hex],
       [set, "opacity", hex ? object.opacity || object.tempOpacity || 1 : 0],
@@ -106,8 +106,8 @@ export const setHex = (hex, v = {}) => {
  * @param {Color} m
  * @returns {string}
  */
-export const getPalette = (orElse, m = {}) =>
-  toPalette(orElse, get(undefined, "palette", m));
+export const getPalette = (m = {}, orElse = undefined) =>
+  toPalette(get("palette", m), orElse);
 
 /**
  * Set palette value in the colorPicker model.
@@ -122,20 +122,18 @@ export const getPalette = (orElse, m = {}) =>
  */
 export const setPalette = (v, m = {}) => {
   const i = {};
-  if (toPalette(i, v) === i || getPalette(i, m) === v) {
+  if (toPalette(v, i) === i || getPalette(m, i) === v) {
     return m;
   }
 
-  const tempPalette =
-    getPalette(undefined, m) || get(undefined, "tempPalette", m);
-  const tempOpacity =
-    getOpacity(undefined, m) || get(undefined, "tempOpacity", m);
+  const tempPalette = getPalette(m) || get("tempPalette", m);
+  const tempOpacity = getOpacity(m) || get("tempOpacity", m);
 
-  return apply(
+  return _apply(
     [
       [set, "tempPalette", !v ? tempPalette : undefined],
       [set, "palette", v],
-      [set, "opacity", v ? getOpacity(0, m) || tempOpacity : undefined]
+      [set, "opacity", v ? getOpacity(m, 0) || tempOpacity : undefined]
     ],
     m
   );

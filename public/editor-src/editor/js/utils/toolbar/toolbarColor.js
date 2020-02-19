@@ -60,6 +60,7 @@ export function toolbarColorHexField2({
   v,
   device,
   state,
+  disabled = false,
   states,
   devices = "all",
   prefix = "color",
@@ -77,6 +78,7 @@ export function toolbarColorHexField2({
     id: dvk(capByPrefix(prefix, "field")),
     type: "colorFields",
     devices,
+    disabled,
     states,
     value: {
       hex,

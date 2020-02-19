@@ -1,6 +1,7 @@
 import $ from "jquery";
+import "./popupsPlugin";
 
-export default function() {
+export default function($node) {
   const $document = $(document);
 
   $.fn.popup = function() {
@@ -32,6 +33,8 @@ export default function() {
         } else {
           $("html").removeClass("brz-ow-hidden");
         }
+
+        $(document).trigger("brz.popup.show", [$this.get(0)]);
       },
       close() {
         $this.removeClass("brz-popup2--opened");
@@ -43,7 +46,7 @@ export default function() {
     };
   };
 
-  $document.on("click", "[data-brz-link-type='popup']", function(e) {
+  $node.find("[data-brz-link-type='popup']").on("click", function(e) {
     e.preventDefault();
 
     const popupId = this.getAttribute("href").slice(1); // without the `#`
@@ -57,7 +60,7 @@ export default function() {
     }
   });
 
-  $document.on("click", ".brz-popup2", function(e) {
+  $node.click(function(e) {
     const clickedOutSideToClose = $(this).attr("data-click_outside_to_close");
     const clickedOutSideContent =
       $(e.target).closest(".brz-container").length === 0;

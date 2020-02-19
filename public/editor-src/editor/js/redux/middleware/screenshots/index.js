@@ -28,9 +28,8 @@ import {
   screenshotsSelector,
   deviceModeSelector
 } from "visual/redux/selectors";
-import { makeBlockScreenshot, makeTaskQueue, debounceAdvanced } from "./utils";
-
-export { browserSupportsScreenshots } from "./browserSupportsScreenshots";
+import { makeNodeScreenshot } from "visual/utils/screenshots";
+import { makeTaskQueue, debounceAdvanced } from "./utils";
 
 const { UNDO, REDO } = HistoryActionTypes;
 
@@ -290,7 +289,8 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     try {
-      screenshot = await makeBlockScreenshot(block);
+      const node = document.querySelector(`#${blockId}`);
+      screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -371,7 +371,7 @@ async function savedBlockTaskCb(
     }
 
     try {
-      screenshot = await makeBlockScreenshot(null, { node });
+      screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -463,7 +463,7 @@ async function globalBlockTaskCb(
     }
 
     try {
-      screenshot = await makeBlockScreenshot(null, { node });
+      screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -559,7 +559,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     try {
-      screenshot = await makeBlockScreenshot(null, { node });
+      screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -650,12 +650,12 @@ async function popupBlockInsideGlobalBlockTaskCb(
 ) {
   const { domId: popupDOMId, dbId: popupDbId } = options.popup;
   const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
-  const { obj: popup } = findDeep(
+  const { obj: popupData } = findDeep(
     globalBlock,
     obj => obj && obj.value && obj.value._id === popupDbId
   );
-  const popupId = popup.value._id;
-  const popupIsGlobal = popup === globalBlock;
+  const popupId = popupData.value._id;
+  const popupIsGlobal = popupData === globalBlock.data;
   let screenshotId;
   let screenshot;
 
@@ -667,7 +667,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
     }
 
     try {
-      screenshot = await makeBlockScreenshot(null, { node });
+      screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */

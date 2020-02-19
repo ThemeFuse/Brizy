@@ -123,6 +123,34 @@ gulp.task("verifications", () => {
   }
 });
 
+gulp.task("external_popups", () => {
+  const tasks = ["external_popups.popup", "external_popups.code_injection"];
+
+  runSequence(...tasks);
+});
+
+gulp.task("external_popups.popup", () => {
+  const src = paths.editor + "/js/bootstraps/popups/index.js";
+  const dest = paths.build + "/editor/js/";
+
+  gulp
+    .src(src)
+    .pipe(gulpPlugins.terser())
+    .pipe(gulpPlugins.rename("popups.js"))
+    .pipe(gulp.dest(dest));
+});
+
+gulp.task("external_popups.code_injection", () => {
+  const src = paths.editor + "/js/bootstraps/popups/code_injection.js";
+  const dest = paths.build + "/editor/js";
+
+  gulp
+    .src(src)
+    .pipe(gulpPlugins.terser())
+    .pipe(gulpPlugins.rename("popup_injection.js"))
+    .pipe(gulp.dest(dest));
+});
+
 gulp.task("clean", [
   "clean.local",
   "clean.free",

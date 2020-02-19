@@ -10,17 +10,17 @@
     <meta name="description" content="{{ meta.description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{ assetsUrl }}/editor/css/preview.css" rel="stylesheet">
+    <link class="brz-link brz-link-preview" href="{{ assetsUrl }}/editor/css/preview.css" rel="stylesheet">
 
     {{ blocks.head | raw }}
   </head>
   <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
 
-    <script src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
-    <script src="{{ assetsUrl }}/editor/js/preview.js"></script>
+    <script class="brz-script brz-script-polyfill" src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
+    <script class="brz-script brz-script-preview" src="{{ assetsUrl }}/editor/js/preview.js"></script>
 
   {% for script in scriptTags %}
-    <script src="{{ script.src }}"></script>
+    <script class="brz-script" src="{{ script.src }}"></script>
   {% endfor %}
   </body>
 </html>

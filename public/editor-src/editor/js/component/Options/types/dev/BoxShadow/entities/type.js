@@ -10,7 +10,8 @@ export const empty = NONE;
  * @param {string} v
  * @return {string}
  */
-export const toType = (orElse, v) => (types.includes(v) ? v : orElse);
+export const toType = (v, orElse = undefined) =>
+  types.includes(v) ? v : orElse;
 
 /**
  * @param {string} orElse
@@ -18,7 +19,7 @@ export const toType = (orElse, v) => (types.includes(v) ? v : orElse);
  * @return {string}
  */
 export const onEmpty = (orElse, v) => {
-  const value = toType(empty, v);
+  const value = toType(v, empty);
 
   return value === empty ? orElse : v;
 };

@@ -1,20 +1,14 @@
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementContainerTypeAll,
   toolbarBgImage,
   toolbarBgVideoUrl,
-  toolbarBgVideoQuality,
   toolbarBgVideoLoop,
-  toolbarBgMapAddress,
   toolbarBgMapZoom,
-  toolbarBorderRadius,
   toolbarBorder2,
   toolbarBorderColorHexField2,
   toolbarBorderWidthFourFields2,
@@ -26,34 +20,21 @@ import {
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
-  toolbarHoverTransition,
-  toolbarShowOnDesktop,
   toolbarShowOnResponsive,
-  toolbarPaddingFourFields,
-  toolbarMargin,
-  toolbarZIndex,
-  toolbarCSSID,
-  toolbarCustomCSSClass,
-  toolbarEntranceAnimation,
   toolbarElementContainerTypeImageMap,
   toolbarImageLinkExternal,
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkAnchor,
   toolbarSizeWidthSizePercent,
-  toolbarElementRowColumnsHeightStyle,
   toolbarElementRowColumnsHeight,
-  toolbarVerticalAlign,
-  toolbarTags
+  toolbarVerticalAlign
 } from "visual/utils/toolbar";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -139,13 +120,6 @@ export function getItems({ v, device, component }) {
                           state: "normal",
                           disabled: dvv("media") !== "video"
                         }),
-                        toolbarBgVideoQuality({
-                          v,
-                          device,
-                          devices: "desktop",
-                          state: "normal",
-                          disabled: dvv("media") !== "video"
-                        }),
                         toolbarBgVideoLoop({
                           v,
                           device,
@@ -153,13 +127,17 @@ export function getItems({ v, device, component }) {
                           state: "normal",
                           disabled: dvv("media") !== "video"
                         }),
-                        toolbarBgMapAddress({
-                          v,
-                          device,
+                        {
+                          id: "bgMapAddress",
+                          label: t("Address"),
+                          type: "inputText-dev",
                           devices: "desktop",
-                          state: "normal",
-                          disabled: dvv("media") !== "map"
-                        }),
+                          disabled: dvv("media") !== "map",
+                          placeholder: t("Enter address"),
+                          config: {
+                            size: "large"
+                          }
+                        },
                         toolbarBgMapZoom({
                           v,
                           device,
@@ -817,27 +795,36 @@ export function getItems({ v, device, component }) {
       icon: "nc-cog",
       title: t("Settings"),
       position: 100,
-      devices: "desktop",
       options: [
         toolbarSizeWidthSizePercent({
           v,
           device,
           state: "normal",
-          devices: "desktop",
           min: 40,
           max: 100,
           disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP
         }),
         {
           type: dvk("multiPicker"),
+          devices: "desktop",
           disabled: inPopup2 || IS_GLOBAL_POPUP,
           position: 90,
-          picker: toolbarElementRowColumnsHeightStyle({
-            v,
-            device,
+          picker: {
+            id: "columnsHeightStyle",
+            label: t("Height"),
+            type: "select-dev",
             devices: "desktop",
-            state: "normal"
-          }),
+            choices: [
+              {
+                title: t("Auto"),
+                value: "auto"
+              },
+              {
+                title: t("Custom"),
+                value: "custom"
+              }
+            ]
+          },
           choices: {
             custom: [
               toolbarElementRowColumnsHeight({
@@ -858,160 +845,11 @@ export function getItems({ v, device, component }) {
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",
+          devices: "desktop",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),
           icon: "nc-cog",
-          position: 110,
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("settingsStyling"),
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: [
-                    toolbarPaddingFourFields({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarMargin({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      disabled: inPopup,
-                      onChangeGrouped: ["onChangeMarginGrouped"],
-                      onChangeUngrouped: ["onChangeMarginUngrouped"]
-                    }),
-                    toolbarBorderRadius({
-                      v,
-                      device,
-                      state: "normal",
-                      onChangeGrouped: [
-                        "onChangeBorderRadiusGrouped",
-                        "onChangeBorderRadiusGroupedDependencies"
-                      ],
-                      onChangeUngrouped: [
-                        "onChangeBorderRadiusUngrouped",
-                        "onChangeBorderRadiusUngroupedDependencies"
-                      ]
-                    })
-                  ]
-                },
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarShowOnDesktop({ v, devices: "desktop" }),
-                    toolbarZIndex({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarCustomCSSClass({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarCSSID({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarEntranceAnimation({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      position: 60,
-                      devices: "desktop",
-                      state: "normal"
-                    }),
-                    toolbarTags({
-                      v,
-                      device,
-                      state: "normal"
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      position: 100,
-      devices: "responsive",
-      options: [
-        toolbarSizeWidthSizePercent({
-          v,
-          device,
-          state: "normal",
-          devices: "responsive",
-          min: 40,
-          max: 100,
-          disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP
-        }),
-        {
-          id: dvk("advancedSettings"),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          sidebarLabel: t("More Settings"),
-          icon: "nc-cog",
-          title: t("Settings"),
-          position: 110,
-          devices: "responsive",
-          options: [
-            toolbarPaddingFourFields({
-              v,
-              device,
-              state: "normal",
-              devices: "responsive"
-            }),
-            toolbarMargin({
-              v,
-              device,
-              state: "normal",
-              devices: "responsive",
-              disabled: inPopup,
-              onChangeGrouped: ["onChangeMarginGrouped"],
-              onChangeUngrouped: ["onChangeMarginUngrouped"]
-            }),
-            toolbarBorderRadius({
-              v,
-              device,
-              devices: "responsive",
-              state: "normal",
-              onChangeGrouped: [
-                "onChangeBorderRadiusGrouped",
-                "onChangeBorderRadiusGroupedDependencies"
-              ],
-              onChangeUngrouped: [
-                "onChangeBorderRadiusUngrouped",
-                "onChangeBorderRadiusUngroupedDependencies"
-              ]
-            })
-          ]
+          position: 110
         }
       ]
     }

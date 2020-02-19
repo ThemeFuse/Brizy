@@ -39,7 +39,6 @@ export function cssStyleBorder({
 
   if (borderWidthType === "grouped") {
     const borderWidth = styleBorderWidthGrouped({ v, device, state, prefix });
-
     borderTopWidth = borderWidth;
     borderRightWidth = borderWidth;
     borderBottomWidth = borderWidth;

@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function() {
-  $(".brz-input__upload").each(function() {
+export default function($node) {
+  $node.find(".brz-input__upload").each(function() {
     const $this = $(this);
     const $input = $this.children(".brz-input");
     const $button = $this.find(".brz-button");

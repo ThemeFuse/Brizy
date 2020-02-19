@@ -42,6 +42,8 @@ import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { flatMap } from "visual/utils/array";
 
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
+
 export default function main({
   pageId,
   pages,
@@ -53,8 +55,8 @@ export default function main({
     .find(page => (pageId ? page.id === pageId : page.is_index));
   const globalBlocks = globalBlocks_
     .map(parseGlobalBlock)
-    .reduce((acc, block) => {
-      acc[block.uid] = block.data;
+    .reduce((acc, { uid, data, dataVersion }) => {
+      acc[uid] = { id: uid, data, dataVersion };
       return acc;
     }, {});
 
@@ -116,11 +118,12 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
       project,
       fonts: _fonts,
       globalBlocks,
-      savedBlocks: {}
+      savedBlocks: {},
+      projectStatus: {}
     })
   );
 
-  const { Page } = EditorGlobal.getComponents();
+  const { Page, PagePopup } = EditorGlobal.getComponents();
   const reduxState = store.getState();
 
   // === TMP ===
@@ -130,7 +133,11 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
-        <Page dbValue={reduxState.page.data} reduxState={reduxState} />
+        {IS_GLOBAL_POPUP ? (
+          <PagePopup dbValue={reduxState.page.data} reduxState={reduxState} />
+        ) : (
+          <Page dbValue={reduxState.page.data} reduxState={reduxState} />
+        )}
       </Provider>
     )
   );
@@ -140,7 +147,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   // ===========
 
   const $pageHTML = cheerio.load(
-    `<html><head><style>${glamorCSS}</style><style>${brzCss}</style></head><body>${html}</body></html>`
+    `<html><head><style class="brz-style">${glamorCSS}</style><style class="brz-style">${brzCss}</style></head><body>${html}</body></html>`
   );
 
   // get all Fonts from page

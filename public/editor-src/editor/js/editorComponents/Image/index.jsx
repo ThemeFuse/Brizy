@@ -14,6 +14,7 @@ import { imageUrl, imagePopulationUrl, svgUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
 import toolbarConfigFn, {
   getMinSize,
   getMaxSize,
@@ -309,7 +310,7 @@ class Image extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -354,7 +355,7 @@ class Image extends EditorComponent {
       linkUpload,
       popups
     } = v;
-    const { tabletW, mobileW, inGallery = false } = this.props.meta;
+    const { tabletW, mobileW, gallery = {} } = this.props.meta;
     const {
       containerWidth,
       maxDesktopContainerWidth,
@@ -501,7 +502,7 @@ class Image extends EditorComponent {
       tabletContainerWidth: tabletW,
       mobileWrapperSizes: wrapperSizes.mobile,
       mobileContainerWidth: mobileW,
-      inGallery
+      gallery
     });
 
     const resizerRestrictions = {
@@ -516,7 +517,7 @@ class Image extends EditorComponent {
     };
 
     let resizerPoints_ = resizerPoints.default;
-    if (inGallery) {
+    if (gallery && gallery.inGallery) {
       resizerPoints_ = resizerPoints.gallery;
     } else if (isSVG(imageExtension)) {
       resizerPoints_ = resizerPoints.svg;
@@ -529,7 +530,7 @@ class Image extends EditorComponent {
           className={imageStylesClassName(v, wrapperSizes, this.props)}
           style={imageStylesCSSVars(v)}
         >
-          <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+          <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}>
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
               <div
                 className={contentStyleClassName(v)}

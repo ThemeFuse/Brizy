@@ -24,7 +24,7 @@ export function getItems({ v, device, component }) {
 
   return [
     {
-      id: dvk("toolbarPopup"),
+      id: "toolbarPopup",
       type: "popover",
       icon: "nc-popup",
       title: "Popup",
@@ -32,7 +32,7 @@ export function getItems({ v, device, component }) {
       position: 70,
       options: [
         {
-          id: dvk("makeItGlobal"),
+          id: "makeItGlobal",
           label: t("Make it Global"),
           type: "switch",
           value: component.props.meta.globalBlockId ? "on" : "off",
@@ -341,7 +341,7 @@ export function getItems({ v, device, component }) {
       })
     },
     {
-      id: dvk("makeItSaved"),
+      id: "makeItSaved",
       type: "buttonTooltip",
       icon: "nc-save-section",
       position: 100,
@@ -352,37 +352,6 @@ export function getItems({ v, device, component }) {
         component.becomeSaved();
       }
     },
-    {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 110,
-      options: [
-        {
-          id: dvk("advancedSettings"),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+
   ];
 }

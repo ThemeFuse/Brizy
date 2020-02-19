@@ -13,9 +13,12 @@ import WPBreadcrumbs from "./WordPress/WPBreadcrumbs";
 import WPPostsTitle from "./WordPress/WPPostsTitle";
 import WPPostExcerpt from "./WordPress/WPPostExcerpt";
 import WPPostContent from "./WordPress/WPPostContent";
+import WPPostInfo from "./WordPress/WPPostInfo";
 // import WOOSku from "./WordPress/WOOSku";
 // import WOOStock from "./WordPress/WOOStock";
-import WPPostInfo from "./WordPress/WPPostInfo";
+// import WOOPrice from "./WordPress/WOOPrice";
+// import WOOAdditional from "./WordPress/WOOAdditional";
+import Search from "./Search";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 
@@ -30,6 +33,7 @@ export default {
   WPPostExcerpt,
   WPPostContent,
   WPPostInfo,
+  Search,
   ...(pluginActivated("woocommerce")
     ? {
         WOOProducts,
@@ -37,7 +41,9 @@ export default {
         WOOCategories,
         WOOPages
         // WOOSku,
-        // WOOStock
+        // WOOStock,
+        // WOOPrice,
+        // WOOAdditional
       }
     : {})
 };

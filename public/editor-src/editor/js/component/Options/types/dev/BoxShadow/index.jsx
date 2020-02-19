@@ -1,11 +1,9 @@
 import React from "react";
 import T from "prop-types";
 import classNames from "classnames";
-import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
 import {
-  getColorPaletteColor,
-  getColorPaletteColors
+  getColorPaletteColors,
+  getColorPaletteColor
 } from "visual/utils/color";
 import { BoxShadow as ShadowControl } from "visual/component/Controls/BoxShadow";
 import { toHex } from "visual/utils/color/isHex";
@@ -23,14 +21,7 @@ import { get } from "visual/utils/model";
 import * as Type from "visual/component/Options/types/dev/BoxShadow/entities/type";
 import { toOpacity } from "visual/utils/cssProps/opacity";
 
-const openPaletteSidebar = () => {
-  getStore().dispatch(
-    updateUI("leftSidebar", {
-      isOpen: true,
-      drawerContentType: "styling"
-    })
-  );
-};
+import { openPaletteSidebar } from "visual/component/Options/types/dev/ColorPicker/store";
 
 export const BoxShadow = ({ onChange, value, ...props }) => {
   const className = classNames("brz-ed-option__boxShadow", props.className);
@@ -39,23 +30,14 @@ export const BoxShadow = ({ onChange, value, ...props }) => {
       // Opacity has a special cas where we need to update tempOpacity when the slider drag ends
 
       onChange(
-        fromModel(
-          _setOpacity(
-            get(undefined, "opacity", m),
-            value,
-            !!meta.opacityDragEnd
-          )
-        ),
+        fromModel(_setOpacity(get("opacity", m), value, !!meta.opacityDragEnd)),
         meta
       );
     } else {
       const setter = getSetter(meta.isChanged);
 
       if (setter) {
-        onChange(
-          fromModel(setter(get(undefined, meta.isChanged, m), value)),
-          meta
-        );
+        onChange(fromModel(setter(get(meta.isChanged, m), value)), meta);
       }
     }
   };
@@ -85,30 +67,30 @@ BoxShadow.getModel = get => {
   const tType =
     tValue === "" ? Type.NONE : tValue === "on" ? Type.OUTSET : tValue;
   const palette = Palette.toPalette(
-    get("palette") || Palette.empty,
-    get("colorPalette")
+    get("colorPalette"),
+    get("palette") || Palette.empty
   );
   const hex = (getColorPaletteColor(palette) || {}).hex;
 
   return {
-    type: Type.toType(get("type") || Type.empty, type),
-    tempType: Type.toType(get("tempType") || Type.INSET, tType),
+    type: Type.toType(type, get("type") || Type.empty),
+    tempType: Type.toType(tType, get("tempType") || Type.OUTSET),
     hex: toHex(get("colorHex") || get("hex") || "#000000", hex),
-    opacity: toOpacity(get("opacity") || 0, get("colorOpacity")),
-    tempOpacity: toOpacity(get("tempOpacity") || 1, get("tempColorOpacity")),
+    opacity: toOpacity(get("colorOpacity"), get("opacity") || 0),
+    tempOpacity: toOpacity(get("tempColorOpacity"), get("tempOpacity") || 1),
     palette: palette,
     tempPalette: Palette.toPalette(
-      get("tempPalette") || Palette.empty,
-      get("tempColorPalette")
+      get("tempColorPalette"),
+      get("tempPalette") || Palette.empty
     ),
-    blur: toBlur(0, get("blur")),
-    tempBlur: toBlur(4, get("tempBlur")),
-    spread: toSpread(0, get("spread")),
-    tempSpread: toSpread(2, get("tempSpread")),
-    vertical: toNumber(0, get("vertical")),
-    tempVertical: toNumber(0, get("tempVertical")),
-    horizontal: toNumber(0, get("horizontal")),
-    tempHorizontal: toNumber(0, get("tempHorizontal"))
+    blur: toBlur(get("blur"), 0),
+    tempBlur: toBlur(get("tempBlur"), 4),
+    spread: toSpread(get("spread"), 0),
+    tempSpread: toSpread(get("tempSpread"), 2),
+    vertical: toNumber(get("vertical"), 0),
+    tempVertical: toNumber(get("tempVertical"), 0),
+    horizontal: toNumber(get("horizontal"), 0),
+    tempHorizontal: toNumber(get("tempHorizontal"), 0)
   };
 };
 

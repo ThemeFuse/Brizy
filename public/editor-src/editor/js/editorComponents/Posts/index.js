@@ -6,7 +6,8 @@ import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Items from "./items";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as parentToolbarExtend from "./parentToolbarExtend";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as sidebarExtendParent from "./sidebarExtendParent";
 import defaultValue from "./defaultValue.json";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 
@@ -22,10 +23,13 @@ class Posts extends EditorComponent {
   };
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      toolbarExtendParent,
+      sidebarExtendParent,
+      {
+        allowExtend: false
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
   }
 

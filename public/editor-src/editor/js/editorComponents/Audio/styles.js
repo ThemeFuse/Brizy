@@ -3,8 +3,29 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleContent(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent", "cssStyleSizeHeightPx"]
-    }
+      standart: ["cssStyleSizeWidthPercent", "cssStyleSizeMinHeightPx"]
+    },
+    ".brz &&:hover .progress": {
+      standart: ["cssStyleBg2Color"]
+    },
+    ".brz &&:hover:before": {
+      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementSoundCloudPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover .play-pause-btn, .volume, .volume-btn, .volume-controls, .brz-audio-cover, .brz-audio__cover-icon": {
+      standart: ["cssStyleDisplayFlex"]
+    },
+    ".brz &&:hover .brz-soundCloud-content": {
+      standart: ["cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementSoundCloudPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover iframe": { standart: ["cssStyleSizeHeightPx"] }
   };
   return renderStyles({ v, vs, vd, styles });
 }
@@ -16,13 +37,15 @@ export function styleWrapperAudio(v, vs, vd) {
         "cssStyleBorderRadius",
         "cssStyleBoxShadow",
         "cssStyleBorder",
-        "cssStyleBgColor"
+        "cssStyleBgColor",
+        "cssStyleDisplayFlex"
       ]
     },
     ".brz &&:hover .brz-audio__cover::before": {
       standart: [
         "cssStyleElementVideoCoverSrc",
         "cssStyleElementVideoCoverPosition",
+        "cssStyleElementVideoBgSize",
         "cssStyleBorderRadius"
       ]
     },
@@ -43,6 +66,7 @@ export function styleControls(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: [
+        "cssStyleDisplayFlex",
         "cssStyleElementMediaPadding",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -53,15 +77,6 @@ export function styleControls(v, vs, vd) {
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleSliderProgress(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleBg2Color"]
-    }
-  };
   return renderStyles({ v, vs, vd, styles });
 }
 

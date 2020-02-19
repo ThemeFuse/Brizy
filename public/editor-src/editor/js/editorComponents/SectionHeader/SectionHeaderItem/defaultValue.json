@@ -201,6 +201,9 @@
     "containerType": "boxed",
     "containerSize": 100,
 
+    "hoverContainerType": null,
+    "hoverContainerSize": null,
+
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",
 

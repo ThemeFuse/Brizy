@@ -4,13 +4,14 @@ import classnames from "classnames";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import ThemeIcon from "visual/component/ThemeIcon";
+import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import {
   styleContent,
   styleWrapperAudio,
   styleControls,
-  styleSliderProgress,
   styleIcon
 } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -18,17 +19,15 @@ import { customFileUrl } from "visual/utils/customFile";
 import defaultValue from "./defaultValue.json";
 
 const resizerPoints = [
+  "topLeft",
+  "topCenter",
+  "topRight",
   "centerLeft",
   "centerRight",
-  "topCenter",
-  "bottomCenter"
+  "bottomLeft",
+  "bottomCenter",
+  "bottomRight"
 ];
-const resizerRestrictions = {
-  height: {
-    min: 40,
-    max: 300
-  }
-};
 
 class Audio extends EditorComponent {
   static get componentId() {
@@ -39,12 +38,42 @@ class Audio extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
+  getResizerRestrictions(v) {
+    return {
+      height: {
+        min: 5,
+        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+      },
+      width: {
+        min: 5,
+        max: 100
+      },
+      tabletHeight: {
+        min: 5,
+        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+      },
+      tabletWidth: {
+        min: 5,
+        max: 100
+      },
+      mobileHeight: {
+        min: 5,
+        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+      },
+      mobileWidth: {
+        min: 5,
+        max: 100
+      }
+    };
+  }
+
   renderCover() {
     return <div className="brz-audio__cover" />;
   }
 
   renderForEdit(v, vs, vd) {
     const {
+      type,
       audio,
       showCurrentTime,
       showDurationTime,
@@ -55,7 +84,8 @@ class Audio extends EditorComponent {
     const audioFile = customFileUrl(audio);
 
     const classNameContent = classnames(
-      "brz-audio",
+      { "brz-audio": type === "custom" },
+      { "brz-soundcloud": type === "soundcloud" },
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -81,14 +111,7 @@ class Audio extends EditorComponent {
       )
     );
 
-    const classNameSliderProgress = classnames(
-      "progress",
-      css(
-        `${this.constructor.componentId}-progress-bar`,
-        `${this.getId()}-progress-bar`,
-        styleSliderProgress(v, vs, vd)
-      )
-    );
+    const classNameSliderProgress = classnames("progress");
 
     const styleIconClass = css(
       `${this.constructor.componentId}-icon`,
@@ -170,18 +193,43 @@ class Audio extends EditorComponent {
       </div>
     );
 
+    // SoundCloud
+
+    const wrapperClassName = classnames("brz-iframe", {
+      "brz-blocked": IS_EDITOR
+    });
+    let { url, autoPlay, showArtwork } = v;
+    autoPlay = autoPlay === "on";
+    showArtwork = showArtwork === "on";
+    const src = `https://w.soundcloud.com/player/?url=${url}&amp;auto_play=${autoPlay}&amp;how_teaser=true&amp;visual=${showArtwork}&amp;`;
+
+    const contentSoundCloud = !url ? (
+      <Placeholder icon="sound-cloud" />
+    ) : (
+      <div className="brz-soundCloud-content">
+        <iframe
+          className={wrapperClassName}
+          scrolling="no"
+          frameBorder="no"
+          src={src}
+        />
+      </div>
+    );
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={classNameContent}>
             <BoxResizer
               points={resizerPoints}
-              restrictions={resizerRestrictions}
+              restrictions={this.getResizerRestrictions(v)}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
             >
-              {content}
+              {type === "custom" ? content : contentSoundCloud}
             </BoxResizer>
           </div>
         </CustomCSS>

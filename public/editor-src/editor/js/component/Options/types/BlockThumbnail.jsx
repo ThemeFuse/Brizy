@@ -1,7 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import classnames from "classnames";
+import produce from "immer";
 import _ from "underscore";
+import classnames from "classnames";
+import { connect } from "react-redux";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { blockThumbnailData } from "visual/utils/blocks";
@@ -11,7 +12,8 @@ import {
   pageBlocksAssembledSelector,
   globalBlocksAssembled2Selector
 } from "visual/redux/selectors";
-import { updateBlocks, updateGlobalBlock } from "visual/redux/actions";
+import { updateBlocks } from "visual/redux/actions";
+import { updateGlobalBlock } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 
 const MAX_THUMBNAIL_WIDTH = 132;
@@ -54,7 +56,7 @@ class BlockThumbnail extends React.Component {
         .filter(block => block.value._id !== id)
         .map(block => {
           if (block.type === "GlobalBlock") {
-            block = globalBlocks[block.value.globalBlockId];
+            block = globalBlocks[block.value.globalBlockId].data;
           }
 
           return block.value.anchorName;
@@ -74,7 +76,13 @@ class BlockThumbnail extends React.Component {
       } while (foundDuplicateAnchorName);
     }
 
-    const blockToUpdate = blocks.find(block => block.value._id === id);
+    const blockToUpdate = blocks.find(({ type, value }) => {
+      if (type === "GlobalBlock") {
+        return globalBlocks[value.globalBlockId].data.value._id === id;
+      }
+
+      return value._id === id;
+    });
     if (blockToUpdate.type !== "GlobalBlock") {
       const updatedBlocks = blocks.map(block => {
         return block.value._id === id
@@ -91,20 +99,11 @@ class BlockThumbnail extends React.Component {
       dispatch(updateBlocks({ blocks: updatedBlocks }));
     } else {
       const globalBlockId = blockToUpdate.value.globalBlockId;
-      const globalBlock = globalBlocks[globalBlockId];
+      const globalBlock = produce(globalBlocks[globalBlockId], draft => {
+        draft.data.value.anchorName = anchorName;
+      });
 
-      dispatch(
-        updateGlobalBlock({
-          id: globalBlockId,
-          data: {
-            ...globalBlock,
-            value: {
-              ...globalBlock.value,
-              anchorName
-            }
-          }
-        })
-      );
+      dispatch(updateGlobalBlock(globalBlock));
     }
 
     this.anchorInputRefs[id].setValue(anchorName);
@@ -138,7 +137,7 @@ class BlockThumbnail extends React.Component {
 
     return blocks.map(block => {
       if (block.type === "GlobalBlock") {
-        block = globalBlocks[block.value.globalBlockId];
+        block = globalBlocks[block.value.globalBlockId].data;
       }
 
       const { _id, anchorName } = block.value;

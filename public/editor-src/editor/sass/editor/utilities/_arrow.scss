@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // Arrows
 .brz-ed-arrow {
   position: absolute;
@@ -15,6 +17,9 @@
   }
 
   // Arrow Position
+  &--top,
+  &--top-start,
+  &--top-end,
   &--top-left,
   &--top-right,
   &--top-center {
@@ -25,5 +30,22 @@
       border-top: $toolbar-arrow-size solid $toolbar-bg-color;
       border-bottom: $toolbar-arrow-size solid transparent;
     }
+  }
+
+  // Arrow Position
+  &--left,
+  &--left-start,
+  &--left-end {
+    left: unset;
+    right: -$toolbar-arrow-size;
+    transform: rotate(90deg);
+  }
+
+  // Arrow Position
+  &--right,
+  &--right-start,
+  &--right-end {
+    left: -$toolbar-arrow-size;
+    transform: rotate(-90deg);
   }
 }

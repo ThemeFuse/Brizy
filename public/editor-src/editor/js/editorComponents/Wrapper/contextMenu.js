@@ -5,16 +5,21 @@ const translationsMap = {
   RichText: t("Text"),
   Image: t("Image"),
   Video: t("Video"),
+  VideoPlaylist: t("Playlist"),
   Spacer: t("Spacer"),
   Line: t("Line"),
   Map: t("Map"),
   EmbedCode: t("Embed"),
   Form: t("Form"),
+  Form2: t("Form"),
   IconText: t("Icon Box"),
   SoundCloud: t("SoundCloud"),
   Counter: t("Counter"),
   Countdown: t("Countdown"),
+  Countdown2: t("Countdown"),
   Tabs: t("Tabs"),
+  TimeLine: t("Timeline"),
+  Switcher: t("Switcher"),
   ProgressBar: t("Progress"),
   Accordion: t("Accordion"),
   ImageGallery: t("Gallery"),
@@ -30,7 +35,7 @@ const translationsMap = {
   Posts: t("Posts"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
-  FacebookComments: t("Facebook Comments"),
+  FacebookComments: t("Comments"),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
   FacebookGroup: t("Facebook Group"),
@@ -38,7 +43,11 @@ const translationsMap = {
   WPPostInfo: t("Post Info"),
   WPPostContent: t("Post Content"),
   // WPPostInfo: t("Post info")
-  Audio: t("Audio")
+  Audio: t("Audio"),
+  Twitter: t("Twitter"),
+  Facebook: t("Facebook"),
+  WPComments: t("Comments"),
+  Search: t("Search")
 };
 
 export default {

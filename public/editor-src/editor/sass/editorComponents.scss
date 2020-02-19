@@ -55,6 +55,9 @@
 // countdown
 @import "editorComponents/countdown";
 
+// countdown2
+@import "editorComponents/countdown2";
+
 // divider
 @import "editorComponents/spacer";
 
@@ -72,6 +75,9 @@
 
 // video
 @import "editorComponents/video";
+
+// video playlist
+@import "editorComponents/video-playlist";
 
 // audio
 @import "editorComponents/audio";
@@ -118,6 +124,12 @@
 // tabs
 @import "editorComponents/tabs";
 
+//timeline
+@import "editorComponents/timeline";
+
+// switcher
+@import "editorComponents/switcher";
+
 // accordion
 @import "editorComponents/accordion";
 
@@ -154,9 +166,20 @@
 // WP Content
 @import "editorComponents/wpcontent";
 
-// post info
+// Post info
 @import "editorComponents/postinfo";
 
-// star ratinn
+// Star rating
 @import "editorComponents/starrating";
 
+// Search
+@import "editorComponents/search";
+
+// WOOPrice
+@import "editorComponents/WOOPrice";
+
+// WOOAdditional
+@import "editorComponents/WOOAdditional";
+
+// comments
+@import "editorComponents/comments";

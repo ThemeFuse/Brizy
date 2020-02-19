@@ -1,100 +1,22 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementVideoLink({
-  v,
-  device,
-  devices = "all",
-  state,
-  population
-}) {
-  return {
-    id: defaultValueKey({ key: "video", device, state }),
-    label: t("Link"),
-    type: "input",
-    devices,
-    placeholder: t("YouTube or Vimeo"),
-    population: {
-      show: population.length > 0,
-      choices: population
-    },
-    value: {
-      population: defaultValueValue({
-        v,
-        key: "videoPopulation",
-        device,
-        state
-      }),
-      value: defaultValueValue({ v, key: "video", device, state })
-    },
-    onChange: ({ value, population }) => ({
-      [defaultValueKey({
-        v,
-        key: "videoPopulation",
-        device,
-        state
-      })]: population,
-      [defaultValueKey({ v, key: "video", device, state })]: value
-    })
-  };
-}
-
-export function toolbarElementVideoRatio({
-  v,
-  device,
-  devices = "all",
-  state
-}) {
-  return {
-    id: defaultValueKey({ key: "ratio", device, state }),
-    devices,
-    label: t("Ratio"),
-    type: "select",
-    roles: ["admin"],
-    choices: [
-      {
-        title: "16:9",
-        value: "16:9"
-      },
-      {
-        title: "9:16",
-        value: "9:16"
-      },
-      {
-        title: "4:3",
-        value: "4:3"
-      }
-    ],
-    value: defaultValueValue({ v, key: "ratio", device, state })
-  };
-}
-
-export function toolbarElementVideoControls({
-  v,
-  device,
-  devices = "all",
-  state
-}) {
-  return {
-    id: defaultValueKey({ key: "controls", device, state }),
-    label: t("Controls"),
-    devices,
-    type: "switch",
-    roles: ["admin"],
-    value: defaultValueValue({ v, key: "controls", device, state })
-  };
-}
-
 export function toolbarElementVideoStart({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+
   return {
-    id: defaultValueKey({ key: "start", device, state }),
+    id: dvk("start"),
     devices,
+    disabled,
     label: t("Start"),
+    helper: true,
+    helperContent: t("Specify a start time (in seconds)"),
     type: "input",
     inputType: "number",
     placeholder: "seconds",
@@ -103,99 +25,37 @@ export function toolbarElementVideoStart({
       value: v.start
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "start", device, state })]: Number(value)
+      [dvk("start")]: Number(value)
     })
   };
 }
 
-export function toolbarElementVideoCover({
+export function toolbarElementVideoEnd({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
-  return {
-    id: defaultValueKey({ key: "cover", device, state }),
-    devices,
-    label: t("Cover"),
-    type: "imageSetter",
-    value: {
-      width: defaultValueValue({ v, key: "coverImageWidth", device, state }),
-      height: defaultValueValue({ v, key: "coverImageHeight", device, state }),
-      src: defaultValueValue({ v, key: "coverImageSrc", device, state }),
-      x: defaultValueValue({ v, key: "coverPositionX", device, state }),
-      y: defaultValueValue({ v, key: "coverPositionY", device, state }),
-      extension: defaultValueValue({
-        v,
-        key: "coverImageExtension",
-        device,
-        state
-      })
-    },
-    onChange: ({ width, height, src, x, y, extension }) => {
-      return {
-        [defaultValueKey({ v, key: "coverImageWidth", device, state })]: width,
-        [defaultValueKey({
-          v,
-          key: "coverImageHeight",
-          device,
-          state
-        })]: height,
-        [defaultValueKey({ v, key: "coverImageSrc", device, state })]: src,
-        [defaultValueKey({ v, key: "coverPositionX", device, state })]: x,
-        [defaultValueKey({ v, key: "coverPositionY", device, state })]: y,
-        [defaultValueKey({
-          v,
-          key: "coverImageExtension",
-          device,
-          state
-        })]: extension
-      };
-    }
-  };
-}
+  const dvk = key => defaultValueKey({ key, device, state });
 
-export function toolbarElementVideoCoverZoom({
-  v,
-  device,
-  devices = "all",
-  state
-}) {
   return {
-    id: defaultValueKey({ key: "coverZoom", device, state }),
-    label: t("Zoom"),
-    type: "slider",
+    id: dvk("end"),
     devices,
-    slider: {
-      min: 100,
-      max: 300
-    },
-    input: {
-      show: true,
-      min: 100
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "%",
-          value: "%"
-        }
-      ]
-    },
+    disabled,
+    label: t("End"),
+    helper: true,
+    helperContent: t("Specify an end time (in seconds)"),
+    type: "input",
+    inputType: "number",
+    placeholder: "seconds",
+    roles: ["admin"],
     value: {
-      value: defaultValueValue({
-        v,
-        key: "coverZoom",
-        device,
-        state
-      })
+      value: v.end
     },
-    onChange: ({ value }) => {
-      return {
-        [defaultValueKey({ v, key: "coverZoom", device, state })]: value
-      };
-    }
+    onChange: ({ value }) => ({
+      [dvk("end")]: Number(value)
+    })
   };
 }
 
@@ -203,13 +63,18 @@ export function toolbarElementVideoPlaySize({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "iconSize", device, state }),
+    id: dvk("iconSize"),
     label: t("Play"),
     type: "slider",
     devices,
+    disabled,
     roles: ["admin"],
     slider: {
       min: 50,
@@ -230,19 +95,94 @@ export function toolbarElementVideoPlaySize({
       ]
     },
     value: {
-      value: defaultValueValue({
-        v,
-        key: "iconSize",
-        device,
-        state
-      })
+      value: dvv("iconSize")
     },
     onChange: ({ value }) => {
       return {
-        [defaultValueKey({ v, key: "iconSize", device, state })]: value,
-        [defaultValueKey({ v, key: "iconSizeWidth", device, state })]: value,
-        [defaultValueKey({ v, key: "iconSizeHeight", device, state })]: value
+        [dvk("iconSize")]: value,
+        [dvk("iconSizeWidth")]: value,
+        [dvk("iconSizeHeight")]: value
       };
+    }
+  };
+}
+
+export function toolbarElementVideoUpload({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled = false
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = key => defaultValueKey({ key, device, state });
+  return {
+    id: dvk("custom"),
+    label: t("File"),
+    type: "fileUpload",
+    acceptedExtensions: ["video/*"],
+    devices,
+    disabled,
+    value: dvv("custom")
+  };
+}
+
+export function toolbarElementVideoControls({
+  v,
+  device,
+  devices = "all",
+  disabled = false,
+  state
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = key => defaultValueKey({ key, device, state });
+  return {
+    type: "multiPicker",
+    roles: ["admin"],
+    devices,
+    disabled,
+    picker: {
+      id: dvk("controls"),
+      label: t("Controls"),
+      devices,
+      disabled,
+      type: "switch",
+      roles: ["admin"],
+      value: dvv("controls")
+    },
+    choices: {
+      on: [
+        {
+          id: dvk("controlsIconCustomSize"),
+          type: "slider",
+          label: t("Size"),
+          disabled: v.type !== "custom",
+          slider: {
+            min: 1,
+            max: 40
+          },
+          input: {
+            show: true
+          },
+          suffix: {
+            show: true,
+            choices: [
+              {
+                title: "px",
+                value: "px"
+              }
+            ]
+          },
+          value: {
+            value: dvv("controlsIconCustomSize")
+          },
+          onChange: ({ value: controlsIconCustomSize }) => {
+            return {
+              [dvk("controlsIconCustomSize")]: controlsIconCustomSize
+            };
+          }
+        }
+      ]
     }
   };
 }

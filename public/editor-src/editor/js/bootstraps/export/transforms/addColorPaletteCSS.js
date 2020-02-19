@@ -6,5 +6,5 @@ export default $ => {
     getColorPaletteColors()
   );
 
-  $("head").append(`<style>${richTextPaletteCSS}</style>`);
+  $("head").append(`<style class="brz-style">${richTextPaletteCSS}</style>`);
 };

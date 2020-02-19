@@ -1,18 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Popper } from "react-popper";
+import { getPosition } from "visual/component/Toolbar/PortalToolbar/state";
 
 const SIDEBAR_WIDTH = 48;
 const TOOLTIP_SPACE = 14;
 const TOOLBAR_PADDING = 12;
 
 export default class TooltipContent extends React.Component {
-  static contextTypes = {
-    position: PropTypes.string
-  };
-
   static defaultProps = {
     className: "",
     isOpen: false,
@@ -61,27 +57,32 @@ export default class TooltipContent extends React.Component {
   }
 
   repositionByToolbar(toolbar) {
+    let { placement, arrowPlacementStyle } = this.props;
+
     // eslint-disable-next-line react/no-find-dom-node
-    const toolbarTarget = ReactDOM.findDOMNode(toolbar);
+    const toolbarNode = ReactDOM.findDOMNode(toolbar);
+    const {
+      top: toolbarTop,
+      right: toolbarRight,
+      left: toolbarLeft,
+      width: toolbarWidth,
+      height: toolbarHeight
+    } = toolbarNode.getBoundingClientRect();
+    const {
+      toolbarItemIndex,
+      toolbarItemsLength,
+      toolbarCSSPosition
+    } = toolbar;
+
     const {
       width: contentWidth,
       height: contentHeight
     } = this.contentRef.current.getBoundingClientRect();
-    const {
-      top: targetTop,
-      right: targetRight,
-      left: targetLeft,
-      height: targetHeight,
-      width: targetWidth
-    } = toolbarTarget.getBoundingClientRect();
 
-    let { placement, arrowPlacementStyle } = this.props;
-    const { position } = this.context;
-    const windowTop = position === "fixed" ? 0 : window.scrollY;
-    const { toolbarItemIndex, toolbarItemsLength } = toolbar;
+    const windowTop = toolbarCSSPosition === "fixed" ? 0 : window.scrollY;
 
     const toolbarItemWidth =
-      (targetWidth - TOOLBAR_PADDING) / toolbarItemsLength;
+      (toolbarWidth - TOOLBAR_PADDING) / toolbarItemsLength;
 
     const toolbarItemWidthCenter =
       toolbarItemWidth * toolbarItemIndex -
@@ -91,15 +92,21 @@ export default class TooltipContent extends React.Component {
     const toolbarItemCenter =
       Math.round((toolbarItemWidthCenter - contentWidth / 2) * 10) / 10;
 
-    const contentTop = windowTop + targetTop - TOOLTIP_SPACE - contentHeight;
-    const contentLeft = targetLeft + toolbarItemCenter;
+    const contentTop = windowTop + toolbarTop - TOOLTIP_SPACE - contentHeight;
+    const contentLeft = toolbarLeft + toolbarItemCenter;
     const contentMinLeft = SIDEBAR_WIDTH;
     const contentMaxLeft = document.documentElement.clientWidth - contentWidth;
 
-    let placementStyle = { top: contentTop, left: contentLeft, position };
+    let placementStyle = {
+      top: contentTop,
+      left: contentLeft,
+      position: toolbarCSSPosition
+    };
 
-    if (contentTop <= windowTop) {
-      placementStyle.top = windowTop + targetTop + targetHeight + TOOLTIP_SPACE;
+    // try to open in the same way (above, below) as the toolbar did
+    if (getPosition() === "below" || contentTop <= windowTop) {
+      placementStyle.top =
+        windowTop + toolbarTop + toolbarHeight + TOOLTIP_SPACE;
       placement = `bottom-${placement.split("-")[1]}`;
     }
     if (contentLeft >= contentMaxLeft) {
@@ -108,12 +115,12 @@ export default class TooltipContent extends React.Component {
         toolbarItemWidth / 2 +
         TOOLBAR_PADDING / 2;
       placement = `${placement.split("-")[0]}-right`;
-      placementStyle.left = targetRight - contentWidth;
+      placementStyle.left = toolbarRight - contentWidth;
       arrowPlacementStyle = { left: contentWidth - arrowPosition };
     }
     if (contentLeft <= contentMinLeft) {
       placement = `${placement.split("-")[0]}-left`;
-      placementStyle.left = targetLeft;
+      placementStyle.left = toolbarLeft;
       arrowPlacementStyle = { left: toolbarItemWidthCenter };
     }
 
@@ -172,6 +179,7 @@ export default class TooltipContent extends React.Component {
     const className = classnames(
       "brz-ed-animated brz-ed-animated--fadeInUp",
       "brz-ed-tooltip__overlay",
+      `brz-ed-tooltip--${placement}`,
       { [`brz-ed-tooltip--${size}`]: size },
       _className
     );

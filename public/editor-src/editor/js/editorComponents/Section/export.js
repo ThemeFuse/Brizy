@@ -1,8 +1,8 @@
 import $ from "jquery";
 import "slick-carousel";
 
-export default function() {
-  const isRtl = $("html").attr("dir") === "rtl";
+export default function($node) {
+  const isRtl = $node.find("html").attr("dir") === "rtl";
   const makeArrow = node => {
     const $svg = $(node)
       .children(".brz-icon-svg")
@@ -18,7 +18,7 @@ export default function() {
     };
   };
 
-  $(".brz-slick-slider, .brz-carousel__slider").each(function() {
+  $node.find(".brz-slick-slider, .brz-carousel__slider").each(function() {
     const _this = this;
     const $this = $(this);
     const data = $this.data();
@@ -35,11 +35,11 @@ export default function() {
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
     $this.on("init", function() {
-      $(".brz-icon-svg", _this).brzThemeIcon({ forceInit: true });
+      $node.find(".brz-icon-svg", _this).brzThemeIcon({ forceInit: true });
     });
 
     $this.on("breakpoint", function() {
-      $(".brz-icon-svg", _this).brzThemeIcon();
+      $node.find(".brz-icon-svg", _this).brzThemeIcon();
     });
 
     const getArrow = makeArrow(_this);

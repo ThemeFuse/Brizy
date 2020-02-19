@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { connect } from "react-redux";
-import { addFonts } from "visual/redux/actions";
+import { addFonts } from "visual/redux/actions2";
 import { uuid } from "visual/utils/uuid";
 import { weightTypes } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";

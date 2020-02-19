@@ -14,7 +14,16 @@ export function styleSection(v, vs, vd) {
       interval: ["cssStyleVisibleMode|||editor"]
     },
     ".brz &&:hover .brz-section__content": {
-      standart: ["cssStyleSectionSliderHeight"]
+      standart: ["cssStyleSectionHeightStyle", "cssStyleDisplayFlex"]
+    },
+    ".brz &&:hover .brz-section__content > .brz-ed-border > .brz-bg": {
+      standart: ["cssStyleFlexVerticalAlign", "cssStyleDisplayFlex"]
+    },
+    ".brz &&:hover .brz-section__content > .brz-bg": {
+      standart: ["cssStyleFlexVerticalAlign", "cssStyleDisplayFlex"]
+    },
+    ".brz &&:hover .brz-section__content > .brz-bg > .brz-bg-content": {
+      standart: ["cssStyleFlexVerticalAlign"]
     },
     ".brz && > .slick-slider > .brz-slick-slider__dots:hover": {
       standart: ["cssStyleSectionColorDots"]

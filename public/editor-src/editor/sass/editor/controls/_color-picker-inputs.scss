@@ -1,0 +1,29 @@
+@import "../../mixins/input";
+
+.brz-ed-control__color-picker-inputs {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-top: $control-padding;
+
+  .brz-ed-control__input-hex {
+    flex: none;
+    width: 64px;
+
+    input {
+      @include small-input;
+
+      height: auto;
+    }
+  }
+
+  .brz-ed-option__multi-border {
+    .brz-button {
+      display: flex;
+    }
+
+    .brz-icon {
+      position: static;
+    }
+  }
+}

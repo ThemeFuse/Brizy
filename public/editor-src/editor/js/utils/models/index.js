@@ -9,6 +9,13 @@ import {
 } from "./styles";
 import { stripSystemKeys } from "./stripSystemKeys";
 import { insertItem } from "./insertItem";
+import {
+  IS_PAGE,
+  IS_INTERNAL_POPUP,
+  IS_EXTERNAL_POPUP,
+  IS_GLOBAL_POPUP,
+  isGlobalPopup
+} from "./modes";
 
 export {
   setIds,
@@ -19,5 +26,10 @@ export {
   getClosestParent,
   getParentWhichContainsStyleProperty,
   stripSystemKeys,
-  insertItem
+  insertItem,
+  IS_PAGE,
+  IS_INTERNAL_POPUP,
+  IS_EXTERNAL_POPUP,
+  IS_GLOBAL_POPUP,
+  isGlobalPopup
 };

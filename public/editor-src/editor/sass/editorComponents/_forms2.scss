@@ -226,7 +226,7 @@
     width: 100%;
     visibility: hidden;
   }
-  .select2 {
+  .brz-forms2__field-select .select2 {
     &-dropdown {
       background-color: #fff;
       border: none;
@@ -305,7 +305,6 @@
         color: inherit;
       }
     }
-
     &-container .select2-search--inline {
       margin: 2.5px;
       flex: 1;

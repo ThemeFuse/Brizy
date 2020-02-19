@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
@@ -11,7 +12,7 @@ import { css } from "visual/utils/cssStyle";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
-class WOOAddToCart extends EditorComponent {
+export default class WOOAddToCart extends EditorComponent {
   static get componentId() {
     return "WOOAddToCart";
   }
@@ -35,7 +36,9 @@ class WOOAddToCart extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             name="add_to_cart"
@@ -52,5 +55,3 @@ class WOOAddToCart extends EditorComponent {
     );
   }
 }
-
-export default WOOAddToCart;

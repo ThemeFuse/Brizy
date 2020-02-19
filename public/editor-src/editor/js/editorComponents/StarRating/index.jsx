@@ -5,6 +5,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
@@ -54,7 +55,7 @@ class StarRating extends EditorComponent {
     const starArray = Array(5).fill();
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             {label !== "" && (

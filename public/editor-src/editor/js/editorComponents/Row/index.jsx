@@ -9,23 +9,22 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import Background from "visual/component/Background";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
-import Toolbar from "visual/component/Toolbar";
+import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
-import * as toolbarExtendConfig from "./extendToolbar";
+import * as sidebarConfig from "./sidebar";
+import * as toolbarExtendConfig from "./toolbarExtend";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Link from "visual/component/Link";
 import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { styleRow, styleBg, styleContainer } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { styleSizeSize } from "visual/utils/style2";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -39,7 +38,10 @@ class Row extends EditorComponent {
   static defaultValue = defaultValue;
 
   mounted = false;
-  containerBorder = React.createRef();
+
+  containerBorderRef = React.createRef();
+
+  toolbarRef = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
@@ -66,6 +68,10 @@ class Row extends EditorComponent {
       super.handleValueChange(value, meta);
     }
   }
+
+  handleToolbarEscape = () => {
+    this.toolbarRef.current.show();
+  };
 
   getMeta(v) {
     const { meta } = this.props;
@@ -111,7 +117,10 @@ class Row extends EditorComponent {
 
   renderToolbar = ContainerBorderButton => {
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.toolbarRef}
+      >
         <SortableHandle>
           <ContainerBorderButton className="brz-ed-border__button--row" />
         </SortableHandle>
@@ -146,10 +155,13 @@ class Row extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       containerClassName: classNameContainer,
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
-        filterExtendName: `${this.constructor.componentId}_child`,
-        allowExtend: false
-      }),
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtendConfig,
+        null,
+        {
+          allowExtend: false
+        }
+      ),
       meta: this.getMeta(v),
       tabletReversed: tabletReverseColumns,
       mobileReversed: mobileReverseColumns
@@ -172,7 +184,7 @@ class Row extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -254,7 +266,7 @@ class Row extends EditorComponent {
                   fallbackRender={() => this.renderContent(v, vs, vd)}
                 >
                   <ContainerBorder
-                    ref={this.containerBorder}
+                    ref={this.containerBorderRef}
                     color="grey"
                     activeBorderStyle="dotted"
                     activateOnContentClick={false}
@@ -262,7 +274,9 @@ class Row extends EditorComponent {
                     buttonPosition="topLeft"
                     renderButtonWrapper={this.renderToolbar}
                   >
-                    {this.renderContent(v, vs, vd)}
+                    <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                      {this.renderContent(v, vs, vd)}
+                    </ToolbarExtend>
                   </ContainerBorder>
                 </Roles>
               </ContextMenu>

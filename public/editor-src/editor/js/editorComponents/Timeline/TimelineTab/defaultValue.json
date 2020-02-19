@@ -1,0 +1,28 @@
+{
+  "content": {
+    "items": [],
+    "activeTab": 0,
+    "type": "glyph",
+    "name": "favourite-31",
+    "labelText": ""
+  },
+
+  "style": {
+    "className": "",
+    "customCSS": "",
+
+    "colorHex": "#73777f",
+    "colorOpacity": 0.7,
+    "colorPalette": "",
+
+    "tempColorOpacity": 0.7,
+    "tempColorPalette": "color8",
+
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": ""
+  }
+}

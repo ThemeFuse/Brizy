@@ -1,4 +1,4 @@
-import { inRange } from "visual/utils/math";
+import { isNumber, inRange } from "visual/utils/math";
 import * as Value from "visual/utils/value";
 
 export const empty = 0;
@@ -11,10 +11,11 @@ export const empty = 0;
  *  - If value is not valid, return orElse value
  *
  * @param {number} orElse
- * @param {number} v
+ * @param {*} v
  * @returns {number}
  */
-export const toOpacity = (orElse, v) => (inRange(0, 1, v) ? v : orElse);
+export const toOpacity = (v, orElse = undefined) =>
+  isNumber(v) && inRange(0, 1, v) ? v : orElse;
 
 /**
  * Check if value is a valid opacity type and if it is not 0
@@ -25,5 +26,5 @@ export const toOpacity = (orElse, v) => (inRange(0, 1, v) ? v : orElse);
  * @param {number} v
  * @return {number}
  */
-export const onEmpty = (orElse, v) =>
-  Value.onEmpty(empty, orElse, toOpacity(undefined, v));
+export const onEmpty = (v, orElse = undefined) =>
+  Value.onEmpty(empty, toOpacity(v), orElse);

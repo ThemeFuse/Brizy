@@ -52,8 +52,10 @@ export default class Checkbox extends TextField {
     const { options, onChange } = this.props;
     const { value } = this.state;
 
-    this.setState({ value: "" });
-    onChange({ options: [...options, value] });
+    if (value && value.trim()) {
+      onChange({ options: [...options, value] });
+      this.setState({ value: "" });
+    }
   };
 
   handleRemoveOption(index) {
@@ -163,26 +165,29 @@ export default class Checkbox extends TextField {
   }
 
   renderForView(v) {
-    const { options, attr } = v;
+    const { attr } = v;
+    const options = v.options.filter(option => option && option.trim());
 
-    return (
+    return options.length ? (
       <div className={this.getClassName()}>
         <CheckboxControls className="brz-forms2__checkbox-options">
-          {options.map((option, index) => (
-            <CheckboxControlsItem
-              {...attr}
-              key={index}
-              className="brz-forms2__checkbox-option"
-              value={option}
-              renderIcons={this.renderIconForView}
-            >
-              <span className="brz-span brz-forms2__checkbox-option-name">
-                {option}
-              </span>
-            </CheckboxControlsItem>
-          ))}
+          {options
+            .filter(option => option && option.trim())
+            .map((option, index) => (
+              <CheckboxControlsItem
+                {...attr}
+                key={index}
+                className="brz-forms2__checkbox-option"
+                value={option}
+                renderIcons={this.renderIconForView}
+              >
+                <span className="brz-span brz-forms2__checkbox-option-name">
+                  {option}
+                </span>
+              </CheckboxControlsItem>
+            ))}
         </CheckboxControls>
       </div>
-    );
+    ) : null;
   }
 }

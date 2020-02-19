@@ -72,7 +72,10 @@ export {
   styleElementSectionContainerType,
   styleElementSectionContainerSize,
   styleElementSectionSliderHeight,
-  styleElementSectionHeight
+  styleElementSectionHeight,
+  styleElementSectionMinHeightType,
+  styleElementSectionMinHeight,
+  styleElementSectionMinHeightSuffix
 } from "./styleElementSection";
 
 // Padding
@@ -178,8 +181,15 @@ export { styleElementProgressBarPercentage } from "./styleElementProgressBar";
 
 // Element Countdown
 export {
-  styleTypographyElementCountdownLabelFontSize
+  styleTypographyElementCountdownLabelFontSize,
+  styleElementCountdown2Spacing
 } from "./styleElementCountdown";
+
+// Element Counter
+export {
+  styleElementCounterStrokeColor,
+  styleElementCounterFillColor
+} from "./styleElementCounter";
 
 // Element IconBox
 export {
@@ -191,7 +201,8 @@ export {
 // Element Image Gallery
 export {
   styleElementImageGalleryGridColumn,
-  styleElementImageGallerySpacing
+  styleElementImageGallerySpacing,
+  styleElementImageGalleryFilterStyle
 } from "./styleElementImageGallery";
 
 // Element Video
@@ -205,7 +216,10 @@ export {
   styleElementVideoCoverPositionY,
   styleElementVideoCoverZoom,
   styleElementVideoIconSizeWidth,
-  styleElementVideoIconSizeHeight
+  styleElementVideoIconSizeHeight,
+  styleElementVideoIconCustomSize,
+  styleSidebarSizeWidthPixed,
+  styleElementVideoImageSize
 } from "./styleElementVideo";
 
 // Element Audio
@@ -242,3 +256,46 @@ export {
 
 // Element Form2
 export { styleElementForm2FieldColumns } from "./styleElementForm2";
+
+// Element WOOPrice
+export {
+  styleElementWOOPriceColumn,
+  styleElementWOOPriceSpacing
+} from "./styleElementWOOPrice";
+
+// Element WOOAdditionals
+export {
+  styleElementWOOAdditionalSpacing,
+  styleElementWOOAdditionalBorderWidth
+} from "./styleElementWOOAdditionals";
+
+// Element Timeline
+export {
+  styleElementTimelineWidth,
+  styleElementTimelineWidthSuffix,
+  styleElementTimelineTabsCount,
+  styleElementTimelineVerticalMode,
+  styleElementTimelineIconCustomSize,
+  styleElementTimelineIconPadding,
+  styleElementTimelineEnableText,
+  styleElementTimelineSpacing
+} from "./styleElementTimeline";
+
+// Element Comments
+export {
+  styleElementCommentsLogoSize,
+  styleElementCommentsSkin
+} from "./styleElementComments";
+
+// Element Switcher
+export {
+  styleElementSwitcherSize,
+  styleElementSwitcherWidth,
+  styleElementSwitcherSpacing
+} from "./styleElementSwitcher";
+
+// Element Search
+export {
+  styleElementSearchMinWidth,
+  styleElementSearchMinHeight
+} from "./styleElementSearch";

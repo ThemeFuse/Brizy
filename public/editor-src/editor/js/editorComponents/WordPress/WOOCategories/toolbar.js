@@ -1,71 +1,66 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementWOOCategoriesColumns,
-  toolbarElementWOOCategoriesNumber,
-  toolbarElementWOOCategoriesOrderBy,
-  toolbarElementWOOCategoriesOrder,
-  toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { toolbarElementWOOCategoriesOrder } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device });
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarWOOCategories",
-        device,
-        state: "normal"
-      }),
+      id: dvk("toolbarWOOCategories"),
       type: "popover",
       devices: "desktop",
       icon: "nc-woo-2",
       position: 10,
       options: [
         {
-          id: defaultValueKey({
-            key: "WOOCategoriesTabs",
-            device,
-            state: "normal"
-          }),
+          id: dvk("WOOCategoriesTabs"),
           type: "tabs",
           tabs: [
             {
-              id: defaultValueKey({
-                key: "layoutTab",
-                device,
-                state: "normal"
-              }),
+              id: dvk("layoutTab"),
               label: t("Layout"),
               options: [
-                toolbarElementWOOCategoriesColumns({
-                  v,
-                  device,
+                {
+                  id: "columns",
+                  label: t("Columns"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWOOCategoriesNumber({
-                  v,
-                  device,
+                  choices: [
+                    { title: "1", value: 1 },
+                    { title: "2", value: 2 },
+                    { title: "3", value: 3 },
+                    { title: "4", value: 4 },
+                    { title: "5", value: 5 },
+                    { title: "6", value: 6 }
+                  ]
+                },
+                {
+                  id: "number",
+                  label: t("Categories Count"),
+                  type: "inputText-dev",
                   devices: "desktop",
-                  state: "normal"
-                })
+                  config: {
+                    size: "short"
+                  }
+                }
               ]
             },
             {
-              id: defaultValueKey({
-                key: "orderTab",
-                device,
-                state: "normal"
-              }),
+              id: dvk("orderTab"),
               label: t("Filter"),
               options: [
-                toolbarElementWOOCategoriesOrderBy({
-                  v,
-                  device,
+                {
+                  id: "orderBy",
+                  label: t("Filter By"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  choices: [
+                    { title: t("Name"), value: "name" },
+                    { title: t("Slug"), value: "slug" },
+                    { title: t("Description"), value: "description" },
+                    { title: t("Count"), value: "count" }
+                  ]
+                },
                 toolbarElementWOOCategoriesOrder({
                   v,
                   device,
@@ -78,29 +73,28 @@ export function getItems({ v, device }) {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: dvk("toolbarSettings"),
       type: "popover",
       roles: ["admin"],
       icon: "nc-cog",
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({
-          v,
-          device,
-          state: "normal"
-        }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: []
+          icon: "nc-cog"
         }
       ]
     }

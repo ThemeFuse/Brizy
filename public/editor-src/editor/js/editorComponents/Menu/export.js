@@ -1,8 +1,8 @@
 import $ from "jquery";
 import "jquery.mmenu";
 
-export default function() {
-  $("[data-mmenu-id]").each(function() {
+export default function($node) {
+  $node.find("[data-mmenu-id]").each(function() {
     var $this = $(this);
     var mmenuId = $this.data().mmenuId;
     var mmenuPosition = $this.data().mmenuPosition;

@@ -1,9 +1,21 @@
-import { styleBgColor, styleBgColorHex } from "visual/utils/style2";
+import {
+  styleBgColor,
+  styleBgColorHex,
+  styleBgGradient
+} from "visual/utils/style2";
 
 export function cssStyleBgColor({ v, device, state, prefix = "bg" }) {
   const bgColor = styleBgColor({ v, device, state, prefix });
 
-  return bgColor === undefined ? "" : `background-color:${bgColor};`;
+  const bgGradient = styleBgGradient({
+    v,
+    device,
+    state
+  });
+
+  return bgColor === undefined || bgGradient !== "none"
+    ? ""
+    : `background-color:${bgColor};`;
 }
 
 export function cssStyleBgColorHex({ v, device, state, prefix = "bg" }) {

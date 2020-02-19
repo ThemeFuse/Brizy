@@ -10,6 +10,7 @@ import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { style, styleIcon } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
@@ -118,7 +119,7 @@ class Button extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -169,7 +170,9 @@ class Button extends EditorComponent {
 
     return (
       <Fragment>
-        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+        >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             {type === "link"
               ? this.renderLink(v, vs, vd, content)

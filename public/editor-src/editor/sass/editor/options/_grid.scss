@@ -1,6 +1,31 @@
+@import "../../variables";
+
 // Grid option
 .brz-ed-grid {
   @extend .brz-ed-popover__option;
+
+  .brz-ed-grid-option__column {
+    &--top .brz-ed-grid__options {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    &--center .brz-ed-grid__options {
+      display: flex;
+      align-items: center;
+    }
+
+    &--bottom .brz-ed-grid__options {
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  &--separator .brz-ed-grid-option__column:not(:first-child) {
+    border-left: 1px solid $brand-options-border;
+    margin-left: $control-padding;
+    padding-left: $control-padding;
+  }
 }
 
 .brz-ed-grid__options {
@@ -14,6 +39,7 @@
 .brz-ed-grid__inline-options {
   align-items: center;
   justify-content: center;
+
   .brz-ed-grid__option {
     padding: 0px;
     min-height: 16px;

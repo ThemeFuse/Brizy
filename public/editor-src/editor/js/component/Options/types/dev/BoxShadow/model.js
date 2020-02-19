@@ -1,4 +1,4 @@
-import { apply, get, set } from "visual/utils/model";
+import { _apply, get, set } from "visual/utils/model";
 import {
   getHex,
   getOpacity,
@@ -27,7 +27,8 @@ import { toOpacity } from "visual/utils/cssProps/opacity";
  * @param {object} m
  * @return {string}
  */
-export const getType = (orElse, m) => toType(orElse, toObject(m).type);
+export const getType = (m, orElse = undefined) =>
+  toType(toObject(m).type, orElse);
 
 /**
  * Set box shadow type
@@ -37,19 +38,19 @@ export const getType = (orElse, m) => toType(orElse, toObject(m).type);
  * @return {object}
  */
 export const setType = (v, m) => {
-  if (undefined === toType(undefined, v) || getType(undefined, m) === v) {
+  if (undefined === toType(v) || getType(m) === v) {
     return m;
   }
 
   const isNone = v === NONE;
   const setters = [
-    [set, "tempType", isNone ? get(undefined, "type", m) : undefined],
+    [set, "tempType", isNone ? get("type", m) : undefined],
     [set, "type", v],
     [toggleFields, !isNone],
     [toggleColor, !isNone]
   ];
 
-  return apply(setters, m);
+  return _apply(setters, m);
 };
 
 /**
@@ -60,12 +61,12 @@ export const setType = (v, m) => {
  * @return {object}
  */
 export const setOpacity = (v, m) => {
-  if (toOpacity(undefined, v) === undefined || getOpacity(undefined, m) === v) {
+  if (toOpacity(v) === undefined || getOpacity(m) === v) {
     return m;
   }
 
   const enable = v > 0;
-  return apply([[ColorPicker.setOpacity, v], [toggleType, enable]], m);
+  return _apply([[ColorPicker.setOpacity, v], [toggleType, enable]], m);
 };
 
 /**
@@ -76,12 +77,12 @@ export const setOpacity = (v, m) => {
  * @return {object}
  */
 export const setHex = (v, m) => {
-  if (toHex(undefined, v) === undefined || getHex(undefined, m) === v) {
+  if (toHex(undefined, v) === undefined || getHex(m) === v) {
     return m;
   }
 
   const enable = v !== "";
-  return apply([[ColorPicker.setHex, v], [toggleType, enable]], m);
+  return _apply([[ColorPicker.setHex, v], [toggleType, enable]], m);
 };
 
 /**
@@ -93,13 +94,13 @@ export const setHex = (v, m) => {
  */
 export const setPalette = (v, m) => {
   const i = {};
-  if (toPalette(i, v) === i || getPalette(i, m) === v) {
+  if (toPalette(v, i) === i || getPalette(m, i) === v) {
     return m;
   }
 
   const enable = v !== NONE;
 
-  return apply([[ColorPicker.setPalette, v], [toggleType, enable]], m);
+  return _apply([[ColorPicker.setPalette, v], [toggleType, enable]], m);
 };
 
 /**
@@ -107,7 +108,7 @@ export const setPalette = (v, m) => {
  * @param {object} m
  * @return {number}
  */
-export const getBlur = (orElse, m) => toBlur(orElse, toObject(m).blur);
+export const getBlur = (m, orElse) => toBlur(toObject(m).blur, orElse);
 
 /**
  * Set box shadow blur
@@ -122,7 +123,7 @@ export const setBlur = (v, m) => setField("blur", v, m);
  * @param {number} orElse
  * @param {object} m
  */
-export const getSpread = (orElse, m) => toSpread(orElse, toObject(m).spread);
+export const getSpread = (m, orElse) => toSpread(toObject(m).spread, orElse);
 
 /**
  * Set box shadow spread
@@ -137,8 +138,8 @@ export const setSpread = (v, m) => setField("spread", v, m);
  * @param {number} orElse
  * @param {object} m
  */
-export const getHorizontal = (orElse, m) =>
-  toNumber(orElse, get(orElse, "horizontal", m));
+export const getHorizontal = (m, orElse) =>
+  toNumber(get("horizontal", m, orElse), orElse);
 
 /**
  * Set box shadow horizontal
@@ -153,8 +154,8 @@ export const setHorizontal = (v, m) => setField("horizontal", v, m);
  * @param {number} orElse
  * @param {object} m
  */
-export const getVertical = (orElse, m) =>
-  toNumber(orElse, get(orElse, "vertical", m));
+export const getVertical = (m, orElse) =>
+  toNumber(get("vertical", m, orElse), orElse);
 
 /**
  * Set box shadow vertical

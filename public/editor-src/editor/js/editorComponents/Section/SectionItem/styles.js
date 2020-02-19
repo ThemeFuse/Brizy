@@ -59,7 +59,11 @@ export function styleBg(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover > .brz-bg-content": {
-      standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
+      standart: [
+        "cssStylePaddingPreview",
+        "cssStylePaddingRightLeftForEditor",
+        "cssStyleDisplayFlex"
+      ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
       standart: ["cssStylePaddingTopForEditorResizer"]

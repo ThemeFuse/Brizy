@@ -8,6 +8,9 @@ export default {
   "wrapper--tabs": {
     showToolbar: "on"
   },
+  "wrapper--timeline": {
+    showToolbar: "on"
+  },
   "wrapper--accordion": {
     showToolbar: "on"
   },
@@ -15,6 +18,12 @@ export default {
     showToolbar: "on"
   },
   "wrapper--menu": {
+    showToolbar: "on"
+  },
+  "wrapper--video-playlist": {
+    showToolbar: "on"
+  },
+  "wrapper--switcher": {
     showToolbar: "on"
   },
   "wrapper--spacer": {
@@ -98,5 +107,8 @@ export default {
   "richText-desc--dynamic": {
     text:
       "<p class='brz-text-lg-center brz-tp-paragraph'><span class='brz-cp-color7'><span data-population='brizy_dc_post_excerpt'>#Post Excerpt</span></span></p>"
+  },
+  "wrapper--facebookComments": {
+    showToolbar: "on"
   }
 };

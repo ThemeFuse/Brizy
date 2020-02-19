@@ -4,11 +4,12 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 
-class WOOStock extends EditorComponent {
+export default class WOOStock extends EditorComponent {
   static get componentId() {
     return "WOOStock";
   }
@@ -17,7 +18,6 @@ class WOOStock extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { className } = v;
-
     const classNameStyle = classnames(
       "brz-woostock",
       className,
@@ -29,7 +29,9 @@ class WOOStock extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <WPShortcode
           name="brizy_woo_stock"
           placeholderIcon="wp-shortcode"
@@ -40,5 +42,3 @@ class WOOStock extends EditorComponent {
     );
   }
 }
-
-export default WOOStock;

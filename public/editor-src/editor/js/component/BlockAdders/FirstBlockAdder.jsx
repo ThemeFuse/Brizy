@@ -1,13 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import Config from "visual/global/Config";
 import UIState from "visual/global/UIState";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
 import { setDeviceMode, addBlock, importTemplate } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 const textsByDeviceMode = {
   desktop: {
@@ -63,7 +61,9 @@ class FirstBlockAdder extends React.Component {
             blocksFilter: blocks => {
               return blocks.filter(
                 // eslint-disable-next-line no-unused-vars
-                ([_, block]) => block.type !== "SectionPopup"
+                ([_, { data: blockData }]) =>
+                  blockData.type !== "SectionPopup" &&
+                  blockData.type !== "SectionPopup2"
               );
             },
             onAddBlocks: this.handleBlockAdd
@@ -72,7 +72,9 @@ class FirstBlockAdder extends React.Component {
             blocksFilter: blocks => {
               return blocks.filter(
                 // eslint-disable-next-line no-unused-vars
-                ([_, block]) => block.type !== "SectionPopup"
+                ([_, { data: blockData }]) =>
+                  blockData.type !== "SectionPopup" &&
+                  blockData.type !== "SectionPopup2"
               );
             },
             onAddBlocks: this.handleBlockAdd
@@ -126,8 +128,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default rolesHOC({
   allow: ["admin"],
-  component: connect(
-    stateToProps,
-    mapDispatchToProps
-  )(FirstBlockAdder)
+  component: connect(stateToProps, mapDispatchToProps, undefined, {
+    forwardRef: true
+  })(FirstBlockAdder)
 });

@@ -1,17 +1,11 @@
 import "@babel/polyfill";
 import jQuery from "jquery";
-import addTriggersForPopups from "./addTriggersForPopups.js";
-import * as Components from "../../component/index.export.js";
-import * as EditorComponents from "../../editorComponents/index.export.js";
+import initExports from "./initExports";
+import initPopups from "./initPopups.js";
 
 jQuery(document).ready(function() {
-  Object.values(Components).forEach(fn => {
-    fn();
-  });
+  const $page = jQuery(".brz-root__container");
 
-  Object.values(EditorComponents).forEach(fn => {
-    fn();
-  });
+  initExports($page);
+  initPopups();
 });
-
-addTriggersForPopups();

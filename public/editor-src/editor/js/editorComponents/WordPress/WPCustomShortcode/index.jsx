@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
@@ -31,12 +32,15 @@ class WPCustomShortcode extends EditorComponent {
       className
     );
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             raw={v.shortcode}
             placeholderIcon="wp-shortcode"
             className={classNameWP}
+            height={45}
             resizerPoints={resizerPoints}
             resizerMeta={this.props.meta}
             resizerValue={v}

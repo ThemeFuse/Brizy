@@ -2,6 +2,10 @@ import React from "react";
 import classnames from "classnames";
 import Options, { filterOptionsData } from "visual/component/Options";
 
+const vAlign = ["top", "center", "bottom"];
+const toVAlign = v =>
+  vAlign.includes(v) ? `brz-ed-grid-option__column--${v}` : "";
+
 class GridOptionType extends React.Component {
   static shouldOptionBeFiltered({ columns }) {
     return columns.every(
@@ -14,7 +18,8 @@ class GridOptionType extends React.Component {
     location: "",
     attr: {},
     toolbar: null,
-    columns: []
+    columns: [],
+    separator: false
   };
 
   filterColumns(columns) {
@@ -29,16 +34,19 @@ class GridOptionType extends React.Component {
       attr,
       columns,
       location,
-      toolbar
+      toolbar,
+      separator
     } = this.props;
     const className = classnames(
       "brz-d-xs-flex brz-flex-xs-no-wrap brz-ed-grid",
+      { "brz-ed-grid--separator": !!separator },
       _className
     );
     const renderedColumns = this.filterColumns(columns).map(
-      ({ className, width, options }, index, allColumns) => {
+      ({ className, width, options, vAlign }, index, allColumns) => {
         const columnClassName = classnames(
           "brz-ed-grid-option__column",
+          toVAlign(vAlign),
           className
         );
         const onlyOneColumn = allColumns.length === 1;

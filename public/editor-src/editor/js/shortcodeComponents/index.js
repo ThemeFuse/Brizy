@@ -1,22 +1,23 @@
 import Text from "./Text";
-import Video from "./Video";
 import Button from "./Button";
 import Icon from "./Icon";
 import Image from "./Image";
+import Audio from "./Audio";
+import Video from "./Video";
 import Spacer from "./Spacer";
 import Line from "./Line";
 import Map from "./Map";
 import Embed from "./Embed";
-import Form from "./Form";
+import Form2 from "./Form2";
 import IconText from "./IconText";
-import Row from "./Row";
-import Columns from "./Columns";
+import Counter from "./Counter";
+import Countdown2 from "./Countdown2";
 import Tabs from "./Tabs";
 import ProgressBar from "./ProgressBar";
-import Counter from "./Counter";
-import SoundCloud from "./SoundCloud";
-import Countdown from "./Countdown";
 import Accordion from "./Accordion";
+
+import Row from "./Row";
+import Columns from "./Columns";
 
 export default {
   base: [
@@ -24,16 +25,16 @@ export default {
     Button,
     Icon,
     Image,
+    Audio,
     Video,
     Spacer,
     Line,
     Map,
     Embed,
-    Form,
+    Form2,
     IconText,
-    SoundCloud,
     Counter,
-    Countdown,
+    Countdown2,
     Tabs,
     ProgressBar,
     Accordion

@@ -15,11 +15,11 @@ import {
   getOpacity,
   getType
 } from "visual/component/Options/types/dev/BoxShadow/model";
-import * as ColoPicker from "visual/component/Options/types/dev/ColorPicker/utils";
-import { get, apply, set } from "visual/utils/model";
+import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
+import * as Math from "visual/utils/math";
+import { get, _apply, set } from "visual/utils/model";
 import { capByPrefix } from "visual/utils/string";
 import { toBlur, toSpread } from "visual/utils/cssProps";
-import { isNumber } from "visual/utils/math";
 import { t } from "visual/utils/i18n";
 import { toObject } from "visual/utils/object";
 import * as T from "visual/component/Options/types/dev/BoxShadow/entities/type";
@@ -36,14 +36,10 @@ import { OUTSET } from "visual/component/Options/types/dev/BoxShadow/entities/ty
  * @return {object}
  */
 export const toggleColor = (enable, m) => {
-  const opacity = enable
-    ? getOpacity(undefined, m) || get(undefined, "tempOpacity", m)
-    : 0;
-  const palette = enable
-    ? getPalette(undefined, m) || get(undefined, "tempPalette", m)
-    : "";
+  const opacity = enable ? getOpacity(m) || get("tempOpacity", m) : 0;
+  const palette = enable ? getPalette(m) || get("tempPalette", m) : "";
 
-  return apply([[setOpacity, opacity], [setPalette, palette]], m);
+  return _apply([[setOpacity, opacity], [setPalette, palette]], m);
 };
 
 /**
@@ -56,9 +52,7 @@ export const toggleColor = (enable, m) => {
  * @return {object}
  */
 export const toggleType = (enable, m) => {
-  const value = enable
-    ? T.onEmpty(get(undefined, "tempType", m), getType(undefined, m))
-    : T.NONE;
+  const value = enable ? T.onEmpty(get("tempType", m), getType(m)) : T.NONE;
 
   return setType(value, m);
 };
@@ -71,10 +65,10 @@ export const toggleType = (enable, m) => {
  */
 export const toggleFields = (enable, m) => {
   const u = undefined;
-  const blur = getBlur(u, m) || get(0, "tempBlur", m);
-  const spread = getSpread(u, m) || get(0, "tempSpread", m);
-  const horizontal = getHorizontal(u, m) || get(0, "tempHorizontal", m);
-  const vertical = getVertical(u, m) || get(0, "tempVertical", m);
+  const blur = getBlur(m, u) || get("tempBlur", m, 0);
+  const spread = getSpread(m, u) || get("tempSpread", m, 0);
+  const horizontal = getHorizontal(m, u) || get("tempHorizontal", m, 0);
+  const vertical = getVertical(m, u) || get("tempVertical", m, 0);
   const model = { ...toObject(m) };
 
   model.blur = enable ? blur : 0;
@@ -93,22 +87,22 @@ export const setField = (key, v, m) => {
   const getter = fieldGetter(key);
   const valid = fieldValidation(key);
 
-  if (valid(undefined, v) === undefined || getter(undefined, m) === v) {
+  if (valid(v) === undefined || getter(m) === v) {
     return m;
   }
 
-  const value = v === 0 ? getter(undefined, m) : undefined;
+  const value = v === 0 ? getter(m) : undefined;
 
-  return apply(
+  return _apply(
     [
-      [set, "blur", getBlur(0, m)],
-      [set, "tempBlur", getBlur(0, m)],
-      [set, "spread", getSpread(0, m)],
-      [set, "tempSpread", getSpread(0, m)],
-      [set, "vertical", getVertical(0, m)],
-      [set, "tempVertical", getVertical(0, m)],
-      [set, "horizontal", getHorizontal(0, m)],
-      [set, "tempHorizontal", getHorizontal(0, m)],
+      [set, "blur", getBlur(m, 0)],
+      [set, "tempBlur", getBlur(m, 0)],
+      [set, "spread", getSpread(m, 0)],
+      [set, "tempSpread", getSpread(m, 0)],
+      [set, "vertical", getVertical(m, 0)],
+      [set, "tempVertical", getVertical(m, 0)],
+      [set, "horizontal", getHorizontal(m, 0)],
+      [set, "tempHorizontal", getHorizontal(m, 0)],
       [set, capByPrefix("temp", key), value],
       [set, key, v],
       [toggleType, v || fieldsEnabled(m)]
@@ -152,9 +146,9 @@ export const fieldValidation = key => {
       return toSpread;
     case "horizontal":
     case "vertical":
-      return (orElse, v) => (isNumber(v) && v >= 0 ? v : orElse);
+      return Math.toNonNegative;
     default:
-      return (_, v) => v;
+      return v => v;
   }
 };
 
@@ -166,10 +160,10 @@ export const fieldValidation = key => {
  */
 export const fieldsEnabled = m => {
   return !!(
-    getBlur(0, m) &&
-    getSpread(0, m) &&
-    getHorizontal(0, m) &&
-    getVertical(0, m)
+    getBlur(m, 0) &&
+    getSpread(m, 0) &&
+    getHorizontal(m, 0) &&
+    getVertical(m, 0)
   );
 };
 
@@ -288,8 +282,8 @@ export const fromModel = m => {
  * @return {*}
  */
 export const getConfig = (defaultConfig, newConfig, key) => {
-  const r = get(undefined, key, newConfig);
-  return r === undefined ? get(undefined, key, defaultConfig) : r;
+  const r = get(key, newConfig);
+  return r === undefined ? get(key, defaultConfig) : r;
 };
 
 /**
@@ -316,4 +310,4 @@ export const getConfig = (defaultConfig, newConfig, key) => {
  *   tempHorizontal: number,
  * }}
  */
-export const _setOpacity = ColoPicker.setOpacity;
+export const _setOpacity = ColorUtils.setOpacity.bind(undefined, setOpacity);

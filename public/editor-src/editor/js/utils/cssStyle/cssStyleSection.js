@@ -3,6 +3,9 @@ import {
   styleElementSectionHeight,
   styleElementSectionContainerType,
   styleElementSectionContainerSize,
+  styleElementSectionMinHeightType,
+  styleElementSectionMinHeight,
+  styleElementSectionMinHeightSuffix,
   styleColor,
   styleMarginType,
   styleMarginUngrouped,
@@ -13,9 +16,9 @@ import {
 
 const validation = k => k !== undefined;
 
-export function cssStyleSectionMaxWidth({ v }) {
-  const containerType = styleElementSectionContainerType({ v });
-  const containerSize = styleElementSectionContainerSize({ v });
+export function cssStyleSectionMaxWidth({ v, device, state }) {
+  const containerType = styleElementSectionContainerType({ v, device, state });
+  const containerSize = styleElementSectionContainerSize({ v, device, state });
   return containerType === "boxed"
     ? `max-width: ${containerSize}%;`
     : "max-width: 100%;";
@@ -101,4 +104,19 @@ export function cssStyleSectionToolbarOffset({ v, device, state }) {
   }
 
   return `grid-template-rows: minmax(calc(100% - 42px), ${toolbarSpacing}px) 42px;`;
+}
+
+export function cssStyleSectionHeightStyle({ v, device }) {
+  const minHeightType = styleElementSectionMinHeightType({ v, device });
+  const minHeight =
+    minHeightType === "custom"
+      ? `${styleElementSectionMinHeight({
+          v,
+          device
+        })}${styleElementSectionMinHeightSuffix({ v, device })}`
+      : minHeightType === "fullHeight"
+      ? "100vh"
+      : "auto";
+
+  return `min-height: ${minHeight};`;
 }

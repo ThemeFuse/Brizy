@@ -7,6 +7,7 @@ import {
   globalBlocksAssembledSelector
 } from "visual/redux/selectors";
 import { objectTraverse2 } from "visual/utils/object";
+import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
 import historyEnhancer from "./historyEnhancer";
 import {
   HYDRATE,
@@ -34,7 +35,8 @@ import {
   PUBLISH,
   UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
-  UPDATE_TRIGGERS
+  UPDATE_TRIGGERS,
+  UPDATE_ERROR
 } from "../actions";
 
 // project
@@ -47,13 +49,16 @@ export function project(state = {}, action, fullState) {
       return project;
     }
     case PUBLISH: {
-      return projectAssembled(fullState);
+      return produce(projectAssembled(fullState), draft => {
+        draft.dataVersion = draft.dataVersion + 1;
+      });
     }
     case UPDATE_DISABLED_ELEMENTS: {
       const disabledElements = action.payload;
 
       return produce(state, draft => {
         draft.data.disabledElements = disabledElements;
+        draft.dataVersion = draft.dataVersion + 1;
       });
     }
     case IMPORT_KIT: {
@@ -61,6 +66,7 @@ export function project(state = {}, action, fullState) {
 
       return produce(state, draft => {
         draft.data.selectedKit = selectedKit;
+        draft.dataVersion = draft.dataVersion + 1;
       });
     }
     case UPDATE_CURRENT_KIT_ID: {
@@ -68,8 +74,17 @@ export function project(state = {}, action, fullState) {
 
       return produce(state, draft => {
         draft.data.selectedKit = selectedKit;
+        draft.dataVersion = draft.dataVersion + 1;
       });
     }
+    case IMPORT_TEMPLATE:
+    case ADD_FONTS:
+    case DELETE_FONTS: {
+      return produce(state, draft => {
+        draft.dataVersion = draft.dataVersion + 1;
+      });
+    }
+
     default:
       return state;
   }
@@ -210,30 +225,24 @@ export function page(state = {}, action, fullState) {
       return page;
     }
     case PUBLISH: {
-      return {
-        ...pageAssembledSelector(fullState),
-        status: "publish"
-      };
+      return produce(pageAssembledSelector(fullState), draft => {
+        draft.status = "publish";
+        draft.dataVersion = draft.dataVersion + 1;
+      });
     }
     case UPDATE_TRIGGERS: {
       const { data: triggers } = action.payload;
 
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          triggers
-        }
-      };
+      return produce(state, draft => {
+        draft.data.triggers = triggers;
+        draft.dataVersion = draft.dataVersion + 1;
+      });
     }
     case UPDATE_RULES: {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          rulesAmount: action.payload.length
-        }
-      };
+      return produce(state, draft => {
+        draft.data.rulesAmount = action.payload.length;
+        draft.dataVersion = draft.dataVersion + 1;
+      });
     }
     default:
       return state;
@@ -311,21 +320,43 @@ export function globalBlocks(state = {}, action, fullState) {
     case CREATE_GLOBAL_BLOCK: {
       const { id, data } = action.payload;
 
-      return { ...state, [id]: data };
+      return produce(state, draft => {
+        draft[id] = { id, data, dataVersion: 1 };
+      });
     }
     case DELETE_GLOBAL_BLOCK: {
       const { id } = action.payload;
 
-      return {
-        ...state,
-        [id]: {
-          ...state[id],
-          deleted: true
-        }
-      };
+      return produce(state, draft => {
+        draft[id].data.deleted = true;
+        draft[id].dataVersion = draft[id].dataVersion + 1;
+      });
     }
     case PUBLISH: {
-      return globalBlocksAssembledSelector(fullState);
+      const blocks = globalBlocksAssembledSelector(fullState);
+
+      return Object.entries(blocks).reduce((acc, [key, block]) => {
+        acc[key] = produce(block, draft => {
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+
+        return acc;
+      }, {});
+    }
+    case UPDATE_SCREENSHOT: {
+      const {
+        payload: { blockId, data: screenshots },
+        meta: { blockType, action: metaAction }
+      } = action;
+
+      if (blockType === "global" && metaAction === "create") {
+        return produce(state, draft => {
+          Object.assign(draft[blockId].data.value, screenshots);
+          draft[blockId].dataVersion = draft[blockId].dataVersion + 1;
+        });
+      }
+
+      return state;
     }
     default:
       return state;
@@ -351,21 +382,45 @@ export function globalBlocksUpdates(state = {}, action) {
 
 export function savedBlocks(state = {}, action) {
   switch (action.type) {
-    case HYDRATE:
+    case HYDRATE: {
       return action.payload.savedBlocks;
-    case CREATE_SAVED_BLOCK:
+    }
+    case CREATE_SAVED_BLOCK: {
+      const { id, data } = action.payload;
+
+      return produce(state, draft => {
+        draft[id] = { id, data, dataVersion: 1 };
+      });
+    }
     case UPDATE_SAVED_BLOCK: {
       const { id, data } = action.payload;
 
-      return { ...state, [id]: data };
+      return produce(state, draft => {
+        draft[id].data = data;
+        draft[id].dataVersion = draft[id].dataVersion + 1;
+      });
     }
     case DELETE_SAVED_BLOCK: {
       const { id } = action.payload;
-      /* eslint-disable no-unused-vars */
-      const { [id]: deleted, ...remaining } = state;
-      /* eslint-enabled no-unused-vars */
 
-      return remaining;
+      return produce(state, draft => {
+        delete draft[id];
+      });
+    }
+    case UPDATE_SCREENSHOT: {
+      const {
+        payload: { blockId, data: screenshots },
+        meta: { blockType }
+      } = action;
+
+      if (blockType === "saved") {
+        return produce(state, draft => {
+          Object.assign(draft[blockId].data.value, screenshots);
+          draft[blockId].dataVersion = draft[blockId].dataVersion + 1;
+        });
+      }
+
+      return state;
     }
     default:
       return state;
@@ -380,15 +435,44 @@ const uiDefault = {
     isOpen: false,
     drawerContentType: null
   },
-  showHiddenElements: false
+  rightSidebar: {
+    isOpen: false,
+    lock: undefined, // undefined | "manual" | "auto"
+    alignment: "right" // "left" | "right"
+  },
+  showHiddenElements: false,
+  error: null
 };
 export function ui(state = uiDefault, action) {
   switch (action.type) {
-    case UPDATE_UI:
-      return {
+    case UPDATE_UI: {
+      const { key, value } = action;
+      const newState = {
         ...state,
-        [action.key]: action.value
+        [key]: value
       };
+
+      // deviceMode + rightSidebar
+      if (key === "deviceMode" && newState.rightSidebar.lock !== "manual") {
+        if (value !== "desktop") {
+          newState.rightSidebar = {
+            ...newState.rightSidebar,
+            isOpen: true,
+            lock: "auto"
+          };
+        } else {
+          if (newState.rightSidebar.isOpen) {
+            newState.rightSidebar = {
+              ...newState.rightSidebar,
+              isOpen: false,
+              lock: undefined
+            };
+          }
+        }
+      }
+
+      return newState;
+    }
     default:
       return state;
   }
@@ -448,8 +532,14 @@ export function screenshots(
       for (const [key, obj] of Object.entries(
         inConstructionState.globalBlocks
       )) {
-        if (obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc) {
-          const v = obj.value;
+        const objValue = obj.data;
+        if (
+          objValue.type &&
+          objValue.value &&
+          objValue.value._id &&
+          objValue.value._thumbnailSrc
+        ) {
+          const v = objValue.value;
 
           globalBlocksScreenshots[key] = {
             _thumbnailSrc: v._thumbnailSrc,
@@ -459,7 +549,10 @@ export function screenshots(
           };
         }
 
-        Object.assign(globalBlocksScreenshots, parseScreenshots(obj.value));
+        Object.assign(
+          globalBlocksScreenshots,
+          parseScreenshots(objValue.value)
+        );
       }
 
       return {
@@ -496,6 +589,32 @@ export function screenshots(
   }
 }
 
+// error
+
+const errorDefault = null;
+export function error(state = errorDefault, action) {
+  switch (action.type) {
+    case HYDRATE: {
+      const { projectStatus } = action.payload;
+
+      if (projectStatus.locked) {
+        return {
+          code: PROJECT_LOCKED_ERROR,
+          data: projectStatus
+        };
+      }
+
+      return state;
+    }
+    case UPDATE_ERROR: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 export default historyEnhancer(
   combineReducersCustom(
     {
@@ -512,7 +631,8 @@ export default historyEnhancer(
       pageBlocks,
       fonts,
       ui,
-      copiedElement
+      copiedElement,
+      error
     },
     {
       screenshots

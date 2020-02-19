@@ -1,6 +1,7 @@
 import React from "react";
+import T from "prop-types";
 import classnames from "classnames";
-import Notifications from "visual/global/Notifications";
+import ToastNotification from "cogo-toast";
 import EditorIcon from "visual/component/EditorIcon";
 import {
   uploadImage,
@@ -9,12 +10,28 @@ import {
   svgUrl,
   getImageFormat
 } from "visual/utils/image";
+import { t } from "visual/utils/i18n";
 
 import Image from "./Image";
 
 const isSVG = extension => extension === "svg";
 
 export default class ImageSetter extends React.Component {
+  static propTypes = {
+    className: T.string,
+    src: T.string,
+    x: T.number,
+    y: T.number,
+    width: T.number,
+    height: T.number,
+    extension: T.string,
+    onlyPointer: T.bool,
+    showPointer: T.bool,
+    customUrl: T.bool,
+    onUpload: T.func,
+    onChange: T.func
+  };
+
   static defaultProps = {
     className: "",
     src: "",
@@ -25,8 +42,7 @@ export default class ImageSetter extends React.Component {
     extension: null,
     onlyPointer: false,
     showPointer: true,
-    customUrl: false,
-    onUpload: null
+    customUrl: false
   };
 
   state = {
@@ -105,12 +121,17 @@ export default class ImageSetter extends React.Component {
         });
       },
       onError: e => {
-        Notifications.addNotification({
-          id: "image-upload-fail",
-          type: Notifications.notificationTypes.error,
-          text:
+        let errorMsg;
+
+        if (e.status === 413) {
+          errorMsg = e.message || t("Image file is too large.");
+        } else {
+          errorMsg = t(
             "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
-        });
+          );
+        }
+
+        ToastNotification.error(errorMsg);
 
         if (process.env.NODE_ENV === "development") {
           console.error("Image upload error", e);

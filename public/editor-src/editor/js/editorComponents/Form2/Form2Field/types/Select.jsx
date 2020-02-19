@@ -46,9 +46,13 @@ export default class Select extends TextField {
   };
 
   handleOptionsAdd = () => {
-    const options = addLast(this.props.options, this.state.newItemValue);
-    this.setState({ newItemValue: "" });
-    this.props.onChange({ options });
+    const { newItemValue } = this.state;
+    const { options, onChange } = this.props;
+
+    if (newItemValue && newItemValue.trim()) {
+      onChange({ options: addLast(options, newItemValue) });
+      this.setState({ newItemValue: "" });
+    }
   };
 
   handleOptionsRemove = index => {
@@ -119,7 +123,7 @@ export default class Select extends TextField {
 
     return (
       <Portal node={node.ownerDocument.body} className={className}>
-        <Toolbar {...this.props.selectToolbarItems}>
+        <Toolbar {...this.props.toolbarExtendSelect}>
           <div className="brz-forms2__select-list" style={dropdownStyle}>
             {this.renderOptions(v, isDesktop)}
             {isDesktop && (
@@ -206,7 +210,7 @@ export default class Select extends TextField {
   }
 
   renderForView(v) {
-    const { label, options, attr: _attr } = v;
+    const { label, attr: _attr } = v;
     const attr = _.omit(_attr, [
       "type",
       "accept",
@@ -214,8 +218,9 @@ export default class Select extends TextField {
       "data-max",
       "data-native"
     ]);
+    const options = v.options.filter(option => option && option.trim());
 
-    return (
+    return options.length ? (
       <div className={this.getClassName(v)}>
         <select {...attr} className="brz-select">
           <option value=" ">{label}</option>
@@ -226,6 +231,6 @@ export default class Select extends TextField {
           ))}
         </select>
       </div>
-    );
+    ) : null;
   }
 }

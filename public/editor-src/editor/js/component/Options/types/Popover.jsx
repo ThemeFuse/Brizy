@@ -46,37 +46,23 @@ class PopoverOptionType extends React.Component {
     this.props.toolbar.setItemsRenderer(this.renderToolbarItems);
   };
 
-  getOutSideExceptions = () => {
-    let clickOutsideExceptions = [".brz-ed-fixed"];
+  getClickOutSideExceptions() {
+    let clickOutsideExceptions = [
+      ".brz-ed-fixed",
+      ...(TARGET === "WP"
+        ? [
+            ".media-modal", // class of the WP media modal
+            ".media-modal-backdrop"
+          ]
+        : [])
+    ];
+
     if (this.props.location === "toolbar") {
-      clickOutsideExceptions.push(".brz-ed-sidebar-right-portal");
+      clickOutsideExceptions.push(".brz-ed-sidebar__right");
     }
 
     return clickOutsideExceptions;
-  };
-
-  renderLabel = () => {
-    const { label, helper: _helper, helperContent } = this.props;
-    const helper = _helper ? (
-      <div className="brz-ed-option__helper">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <div
-          className="brz-ed-option__helper__content"
-          dangerouslySetInnerHTML={{ __html: helperContent }}
-        />
-      </div>
-    ) : null;
-
-    return (
-      <div
-        key="label"
-        className="brz-ed-option__label brz-ed-option__popover__label"
-      >
-        {label}
-        {helper}
-      </div>
-    );
-  };
+  }
 
   renderToolbarItems = toolbarItems => {
     const toolbarItem = toolbarItems.find(({ id }) => id === this.props.id);
@@ -105,6 +91,47 @@ class PopoverOptionType extends React.Component {
     );
   };
 
+  renderIcon() {
+    const { icon } = this.props;
+
+    if (_.isObject(icon)) {
+      const iconClassName = classnames(
+        "brz-ed-popover__tooltip--icon-custom",
+        icon.className
+      );
+
+      return <div {...icon} className={iconClassName} />;
+    } else {
+      return <EditorIcon icon={icon} />;
+    }
+  }
+
+  renderLabelHelper() {
+    const { label, helper, helperContent } = this.props;
+
+    if (!label && !helper) {
+      return null;
+    }
+
+    return (
+      <div
+        key="label"
+        className="brz-ed-option__label brz-ed-option__popover__label"
+      >
+        {label}
+        {helper && (
+          <div className="brz-ed-option__helper">
+            <EditorIcon icon="nc-alert-circle-que" />
+            <div
+              className="brz-ed-option__helper__content"
+              dangerouslySetInnerHTML={{ __html: helperContent }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+
   renderInside() {
     const { className: _className, icon, title } = this.props;
     const className = classnames("brz-ed-popover__inner--icon", _className);
@@ -128,29 +155,14 @@ class PopoverOptionType extends React.Component {
   renderOutside() {
     const {
       className: _className,
-      icon: _icon,
       title,
       size,
       location,
-      toolbar: _toolbar,
-      label,
-      helper
+      toolbar: _toolbar
     } = this.props;
     const className = classnames("brz-ed-popover", _className);
     let toolbar = _toolbar;
     let placement = "top-center";
-    let icon;
-
-    if (_.isObject(_icon)) {
-      const iconClassName = classnames(
-        "brz-ed-popover__tooltip--icon-custom",
-        _icon.className
-      );
-      icon = <div {..._icon} className={iconClassName} />;
-    } else {
-      icon = <EditorIcon icon={_icon} />;
-    }
-    const hasLabel = label || helper;
 
     if (location === "rightSidebar") {
       toolbar = null;
@@ -159,7 +171,7 @@ class PopoverOptionType extends React.Component {
 
     return (
       <div className={className}>
-        {hasLabel && this.renderLabel()}
+        {this.renderLabelHelper()}
         <Tooltip
           className="brz-ed-popover__tooltip"
           placement={placement}
@@ -167,22 +179,18 @@ class PopoverOptionType extends React.Component {
           title={title}
           size={size}
           toolbar={toolbar}
-          clickOutsideExceptions={this.getOutSideExceptions()}
+          clickOutsideExceptions={this.getClickOutSideExceptions()}
           onOpen={this.handleTooltipOpen}
           onClose={this.handleTooltipClose}
         >
-          {icon}
+          {this.renderIcon()}
         </Tooltip>
       </div>
     );
   }
 
   render() {
-    const { options, display } = this.props;
-
-    if (filterOptionsData(options).length === 0) {
-      return null;
-    }
+    const { display } = this.props;
 
     return display === "outside" ? this.renderOutside() : this.renderInside();
   }

@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-export default function() {
+export default function($node) {
   function formatTime(time) {
     var min = Math.floor(time / 60);
     var sec = Math.floor(time % 60);
@@ -32,7 +32,7 @@ export default function() {
     return (offsetLeft * 100) / sliderWidth;
   }
 
-  $(".brz-audio .play-pause-btn").click(function() {
+  $node.find(".brz-audio .play-pause-btn").click(function() {
     var $this = $(this);
     var $shortcodeAudio = $(this).closest(".brz-audio");
     var $slider = $shortcodeAudio.find(".controls .slider");
@@ -84,7 +84,7 @@ export default function() {
     }
   });
 
-  $(".brz-audio .volume-btn").click(function() {
+  $node.find(".brz-audio .volume-btn").click(function() {
     var $this = $(this);
     var $shortcodeAudio = $(this).closest(".brz-audio");
     var $volumeProgress = $shortcodeAudio.find(".volume-controls .progress");

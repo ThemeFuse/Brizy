@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -96,7 +97,7 @@ class Countdown extends EditorComponent {
   initPlugin(options = null) {
     const { timeZone, language } = this.getValue();
 
-    const timeZoneOffset = -timeZone * 60 * 1000;
+    const timeZoneOffset = timeZone * 60 * 1000;
     const currentLanguage = getLanguage(language);
 
     jQuery(this.countdown).countdown({
@@ -140,7 +141,7 @@ class Countdown extends EditorComponent {
     const { timeZone, language } = v;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div
             ref={el => {

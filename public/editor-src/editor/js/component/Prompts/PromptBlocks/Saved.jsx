@@ -121,14 +121,14 @@ class Saved extends Component {
     const { savedBlocks, blocksFilter } = this.props;
     const thumbnails = blocksFilter(Object.entries(savedBlocks)).reduce(
       (acc, [savedBlockId, block]) => {
-        const { url, width, height } = blockThumbnailData(block);
+        const { url, width, height } = blockThumbnailData(block.data);
         const thumbnailData = {
           id: savedBlockId,
           thumbnailSrc: url,
           thumbnailWidth: width,
           thumbnailHeight: height,
           showRemoveIcon: true,
-          resolve: block
+          resolve: block.data
         };
 
         acc.push(thumbnailData);

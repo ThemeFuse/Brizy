@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function() {
-  $(".brz-map").each(function() {
+export default function($node) {
+  $node.find(".brz-map").each(function() {
     var $this = $(this);
 
     $this.on("click", function() {

@@ -1,0 +1,196 @@
+{
+  "content": {
+    "searchStyle": "classic",
+
+    "label": "Search...",
+    "items": []
+  },
+  "style": {
+    "className": "",
+
+    "customCSS": "",
+
+    "height": 55,
+    "width": 100,
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFamilies": {
+      "typographyFontFamily": "roboto"
+    },
+    "typographyFontSize": 21,
+    "typographyFontWeight": 700,
+    "typographyLineHeight": 1,
+    "typographyLetterSpacing": 1,
+
+    "bgColorType": "solid",
+
+    "hoverBgColorType": null,
+
+    "bgColorHex": "#000000",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
+    "colorHex": "#ccc",
+    "colorOpacity": 1,
+    "colorPalette": "color7",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color7",
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "hoverBorderRadiusType": null,
+    "hoverBorderRadius": null,
+    "hoverBorderTopLeftRadius": null,
+    "hoverBorderTopRightRadius": null,
+    "hoverBorderBottomRightRadius": null,
+    "hoverBorderBottomLeftRadius": null,
+
+    "tempHoverBorderRadius": null,
+    "tempHoverBorderTopLeftRadius": null,
+    "tempHoverBorderTopRightRadius": null,
+    "tempHoverBorderBottomRightRadius": null,
+    "tempHoverBorderBottomLeftRadius": null,
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
+
+    "hoverTransition": 50,
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFamilies": {
+      "tabletTypographyFontFamily": null
+    },
+    "tabletTypographyFontSize": 13,
+    "tabletTypographyFontWeight": 400,
+    "tabletTypographyLineHeight": 1,
+    "tabletTypographyLetterSpacing": 1,
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFamilies": {
+      "mobileTypographyFontFamily": null
+    },
+    "mobileTypographyFontSize": 13,
+    "mobileTypographyFontWeight": 400,
+    "mobileTypographyLineHeight": 1,
+    "mobileTypographyLetterSpacing": 1
+  }
+}

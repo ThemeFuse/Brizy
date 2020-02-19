@@ -9,6 +9,7 @@ import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
 
@@ -29,7 +30,7 @@ class Icon extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -103,13 +104,15 @@ class Icon extends EditorComponent {
 
     return (
       <Fragment>
-        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div className="brz-icon__container" style={style}>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <div className="brz-icon__container" style={style}>
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+            >
               {content}
-            </div>
-          </CustomCSS>
-        </Toolbar>
+            </Toolbar>
+          </div>
+        </CustomCSS>
         {popups.length > 0 &&
           linkType === "popup" &&
           linkPopup !== "" &&

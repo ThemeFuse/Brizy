@@ -1,20 +1,11 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementWOOAddToCartProductID,
-  toolbarElementWOOAddToCartStyle,
-  toolbarSizeWidthWidthPercent
-} from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarWOOProductPage",
-        device,
-        state: "normal"
-      }),
+      id: "toolbarWOOProductPage",
       type: "popover",
+      devices: "desktop",
       icon: "nc-woo-2",
       position: 10,
       options: [
@@ -26,24 +17,24 @@ export function getItems({ v, device }) {
               id: "queryTab",
               label: t("Query"),
               options: [
-                toolbarElementWOOAddToCartProductID({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
+                {
+                  id: "productID",
+                  label: t("Product"),
+                  type: "inputText-dev",
+                  placeholder: t("Product ID or SKU")
+                }
               ]
             },
             {
               id: "layoutTab",
               label: t("Layout"),
               options: [
-                toolbarElementWOOAddToCartStyle({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
+                {
+                  id: "style",
+                  label: t("Style"),
+                  type: "inputText-dev",
+                  placeholder: t("Style Add to Cart")
+                }
               ]
             }
           ]
@@ -51,27 +42,28 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: "toolbarSettings",
       type: "popover",
       roles: ["admin"],
       icon: "nc-cog",
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({
-          v,
-          device,
-          state: "normal"
-        }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "advancedSettings",
           type: "advancedSettings",
+          devices: "desktop",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: []
+          icon: "nc-cog"
         }
       ]
     }

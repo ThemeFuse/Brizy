@@ -1,7 +1,13 @@
 {
   "content": {
     "items": [],
-    "activeTab": 0
+    "activeTab": 0,
+    "verticalMode": "off",
+    "verticalAlign": "left",
+    "navStyle": "style-1",
+    "spacing": 3,
+    "spacingAfter": 30,
+    "action": "click"
   },
 
   "toolbar": {
@@ -17,10 +23,30 @@
     "iconCustomSize": 16,
     "iconPosition": "left",
     "iconSpacing": 10,
+
+    "tabletIconSize": null,
+    "tabletIconCustomSize": null,
+    "tabletIconPosition": null,
+    "tabletIconSpacing": null,
+
+    "mobileIconSize": null,
+    "mobileIconCustomSize": null,
+    "mobileIconPosition": null,
+    "mobileIconSpacing": null,
+
     "iconStrokeWidth": 1,
-    "smallIconSize": 16,
-    "mediumIconSize": 24,
-    "largeIconSize": 32,
+
+    "iconSmallSize": 16,
+    "iconMediumSize": 24,
+    "iconLargeSize": 32,
+
+    "tabletIconSmallSize": 16,
+    "tabletIconMediumSize": 24,
+    "tabletIconLargeSize": 32,
+
+    "mobileIconSmallSize": 16,
+    "mobileIconMediumSize": 24,
+    "mobileIconLargeSize": 32,
 
     "fontStyle": "",
     "fontFamilyType": "google",
@@ -36,10 +62,6 @@
 
     "tempBorderStyle": "solid",
 
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
-
     "borderWidthType": "grouped",
     "borderWidth": 2,
     "borderTopWidth": 2,
@@ -52,19 +74,6 @@
     "tempBorderRightWidth": 2,
     "tempBorderBottomWidth": 2,
     "tempBorderLeftWidth": 2,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -79,6 +88,30 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -91,13 +124,6 @@
     "tempHoverBorderTopRightRadius": null,
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
-
-    "borderColorHex": "#dcdee1",
-    "borderColorOpacity": 1,
-    "borderColorPalette": "",
-
-    "tempBorderColorOpacity": 1,
-    "tempBorderColorPalette": "",
 
     "hoverBorderColorHex": null,
     "hoverBorderColorOpacity": null,
@@ -113,6 +139,13 @@
     "tempColorOpacity": 0.7,
     "tempColorPalette": "color8",
 
+    "hoverColorHex": null,
+    "hoverColorOpacity": 0.7,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": 0.7,
+    "tempHoverColorPalette": null,
+
     "bgColorType": "solid",
 
     "bgColorHex": "#ffffff",
@@ -121,6 +154,56 @@
 
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
+
+    "hoverBgColorType": null,
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": 1,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": 1,
+    "tempHoverBgColorPalette": null,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",

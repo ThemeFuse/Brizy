@@ -26,21 +26,25 @@ class Tab extends EditorComponent {
 
   renderNav(v) {
     const { iconName, iconType, labelText } = v;
-    const { active, iconPosition, onChangeNav } = this.props;
+    const { active, onChangeNav, action } = this.props;
     const className = classnames("brz-tabs__nav--item brz-tabs__nav--desktop", {
       "brz-tabs__nav--active": active
     });
-
-    return (
+    return action === "click" ? (
       <li className={className} onClick={onChangeNav}>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-          <div
-            className={classnames(
-              iconPosition === "right"
-                ? "brz-tabs__nav--button brz-tabs__nav--button--right"
-                : "brz-tabs__nav--button"
+          <div className={classnames("brz-tabs__nav--button")}>
+            {iconName && iconType && (
+              <ThemeIcon name={iconName} type={iconType} />
             )}
-          >
+            <TextEditor value={labelText} onChange={this.handleLabelChange} />
+          </div>
+        </Toolbar>
+      </li>
+    ) : (
+      <li className={className} onMouseOver={onChangeNav}>
+        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+          <div className={classnames("brz-tabs__nav--button")}>
             {iconName && iconType && (
               <ThemeIcon name={iconName} type={iconType} />
             )}
@@ -53,7 +57,7 @@ class Tab extends EditorComponent {
 
   renderContent(v) {
     const { labelText, customClassName, iconName, iconType } = v;
-    const { active, iconPosition, meta, onChangeNav } = this.props;
+    const { active, meta, onChangeNav } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       meta,
       bindWithKey: "items",
@@ -70,11 +74,7 @@ class Tab extends EditorComponent {
       <div className={className}>
         <div className={labelClassName} onClick={onChangeNav}>
           <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-            <div className={classnames(
-              iconPosition === "right"
-                ? "brz-tabs__nav--button brz-tabs__nav--button--right"
-                : "brz-tabs__nav--button"
-            )}>
+            <div className={classnames("brz-tabs__nav--button")}>
               {iconName && iconType && (
                 <ThemeIcon name={iconName} type={iconType} />
               )}

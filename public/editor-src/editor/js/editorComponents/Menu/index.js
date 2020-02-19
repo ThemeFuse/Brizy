@@ -15,8 +15,10 @@ import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as parentToolbarExtendConfig from "./parentToolbarExtend";
+import * as toolbarExtend from "./toolbarExtend";
+import * as sidebarExtend from "./sidebarExtend";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as sidebarExtendParent from "./sidebarExtendParent";
 import {
   styleClassName,
   styleCSSVars,
@@ -39,10 +41,12 @@ export default class Menu extends EditorComponent {
   mMenu = null;
 
   componentDidMount() {
-    const parentToolbarExtend = this.makeToolbarPropsFromConfig(
-      parentToolbarExtendConfig,
+    const parentToolbarExtend = this.makeToolbarPropsFromConfig2(
+      toolbarExtendParent,
+      sidebarExtendParent,
       {
-        allowExtend: false
+        allowExtend: false,
+        allowExtendFromThirdParty: true
       }
     );
     this.props.extendParentToolbar(parentToolbarExtend);
@@ -53,6 +57,7 @@ export default class Menu extends EditorComponent {
       this.initMMenu();
     }
   }
+
   componentWillUpdate({ dbValue }) {
     const { mMenuPosition, menuSelected } = this.getValue();
 
@@ -182,9 +187,13 @@ export default class Menu extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         mMenu: hasMMenu,
-        toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtendConfig, {
-          allowExtend: !hasMMenu
-        })
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          {
+            allowExtend: false
+          }
+        )
       }
     });
 
@@ -318,6 +327,7 @@ export default class Menu extends EditorComponent {
     const clickOutsideExceptions = [
       ".brz-ed-toolbar",
       ".brz-ed-tooltip__content-portal",
+      ".brz-ed-sidebar__right",
       ".brz-menu",
       ".brz-menu__container",
       ".brz-ed-fixed"

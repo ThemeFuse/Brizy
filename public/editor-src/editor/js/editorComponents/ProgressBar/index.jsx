@@ -5,6 +5,7 @@ import classnames from "classnames";
 import TextEditor from "visual/editorComponents/Text/Editor";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { css } from "visual/utils/cssStyle";
 import { styleBg, styleBar } from "./styles";
 import defaultValue from "./defaultValue.json";
@@ -12,7 +13,7 @@ import BoxResizer from "visual/component/BoxResizer";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
-class ProgressBar extends EditorComponent {
+export default class ProgressBar extends EditorComponent {
   static get componentId() {
     return "ProgressBar";
   }
@@ -25,18 +26,32 @@ class ProgressBar extends EditorComponent {
 
   handleResizerChange = patch => this.patchValue(patch);
 
+  renderText({ text }) {
+    return <TextEditor value={text} onChange={this.handleTextChange} />;
+  }
+
   renderForEdit(v, vs, vd) {
-    const { className } = v;
-    const classNameBg = classnames(
-      "brz-progress-bar",
+    const {
       className,
+      percentage,
+      showText,
+      showPercentage,
+      progressBarStyle
+    } = v;
+    const classNameBg = classnames(
+      className,
+      "brz-progress-bar",
+      `brz-progress-bar-${progressBarStyle}`,
+      {
+        "brz-without-percent": showPercentage === "off",
+        "brz-without-text": progressBarStyle === "style1" && showText === "off"
+      },
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
         styleBg(v, vs, vd)
       )
     );
-
     const classNameBar = classnames(
       "brz-d-xs-flex",
       "brz-justify-content-xs-between",
@@ -49,10 +64,10 @@ class ProgressBar extends EditorComponent {
       )
     );
 
-    const { text, percentage, showPercentage } = v;
-
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={classNameBg}>
             <BoxResizer
@@ -61,13 +76,35 @@ class ProgressBar extends EditorComponent {
               value={v}
               onChange={this.handleResizerChange}
             >
-              <div className={classNameBar} data-progress={percentage}>
-                <TextEditor value={text} onChange={this.handleTextChange} />
-                {showPercentage === "on" && (
-                  <span className="brz-span brz-progress-bar__percent">
-                    {percentage}%
-                  </span>
-                )}
+              {progressBarStyle === "style2" && showPercentage === "on" && (
+                <span
+                  className="brz-span brz-progress-bar__percent"
+                  style={{
+                    marginLeft: `${percentage - 2}%`
+                  }}
+                >
+                  {percentage}%
+                </span>
+              )}
+              <div className="brz-progress-bar-overlay">
+                <div
+                  className={classNameBar}
+                  data-progress={percentage}
+                  style={{
+                    width: `${percentage}%`,
+                    maxWidth: `${percentage}%`
+                  }}
+                >
+                  <div className="for-bar">
+                    {showText === "on" && this.renderText(v)}
+                    {progressBarStyle === "style1" &&
+                      showPercentage === "on" && (
+                        <span className="brz-span brz-progress-bar__percent">
+                          {percentage}%
+                        </span>
+                      )}
+                  </div>
+                </div>
               </div>
             </BoxResizer>
           </div>
@@ -76,5 +113,3 @@ class ProgressBar extends EditorComponent {
     );
   }
 }
-
-export default ProgressBar;

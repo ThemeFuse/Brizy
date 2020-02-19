@@ -1,14 +1,15 @@
 import $ from "jquery";
 import Isotope from "isotope-layout";
 
-export default function() {
-  $(".brz-tabs").each(function() {
+export default function($node) {
+  $node.find(".brz-tabs").each(function() {
     var $this = $(this);
     var $tabsContent = $this
       .children(".brz-tabs__content")
       .children(".brz-tabs__items");
+    var action = $this.attr("data-action");
 
-    $this.children(".brz-tabs__nav").on("click", function(e) {
+    $this.children(".brz-tabs__nav").on(action, function(e) {
       var $navItem = $(e.target).closest("li");
       var navIndex = $navItem.index();
       var mobileActiveClassName = "brz-tabs__nav--mobile--active";

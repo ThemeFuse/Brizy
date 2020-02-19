@@ -3,3 +3,4 @@
 /popups/**
 /templates/**
 *.test.js
+*.test.ts

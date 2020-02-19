@@ -193,6 +193,7 @@
   color: #000;
   background-color: transparent;
   border: none;
+  overflow: auto;
 
   &:hover {
     transition: linear 0.2s opacity;

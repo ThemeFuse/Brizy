@@ -7,13 +7,15 @@ import {
   onChangeDependeciesGrouped,
   onChangeDependeciesUngrouped
 } from "./onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function onChangeBorderRadiusGrouped({
   v,
   device,
   state,
   value,
-  sliderDragEnd
+  sliderDragEnd,
+  prefix = ""
 }) {
   /**
    * ### OUTPUT EXAMPLE
@@ -34,13 +36,13 @@ export function onChangeBorderRadiusGrouped({
    * tempBorderBottomLeftRadius: borderBottomLeftRadius,
    */
 
-  const parent = "borderRadius";
+  const parent = capByPrefix(prefix, "borderRadius");
   const childs = [
     "borderTopLeftRadius",
     "borderTopRightRadius",
     "borderBottomLeftRadius",
     "borderBottomRightRadius"
-  ];
+  ].map(child => capByPrefix(prefix, child));
   const temp = true;
   const tempZero = true;
 
@@ -61,7 +63,8 @@ export function onChangeBorderRadiusGroupedDependencies({
   v,
   device,
   state,
-  value
+  value,
+  prefix = ""
 }) {
   // ToDo..
   // Asta trebuei de analizat si devazut ce facem cu ea ???
@@ -71,6 +74,12 @@ export function onChangeBorderRadiusGroupedDependencies({
    *     ? v.tempBgColorOpacity
    *     : v.bgColorOpacity
    */
+  const childs = [
+    "borderTopWidth",
+    "borderRightWidth",
+    "borderBottomWidth",
+    "borderLeftWidth"
+  ].map(child => capByPrefix(prefix, child));
   const tempZero = true;
   const dependencies = {
     borderStyle: {
@@ -78,12 +87,7 @@ export function onChangeBorderRadiusGroupedDependencies({
       tempValue: ["bgColorOpacity", "bgImageSrc"]
     },
     borderWidth: {
-      childs: [
-        "borderTopWidth",
-        "borderRightWidth",
-        "borderBottomWidth",
-        "borderLeftWidth"
-      ],
+      childs,
       tempValue: ["bgColorOpacity", "bgImageSrc"]
     },
     borderColorOpacity: {
@@ -110,16 +114,18 @@ export function onChangeBorderRadiusUngrouped({
   v,
   device,
   state,
-  current,
-  value
+  value,
+  current: _current,
+  prefix = ""
 }) {
-  const parent = "borderRadius";
+  const current = capByPrefix(prefix, _current);
+  const parent = capByPrefix(prefix, "borderRadius");
   const childs = [
     "borderTopLeftRadius",
     "borderTopRightRadius",
     "borderBottomLeftRadius",
     "borderBottomRightRadius"
-  ];
+  ].map(child => capByPrefix(prefix, child));
   const temp = true;
   const tempZero = true;
 
@@ -170,16 +176,24 @@ export function onChangeBorderRadiusUngroupedDependencies({
   v,
   device,
   state,
-  current,
-  value
+  value,
+  current: _current,
+  prefix = ""
 }) {
-  const parent = "borderRadius";
+  const current = capByPrefix(prefix, _current);
+  const parent = capByPrefix(prefix, "borderRadius");
   const childs = [
     "borderTopLeftRadius",
     "borderTopRightRadius",
     "borderBottomLeftRadius",
     "borderBottomRightRadius"
-  ];
+  ].map(child => capByPrefix(prefix, child));
+  const borderWidthChilds = [
+    "borderTopWidth",
+    "borderRightWidth",
+    "borderBottomWidth",
+    "borderLeftWidth"
+  ].map(child => capByPrefix(prefix, child));
 
   const dependencies = {
     borderStyle: {
@@ -187,12 +201,7 @@ export function onChangeBorderRadiusUngroupedDependencies({
       tempValue: ["bgColorOpacity", "bgImageSrc"]
     },
     borderWidth: {
-      childs: [
-        "borderTopWidth",
-        "borderRightWidth",
-        "borderBottomWidth",
-        "borderLeftWidth"
-      ],
+      childs: borderWidthChilds,
       tempValue: ["bgColorOpacity", "bgImageSrc"]
     },
     borderColorOpacity: {

@@ -23,7 +23,7 @@ export function cssStyleFilterSuffixForGlamour({
     saturation === 100 &&
     contrast === 100
     ? ""
-    : `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%);`;
+    : `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`;
 }
 
 export function cssStyleFilter({ v, device, state, prefix = "" }) {

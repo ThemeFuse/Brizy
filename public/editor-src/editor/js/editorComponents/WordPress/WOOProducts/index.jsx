@@ -5,6 +5,7 @@ import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import defaultValue from "./defaultValue.json";
 import toolbarConfigFn from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -39,7 +40,7 @@ class WOOProducts extends EditorComponent {
       orderby: v.orderBy,
       order: v.order
     };
-    const className = classnames(
+    const classNames = classnames(
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -48,14 +49,16 @@ class WOOProducts extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             name="products"
             attributes={attributes}
             placeholderIcon="woo-2"
             placeholderContainerWidth={this.props.meta.desktopW}
-            className={className}
+            className={classNames}
             resizerPoints={resizerPoints}
             resizerMeta={this.props.meta}
             resizerValue={v}

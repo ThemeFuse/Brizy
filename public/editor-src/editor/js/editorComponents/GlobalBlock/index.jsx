@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
-import { updateGlobalBlock } from "visual/redux/actions";
+import { updateGlobalBlock } from "visual/redux/actions2";
 
 class GlobalBlock extends EditorComponent {
   static get componentId() {
@@ -22,8 +22,8 @@ class GlobalBlock extends EditorComponent {
     // whole object because of the way globalBlocksAssembled2Selector works
     // in that the objects may be different even if the value did not change
     const globalBlockChanged =
-      nextProps.globalBlocks[globalBlockId].value !==
-      this.props.globalBlocks[globalBlockId].value;
+      nextProps.globalBlocks[globalBlockId].data.value !==
+      this.props.globalBlocks[globalBlockId].data.value;
 
     return globalBlockChanged || this.optionalSCU(nextProps);
   }
@@ -34,7 +34,7 @@ class GlobalBlock extends EditorComponent {
     } else {
       const { globalBlocks } = this.props;
       const { globalBlockId } = this.getDBValue();
-      const globalBlock = globalBlocks[globalBlockId];
+      const globalBlock = globalBlocks[globalBlockId].data;
       const updatedGlobalBlock = {
         ...globalBlock,
         value
@@ -56,7 +56,7 @@ class GlobalBlock extends EditorComponent {
   renderForEdit(v) {
     const { globalBlockId } = v;
     const { globalBlocks } = this.props;
-    const { type, value, ...otherData } = globalBlocks[globalBlockId];
+    const { type, value, ...otherData } = globalBlocks[globalBlockId].data;
     const Component = Editor.getComponent(type);
     const meta = {
       ...this.props.meta,

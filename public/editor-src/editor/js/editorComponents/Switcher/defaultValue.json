@@ -1,0 +1,221 @@
+{
+  "content": {
+    "items": [],
+    "activeTab": 0,
+    "spacing": 20,
+    "navStyle2Size": 50,
+    "navStyle1Width": 200,
+    "switcherStyle": "style-1",
+    "labelText1": "Tab 1",
+    "labelText2": "Tab 2"
+  },
+
+  "toolbar": {
+    "tabsColor": ""
+  },
+
+  "style": {
+    "className": "",
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "families": {
+      "typographyFontFamily": "noto_serif"
+    },
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.5,
+    "typographyLetterSpacing": 0,
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 100,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 100,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "borderColorHex": "#e5e5e5",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "colorHex": "#3c4b71;",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color8",
+
+    "activeColorHex": "#ffffff",
+    "activeColorOpacity": 1,
+    "activeColorPalette": "",
+
+    "tempActiveColorOpacity": 0.7,
+    "tempActiveColorPalette": "color8",
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#f7f7fb",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "activeBgColorHex": "#617be5",
+    "activeBgColorOpacity": 1,
+    "activeBgColorPalette": "",
+
+    "tempActiveBgColorOpacity": 1,
+    "tempActiveBgColorPalette": "",
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "customCSS": "",
+
+    "paddingType": "grouped",
+    "tempPaddingType": "grouped",
+
+    "padding": 14,
+    "paddingTop": 14,
+    "paddingRight": 14,
+    "paddingBottom": 14,
+    "paddingLeft": 14,
+
+    "tempPadding": 14,
+    "tempPaddingTop": 14,
+    "tempPaddingRight": 14,
+    "tempPaddingBottom": 14,
+    "tempPaddingLeft": 14,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletFamilies": {
+      "tabletTypographyFontFamily": null
+    },
+    "tabletTypographyFontSize": null,
+    "tabletTypographyLineHeight": null,
+    "tabletTypographyLetterSpacing": null,
+    "tabletTypographyFontWeight": null,
+
+    "tabletPaddingType": "grouped",
+    "tempTabletPaddingType": "grouped",
+
+    "tabletPadding": 14,
+    "tabletPaddingTop": 14,
+    "tabletPaddingRight": 14,
+    "tabletPaddingBottom": 14,
+    "tabletPaddingLeft": 14,
+
+    "tempTabletPadding": 14,
+    "tempTabletPaddingTop": 14,
+    "tempTabletPaddingRight": 14,
+    "tempTabletPaddingBottom": 14,
+    "tempTabletPaddingLeft": 14,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileFamilies": {
+      "mobileTypographyFontFamily": null
+    },
+    "mobileTypographyFontSize": null,
+    "mobileTypographyLineHeight": null,
+    "mobileTypographyLetterSpacing": null,
+    "mobileTypographyFontWeight": null,
+
+    "mobilePaddingType": "grouped",
+    "tempMobilePaddingType": "grouped",
+
+    "mobilePadding": 14,
+    "mobilePaddingTop": 14,
+    "mobilePaddingRight": 14,
+    "mobilePaddingBottom": 14,
+    "mobilePaddingLeft": 14,
+
+    "tempMobilePadding": 14,
+    "tempMobilePaddingTop": 14,
+    "tempMobilePaddingRight": 14,
+    "tempMobilePaddingBottom": 14,
+    "tempMobilePaddingLeft": 14,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px"
+  }
+}

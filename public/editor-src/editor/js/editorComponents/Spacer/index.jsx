@@ -4,6 +4,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 
@@ -45,7 +46,11 @@ class Spacer extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig, {
+          allowSidebarExtend: false
+        })}
+      >
         <BoxResizer
           points={resizerPoints}
           restrictions={resizerRestrictions}

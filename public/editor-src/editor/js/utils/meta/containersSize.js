@@ -14,7 +14,7 @@ import {
 } from "visual/utils/style2";
 import { percentageToPixels } from "./percentageToPixels";
 
-const getMargin = ({ w, v, device, state, type }) => {
+export const getMargin = ({ w, v, device, state, type }) => {
   switch (type) {
     case "grouped": {
       return percentageToPixels(
@@ -60,7 +60,7 @@ const getMargin = ({ w, v, device, state, type }) => {
   }
 };
 
-const getPadding = ({ w, v, device, state, type }) => {
+export const getPadding = ({ w, v, device, state, type }) => {
   switch (type) {
     case "grouped": {
       return percentageToPixels(
@@ -106,7 +106,7 @@ const getPadding = ({ w, v, device, state, type }) => {
   }
 };
 
-const getBorder = ({ v, device, state, type }) => {
+export const getBorder = ({ v, device, state, type }) => {
   switch (type) {
     case "grouped": {
       return styleBorderWidthGrouped({ v, device, state }) * 2;

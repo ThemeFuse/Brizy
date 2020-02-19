@@ -2,13 +2,13 @@ import flatpickr from "flatpickr";
 import $ from "jquery";
 import "select2";
 
-export default function() {
-  $("[data-form-version='2']").each(function() {
+export default function($node) {
+  $node.find("[data-form-version='2']").each(function() {
     initForm($(this));
   });
 
   // For Date
-  $(".brz-forms2__field-date").each(function() {
+  $node.find(".brz-forms2__field-date").each(function() {
     const $this = $(this);
     const data = $this.data();
     const minDate = data.min;
@@ -28,7 +28,7 @@ export default function() {
   });
 
   // For Time
-  $(".brz-forms2__field-time").each(function() {
+  $node.find(".brz-forms2__field-time").each(function() {
     const $this = $(this);
     const data = $this.data();
     const minDate = data.min;
@@ -50,7 +50,7 @@ export default function() {
   });
 
   // Select
-  $(".brz-forms2__field-select").each(function() {
+  $node.find(".brz-forms2__field-select").each(function() {
     const $this = $(this);
     const $select = $this.find(".brz-select");
     const placeholder = $select.data("placeholder");
@@ -68,7 +68,7 @@ export default function() {
   });
 
   // RECAPTCHA
-  const $recaptcha = $(".brz-g-recaptcha");
+  const $recaptcha = $node.find(".brz-g-recaptcha");
 
   if ($recaptcha.length) {
     // Load Script recaptcha

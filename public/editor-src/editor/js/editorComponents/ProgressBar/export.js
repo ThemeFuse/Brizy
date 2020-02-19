@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function() {
-  $(".brz-progress-bar").each(function() {
+export default function($node) {
+  $node.find(".brz-progress-bar").each(function() {
     var $this = $(this);
     var percentWrapper = $this.find(".brz-progress-bar__wrapper");
     var percentText = $this.find(".brz-progress-bar__percent");
@@ -17,6 +17,9 @@ export default function() {
           percentText.text(Math.floor(this.countNum) + "%");
           percentWrapper.css({
             maxWidth: Math.round(this.countNum + 0.5) + "%"
+          });
+          percentText.css({
+            marginLeft: Math.round(this.countNum + 0.5) - 2 + "%"
           });
         },
 

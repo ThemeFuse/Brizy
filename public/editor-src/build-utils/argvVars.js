@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = function argv(argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
-  const TARGET = argv_.target || argv_.t || "none";
+  const TARGET = argv_.target || argv_.t || "node_local";
   const IS_PRODUCTION = Boolean(argv_.production);
   const IS_EXPORT = Boolean(argv_.export || argv_.e);
   const IS_PRO = Boolean(argv_.pro || argv_.p);
@@ -21,7 +21,7 @@ module.exports = function argv(argv) {
     popups: path.resolve(__dirname, "../popups"),
     build: getBuildPath(),
     buildPro: getBuildProPath(),
-    buildLocal: path.resolve(__dirname, `../build`)
+    buildLocal: path.resolve(__dirname, "../build")
   };
 
   return {
@@ -89,7 +89,7 @@ module.exports = function argv(argv) {
           ? BUILD_DIR_PRO
           : path.resolve(__dirname, BUILD_DIR_PRO);
       } else {
-        r = path.resolve(__dirname, `../build/pro`);
+        r = path.resolve(__dirname, "../build/pro");
       }
     }
 

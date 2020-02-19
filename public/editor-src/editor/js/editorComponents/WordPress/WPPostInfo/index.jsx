@@ -5,6 +5,7 @@ import Config from "visual/global/Config";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
@@ -33,11 +34,12 @@ class WPPostInfo extends EditorComponent {
     const pageId = Config.get("wp").page;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             blocked={false}
             name="brizy_post_info"
+            height={45}
             placeholderIcon="wp-shortcode"
             className={classNameBC}
             attributes={{ post: pageId }}

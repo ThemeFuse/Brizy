@@ -1,4 +1,5 @@
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 import { imageUrl, svgUrl } from "visual/utils/image";
 
 const isSVG = extension => extension === "svg";
@@ -10,9 +11,11 @@ export function styleElementVideoPaddingRatio({ v, device, state }) {
     "2:1": "50%",
     "2:3": "150%",
     "3:4": "125%",
+    "3:2": "66.67%",
     "4:3": "75%",
-    "9:16": "177.8%",
-    "16:9": "56.25%"
+    "9:16": "177.78%",
+    "16:9": "56.25%",
+    "21:9": "42.86%"
   };
 
   return ratio === undefined ? ratio : paddingRatio[ratio];
@@ -110,4 +113,25 @@ export function styleElementVideoIconSizeHeight({ v, device, state }) {
   });
 
   return iconSizeHeight;
+}
+
+export function styleElementVideoIconCustomSize({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "controlsIconCustomSize",
+    device,
+    state
+  });
+}
+
+export function styleSidebarSizeWidthPixed({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "widthSidebar"));
+}
+
+export function styleElementVideoImageSize({ v, device, state, prefix = "" }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "widthImage"));
 }

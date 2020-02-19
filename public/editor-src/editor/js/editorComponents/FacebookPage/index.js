@@ -10,6 +10,7 @@ import { css } from "visual/utils/cssStyle";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 
 class FacebookPage extends EditorComponent {
@@ -56,7 +57,9 @@ class FacebookPage extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <Facebook

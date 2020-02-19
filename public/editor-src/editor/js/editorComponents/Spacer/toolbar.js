@@ -1,38 +1,31 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarSizeHeightHeightPx,
-  toolbarDisabledHorizontalAlign,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
 
-import { defaultValueKey } from "visual/utils/onChange";
-
-export function getItems({ v, device }) {
+export function getItems() {
   return [
-    toolbarDisabledAdvancedSettings({ device }),
-
     {
-      id: defaultValueKey({ key: "toolbarSettings", device }),
+      id: "toolbarSettings",
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeHeightHeightPx({
-          v,
-          device,
-          state: "normal",
+        {
+          id: "height",
+          label: t("Height"),
+          type: "slider-dev",
           config: {
-            slider: {
-              min: 10,
-              max: 200
-            }
+            min: 10,
+            max: 200,
+            units: [{ value: "px", title: "px" }]
           }
-        }),
-        toolbarDisabledAdvancedSettings({ device })
+        }
       ]
     },
-    toolbarDisabledHorizontalAlign({ device })
+    {
+      id: "horizontalAlign",
+      type: "toggle-dev",
+      disabled: true
+    }
   ];
 }

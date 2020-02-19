@@ -9,4 +9,51 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  &.brz-without-text {
+    .brz-progress-bar__percent {
+      width: 100%;
+      text-align: right;
+    }
+  }
+  .for-bar {
+    display: flex;
+    min-width: 0;
+    width: 100%;
+  }
+  &-style1 {
+    margin-top: 0 !important;
+
+    .brz-progress-bar__wrapper {
+      height: auto;
+    }
+
+    .for-bar {
+      align-items: center;
+    }
+  }
+  &-style2 {
+    .brz-progress-bar__wrapper {
+      position: relative;
+      overflow: visible;
+      height: auto;
+      margin-top: 10px;
+    }
+    .brz-progress-bar__percent {
+      padding: 4px 7px;
+      text-align: center;
+      margin-top: 0;
+      display: block;
+      width: fit-content;
+    }
+    &.brz-without-percent {
+      margin-top: 0;
+
+      .brz-progress-bar__wrapper {
+        margin-top: 0 !important;
+      }
+    }
+    .brz-text__editor {
+      display: none;
+    }
+  }
 }

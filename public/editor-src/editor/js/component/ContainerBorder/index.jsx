@@ -1,18 +1,27 @@
 import React from "react";
+import T from "prop-types";
 import classnames from "classnames";
 import ClickOutside from "visual/component/ClickOutside";
 import ContainerBorderButton from "./ContainerBorderButton";
 
-class ContainerBorder extends React.Component {
+export default class ContainerBorder extends React.Component {
+  static propTypes = {
+    className: T.string,
+    color: T.oneOf(["grey", "blue", "red"]),
+    showBorder: T.bool,
+    borderStyle: T.oneOf(["none", "solid", "dotted"]),
+    activeBorderStyle: T.oneOf(["none", "solid", "dotted"]),
+    showButton: T.bool,
+    buttonPosition: T.oneOf(["topLeft", "topRight"]),
+    renderButtonWrapper: T.func,
+    activateOnContentClick: T.bool,
+    clickOutsideExceptions: T.arrayOf(T.string)
+  };
+
   static defaultProps = {
-    className: "",
-    color: "", // grey, blue, red
     showBorder: true,
-    borderStyle: "", // none, dotted, solid, dotted
-    activeBorderStyle: "", // none, dotted, solid, dotted
     showButton: false,
-    buttonPosition: "topRight", // topRight, topLeft
-    renderButtonWrapper: null,
+    buttonPosition: "topRight",
     activateOnContentClick: true,
     clickOutsideExceptions: [
       "#brz-toolbar-portal",
@@ -55,42 +64,27 @@ class ContainerBorder extends React.Component {
       "brz.toolbar.mouseleave",
       this.handleToolbarMouseLeave
     );
+    this.containerRef.current.addEventListener(
+      "brz.toolbar.open",
+      this.handleToolbarOpen
+    );
+    this.containerRef.current.addEventListener(
+      "brz.toolbar.close",
+      this.handleToolbarClose
+    );
   }
 
   handleContentClick = e => {
-    if (
-      this.isButtonActive &&
-      !this.buttonInnerRef.current.contains(e.target)
-    ) {
-      // this deactivate the button (if it's active)
-      // when clicking inside the content after activating it
-      this.setActive(false, false);
-    }
-
-    const { activateOnContentClick } = this.props;
-    if (!activateOnContentClick || this.isButtonActive) {
-      return;
-    }
-
-    if (!this.isBorderActive || this.isButtonActive) {
-      this.setActive(true, false);
-    }
+    this.handleActivationEvent(e);
   };
 
-  handleButtonClick = () => {
-    if (!this.isButtonActive) {
-      this.setActive(true, true);
-    }
+  handleButtonClick = e => {
+    this.handleActivationEvent(e);
   };
 
   handleClickOutside = () => {
-    if (this.isBorderActive || this.isButtonActive) {
-      this.setActive(false, false);
-    }
-
-    if (this.isHovered) {
-      this.setHover(false);
-    }
+    this.setActive(false, false);
+    this.setHover(false);
   };
 
   handleToolbarMouseEnter = () => {
@@ -102,6 +96,46 @@ class ContainerBorder extends React.Component {
   handleToolbarMouseLeave = () => {
     if (!this.isBorderActive && !this.isButtonActive) {
       this.setHover(false);
+    }
+  };
+
+  handleToolbarOpen = e => {
+    this.handleActivationEvent(e);
+  };
+
+  handleToolbarClose = () => {
+    this.setActive(false, false);
+  };
+
+  handleActivationEvent = e => {
+    const { showButton, activateOnContentClick } = this.props;
+
+    if (e.brzContainerBorderHandled) {
+      return;
+    }
+
+    let handled = false;
+
+    if (showButton) {
+      const fromButton = this.buttonInnerRef.current.contains(e.target);
+
+      if (fromButton) {
+        this.setActive(true, true);
+        handled = true;
+      }
+    }
+
+    if (!handled && activateOnContentClick) {
+      this.setActive(true, false);
+      handled = true;
+    }
+
+    if (handled) {
+      e.brzContainerBorderHandled = true;
+    }
+
+    if (!handled && (this.isBorderActive || this.isBorderActive)) {
+      this.setActive(false, false);
     }
   };
 
@@ -144,7 +178,6 @@ class ContainerBorder extends React.Component {
         ref={this.buttonRef}
         innerRef={this.buttonInnerRef}
         position={buttonPosition}
-        onClick={this.handleButtonClick}
       />
     );
   };
@@ -202,5 +235,3 @@ class ContainerBorder extends React.Component {
     );
   }
 }
-
-export default ContainerBorder;

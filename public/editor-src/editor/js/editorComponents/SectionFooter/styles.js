@@ -16,7 +16,14 @@ export function styleSection(v, vs, vd) {
 
 export function styleBg(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": { interval: ["cssStyleVisibleMode|||editor"] },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleSectionHeightStyle",
+        "cssStyleFlexVerticalAlign",
+        "cssStyleDisplayFlex"
+      ],
+      interval: ["cssStyleVisibleMode|||editor"]
+    },
     ".brz &&:hover > .brz-bg-media": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius"],
       interval: [

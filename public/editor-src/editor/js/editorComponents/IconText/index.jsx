@@ -1,17 +1,20 @@
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
 import { noop } from "underscore";
-
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import * as toolbarExtendConfigIcon from "./extendToolbarIcon";
-import * as toolbarExtendConfigText from "./extendToolbarText";
-import * as toolbarExtendConfigButton from "./extendToolbarButton";
-import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as toolbarExtendIcon from "./toolbarExtendIcon";
+import * as sidebarExtendIcon from "./sidebarExtendIcon";
+import * as toolbarExtendText from "./toolbarExtendText";
+import * as sidebarExtendText from "./sidebarExtendText";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as sidebarExtendButton from "./sidebarExtendButton";
 import defaultValue from "./defaultValue.json";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import { style } from "./styles";
 
 const ICON_ITEM_INDEX = 0;
 const TEXT_ITEM_INDEX = 1;
@@ -30,10 +33,12 @@ class IconText extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
-      parentToolbarExtend,
+      toolbarExtendParent,
+      sidebarExtendParent,
       {
         allowExtend: false,
-        filterExtendName: `${this.constructor.componentId}_parent`
+        allowExtendFromThirdParty: true,
+        thirdPartyExtendId: `${this.constructor.componentId}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -49,7 +54,8 @@ class IconText extends EditorComponent {
       itemProps: {
         meta,
         toolbarExtend: this.makeToolbarPropsFromConfig2(
-          toolbarExtendConfigIcon,
+          toolbarExtendIcon,
+          sidebarExtendIcon,
           {
             allowExtend: false
           }
@@ -63,13 +69,13 @@ class IconText extends EditorComponent {
       sliceStartIndex: TEXT_ITEM_INDEX,
       itemProps: (itemData, itemIndex) => {
         let props;
-
         switch (itemIndex) {
           case TEXT_ITEM_INDEX:
             props = {
               meta,
               toolbarExtend: this.makeToolbarPropsFromConfig2(
-                toolbarExtendConfigText,
+                toolbarExtendText,
+                sidebarExtendText,
                 {
                   allowExtend: false
                 }
@@ -81,7 +87,11 @@ class IconText extends EditorComponent {
               className: "brz-ed-dd-cancel",
               meta,
               toolbarExtend: this.makeToolbarPropsFromConfig2(
-                toolbarExtendConfigButton
+                toolbarExtendButton,
+                sidebarExtendButton,
+                {
+                  allowExtend: false
+                }
               ),
               showBorder: false
             };

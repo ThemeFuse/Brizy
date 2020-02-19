@@ -2,10 +2,9 @@ import Config from "visual/global/Config";
 import { getWeight } from "visual/utils/fonts";
 import { encodeToString, capitalize } from "visual/utils/string";
 import { getFontStyles, getFontStyle } from "visual/utils/fonts";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
-
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
@@ -21,11 +20,7 @@ import {
   toolbarLinkUpload
 } from "visual/utils/toolbar";
 
-import { defaultValueKey } from "visual/utils/onChange";
-
 const proEnabled = Boolean(Config.get("pro"));
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const getBlockTag = value => {
   switch (value) {
@@ -792,9 +787,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: "toolbarSettings",
       type: "popover",
       title: t("Settings"),
       roles: ["admin"],
@@ -896,36 +890,11 @@ const getItems = (v, onChange) => ({ device, component }) => {
           value: v.tagName
         },
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "advancedSettings",
           type: "advancedSettings",
+          devices: "desktop",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              devices: "desktop",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }

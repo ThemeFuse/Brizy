@@ -1,21 +1,20 @@
 import React from "react";
 import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import classnames from "classnames";
 import Config from "visual/global/Config";
 import CustomCSS from "visual/component/CustomCSS";
-import Form2Items from "./Items";
 import { css } from "visual/utils/cssStyle";
 import { styleForm } from "./styles";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendConfigFields from "./toolbarExtendFields";
-import * as toolbarExtendConfigButton from "./toolbarExtendButton";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as toolbarExtendFields from "./toolbarExtendFields";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as sidebarExtendButton from "./sidebarExtendButton";
 
-const FIELDS_INDEX = 0;
-const BUTTON_INDEX = 1;
-
-class Form2 extends EditorComponent {
+export default class Form2 extends EditorComponent {
   static get componentId() {
     return "Form2";
   }
@@ -28,7 +27,8 @@ class Form2 extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
-      parentToolbarExtend,
+      toolbarExtendParent,
+      sidebarExtendParent,
       { allowExtend: false }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -38,47 +38,46 @@ class Form2 extends EditorComponent {
     e.preventDefault();
   };
 
-  renderItems(v) {
+  renderFields(v) {
     const { label, placeholder } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      meta: this.props.meta,
-      labelType: label === "off" ? "inside" : "outside",
-      itemProps: (_, itemIndex) => {
-        let props = {
-          meta: this.props.meta,
-          labelType: label === "off" ? "inside" : "outside",
-          placeholder: placeholder === "on"
-        };
-
-        switch (itemIndex) {
-          case FIELDS_INDEX:
-            props = {
-              ...props,
-              toolbarExtend: this.makeToolbarPropsFromConfig2(
-                toolbarExtendConfigFields,
-                { allowExtend: false }
-              )
-            };
-            break;
-          case BUTTON_INDEX:
-            props = {
-              ...props,
-              toolbarExtend: this.makeToolbarPropsFromConfig2(
-                toolbarExtendConfigButton,
-                { allowExtend: false }
-              )
-            };
-            break;
-          default:
-            throw new Error(`Form unexpected index ${itemIndex}`);
-        }
-
-        return props;
+      sliceStartIndex: 0,
+      sliceEndIndex: 1,
+      itemProps: {
+        meta: this.props.meta,
+        labelType: label === "off" ? "inside" : "outside",
+        placeholder: placeholder === "on",
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendFields,
+          null,
+          { allowExtend: false }
+        )
       }
     });
 
-    return <Form2Items {...itemsProps} />;
+    return <EditorArrayComponent {...itemsProps} />;
+  }
+
+  renderButton() {
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      sliceStartIndex: 1,
+      itemProps: {
+        meta: this.props.meta,
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendButton,
+          sidebarExtendButton,
+          { allowExtend: false }
+        )
+      }
+    });
+
+    return (
+      <div className="brz-forms2__item brz-align-self-xs-end brz-forms2__item-button">
+        <EditorArrayComponent {...itemsProps} />
+      </div>
+    );
   }
 
   renderForEdit(v, vs, vd) {
@@ -98,7 +97,8 @@ class Form2 extends EditorComponent {
             noValidate
             onSubmit={this.handleSubmit}
           >
-            {this.renderItems(v)}
+            {this.renderFields(v)}
+            {this.renderButton(v)}
           </form>
         </div>
       </CustomCSS>
@@ -132,7 +132,8 @@ class Form2 extends EditorComponent {
             data-error={messageError}
             data-redirect={messageRedirect}
           >
-            {this.renderItems(v)}
+            {this.renderFields(v)}
+            {this.renderButton(v)}
             {recaptchaSiteKey && (
               <div
                 className="brz-g-recaptcha"
@@ -146,5 +147,3 @@ class Form2 extends EditorComponent {
     );
   }
 }
-
-export default Form2;

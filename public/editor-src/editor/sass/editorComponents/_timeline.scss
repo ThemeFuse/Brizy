@@ -1,0 +1,215 @@
+// timeline
+.brz-timeline {
+  &__tab {
+    position: relative;
+    list-style: none;
+    min-width: 280px;
+
+    &:after {
+      content: "";
+      position: absolute;
+    }
+    &:last-child:after {
+      display: none;
+    }
+  }
+  &__nav--title {
+    position: relative;
+    text-align: center;
+    left: -10px;
+    min-width: 116px;
+    max-width: 116px;
+    width: 116px;
+  }
+  &__nav--icon {
+    margin-left: 20px;
+  }
+
+  // Content
+  &__content {
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(52, 49, 75, 0.1);
+    position: relative;
+  }
+  &__content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  // Mobile
+  &__nav--mobile {
+    display: none;
+  }
+}
+.brz-timeline__tabs--horizontal.brz-timeline {
+  &__tabs {
+    flex: 1 1 auto;
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 30px;
+
+    &::-webkit-scrollbar {
+      height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #141923;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+  }
+  &__tab {
+    position: relative;
+    list-style: none;
+    min-width: 280px;
+
+    &:after {
+      content: "";
+      position: absolute;
+    }
+    &:last-child:after {
+      display: none;
+    }
+  }
+  &__tab--style-2 {
+    position: relative;
+    list-style: none;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column-reverse;
+
+    &:after {
+      content: "";
+      position: absolute;
+    }
+    &:last-child:after {
+      display: none;
+    }
+
+    .brz-timeline__content:before {
+      bottom: -15px;
+      top: unset;
+    }
+  }
+}
+
+// Custom tab
+.brz-timeline__tabs--horizontal.brz-timeline__tabs--style-3 {
+  align-items: baseline;
+
+  .brz-timeline__tab--style-3 {
+    position: relative;
+    list-style: none;
+
+    &:after {
+      content: "";
+      position: absolute;
+    }
+    &:last-child:after {
+      display: none;
+    }
+    &:nth-child(even) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    &:nth-child(even) > .brz-timeline__content:before {
+      bottom: -15px;
+      top: unset;
+      border-left-color: transparent;
+      border-top-color: transparent;
+    }
+  }
+}
+
+// Vertical
+.brz-timeline__tabs--vertical.brz-timeline {
+  &__tabs {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    overflow-x: unset;
+    overflow-y: unset;
+    padding-bottom: unset;
+
+    .brz-timeline__nav--icon {
+      margin-left: 0;
+      line-height: 0;
+      z-index: 1;
+    }
+    .brz-timeline__nav--title {
+      position: unset;
+      left: 0;
+    }
+    .brz-timeline__content {
+      margin: 0;
+      position: static;
+      width: 100%;
+    }
+    .brz-timeline__content:before {
+      content: "";
+      position: absolute;
+    }
+  }
+  &__tabs--style-3 {
+    width: 100%;
+  }
+}
+
+// Vertical tab
+.brz-timeline__tabs--vertical.brz-timeline__tab {
+  position: relative;
+  display: flex;
+  margin-bottom: 100px;
+  align-items: center;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:first-child:before {
+    display: none;
+  }
+  &:last-child:after {
+    display: none;
+  }
+  &--style-2 {
+    flex-direction: row-reverse;
+  }
+  &--style-3 {
+    position: relative;
+    list-style: none;
+    min-width: 280px;
+
+    &:nth-child(even) {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    &:nth-child(even):last-child:after {
+      display: none;
+    }
+    &:nth-child(even) > .brz-timeline__content:before {
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
+}

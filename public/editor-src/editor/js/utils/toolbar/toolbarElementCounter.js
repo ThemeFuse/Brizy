@@ -5,25 +5,25 @@ export function toolbarElementCounterStart({
   v,
   device,
   devices = "all",
-  state
+  state,
+  disabled = false
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "start", device, state }),
+    id: dvk("start"),
     label: t("Start"),
     type: "input",
     inputType: "number",
     inputSize: "small",
     devices,
+    disabled,
     value: {
-      value: defaultValueValue({
-        v,
-        key: "start",
-        device,
-        state
-      })
+      value: dvv("start")
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ v, key: "start", device, state })]: value
+      [dvk("start")]: value
     })
   };
 }
@@ -32,70 +32,67 @@ export function toolbarElementCounterEnd({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "end", device, state }),
+    id: dvk("end"),
     label: t("End"),
     type: "input",
     inputType: "number",
     inputSize: "small",
     devices,
+    disabled,
     value: {
-      value: defaultValueValue({
-        v,
-        key: "end",
-        device,
-        state
-      })
+      value: dvv("end")
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ v, key: "end", device, state })]:
-        value !== "" ? value : 0
+      [dvk("end")]: value
     })
   };
 }
 
-export function toolbarElementCounterDuration({
+export function toolbarElementCounterStyles({
   v,
   device,
   devices = "all",
+  disabled = false,
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "duration", device, state }),
-    label: t("Duration"),
-    type: "slider",
+    id: dvk("type"),
+    label: t("Styles"),
+    type: "select",
     devices,
-    slider: {
-      min: 0,
-      step: 0.5,
-      max: 25
-    },
-    input: {
-      show: true
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "sec",
-          value: "sec"
-        }
-      ]
-    },
-    value: {
-      value: defaultValueValue({
-        v,
-        key: "duration",
-        device,
-        state
-      })
-    },
-    onChange: ({ value }) => {
-      return {
-        [defaultValueKey({ v, key: "duration", device, state })]: value
-      };
-    }
+    choices: [
+      {
+        title: t("Style 1"),
+        value: "simple"
+      },
+      {
+        title: t("Style 2"),
+        value: "radial"
+      },
+      {
+        title: t("Style 3"),
+        value: "empty"
+      },
+      {
+        title: t("Style 4"),
+        value: "pie"
+      }
+    ],
+    disabled,
+    value: dvv("type"),
+    onChange: value => ({
+      [dvk("type")]: value,
+      [dvk("start")]: dvv("type") !== "simple" ? dvv("start") : 0
+    })
   };
 }

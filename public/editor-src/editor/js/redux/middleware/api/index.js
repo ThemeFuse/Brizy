@@ -24,7 +24,10 @@ import {
   UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
   UPDATE_RULES,
-  UPDATE_TRIGGERS
+  UPDATE_TRIGGERS,
+  updateError,
+  UPDATE_ERROR,
+  HYDRATE
 } from "../../actions";
 import { ActionTypes as HistoryActionTypes } from "../../reducers/historyEnhancer";
 import {
@@ -38,7 +41,8 @@ import {
   debouncedApiCreateSavedBlock,
   debouncedApiDUpdateSavedBlock,
   debouncedApiDeleteSavedBlock,
-  apiUpdateRules
+  apiUpdateRules,
+  pollingSendHeartBeat
 } from "./utils";
 import {
   projectSelector,
@@ -48,65 +52,73 @@ import {
   pageSelector,
   pageBlocksSelector,
   globalBlocksSelector,
-  globalBlocksAssembled3Selector,
   globalBlocksInPageSelector,
-  savedBlocksAssembledSelector
+  savedBlocksSelector,
+  errorSelector
 } from "../../selectors";
+import {
+  HEART_BEAT_ERROR,
+  PROJECT_DATA_VERSION_ERROR,
+  PROJECT_LOCKED_ERROR
+} from "visual/utils/errors";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const { UNDO, REDO } = HistoryActionTypes;
 
-export default store => next => action => {
-  const oldState = store.getState();
+export default store => next => {
+  const apiHandler = apiCatch.bind(null, next);
 
-  next(action);
+  return action => {
+    next(action);
 
-  const state = store.getState();
+    const state = store.getState();
 
-  handlePublish({ action, state, oldState });
-  handleProject({ action, state, oldState });
-  handlePage({ action, state, oldState });
-  handleGlobalBlocks({ action, state, oldState });
-  handleSavedBlocks({ action, state, oldState });
-  handleScreenshots({ action, state, oldState });
-  IS_GLOBAL_POPUP && handlePopupRules({ action, state, oldState });
+    handlePublish({ action, state, apiHandler });
+    handleProject({ action, state, apiHandler });
+    handlePage({ action, state, apiHandler });
+    handleGlobalBlocks({ action, state, apiHandler });
+    handleSavedBlocks({ action, state, apiHandler });
+    handleScreenshots({ action, state, apiHandler });
+    handleHeartBeat({ action, state, apiHandler });
+
+    IS_GLOBAL_POPUP && handlePopupRules({ action, state, apiHandler });
+  };
 };
 
-function handlePublish({ action, state }) {
+function handlePublish({ action, state, apiHandler }) {
   if (action.type === PUBLISH) {
     const { onSuccess = _.noop, onError = _.noop } = action.meta;
 
     const project = projectSelector(state);
     const page = pageSelector(state);
-    const globalBlocksEntries = Object.entries(
+    const globalBlocksEntries = Object.values(
       globalBlocksInPageSelector(state)
     );
 
     // cancel possible pending requests
     debouncedApiUpdatePage.cancel();
     debouncedApiUpdateProject.cancel();
-    for (const [id] of globalBlocksEntries) {
+    for (const { id } of globalBlocksEntries) {
       debouncedApiUpdateGlobalBlock(id).cancel();
     }
 
     // update
     const meta = { is_autosave: 0 };
-    Promise.all([
-      apiUpdateProject(project, meta),
-      apiUpdatePage(page, meta),
-      Promise.all(
-        globalBlocksEntries.map(([id, data]) =>
-          apiUpdateGlobalBlock({ id, data }, meta)
-        )
-      )
-    ])
-      .then(onSuccess)
-      .catch(onError);
+
+    apiHandler(
+      Promise.all([
+        apiUpdateProject(project, meta),
+        apiUpdatePage(page, meta),
+        ...globalBlocksEntries.map(block => apiUpdateGlobalBlock(block, meta))
+      ]),
+      onSuccess,
+      onError
+    );
   }
 }
 
-function handleProject({ action, state, oldState }) {
+function handleProject({ action, state, apiHandler }) {
   switch (action.type) {
     case UPDATE_DISABLED_ELEMENTS: {
       const meta = {
@@ -114,7 +126,7 @@ function handleProject({ action, state, oldState }) {
       };
       const project = projectSelector(state);
 
-      apiUpdateProject(project, meta);
+      apiHandler(apiUpdateProject(project, meta));
       break;
     }
     case UPDATE_CURRENT_STYLE_ID:
@@ -140,32 +152,12 @@ function handleProject({ action, state, oldState }) {
       // cancel pending request
       debouncedApiUpdateProject.cancel();
 
-      apiUpdateProject(project, meta)
-        .then(onSuccess)
-        .catch(onError);
+      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
       break;
     }
-    case UPDATE_TRIGGERS: {
-      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const meta = {
-        is_autosave: 0
-      };
-      const project = projectSelector(state);
-
-      apiUpdateProject(project, meta)
-        .then(syncSuccess)
-        .catch(syncFail);
-      break;
-    }
-    case ADD_BLOCK:
     case ADD_FONTS:
     case DELETE_FONTS: {
       const fonts = fontSelector(state);
-
-      if (fonts === fontSelector(oldState)) {
-        return;
-      }
-
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const project = produce(projectSelector(state), draft => {
         draft.data.fonts = fonts;
@@ -177,9 +169,7 @@ function handleProject({ action, state, oldState }) {
       // cancel pending request
       debouncedApiUpdateProject.cancel();
 
-      apiUpdateProject(project, meta)
-        .then(onSuccess)
-        .catch(onError);
+      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
       break;
     }
     case UNDO:
@@ -222,6 +212,26 @@ function handlePage({ action, state }) {
       debouncedApiUpdatePage(page, action.meta);
       break;
     }
+    case UPDATE_RULES: {
+      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const page = { ...state.page, rules: action.payload };
+      apiUpdateRules(page, action.meta)
+        .then(syncSuccess)
+        .catch(syncFail);
+      break;
+    }
+    case UPDATE_TRIGGERS: {
+      const { page } = state;
+      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const meta = {
+        is_autosave: 0
+      };
+
+      apiUpdatePage(page, meta)
+        .then(syncSuccess)
+        .catch(syncFail);
+      break;
+    }
     case UNDO:
     case REDO: {
       const { page: currentPage } = action.currentSnapshot;
@@ -237,24 +247,22 @@ function handlePage({ action, state }) {
 function handleGlobalBlocks({ action, state }) {
   if (action.type === CREATE_GLOBAL_BLOCK) {
     const { id } = action.payload;
+    const globalBlock = globalBlocksSelector(state)[id];
 
-    debouncedApiCreateGlobalBlock(id)(action.payload);
+    debouncedApiCreateGlobalBlock(id)(globalBlock);
   } else if (action.type === UPDATE_GLOBAL_BLOCK) {
     const { id } = action.payload;
+    const globalBlock = globalBlocksSelector(state)[id];
 
-    debouncedApiUpdateGlobalBlock(id)(action.payload, action.meta);
+    debouncedApiUpdateGlobalBlock(id)(globalBlock, action.meta);
   } else if (action.type === DELETE_GLOBAL_BLOCK) {
     const { id } = action.payload;
     const globalBlock = globalBlocksSelector(state)[id];
-    const payload = {
-      id,
-      data: globalBlock
-    };
     const meta = {
       is_autosave: 0
     };
 
-    debouncedApiUpdateGlobalBlock(id)(payload, meta);
+    debouncedApiUpdateGlobalBlock(id)(globalBlock, meta);
   } else if (action.type === UNDO || action.type === REDO) {
     const { globalBlocks: currentGlobalBlocks } = action.currentSnapshot;
     const { globalBlocks: nextGlobalBlocks } = action.nextSnapshot;
@@ -266,22 +274,25 @@ function handleGlobalBlocks({ action, state }) {
           currentGlobalBlocks[id] &&
           nextGlobalBlocks[id] !== currentGlobalBlocks[id]
         ) {
-          debouncedApiUpdateGlobalBlock(id)({ id, data: nextGlobalBlocks[id] });
+          const globalBlock = nextGlobalBlocks[id];
+          debouncedApiUpdateGlobalBlock(id)(globalBlock);
         }
       });
     }
   }
 }
 
-function handleSavedBlocks({ action }) {
+function handleSavedBlocks({ action, state }) {
   if (action.type === CREATE_SAVED_BLOCK) {
     const { id } = action.payload;
+    const savedBlock = savedBlocksSelector(state)[id];
 
-    debouncedApiCreateSavedBlock(id)(action.payload);
+    debouncedApiCreateSavedBlock(id)(savedBlock);
   } else if (action.type === UPDATE_SAVED_BLOCK) {
     const { id } = action.payload;
+    const savedBlock = savedBlocksSelector(state)[id];
 
-    debouncedApiDUpdateSavedBlock(id)(action.payload, action.meta);
+    debouncedApiDUpdateSavedBlock(id)(savedBlock, action.meta);
   } else if (action.type === DELETE_SAVED_BLOCK) {
     const { id } = action.payload;
 
@@ -297,43 +308,36 @@ function handleScreenshots({ action, state }) {
     } = action;
 
     if (blockType === "saved") {
-      const savedBlocks = savedBlocksAssembledSelector(state);
-      const savedBlockToUpdate = savedBlocks[blockId];
+      const savedBlock = savedBlocksSelector(state)[blockId];
 
-      if (savedBlockToUpdate) {
-        const data = {
-          id: blockId,
-          data: savedBlockToUpdate
-        };
+      if (savedBlock) {
         const meta = { is_autosave: 0 };
 
-        debouncedApiDUpdateSavedBlock(blockId)(data, meta);
+        debouncedApiDUpdateSavedBlock(blockId)(savedBlock, meta);
       }
     }
 
     if (blockType === "global" && metaAction === "create") {
-      const globalBlocks = globalBlocksAssembled3Selector(state);
-      const globalBlockToUpdate = globalBlocks[blockId];
+      const globalBlock = globalBlocksSelector(state)[blockId];
 
-      if (globalBlockToUpdate) {
-        const data = {
-          id: blockId,
-          data: globalBlockToUpdate
-        };
+      if (globalBlock) {
         const meta = { is_autosave: 0 };
 
-        debouncedApiUpdateGlobalBlock(blockId)(data, meta);
+        debouncedApiUpdateGlobalBlock(blockId)(globalBlock, meta);
       }
     }
   }
 }
 
-function handlePopupRules({ action, state }) {
+function handlePopupRules({ action, state, apiHandler }) {
   if (action.type === UPDATE_RULES) {
     const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-    apiUpdateRules(action.payload, action.meta)
-      .then(syncSuccess)
-      .catch(syncFail);
+
+    apiHandler(
+      apiUpdateRules(action.payload, action.meta),
+      syncSuccess,
+      syncFail
+    );
   }
   if (action.type === UPDATE_RULES || action.type === UPDATE_TRIGGERS) {
     const { page } = state;
@@ -342,8 +346,51 @@ function handlePopupRules({ action, state }) {
       is_autosave: 0
     };
 
-    apiUpdatePage(page, meta)
-      .then(syncSuccess)
-      .catch(syncFail);
+    apiHandler(apiUpdatePage(page, meta), syncSuccess, syncFail);
   }
+}
+
+const startHeartBeat = apiHandler => {
+  const { heartBeatInterval } = Config.get("project");
+  apiHandler(pollingSendHeartBeat(heartBeatInterval));
+};
+
+const startHeartBeatOnce = _.once(startHeartBeat);
+
+function handleHeartBeat({ action, state, apiHandler }) {
+  if (action.type === UPDATE_ERROR || action.type === HYDRATE) {
+    const error = errorSelector(state);
+    const projectUnLocked = !error || error.code !== PROJECT_LOCKED_ERROR;
+
+    if (projectUnLocked) {
+      startHeartBeatOnce(apiHandler);
+    }
+  }
+}
+
+function apiCatch(next, p, onSuccess = _.noop, onError = _.noop) {
+  return p
+    .then(r => {
+      onSuccess(r);
+    })
+    .catch(r => {
+      if (r && r.heartBeat) {
+        next(
+          updateError({
+            code: HEART_BEAT_ERROR,
+            data: r.data
+          })
+        );
+      } else {
+        next(
+          updateError({
+            code: PROJECT_DATA_VERSION_ERROR,
+            data:
+              "Something went wrong, maybe your data is old, please refresh your page and try again"
+          })
+        );
+
+        onError(r);
+      }
+    });
 }

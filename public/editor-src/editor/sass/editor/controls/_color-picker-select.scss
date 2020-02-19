@@ -1,26 +1,13 @@
+@import "../../mixins/input";
+
 .brz-ed-control__colorPickerSelect {
-  .brz-control__select {
+  .brz-ed-control__multiSelect {
+    @include small-select;
+
     position: absolute;
     z-index: 2;
-    font-size: 12px;
     margin-top: 6px;
     margin-left: 4px;
-
-    .brz-control__select-current {
-      height: 24px;
-    }
-
-    .brz-control__select-option {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      font-size: 12px;
-      height: 24px;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      line-height: normal;
-      padding-right: 30px;
-    }
+    width: auto;
   }
 }

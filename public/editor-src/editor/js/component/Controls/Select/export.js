@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function() {
-  $(".brz-control__select").each(function() {
+export default function($node) {
+  $node.find(".brz-control__select").each(function() {
     var $this = $(this);
     var $currentWrap = $this.find(".brz-control__select-current");
     var $currentOption = $currentWrap.find(".brz-control__select-option");

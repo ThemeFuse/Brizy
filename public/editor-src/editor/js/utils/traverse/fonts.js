@@ -78,7 +78,9 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
       const globalBlockValue = globalBlocks[globalBlockId];
 
       if (globalBlockValue) {
-        getUsedModelsFonts({ models: globalBlockValue }).forEach(font => {
+        const models = { models: globalBlockValue, globalBlocks };
+
+        getUsedModelsFonts(models).forEach(font => {
           fontFamilies.add(splitFont(font));
         });
       }

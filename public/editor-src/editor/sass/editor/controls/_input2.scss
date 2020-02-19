@@ -1,0 +1,63 @@
+@import "../../variables";
+@import "../../mixins/input";
+
+// --- Input Control
+.brz-ed-control__input2 {
+  input {
+    font-family: $font-family-1;
+    font-size: $control-font-size;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    background: $control-background-color none;
+    color: #fff;
+    flex: 1 1 auto;
+    height: $control-height;
+    text-indent: 5px;
+    padding: 0 5px;
+    border-radius: $control-border-radius;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    text-shadow: none;
+    text-align: left;
+    margin-left: auto;
+    width: 100%;
+
+    &:focus,
+    &:active {
+      background-color: $control-background-color;
+      color: #fff;
+    }
+
+    // Placeholder
+    @include placeholder {
+      & {
+        color: rgba(234, 241, 255, 0.2);
+        font-style: italic;
+        font-size: 1em;
+      }
+    }
+  }
+
+  // Size Styles
+  &--large input {
+    width: $control-lg-width;
+  }
+
+  &--medium input {
+    width: $control-md-width;
+  }
+
+  &--short input {
+    width: $control-sm-width;
+  }
+}
+
+.brz-ed-option-population > .brz-ed-control__input2,
+.brz-ed-option__block > .brz-ed-control__input2 {
+  &,
+  & input {
+    width: 100%;
+  }
+}

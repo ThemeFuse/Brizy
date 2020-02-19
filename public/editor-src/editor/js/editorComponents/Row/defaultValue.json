@@ -17,7 +17,6 @@
     "contrast": 100,
 
     "bgVideo": "",
-    "bgVideoQuality": 1080,
     "bgVideoLoop": "off",
 
     "bgMapAddress": "Wall Street",
@@ -70,7 +69,6 @@
     "tabletContrast": null,
 
     "tabletBgVideo": null,
-    "tabletBgVideoQuality": null,
     "tabletBgVideoLoop": null,
 
     "tabletBgMapZoom": null,
@@ -99,7 +97,6 @@
     "mobileContrast": null,
 
     "mobileBgVideo": null,
-    "mobileBgVideoQuality": null,
     "mobileBgVideoLoop": null,
 
     "mobileBgMapZoom": null,

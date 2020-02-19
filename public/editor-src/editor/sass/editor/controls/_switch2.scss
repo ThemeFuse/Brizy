@@ -1,0 +1,116 @@
+@import "../../variables";
+
+// --- Switch
+
+// --- Settings
+$width: 50px;
+$height: 28px;
+$border-radius: 18px;
+$background: $brand-options; // #5aaeca
+$background-checked: $brand-primary; //#5aaeca; // #373d47
+$switchTransition: 0.15s ease-out;
+$background-light-checked: #c7c9cd;
+
+// ---
+.brz-ed-control__switch2 {
+  &-label {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: $width;
+    height: $height;
+    border-radius: $border-radius;
+    cursor: pointer;
+    margin: 0;
+    line-height: 1;
+  }
+  &-arrows {
+    position: relative;
+    display: block;
+    height: inherit;
+    font-size: 18px;
+    text-transform: uppercase;
+    background: $background;
+    border-radius: inherit;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.38) inset;
+  }
+  &--check,
+  &--un-check {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    transition: inherit;
+    color: rgba(18, 20, 25, 0.7);
+  }
+  &--check {
+    // Check √
+    left: 5px;
+    opacity: 0;
+  }
+  &--un-check {
+    // Close x
+    right: 5px;
+  }
+  &--handle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.35);
+    transition: left #{$switchTransition};
+
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      width: 7px;
+      border-top: 1px solid #34beea;
+      top: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &:before {
+      top: 10px;
+    }
+    &:after {
+      height: 7px;
+      border-bottom: 1px solid #34beea;
+    }
+  }
+
+  &--on .brz-ed-control__switch2-arrows {
+    background: $background-checked;
+
+    .brz-ed-control__switch2--check {
+      opacity: 1;
+    }
+    .brz-ed-control__switch2--un-check {
+      opacity: 0;
+    }
+
+    .brz-ed-control__switch2--handle {
+      left: 25px;
+    }
+  }
+}
+
+// Light
+.brz-ed-control__switch2--light {
+  .brz-ed-control__switch2-arrows {
+    background: $background-light-checked;
+  }
+  .brz-ed-control__switch2--handle {
+    &:after {
+      border-top-color: #bfbfbf;
+      border-bottom-color: #bfbfbf;
+    }
+    &:before {
+      border-top-color: #bfbfbf;
+    }
+  }
+}

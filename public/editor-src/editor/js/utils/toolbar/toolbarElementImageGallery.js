@@ -1,80 +1,41 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementImageGalleryGridColumn({ v, device, state }) {
+export function toolbarElementImageGalleryFilterSpacing() {
   return {
-    id: defaultValueKey({ key: "gridColumn", device, state }),
-    label: t("Columns"),
-    type: "slider",
-    slider: {
-      min: 1,
-      max: 6
-    },
-    input: {
-      show: true,
-      max: 6
-    },
-    value: {
-      value: defaultValueValue({
-        v,
-        key: "gridColumn",
-        device,
-        state
-      })
-    },
-    onChange: ({ value }) => ({
-      [defaultValueKey({ v, key: "gridColumn", device, state })]: value
-    })
-  };
-}
-
-export function toolbarElementImageGallerySpacing({ v, device, state }) {
-  return {
-    id: defaultValueKey({ key: "spacing", device, state }),
+    id: "filterSpacing",
+    type: "slider-dev",
     label: t("Spacing"),
-    type: "slider",
-    slider: {
+    config: {
       min: 0,
-      max: 20
-    },
-    input: {
-      show: true,
-      min: 0
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "px",
-          value: "px"
-        }
-      ]
-    },
-    value: {
-      value: defaultValueValue({
-        v,
-        key: "spacing",
-        device,
-        state
-      })
-    },
-    onChange: ({ value }) => ({
-      [defaultValueKey({ key: "spacing", device, state })]: value
-    })
+      max: 20,
+      units: [{ value: "px", title: "px" }]
+    }
+  };
+}
+export function toolbarElementImageGalleryFilterAfterSpacing() {
+  return {
+    id: "afterFilterSpacing",
+    type: "slider-dev",
+    label: t("After spacing"),
+    config: {
+      min: 0,
+      max: 100,
+      units: [{ value: "px", title: "px" }]
+    }
   };
 }
 
-export function toolbarElementImageGalleryLightBox({
-  v,
-  device,
-  state,
-  devices = "all"
-}) {
+export function toolbarElementImageGalleryStyle() {
   return {
-    id: defaultValueKey({ v, key: "lightBox", device, state }),
-    label: t("Open in Lightbox"),
-    type: "switch",
-    devices,
-    value: defaultValueValue({ v, key: "lightBox", device, state })
+    id: "filterStyle",
+    type: "select-dev",
+    label: t("Style"),
+    choices: [
+      { value: "style-1", title: "Style 1" },
+      { value: "style-2", title: "Style 2" }
+    ],
+    value: {
+      value: "style-1"
+    }
   };
 }

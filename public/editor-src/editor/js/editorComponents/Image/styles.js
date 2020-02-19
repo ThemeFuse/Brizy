@@ -71,10 +71,22 @@ export function imageStylesClassName(v, sizes, props) {
         filter: filterNormal !== "" ? filterNormal : null
       },
 
+      ":before": {
+        boxShadow: shadowDesktopNormal !== "" ? shadowDesktopNormal : null
+      },
+
       "@media (min-width: 992px)": {
         transition: styleHoverTransition({ v }),
         transitionProperty: styleHoverTransitionProperty(),
 
+        ":before": {
+          transition: styleHoverTransition({ v }),
+          transitionProperty: styleHoverTransitionProperty()
+        },
+
+        ":hover:before": {
+          boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
+        },
         ".brz &:hover": {
           boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
         }
