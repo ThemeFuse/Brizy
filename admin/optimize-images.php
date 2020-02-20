@@ -139,7 +139,21 @@ class Brizy_Admin_OptimizeImages {
 
 		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
 
+		$closure = function ( $processors ) {
+			foreach ( $processors as $i => $processor ) {
+				if ( $processor instanceof Brizy_Editor_Asset_MediaAssetProcessor ) {
+					unset( $processors[ $i ] );
+					return $processors;
+				}
+			}
+			return $processors;
+		};
+
+		add_filter( 'brizy_content_processors', $closure );
+
 		$content = apply_filters( 'brizy_content', $content, $project, get_post( $postId ) );
+
+		remove_filter( 'brizy_content_processors', $closure );
 
 		return $this->extract_media_urls( $urls, $content, $filesystem );
 	}
@@ -242,14 +256,14 @@ class Brizy_Admin_OptimizeImages {
 
 			$mediaUid = $params[ Brizy_Public_CropProxy::ENDPOINT ];
 
-			if ( strpos( $mediaUid, 'wp-' ) !== false ) {
-				$attachmentUids[] = array(
-					'url'        => $url,
-					'parsed_url' => $parsed_url,
-					'uid'        => $mediaUid,
-					'uidQuery'   => "'{$mediaUid}'"
-				);
-			}
+			//if ( strpos( $mediaUid, 'wp-' ) !== false ) {
+			$attachmentUids[] = array(
+				'url'        => $url,
+				'parsed_url' => $parsed_url,
+				'uid'        => $mediaUid,
+				'uidQuery'   => "'{$mediaUid}'"
+			);
+			//}
 		}
 
 		if ( count( $attachmentUids ) === 0 ) {
@@ -286,7 +300,7 @@ class Brizy_Admin_OptimizeImages {
 
 			$parsed_url = $uidRes['parsed_url'];
 
-			if ( ! isset( $parsed_url['query'] ) || !isset($uidRes['ID']) ) {
+			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['ID'] ) ) {
 				continue;
 			}
 
