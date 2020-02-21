@@ -171,14 +171,14 @@ class Brizy_Admin_OptimizeImages {
 			if ( ! $shortpixelSettings['API_KEY'] ) {
 				Brizy_Admin_Flash::instance()->add_warning( 'You have disabled Shortpixel.' );
 				Brizy_Editor_Project::get()->setImageOptimizerSettings( $settings );
-				Brizy_Editor_Project::get()->save();
+				Brizy_Editor_Project::get()->saveStorage();
 
 				return;
 			}
 
 			if ( $shortpixelOptimizer->validateConfig() ) {
 				Brizy_Editor_Project::get()->setImageOptimizerSettings( $settings );
-				Brizy_Editor_Project::get()->save();
+				Brizy_Editor_Project::get()->saveStorage();
 
 				Brizy_Admin_Flash::instance()->add_success( 'Settings saved.' );
 			} else {
