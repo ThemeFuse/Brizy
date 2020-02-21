@@ -9,15 +9,18 @@ var RULE_ARCHIVE = "4";
 var RULE_TEMPLATE = "8";
 var RULE_BRIZY_TEMPLATE = "16";
 
+const defaultAppliedFor = Brizy_Admin_Rules.templateType === 'archive' ? RULE_TAXONOMY :  RULE_POSTS;
+const defaultEntityType = Brizy_Admin_Rules.templateType === 'archive' ? 'category' : 'post';
+
 var defaultRule = {
     type: RULE_TYPE_INCLUDE,
-    appliedFor: "1",
-    entityType: "post",
+    appliedFor: defaultAppliedFor,
+    entityType: defaultEntityType,
     entityValues: []
 };
 
 var state = {
-    templateType: Brizy_Admin_Rules.templateType,
+    templateType: Brizy_Admin_Rules.templateType || 'single',
     rule: defaultRule,
     singleRules: Brizy_Admin_Rules.templateType === 'single' ? Brizy_Admin_Rules.rules : [],
     archiveRules: Brizy_Admin_Rules.templateType === 'archive' ? Brizy_Admin_Rules.rules : [],
@@ -388,6 +391,7 @@ var RulePostsGroupSelectField = function (params) {
 
 var RuleApplyGroupField = function (params) {
     return function (state, actions) {
+
         var appliedFor = params.rule.appliedFor;
         var entityType = params.rule.entityType;
         var value = appliedFor + "|" + entityType;
@@ -428,7 +432,7 @@ var RuleApplyGroupField = function (params) {
             h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
         ];
 
-
+        console.log(params);
         console.log(appliedFor);
 
         switch (appliedFor) {

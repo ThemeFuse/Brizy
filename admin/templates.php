@@ -673,7 +673,7 @@ class Brizy_Admin_Templates {
 
 		// get rules from $_POST
 		$rules = [];
-		if ( $type ) {
+		if ( $type && isset($_POST[ 'brizy-' . $type . '-rule-type' ]) && is_array($_POST[ 'brizy-' . $type . '-rule-type' ])) {
 			foreach ( $_POST[ 'brizy-' . $type . '-rule-type' ] as $i => $ruleType ) {
 
 				// ignore this rule if type is invalid
