@@ -4,6 +4,8 @@
 
 class Brizy_Public_Main {
 
+	static $is_excerpt = false;
+
 	/**
 	 * @var Brizy_Editor_Post
 	 */
@@ -28,7 +30,6 @@ class Brizy_Public_Main {
 	}
 
 	public function initialize_front_end() {
-
 
 		if ( $this->is_editing_page_with_editor() && Brizy_Editor::is_user_allowed() ) {
 			// When some plugins want to redirect to their templates.
@@ -68,6 +69,10 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
+
+
+			add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
+			add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
 			$this->plugin_live_composer_fixes();
 		}
 	}
@@ -367,11 +372,13 @@ class Brizy_Public_Main {
 
 		global $post;
 
-		global $post;
-
 		if ( false === strpos( $content, 'brz-root__container' ) ||
 		     ( $post && $post->ID !== $this->post->getWpPostParentId() ) ) {
 			return $content;
+		}
+
+		if ( self::$is_excerpt ) {
+			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' );
 		}
 
 		if ( ! $this->post->get_compiled_html() ) {
@@ -396,7 +403,6 @@ class Brizy_Public_Main {
 	public static function path( $rel ) {
 		return dirname( __FILE__ ) . "/$rel";
 	}
-
 
 	private function getConfigObject() {
 		$editor        = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $this->post );
@@ -437,6 +443,18 @@ class Brizy_Public_Main {
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
+	}
+
+	public function start_excerpt( $content ) {
+		self::$is_excerpt = true;
+
+		return $content;
+	}
+
+	public function end_excerpt( $content ) {
+		self::$is_excerpt = false;
+
+		return $content;
 	}
 
 	private function plugin_live_composer_fixes() {
