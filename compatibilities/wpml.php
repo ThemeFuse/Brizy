@@ -8,6 +8,15 @@ class Brizy_Compatibilities_WPML {
 	public function __construct() {
 		add_action( 'wp_insert_post', array( $this, 'insertNewPost' ), -10000, 3 );
 		add_action( 'wp_insert_post', array( $this, 'duplicatePosts' ), -10000, 3 );
+
+		add_filter( 'wpml_decode_custom_field', array( $this, 'decode_custom_field' ), 10, 2 );
+		add_filter( 'wpml_encode_custom_field',  array( $this, 'encode_custom_field' ), 10, 2 );
+		add_filter( 'wpml_pb_should_body_be_translated', array( $this, 'remove_body' ), 10, 2 );
+		add_action( 'wpml_pro_translation_completed', array( $this, 'save_post' ), 10, 3 );
+
+		add_filter( 'wpml_basket_is_base64_item', '__return_false' );
+		add_filter( 'wpml_document_view_item_link', '__return_empty_string' );
+		add_filter( 'wpml_document_edit_item_link', '__return_empty_string' );
 	}
 
 	/**
@@ -63,6 +72,73 @@ class Brizy_Compatibilities_WPML {
 					$currentBrizyPost->save();
 				}
 			}
+		}
+	}
+
+	/**
+	 * Decodes editor_data to send for translation.
+	 *
+	 * @param array  $value The value of the custom field.
+	 * @param string $key   The key of the custom field.
+	 * @return array
+	 */
+	public function decode_custom_field( $value, $key ) {
+		// We only need to handle this for 'brizy' custom field.
+		if ( 'brizy' === $key ) {
+			// WPML calls this filter twice, so we need to check if it was already decoded.
+			if ( isset( $value['brizy-post']['editor_data'] ) && is_scalar( $value['brizy-post']['editor_data'] ) ) {
+				$value['brizy-post']['editor_data'] = json_decode( base64_decode( $value['brizy-post']['editor_data'], true ), true );
+			}
+		}
+		return $value;
+	}
+
+	/**
+	 * Encode editor_data after its translated.
+	 *
+	 * @param array  $value The value of the custom field.
+	 * @param string $key   The key of the custom field.
+	 * @return array
+	 */
+	public function encode_custom_field( $value, $key ) {
+		// We only need to handle this for 'brizy' custom field.
+		if ( 'brizy' === $key ) {
+			// WPML calls this filter twice, so we need to check if it was already encoded.
+			if ( isset( $value['brizy-post']['editor_data'] ) && ! is_scalar( $value['brizy-post']['editor_data'] ) ) {
+				$value['brizy-post']['editor_data'] = base64_encode( json_encode( $value['brizy-post']['editor_data'] ) ); 
+			}
+		}
+		return $value;
+	}
+
+	/**
+	 * Remove body from the translation editor because it is generated automatically.
+	 *
+	 * @param bool    $translate Does body need to be translated.
+	 * @param WP_Post $post      The post we are translating.
+	 * @return bool
+	 */
+	public function remove_body( $translate, $post ) {
+		$brizyPost = Brizy_Editor_Post::get( $post );
+		if ( $brizyPost->uses_editor() ) {
+			$translate = false;
+		}
+		return $translate;
+	}
+
+	/**
+	 * Compile translated brizy pages.
+	 *
+	 * @param int $post_id The ID of the translated post.
+	 */
+	public function save_post( $post_id, $fields, $job ) {
+		$originalPost = Brizy_Editor_Post::get( $job->original_doc_id );
+		if ( $originalPost->uses_editor() ) {
+			$translatedPost = Brizy_Editor_Post::get( $post_id );
+			if ( ! $translatedPost->uses_editor() ) {
+				$translatedPost->set_uses_editor( true );
+			}
+			$translatedPost->set_needs_compile( true );
 		}
 	}
 }

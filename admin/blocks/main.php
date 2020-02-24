@@ -57,11 +57,12 @@ class Brizy_Admin_Blocks_Main {
 		}
 
 		$blocks = get_posts( array(
-			'post_type'      => Brizy_Admin_Blocks_Main::CP_GLOBAL,
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
+			'post_type'        => Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			'posts_per_page'   => - 1,
+			'post_status'      => 'publish',
+			'orderby'          => 'ID',
+			'order'            => 'ASC',
+			'suppress_filters' => false,
 		) );
 
 		foreach ( $blocks as $block ) {
@@ -71,11 +72,12 @@ class Brizy_Admin_Blocks_Main {
 		}
 
 		$blocks = get_posts( array(
-			'post_type'      => Brizy_Admin_Blocks_Main::CP_SAVED,
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
+			'post_type'        => Brizy_Admin_Blocks_Main::CP_SAVED,
+			'posts_per_page'   => - 1,
+			'post_status'      => 'publish',
+			'orderby'          => 'ID',
+			'order'            => 'ASC',
+			'suppress_filters' => false,
 		) );
 
 		foreach ( $blocks as $block ) {

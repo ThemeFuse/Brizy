@@ -131,11 +131,12 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	public static function getBlocksByType( $type, $arags = array() ) {
 
 		$filterArgs = array(
-			'post_type'      => $type,
-			'posts_per_page' => - 1,
-			'post_status'    => 'any',
-			'orderby'        => 'ID',
-			'order'          => 'ASC',
+			'post_type'        => $type,
+			'posts_per_page'   => - 1,
+			'post_status'      => 'any',
+			'orderby'          => 'ID',
+			'order'            => 'ASC',
+			'suppress_filters' => false,
 		);
 		$filterArgs = array_merge( $filterArgs, $arags );
 
