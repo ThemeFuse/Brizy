@@ -14,7 +14,7 @@ class Brizy_Compatibilities_WPML {
 		add_filter( 'wpml_pb_should_body_be_translated', array( $this, 'remove_body' ), 10, 2 );
 		add_action( 'wpml_pro_translation_completed', array( $this, 'save_post' ), 10, 3 );
 
-		add_filter( 'wpml_basket_is_base64_item', '__return_false' );
+		add_filter( 'wpml_basket_base64_item', '__return_false' );
 		add_filter( 'wpml_document_view_item_link', '__return_empty_string' );
 		add_filter( 'wpml_document_edit_item_link', '__return_empty_string' );
 	}
