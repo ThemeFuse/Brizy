@@ -425,18 +425,23 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function placeholder_content() {
 		try {
 			$this->verifyNonce( self::nonce );
-			$placeholder = '';
-			$postId      = $this->param( 'post_id' );
-			$placeholder = stripslashes( $this->param( 'placeholder' ) );
-			if ( ! $placeholder ) {
+			$postId       = $this->param( 'post_id' );
+			$placeholders = $this->param( 'placeholders' ) ;
+
+			if ( ! $placeholders ) {
 				throw new Exception( 'Placeholder string not provided.', 400 );
 			}
+
 			$post = $this->getPostSample( $postId );
 
-			$content = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+			$contents = [];
+			foreach ( $placeholders as $placeholder ) {
+				$placeholder = stripslashes($placeholder);
+				$contents[] = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+			}
 
 			$this->success( array(
-				'placeholder' => $content
+				'placeholders' => $contents
 			) );
 
 		} catch ( Exception $exception ) {
@@ -502,6 +507,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					switch ( $rule->getEntityType() ) {
 						case 'author':
 							$authors = get_users();
+
 							return array_pop( $authors );
 							break;
 

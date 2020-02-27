@@ -402,25 +402,29 @@ class ApiCest {
 
 		$postId = $I->havePostInDatabase( [
 			'post_type'    => 'page',
-			'post_title'   => 'Title {{n}}',
+			'post_title'   => 'Title 1',
 			'post_content' => 'Page content'
 		] );
 
-		$permalink = get_permalink($postId);
+		$permalink = get_permalink( $postId );
 
 		// test with invalid attachment
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'post_id'        => $postId,
-				'action'      => 'brizy_placeholder_content',
-				'version'     => BRIZY_EDITOR_VERSION,
-				'placeholder' => '{{brizy_dc_permalink post_id=\''.$postId.'\'}}'
+				'post_id'      => $postId,
+				'action'       => 'brizy_placeholder_content',
+				'version'      => BRIZY_EDITOR_VERSION,
+				'placeholders' => [ '{{brizy_dc_permalink post_id=\'' . $postId . '\'}}', '{{brizy_dc_post_title post_id=\'' . $postId . '\'}}' ]
 			] ) );
 		$I->seeResponseCodeIsSuccessful();
 
 		$response = $I->grabResponse();
 		$response = json_decode( $response );
 
-		$I->assertStringNotContainsString('{{brizy_dc_permalink post_id=\''.$postId.'\'}}',$response->data->placeholder,'Is should replace the place holder with the post permalink');
+		$I->assertCount(2, $response->data->placeholders, 'It should return two responses');
+
+		$I->assertStringNotContainsString( '{{brizy_dc_permalink post_id=\'' . $postId . '\'}}', $response->data->placeholders[0], 'Is should replace the place holder with the post permalink' );
+
+		$I->assertStringNotContainsString( '{{brizy_dc_post_title post_id=\'' . $postId . '\'}}', $response->data->placeholders[1], 'Is should replace the place holder with the post title' );
 	}
 
 	public function setTemplateTypeTest( FunctionalTester $I ) {
