@@ -4,26 +4,58 @@ use Gaufrette\Adapter;
 use Gaufrette\Filesystem;
 
 /**
- * @todo: move all mkdir calls here.
- *
  * Class Brizy_FileSystem
  */
 class Brizy_Admin_FileSystem {
 
-	static private $fileSystem;
+	/**
+	 * @var Brizy_Admin_FileSystem[]
+	 */
+	static private $instances;
+	/**
+	 * @var Filesystem
+	 */
+	private $fileSystem;
 
+	private $hasCache;
+
+	/**
+	 * @return Brizy_Admin_FileSystem
+	 * @throws Exception
+	 */
 	public static function instance() {
 
-		$urlBuilder        = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
-		$brizy_upload_path = $urlBuilder->brizy_upload_path();
-
-		$adapter = apply_filters( 'brizy_filesystem_adapter', new Brizy_Admin_Guafrette_LocalAdapter( $brizy_upload_path, true, 755 ) );
+		$adapter = apply_filters( 'brizy_filesystem_adapter', null );
 
 		if ( ! $adapter ) {
 			throw new Exception( 'Invalid file system adapter provided' );
 		}
 
-		return new self( $adapter );
+		$adapterClass = get_class( $adapter );
+
+		if ( isset( self::$instances[ $adapterClass ] ) ) {
+			return self::$instances[ $adapterClass ];
+		}
+
+		return self::$instances[ $adapterClass ] = new self( $adapter );
+	}
+
+	/**
+	 * @return Brizy_Admin_FileSystem
+	 * @throws Exception
+	 */
+	public static function localInstance() {
+
+		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+		$adapter    = new Brizy_Admin_Guafrette_LocalAdapter( $urlBuilder->upload_path(), true, 0755 );
+
+		$adapterClass = get_class( $adapter );
+
+		if ( isset( self::$instances[ $adapterClass ] ) ) {
+			return self::$instances[ $adapterClass ];
+		}
+
+		return self::$instances[ $adapterClass ] = new self( $adapter );
 	}
 
 	/**
@@ -32,9 +64,9 @@ class Brizy_Admin_FileSystem {
 	 * @param Brizy_Editor_Project $project
 	 * @param Adapter $adapter
 	 */
-	public function __construct( Adapter $adapter ) {
-
-		self::$fileSystem = new Filesystem( $adapter );
+	private function __construct( Adapter $adapter ) {
+		$this->fileSystem = new Filesystem( $adapter );
+		$this->hasCache = [];
 	}
 
 
@@ -49,16 +81,26 @@ class Brizy_Admin_FileSystem {
 	 * @return int
 	 */
 	public function loadFileInKey( $key, $localFile ) {
-		return self::$fileSystem->write( $key, file_get_contents( $localFile ), true );
+		$bytes = $this->write( $key, file_get_contents( $localFile ) );
+		$this->hasCache[] = $key;
+		return $bytes;
 	}
 
-	public function writeFileLocally( $key, $localFile = null ) {
+	/**
+	 * @param $key
+	 * @param null $localFile
+	 */
+	public function writeFileLocally( $key, $localFile ) {
+		$dirPath = dirname( $localFile );
 
-		if ( ! ( self::$fileSystem->getAdapter() instanceof Brizy_Admin_Guafrette_LocalAdapter ) ) {
-			file_put_contents( $localFile ? $localFile : $key, self::$fileSystem->read( $key ) );
+		if ( ! file_exists( $dirPath ) ) {
+			if ( ! mkdir( $dirPath, 0755, true ) && ! is_dir( $dirPath ) ) {
+				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $dirPath ) );
+			}
 		}
-	}
 
+		file_put_contents( $localFile, $this->fileSystem->read( $key ) );
+	}
 
 	/**
 	 * @param $key
@@ -67,21 +109,61 @@ class Brizy_Admin_FileSystem {
 	 * @return int
 	 */
 	public function write( $key, $content ) {
-		return self::$fileSystem->write( $key, $content, true );
+		$bytes            = $this->fileSystem->write( $key, $content, true );
+		$this->hasCache[] = $key;
+
+		return $bytes;
 	}
 
+	/**
+	 * @param $key
+	 *
+	 * @return string
+	 */
 	public function read( $key ) {
-		return self::$fileSystem->read( $key );
+		return $this->fileSystem->read( $key );
 	}
 
+	/**
+	 * @param $key
+	 *
+	 * @return bool
+	 */
 	public function delete( $key ) {
-		return self::$fileSystem->delete( $key );
+		$this->hasCache = array_filter( $this->hasCache, function ( $akey ) use ( $key ) {
+			return $key != $akey;
+		} );
+
+		return $this->fileSystem->delete( $key );
 	}
 
-	public function has( $key ) {
-		return self::$fileSystem->has( $key );
+	/**
+	 * @param $key
+	 * @param bool $ignoreCache
+	 *
+	 * @return bool
+	 */
+	public function has( $key, $ignoreCache = false ) {
+
+		if ( in_array( $key, $this->hasCache ) ) {
+			return true;
+		}
+
+		if ( $this->fileSystem->has( $key ) ) {
+			$this->hasCache[] = $key;
+
+			return true;
+		}
 	}
 
+	/**
+	 * @param $key
+	 */
+	public function getUrl( $key ) {
+		$uri = $this->fileSystem->getAdapter()->getUrl( $key );
+
+		return $uri;
+	}
 
 	/**
 	 * @param $pageUploadPath

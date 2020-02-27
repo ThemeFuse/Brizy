@@ -162,7 +162,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 			throw new Exception( 'Unable to crop media. Target directory is not writable.' );
 		}
 
-
 		try {
 			wp_raise_memory_limit( 'image' );
 			$filterOptions = $this->getFilterOptions( $source, $filter );

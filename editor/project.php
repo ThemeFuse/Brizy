@@ -172,14 +172,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 
 		$defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' );
 
-		$fs = Brizy_Admin_FileSystem::instance();
-
-		if ( ! $fs->has( $defaultJsonPath ) ) {
-			throw new Exception( 'Failed to create project. No fdefault json found.' );
-			Brizy_Logger::instance()->critical( 'Failed to create project. No fdefault json found.', [ $defaultJsonPath ] );
-		}
-
-		$data         = $fs->read( $defaultJsonPath );
+		$data         = file_get_contents($defaultJsonPath);
 		$project_data = array(
 			'id'                       => md5( uniqid( 'Local project', true ) ),
 			'title'                    => 'Brizy Project',

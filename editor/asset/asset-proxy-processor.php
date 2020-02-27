@@ -27,7 +27,7 @@ class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Content_Pro
 
 		preg_match_all( '/"(.[^"]*(?:\?|&|&amp;)brizy=(.[^"]*))"/im', $content, $matches );
 
-		if ( ! isset( $matches[2] ) ) {
+		if ( ! isset( $matches[2] ) || count($matches[2])==0 ) {
 			return $content;
 		}
 
@@ -53,9 +53,6 @@ class Brizy_Editor_Asset_AssetProxyProcessor implements Brizy_Editor_Content_Pro
 				$content = str_replace( $matches[1][ $i ], $new_url, $content );
 			}
 		}
-
 		return $content;
 	}
-
-
 }

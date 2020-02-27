@@ -35,26 +35,29 @@ abstract class Brizy_Editor_Asset_StaticFile {
 
 	/**
 	 * @param $asset_source
-	 * @param $asset_path
+	 * @param $asset_relative_path
 	 *
 	 * @return bool
 	 */
-	protected function store_file( $asset_source, $asset_path ) {
+	protected function store_file( $asset_source, $asset_relative_path ) {
 
 		$fs = Brizy_Admin_FileSystem::instance();
 
-		if ( $fs->has( $asset_path ) ) {
+		if ( $fs->has( $asset_relative_path ) ) {
 			return true;
+		} elseif ( ( $lfs = Brizy_Admin_FileSystem::localInstance() ) && $lfs->has( $asset_relative_path, true ) ) {
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+			$fs->loadFileInKey( $asset_relative_path, $urlBuilder->upload_path( $asset_relative_path ) );
 		}
 
 		try {
 			$content = $this->get_asset_content( $asset_source );
-			return $fs->write( $asset_path, $content ) > 0;
 
+			return $fs->write( $asset_relative_path, $content ) > 0;
 		} catch ( Exception $e ) {
 			// clean up
-			if ( $asset_path ) {
-				$fs->delete( $asset_path );
+			if ( $asset_relative_path ) {
+				$fs->delete( $asset_relative_path );
 			}
 
 			return false;
@@ -66,7 +69,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	protected function create_attachment( $madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null ) {
 		$filetype = wp_check_filetype( $absolute_asset_path );
 
-		$upload_path = wp_upload_dir();
+		$upload_path = Brizy_Admin_UploadDir::getUploadDir();
 
 		$attachment = array(
 			'guid'           => $upload_path['baseurl'] . "/" . $relative_asset_path,
@@ -95,13 +98,13 @@ abstract class Brizy_Editor_Asset_StaticFile {
 		return $attachment_id;
 	}
 
-	/**
+	/***
 	 * @param $attachmentId
 	 * @param $post_id
 	 * @param $madia_name
 	 *
 	 * @return bool
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Exception
 	 */
 	public function attach_to_post( $attachmentId, $post_id, $madia_name ) {
 
@@ -118,40 +121,52 @@ abstract class Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @param $filename
 	 * @param array $headers
+	 *
+	 * @throws Exception
 	 */
 	public function send_file( $filename, $headers = array() ) {
 
 		$fs = Brizy_Admin_FileSystem::instance();
 
-		if ( $fs->has( $filename ) ) {
-
-			$defaultHeaders = array(
-				'Content-Type'  => $this->get_mime( $filename, 1 ),
-				'Cache-Control' => 'max-age=600'
-			);
-
-			$content = $fs->read( $filename );
-
-			// send headers
-			$headers = array_merge( $defaultHeaders, $headers );
-
-			foreach ( $headers as $key => $val ) {
-				if ( is_array( $val ) ) {
-					$val = implode( ', ', $val );
-				}
-
-				header( "{$key}: {$val}" );
-			}
-			// send file content
-			echo $content;
-			exit;
+		if ( $fs->has( $filename, true ) ) {
+			$this->sendFileContent( $filename, $fs, $headers );
+		} else if ( ( $lfs = Brizy_Admin_FileSystem::localInstance() ) && $lfs->has( $filename, true ) ) {
+			$this->sendFileContent( $filename, $lfs, $headers );
 		} else {
 			global $wp_query;
 			$wp_query->set_404();
 
 			return;
 		}
+	}
 
+
+	/**
+	 * @param $filename
+	 * @param Brizy_Admin_FileSystem $fs
+	 * @param array $headers
+	 */
+	private function sendFileContent( $filename, $fs, $headers = array() ) {
+		$defaultHeaders = array(
+			'Content-Type'  => $this->get_mime( $filename, 1 ),
+			'Cache-Control' => 'max-age=600'
+		);
+
+		$content = $fs->read( $filename );
+
+		// send headers
+		$headers = array_merge( $defaultHeaders, $headers );
+
+		foreach ( $headers as $key => $val ) {
+			if ( is_array( $val ) ) {
+				$val = implode( ', ', $val );
+			}
+
+			header( "{$key}: {$val}" );
+		}
+		// send file content
+		echo $content;
+		exit;
 	}
 
 	/**

@@ -1,5 +1,7 @@
 <?php
 
+use Gaufrette\Adapter;
+
 /**
  * Class Brizy_Editor
  */
@@ -104,6 +106,7 @@ class Brizy_Editor {
 		}
 
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
+		add_filter( "brizy_filesystem_adapter", array( $this, 'returnFileSystemAdapter' ) );
 	}
 
 	public function runMigrations() {
@@ -201,6 +204,33 @@ class Brizy_Editor {
 		if ( $post && $post->uses_editor() ) {
 			$this->handleFrontEndEditor( $post );
 		}
+	}
+
+	/**
+	 * @param Adapter $adapter
+	 *
+	 * @return Adapter
+	 */
+	public function returnFileSystemAdapter( $adapter ) {
+
+		if ( ! $adapter ) {
+			try {
+				//$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
+				//$adapter    = new Brizy_Admin_Guafrette_LocalAdapter( $urlBuilder->upload_path(), true, 0755 );
+				$adapter    = new Adapter\AwsS3( new Aws\S3\S3Client([
+					'credentials' => [
+						'key'     => AS3CF_ID,
+						'secret'  => AS3CF_KEY,
+					],
+					'version' => 'latest',
+					'region'  => AS3CF_REGION,
+				]), AS3CF_BUCKET );
+			} catch ( Exception $e ) {
+				Brizy_Logger::instance()->error( $e->getMessage(), array( $e ) );
+			}
+		}
+
+		return $adapter;
 	}
 
 	public function revisionsToKeep( $num, $post ) {
@@ -339,10 +369,28 @@ class Brizy_Editor {
 
 	public function brizy_content( $content, $project, $wpPost, $contentType = 'document' ) {
 
+		if(!function_exists('microtime_float'))
+		{
+			function microtime_float()
+			{
+				list($usec, $sec) = explode(" ", microtime());
+				return ((float)$usec + (float)$sec);
+			}
+		}
+
+		$time_start = microtime_float();
+
 		$context       = Brizy_Content_ContextFactory::createContext( $project, null, $wpPost, null );
 		$mainProcessor = new Brizy_Content_MainProcessor( $context );
 
-		return $mainProcessor->process( $content );
+		$content =  $mainProcessor->process( $content );
+
+		$time_end = microtime_float();
+		$time = $time_end - $time_start;
+
+		echo "Processors [{$contentType}]:  $time secunde<br>";
+
+		return $content;
 	}
 
 	public function forceJqueryQueue() {

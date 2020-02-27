@@ -85,10 +85,14 @@ class  Brizy_Editor_Asset_Crop_WordpressService implements Brizy_Editor_Asset_Cr
 	 */
 	public function saveTargetImage() {
 		$result = $this->imageEditor->save( $this->targetPath );
-
 		if ( $result instanceof WP_Error ) {
 			return false;
 		}
+		$dir = Brizy_Admin_UploadDir::getUploadDir();
+		$key = ltrim( str_replace( $dir['basedir'], '', $this->targetPath ), '/' );
+
+		$fs = Brizy_Admin_FileSystem::instance();
+		$fs->loadFileInKey( $key, $this->targetPath );
 
 		return true;
 	}

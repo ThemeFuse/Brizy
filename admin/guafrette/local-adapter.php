@@ -33,4 +33,10 @@ class Brizy_Admin_Guafrette_LocalAdapter extends OriginalLocalAdapter {
 		return $path;
 	}
 
+	public function getUrl( $key ) {
+		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), null );
+
+		return $urlBuilder->upload_url( $key );
+	}
+
 }

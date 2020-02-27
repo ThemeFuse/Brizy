@@ -32,7 +32,8 @@ class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_Proce
 
 		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
 		$brizy_attachment = Brizy_Editor::prefix('_attachment');
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?'.$brizy_attachment.'=(.[^"\',\s)]*))/im', $content, $matches );
+		$regex              = "/(http|https):\/\/{$site_url}\/?(\?{$brizy_attachment}=(.[^\"',\s)]*))/im";
+		preg_match_all( $regex, $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;

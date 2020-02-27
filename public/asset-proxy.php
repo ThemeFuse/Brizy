@@ -51,23 +51,6 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 			return;
 		}
 
-		$content = Brizy_Admin_FileSystem::instance()->read( $new_path );
-
-		// send headers
-		$headers                  = array();
-		$headers['Content-Type']  = $this->get_mime( $new_path, 1 );
-		$headers['Cache-Control'] = 'max-age=600';
-
-		foreach ( $headers as $key => $val ) {
-			if ( is_array( $val ) ) {
-				$val = implode( ', ', $val );
-			}
-
-			header( "{$key}: {$val}" );
-		}
-
-		// send file content
-		echo $content;
-		exit;
+		$this->send_file( $new_path );
 	}
 }

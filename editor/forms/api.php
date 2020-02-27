@@ -295,7 +295,7 @@ class Brizy_Editor_Forms_Api {
 					}
 
 					// create attachment
-					$wp_upload_dir = wp_upload_dir();
+					$wp_upload_dir = Brizy_Admin_UploadDir::getUploadDir();
 					$attachment    = array(
 						'guid'           => $wp_upload_dir['url'] . '/' . basename( $file['file'] ),
 						'post_mime_type' => $file['type'],

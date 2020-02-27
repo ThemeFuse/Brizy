@@ -156,11 +156,11 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 			switch ( $type ) {
 				case self::BLOCK_TYPE_NORMAL:
-					return $this->storeThumbnail( $content, $urlBuilder->page_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->page_upload_relative_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . $blockFileName ) );
 				case self::BLOCK_TYPE_GLOBAL:
-					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_relative_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' . DIRECTORY_SEPARATOR . $blockFileName ) );
 				case self::BLOCK_TYPE_SAVED:
-					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' . DIRECTORY_SEPARATOR . $blockFileName ) );
+					return $this->storeThumbnail( $content, $urlBuilder->brizy_upload_relative_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' . DIRECTORY_SEPARATOR . $blockFileName ) );
 			}
 		} catch ( Exception $e ) {
 			return false;
@@ -203,19 +203,22 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 */
 	private function resizeImage( $thumbnailFullPath ) {
 		try {
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $this->post ? $this->post->getWpPostParentId() : null );
 
-			Brizy_Admin_FileSystem::instance()->writeFileLocally( $thumbnailFullPath );
+			$absolute_path_local_file = $urlBuilder->upload_path( $thumbnailFullPath );
 
-			$imageEditor = wp_get_image_editor( $thumbnailFullPath );
+			Brizy_Admin_FileSystem::instance()->writeFileLocally( $thumbnailFullPath, $absolute_path_local_file );
+
+			$imageEditor = wp_get_image_editor( $absolute_path_local_file );
 
 			if ( $imageEditor instanceof WP_Error ) {
 				throw new Exception( $imageEditor->get_error_message() );
 			}
 
 			$imageEditor->resize( 600, 600 );
-			$result = $imageEditor->save( $thumbnailFullPath );
+			$result = $imageEditor->save( $absolute_path_local_file );
 
-			Brizy_Admin_FileSystem::instance()->loadFileInKey( $thumbnailFullPath, $thumbnailFullPath );
+			Brizy_Admin_FileSystem::instance()->loadFileInKey( $thumbnailFullPath, $absolute_path_local_file );
 
 			return is_array( $result );
 		} catch ( Exception $e ) {

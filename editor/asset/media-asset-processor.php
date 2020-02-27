@@ -8,6 +8,8 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 	 */
 	private $storage;
 
+	static private $attachment_file_cache;
+
 	/**
 	 * Brizy_Editor_Asset_HtmlAssetProcessor constructor.
 	 *
@@ -40,13 +42,17 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 	 */
 	public function process_external_asset_urls( $content, Brizy_Content_Context $context ) {
 
+		$project = $context->getProject();
+
 		$site_url = str_replace( array( 'http://', 'https://' ), '', home_url() );
-
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
-		$project  = $context->getProject();
 
-		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		$endpoint        = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		$endpoint_post   = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST );
+		$endpoint_filter = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER );
+
+		$str = "/(http|https):\/\/{$site_url}\/?(\?{$endpoint}=(.[^\"',\s)]*))/im";
+		preg_match_all( $str, $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;
@@ -63,35 +69,48 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			parse_str( $parsed_url['query'], $params );
 
 
-			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
+			if ( ! isset( $params[ $endpoint ] ) ) {
 				continue;
 			}
 
-			$post_id = wp_is_post_revision( (int) $params[ Brizy_Public_CropProxy::ENDPOINT_POST ] ) ? wp_get_post_parent_id( (int) $params[ Brizy_Public_CropProxy::ENDPOINT_POST ] ) : (int) $params[ Brizy_Public_CropProxy::ENDPOINT_POST ];
-			$media_cache           = new Brizy_Editor_CropCacheMedia( $project, $post_id );
+			$post_id = wp_is_post_revision( (int) $params[ $endpoint_post ] ) ? wp_get_post_parent_id( (int) $params[ $endpoint_post ] ) : (int) $params[ $endpoint_post ];
 
-			$new_url = null;
-
-			$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
-
-			if ( ! $media_path ) {
-				return $content;
-			}
+			$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post_id );
+			$media_path = $this->get_attachment_file_by_uid( $params[ $endpoint ] );
+			$fs         = Brizy_Admin_FileSystem::instance();
+			$lfs        = Brizy_Admin_FileSystem::localInstance();
 
 			try {
+				$resized_page_asset_path   = $urlBuilder->page_upload_relative_path( "/assets/images/" . $params[ $endpoint_filter ] );
+				$resized_image_path        = $resized_page_asset_path . '/' . basename( $media_path );
+				$optimized_image_full_path = $resized_page_asset_path . '/' . 'optimized' . '/' . basename( $resized_image_path );
 
-				$crop_media_path = $media_cache->crop_media( $media_path, $params[ Brizy_Public_CropProxy::ENDPOINT_FILTER ], false );
+				// if there is an optimized image then return it
+				if ( $fs->has( $optimized_image_full_path ) ) {
+					$local_media_url = $fs->getUrl( $optimized_image_full_path );
+					$content         = str_replace( $matches[0][ $i ], $local_media_url, $content );
+					continue;
+				} elseif ( $lfs->has( $optimized_image_full_path , true) ) { // try to write if localy the file is found
+					$fs->loadFileInKey( $optimized_image_full_path, $urlBuilder->upload_path( $optimized_image_full_path ) );
+					$url     = $fs->getUrl( $optimized_image_full_path );
+					$content = str_replace( $matches[0][ $i ], $url, $content );
+					continue;
+				}
 
-				$urlBuilder      = new Brizy_Editor_UrlBuilder( $project, $post_id );
-				$local_media_url = str_replace( $urlBuilder->upload_path(), $urlBuilder->upload_url(), $crop_media_path );
-
-				$content = str_replace( $matches[0][ $i ], $local_media_url, $content );
+				if ( $fs->has( $resized_image_path ) ) {
+					$local_media_url = $fs->getUrl( $resized_image_path );
+					$content         = str_replace( $matches[0][ $i ], $local_media_url, $content );
+					continue;
+				} elseif ( $lfs->has( $resized_image_path, true ) ) { // try to write if localy the file is found
+					$fs->loadFileInKey( $resized_image_path, $urlBuilder->upload_path( $resized_image_path ) );
+					$url     = $fs->getUrl( $resized_image_path );
+					$content = str_replace( $matches[0][ $i ], $url, $content );
+					continue;
+				}
 
 			} catch ( Exception $e ) {
 				continue;
 			}
-
-
 		}
 
 		return $content;
@@ -99,13 +118,16 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 	private function get_attachment_file_by_uid( $attachment ) {
 
+		if ( isset( self::$attachment_file_cache[ $attachment ] ) ) {
+			return self::$attachment_file_cache[ $attachment ];
+		}
 
 		if ( ! is_numeric( $attachment ) ) {
 			global $wpdb;
 
-			$pt = $wpdb->posts;
-			$mt  = $wpdb->postmeta;
-			$attachment  = $wpdb->get_var( $wpdb->prepare(
+			$pt           = $wpdb->posts;
+			$mt           = $wpdb->postmeta;
+			$attachmentId = $wpdb->get_var( $wpdb->prepare(
 				"SELECT 
 						{$pt}.ID
 					FROM {$pt}
@@ -120,12 +142,13 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 				$attachment
 			) );
 
-
 			if ( ! $attachment ) {
 				return;
 			}
+		} else {
+			$attachmentId = $attachment;
 		}
 
-		return get_attached_file( $attachment );
+		return self::$attachment_file_cache[ $attachment ] = get_attached_file( $attachmentId );
 	}
 }

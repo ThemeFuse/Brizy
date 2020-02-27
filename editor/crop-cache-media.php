@@ -48,16 +48,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		$attachmentId       = null;
 		$external_asset_url = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
+		$fs                 = Brizy_Admin_FileSystem::instance();
+
+		$original_asset_path          = $this->url_builder->page_upload_path( "/assets/images/" . $madia_name );
+		$original_asset_path_relative = $this->url_builder->page_upload_relative_path( "/assets/images/" . $madia_name );
 
 		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $madia_name ) ) ) {
 
-			$original_asset_path          = $this->url_builder->page_upload_path( "/assets/images/" . $madia_name );
-			$original_asset_path_relative = $this->url_builder->page_upload_relative_path( "/assets/images/" . $madia_name );
-
-			if ( ! file_exists( $original_asset_path ) ) {
+			if ( ! $fs->has( $original_asset_path_relative ) ) {
 				// I assume that the media was already attached.
 
-				if ( ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
+				if ( ! $this->store_file( $external_asset_url, $original_asset_path_relative ) ) {
 					// unable to save the attachment
 					Brizy_Logger::instance()->error( 'Unable to store original media file', array(
 						'source'      => $external_asset_url,
@@ -79,6 +80,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new Exception( 'Unable to attach media' );
 		}
 
+		// move this attachment in FS
+		if ( ! $fs->has( $original_asset_path_relative ) ) {
+			$fs->loadFileInKey( $original_asset_path_relative, $original_asset_path );
+		}
 
 		// attach to post
 		$this->attach_to_post( $attachmentId, $this->post_id, $madia_name );
@@ -94,24 +99,42 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @return string
 	 */
 	public function getResizedMediaPath( $original_asset_path, $media_filter ) {
-		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
+		return $this->url_builder->page_upload_relative_path( "/assets/images/" . $media_filter . '/' . basename( $original_asset_path ) );
+	}
 
+	public function getOptimizedMediaPath( $original_asset_path, $media_filter ) {
+		return $this->url_builder->page_upload_relative_path( "/assets/images/" . $media_filter . '/' . 'optimized' . '/' . basename( $original_asset_path ) );
+	}
 
-		return $resized_page_asset_path . "/" . basename( $original_asset_path );
+	public function getHQMediaPath( $original_asset_path, $media_filter ) {
+		return $this->url_builder->page_upload_relative_path( "/assets/images/" . $media_filter . '/' . 'hq' . '/' . basename( $original_asset_path ) );
 	}
 
 	/**
-	 * @param $original_asset_path
+	 * @param $original_asset_key
 	 * @param $media_filter
 	 * @param bool $force_crop
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
-	public function crop_media( $original_asset_path, $media_filter, $force_crop = true, $force_optimize = false ) {
+	public function crop_media( $original_asset_key, $media_filter, $force_crop = true, $force_optimize = false ) {
+
+		$fs = Brizy_Admin_FileSystem::instance();
+
+		$resized_image_path        = $this->getResizedMediaPath( $original_asset_key, $media_filter );
+		$optimized_image_full_path = $this->getOptimizedMediaPath( $original_asset_key, $media_filter );
+
+		if ( $fs->has( $optimized_image_full_path ) ) {
+			return $optimized_image_full_path;
+		}
+
+		if ( $hasResizedImagePath = $fs->has( $resized_image_path ) ) {
+			return $resized_image_path;
+		}
 
 		// Check if user is querying API
-		if ( ! file_exists( $original_asset_path ) ) {
+		if ( ! $fs->has( $original_asset_key ) ) {
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
 
@@ -119,79 +142,69 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		$fs = Brizy_Admin_FileSystem::instance();
+		$hq_image_full_path = $this->getHQMediaPath($original_asset_key, $media_filter);
+		$tmp_original_absolute_path = $this->url_builder->upload_path( time() . '-' . basename( $original_asset_key ) );
 
-		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
-		$resized_image_path      = $this->getResizedMediaPath( $original_asset_path, $media_filter );
-
-		$optimized_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'optimized';
-		$optimized_image_full_path = $optimized_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
-
-		$hq_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
-		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
-
-
-		if ( $fs->has( $optimized_image_full_path ) ) {
-			return $optimized_image_full_path;
-		}
 
 		// resize image with default wordpress settings
-		$wp_file_exists = $fs->has( $resized_image_path );
-		if ( ! $wp_file_exists ) {
+		if ( ! $hasResizedImagePath ) {
 
 			if ( ! $force_crop ) {
 				throw new Exception( 'Crop not forced.' );
 			}
 
-			if ( !$fs->has( $resized_page_asset_path ) && ! @$fs->( $resized_page_asset_path, 0755, true ) && ! is_dir( $resized_page_asset_path ) ) {
-				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $resized_page_asset_path ) );
-			}
-
-			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
-
-			if ( ! $cropper->crop( $original_asset_path, $resized_image_path, $media_filter ) ) {
+			$cropper              = new Brizy_Editor_Asset_Crop_Cropper();
+			$resize_absolute_path = $this->url_builder->upload_path( time() . '-resized-' . basename( $original_asset_key ) );
+			$fs->writeFileLocally( $original_asset_key, $tmp_original_absolute_path );
+			if ( ! $cropper->crop( $tmp_original_absolute_path, $resize_absolute_path, $media_filter ) ) {
 				throw new Exception( 'Failed to crop image.' );
 			}
+			$fs->loadFileInKey( $resized_image_path, $resize_absolute_path );
+
+			@unlink( $resize_absolute_path );
+			@unlink( $tmp_original_absolute_path );
 		}
 
+
 		// resize image for optimization
-		$hq_wp_file_exists = file_exists( $hq_image_full_path );
-		$closure           = null;
-		if ( $force_optimize && ! $hq_wp_file_exists ) {
+		// we must create a 100% quality image for optimization
+		$closure          = null;
+		$tmp_hq_absolute_path = $this->url_builder->upload_path( time() . '-resized-hd-' . basename( $original_asset_key ) );
+		if ( $force_optimize && ! $fs->has( $hq_image_full_path ) ) {
 			$closure = function ( $t ) {
 				return 100;
 			};
 			add_filter( 'jpeg_quality', $closure );
 
-			if ( !file_exists( $hq_image_path_dir ) && ! @mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
-				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $hq_image_path_dir ) );
-			}
-
 			$cropper = new Brizy_Editor_Asset_Crop_Cropper();
 
-			if ( ! $cropper->crop( $original_asset_path, $hq_image_full_path, $media_filter ) ) {
+			if ( ! file_exists( $tmp_original_absolute_path ) ) {
+				$fs->writeFileLocally( $original_asset_key, $tmp_original_absolute_path );
+			}
+
+			if ( ! $cropper->crop( $tmp_original_absolute_path, $tmp_hq_absolute_path, $media_filter ) ) {
 				throw new Exception( 'Failed to crop image with 100%.' );
 			}
 		}
 
-		// try to optimize the image
-		$hq_wp_file_exists = file_exists( $hq_image_full_path );
-		if ( $force_optimize && $hq_wp_file_exists ) {
-			$optimizer = new Brizy_Editor_Asset_Optimize_Optimizer();
-			if ( !file_exists( $optimized_image_path_dir ) && ! @mkdir( $optimized_image_path_dir, 0755, true ) && ! is_dir( $optimized_image_path_dir ) ) {
-				throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $optimized_image_path_dir ) );
-			}
 
-			if ( $optimizer->optimize( $hq_image_full_path, $optimized_image_full_path ) ) {
+		// try to optimize the image
+		$tmp_hq_optimized_path = $this->url_builder->upload_path( time() . '-resized-hd-optimized' . basename( $original_asset_key ) );
+		if ( $force_optimize && $fs->has( $hq_image_full_path ) ) {
+			$optimizer = new Brizy_Editor_Asset_Optimize_Optimizer();
+
+			if ( $optimizer->optimize( $tmp_hq_absolute_path, $tmp_hq_optimized_path ) ) {
+				$fs->loadFileInKey( $optimized_image_full_path, $tmp_hq_optimized_path );
 				$resized_image_path = $optimized_image_full_path;
 			} else {
 				throw new Exception( 'Failed to optimize the image.' );
 			}
 
 		}
-
+		@unlink( $tmp_hq_optimized_path );
+		@unlink( $tmp_hq_absolute_path );
 		// remove jpeg_quality and try to delete the hq image
-		if ( $hq_wp_file_exists ) {
+		if ( $force_optimize && ! $fs->has( $hq_image_full_path ) ) {
 			remove_filter( 'jpeg_quality', $closure );
 			@unlink( $hq_image_full_path );
 		}
@@ -209,7 +222,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		global $wpdb;
 
 		$pt = $wpdb->posts;
-		$mt  = $wpdb->postmeta;
+		$mt = $wpdb->postmeta;
 
 		return $wpdb->get_var( $wpdb->prepare(
 			"SELECT 

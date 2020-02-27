@@ -178,13 +178,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$this->error( '400', 'Invalid data version' );
 			}
 
-
 			$block = $this->getBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_GLOBAL );
+
 			/**
 			 * @var Brizy_Editor_Block $block ;
 			 */
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$block->setDataVersion( $this->param( 'dataVersion' ) );
+
 			$position = stripslashes( $this->param( 'position' ) );
 
 			if ( $position ) {
@@ -194,7 +195,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			// rules
 			$rulesData = stripslashes( $this->param( 'rules' ) );
 			$rules     = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
-
 			$this->ruleManager->setRules( $block->getWpPostId(), $rules );
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
