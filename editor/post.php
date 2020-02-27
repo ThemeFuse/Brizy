@@ -114,14 +114,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	}
 
 	/**
-	 *  Mark all brizy post that needs compile
-	 */
-	public static function markAllForCompilation() {
-		global $wpdb;
-		$wpdb->update( $wpdb->postmeta, array( 'meta_value' => 1 ), array( 'meta_key' => self::BRIZY_POST_NEEDS_COMPILE_KEY ) );
-	}
-
-	/**
 	 * @return string
 	 */
 	public function serialize() {
