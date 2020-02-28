@@ -282,7 +282,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $block->createResponse() );
+			Brizy_Editor_Block::cleanClassCache();
+
+			$this->success( Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse() );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -331,7 +333,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_saved_data_updated' );
 			}
 
-			$this->success( $block->createResponse() );
+			Brizy_Editor_Block::cleanClassCache();
+
+			$this->success( Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse() );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
@@ -371,7 +375,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$this->deleteBlock( $this->param( 'uid' ), Brizy_Admin_Blocks_Main::CP_SAVED );
 			$this->success( null );
 		}
-
 		$this->error( '404', 'Block not found' );
 	}
 

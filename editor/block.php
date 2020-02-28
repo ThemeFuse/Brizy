@@ -42,7 +42,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 	static protected $block_instance = null;
 
 	public static function cleanClassCache() {
-		self::$instance = array();
+		self::$block_instance = array();
 	}
 
 	protected function canBeSynchronized() {

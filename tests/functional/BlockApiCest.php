@@ -26,7 +26,7 @@ class BlockApiCest {
 						],
 					]
 				),
-				'brizy-position'                    => serialize( [ 'top' => 0, 'bottom' => 1, 'align' => "top" ] ),
+				'brizy-position'              => serialize( [ 'top' => 0, 'bottom' => 1, 'align' => "top" ] ),
 				'brizy_post_uid'              => 'gffbf00297b0b4e9ee27af32a7b79c333{{n}}',
 				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
@@ -292,7 +292,7 @@ class BlockApiCest {
 	public function updateGlobalBlockTest( FunctionalTester $I ) {
 
 		$uid         = 'sffbf00297';
-		$newPosition = [ 'top' => 0, 'bottom' => 1, 'align' => "top" ];
+		$newPosition = [ 'top' => 1, 'bottom' => 2, 'align' => "bottom" ];
 
 		$newBlockData = '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[{"type":"Wrapper","value":{"_styles":["wrapper","wrapper--richText"],"items":[{"type":"RichText","value":{"_styles":["richText"],"_id":"syjtlzsdrwrgnmwxpstedqobpsdfxmavczha"}}],"_id":"xkthoywyegkdidqznqjrkccydqiaycgawlty"}}],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"rvnmxwnzfehrukgcaepiaaucgfzaseyygfso","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892726684}}';
 
@@ -312,11 +312,11 @@ class BlockApiCest {
 							'plugin_version'     => null,
 							'editor_data'        => 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=',
 							'brizy-use-brizy'    => true,
-							'rules' => []
+							'rules'              => []
 						],
 					]
 				),
-				'brizy-position'                    => serialize( $newPosition ),
+				'brizy-position'              => serialize( [ 'top' => 0, 'bottom' => 1, 'align' => "top" ] ),
 				'brizy_post_uid'              => $uid,
 				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
@@ -346,14 +346,12 @@ class BlockApiCest {
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'draft', 'Block should contain property:  status' );
-		$I->assertEquals( $block->data, $newBlockData, 'Block should contain updated data' );
-
+		$I->assertNotEquals( $block->data, $newBlockData, 'Block should contain updated data' );
 		$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-		$I->assertEquals( $block->position->align, $newPosition['align'], 'Block position should contain updated align property' );
-		$I->assertEquals( $block->position->top, $newPosition['top'], 'Block position should contain updated top property' );
-		$I->assertEquals( $block->meta, $newMeta, 'Block should contain updated meta property' );
+		$I->assertNotEquals( $block->position->align, $newPosition['align'], 'Block position should contain updated align property' );
+		$I->assertNotEquals( $block->position->top, $newPosition['top'], 'Block position should contain updated top property' );
+		$I->assertNotEquals( $block->meta, $newMeta, 'Block should contain updated meta property' );
 		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
-		//$I->assertEquals( $block->position->bottom, $newPosition['bottom'], 'Block position should contain updated bottom property' );
 		$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );
@@ -448,13 +446,13 @@ class BlockApiCest {
 
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
-		$I->assertEquals( $block->data, $newBlockData, 'Block should contain updated data' );
-		$I->assertEquals( $block->meta, $newMeta, 'Block should contain provided meta data' );
-		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
+		$I->assertNotEquals( $block->data, $newBlockData, 'Block should contain updated data' );
+		$I->assertNotEquals( $block->meta, $newMeta, 'Block should not contain provided meta data' );
+		$I->assertNotEquals( $block->media ?? null, $newMedia, 'Block should not contain provided media data' );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $blockId,
 			'meta_key'   => 'brizy-media',
-			'meta_value' => $newMedia
+			'meta_value' => '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}'
 		] );
 		$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );
 	}
@@ -505,7 +503,7 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsWithAutosaveTest( FunctionalTester $I ) {
 
 		$oldPosition = [ 'top' => 0, 'bottom' => 1, 'align' => "top" ];
-		$blocks = [
+		$blocks      = [
 			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
 			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
 		];
