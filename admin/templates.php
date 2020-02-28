@@ -74,9 +74,16 @@ class Brizy_Admin_Templates {
 			true
 		);
 
+		wp_enqueue_style(
+			Brizy_Editor::get()->get_slug() . '-select2',
+			Brizy_Editor::get()->get_url('vendor/select2/select2/dist/css/select2.min.css'),
+			array(),
+			true
+		);
+
 		wp_enqueue_script(
 			Brizy_Editor::get()->get_slug() . '-select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
+			Brizy_Editor::get()->get_url('vendor/select2/select2/dist/js/select2.full.min.js'),
 			array( 'jquery' )
 		);
 
