@@ -68,6 +68,15 @@ class Brizy_Admin_FormEntries {
 			$post = get_post( $post_ID );
 			$data = json_decode( $post->post_content );
 
+			// We use html_entity_decode the user can insert text in some languages like German, Hindi, etc.
+			// and the function json_encode broke the json or encode the characters like this ud83dude00.
+            if ( isset( $data->formData ) ) {
+	            foreach ( $data->formData as $i => $field ) {
+		            $data->formData[ $i ]->name = html_entity_decode( $field->name );
+		            $data->formData[ $i ]->value = html_entity_decode( $field->value );
+	            }
+            }
+
 			echo Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/views" ) )
 			                     ->render( 'form-data.html.twig', array( 'data' => $data ) );
 		}
@@ -198,13 +207,18 @@ class Brizy_Admin_FormEntries {
                 unset($fields[$i]);
 	            $fields = array_values($fields);
             }
+
+			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
+			// and the function json_encode broke the json or encode the characters.
+			$fields[$i]->name = htmlentities( $field->name );
+			$fields[$i]->value = htmlentities( $field->value );
 		}
 
 		$params = array(
 			'post_title'   => $title,
 			'post_type'    => self::CP_FORM_ENTRY,
 			'post_status'  => 'publish',
-			'post_content' => json_encode( array( 'formId' => $form->getId(), 'formData' => $fields ) )
+			'post_content' => json_encode( array( 'formId' => $form->getId(), 'formData' => $fields ), JSON_UNESCAPED_UNICODE  )
 		);
 
 		wp_insert_post( $params );
