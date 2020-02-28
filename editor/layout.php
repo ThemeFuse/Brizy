@@ -143,33 +143,34 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	 * @return array
 	 */
 	public function getMeta() {
-		return get_metadata( 'post', $this->wp_post_id, self::BRIZY_LAYOUT_META, true );
+		return $this->meta;
 	}
 
 	/**
 	 * @param string $meta
 	 *
-	 * @return Brizy_Editor_Layout
+	 * @return Brizy_Editor_Block
 	 */
 	public function setMeta( $meta ) {
 		$this->meta = $meta;
-		update_metadata( 'post', $this->wp_post_id, self::BRIZY_LAYOUT_META, $meta );
+
+		return $this;
 	}
 
 	public function getMedia() {
-		return get_metadata( 'post', $this->wp_post_id, self::BRIZY_LAYOUT_MEDIA, true );
+		return $this->media;
 	}
 
 	/**
 	 * @param string $media
 	 *
-	 * @return Brizy_Editor_Layout
+	 * @return Brizy_Editor_Block
 	 */
 	public function setMedia( $media ) {
 		$this->media = $media;
-		update_metadata( 'post', $this->wp_post_id, self::BRIZY_LAYOUT_MEDIA, $media );
-	}
 
+		return $this;
+	}
 
 	/**
 	 * @return mixed
@@ -207,6 +208,9 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		if ( isset( $storage_post['cloudId'] ) ) {
 			$this->cloudId = $storage_post['cloudId'];
 		}
+
+		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
+		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, true );
 	}
 
 	public function convertToOptionValue() {
@@ -218,6 +222,16 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data['synchronizable'] = $this->isSynchronizable();
 
 		return $data;
+	}
+
+	/**
+	 * This will take all values from entity and save them to database
+	 */
+	public function saveStorage() {
+		parent::saveStorage();
+
+		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, $this->meta );
+		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, $this->media );
 	}
 
 }

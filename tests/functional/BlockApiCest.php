@@ -5,7 +5,7 @@ class BlockApiCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
-		$I->dontHavePostInDatabase( [  ] );
+		$I->dontHavePostInDatabase( [] );
 		$I->haveManyPostsInDatabase( 2, [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'post_title'  => 'Global {{n}}',
@@ -22,11 +22,11 @@ class BlockApiCest {
 							'plugin_version'     => null,
 							'editor_data'        => 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=',
 							'brizy-use-brizy'    => true,
-							'position'           => [ 'top' => 0, 'bottom' => 1, 'align' => "top" ],
 							'rules'              => '{}'
 						],
 					]
 				),
+				'brizy-position'                    => serialize( [ 'top' => 0, 'bottom' => 1, 'align' => "top" ] ),
 				'brizy_post_uid'              => 'gffbf00297b0b4e9ee27af32a7b79c333{{n}}',
 				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
@@ -276,7 +276,7 @@ class BlockApiCest {
 		$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
 		$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-		$I->assertEquals(  'draft', $block->status, 'Block status should be draft' );
+		$I->assertEquals( 'draft', $block->status, 'Block status should be draft' );
 		$I->assertEquals( $block->position->align, 'top', 'Block position should contain updated align property' );
 		$I->assertEquals( $block->meta, $meta, 'Block should contain the meta property and the correct value' );
 		$I->assertEquals( $block->position->top, 1, 'Block position should contain updated top property' );
@@ -312,11 +312,11 @@ class BlockApiCest {
 							'plugin_version'     => null,
 							'editor_data'        => 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=',
 							'brizy-use-brizy'    => true,
-							'position'           => $newPosition,
-							'rules'              => []
+							'rules' => []
 						],
 					]
 				),
+				'brizy-position'                    => serialize( $newPosition ),
 				'brizy_post_uid'              => $uid,
 				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
 				'brizy-post-editor-version'   => '1.0.101',
@@ -449,7 +449,7 @@ class BlockApiCest {
 		$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
 		$I->assertEquals( $block->status, 'publish', 'Block should contain property:  status' );
 		$I->assertEquals( $block->data, $newBlockData, 'Block should contain updated data' );
-		$I->assertEquals( $block->meta, $newMeta, 'Block should contain providede meta data' );
+		$I->assertEquals( $block->meta, $newMeta, 'Block should contain provided meta data' );
 		$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $blockId,
@@ -504,6 +504,7 @@ class BlockApiCest {
 
 	public function updateGlobalBlockPositionsWithAutosaveTest( FunctionalTester $I ) {
 
+		$oldPosition = [ 'top' => 0, 'bottom' => 1, 'align' => "top" ];
 		$blocks = [
 			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
 			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
@@ -533,9 +534,9 @@ class BlockApiCest {
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertNotEquals( $block->position->align, $blocks[ $block->uid ]['align'], 'Block position should contain updated align property' );
-			$I->assertNotEquals( $block->position->top, $blocks[ $block->uid ]['top'], 'Block position should contain updated top property' );
-			$I->assertNotEquals( $block->position->bottom, $blocks[ $block->uid ]['bottom'], 'Block position should contain updated bottom property' );
+			$I->assertEquals( $block->position->align, $oldPosition['align'], 'Block position should not be updated' );
+			$I->assertEquals( $block->position->top, $oldPosition['top'], 'Block position should not be updated' );
+			$I->assertEquals( $block->position->bottom, $oldPosition['bottom'], 'Block position should not be updated' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}

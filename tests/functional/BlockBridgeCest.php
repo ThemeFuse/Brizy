@@ -89,7 +89,7 @@ class BlockBridgeCest {
 						],
 					]
 				),
-				'brizy_post_meta'             => 'sffbf00297b0b4e9ee27af32a7b79c333',
+				'brizy-meta'                  => '{"_thumbnailSrc": "1234567890","_thumbnailWidth": 0}',
 				'brizy_post_uid'              => 'sffbf00297b0b4e9ee27af32a7b79c333',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
@@ -150,7 +150,7 @@ class BlockBridgeCest {
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$fontManager->createFont( $fontUid, $family, $fontWeights, $fontType );
 
-		$block->setMeta( json_encode( (object) [] ) );
+		$block->setMeta( '{"_thumbnailSrc": "1234567890","_thumbnailWidth": 0}' );
 		$block->setMedia( json_encode( [ 'images' => [ $mediaUid ], 'fonts' => [ $fontUid ] ] ) );
 
 		$font = $fontManager->getFontForExport( $fontUid );

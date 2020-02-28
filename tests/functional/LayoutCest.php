@@ -89,6 +89,7 @@ class LayoutCest {
 		$I->wantToTest( 'Get and Set Meta' );
 		$meta = json_encode( [ 1, 2, 3 ] );
 		$this->layoutObject->setMeta( $meta );
+		$this->layoutObject->saveStorage();
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->layoutId,
 			'meta_key'   => Brizy_Editor_Block::BRIZY_META,
@@ -106,6 +107,7 @@ class LayoutCest {
 		$I->wantToTest( 'Get and Set Media' );
 		$media = json_encode( [ 1, 2, 3 ] );
 		$this->layoutObject->setMedia( $media );
+		$this->layoutObject->saveStorage();
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->layoutId,
 			'meta_key'   => Brizy_Editor_Block::BRIZY_MEDIA,

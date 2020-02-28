@@ -164,7 +164,7 @@ class BlockCest {
 
 		$block = new Brizy_Editor_Block( $id );
 
-		$I->assertNotInstanceOf( "Brizy_Editor_BlockPosition", $block->getPosition(), "setPosition should return a Brizy_Editor_BlockPosition instance " );
+		$I->assertInstanceOf( "Brizy_Editor_BlockPosition", $block->getPosition(), "setPosition should return a Brizy_Editor_BlockPosition instance " );
 		$I->assertNotEquals( $data_decoded, $block->get_editor_data(), "It should return decoded data" );
 		$I->assertNotEquals( "1", $block->get_compiler_version() );
 		$I->assertNotEquals( "2", $block->get_editor_version() );
@@ -259,6 +259,9 @@ class BlockCest {
 			'meta_value' => 1,
 		] );
 
+		global $wpdb;
+		$wpdb->flush();
+
 		$expectedFlag = $this->savedBlockObject->isCloudUpdateRequired();
 		$I->assertTrue( $expectedFlag, 'It should return the correct flag value for cloud update required field' );
 	}
@@ -267,6 +270,7 @@ class BlockCest {
 		$I->wantToTest( 'Get and Set Meta' );
 		$meta = json_encode( [ 1, 2, 3 ] );
 		$this->savedBlockObject->setMeta( $meta );
+		$this->savedBlockObject->saveStorage();
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
 			'meta_key'   => Brizy_Editor_Block::BRIZY_META,
@@ -281,6 +285,7 @@ class BlockCest {
 		$I->wantToTest( 'Get and Set Media' );
 		$media = json_encode( [ 1, 2, 3 ] );
 		$this->savedBlockObject->setMedia( $media );
+		$this->savedBlockObject->saveStorage();
 		$I->seePostMetaInDatabase( [
 			'post_id'    => $this->savedBlockId,
 			'meta_key'   => Brizy_Editor_Block::BRIZY_MEDIA,

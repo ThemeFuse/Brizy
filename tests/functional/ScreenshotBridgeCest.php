@@ -68,12 +68,11 @@ class ScreenshotBridgeCest {
 			],
 		] );
 
-
-		$screenPath = Brizy_Public_BlockScreenshotProxy::getBlockScreenshotPath( 'name', Brizy_Editor_BlockScreenshotApi::BLOCK_TYPE_SAVED, $postID );
-
+		$manager    = new Brizy_Editor_Screenshot_Manager( new  Brizy_Editor_UrlBuilder( null ) );
+		$screenPath = $manager->getScreenshot( '1234567890' );
 
 		$client = $this->getCloudClientObserver();
-		$client->createScreenshot( 'name', $screenPath )
+		$client->createScreenshot( '1234567890', $screenPath )
 		       ->shouldBeCalled();
 
 		$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $client->reveal() );
