@@ -46,6 +46,7 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
+		add_action( 'wp_print_scripts', array($this,'forceJqueryQueue'),99999 );
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
@@ -283,6 +284,12 @@ class Brizy_Editor {
 		$mainProcessor = new Brizy_Content_MainProcessor( $context );
 
 		return $mainProcessor->process( $content );
+	}
+
+	public function forceJqueryQueue() {
+		if(!wp_script_is('jquery','enqueued')) {
+			wp_enqueue_script('jquery');
+		}
 	}
 
 	private function loadShortcodes() {
