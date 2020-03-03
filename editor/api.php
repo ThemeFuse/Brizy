@@ -644,7 +644,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 		$groups = [];
 
-		if ( $templateType == 'single' ) {
+		if ( $templateType == 'single' || $context == 'popup-rules' ) {
 			$groups[] = array(
 				'title' => 'Pages',
 				'value' => Brizy_Admin_Rule::POSTS,
@@ -652,7 +652,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			);
 		}
 
-		if ( $templateType == 'archive' ) {
+		if ( $templateType == 'archive' || $context == 'popup-rules' ) {
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY ) );
 			$groups        = array(
@@ -678,7 +678,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			);
 		}
 
-		$groups = array_values(array_filter( $groups, function($o) { return !is_null($o); } ));
+		$groups = array_values( array_filter( $groups, function ( $o ) {
+			return ! is_null( $o );
+		} ) );
 		wp_send_json_success( $groups, 200 );
 	}
 
@@ -729,7 +731,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			'items' => array_map( $closure, $this->get_post_list( null, $post_type ) )
 		);
 
-		$groups = array_values(array_filter( $groups, function($o) { return !is_null($o); } ));
+		$groups = array_values( array_filter( $groups, function ( $o ) {
+			return ! is_null( $o );
+		} ) );
 		wp_send_json_success( $groups, 200 );
 	}
 
@@ -766,32 +770,32 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function geTemplateList( $context, $templateType ) {
 
 		$list = array(
-			$templateType === 'single' ? array(
+			$templateType === 'single' || $context == 'popup-rules' ? array(
 				'title'      => 'Author page',
 				'value'      => 'author',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
 			) : null,
-			$templateType === 'archive' ? array(
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
 				'title'      => 'Search page',
 				'value'      => 'search',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
 			) : null,
-			$templateType === 'single' ? array(
+			$templateType === 'single' || $context == 'popup-rules' ? array(
 				'title'      => 'Front page',
 				'value'      => 'front_page',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
 			) : null,
-			$templateType === 'archive' ? array(
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
 				'title'      => 'Blog / Posts page',
 				'value'      => 'home_page',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
 			) : null,
-			$templateType === 'single' ? array(
+			$templateType === 'single' || $context == 'popup-rules' ? array(
 				'title'      => '404 page',
 				'value'      => '404',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
 			) : null,
-			$templateType === 'archive' ? array(
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
 				'title'      => 'Archive page',
 				'value'      => '',
 				'groupValue' => Brizy_Admin_Rule::ARCHIVE
@@ -807,7 +811,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			);
 		}
 
-		return array_values(array_filter( $list, function($o) { return !is_null($o); } ));
+		return array_values( array_filter( $list, function ( $o ) {
+			return ! is_null( $o );
+		} ) );
 	}
 
 	public function setTemplateType() {
