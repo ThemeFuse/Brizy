@@ -655,7 +655,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		if ( $templateType == 'archive' || $context == 'popup-rules' ) {
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY ) );
-			$groups        = array(
+			$groups[]        = array(
 				count( $taxonomyItems ) ? array(
 					'title' => 'Categories',
 					'value' => Brizy_Admin_Rule::TAXONOMY,
