@@ -655,19 +655,18 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		if ( $templateType == 'archive' || $context == 'popup-rules' ) {
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY ) );
-			$groups[]        = array(
+			$groups[]      =
 				count( $taxonomyItems ) ? array(
 					'title' => 'Categories',
 					'value' => Brizy_Admin_Rule::TAXONOMY,
 					'items' => $taxonomyItems
-				) : null,
+				) : null;
+			$groups[]      =
 				count( $archiveItems ) ? array(
 					'title' => 'Archives',
 					'value' => Brizy_Admin_Rule::ARCHIVE,
 					'items' => $archiveItems
-				) : null,
-
-			);
+				) : null;
 		}
 
 		if ( $items = $this->geTemplateList( $context, $templateType ) ) {
