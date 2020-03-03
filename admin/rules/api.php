@@ -163,6 +163,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+
+			if(count($rules)==0) {
+				$this->error( 400,"No rules found." );
+			}
+
 		} catch ( Exception $e ) {
 			$this->error( 400, $e->getMessage() );
 		}
@@ -210,6 +215,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$rules = $this->manager->createRulesFromJson( $rulesData, $postType );
+
+			if(count($rules)==0) {
+				$this->error( 400,"No rules found." );
+			}
+
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 			$this->error( 400, $e->getMessage() );
