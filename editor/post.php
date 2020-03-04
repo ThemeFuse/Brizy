@@ -617,35 +617,64 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		return $autosave;
 	}
 
-	//=================================================================================================================
-	//=================================================================================================================
-	//=================================================================================================================
-	//=================================================================================================================
-	//=================================================================================================================
-	//=================================================================================================================
-	//=================================================================================================================
 
-//
-//	/**
-//	 * @var Brizy_Editor_API_Page
-//	 */
-//	protected $api_page;
-//
-//
-//
-//
-//
-//	/**
-//	 * @deprecated;
-//	 */
-//	public function get_api_page() {
-//
-//		if ( isset( $this->api_page ) ) {
-//			return $this->api_page;
-//		}
-//
-//		return null;
-//	}
+	public static function get_post_list( $searchTerm, $postType, $excludePostType = array() ) {
+
+		global $wp_post_types;
+
+		$post_query = array(
+			'post_type'      => $postType,
+			'posts_per_page' => - 1,
+			'post_status'    => $postType == 'attachment' ? 'inherit' : array(
+				'publish',
+				'pending',
+				'draft',
+				'future',
+				'private'
+			),
+			'orderby'        => 'post_title',
+			'order'          => 'ASC'
+		);
+
+		if ( $searchTerm ) {
+			$post_query['post_title_term'] = $searchTerm;
+		}
+
+		$posts = new WP_Query( $post_query );
+
+		$result = array();
+
+		foreach ( $posts->posts as $post ) {
+
+			if ( in_array( $post->post_type, $excludePostType ) ) {
+				continue;
+			}
+
+			$result[] = (object) array(
+				'ID'              => $post->ID,
+				'uid'             => self::create_uid( $post->ID ),
+				'post_type'       => $post->post_type,
+				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
+				'title'           => apply_filters( 'the_title', $post->post_title ),
+				'post_title'      => apply_filters( 'the_title', $post->post_title )
+			);
+		}
+
+
+		return $result;
+	}
+
+	private static function create_uid( $postId ) {
+
+		$uid = get_post_meta( $postId, 'brizy_post_uid', true );
+
+		if ( ! $uid ) {
+			$uid = md5( $postId . time() );
+			update_post_meta( $postId, 'brizy_post_uid', $uid );
+		}
+
+		return $uid;
+	}
 
 }
 

@@ -11,6 +11,8 @@ class Brizy_Admin_Templates {
 
 	const TYPE_SINGLE = 'single';
 	const TYPE_ARCHIVE = 'archive';
+	const TYPE_SINGLE_PRODUCT = 'single_product';
+	const TYPE_PRODUCT_ARCHIVE = 'product_archive';
 
 	/**
 	 * @var Brizy_Editor_Post
@@ -107,8 +109,10 @@ class Brizy_Admin_Templates {
 				'id'           => get_the_ID(),
 				'templateType' => Brizy_Admin_Templates::getTemplateType( get_the_ID() ),
 				'labels'       => [
-					'single'  => __( 'Single', 'brizy' ),
-					'archive' => __( 'Archive', 'brizy' )
+					'single'          => __( 'Single', 'brizy' ),
+					'archive'         => __( 'Archive', 'brizy' ),
+					'single_product'  => __( 'Product', 'brizy' ),
+					'product_archive' => __( 'Product Archive', 'brizy' ),
 				],
 			)
 		);
@@ -636,6 +640,7 @@ class Brizy_Admin_Templates {
 
 							if ( $get_option ) {
 								$post = Brizy_Editor_Post::get( $get_option );
+
 								return $post->uses_editor() ? null : get_post( $get_option );
 							}
 							break;
@@ -664,7 +669,7 @@ class Brizy_Admin_Templates {
 		$type = null;
 		if ( isset( $_POST['brizy-template-type'] ) ) {
 			$type = strtolower( $_POST['brizy-template-type'] );
-			if ( in_array( $type, [ self::TYPE_SINGLE, self::TYPE_ARCHIVE ] ) ) {
+			if ( in_array( $type, [ self::TYPE_SINGLE, self::TYPE_ARCHIVE, self::TYPE_PRODUCT_ARCHIVE,self::TYPE_SINGLE_PRODUCT ] ) ) {
 				self::setTemplateType( $post_id, $type );
 			}
 		} else {
@@ -673,7 +678,7 @@ class Brizy_Admin_Templates {
 
 		// get rules from $_POST
 		$rules = [];
-		if ( $type && isset($_POST[ 'brizy-' . $type . '-rule-type' ]) && is_array($_POST[ 'brizy-' . $type . '-rule-type' ])) {
+		if ( $type && isset( $_POST[ 'brizy-' . $type . '-rule-type' ] ) && is_array( $_POST[ 'brizy-' . $type . '-rule-type' ] ) ) {
 			foreach ( $_POST[ 'brizy-' . $type . '-rule-type' ] as $i => $ruleType ) {
 
 				// ignore this rule if type is invalid
@@ -699,12 +704,10 @@ class Brizy_Admin_Templates {
 
 				$rules[] = new Brizy_Admin_Rule( null, $ruleType, $appliedFor, $entityType, $entityValues );
 			}
-
-			$ruleManager = new Brizy_Admin_Rules_Manager();
-			$ruleManager->setRules( $post_id, $rules );
 		}
 
-
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$ruleManager->setRules( $post_id, $rules );
 	}
 
 	/**

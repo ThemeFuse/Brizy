@@ -9,8 +9,22 @@ var RULE_ARCHIVE = "4";
 var RULE_TEMPLATE = "8";
 var RULE_BRIZY_TEMPLATE = "16";
 
-const defaultAppliedFor = Brizy_Admin_Rules.templateType === 'archive' ? RULE_TAXONOMY :  RULE_POSTS;
-const defaultEntityType = Brizy_Admin_Rules.templateType === 'archive' ? 'category' : 'post';
+var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
+var defaultAppliedFor = null;
+var defaultEntityType = null;
+
+switch (defaultTemplateType) {
+    case 'archive':
+        defaultAppliedFor = RULE_TAXONOMY;
+        defaultEntityType = 'category';
+        break;
+
+    default:
+        defaultAppliedFor = RULE_POSTS;
+        defaultEntityType = 'post';
+        break;
+}
+
 
 var defaultRule = {
     type: RULE_TYPE_INCLUDE,
@@ -20,14 +34,19 @@ var defaultRule = {
 };
 
 var state = {
-    templateType: Brizy_Admin_Rules.templateType || 'single',
+    templateType: defaultTemplateType,
     rule: defaultRule,
-    singleRules: Brizy_Admin_Rules.templateType === 'single' ? Brizy_Admin_Rules.rules : [],
-    archiveRules: Brizy_Admin_Rules.templateType === 'archive' ? Brizy_Admin_Rules.rules : [],
+    rules: {
+        single: [],
+        archive: [],
+        single_product: [],
+        product_archive: [],
+    },
     errors: "",
     groups: [],
 };
 
+state.rules[state.templateType] = Brizy_Admin_Rules.rules;
 
 var apiCache = {
     groupList: null,
@@ -155,50 +174,36 @@ var actions = {
             return {errors: errors};
         };
     },
-    setRuleList: function (rules) {
-        return function (state) {
-            return {rules: rules};
-        };
-    },
-    addSingleRule: function (rule) {
+
+    addRule: function (rule) {
         return function (state) {
             return {
-                singleRules: [...state.singleRules, rule
-                ]
-            }
-                ;
-        };
-    },
-    addArchiveRule: function (rule) {
-        return function (state) {
-            return {
-                archiveRules: [...state.archiveRules, rule]
-            }
-                ;
-        };
-    },
-    removeSingleRule: function (rule) {
-        return function (state) {
-            return {
-                singleRules: state.singleRules.filter(function (arule) {
-                    return arule != rule;
-                })
+                rules: {[state.templateType]: [...state.rules[state.templateType], rule]}
             };
         };
     },
-    removeArchiveRule: function (rule) {
+    removeRule: function (rule) {
         return function (state) {
             return {
-                archiveRules: state.archiveRules.filter(function (arule) {
-                    return arule != rule;
-                })
-            }
-                ;
+                rules: {
+                    [state.templateType]: state.rules[state.templateType].filter(function (arule) {
+                        return arule != rule;
+                    })
+                }
+            };
         };
     },
     setTemplateType: function (type) {
         return function (state) {
-            return {templateType: type, rules: []};
+            return {
+                templateType: type,
+                rules: {
+                    single: [],
+                    archive: [],
+                    single_product: [],
+                    product_archive: [],
+                }
+            };
         };
     }
 };
@@ -432,9 +437,6 @@ var RuleApplyGroupField = function (params) {
             h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
         ];
 
-        console.log(params);
-        console.log(appliedFor);
-
         switch (appliedFor) {
             case RULE_POSTS:
                 elements.push(
@@ -567,11 +569,31 @@ var TemplateTypeSelect = function (params) {
                 }),
                 h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.archive),
             ]),
+            h('label', {}, [
+                h('input', {
+                    type: 'radio',
+                    name: 'brizy-template-type',
+                    onchange: params.onChange,
+                    value: 'single_product',
+                    checked: 'single_product' === params.value
+                }),
+                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.single_product),
+            ]), h('label', {}, [
+                h('input', {
+                    type: 'radio',
+                    name: 'brizy-template-type',
+                    onchange: params.onChange,
+                    value: 'product_archive',
+                    checked: 'product_archive' === params.value
+                }),
+                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.product_archive),
+            ]),
         ]
     );
 };
 
 var ruleView = function (state, actions) {
+
     return h(
         "div",
         {
@@ -603,14 +625,10 @@ var ruleView = function (state, actions) {
             ),
             h(RuleList, {
                 type: state.templateType,
-                rules: state.templateType === 'single' ? state.singleRules : state.archiveRules,
+                rules: state.rules[state.templateType] || [],
                 groups: state.groups,
                 onDelete: function (rule) {
-                    if (state.templateType === 'single') {
-                        actions.removeSingleRule(rule);
-                    } else if (state.templateType === 'archive') {
-                        actions.removeArchiveRule(rule);
-                    }
+                    actions.removeRule(rule);
                 }
             }),
             state.templateType ? [
@@ -621,7 +639,7 @@ var ruleView = function (state, actions) {
                         errors: state.errors,
                         onSubmit: function () {
 
-                            var rules = state.templateType === 'single' ? state.singleRules : state.archiveRules;
+                            var rules = state.rules[state.templateType] || [];
 
                             try {
 
@@ -644,13 +662,8 @@ var ruleView = function (state, actions) {
                             api
                                 .validateRule(state.rule)
                                 .done(function () {
-                                    if (state.templateType === 'single') {
-                                        actions.addSingleRule(state.rule);
-                                        actions.resetRule();
-                                    } else if (state.templateType === 'archive') {
-                                        actions.addArchiveRule(state.rule);
-                                        actions.resetRule();
-                                    }
+                                    actions.addRule(state.rule);
+                                    actions.resetRule();
                                 })
                                 .fail(function (response) {
                                     if (response.responseJSON && response.responseJSON.data) {

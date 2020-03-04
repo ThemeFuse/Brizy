@@ -314,7 +314,6 @@ class ApiCest {
 		] );
 	}
 
-
 	public function takeOverTest( FunctionalTester $I ) {
 
 		$project = Brizy_Editor_Project::get();
