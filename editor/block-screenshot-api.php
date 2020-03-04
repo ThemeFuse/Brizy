@@ -88,13 +88,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 			), 400 );
 		}
 
-		$img_type = $this->getFileExtensionByContent( $imageContent );
-
-		if ( ! in_array( $img_type, array( 'jpg', 'jpeg', 'gif', 'png' ) ) ) {
-			wp_send_json_error( array(
-				'message' => esc_html__( 'Invalid image format', 'brizy' )
-			) );
-		}
+		$img_type = 'jpeg';
 
 		if ( isset( $_REQUEST['id'] ) ) {
 			$screenId = $_REQUEST['id'];

@@ -3,8 +3,7 @@
 
 class ScreenshotApiCest {
 
-	const PIXEL_IMG_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==';
-	const PIXEL_IMG_GIF = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+	const PIXEL_IMG_JPG = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
@@ -16,7 +15,7 @@ class ScreenshotApiCest {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query(
 				[ 'action' => 'brizy_create_block_screenshot' ] ), [
 			'block_type' => 'global',
-			'ibsf'       => self::PIXEL_IMG_PNG,
+			'ibsf'       => self::PIXEL_IMG_JPG,
 		] );
 		$I->seeResponseCodeIs( 400 );
 	}
@@ -26,10 +25,9 @@ class ScreenshotApiCest {
 			[ 'block_type' => 'normal', 'ibsf' => null ],
 			[ 'block_type' => 'normal', 'ibsf' => '' ],
 			[ 'block_type' => 'normal', ],
-
-			[ 'block_type' => null, 'ibsf' => self::PIXEL_IMG_PNG ],
-			[ 'block_type' => '', 'ibsf' => self::PIXEL_IMG_PNG ],
-			[ 'ibsf' => self::PIXEL_IMG_PNG ],
+			[ 'block_type' => null, 'ibsf' => self::PIXEL_IMG_JPG ],
+			[ 'block_type' => '', 'ibsf' => self::PIXEL_IMG_JPG ],
+			[ 'ibsf' => self::PIXEL_IMG_JPG ],
 			[ 'block_type' => 'global', 'ibsf' => 'asdasdasdasdasd' ],
 		];
 	}
@@ -41,34 +39,23 @@ class ScreenshotApiCest {
 		return [
 			[
 				'block_type' => 'global',
-				'ibsf'       => self::PIXEL_IMG_PNG,
-				'file_type'  => '.png',
-				'post'       => null
-			],
-			[
-				'block_type' => 'global',
-				'ibsf'       => self::PIXEL_IMG_GIF,
-				'file_type'  => '.gif',
+				'ibsf'       => self::PIXEL_IMG_JPG,
+				'file_type'  => '.jpeg',
 				'post'       => null
 			],
 			[
 				'block_type' => 'saved',
-				'ibsf'       => self::PIXEL_IMG_PNG,
-				'file_type'  => '.png',
+				'ibsf'       => self::PIXEL_IMG_JPG,
+				'file_type'  => '.jpeg',
 				'post'       => null
 			],
 			[
 				'block_type' => 'normal',
-				'ibsf'       => self::PIXEL_IMG_PNG,
-				'file_type'  => '.png',
+				'ibsf'       => self::PIXEL_IMG_JPG,
+				'file_type'  => '.jpeg',
 				'post'       => $postId
 			],
-			[
-				'block_type' => 'normal',
-				'ibsf'       => self::PIXEL_IMG_GIF,
-				'file_type'  => '.gif',
-				'post'       => $postId
-			],
+
 		];
 	}
 
@@ -145,7 +132,7 @@ class ScreenshotApiCest {
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'block_type' => 'global',
-			'ibsf'       => self::PIXEL_IMG_PNG,
+			'ibsf'       => self::PIXEL_IMG_JPG,
 		] );
 
 		$response = $I->grabResponse();
@@ -156,7 +143,7 @@ class ScreenshotApiCest {
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'block_type' => 'global',
-			'ibsf'       => self::PIXEL_IMG_PNG,
+			'ibsf'       => self::PIXEL_IMG_JPG,
 			'id'         => $object->data->id,
 		] );
 
