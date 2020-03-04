@@ -98,6 +98,8 @@ var api = {
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
         url.searchParams.append('version', Brizy_Admin_Data.editorVersion);
+        url.searchParams.append('dataVersion', 0);
+        url.searchParams.append('ignoreDataVersion', 1);
 
         return jQuery.ajax({
             type: "POST",
@@ -112,6 +114,8 @@ var api = {
             action: "brizy_delete_rule",
             rule: ruleId,
             hash: Brizy_Admin_Rules.hash,
+            dataVersion: 0,
+            ignoreDataVersion: 1,
             version: Brizy_Admin_Data.editorVersion,
             post: Brizy_Admin_Rules.id
         });

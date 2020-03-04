@@ -80,8 +80,9 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
-		$postId      = (int) $this->param( 'post' );
-		$dataVersion = (int) $this->param( 'dataVersion' );
+		$postId            = (int) $this->param( 'post' );
+		$ignoreDataVersion = (int) $this->param( 'ignoreDataVersion' );
+		$dataVersion       = (int) $this->param( 'dataVersion' );
 
 		$postType = get_post_type( $postId );
 
@@ -89,7 +90,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, "Validation" . 'Invalid post' );
 		}
 
-		if ( ! $dataVersion ) {
+		if ( ! $dataVersion && $ignoreDataVersion===0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -111,9 +112,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 			$ruleValidator->validateRuleForPostId( $rule, $postId );
 
-			$post = Brizy_Editor_Entity::get( $postId );
-			$post->setDataVersion( $dataVersion );
-			$post->save( 0 );
+			if ( !$ignoreDataVersion ) {
+				$post = Brizy_Editor_Entity::get( $postId );
+				$post->setDataVersion( $dataVersion );
+				$post->save( 0 );
+			}
 
 			$this->manager->addRule( $postId, $rule );
 
@@ -131,15 +134,16 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	public function actionCreateRules() {
 		$this->verifyNonce( self::nonce );
 
-		$postId      = (int) $this->param( 'post' );
-		$dataVersion = (int) $this->param( 'dataVersion' );
-		$postType    = get_post_type( $postId );
+		$postId            = (int) $this->param( 'post' );
+		$ignoreDataVersion = (int) $this->param( 'ignoreDataVersion' );
+		$dataVersion       = (int) $this->param( 'dataVersion' );
+		$postType          = get_post_type( $postId );
 
 		if ( ! $postId ) {
 			$this->error( 400, 'Invalid post' );
 		}
 
-		if ( ! $dataVersion ) {
+		if ( ! $dataVersion && $ignoreDataVersion===0) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -161,9 +165,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$validator->validateRulesForPostId( $rules, $postId );
 
-			$post = Brizy_Editor_Entity::get( $postId );
-			$post->setDataVersion( $dataVersion );
-			$post->save( 0 );
+			if ( !$ignoreDataVersion ) {
+				$post = Brizy_Editor_Entity::get( $postId );
+				$post->setDataVersion( $dataVersion );
+				$post->save( 0 );
+			}
 
 			foreach ( $rules as $newRule ) {
 				$this->manager->addRule( $postId, $newRule );
@@ -187,15 +193,16 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	public function actionUpdateRules() {
 		$this->verifyNonce( self::nonce );
 
-		$postId      = (int) $this->param( 'post' );
-		$dataVersion = (int) $this->param( 'dataVersion' );
-		$postType    = get_post_type( $postId );
+		$postId            = (int) $this->param( 'post' );
+		$ignoreDataVersion = (int) $this->param( 'ignoreDataVersion' );
+		$dataVersion       = (int) $this->param( 'dataVersion' );
+		$postType          = get_post_type( $postId );
 
 		if ( ! $postId ) {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
-		if ( ! $dataVersion ) {
+		if ( ! $dataVersion && $ignoreDataVersion===0) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -214,9 +221,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		try {
-			$post = Brizy_Editor_Entity::get( $postId );
-			$post->setDataVersion( $dataVersion );
-			$post->save( 0 );
+			if ( !$ignoreDataVersion ) {
+				$post = Brizy_Editor_Entity::get( $postId );
+				$post->setDataVersion( $dataVersion );
+				$post->save( 0 );
+			}
 
 			$this->manager->saveRules( $postId, $rules );
 		} catch ( Brizy_Editor_Exceptions_DataVersionMismatch $e ) {
@@ -234,22 +243,27 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
-		$postId      = (int) $this->param( 'post' );
-		$dataVersion = (int) $this->param( 'dataVersion' );
-		$ruleId      = $this->param( 'rule' );
+		$postId            = (int) $this->param( 'post' );
+		$ignoreDataVersion = (int) $this->param( 'ignoreDataVersion' );
+		$dataVersion       = (int) $this->param( 'dataVersion' );
+		$ruleId            = $this->param( 'rule' );
 
 		if ( ! $postId || ! $ruleId ) {
 			$this->error( 400, 'Invalid request' );
 		}
 
-		if ( ! $dataVersion ) {
+		if ( ! $dataVersion && $ignoreDataVersion===0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
 		try {
-			$post = Brizy_Editor_Entity::get( $postId );
-			$post->setDataVersion( $dataVersion );
-			$post->save( 0 );
+
+			if ( !$ignoreDataVersion ) {
+				$post = Brizy_Editor_Entity::get( $postId );
+				$post->setDataVersion( $dataVersion );
+				$post->save( 0 );
+			}
+
 			$this->manager->deleteRule( $postId, $ruleId );
 		} catch ( Brizy_Editor_Exceptions_DataVersionMismatch $e ) {
 			$this->error( 400, 'Invalid data version' );
