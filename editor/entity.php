@@ -40,6 +40,19 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		$this->loadInstanceData();
 	}
 
+	static public function get( $postId ) {
+		$type = get_post_type( $postId );
+
+		switch ( $type ) {
+			case 'post':
+			case Brizy_Admin_Popups_Main::CP_POPUP:
+				return Brizy_Editor_Post::get( $postId );
+
+			case Brizy_Admin_Blocks_Main::CP_GLOBAL:
+			case Brizy_Admin_Blocks_Main::CP_SAVED:
+				return Brizy_Editor_Block::get( $postId );
+		}
+	}
 
 	/**
 	 * Will return the key on witch the object data will be saved in storage
