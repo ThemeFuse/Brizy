@@ -71,14 +71,7 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 				return null;
 		}
 
-		$globStr     = $folderPath . DIRECTORY_SEPARATOR . "{$blockName}.*";
-		$screenshots = glob( $globStr );
-
-		if ( count( $screenshots ) == 1 ) {
-			return $screenshots[0];
-		}
-
-		return null;
+		return $folderPath . DIRECTORY_SEPARATOR . "{$blockName}.jpeg";
 	}
 
 }
