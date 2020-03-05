@@ -65,4 +65,10 @@ class Functional extends \Codeception\Module {
 		}
 
 	}
+
+	public function canSeePostInDatabaseContainingContent( $postId, $content ) {
+		global $wpdb;
+
+		return $wpdb->get_var( $wpdb->prepare( "SELECT count(ID) FROM {$wpdb->posts} WHERE post_content LIKE %s", "%{$content}%" ) ) > 0;
+	}
 }
