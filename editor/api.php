@@ -576,7 +576,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				Brizy_Admin_Templates::TYPE_SINGLE,
 				Brizy_Admin_Templates::TYPE_ARCHIVE,
 				Brizy_Admin_Templates::TYPE_SINGLE_PRODUCT,
-				Brizy_Admin_Templates::TYPE_PRODUCT_CATEGORY
+				Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE
 			];
 
 			if ( ! in_array( $templateType, $allowedTypes, true ) ) {
