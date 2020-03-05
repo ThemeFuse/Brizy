@@ -111,15 +111,16 @@ var api = {
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
         url.searchParams.append('version', Brizy_Admin_Data.editorVersion);
+        url.searchParams.append('dataVersion', 0);
+        url.searchParams.append('ignoreDataVersion', 1);
 
         return jQuery.ajax({
             type: "POST",
             url: url.toString(),
             data: JSON.stringify(rule),
             contentType: "application/json; charset=utf-8"
-        })
+        });
     },
-
 };
 
 var actions = {

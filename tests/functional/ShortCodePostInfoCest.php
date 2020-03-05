@@ -8,7 +8,7 @@ class ShortCodePostInfoCest {
 
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
-		$I->havePostInDatabase([]);
+		$I->havePostInDatabase( [] );
 		$this->postId = $I->havePostInDatabase( [
 			'post_content'   => 'field_post_content',
 			'post_title'     => 'field_post_title',
@@ -50,8 +50,8 @@ class ShortCodePostInfoCest {
 		$postDate = new \DateTime( $post->post_date );
 
 		$author   = get_the_author_meta( 'nickname', $post->post_author );
-		$date     = $postDate->format( 'd/m/Y' );
-		$time     = $postDate->format( 'H:s' );
+		$date     = get_the_date( null, $post );
+		$time     = get_the_time( null, $post );
 		$comments = get_comment_count( $post->ID );
 
 
@@ -78,8 +78,8 @@ class ShortCodePostInfoCest {
 		$postDate = new \DateTime( $post->post_date );
 
 		$author   = get_the_author_meta( 'nickname', $post->post_author );
-		$date     = $postDate->format( 'd/m/Y' );
-		$time     = $postDate->format( 'H:s' );
+		$date     = get_the_date( null, $post );
+		$time     = get_the_time( null, $post );
 		$comments = get_comment_count( $post->ID );
 
 

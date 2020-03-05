@@ -121,8 +121,9 @@ class RulesApiCest {
 			"entityValues" => [ 3, 4 ]
 		] );
 		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [
-			'version' => BRIZY_EDITOR_VERSION,
-			'post'    => $postId
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
+			'post'        => $postId
 		] ), $newRule->convertToOptionValue() );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -139,6 +140,53 @@ class RulesApiCest {
 			$rule,
 			$newRule
 		], 'It should return the rule created' );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
+	 */
+	public function createRuleWithInvalidDataVersionTest( FunctionalTester $I ) {
+
+		$ruleId = md5( time() );
+		$rule   = Brizy_Admin_Rule::createFromRequestData( [
+			"id"           => $ruleId,
+			"type"         => 1,
+			"appliedFor"   => 1,
+			"entityType"   => "post",
+			"entityValues" => [ 1 ]
+		] );
+
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
+			'post_status' => 'publish',
+			'meta_input'  => [
+				'brizy-rules' => serialize( [ $rule->convertToOptionValue() ] ),
+			]
+		] );
+
+		$I->haveHttpHeader( 'Content-Type', 'application/json' );
+		$newRule = Brizy_Admin_Rule::createFromRequestData( [
+			"type"         => 1,
+			"appliedFor"   => 1,
+			"entityType"   => "post",
+			"entityValues" => [ 3, 4 ]
+		] );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 10,
+			'post'        => $postId
+		] ), $newRule->convertToOptionValue() );
+
+		$I->seeResponseCodeIs( 400 );
+
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $postId,
+			'meta_key'   => 'brizy-rules',
+			'meta_value' => serialize( [ $rule->convertToOptionValue() ] )
+		] );
+
 	}
 
 	/**
@@ -171,7 +219,9 @@ class RulesApiCest {
 			"entityType"   => "post",
 			"entityValues" => [ 1 ]
 		] );
-		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post' => $postId ] ), $newRule->convertToOptionValue() );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post'        => $postId,
+		                                               'dataVersion' => 1
+		] ), $newRule->convertToOptionValue() );
 
 		$I->seeResponseCodeIs( 400 );
 
@@ -200,7 +250,9 @@ class RulesApiCest {
 			"entityType"   => "post",
 			"entityValues" => [ 1 ]
 		] );
-		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post' => $postId ] ), $newRule->convertToOptionValue() );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rule', [ 'post'        => $postId,
+		                                               'dataVersion' => 1
+		] ), $newRule->convertToOptionValue() );
 
 		$I->seeResponseCodeIs( 400 );
 
@@ -241,8 +293,9 @@ class RulesApiCest {
 		];
 
 		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules', [
-			'post'    => $postId,
-			'version' => BRIZY_EDITOR_VERSION
+			'post'        => $postId,
+			'version'     => BRIZY_EDITOR_VERSION,
+			'dataVersion' => 1,
 		] ), $rules );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -293,8 +346,9 @@ class RulesApiCest {
 
 		$I->sendPOST( $I->ajaxUrl( 'brizy_add_rules',
 			[
-				'post'    => $postId,
-				'version' => BRIZY_EDITOR_VERSION
+				'post'        => $postId,
+				'version'     => BRIZY_EDITOR_VERSION,
+				'dataVersion' => 1,
 			] ), $rules );
 
 		$I->seeResponseCodeIs( 400 );
@@ -344,8 +398,9 @@ class RulesApiCest {
 		];
 
 		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [
-			'version' => BRIZY_EDITOR_VERSION,
-			'post'    => $postId
+			'version'     => BRIZY_EDITOR_VERSION,
+			'post'        => $postId,
+			'dataVersion' => 1,
 		] ), $rules );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -396,8 +451,9 @@ class RulesApiCest {
 		];
 
 		$I->sendPOST( $I->ajaxUrl( 'brizy_update_rules', [
-			'version' => BRIZY_EDITOR_VERSION,
-			'post'    => $postId
+			'version'     => BRIZY_EDITOR_VERSION,
+			'post'        => $postId,
+			'dataVersion' => 1,
 		] ), $rules );
 
 		$I->seeResponseCodeIs( 400 );
@@ -434,9 +490,10 @@ class RulesApiCest {
 		] );
 
 		$I->sendGET( $I->ajaxUrl( 'brizy_delete_rule', [
-			'version' => BRIZY_EDITOR_VERSION,
-			'post'    => $postId,
-			'rule'    => $ruleId
+			'version'     => BRIZY_EDITOR_VERSION,
+			'post'        => $postId,
+			'rule'        => $ruleId,
+			'dataVersion' => 1,
 		] ) );
 
 		$I->seeResponseCodeIsSuccessful();

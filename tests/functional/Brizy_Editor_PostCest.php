@@ -154,10 +154,7 @@ class Brizy_Editor_PostCest {
 		$stub->setDataVersion( 1 );
 		$stub->savePost();
 
-		global $wpdb;
-		$wpdb->flush();
-
-		$I->canSeePostContentContainsString( $postId, $htmlBody );
+		$I->canSeePostInDatabaseContainingContent( $postId, $htmlBody );
 
 		$I->canSeePostMetaInDatabase( [
 			'post_id'    => $postId,

@@ -29,12 +29,10 @@ class Brizy_Shortcode_PostInfo extends Brizy_Shortcode_PostField {
 
 		$post = $this->getPost( $atts );
 
-		$date = new DateTime( $post->post_date );
-
 		$params             = array();
 		$params['author']   = get_the_author_meta( 'nickname', $post->post_author );
-		$params['date']     = $date->format( 'd/m/Y' );
-		$params['time']     = $date->format( 'H:s' );
+		$params['date']     = get_the_date( '', $post );
+		$params['time']     = get_the_time( '', $post );
 		$params['comments'] = get_comment_count( $post->ID );
 
 		return $twig->render( 'post-info.html.twig', $params );
