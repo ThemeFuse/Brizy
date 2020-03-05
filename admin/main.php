@@ -86,7 +86,19 @@ class Brizy_Admin_Main {
 	 */
 	public function fixContentForPastBrizyPosts( $content, $postId ) {
 
-		$post      = get_post( $postId );
+		$post = get_post( $postId );
+
+		// do not fix anything for popups/blocksand templates
+		if ( in_array( $post->post_type, [
+			Brizy_Admin_Templates::CP_TEMPLATE,
+			Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			Brizy_Admin_Blocks_Main::CP_SAVED,
+			Brizy_Admin_Popups_Main::CP_POPUP
+		] ) ) {
+			return $content;
+		}
+
+
 		$brizyPost = get_post_meta( $postId, Brizy_Editor_Storage_Post::META_KEY, false );
 		if ( $brizyPost ) {
 			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post, 'body' );
