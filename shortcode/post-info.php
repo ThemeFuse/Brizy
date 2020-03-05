@@ -49,13 +49,16 @@ class Brizy_Shortcode_PostInfo extends Brizy_Shortcode_PostField {
 	 */
 	protected function getPost( $atts ) {
 
-		if ( isset( $atts['post'] ) ) {
-			return parent::getPost( $atts );
-		} else {
-			$post = get_post();
+		if ( wp_doing_ajax() ) {
 
-			return $post ?: null;
+			$post = get_pages( [ 'number' => 1 ] );
+
+			return isset( $post[0] ) ? $post[0] : null;
 		}
+
+		$post = get_post();
+
+		return $post ?: null;
 	}
 
 }
