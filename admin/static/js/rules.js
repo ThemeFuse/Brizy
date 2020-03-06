@@ -8,6 +8,9 @@ var RULE_TAXONOMY = "2";
 var RULE_ARCHIVE = "4";
 var RULE_TEMPLATE = "8";
 var RULE_BRIZY_TEMPLATE = "16";
+var POSTS_FROM_TAXONOMY = "32";
+var POSTS_FROM_CHILD_TAXONOMY = "64";
+var ANY_CHILD_TAXONOMY = "128";
 
 var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
 var defaultAppliedFor = null;
@@ -51,6 +54,7 @@ state.rules[state.templateType] = Brizy_Admin_Rules.rules;
 var apiCache = {
     groupList: null,
     postGroupListPromise: [],
+    archiveGroupListPromise: [],
     postList: [],
     termList: []
 };
@@ -82,6 +86,21 @@ var api = {
         return apiCache.postGroupListPromise[postType + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: "brizy_rule_posts_group_list",
             postType: postType,
+            hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
+            context: 'template-rules',
+            templateType: templateType
+        })
+    },
+
+    getArchiveGroupList: function (taxonomy, templateType) {
+
+        if (apiCache.archiveGroupListPromise[taxonomy + templateType])
+            return apiCache.archiveGroupListPromise[taxonomy + templateType];
+
+        return apiCache.archiveGroupListPromise[taxonomy + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
+            action: "brizy_rule_archive_group_list",
+            taxonomy: taxonomy,
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules',
@@ -395,6 +414,55 @@ var RulePostsGroupSelectField = function (params) {
     );
 };
 
+var RuleArchiveGroupSelectField = function (params) {
+
+    var appliedFor = params.rule.appliedFor;
+    var taxonomy = params.rule.entityType;
+    var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
+
+    var convertResponseToOptions = function (response) {
+        var groups = [];
+        groups.push(new Option("All", '', false, value === ''));
+        response.data.forEach(function (group) {
+
+            if (group.title === "") {
+                group.items.forEach(function (option) {
+                    var optionValue = String(option.value);
+                    groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
+                });
+            } else {
+                var groupElement = document.createElement("OPTGROUP");
+                groupElement.label = group.title;
+
+                if (group.items.length > 0) {
+                    group.items.forEach(function (option) {
+                        var optionValue = String(option.value);
+                        groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                    });
+                    groups.push(groupElement);
+                }
+            }
+        });
+
+        return groups;
+    };
+
+    return h(
+        BrzSelect2,
+        {
+            id: "archive-groups-" + params.taxonomy,
+            style: params.style ? params.style : {width: "200px"},
+            name: params.name,
+            optionRequest: function () {
+                return api.getArchiveGroupList(taxonomy, params.type);
+            },
+            convertResponseToOptions: convertResponseToOptions,
+            onChange: params.onChange,
+        },
+        []
+    );
+};
+
 var RuleApplyGroupField = function (params) {
     return function (state, actions) {
 
@@ -430,6 +498,7 @@ var RuleApplyGroupField = function (params) {
                 actions.rule.update({
                     appliedFor: values[0],
                     entityType: values[1],
+                    entityValues: []
                 });
             }
         };
@@ -448,12 +517,10 @@ var RuleApplyGroupField = function (params) {
                             type: params.type,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                var values = e.target.value.split("|");
-                                if (values.length === 1) {
-                                    actions.rule.setEntityValues(values);
-                                } else {
-                                    actions.rule.setEntityValues([e.target.value]);
-                                }
+                                if (e.target.value)
+                                    actions.rule.update({
+                                        entityValues: [e.target.value],
+                                    });
                             }
                         })
                     ]));
@@ -461,18 +528,17 @@ var RuleApplyGroupField = function (params) {
             case RULE_TAXONOMY:
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
-                        h(RuleTaxonomySearchField, {
+                        h(RuleArchiveGroupSelectField, {
                             id: appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             taxonomy: entityType,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                actions.rule.setEntityValues(
-                                    e.target.value && e.target.value != "null"
-                                        ? [e.target.value]
-                                        : []
-                                );
+                                if (e.target.value)
+                                    actions.rule.update({
+                                        entityValues: [e.target.value],
+                                    });
                             }
                         })
                     ]));
@@ -544,7 +610,6 @@ var RuleList = function (params) {
 
     return h("div", {}, elements);
 };
-
 
 var TemplateTypeSelect = function (params) {
     return h(
@@ -660,20 +725,25 @@ var ruleView = function (state, actions) {
                                 return;
                             }
 
-                            api
-                                .validateRule(state.rule)
-                                .done(function () {
-                                    actions.addRule(state.rule);
-                                    actions.resetRule();
-                                })
-                                .fail(function (response) {
-                                    if (response.responseJSON && response.responseJSON.data) {
-                                        if (response.responseJSON.data.message)
-                                            actions.addFormErrors(response.responseJSON.data.message);
-                                        else
-                                            actions.addFormErrors("Failed to add the rule");
-                                    }
-                                });
+                            actions.addRule(state.rule);
+                            console.log(state.rule);
+                            //actions.resetRule();
+
+
+                            // api
+                            //     .validateRule(state.rule)
+                            //     .done(function () {
+                            //         actions.addRule(state.rule);
+                            //         actions.resetRule();
+                            //     })
+                            //     .fail(function (response) {
+                            //         if (response.responseJSON && response.responseJSON.data) {
+                            //             if (response.responseJSON.data.message)
+                            //                 actions.addFormErrors(response.responseJSON.data.message);
+                            //             else
+                            //                 actions.addFormErrors("Failed to add the rule");
+                            //         }
+                            //     });
                         }
                     })] :
                 [],

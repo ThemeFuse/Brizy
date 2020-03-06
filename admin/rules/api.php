@@ -12,6 +12,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	const VALIDATE_RULE = 'brizy_validate_rule';
 	const RULE_GROUP_LIST = 'brizy_rule_group_list';
 	const RULE_POSTS_GROUP_LIST = 'brizy_rule_posts_group_list';
+	const RULE_ARCHIVE_GROUP_LIST = 'brizy_rule_archive_group_list';
 
 
 	/**
@@ -57,6 +58,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		add_action( 'wp_ajax_' . self::VALIDATE_RULE, array( $this, 'actionValidateRule' ) );
 		add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
 		add_action( 'wp_ajax_' . self::RULE_POSTS_GROUP_LIST, array( $this, 'getPostsGroupsList' ) );
+		add_action( 'wp_ajax_' . self::RULE_ARCHIVE_GROUP_LIST, array( $this, 'getArchiveGroupsList' ) );
 	}
 
 	/**
@@ -129,7 +131,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, "Validation" . 'Invalid post' );
 		}
 
-		if ( ! $dataVersion && $ignoreDataVersion===0 ) {
+		if ( ! $dataVersion && $ignoreDataVersion === 0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -151,7 +153,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 			$ruleValidator->validateRuleForPostId( $rule, $postId );
 
-			if ( !$ignoreDataVersion ) {
+			if ( ! $ignoreDataVersion ) {
 				$post = Brizy_Editor_Entity::get( $postId );
 				$post->setDataVersion( $dataVersion );
 				$post->save( 0 );
@@ -182,7 +184,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid post' );
 		}
 
-		if ( ! $dataVersion && $ignoreDataVersion===0) {
+		if ( ! $dataVersion && $ignoreDataVersion === 0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -209,7 +211,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$validator->validateRulesForPostId( $rules, $postId );
 
-			if ( !$ignoreDataVersion ) {
+			if ( ! $ignoreDataVersion ) {
 				$post = Brizy_Editor_Entity::get( $postId );
 				$post->setDataVersion( $dataVersion );
 				$post->save( 0 );
@@ -249,7 +251,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
 
-		if ( ! $dataVersion && $ignoreDataVersion===0) {
+		if ( ! $dataVersion && $ignoreDataVersion === 0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
@@ -273,7 +275,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 //		}
 
 		try {
-			if ( !$ignoreDataVersion ) {
+			if ( ! $ignoreDataVersion ) {
 				$post = Brizy_Editor_Entity::get( $postId );
 				$post->setDataVersion( $dataVersion );
 				$post->save( 0 );
@@ -304,13 +306,13 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'Invalid request' );
 		}
 
-		if ( ! $dataVersion && $ignoreDataVersion===0 ) {
+		if ( ! $dataVersion && $ignoreDataVersion === 0 ) {
 			$this->error( 400, "Validation" . 'Invalid data version' );
 		}
 
 		try {
 
-			if ( !$ignoreDataVersion ) {
+			if ( ! $ignoreDataVersion ) {
 				$post = Brizy_Editor_Entity::get( $postId );
 				$post->setDataVersion( $dataVersion );
 				$post->save( 0 );
@@ -392,27 +394,36 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			wp_send_json_error( 'Post type not found', 400 );
 		}
 
+		$postTypeName = $wp_post_types[ $post_type ]->labels->name;
+
 		$taxonomies = get_taxonomies( [ 'object_type' => [ $post_type ] ], 'objects' );
 
 		$groups = array();
 
-		$closure = function ( $v ) {
+		$closureFromTerm  = function ( $v ) {
 			return array(
 				'title'      => $v->name,
-				'value'      => $v->taxonomy . "|" . $v->term_id,
+				'value'      => "in|" . $v->taxonomy . "|" . $v->term_id,
+				'groupValue' => $v->taxonomy
+			);
+		};
+		$closureChildTerm = function ( $v ) {
+			return array(
+				'title'      => $v->name,
+				'value'      => "child|" . $v->taxonomy . "|" . $v->term_id,
 				'groupValue' => $v->taxonomy
 			);
 		};
 
-		foreach ( $taxonomies as $tax ) {
-			$groups[] = array(
-				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
-				'value' => Brizy_Admin_Rule::ALL_FROM_TAXONOMY,
-				'items' => array_map( $closure, get_terms( [ 'taxonomy' => $tax->name, 'hide_empty' => false ] ) )
+		$closureAuthor = function ( $v ) use ( $postTypeName ) {
+			return array(
+				'title'      => ucfirst( $v->data->user_nicename ) . ' ' . $postTypeName,
+				'value'      => 'author|' . $v->ID,
+				'groupValue' => 'author'
 			);
-		}
+		};
 
-		$closure = function ( $v ) {
+		$closurePost = function ( $v ) {
 			return array(
 				'title'      => $v->post_title,
 				'value'      => $v->ID,
@@ -420,16 +431,99 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			);
 		};
 
+		foreach ( $taxonomies as $tax ) {
+			$groups[] = array(
+				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
+				'value' => Brizy_Admin_Rule::POSTS,
+				'items' => array_map( $closureFromTerm, get_terms( [
+					'taxonomy'   => $tax->name,
+					'hide_empty' => false
+				] ) )
+			);
+
+			if ( $tax->hierarchical ) {
+				$groups[] = array(
+					'title' => __( "From any child of", 'brizy' ) . " " . $tax->labels->singular_name,
+					'value' => Brizy_Admin_Rule::POSTS,
+					'items' => array_map( $closureChildTerm, get_terms( [
+						'taxonomy'   => $tax->name,
+						'hide_empty' => false
+					] ) )
+				);
+			}
+		}
+
 		$groups[] = array(
 			'title' => 'Specific Post',
 			'value' => Brizy_Admin_Rule::POSTS,
-			'items' => array_map( $closure, Brizy_Editor_Post::get_post_list( null, $post_type ) )
+			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type ) )
 		);
-		
+
+		$groups[] = array(
+			'title' => 'Specific Author',
+			'value' => Brizy_Admin_Rule::POSTS,
+			'items' => array_map( $closureAuthor, get_users() )
+		);
+
 		$groups = array_values( array_filter( $groups, function ( $o ) {
 			return ! is_null( $o );
 		} ) );
 		wp_send_json_success( $groups, 200 );
+	}
+
+	public function getArchiveGroupsList() {
+
+		if ( ! ( $taxonomy = $this->param( 'taxonomy' ) ) ) {
+			wp_send_json_error( 'Invalid taxonomy', 400 );
+		}
+
+		$groups = [];
+
+		$taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true, 'name' => $taxonomy ), 'objects' );
+
+		$closureSingleTerm = function ( $v ) {
+			return array(
+				'title'      => $v->name,
+				'value'      => $v->term_id,
+				'groupValue' => $v->taxonomy
+			);
+		};
+
+		$closureTerm = function ( $v ) {
+			return array(
+				'title'      => $v->name,
+				'value'      => "child|" . $v->taxonomy . "|" . $v->term_id,
+				'groupValue' => $v->taxonomy
+			);
+		};
+
+		foreach ( $taxonomies as $tax ) {
+			$groups[] = array(
+				'title' => __( "Specific", 'brizy' ) . " " . $tax->labels->singular_name,
+				'value' => Brizy_Admin_Rule::TAXONOMY,
+				'items' => array_map( $closureSingleTerm, get_terms( [
+					'taxonomy'   => $tax->name,
+					'hide_empty' => false
+				] ) )
+			);
+
+			if ( $tax->hierarchical ) {
+				$groups[] = array(
+					'title' => __( "Any child of", 'brizy' ) . " " . $tax->labels->singular_name,
+					'value' => Brizy_Admin_Rule::TAXONOMY,
+					'items' => array_map( $closureTerm, get_terms( [
+						'taxonomy'   => $tax->name,
+						'hide_empty' => false
+					] ) )
+				);
+			}
+		}
+
+		$groups = array_values( array_filter( $groups, function ( $o ) {
+			return ! is_null( $o );
+		} ) );
+		wp_send_json_success( $groups, 200 );
+
 	}
 
 	private function getCustomPostsList( $groupValue, $templateType ) {

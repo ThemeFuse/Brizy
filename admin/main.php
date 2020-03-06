@@ -73,7 +73,6 @@ class Brizy_Admin_Main {
 
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
-
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
 		add_filter( 'content_edit_pre', array( $this, 'fixContentForPastBrizyPosts' ), 10, 2 );
 	}
