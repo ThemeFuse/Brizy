@@ -11,6 +11,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const TEMPLATE = 8;
 	const BRIZY_TEMPLATE = 16;
 	const ALL_FROM_TAXONOMY = 32;
+	const ALL_FROM_ANY_TAXONOMY = 64;
 
 	/**
 	 * @var int
