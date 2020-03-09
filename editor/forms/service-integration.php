@@ -92,16 +92,24 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 		$get_object_vars = parent::jsonSerialize();
 
 		if ( ! is_null( $this->getFields() ) ) {
-			$get_object_vars['fields'] = $this->getFields();
+
+			foreach ( $this->getFields() as $field ) {
+				$get_object_vars['fields'][] = $field->convertToOptionValue();
+			}
 		}
 		if ( ! is_null( $this->getLists() ) ) {
-			$get_object_vars['lists'] = $this->getLists();
+			foreach ( $this->getLists() as $list ) {
+				$get_object_vars['lists'][] = $list->convertToOptionValue();
+			}
 		}
+
 		if ( ! is_null( $this->getListProperties() ) ) {
 			$get_object_vars['listProperties'] = $this->getListProperties();
 		}
 		if ( ! is_null( $this->getFolders() ) ) {
-			$get_object_vars['folders'] = $this->getFolders();
+			foreach ( $this->getFolders() as $filder ) {
+				$get_object_vars['folders'][] = $filder->convertToOptionValue();
+			}
 		}
 		if ( ! is_null( $this->getUsedAccount() ) ) {
 			$get_object_vars['usedAccount'] = $this->getUsedAccount();
@@ -237,6 +245,34 @@ class Brizy_Editor_Forms_ServiceIntegration extends Brizy_Editor_Forms_AbstractI
 			$instance->setHasConfirmation( $data['hasConfirmation'] );
 		}
 
+		if ( isset( $data['fields']) ) {
+			foreach (  $data['fields'] as $field ) {
+				if ( ! $field instanceof Brizy_Editor_Forms_Field ) {
+					$instance->addField( Brizy_Editor_Forms_Field::createFromSerializedData( $field ) );
+				} else {
+					$instance->addField( $field );
+				}
+			}
+		}
+		if ( isset( $data['lists'] ) ) {
+			foreach ( $data['lists'] as $list ) {
+				if ( ! $list instanceof Brizy_Editor_Forms_Group ) {
+					$instance->addList( Brizy_Editor_Forms_Group::createFromSerializedData( $list ) );
+				} else {
+					$instance->addList( $list );
+				}
+			}
+		}
+
+		if ( isset( $data['folders'] ) ) {
+			foreach ( $data['folders'] as $folder ) {
+				if ( ! $folder instanceof Brizy_Editor_Forms_Folder ) {
+					$instance->addFolder( Brizy_Editor_Forms_Folder::createFromSerializedData( $folder ) );
+				} else {
+					$instance->addFolder( $folder );
+				}
+			}
+		}
 
 		return $instance;
 	}

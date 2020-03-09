@@ -10,6 +10,8 @@ class Brizy_Compatibilities_Init {
 	private function load_compatibilites() {
 		global $wp_version;
 
+		new Brizy_Compatibilities_Serialize();
+
 		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
 			new Brizy_Compatibilities_Wtc();
 		}

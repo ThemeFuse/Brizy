@@ -74,14 +74,16 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 		$instance     = new self();
 		$instance->id = $data['id'];
 
-		$instance->hasEmailTemplate = $data['hasEmailTemplate'];
-		$instance->emailTemplate    = $data['emailTemplate'];
+		$instance->hasEmailTemplate = isset( $data['hasEmailTemplate'] ) ? $data['hasEmailTemplate'] : false;
+		$instance->emailTemplate    = isset( $data['emailTemplate'] ) ? $data['emailTemplate'] : false;
 
-		foreach ( $data['integrations'] as $integration ) {
-			$brizy_editor_forms_wordpress_integration = Brizy_Editor_Forms_AbstractIntegration::createFromSerializedData( $integration );
+		if ( isset( $data['integrations'] ) ) {
+			foreach ( $data['integrations'] as $integration ) {
+				$brizy_editor_forms_wordpress_integration = Brizy_Editor_Forms_AbstractIntegration::createFromSerializedData( $integration );
 
-			if ( $brizy_editor_forms_wordpress_integration ) {
-				$instance->integrations[] = $brizy_editor_forms_wordpress_integration;
+				if ( $brizy_editor_forms_wordpress_integration ) {
+					$instance->integrations[] = $brizy_editor_forms_wordpress_integration;
+				}
 			}
 		}
 
@@ -106,7 +108,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		return $this;
 	}
-
 
 
 	/**
