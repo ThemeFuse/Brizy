@@ -1,4 +1,4 @@
-import { t } from "visual/utils/i18n";
+const { t } = global.Brizy;
 
 export default {
   id: "WPBreadcrumbs",

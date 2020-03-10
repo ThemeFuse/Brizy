@@ -1,42 +1,40 @@
 import $ from "jquery";
-import "jquery.mmenu";
+import MMenu from "mmenu-js";
 
 export default function() {
   $("[data-mmenu-id]").each(function() {
-    var $this = $(this);
-    var mmenuId = $this.data().mmenuId;
-    var mmenuPosition = $this.data().mmenuPosition;
-    var mmenuTitle = $this.data().mmenuTitle;
-    var $icon = $this.children(".brz-mm-menu__icon");
-
-    var menuAPI = $(mmenuId)
-      .mmenu(
-        {
-          extensions: [
-            "theme-dark",
-            "pagedim-black",
-            "border-full",
-            "position-front",
-            mmenuPosition
-          ],
-          slidingSubmenus: false,
-          navbar: {
-            title: mmenuTitle
-          }
+    const $this = $(this);
+    const mmenuId = $this.data().mmenuId;
+    const mmenuPosition = $this.data().mmenuPosition;
+    const mmenuTitle = $this.data().mmenuTitle;
+    const $icon = $this.children(".brz-mm-menu__icon");
+    const options = {
+      extensions: [
+        "theme-dark",
+        "pagedim-black",
+        "border-full",
+        "position-front",
+        mmenuPosition
+      ],
+      slidingSubmenus: false,
+      navbar: {
+        title: mmenuTitle
+      }
+    };
+    const config = {
+      offCanvas: {
+        menu: {
+          insertSelector: ".brz-root__container"
         },
-        {
-          offCanvas: {
-            menu: {
-              insertSelector: ".brz-root__container"
-            },
-            page: {
-              wrapIfNeeded: false,
-              pageSelector: ".brz-root__container"
-            }
-          }
+        page: {
+          wrapIfNeeded: false,
+          selector: ".brz-root__container"
         }
-      )
-      .data("mmenu");
+      }
+    };
+
+    const menu = new MMenu(mmenuId, options, config);
+    const menuAPI = menu.API;
 
     $icon.on("click", function() {
       menuAPI.open();

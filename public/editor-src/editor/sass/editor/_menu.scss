@@ -121,3 +121,9 @@
     }
   }
 }
+
+// MMenu
+&.mm-wrapper_opened .brz-root__container {
+  position: relative;
+  z-index: 1;
+}

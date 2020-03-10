@@ -6,7 +6,7 @@ module.exports = options => {
   const editorConfig = editorConfigFn(options);
 
   return {
-    mode: options.IS_PRODUCTION ? "production" : "development",
+    mode: editorConfig.mode,
     entry: "./editor/js/bootstraps/preview/index.js",
     output: {
       ...editorConfig.output,
@@ -28,6 +28,7 @@ module.exports = options => {
         }
       ]
     },
+    externals: editorConfig.externals,
     devtool: editorConfig.devtool,
     watch: editorConfig.watch
   };

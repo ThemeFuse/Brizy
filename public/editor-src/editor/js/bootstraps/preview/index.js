@@ -4,6 +4,8 @@ import addTriggersForPopups from "./addTriggersForPopups.js";
 import * as Components from "../../component/index.export.js";
 import * as EditorComponents from "../../editorComponents/index.export.js";
 
+window.jQuery = jQuery;
+
 jQuery(document).ready(function() {
   Object.values(Components).forEach(fn => {
     fn();

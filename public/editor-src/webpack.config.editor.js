@@ -14,6 +14,14 @@ const getExtensions = target => {
   }
 };
 
+const getExternal = target => {
+  if (target === "WP") {
+    return { jquery: "jQuery" };
+  }
+
+  return {};
+};
+
 module.exports = (options = {}) => {
   // extracted variable to make phpstorm work with aliases
   const BUILD_PATH = options.BUILD_PATH || path.resolve(__dirname, "build");
@@ -72,6 +80,7 @@ module.exports = (options = {}) => {
         }
       }
     },
+    externals: getExternal(options.TARGET),
     devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
     watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {

@@ -181,7 +181,7 @@ gulp.task("editor.css", () => {
   ];
   const dest = paths.build + "/editor/css";
 
-  gulp
+  return gulp
     .src(src, { base: paths.editor })
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.init()))
     .pipe(
@@ -502,7 +502,7 @@ gulp.task("popups.media", () => {
 });
 
 gulp.task("export", ["export.css", "export.js", "export.twig"]);
-gulp.task("export.css", done => {
+gulp.task("export.css", () => {
   const src = [
     paths.editor + "/lib/common/*/*.css",
     paths.editor + "/lib/export/*/*.css",
@@ -510,7 +510,7 @@ gulp.task("export.css", done => {
   ];
   const dest = paths.build + "/editor/css";
 
-  gulp
+  return gulp
     .src(src, { base: paths.editor })
     .pipe(
       gulpPlugins
@@ -523,10 +523,7 @@ gulp.task("export.css", done => {
         })
     )
     .pipe(gulpPlugins.concat("preview.css"))
-    .pipe(gulp.dest(dest))
-    .on("end", () => {
-      done();
-    });
+    .pipe(gulp.dest(dest));
 });
 gulp.task("export.js", done => {
   const options = {
@@ -579,7 +576,7 @@ gulp.task("export.twig", done => {
     });
 });
 
-gulp.task("pro", ["pro.js"]);
+gulp.task("pro", ["pro.js", "pro.editor.css", "pro.export.css"]);
 gulp.task("pro.js", done => {
   const options = {
     TARGET,
@@ -589,7 +586,14 @@ gulp.task("pro.js", done => {
     BUILD_PATH_PRO: paths.buildPro,
     NO_WATCH
   };
-  const config = webpackConfigPro(options);
+  const config = [webpackConfigPro.editor(options)];
+
+  if (IS_EXPORT) {
+    config.push(
+      webpackConfigPro.export(options),
+      webpackConfigPro.preview(options)
+    );
+  }
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
@@ -606,6 +610,51 @@ gulp.task("pro.js", done => {
       done();
     }
   });
+});
+gulp.task("pro.editor.css", () => {
+  const src = paths.editor + "/sass/main.editor.pro.scss";
+  const dest = paths.buildPro + "/css";
+
+  return gulp
+    .src(src, { base: paths.editor })
+    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.init()))
+    .pipe(
+      gulpPlugins
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
+        })
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
+    )
+    .pipe(
+      cleanCSS({
+        format: { breaks: { afterRuleEnds: true } }
+      })
+    )
+    .pipe(gulpPlugins.concat("editor.pro.css"))
+    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
+    .pipe(gulp.dest(dest));
+});
+gulp.task("pro.export.css", () => {
+  const src = paths.editor + "/sass/main.export.pro.scss";
+  const dest = paths.buildPro + "/css";
+
+  return gulp
+    .src(src, { base: paths.editor })
+    .pipe(
+      gulpPlugins
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
+        })
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
+    )
+    .pipe(gulpPlugins.concat("preview.pro.css"))
+    .pipe(gulp.dest(dest));
 });
 
 gulp.task("wp.translations", async () => {
@@ -627,7 +676,10 @@ gulp.task("wp.open-source", done => {
     "!templates/*/assets/{icons,img}/**",
     "!**/pro/",
     "!**/pro/**/*",
-    "!**/*.pro.*"
+    "!**/*.pro.*",
+    "!editor/icons/{glyph,outline}/",
+    "!editor/icons/{glyph,outline}/**",
+    "!**/sass/editor/icons/nucleo-*"
   ];
   const dest = paths.buildLocal + "/editor-src";
 
@@ -733,9 +785,16 @@ gulp.task("build.stats", () => {
 gulp.task("watch", () => {
   // editor css
   const coreCSSPath = paths.editor + "/**/*.scss";
-  gulp
-    .watch(coreCSSPath, ["editor.css", ...(IS_EXPORT ? ["export.css"] : [])])
-    .on("change", handleChange);
+
+  gulp.watch(coreCSSPath, e => {
+    handleChange(e);
+    runSequence(
+      "editor.css",
+      "pro.editor.css",
+
+      ...(IS_EXPORT ? ["export.css", "pro.export.css"] : [])
+    );
+  });
 
   function handleChange(event) {
     console.log(event.type, event.path);

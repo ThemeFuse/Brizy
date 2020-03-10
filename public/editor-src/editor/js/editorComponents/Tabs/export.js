@@ -1,5 +1,4 @@
 import $ from "jquery";
-import Isotope from "isotope-layout";
 
 export default function() {
   $(".brz-tabs").each(function() {
@@ -30,7 +29,7 @@ export default function() {
 
         // Need Update Isotope
         $tabsContent.find(".brz-image__gallery").each(function() {
-          var iso = Isotope.data($(this)[0]);
+          var iso = $(this).data("isotope");
 
           if (iso) {
             iso.layout();
@@ -63,7 +62,7 @@ export default function() {
 
       // Need Update Isotope
       $item.find(".brz-image__gallery").each(function() {
-        var iso = Isotope.data($(this)[0]);
+        var iso = $(this).data("isotope");
 
         if (iso) {
           iso.layout();

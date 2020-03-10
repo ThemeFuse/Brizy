@@ -6,7 +6,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import deepMerge from "deepmerge";
-
 import Config from "visual/global/Config";
 
 import {
