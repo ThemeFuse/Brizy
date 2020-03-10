@@ -1,6 +1,7 @@
 import _ from "underscore";
 import React, { Component } from "react";
 import classnames from "classnames";
+import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -25,6 +26,13 @@ const getFilteredIcons = (
   });
 };
 
+const addIconFonts = _.memoize(doc => {
+  const { templateFonts } = Config.get("urls");
+  const style = document.createElement("style");
+  style.innerHTML = `@font-face{font-family:'Nucleo Outline';src:url('${templateFonts}/a');src:url('${templateFonts}/a') format('embedded-opentype'),url('${templateFonts}/b') format('woff2'),url('${templateFonts}/c') format('woff'),url('${templateFonts}/d') format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Nucleo Glyph';src:url('${templateFonts}/a1');src:url('${templateFonts}/a1') format('embedded-opentype'),url('${templateFonts}/b1') format('woff2'),url('${templateFonts}/c1') format('woff'),url('${templateFonts}/d1') format('truetype');font-weight:400;font-style:normal}`;
+  doc.head.appendChild(style);
+});
+
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -39,12 +47,22 @@ export default class extends Component {
       type
     };
 
+    this.containerRef = React.createRef();
     this.onIconClick = this.onIconClick.bind(this);
     this.onCategoryChange = this.onCategoryChange.bind(this);
     this.onTypeChange = this.onTypeChange.bind(this);
     this.onSearchQueryChange = this.onSearchQueryChange.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
+
+  componentDidMount() {
+    const node = this.containerRef.current;
+
+    if (node) {
+      addIconFonts(node.ownerDocument);
+    }
+  }
+
   onIconClick(type, name) {
     this.props.onClose();
 
@@ -163,7 +181,7 @@ export default class extends Component {
 
     return (
       <Fixed onClose={this.props.onClose}>
-        <div className="brz-ed-popup-wrapper">
+        <div ref={this.containerRef} className="brz-ed-popup-wrapper">
           {this.renderHeader()}
           <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
             <div className="brz-ed-popup-body">

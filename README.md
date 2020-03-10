@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.114<br>
+Stable tag: 1.0.115<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.115 - 2020-03-10 ###
+* Fixed: Removed Nucleo
+* Fixed: Added Font Awesome4
+* Fixed: Removed all possible screenshot extensions al leaved only jpeg
+* Fixed: Force jQuery enqueue.
+* Fixed: Removed some unused code added Select2 as a dependency
+* Fixed: Removed Site Settings feature as this was never used
 
 ### 1.0.114 - 2020-02-12 ###
 * Fixed: Builder settings page access

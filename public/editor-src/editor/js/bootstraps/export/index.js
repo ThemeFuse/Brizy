@@ -23,6 +23,7 @@ import {
   getDefaultFont
 } from "visual/utils/fonts";
 
+import Config from "visual/global/Config";
 import { createStore } from "visual/redux/store";
 import { hydrate } from "visual/redux/actions";
 
@@ -41,6 +42,8 @@ import extractPopups from "./transforms/extractPopups";
 import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { flatMap } from "visual/utils/array";
+
+const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 export default function main({
   pageId,
@@ -120,7 +123,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
     })
   );
 
-  const { Page } = EditorGlobal.getComponents();
+  const { Page, PagePopup } = EditorGlobal.getComponents();
   const reduxState = store.getState();
 
   // === TMP ===
@@ -130,7 +133,11 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
-        <Page dbValue={reduxState.page.data} reduxState={reduxState} />
+        {IS_GLOBAL_POPUP ? (
+          <PagePopup dbValue={reduxState.page.data} reduxState={reduxState} />
+        ) : (
+          <Page dbValue={reduxState.page.data} reduxState={reduxState} />
+        )}
       </Provider>
     )
   );

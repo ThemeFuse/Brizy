@@ -12,6 +12,11 @@
 
     <link href="{{ assetsUrl }}/editor/css/preview.css" rel="stylesheet">
 
+    {% if PRO is defined and PRO %}
+    {% set assetsUrlPro = editorData.pro.urls.assets %}
+      <link href="{{ assetsUrlPro }}/css/preview.pro.css" rel="stylesheet">
+    {% endif %}
+
     {{ blocks.head | raw }}
   </head>
   <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
@@ -19,6 +24,10 @@
     <script src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
     <script src="{{ assetsUrl }}/editor/js/preview.js"></script>
 
+  {% if PRO is defined and PRO %}
+  {% set assetsUrlPro = editorData.pro.urls.assets %}
+    <script class="brz-script brz-script-preview-pro" src="{{ assetsUrlPro }}/js/preview.pro.js"></script>
+  {% endif %}
   {% for script in scriptTags %}
     <script src="{{ script.src }}"></script>
   {% endfor %}
