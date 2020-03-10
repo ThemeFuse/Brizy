@@ -49,6 +49,7 @@ import {
   toolbarLinkUpload,
   toolbarActionClosePopup
 } from "visual/utils/toolbar";
+import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 global.Brizy = {
   config: Config,
@@ -87,7 +88,9 @@ global.Brizy = {
     tabletSyncOnChange,
     mobileSyncOnChange,
     onChangeTypography,
-    onChangeTypographyMobile
+    onChangeTypographyMobile,
+    NORMAL,
+    HOVER
   },
   toolbar: {
     toolbarColor2,

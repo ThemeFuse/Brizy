@@ -100,7 +100,7 @@
       background: none;
       color: white;
       text-align: left;
-      font-family: pn, "Open Sans", Arial, sans-serif;
+      font-family: $font-family-1;
       font-size: 13px;
       font-weight: 600;
 
@@ -110,7 +110,7 @@
       &::placeholder {
         color: white;
         opacity: 0.6;
-        font-family: pn, "Open Sans", Arial, sans-serif;
+        font-family: $font-family-1;
         font-size: 13px;
         font-weight: 600;
         font-style: italic;

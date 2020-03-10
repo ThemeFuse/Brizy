@@ -1,82 +1,40 @@
 // Import Font
 @font-face {
-  font-family: "iowanoldst_btroman";
-  src: url("../fonts/iowaosrm-webfont.woff");
-  src: url("../fonts/iowaosrm-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/iowaosrm-webfont.woff2") format("woff2"),
-    url("../fonts/iowaosrm-webfont.woff") format("woff"),
-    url("../fonts/iowaosrm-webfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-// Europa
-@font-face {
-  font-family: "europa";
-  src: url("../fonts/europa-regular-webfont.woff");
-  src: url("../fonts/europa-regular-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("../fonts/europa-regular-webfont.woff2") format("woff2"),
-    url("../fonts/europa-regular-webfont.woff") format("woff"),
-    url("../fonts/europa-regular-webfont.ttf") format("truetype");
+  font-family: "nunito";
+  src: url('../fonts/nunito-regular-webfont.eot');
+  src: url('../fonts/nunito-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/nunito-regular-webfont.woff2') format('woff2'),
+       url('../fonts/nunito-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "europa";
-  src: url("../fonts/europa-bold-webfont.woff");
-  src: url("../fonts/europa-bold-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("../fonts/europa-bold-webfont.woff2") format("woff2"),
-    url("../fonts/europa-bold-webfont.woff") format("woff"),
-    url("../fonts/europa-bold-webfont.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "europa";
-  src: url("../fonts/europa-light-webfont.woff");
-  src: url("../fonts/europa-light-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("../fonts/europa-light-webfont.woff2") format("woff2"),
-    url("../fonts/europa-light-webfont.woff") format("woff"),
-    url("../fonts/europa-light-webfont.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-// Proximanova
-@font-face {
-  font-family: "pn";
-  src: url("../fonts/pn-regular-webfont.eot");
-  src: url("../fonts/pn-regular-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/pn-regular-webfont.woff2") format("woff2"),
-    url("../fonts/pn-regular-webfont.woff") format("woff"),
-    url("../fonts/pn-regular-webfont.svg") format("svg");
+  font-family: "nunito";
+  src: url('../fonts/nunito-italic-webfont.eot');
+  src: url('../fonts/nunito-italic-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/nunito-italic-webfont.woff2') format('woff2'),
+       url('../fonts/nunito-italic-webfont.woff') format('woff');
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 
 @font-face {
-  font-family: "pn";
-  src: url("../fonts/pn-medium-webfont.eot");
-  src: url("../fonts/pn-medium-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/pn-medium-webfont.woff2") format("woff2"),
-    url("../fonts/pn-medium-webfont.woff") format("woff"),
-    url("../fonts/pn-medium-webfont.svg") format("svg");
+  font-family: "nunito";
+  src: url('../fonts/nunito-semibold-webfont.eot');
+  src: url('../fonts/nunito-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/nunito-semibold-webfont.woff2') format('woff2'),
+       url('../fonts/nunito-semibold-webfont.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "pn";
-  src: url("../fonts/pn-bold-webfont.eot");
-  src: url("../fonts/pn-bold-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/pn-bold-webfont.woff2") format("woff2"),
-    url("../fonts/pn-bold-webfont.woff") format("woff"),
-    url("../fonts/pn-bold-webfont.svg") format("svg");
-  font-weight: bold;
+  font-family: "nunito";
+  src: url('../fonts/nunito-bold-webfont.eot');
+  src: url('../fonts/nunito-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/nunito-bold-webfont.woff2') format('woff2'),
+       url('../fonts/nunito-bold-webfont.woff') format('woff');
+  font-weight: 700;
   font-style: normal;
 }

@@ -154,14 +154,7 @@ class PagePopup extends EditorComponent {
       })
     });
 
-    return (
-      <div className="brz-root__container brz-reset-all">
-        <div className="brz-ed-wrap-block-wrap">
-          <EditorArrayComponent {...popupsProps} />
-        </div>
-        <div className="brz-root__container-after" />
-      </div>
-    );
+    return <EditorArrayComponent {...popupsProps} />;
   }
 }
 

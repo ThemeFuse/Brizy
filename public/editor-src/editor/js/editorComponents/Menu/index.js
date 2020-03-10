@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import _ from "underscore";
-import jQuery from "jquery";
-import "jquery.mmenu";
 import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -14,6 +12,7 @@ import ClickOutside from "visual/component/ClickOutside";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";
+import { applyFilter } from "visual/utils/filters";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as parentToolbarExtendConfig from "./parentToolbarExtend";
@@ -212,7 +211,7 @@ export default class Menu extends EditorComponent {
           node={document.body}
           className="brz-ed-mmenu-portal"
         >
-          <div className="brz-ed-mmenu-portal__menu">
+          <div className="brz-ed-mmenu-portal__menu brz-d-none">
             {this.renderMenu(v, this.getId())}
           </div>
         </Portal>
@@ -411,14 +410,22 @@ export default class Menu extends EditorComponent {
   }
 
   // MMenu plugin
+  getMMenu() {
+    return applyFilter("getLibs", {}).MMenu;
+  }
+
   initMMenu() {
-    if (this.mMenu) {
+    const MMenu = this.getMMenu();
+    const { items = [], mMenuPosition } = this.getValue();
+
+    if (this.mMenu || !MMenu || items.length === 0) {
       return;
     }
 
-    const { mMenuPosition } = this.getValue();
-
     const options = {
+      navbar: {
+        add: false
+      },
       extensions: [
         "theme-dark",
         "pagedim-black",
@@ -435,33 +442,40 @@ export default class Menu extends EditorComponent {
         },
         page: {
           wrapIfNeeded: false,
-          pageSelector: "#brz-ed-root"
+          selector: "#brz-ed-root"
         }
       }
     };
-    this.mMenu = jQuery(`#${this.getId()}`).mmenu(options, config);
+
+    this.mMenu = new MMenu(`#${this.getId()}`, options, config);
   }
 
   destroyMMenu() {
     if (this.mMenu) {
-      this.mMenu.remove();
+      this.mMenu.node.menu.remove();
       this.mMenu = null;
     }
   }
 
   openMMenu = () => {
-    const mMenuApi = this.mMenu.data("mmenu");
+    const MMenu = this.getMMenu();
 
-    if (mMenuApi) {
-      mMenuApi.open();
+    if (!this.mMenu && MMenu) {
+      this.initMMenu();
+    }
+
+    const menuAPI = this.mMenu && this.mMenu.API;
+
+    if (menuAPI) {
+      menuAPI.open();
     }
   };
 
   closeMMenu = () => {
-    const mMenuApi = this.mMenu && this.mMenu.data("mmenu");
+    const menuAPI = this.mMenu && this.mMenu.API;
 
-    if (mMenuApi) {
-      mMenuApi.close();
+    if (menuAPI) {
+      menuAPI.close();
     }
   };
 }
