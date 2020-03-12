@@ -165,8 +165,8 @@ export default class Menu extends EditorComponent {
     const { mMenuTitle } = v;
 
     return (
-      <li className="mm-navbar">
-        <a className="brz-a mm-navbar__title">
+      <li className="brz-mm-navbar">
+        <a className="brz-a brz-mm-navbar__title">
           <TextEditor value={mMenuTitle} onChange={this.handleTextChange} />
         </a>
       </li>

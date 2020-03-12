@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.116<br>
+Stable tag: 1.0.117<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.117 - 2020-03-12 ###
+* Fixed: Export errors for certain users
+* Fixed: Removed header 'To' from PHPMailer
 
 ### 1.0.116 - 2020-03-10 ###
 * Fixed: Removed local Lato font

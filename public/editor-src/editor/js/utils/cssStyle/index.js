@@ -18,9 +18,7 @@ export {
 export { cssStyleElementLineBorder } from "./cssStyleElementLineBorder";
 
 // Element Countdown
-export {
-  cssStyleTypographyElementCountdownLabelFontSize
-} from "./cssStyleElementCountdown";
+export { cssStyleTypographyElementCountdownLabelFontSize } from "./cssStyleElementCountdown";
 
 // Element IconBox
 export {
@@ -130,39 +128,25 @@ export {
 } from "./cssStyleElementButton";
 
 //Element FacebookButton
-export {
-  cssStyleElementFacebookButtonPropertyHoverTransition
-} from "./cssStyleElementFacebookButton";
+export { cssStyleElementFacebookButtonPropertyHoverTransition } from "./cssStyleElementFacebookButton";
 
 //Element FacebookComments
-export {
-  cssStyleElementFacebookCommentsPropertyHoverTransition
-} from "./cssStyleElementFacebookComments";
+export { cssStyleElementFacebookCommentsPropertyHoverTransition } from "./cssStyleElementFacebookComments";
 
 //Element FacebookEmbed
-export {
-  cssStyleElementFacebookEmbedPropertyHoverTransition
-} from "./cssStyleElementFacebookEmbed";
+export { cssStyleElementFacebookEmbedPropertyHoverTransition } from "./cssStyleElementFacebookEmbed";
 
 //Element FacebookGroup
-export {
-  cssStyleElementFacebookGroupPropertyHoverTransition
-} from "./cssStyleElementFacebookGroup";
+export { cssStyleElementFacebookGroupPropertyHoverTransition } from "./cssStyleElementFacebookGroup";
 
 //Element FacebookPage
-export {
-  cssStyleElementFacebookPagePropertyHoverTransition
-} from "./cssStyleElementFacebookPage";
+export { cssStyleElementFacebookPagePropertyHoverTransition } from "./cssStyleElementFacebookPage";
 
 //Element Map
-export {
-  cssStyleElementMapPropertyHoverTransition
-} from "./cssStyleElementMap";
+export { cssStyleElementMapPropertyHoverTransition } from "./cssStyleElementMap";
 
 //Element SoundCloud
-export {
-  cssStyleElementSoundCloudPropertyHoverTransition
-} from "./cssStyleElementSoundCloud";
+export { cssStyleElementSoundCloudPropertyHoverTransition } from "./cssStyleElementSoundCloud";
 
 // Element Popup2
 export {

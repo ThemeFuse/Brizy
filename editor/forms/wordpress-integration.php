@@ -65,10 +65,6 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		$headers   = array();
 		$headers[] = 'Content-type: text/html; charset=UTF-8';
 
-		if ( $this->getEmailTo() ) {
-			$headers[] = "To: {$this->getEmailTo()}";
-		}
-
 		if ( $this->getCc() ) {
 			$headers[] = "Cc: {$this->getCc()}";
 		}

@@ -177,9 +177,7 @@ export {
 export { styleElementProgressBarPercentage } from "./styleElementProgressBar";
 
 // Element Countdown
-export {
-  styleTypographyElementCountdownLabelFontSize
-} from "./styleElementCountdown";
+export { styleTypographyElementCountdownLabelFontSize } from "./styleElementCountdown";
 
 // Element IconBox
 export {
