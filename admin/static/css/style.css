@@ -195,8 +195,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 1;
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Safari and Chrome */
     appearance: none;
 }
 

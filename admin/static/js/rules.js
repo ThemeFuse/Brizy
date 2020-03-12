@@ -256,11 +256,24 @@ var RuleTypeField = function (params) {
     return function (state, action) {
         return h(
             "span",
-            {class: "brizy-rule-select"},
+            {
+                class: "brizy-rule-select",
+            },
+
             h(
                 "select",
                 {
                     name: params.name,
+                    style: {width: "100px"},
+                    oncreate: function (element) {
+                        var el = jQuery(element);
+                        el.on("change", params.onChange);
+                        el.select2();
+                    },
+                    onremove: function (element, done) {
+                        jQuery(element).select2("destroy");
+                        done();
+                    },
                     onchange: function (e) {
                         action.rule.setType(e.target.value);
                     }
@@ -338,33 +351,6 @@ var BrzSelect2 = function (params) {
     );
 };
 
-
-var RuleTaxonomySearchField = function (params) {
-    var convertResponseToOptions = function (response) {
-        var options = [new Option("All", null, false, false)];
-        response.data.forEach(function (term) {
-            var selected = params.rule.entityValues && (params.rule.entityValues.includes(term.term_id + "") || params.rule.entityValues.includes(term.term_id));
-            options.push(new Option(term.name, term.term_id, false, selected));
-        });
-        return options;
-    };
-
-    return h(
-        BrzSelect2,
-        {
-            id: "taxonomies-" + params.taxonomy,
-            style: params.style ? params.style : {width: "200px"},
-            optionRequest: function () {
-                return api.getTerms(params.taxonomy);
-            },
-            convertResponseToOptions: convertResponseToOptions,
-            onChange: params.onChange,
-            value: params.value
-        },
-        []
-    );
-};
-
 var RulePostsGroupSelectField = function (params) {
 
     var appliedFor = params.rule.appliedFor;
@@ -397,6 +383,7 @@ var RulePostsGroupSelectField = function (params) {
 
         return groups;
     };
+
 
     return h(
         BrzSelect2,
@@ -492,7 +479,7 @@ var RuleApplyGroupField = function (params) {
 
         const attributes = {
             name: params.type ? 'brizy-' + params.type + '-rule-group[]' : '',
-            class: "brizy-rule-select--options[]",
+            class: "brizy-rule-select--options[] ",
             onchange: function (e) {
                 var values = e.target.value.split("|");
                 actions.rule.update({
@@ -504,7 +491,18 @@ var RuleApplyGroupField = function (params) {
         };
 
         var elements = [
-            h("span", {class: "brizy-rule-select"}, h("select", attributes, groups))
+            h("span", {class: "brizy-rule-select brizy-rule-select2"}, h("select", {
+                style: {width: "200px"},
+                oncreate: function (element) {
+                    var el = jQuery(element);
+                    el.on("change", params.onChange);
+                    el.select2();
+                },
+                onremove: function (element, done) {
+                    jQuery(element).select2("destroy");
+                    done();
+                },
+            }, attributes, groups))
         ];
 
         switch (appliedFor) {
