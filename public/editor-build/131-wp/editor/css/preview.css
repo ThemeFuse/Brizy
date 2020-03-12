@@ -7307,16 +7307,16 @@ img.mfp-img {
     -webkit-transform: translate(-100%);
             transform: translate(-100%);
     opacity: 0;
-    -webkit-transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index;
-    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index; }
+    -webkit-transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity; }
     .brz .brz-popup2__preview.brz-popup2--opened {
       z-index: 1070;
       visibility: visible;
       -webkit-transform: translate(0);
               transform: translate(0);
       opacity: 1;
-      -webkit-transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index;
-      transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility, 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index; }
+      -webkit-transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+      transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity; }
   .brz .brz-carousel {
     display: block;
     width: 100%; }

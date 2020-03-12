@@ -177,7 +177,7 @@ export function styleMenuClassName(v, hasMMenu) {
           color: "var(--mMenuColor)",
           borderColor: "var(--mMenuBorderColor)",
 
-          "&:hover > .mm-listitem__text, .mm-btn_next:hover, &.mm-listitem_opened": {
+          "&:hover > .brz-mm-listitem__text, .brz-mm-btn_next:hover, &.brz-mm-listitem_opened": {
             color: "var(--mMenuHoverColor)"
           }
         },
@@ -198,7 +198,7 @@ export function styleMenuClassName(v, hasMMenu) {
             color: "var(--subMenuHoverColor)"
           }
         },
-        "& .mm-navbar": {
+        "& .brz-mm-navbar": {
           color: "var(--mMenuColor)"
         },
         "& .brz-menu__ul > .brz-menu__item": {
@@ -215,7 +215,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Background Color for Dropdown
-        "&:not(.mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
+        "&:not(.brz-mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
           backgroundColor: "var(--subMenuBgColor)",
 
           "&:hover": {
@@ -224,7 +224,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Color for dropdown arrow
-        "&:not(.mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
+        "&:not(.brz-mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
           "&:after": {
             borderColor: "var(--subMenuColor)"
           },
@@ -241,11 +241,11 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // MMenu Style
-        "&.mm-menu.mm-menu_theme-dark": {
-          "& .mm-panels, & .mm-panels > .mm-panel": {
+        "&.brz-mm-menu.brz-mm-menu_theme-dark": {
+          "& .brz-mm-panels, & .brz-mm-panels > .brz-mm-panel": {
             backgroundColor: "var(--mMenuBgColor)"
           },
-          "& .mm-navbar.mm-listitem, & .mm-listitem_opened > .mm-listitem__text:after": {
+          "& .brz-mm-navbar.brz-mm-listitem, & .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
             borderColor: "var(--mMenuBorderColor)"
           }
         }
@@ -272,7 +272,7 @@ export function styleMenuClassName(v, hasMMenu) {
             justifyContent: "var(--mMenuItemHorizontalAlign)"
           }
         },
-        "& .mm-navbar": {
+        "& .brz-mm-navbar": {
           fontFamily: "var(--mMenuFontFamily)",
           fontSize: "var(--mMenuFontSize)",
           fontWeight: "var(--mMenuFontWeight)",
@@ -286,12 +286,12 @@ export function styleMenuClassName(v, hasMMenu) {
           marginRight: "var(--mMenuIconSpacing)",
           fontSize: "var(--mMenuIconSize)"
         },
-        "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
           height: "calc(var(--mMenuLineHeight) * var(--mMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.mm-listview)": {
+        "& .brz-menu__ul:not(.brz-mm-listview)": {
           marginTop: "var(--itemMarginTop)",
           marginRight: "var(--itemMarginRight)",
           marginBottom: "var(--itemMarginBottom)",
@@ -326,7 +326,7 @@ export function styleMenuClassName(v, hasMMenu) {
             justifyContent: "var(--tabletMMenuItemHorizontalAlign)"
           }
         },
-        "& .mm-navbar": {
+        "& .brz-mm-navbar": {
           fontFamily: "var(--mMenuFontFamily)",
           fontSize: "var(--tabletMMenuFontSize)",
           fontWeight: "var(--tabletMMenuFontWeight)",
@@ -340,13 +340,13 @@ export function styleMenuClassName(v, hasMMenu) {
           marginRight: "var(--tabletMMenuIconSpacing)",
           fontSize: "var(--tabletMMenuIconSize)"
         },
-        "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
           height:
             "calc(var(--tabletMMenuLineHeight) * var(--tabletMMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.mm-listview)": {
+        "& .brz-menu__ul:not(.brz-mm-listview)": {
           marginTop: "var(--tabletItemMarginTop)",
           marginRight: "var(--tabletItemMarginRight)",
           marginBottom: "var(--tabletItemMarginBottom)",
@@ -381,7 +381,7 @@ export function styleMenuClassName(v, hasMMenu) {
             justifyContent: "var(--mobileMMenuItemHorizontalAlign)"
           }
         },
-        "& .mm-navbar": {
+        "& .brz-mm-navbar": {
           fontFamily: "var(--mMenuFontFamily)",
           fontSize: "var(--mobileMMenuFontSize)",
           fontWeight: "var(--mobileMMenuFontWeight)",
@@ -395,13 +395,13 @@ export function styleMenuClassName(v, hasMMenu) {
           marginRight: "var(--mobileMMenuIconSpacing)",
           fontSize: "var(--mobileMMenuIconSize)"
         },
-        "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
           height:
             "calc(var(--mobileMMenuLineHeight) * var(--mobileMMenuFontSize) + 19px)"
         },
 
         // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.mm-listview)": {
+        "& .brz-menu__ul:not(.brz-mm-listview)": {
           marginTop: "var(--mobileItemMarginTop)",
           marginRight: "var(--mobileItemMarginRight)",
           marginBottom: "var(--mobileItemMarginBottom)",
@@ -573,14 +573,14 @@ export function styleMenuClassName(v, hasMMenu) {
           letterSpacing: `${mMenuLetterSpacing}`,
           borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity),
 
-          "&:hover > .mm-listitem__text, .mm-btn_next:hover, &.mm-listitem_opened": {
+          "&:hover > .brz-mm-listitem__text, .brz-mm-btn_next:hover, &.brz-mm-listitem_opened": {
             color: hexToRgba(mMenuHoverColorHex, mMenuHoverColorOpacity)
           },
-          "& .mm-listitem__text": {
+          "& .brz-mm-listitem__text": {
             justifyContent: aligns[mMenuItemHorizontalAlign]
           }
         },
-        "& .mm-navbar": {
+        "& .brz-mm-navbar": {
           color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
           fontFamily: getFontById({
             family: mMenuFontFamily,
@@ -593,7 +593,7 @@ export function styleMenuClassName(v, hasMMenu) {
           borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
         },
         // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.mm-listview)": {
+        "& .brz-menu__ul:not(.brz-mm-listview)": {
           marginTop: `${itemPaddingTop}px`,
           marginRight: `${parseFloat(-itemPaddingRight / 2)}px`,
           marginBottom: `${itemPaddingBottom}px`,
@@ -623,7 +623,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Background Color for Dropdown
-        "&:not(.mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
+        "&:not(.brz-mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
           backgroundColor: hexToRgba(subMenuBgColorHex, subMenuBgColorOpacity),
 
           "&:hover": {
@@ -635,7 +635,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Color for dropdown arrow
-        "&:not(.mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
+        "&:not(.brz-mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
           "&:after": {
             borderColor: styleColor({
               v,
@@ -663,15 +663,15 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // MMenu Style
-        "&.mm-menu.mm-menu_theme-dark": {
-          "& .mm-panels, & .mm-panels > .mm-panel": {
+        "&.brz-mm-menu.brz-mm-menu_theme-dark": {
+          "& .brz-mm-panels, & .brz-mm-panels > .brz-mm-panel": {
             backgroundColor: hexToRgba(mMenuBgColorHex, mMenuBgColorOpacity)
           },
-          "& .mm-navbar.mm-listitem, & .mm-listitem_opened > .mm-listitem__text:after": {
+          "& .brz-mm-navbar.brz-mm-listitem, & .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
             borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
           }
         },
-        "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
           height: `${mMenuLineHeight * mMenuFontSize + 19}px`
         }
       },
@@ -699,7 +699,7 @@ export function styleMenuClassName(v, hasMMenu) {
                 aligns[tabletSyncOnChange(v, "mMenuItemHorizontalAlign")]
             }
           },
-          "& .mm-navbar": {
+          "& .brz-mm-navbar": {
             fontSize: `${tabletMMenuFontSize}`,
             fontWeight: tabletMMenuFontWeight,
             lineHeight: tabletMMenuLineHeight,
@@ -712,12 +712,12 @@ export function styleMenuClassName(v, hasMMenu) {
             marginRight: `${tabletMMenuIconSpacing}px`,
             fontSize: `${tabletMMenuIconSize}px`
           },
-          "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+          "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
             height: `${tabletMMenuLineHeight * tabletMMenuFontSize + 19}px`
           },
 
           // Spacing for 0 level menu item
-          "& .brz-menu__ul:not(.mm-listview)": {
+          "& .brz-menu__ul:not(.brz-mm-listview)": {
             marginTop: `${tabletItemPaddingTop}px`,
             marginRight: `${parseFloat(-tabletItemPaddingRight / 2)}px`,
             marginBottom: `${tabletItemPaddingBottom}px`,
@@ -755,7 +755,7 @@ export function styleMenuClassName(v, hasMMenu) {
                 aligns[mobileSyncOnChange(v, "mMenuItemHorizontalAlign")]
             }
           },
-          "& .mm-navbar": {
+          "& .brz-mm-navbar": {
             fontSize: `${mobileMMenuFontSize}`,
             fontWeight: mobileMMenuFontWeight,
             lineHeight: mobileMMenuLineHeight,
@@ -768,12 +768,12 @@ export function styleMenuClassName(v, hasMMenu) {
             marginRight: `${mobileMMenuIconSpacing}px`,
             fontSize: `${mobileMMenuIconSize}px`
           },
-          "&.mm-menu .mm-listitem_vertical .mm-btn_next": {
+          "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
             height: `${mobileMMenuLineHeight * mobileMMenuFontSize + 19}px`
           },
 
           // Spacing for 0 level menu item
-          "& .brz-menu__ul:not(.mm-listview)": {
+          "& .brz-menu__ul:not(.brz-mm-listview)": {
             marginTop: `${mobileItemPaddingTop}px`,
             marginRight: `${parseFloat(-mobileItemPaddingRight / 2)}px`,
             marginBottom: `${mobileItemPaddingBottom}px`,
