@@ -48,7 +48,7 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
-		add_action( 'wp_print_scripts', array($this,'forceJqueryQueue'),99999 );
+		add_action( 'wp_print_scripts', array( $this, 'forceJqueryQueue' ), 99999 );
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
@@ -220,7 +220,7 @@ class Brizy_Editor {
 	 */
 	public function handleFrontEndEditor( $post ) {
 		try {
-			$main = new Brizy_Public_Main( $post );
+			$main = Brizy_Public_Main::get( $post );
 			$main->initialize_front_end();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -233,7 +233,7 @@ class Brizy_Editor {
 	public function handleBackEndEditor( $post ) {
 
 		try {
-			$main = new Brizy_Public_Main( $post );
+			$main = Brizy_Public_Main::get( $post );
 			$main->initialize_wordpress_editor();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -296,8 +296,8 @@ class Brizy_Editor {
 	}
 
 	public function forceJqueryQueue() {
-		if(!wp_script_is('jquery','enqueued')) {
-			wp_enqueue_script('jquery');
+		if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
+			wp_enqueue_script( 'jquery' );
 		}
 	}
 

@@ -60,15 +60,21 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 				$GLOBALS['post'] = $post;
 				setup_postdata( $post );
 
-				add_filter( 'the_content', 'wpautop' );
-				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
+				// remove all brizy the_content fitlers
 
+				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
+				Brizy_Public_Main::get()->removeTheContentFilters();
+
+				// get the content
+				add_filter( 'the_content', 'wpautop' );
 				$content = get_the_content( null, null, $post );
 				$content = apply_filters( 'the_content', $content );
 				$content = str_replace( ']]>', ']]&gt;', $content );
-
 				remove_filter( 'the_content', 'wpautop' );
+
+				// add the filters back
 				add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
+				Brizy_Public_Main::get()->addTheContentFilters();
 
 				wp_reset_postdata();
 
