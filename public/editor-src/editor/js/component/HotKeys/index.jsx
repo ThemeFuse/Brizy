@@ -186,7 +186,7 @@ class HotKeys extends React.Component {
 
   render() {
     if (IS_PREVIEW) {
-      return this.props.children;
+      return this.props.children || null;
     }
 
     const { children, id } = this.props;

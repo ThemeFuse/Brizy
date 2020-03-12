@@ -123,7 +123,20 @@
 }
 
 // MMenu
-&.mm-wrapper_opened .brz-root__container {
-  position: relative;
-  z-index: 1;
+&.brz-mm-wrapper_opened {
+  .brz-root__container {
+    position: relative;
+  }
+
+  // Popups
+  .brz-popup,
+  .brz-popup2,
+  .brz-section__header,
+  .brz-root__container {
+    z-index: 1;
+  }
+  .brz-section__header--animated {
+    z-index: 2;
+  }
 }
+

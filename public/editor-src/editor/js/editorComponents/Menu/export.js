@@ -1,5 +1,5 @@
 import $ from "jquery";
-import MMenu from "mmenu-js";
+import MMenu from "../../libs/mmenu/custom-build/mmenu";
 
 export default function() {
   $("[data-mmenu-id]").each(function() {

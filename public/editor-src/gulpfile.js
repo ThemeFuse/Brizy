@@ -679,7 +679,9 @@ gulp.task("wp.open-source", done => {
     "!**/*.pro.*",
     "!editor/icons/{glyph,outline}/",
     "!editor/icons/{glyph,outline}/**",
-    "!**/sass/editor/icons/nucleo-*"
+    "!**/sass/editor/icons/nucleo-*",
+    "!**/editor/js/libs/mmenu/",
+    "!**/editor/js/libs/mmenu/**"
   ];
   const dest = paths.buildLocal + "/editor-src";
 

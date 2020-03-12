@@ -52,17 +52,13 @@
   visibility: hidden;
   transform: translate(-100%);
   opacity: 0;
-  transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity,
-    0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility,
-    0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index;
+  transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
 
   &.brz-popup2--opened {
     z-index: z("toolbar");
     visibility: visible;
     transform: translate(0);
     opacity: 1;
-    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity,
-      0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) visibility,
-      0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index;
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
   }
 }
