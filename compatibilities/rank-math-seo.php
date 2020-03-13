@@ -11,11 +11,12 @@ class Brizy_Compatibilities_RankMathSeo {
 	 * Enqueue script for the metabox.
 	 */
 	public function enqueue() {
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-rank-math-compatible-js',
-			Brizy_Editor::get()->get_url( 'admin/static/js/rank-math-compatible.js' ),
+			Brizy_Editor::get_slug() . '-rank-math-compatible-js',
+			$urlBuilder->plugin_url( 'admin/static/js/rank-math-compatible.js' ),
 			[ 'wp-hooks', 'rank-math-analyzer' ],
-			Brizy_Editor::get()->get_version(),
+			BRIZY_VERSION,
 			true
 		);
 	}

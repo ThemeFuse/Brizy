@@ -5,8 +5,6 @@
  */
 class Brizy_Editor {
 
-	private static $is_allowed_for_current_user;
-
 	private static $settings_key = 'post-types';
 
 	private static $instance;
@@ -34,7 +32,6 @@ class Brizy_Editor {
 			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );
-
 			return;
 		}
 
@@ -50,12 +47,11 @@ class Brizy_Editor {
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
 		add_action( 'wp_print_scripts', array( $this, 'forceJqueryQueue' ), 99999 );
 
-		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
+		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor_User::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
-
 	}
 
 	public function runMigrations() {
@@ -149,8 +145,6 @@ class Brizy_Editor {
 		if ( $post && $post->uses_editor() ) {
 			$this->handleFrontEndEditor( $post );
 		}
-
-
 	}
 
 	public function revisionsToKeep( $num, $post ) {
@@ -301,7 +295,6 @@ class Brizy_Editor {
 		}
 	}
 
-
 	private function initializeAssetLoaders() {
 		try {
 			$url_builder = new Brizy_Editor_UrlBuilder( null );
@@ -354,61 +347,8 @@ class Brizy_Editor {
 		return $pid;
 	}
 
-	public static function is_administrator() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		return is_admin() || is_super_admin();
-	}
-
-	public static function is_subscriber() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		$user = wp_get_current_user();
-
-		return in_array( 'subscriber', (array) $user->roles );
-	}
-
-	public static function is_user_allowed() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		if ( self::is_administrator() ) {
-			return true;
-		}
-
-		if ( is_null( self::$is_allowed_for_current_user ) ) {
-			self::$is_allowed_for_current_user =
-				(
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
-				);
-		}
-
-		return self::$is_allowed_for_current_user;
-	}
-
-	public function get_path( $rel = '/' ) {
-		return BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . ltrim( $rel, DIRECTORY_SEPARATOR );
-	}
-
-	public function get_url( $rel = '' ) {
-		return BRIZY_PLUGIN_URL . "/" . ltrim( $rel, "/" );
-	}
-
-	public function get_version() {
-		return BRIZY_VERSION;
-	}
-
-	public function get_slug() {
-		return 'brizy';
+	static public function get_slug() {
+		return apply_filters( 'brizy-slug', 'brizy' );
 	}
 
 	/**

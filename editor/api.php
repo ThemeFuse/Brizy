@@ -62,7 +62,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		if ( Brizy_Editor::is_user_allowed() ) {
+		if ( Brizy_Editor_User::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_REMOVE_LOCK, array( $this, 'removeProjectLock' ) );
 			add_action( 'wp_ajax_' . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
 			add_action( 'wp_ajax_' . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );

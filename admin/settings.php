@@ -81,7 +81,7 @@ class Brizy_Admin_Settings {
 	 */
 	function actionRegisterSettingsPage() {
 
-		if ( ! Brizy_Editor::is_user_allowed() || is_network_admin() ) {
+		if ( ! Brizy_Editor_User::is_user_allowed() || is_network_admin() ) {
 			return;
 		}
 

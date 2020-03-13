@@ -73,7 +73,7 @@ class Brizy_Admin_Popups_Main {
 				'public'              => false,
 				'has_archive'         => false,
 				'description'         => __( 'Popups', 'brizy' ),
-				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
+				'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
 				'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,

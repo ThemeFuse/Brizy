@@ -83,37 +83,39 @@ class Brizy_Admin_Templates {
 			return;
 		}
 
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
+
 		//  hyperapp.js is also used in PRO
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-hyperapp-js',
-			Brizy_Editor::get()->get_url( 'admin/static/js/hyperapp.js' ),
+			Brizy_Editor::get_slug() . '-hyperapp-js',
+			$urlBuilder->plugin_url( 'admin/static/js/hyperapp.js' ),
 			array( 'jquery', 'underscore' ),
-			Brizy_Editor::get()->get_version(),
+			BRIZY_VERSION,
 			true
 		);
 
 		wp_enqueue_style(
-			Brizy_Editor::get()->get_slug() . '-select2',
-			Brizy_Editor::get()->get_url( 'vendor/select2/select2/dist/css/select2.min.css' ),
+			Brizy_Editor::get_slug() . '-select2',
+			$urlBuilder->plugin_url( 'vendor/select2/select2/dist/css/select2.min.css' ),
 			array(),
 			true
 		);
 
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-select2',
-			Brizy_Editor::get()->get_url( 'vendor/select2/select2/dist/js/select2.full.min.js' ),
+			Brizy_Editor::get_slug() . '-select2',
+			$urlBuilder->plugin_url( 'vendor/select2/select2/dist/js/select2.full.min.js' ),
 			array( 'jquery' )
 		);
 
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-rules',
-			Brizy_Editor::get()->get_url( 'admin/static/js/rules.js' ),
-			array( Brizy_Editor::get()->get_slug() . '-hyperapp-js' ),
-			Brizy_Editor::get()->get_version(),
+			Brizy_Editor::get_slug() . '-rules',
+			$urlBuilder->plugin_url( 'admin/static/js/rules.js' ),
+			array( Brizy_Editor::get_slug() . '-hyperapp-js' ),
+			BRIZY_VERSION,
 			true
 		);
 		wp_localize_script(
-			Brizy_Editor::get()->get_slug() . '-rules',
+			Brizy_Editor::get_slug() . '-rules',
 			'Brizy_Admin_Rules',
 			array(
 				'url'          => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
@@ -242,7 +244,7 @@ class Brizy_Admin_Templates {
 				'public'              => false,
 				'has_archive'         => false,
 				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'templates', 'brizy' ) . '.',
-				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
+				'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
 				'show_ui'             => true,
 				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
@@ -354,16 +356,18 @@ class Brizy_Admin_Templates {
 		}
 
 		$templateName = self::getTemplate()->get_template();
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
 
 		if ( ! $templateName || $templateName == 'default' ) {
-			return path_join( BRIZY_PLUGIN_PATH, 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
+			return $urlBuilder->plugin_path( 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );
 		}
 
 		if ( in_array( $templateName, array(
 			Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,
 			Brizy_Config::BRIZY_TEMPLATE_FILE_NAME
 		) ) ) {
-			return Brizy_Editor::get()->get_path( '/public/views/templates/' . $templateName );
+
+			return $urlBuilder->plugin_path( '/public/views/templates/' . $templateName );
 		}
 
 		return $template;

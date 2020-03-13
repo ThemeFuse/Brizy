@@ -21,7 +21,7 @@ class Brizy_Admin_Main {
 	 */
 	protected function __construct() {
 
-		if ( ! Brizy_Editor::is_user_allowed() ) {
+		if ( ! Brizy_Editor_User::is_user_allowed() ) {
 			return;
 		}
 
@@ -33,7 +33,7 @@ class Brizy_Admin_Main {
 		// enqueue admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 
-		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
+		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor_User::is_administrator() ) {
 			add_action( 'admin_post__brizy_admin_editor_enable', array(
 				$this,
 				'action_request_enable'
@@ -282,33 +282,35 @@ class Brizy_Admin_Main {
 	 */
 	public function action_register_static() {
 
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
+
 		wp_enqueue_style(
-			Brizy_Editor::get()->get_slug() . '-admin-css',
-			Brizy_Editor::get()->get_url( 'admin/static/css/style.css' ),
+			Brizy_Editor::get_slug() . '-admin-css',
+			$urlBuilder->plugin_url( 'admin/static/css/style.css' ),
 			array(),
-			Brizy_Editor::get()->get_version()
+			BRIZY_VERSION
 		);
 
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-admin-js',
-			Brizy_Editor::get()->get_url( 'admin/static/js/script.js' ),
+			Brizy_Editor::get_slug() . '-admin-js',
+			$urlBuilder->plugin_url( 'admin/static/js/script.js' ),
 			array( 'jquery', 'underscore' ),
-			Brizy_Editor::get()->get_version(),
+			BRIZY_VERSION,
 			true
 		);
 
 		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-admin-featured-image-js',
-			Brizy_Editor::get()->get_url( 'admin/static/js/featured-image.js' ),
+			Brizy_Editor::get_slug() . '-admin-featured-image-js',
+			$urlBuilder->plugin_url( 'admin/static/js/featured-image.js' ),
 			array( 'jquery', 'underscore' ),
-			Brizy_Editor::get()->get_version(),
+			BRIZY_VERSION,
 			true
 		);
 
 		$get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
 
 		wp_localize_script(
-			Brizy_Editor::get()->get_slug() . '-admin-js',
+			Brizy_Editor::get_slug() . '-admin-js',
 			'Brizy_Admin_Data',
 			array(
 				'url'           => admin_url( 'admin-ajax.php' ),
@@ -434,7 +436,7 @@ class Brizy_Admin_Main {
 	 */
 	public function filter_add_brizy_edit_row_actions( $actions, $post ) {
 
-		$is_allowed = Brizy_Editor::is_user_allowed();
+		$is_allowed = Brizy_Editor_User::is_user_allowed();
 
 		if ( ! $is_allowed || ! in_array( get_post_type(), Brizy_Editor::get()->supported_post_types() ) ) {
 			return $actions;

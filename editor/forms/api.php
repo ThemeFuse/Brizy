@@ -53,7 +53,7 @@ class Brizy_Editor_Forms_Api {
 
 	private function initialize() {
 
-		if ( Brizy_Editor::is_user_allowed() ) {
+		if ( Brizy_Editor_User::is_user_allowed() ) {
 			add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
 			add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE_FORM, array( $this, 'update_form' ) );
