@@ -312,6 +312,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	public function get_item() {
 		try {
 			$this->verifyNonce( self::nonce );
+
+			if(!$this->post) {
+				throw new Exception('Invalid post provided');
+			}
+
 			$data             = $this->post->createResponse();
 			$data['is_index'] = true;
 

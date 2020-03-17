@@ -63,7 +63,8 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 				// remove all brizy the_content fitlers
 
 				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-				Brizy_Public_Main::get()->removeTheContentFilters();
+				$brizyPost = Brizy_Editor_Post::get( $post );
+				Brizy_Public_Main::get( $brizyPost )->removeTheContentFilters();
 
 				// get the content
 				add_filter( 'the_content', 'wpautop' );
@@ -74,7 +75,7 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 
 				// add the filters back
 				add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-				Brizy_Public_Main::get()->addTheContentFilters();
+				Brizy_Public_Main::get($brizyPost)->addTheContentFilters();
 
 				wp_reset_postdata();
 
