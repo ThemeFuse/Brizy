@@ -121,6 +121,18 @@ class PagePopup extends EditorComponent {
     UIState.set("prompt", this.getPromptData());
   };
 
+  renderItems() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      itemProps: () => ({
+        isOpened: true,
+        onClose: this.handleClose
+      })
+    });
+
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v) {
     if (v.items.length === 0) {
       return (
@@ -146,22 +158,11 @@ class PagePopup extends EditorComponent {
       );
     }
 
-    const popupsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      itemProps: () => ({
-        isOpened: true,
-        onClose: this.handleClose
-      })
-    });
+    return this.renderItems();
+  }
 
-    return (
-      <div className="brz-root__container brz-reset-all">
-        <div className="brz-ed-wrap-block-wrap">
-          <EditorArrayComponent {...popupsProps} />
-        </div>
-        <div className="brz-root__container-after" />
-      </div>
-    );
+  renderForView() {
+    return this.renderItems();
   }
 }
 

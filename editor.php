@@ -48,14 +48,13 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp', array( $this, 'wordpressObjectCreated' ) );
+		add_action( 'wp_print_scripts', array($this,'forceJqueryQueue'),99999 );
 
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
 		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
-		//add_action( 'wp_head', array( $this, 'brizy_settings_header' ) );
-		//add_action( 'wp_footer', array( $this, 'brizy_settings_footer' ) );
 
 	}
 
@@ -295,6 +294,12 @@ class Brizy_Editor {
 		return $mainProcessor->process( $content );
 	}
 
+	public function forceJqueryQueue() {
+		if(!wp_script_is('jquery','enqueued')) {
+			wp_enqueue_script('jquery');
+		}
+	}
+
 	private function initializeAssetLoaders() {
 		try {
 			$url_builder = new Brizy_Editor_UrlBuilder( null );
@@ -309,45 +314,6 @@ class Brizy_Editor {
 			Brizy_Logger::instance()->exception( $e );
 		}
 	}
-
-
-//	public function brizy_settings_header() {
-//		$params = array();
-//
-//		$context = array(
-//			'site_settings'  => array(
-//				'title'       => html_entity_decode( get_bloginfo( 'name' ) ),
-//				'description' => html_entity_decode( get_bloginfo( 'description' ) ),
-//				'favicon'     => get_option( 'brizy-settings-favicon' ),
-//				'favicon_url' => site_url( get_option( 'brizy-settings-favicon' ) )
-//			),
-//			'social_sharing' => array(
-//				'title'         => html_entity_decode( get_option( 'brizy-social-title' ) ),
-//				'description'   => html_entity_decode( get_option( 'brizy-social-description' ) ),
-//				'thumbnail'     => get_option( 'brizy-social-thumbnail' ),
-//				'thumbnail_url' => site_url( get_option( 'brizy-social-thumbnail' ) )
-//			),
-//			'custom_css'     => html_entity_decode( get_option( 'brizy-custom-css' ) ),
-//			'code_injection' => array(
-//				'header_code' => html_entity_decode( get_option( 'brizy-header-injection' ) ),
-//				'footer_code' => html_entity_decode( get_option( 'brizy-footer-injection' ) )
-//			),
-//			'site_url'       => site_url(),
-//			'language'       => get_locale(),
-//		);
-//
-//		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/public/views' )
-//		                     ->render( 'head-site-settings.html.twig', $context );
-//	}
-
-	public function brizy_settings_footer() {
-		$params                     = array();
-		$params['footer_injection'] = get_option( 'brizy-footer-injection' );
-
-		echo Brizy_TwigEngine::instance( dirname( __FILE__ ) . '/public/views' )
-		                     ->render( 'footer-partial.html.twig', $params );
-	}
-
 
 	/*
 	 * ====================================================================================================

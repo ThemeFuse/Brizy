@@ -1,7 +1,6 @@
 import React from "react";
 import { mergeIn } from "timm";
 import { noop } from "underscore";
-import Isotope from "isotope-layout";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
@@ -10,6 +9,7 @@ import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { applyFilter } from "visual/utils/filters";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -49,7 +49,7 @@ class ImageGallery extends EditorComponent {
   };
 
   handleResizeImage = () => {
-    if (this.node) {
+    if (this.node && this.isotope) {
       this.isotope.layout();
     }
   };
@@ -113,17 +113,28 @@ class ImageGallery extends EditorComponent {
     );
   }
 
+  // Isotope plugin
+  getIsotope() {
+    return applyFilter("getLibs", {}).Isotope;
+  }
+
   initIsotope() {
-    this.isotope = new Isotope(this.node, {
-      itemSelector: ".brz-image__gallery-item",
-      masonry: {
-        columnWidth: ".brz-image__gallery-item"
-      }
-    });
+    const Isotope = this.getIsotope();
+
+    if (Isotope) {
+      this.isotope = new Isotope(this.node, {
+        itemSelector: ".brz-image__gallery-item",
+        masonry: {
+          columnWidth: ".brz-image__gallery-item"
+        }
+      });
+    }
   }
 
   destroyIsotope() {
-    this.isotope.destroy();
+    if (this.isotope) {
+      this.isotope.destroy();
+    }
   }
 }
 

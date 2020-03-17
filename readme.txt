@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.0.114
+Stable tag: 1.0.117
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,28 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.117 - 2020-03-12 =
+* Fixed: Export errors for certain users
+* Fixed: Removed header 'To' from PHPMailer
+
+= 1.0.116 - 2020-03-10 =
+* Fixed: Removed local Lato font
+* Fixed: Removed Europa Font
+* Fixed: Removed IowanOldStyleBT-Bold Font
+* Fixed: Use jQuery from WordPress 
+* Fixed: Removed all possible screenshot extensions al leaved only jpeg
+* Fixed: Force jQuery enqueue.
+* Fixed: Removed some unused code added Select2 as a dependency
+* Fixed: Removed Site Settings feature as this was never used
+
+= 1.0.115 - 2020-03-10 =
+* Fixed: Removed Nucleo
+* Fixed: Added Font Awesome4
+* Fixed: Removed all possible screenshot extensions al leaved only jpeg
+* Fixed: Force jQuery enqueue.
+* Fixed: Removed some unused code added Select2 as a dependency
+* Fixed: Removed Site Settings feature as this was never used
 
 = 1.0.114 - 2020-02-12 =
 * Fixed: Builder settings page access

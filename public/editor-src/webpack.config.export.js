@@ -29,7 +29,7 @@ module.exports = options => {
           options: babelrc.export()
         },
         {
-          test: /quill|isotope-layout|magnific-popup|slick-carousel|jquery.mmenu/,
+          test: /quill|isotope-layout|magnific-popup|slick-carousel/,
           loader: "null-loader"
         },
         {
