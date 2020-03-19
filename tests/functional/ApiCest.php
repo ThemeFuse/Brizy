@@ -413,14 +413,19 @@ class ApiCest {
 				'post_id'      => $postId,
 				'action'       => 'brizy_placeholder_content',
 				'version'      => BRIZY_EDITOR_VERSION,
-				'placeholders' => [ '{{brizy_dc_permalink post_id=\'' . $postId . '\'}}', '{{brizy_dc_post_title post_id=\'' . $postId . '\'}}' ]
+				'placeholders' => [
+					'{{brizy_dc_permalink post_id=\'' . $postId . '\'}}',
+					'{{brizy_dc_post_title post_id=\'' . $postId . '\'}}'
+				]
 			] ) );
 		$I->seeResponseCodeIsSuccessful();
 
 		$response = $I->grabResponse();
 		$response = json_decode( $response );
 
-		$I->assertCount(2, $response->data->placeholders, 'It should return two responses');
+		$I->assertTrue( isset( $response->data->placeholders ), 'The response should have the property placeholders' );
+
+		$I->assertCount( 2, $response->data->placeholders, 'It should return two responses' );
 
 		$I->assertStringNotContainsString( '{{brizy_dc_permalink post_id=\'' . $postId . '\'}}', $response->data->placeholders[0], 'Is should replace the place holder with the post permalink' );
 
@@ -433,7 +438,6 @@ class ApiCest {
 			'post_title'  => 'Template',
 			'post_name'   => 'Template',
 			'post_status' => 'publish',
-
 		] );
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
@@ -444,9 +448,10 @@ class ApiCest {
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
-		$I->seePostMetaInDatabase( [ 'post_id'    => $postId,
-		                             'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
-		                             'meta_value' => 'single'
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $postId,
+			'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
+			'meta_value' => 'single'
 		] );
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
@@ -457,9 +462,10 @@ class ApiCest {
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
-		$I->seePostMetaInDatabase( [ 'post_id'    => $postId,
-		                             'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
-		                             'meta_value' => 'archive'
+		$I->seePostMetaInDatabase( [
+			'post_id'    => $postId,
+			'meta_key'   => Brizy_Admin_Templates::TEMPLATE_TYPE_KEY,
+			'meta_value' => 'archive'
 		] );
 	}
 
@@ -479,7 +485,7 @@ class ApiCest {
 				'version'       => BRIZY_EDITOR_VERSION
 			] ) );
 
-		$I->seeResponseCodeIs(400);
+		$I->seeResponseCodeIs( 400 );
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'template_id'   => $postId,
@@ -488,6 +494,6 @@ class ApiCest {
 				'version'       => BRIZY_EDITOR_VERSION
 			] ) );
 
-		$I->seeResponseCodeIs(400);
+		$I->seeResponseCodeIs( 400 );
 	}
 }
