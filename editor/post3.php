@@ -757,7 +757,7 @@ class Brizy_Editor_Post3 extends Brizy_Admin_Serializable {
 	 */
 	public function edit_url() {
 		return add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			array( Brizy_Editor::prefix('-edit') => '' ),
 			get_permalink( $this->get_parent_id() )
 		);
 	}

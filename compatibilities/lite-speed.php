@@ -6,7 +6,7 @@
 class Brizy_Compatibilities_LiteSpeed {
 
 	public function __construct() {
-		if ( isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) {
+		if ( isset( $_GET[Brizy_Editor::prefix('-edit')] ) || isset( $_GET[Brizy_Editor::prefix('-edit-iframe')] ) ) {
 			add_action( 'litespeed_option_html_minify', '__return_false' );
 			add_action( 'litespeed_option_js_minify', '__return_false' );
 			add_action( 'litespeed_option_js_inline_minify', '__return_false' );

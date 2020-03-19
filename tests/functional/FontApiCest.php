@@ -2,7 +2,6 @@
 
 class FontApiCest {
 
-
 	/**
 	 * @param FunctionalTester $I
 	 */
@@ -18,7 +17,7 @@ class FontApiCest {
 		$I->wantToTest( 'Request with invalid editor version' );
 		$I->sendGET( '/wp-admin/admin-ajax.php?' . build_query(
 				[
-					'action' => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION
+					'action' => 'brizy-get-fonts'
 				] ) );
 		$I->seeResponseCodeIs( 400 );
 	}
@@ -50,7 +49,7 @@ class FontApiCest {
 
 		$I->sendGET( '/wp-admin/admin-ajax.php?' . build_query(
 				[
-					'action'  => Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+					'action'  => 'brizy-get-fonts',
 					'version' => BRIZY_EDITOR_VERSION
 				] ) );
 		$I->seeResponseCodeIsSuccessful();
@@ -94,7 +93,7 @@ class FontApiCest {
 		$uid        = md5( time() );
 		$I->sendPost( '/wp-admin/admin-ajax.php?' . build_query(
 				[
-					'action'  => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+					'action'  => 'brizy-create-font',
 					'version' => BRIZY_EDITOR_VERSION
 				] ), [
 			'family' => $fontFamily,
@@ -218,7 +217,7 @@ class FontApiCest {
 			array( 'family' => 'family_name', 'id' => $uid ),
 		);
 		foreach ( $testData as $data ) {
-			$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION ] ), [
+			$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-create-font' ] ), [
 				'family' => $data['family'],
 				'id'     => $data['id']
 			], [
@@ -247,7 +246,7 @@ class FontApiCest {
 		$I->wantToTest( 'The CSS file return for a font family' );
 		$fontFamily = 'proxima_nova';
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+				'action'  => 'brizy-create-font',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'family' => $fontFamily,
@@ -277,7 +276,8 @@ class FontApiCest {
 
 		$font = json_decode( $I->grabResponse() )->data;
 
-		$I->sendGET( '/?' . build_query( [ Brizy_Admin_Fonts_Handler::ENDPOINT => "{$font->id}:400,500,700" ] ) );
+		$ENDPOINT = Brizy_Editor::prefix( Brizy_Admin_Fonts_Handler::ENDPOINT );
+		$I->sendGET( '/?' . build_query( [ $ENDPOINT => "{$font->id}:400,500,700" ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
 		$response = $I->grabResponse();
@@ -312,7 +312,7 @@ class FontApiCest {
 		$uploadedFontUId = get_post_meta( $uploadedFontId, 'brizy_post_uid', true );
 
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+				'action'  => 'brizy-delete-font',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'id' => $uploadedFontUId,
@@ -340,7 +340,7 @@ class FontApiCest {
 		$uploadedFontId = $I->haveFontInDataBase( $uid, $fontFamily, [ '400' => [ 'ttf' ] ], 'uploaded' );
 
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+				'action'  => 'brizy-delete-font',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'id' => 'unknown',

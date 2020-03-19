@@ -11,18 +11,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const GET_GLOBAL_BLOCKS_ACTION = 'brizy-get-global-blocks';
-	const GET_SAVED_BLOCKS_ACTION = 'brizy-get-saved-blocks';
-
-	const CREATE_GLOBAL_BLOCK_ACTION = 'brizy-create-global-block';
-	const CREATE_SAVED_BLOCK_ACTION = 'brizy-create-saved-block';
-
-	const UPDATE_GLOBAL_BLOCK_ACTION = 'brizy-update-global-block';
-	const UPDATE_SAVED_BLOCK_ACTION = 'brizy-saved-global-block';
-	const DELETE_GLOBAL_BLOCK_ACTION = 'brizy-delete-global-block';
-
-	const DELETE_SAVED_BLOCK_ACTION = 'brizy-delete-saved-block';
-	const UPDATE_BLOCK_POSITIONS_ACTION = 'brizy-update-block-positions';
+	const GET_GLOBAL_BLOCKS_ACTION = '-get-global-blocks';
+	const GET_SAVED_BLOCKS_ACTION = '-get-saved-blocks';
+	const CREATE_GLOBAL_BLOCK_ACTION = '-create-global-block';
+	const CREATE_SAVED_BLOCK_ACTION = '-create-saved-block';
+	const UPDATE_GLOBAL_BLOCK_ACTION = '-update-global-block';
+	const UPDATE_SAVED_BLOCK_ACTION = '-saved-global-block';
+	const DELETE_GLOBAL_BLOCK_ACTION = '-delete-global-block';
+	const DELETE_SAVED_BLOCK_ACTION = '-delete-saved-block';
+	const UPDATE_POSITIONS_ACTION = '-update-block-positions';
 
 	/**
 	 * @var Brizy_Admin_Rules_Manager
@@ -58,15 +55,16 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
-		add_action( 'wp_ajax_' . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
-		add_action( 'wp_ajax_' . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
-		add_action( 'wp_ajax_' . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
-		add_action( 'wp_ajax_' . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
-		add_action( 'wp_ajax_' . self::DELETE_GLOBAL_BLOCK_ACTION, array( $this, 'actionDeleteGlobalBlock' ) );
-		add_action( 'wp_ajax_' . self::CREATE_SAVED_BLOCK_ACTION, array( $this, 'actionCreateSavedBlock' ) );
-		add_action( 'wp_ajax_' . self::DELETE_SAVED_BLOCK_ACTION, array( $this, 'actionDeleteSavedBlock' ) );
-		add_action( 'wp_ajax_' . self::UPDATE_BLOCK_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
+		add_action( $pref . self::GET_SAVED_BLOCKS_ACTION, array( $this, 'actionGetSavedBlocks' ) );
+		add_action( $pref . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
+		add_action( $pref . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
+		add_action( $pref . self::UPDATE_SAVED_BLOCK_ACTION, array( $this, 'actionUpdateSavedBlock' ) );
+		add_action( $pref . self::DELETE_GLOBAL_BLOCK_ACTION, array( $this, 'actionDeleteGlobalBlock' ) );
+		add_action( $pref . self::CREATE_SAVED_BLOCK_ACTION, array( $this, 'actionCreateSavedBlock' ) );
+		add_action( $pref . self::DELETE_SAVED_BLOCK_ACTION, array( $this, 'actionDeleteSavedBlock' ) );
+		add_action( $pref . self::UPDATE_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
 	}
 
 	public function actionGetGlobalBlocks() {

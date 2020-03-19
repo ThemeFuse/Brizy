@@ -116,7 +116,7 @@ class Brizy_MaintenanceMode {
 			'parent' => 'brizy-maintenance-on',
 			'title'  => __( 'Edit Page', 'brizy' ),
 			'href'   => add_query_arg(
-				[ Brizy_Editor_Constants::EDIT_KEY => '' ],
+				[ Brizy_Editor::prefix('-edit') => '' ],
 				get_permalink( $args['page'] )
 			),
 		] );

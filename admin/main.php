@@ -419,7 +419,7 @@ class Brizy_Admin_Main {
 				'post'           => $p,
 				'is_using_brizy' => $is_using_brizy,
 				'url'            => add_query_arg(
-					array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+					array( Brizy_Editor::prefix('-edit') => '' ),
 					get_permalink( get_the_ID() )
 				)
 			) );

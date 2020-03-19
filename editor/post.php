@@ -541,7 +541,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 */
 	public function edit_url() {
 		return add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			array( Brizy_Editor::prefix('-edit') => '' ),
 			get_permalink( $this->getWpPostParentId() )
 		);
 	}

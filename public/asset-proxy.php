@@ -3,14 +3,13 @@
 
 class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 
-	const ENDPOINT = 'brizy';
-	const ENDPOINT_POST = 'brizy_post';
+	const ENDPOINT_POST = '_post';
 
 	/**
 	 * @return string
 	 */
 	protected function get_endpoint_keys() {
-		return array( self::ENDPOINT, self::ENDPOINT_POST );
+		return array( Brizy_Editor::prefix(), Brizy_Editor::prefix(self::ENDPOINT_POST) );
 	}
 
 	public function process_query() {
@@ -18,23 +17,24 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 		$vars = $wp_query->query_vars;
 
 		// Check if user is not querying API
-		if ( ! isset( $wp_query->query_vars[ self::ENDPOINT ] ) || ! is_string( $wp_query->query_vars[ self::ENDPOINT ] ) ) {
+		$endpoint = Brizy_Editor::prefix();
+		if ( ! isset( $wp_query->query_vars[ $endpoint ] ) || ! is_string( $wp_query->query_vars[ $endpoint ] ) ) {
 			return;
 		}
 
-		if ( ! isset( $vars[ self::ENDPOINT_POST ] ) || ! is_numeric( $vars[ self::ENDPOINT_POST ] ) ) {
+		if ( ! isset( $vars[ Brizy_Editor::prefix(self::ENDPOINT_POST) ] ) || ! is_numeric( $vars[ Brizy_Editor::prefix(self::ENDPOINT_POST )] ) ) {
 			return;
 		}
 
 		session_write_close();
 
-		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ self::ENDPOINT_POST ] );
+		$brizyPost = Brizy_Editor_Post::get( (int) $vars[ Brizy_Editor::prefix(self::ENDPOINT_POST )] );
 
 		if ( $brizyPost->uses_editor() ) {
 			$this->urlBuilder->set_post_id( $brizyPost->getWpPostParentId() );
 		}
 
-		$endpoint_value = $wp_query->query_vars[ self::ENDPOINT ];
+		$endpoint_value = $wp_query->query_vars[ $endpoint ];
 
 		// clean endpoint value
 		$asset_path = "/" . ltrim( $endpoint_value, "/" );

@@ -54,11 +54,11 @@ class Brizy_Admin_Templates {
 			add_filter( 'save_post', array( $this, 'save_template_rules' ), 10, 2 );
 		} elseif ( ! defined( 'DOING_AJAX' ) &&
 		           ! is_admin() &&
-		           ! isset( $_REQUEST['brizy_media'] ) &&
-		           ! isset( $_REQUEST['brizy_file'] ) &&
-		           ! isset( $_REQUEST['brizy_attachment'] ) &&
-		           ! isset( $_REQUEST['brizy_block_screenshot'] ) &&
-		           ! isset( $_REQUEST['brizy'] ) ) {
+		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '_media' ) ] ) &&
+		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '_file' ) ] ) &&
+		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '_attachment' ) ] ) &&
+		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '_block_screenshot' ) ] ) &&
+		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '' ) ] ) ) {
 			add_action( 'wp', array( $this, 'templateFrontEnd' ) );
 			add_action( 'template_include', array( $this, 'templateInclude' ), 20000 );
 		}
@@ -356,7 +356,7 @@ class Brizy_Admin_Templates {
 		}
 
 		$templateName = self::getTemplate()->get_template();
-		$urlBuilder = new Brizy_Editor_UrlBuilder();
+		$urlBuilder   = new Brizy_Editor_UrlBuilder();
 
 		if ( ! $templateName || $templateName == 'default' ) {
 			return $urlBuilder->plugin_path( 'public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME );

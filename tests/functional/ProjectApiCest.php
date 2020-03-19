@@ -15,7 +15,7 @@ class ProjectApiCest {
 	public function requestWithoutVersionKey( FunctionalTester $I ) {
 		$I->wantToTest( 'Request with invalid editor version' );
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action' => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'action' => 'brizy_get_project',
 				'hash'   => wp_create_nonce( Brizy_Editor_API::nonce ),
 			] ) );
 		$I->seeResponseCodeIs( 400 );
@@ -26,7 +26,7 @@ class ProjectApiCest {
 	 */
 	public function getProjectDataTest( FunctionalTester $I ) {
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'action'  => 'brizy_get_project',
 				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -57,7 +57,7 @@ class ProjectApiCest {
 	 */
 	public function postProjectWithoutAutosaveTest( FunctionalTester $I, \Codeception\Example $example ) {
 		$query = build_query( [
-			'action'      => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'action'      => 'brizy_set_project',
 			'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
 			'version'     => BRIZY_EDITOR_VERSION,
 			'dataVersion' => 1
@@ -85,7 +85,7 @@ class ProjectApiCest {
 
 		// also make sure the get project data request is returning the correct values
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'      => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'action'      => 'brizy_get_project',
 				'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
 				'version'     => BRIZY_EDITOR_VERSION
 			] ) );
@@ -107,7 +107,7 @@ class ProjectApiCest {
 	 */
 	public function postProjectWithAutosaveTest( FunctionalTester $I ) {
 		$query = build_query( [
-			'action'  => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'action'  => 'brizy_set_project',
 			'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
 			'version' => BRIZY_EDITOR_VERSION,
 			'dataVersion' => 1
@@ -139,7 +139,7 @@ class ProjectApiCest {
 
 		// also make sure the get project data request is returning the correct values
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Editor_API::AJAX_GET_PROJECT,
+				'action'  => 'brizy_get_project',
 				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -157,7 +157,7 @@ class ProjectApiCest {
 	 */
 	public function postProjectFailsTest( FunctionalTester $I ) {
 		$query = build_query( [
-			'action'      => Brizy_Editor_API::AJAX_SET_PROJECT,
+			'action'      => 'brizy_set_project',
 			'hash'        => wp_create_nonce( Brizy_Editor_API::nonce ),
 			'version'     => BRIZY_EDITOR_VERSION,
 			'dataVersion' => 1,

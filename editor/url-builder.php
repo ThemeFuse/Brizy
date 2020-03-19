@@ -96,11 +96,11 @@ class Brizy_Editor_UrlBuilder {
 		$params = array();
 
 		if ( $this->post_id ) {
-			$params['brizy_post'] = ( (int) $this->post_id );
+			$params[ Brizy_Editor::prefix( '_post' ) ] = ( (int) $this->post_id );
 		}
 
 		// do not move this line
-		$params['brizy'] = $end_point;
+		$params[ Brizy_Editor::prefix() ] = $end_point;
 
 		return add_query_arg( $params, home_url( '/' ) );
 	}
