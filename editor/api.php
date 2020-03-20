@@ -13,6 +13,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_SIDEBARS = 'brizy_sidebars';
 	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
 	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
+	const AJAX_PLACEHOLDER_CONTENT = 'brizy_placeholder_content';
 	const AJAX_GET_POST_OBJECTS = 'brizy_get_posts';
 	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
 	const AJAX_GET_TERMS = 'brizy_get_terms';
@@ -74,6 +75,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			add_action( 'wp_ajax_' . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+			add_action( 'wp_ajax_' . self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
@@ -417,6 +419,121 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	public function placeholder_content() {
+		try {
+			$this->verifyNonce( self::nonce );
+			$postId       = $this->param( 'post_id' );
+			$placeholders = $this->param( 'placeholders' ) ;
+
+			if ( ! $placeholders ) {
+				throw new Exception( 'Placeholder string not provided.', 400 );
+			}
+
+			$post = $this->getPostSample( $postId );
+
+			$contents = [];
+			foreach ( $placeholders as $placeholder ) {
+				$placeholder = stripslashes($placeholder);
+				$contents[] = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+			}
+
+			$this->success( array(
+				'placeholders' => $contents
+			) );
+
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
+
+	private function getPostSample( $templateId ) {
+		$wp_post = get_post( $templateId );
+		if ( $wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE ) {
+			return $wp_post;
+		}
+
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$rules       = $ruleManager->getRules( $wp_post->ID );
+		$rule        = null;
+
+		// find first include rule
+		foreach ( $rules as $rule ) {
+			/**
+			 * @var Brizy_Admin_Rule $rule ;
+			 */
+			if ( $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ) {
+				break;
+			}
+		}
+
+		if ( $rule ) {
+
+			switch ( $rule->getAppliedFor() ) {
+				case  Brizy_Admin_Rule::POSTS :
+					$args = array(
+						'post_type' => $rule->getEntityType(),
+					);
+
+					if ( count( $rule->getEntityValues() ) ) {
+						$args['post__in'] = $rule->getEntityValues();
+					}
+					$array = get_posts( $args );
+
+					return array_pop( $array );
+					break;
+				case Brizy_Admin_Rule::TAXONOMY :
+					$args = array(
+						'taxonomy'   => $rule->getEntityType(),
+						'hide_empty' => false,
+					);
+					if ( count( $rule->getEntityValues() ) ) {
+						$args['term_taxonomy_id'] = $rule->getEntityValues();
+					}
+
+					$array = get_terms( $args );
+
+					return array_pop( $array );
+					break;
+				case  Brizy_Admin_Rule::ARCHIVE :
+					return null;
+					break;
+				case  Brizy_Admin_Rule::TEMPLATE :
+
+					switch ( $rule->getEntityType() ) {
+						case 'author':
+							$authors = get_users();
+
+							return array_pop( $authors );
+							break;
+
+						case '404':
+						case 'search':
+							return null;
+							break;
+						case 'home_page':
+							$get_option = get_option( 'page_for_posts' );
+
+							if ( $get_option ) {
+								return get_post( $get_option );
+							}
+							break;
+						case 'front_page':
+							$get_option = get_option( 'page_on_front' );
+
+							if ( $get_option ) {
+								return get_post( $get_option );
+							}
+							break;
+					}
+
+					break;
+			}
+
 		}
 	}
 

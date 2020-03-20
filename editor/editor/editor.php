@@ -178,10 +178,11 @@ class Brizy_Editor_Editor_Editor {
 					'createBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
 					'updateBlockScreenshot' => Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
 
-					'getSidebars'      => Brizy_Editor_API::AJAX_SIDEBARS,
-					'shortcodeContent' => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-					'getMenus'         => Brizy_Editor_API::AJAX_GET_MENU_LIST,
-					'getTerms'         => Brizy_Editor_API::AJAX_GET_TERMS,
+					'getSidebars'        => Brizy_Editor_API::AJAX_SIDEBARS,
+					'shortcodeContent'   => Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+					'placeholderContent' => Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
+					'getMenus'           => Brizy_Editor_API::AJAX_GET_MENU_LIST,
+					'getTerms'           => Brizy_Editor_API::AJAX_GET_TERMS,
 
 
 					'getPostObjects' => Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
@@ -356,7 +357,7 @@ class Brizy_Editor_Editor_Editor {
 
 						foreach ( $array as $p ) {
 
-							if ( $p->post_typ == 'attachment' ) {
+							if ( $p->post_type == 'attachment' ) {
 								return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 							}
 
