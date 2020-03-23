@@ -780,6 +780,7 @@ class Brizy_Editor_Editor_Editor {
 			'updateBlockScreenshot'      => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
 			'getSidebars'                => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
 			'shortcodeContent'           => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+			'placeholderContent'           => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
 			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
 			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
 			'getPostObjects'             => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
