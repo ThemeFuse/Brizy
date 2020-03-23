@@ -13,7 +13,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_SIDEBARS = '_sidebars';
 	const AJAX_SIDEBAR_CONTENT = '_sidebar_content';
 	const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
-	const AJAX_PLACEHOLDER_CONTENT = 'brizy_placeholder_content';
+	const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
 	const AJAX_GET_POST_OBJECTS = '_get_posts';
 	const AJAX_GET_MENU_LIST = '_get_menu_list';
 	const AJAX_GET_TERMS = '_get_terms';
@@ -76,6 +76,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
 		add_action( $p . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 		add_action( $p . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+		add_action( $p . self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
 		add_action( $p . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );

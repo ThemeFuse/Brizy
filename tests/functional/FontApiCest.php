@@ -276,7 +276,7 @@ class FontApiCest {
 
 		$font = json_decode( $I->grabResponse() )->data;
 
-		$ENDPOINT = Brizy_Editor::prefix( Brizy_Admin_Fonts_Handler::ENDPOINT );
+		$ENDPOINT = 'brizy-font';
 		$I->sendGET( '/?' . build_query( [ $ENDPOINT => "{$font->id}:400,500,700" ] ) );
 
 		$I->seeResponseCodeIsSuccessful();
