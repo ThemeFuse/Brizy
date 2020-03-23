@@ -4,8 +4,8 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const AJAX_CREATE_BLOCK_SCREENSHOT = 'brizy_create_block_screenshot';
-	const AJAX_UPDATE_BLOCK_SCREENSHOT = 'brizy_update_block_screenshot';
+	const AJAX_CREATE_BLOCK_SCREENSHOT = '_create_block_screenshot';
+	const AJAX_UPDATE_BLOCK_SCREENSHOT = '_update_block_screenshot';
 
 	const BLOCK_TYPE_NORMAL = 'normal';
 	const BLOCK_TYPE_GLOBAL = 'global';
@@ -52,10 +52,12 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
-		add_action( 'wp_ajax_nopriv_' . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
-		add_action( 'wp_ajax_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
-		add_action( 'wp_ajax_nopriv_' . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		$pref        = 'wp_ajax_' . Brizy_Editor::prefix();
+		$pref_nopriv = 'wp_ajax_nopriv_' . Brizy_Editor::prefix();
+		add_action( $pref . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( $pref . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( $pref_nopriv . self::AJAX_CREATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
+		add_action( $pref_nopriv . self::AJAX_UPDATE_BLOCK_SCREENSHOT, array( $this, 'saveBlockScreenShot' ) );
 	}
 
 	public function saveBlockScreenShot() {

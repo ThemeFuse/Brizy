@@ -67,7 +67,7 @@ class BlockApiCest {
 
 	public function requestWithoutVersionKey( FunctionalTester $I ) {
 		$I->wantToTest( 'Request with invalid editor version' );
-		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION ] ) );
+		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-get-global-blocks' ] ) );
 		$I->seeResponseCodeIs( 400 );
 	}
 
@@ -77,7 +77,7 @@ class BlockApiCest {
 	public function getGlobalBlocksTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'action'  =>  'brizy-get-global-blocks',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 
@@ -103,7 +103,7 @@ class BlockApiCest {
 	public function getSavedBlocksTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+				'action'  => 'brizy-get-saved-blocks',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 
@@ -126,7 +126,7 @@ class BlockApiCest {
 	 */
 	public function createGlobalBlockTest( FunctionalTester $I ) {
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+				'action'  => 'brizy-create-global-block',
 				'version' => BRIZY_EDITOR_VERSION,
 				'dataVersion' => 1,
 			] ), [
@@ -188,7 +188,7 @@ class BlockApiCest {
 		] );
 
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-update-global-block' ] ), [
 			'uid'         => $uid,
 			'data'        => $newBlockData,
 			'position'    => json_encode( $newPosition ),
@@ -218,7 +218,7 @@ class BlockApiCest {
 	 * @param FunctionalTester $I
 	 */
 	public function createSavedBlockTest( FunctionalTester $I ) {
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-create-saved-block' ] ), [
 			'uid'     => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
 			'data'    => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
 			'version' => BRIZY_EDITOR_VERSION,
@@ -270,7 +270,7 @@ class BlockApiCest {
 		] );
 
 
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-saved-global-block' ] ), [
 			'uid'         => $uid,
 			'data'        => $newBlockData,
 			'is_autosave' => 1,

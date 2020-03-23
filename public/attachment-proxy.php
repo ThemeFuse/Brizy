@@ -2,13 +2,13 @@
 
 class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 
-	const ENDPOINT = 'brizy_attachment';
+	const ENDPOINT = '_attachment';
 
 	/**
 	 * @return string
 	 */
 	protected function get_endpoint_keys() {
-		return array( self::ENDPOINT );
+		return array( Brizy_Editor::prefix( self::ENDPOINT ) );
 	}
 
 	/**
@@ -19,14 +19,14 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 		global $wp_query;
 
 		$vars = $wp_query->query_vars;
-
-		if ( isset( $vars[ self::ENDPOINT ] ) && is_string( $vars[ self::ENDPOINT ] ) && ! empty( $vars[ self::ENDPOINT ] ) ) {
+		$ENDPOINT = Brizy_Editor::prefix( self::ENDPOINT );
+		if ( isset( $vars[ $ENDPOINT ] ) && is_string( $vars[ $ENDPOINT ] ) && ! empty( $vars[ $ENDPOINT ] ) ) {
 
 			session_write_close();
 
 			try {
 				// Set artificially high because GD uses uncompressed images in memory.
-				$attachment = $this->getAttachment( $vars[ self::ENDPOINT ] );
+				$attachment = $this->getAttachment( $vars[ $ENDPOINT ] );
 
 				if ( ! $attachment ) {
 					status_header( 404 );

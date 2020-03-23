@@ -143,9 +143,11 @@ class Brizy_Admin_OptimizeImages {
 			foreach ( $processors as $i => $processor ) {
 				if ( $processor instanceof Brizy_Editor_Asset_MediaAssetProcessor ) {
 					unset( $processors[ $i ] );
+
 					return $processors;
 				}
 			}
+
 			return $processors;
 		};
 
@@ -306,14 +308,14 @@ class Brizy_Admin_OptimizeImages {
 
 			parse_str( $parsed_url['query'], $params );
 
-			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
+			if ( ! isset( $params[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ] ) ) {
 				continue;
 			}
 
 			$media_url   = get_attached_file( $uidRes['ID'] );
 			$brizy_media = basename( $media_url );
 
-			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params['brizy_post'], $params['brizy_crop'], $brizy_media );
+			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params[ Brizy_Editor::prefix( '_post' ) ], $params[ Brizy_Editor::prefix( '_crop' ) ], $brizy_media );
 
 			if ( ! $filesystem->has( $wp_imageFullName ) ) {
 				$urls[] = $uidRes['url'] . "&brizy_optimize=1&t=" . $time;

@@ -3,38 +3,35 @@
 class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
-	const AJAX_GET_POST_INFO = 'brizy_get_post_info';
-	const AJAX_GET = 'brizy_editor_get_items';
-	const AJAX_UPDATE = 'brizy_update_item';
-	const AJAX_GET_PROJECT = 'brizy_get_project';
-	const AJAX_SET_PROJECT = 'brizy_set_project';
-	const AJAX_LOCK_PROJECT = 'brizy_lock_project';
-	const AJAX_MEDIA = 'brizy_media';
-	const AJAX_SIDEBARS = 'brizy_sidebars';
-	const AJAX_SIDEBAR_CONTENT = 'brizy_sidebar_content';
-	const AJAX_SHORTCODE_CONTENT = 'brizy_shortcode_content';
+	const AJAX_GET_POST_INFO = '_get_post_info';
+	const AJAX_GET = '_editor_get_items';
+	const AJAX_UPDATE = '_update_item';
+	const AJAX_GET_PROJECT = '_get_project';
+	const AJAX_SET_PROJECT = '_set_project';
+	const AJAX_LOCK_PROJECT = '_lock_project';
+	const AJAX_MEDIA = '_media';
+	const AJAX_SIDEBARS = '_sidebars';
+	const AJAX_SIDEBAR_CONTENT = '_sidebar_content';
+	const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
 	const AJAX_PLACEHOLDER_CONTENT = 'brizy_placeholder_content';
-	const AJAX_GET_POST_OBJECTS = 'brizy_get_posts';
-	const AJAX_GET_MENU_LIST = 'brizy_get_menu_list';
-	const AJAX_GET_TERMS = 'brizy_get_terms';
-	const AJAX_REMOVE_LOCK = 'brizy_remove_lock';
-	const AJAX_HEARTBEAT = 'brizy_heartbeat';
-	const AJAX_TAKE_OVER = 'brizy_take_over';
-	const AJAX_JWT_TOKEN = 'brizy_multipass_create';
-
-	const AJAX_UPDATE_MENU_DATA = 'brizy_update_menu_data';
-	const AJAX_UPDATE_EDITOR_META_DATA = 'brizy_update_editor_meta_data';
-	const AJAX_UPDATE_MENU_ITEM_DATA = 'brizy_update_menu_item_data';
-
-	const AJAX_DOWNLOAD_MEDIA = 'brizy_download_media';
-	const AJAX_MEDIA_METAKEY = 'brizy_get_media_key';
-	const AJAX_CREATE_ATTACHMENT_UID = 'brizy_create_attachment_uid';
-
-	const AJAX_SET_FEATURED_IMAGE = 'brizy_set_featured_image';
-	const AJAX_SET_FEATURED_IMAGE_FOCAL_POINT = 'brizy_set_featured_image_focal_point';
-	const AJAX_REMOVE_FEATURED_IMAGE = 'brizy_remove_featured_image';
-	const AJAX_TIMESTAMP = 'brizy_timestamp';
-	const AJAX_SET_TEMPLATE_TYPE = 'brizy_set_template_type';
+	const AJAX_GET_POST_OBJECTS = '_get_posts';
+	const AJAX_GET_MENU_LIST = '_get_menu_list';
+	const AJAX_GET_TERMS = '_get_terms';
+	const AJAX_REMOVE_LOCK = '_remove_lock';
+	const AJAX_HEARTBEAT = '_heartbeat';
+	const AJAX_TAKE_OVER = '_take_over';
+	const AJAX_JWT_TOKEN = '_multipass_create';
+	const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
+	const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
+	const AJAX_UPDATE_MENU_ITEM_DATA = '_update_menu_item_data';
+	const AJAX_DOWNLOAD_MEDIA = '_download_media';
+	const AJAX_MEDIA_METAKEY = '_get_media_key';
+	const AJAX_CREATE_ATTACHMENT_UID = '_create_attachment_uid';
+	const AJAX_SET_FEATURED_IMAGE = '_set_featured_image';
+	const AJAX_SET_IMAGE_FOCAL_PT = '_set_featured_image_focal_point';
+	const AJAX_REMOVE_FEATURED_IMAGE = '_remove_featured_image';
+	const AJAX_TIMESTAMP = '_timestamp';
+	const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
 
 
 	/**
@@ -63,35 +60,33 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		if ( Brizy_Editor_User::is_user_allowed() ) {
-			add_action( 'wp_ajax_' . self::AJAX_REMOVE_LOCK, array( $this, 'removeProjectLock' ) );
-			add_action( 'wp_ajax_' . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
-			add_action( 'wp_ajax_' . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET, array( $this, 'get_item' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_POST_INFO, array( $this, 'get_post_info' ) );
-			add_action( 'wp_ajax_' . self::AJAX_UPDATE, array( $this, 'update_item' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
-			add_action( 'wp_ajax_' . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
-			add_action( 'wp_ajax_' . self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
-			add_action( 'wp_ajax_' . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
-			add_action( 'wp_ajax_' . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
-			add_action( 'wp_ajax_' . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
-			//add_action( 'wp_ajax_' . self::AJAX_JWT_TOKEN, array( $this, 'multipass_create' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SET_FEATURED_IMAGE_FOCAL_POINT, array(
-				$this,
-				'set_featured_image_focal_point'
-			) );
-			add_action( 'wp_ajax_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
-			add_action( 'wp_ajax_nopriv_' . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
-			add_action( 'wp_ajax_' . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
+		if ( ! Brizy_Editor_User::is_user_allowed() ) {
+			return;
 		}
+
+		$p = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $p . self::AJAX_REMOVE_LOCK, array( $this, 'removeProjectLock' ) );
+		add_action( $p . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
+		add_action( $p . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
+		add_action( $p . self::AJAX_GET, array( $this, 'get_item' ) );
+		add_action( $p . self::AJAX_GET_POST_INFO, array( $this, 'get_post_info' ) );
+		add_action( $p . self::AJAX_UPDATE, array( $this, 'update_item' ) );
+		add_action( $p . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
+		add_action( $p . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
+		add_action( $p . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
+		add_action( $p . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
+		add_action( $p . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+		add_action( $p . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
+		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
+		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+		add_action( $p . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
+		add_action( $p . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
+		add_action( $p . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
+		add_action( $p . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
+		add_action( $p . self::AJAX_SET_IMAGE_FOCAL_PT, array( $this, 'set_featured_image_focal_point' ) );
+		add_action( $p . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
+		add_action( $p . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
+		add_action( $p . 'nopriv_' . Brizy_Editor::prefix( self::AJAX_TIMESTAMP ), array( $this, 'timestamp' ) );
 
 	}
 
@@ -315,8 +310,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 
-			if(!$this->post) {
-				throw new Exception('Invalid post provided');
+			if ( ! $this->post ) {
+				throw new Exception( 'Invalid post provided' );
 			}
 
 			$data             = $this->post->createResponse();

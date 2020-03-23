@@ -128,7 +128,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 				}
 
 				$brizy_posts[] = [
-					'edit_url' => add_query_arg( [ Brizy_Editor_Constants::EDIT_KEY => '' ], get_permalink( $apost ) ),
+					'edit_url' => add_query_arg( [ Brizy_Editor::prefix('-edit') => '' ], get_permalink( $apost ) ),
 					'title'    => get_the_title( $apost ),
 					'date'     => get_the_modified_date( '', $apost )
 				];

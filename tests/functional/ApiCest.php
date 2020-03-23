@@ -273,7 +273,7 @@ class ApiCest {
 
 	public function lockProjectTest( FunctionalTester $I ) {
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Editor_API::AJAX_LOCK_PROJECT,
+				'action'  => 'brizy_lock_project',
 				'hash'    => wp_create_nonce( Brizy_Editor_API::nonce ),
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );

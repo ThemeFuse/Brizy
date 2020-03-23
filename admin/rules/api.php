@@ -4,15 +4,15 @@
 class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = Brizy_Editor_API::nonce;
-	const CREATE_RULES_ACTION = 'brizy_add_rules';
-	const CREATE_RULE_ACTION = 'brizy_add_rule';
-	const UPDATE_RULES_ACTION = 'brizy_update_rules';
-	const DELETE_RULE_ACTION = 'brizy_delete_rule';
-	const LIST_RULE_ACTION = 'brizy_list_rules';
-	const VALIDATE_RULE = 'brizy_validate_rule';
-	const RULE_GROUP_LIST = 'brizy_rule_group_list';
-	const RULE_POSTS_GROUP_LIST = 'brizy_rule_posts_group_list';
-	const RULE_ARCHIVE_GROUP_LIST = 'brizy_rule_archive_group_list';
+	const CREATE_RULES_ACTION = '_add_rules';
+	const CREATE_RULE_ACTION = '_add_rule';
+	const UPDATE_RULES_ACTION = '_update_rules';
+	const DELETE_RULE_ACTION = '_delete_rule';
+	const LIST_RULE_ACTION = '_list_rules';
+	const VALIDATE_RULE = '_validate_rule';
+	const RULE_GROUP_LIST = '_rule_group_list';
+	const RULE_POSTS_GROUP_LIST = '_rule_posts_group_list';
+	const RULE_ARCHIVE_GROUP_LIST = '_rule_archive_group_list';
 
 
 	/**
@@ -50,15 +50,17 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::CREATE_RULE_ACTION, array( $this, 'actionCreateRule' ) );
-		add_action( 'wp_ajax_' . self::CREATE_RULES_ACTION, array( $this, 'actionCreateRules' ) );
-		add_action( 'wp_ajax_' . self::UPDATE_RULES_ACTION, array( $this, 'actionUpdateRules' ) );
-		add_action( 'wp_ajax_' . self::DELETE_RULE_ACTION, array( $this, 'actionDeleteRule' ) );
-		add_action( 'wp_ajax_' . self::LIST_RULE_ACTION, array( $this, 'actionGetRuleList' ) );
-		add_action( 'wp_ajax_' . self::VALIDATE_RULE, array( $this, 'actionValidateRule' ) );
-		add_action( 'wp_ajax_' . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
-		add_action( 'wp_ajax_' . self::RULE_POSTS_GROUP_LIST, array( $this, 'getPostsGroupsList' ) );
-		add_action( 'wp_ajax_' . self::RULE_ARCHIVE_GROUP_LIST, array( $this, 'getArchiveGroupsList' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+
+		add_action( $pref . self::CREATE_RULE_ACTION, array( $this, 'actionCreateRule' ) );
+		add_action( $pref . self::CREATE_RULES_ACTION, array( $this, 'actionCreateRules' ) );
+		add_action( $pref . self::UPDATE_RULES_ACTION, array( $this, 'actionUpdateRules' ) );
+		add_action( $pref . self::DELETE_RULE_ACTION, array( $this, 'actionDeleteRule' ) );
+		add_action( $pref . self::LIST_RULE_ACTION, array( $this, 'actionGetRuleList' ) );
+		add_action( $pref . self::VALIDATE_RULE, array( $this, 'actionValidateRule' ) );
+		add_action( $pref . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
+		add_action( $pref . self::RULE_POSTS_GROUP_LIST, array( $this, 'getPostsGroupsList' ) );
+		add_action( $pref . self::RULE_ARCHIVE_GROUP_LIST, array( $this, 'getArchiveGroupsList' ) );
 	}
 
 	/**

@@ -3,14 +3,14 @@
 
 class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 
-	const ENDPOINT = 'brizy_block_screenshot';
-	const ENDPOINT_POST = 'brizy_post';
+	const ENDPOINT = '_block_screenshot';
+	const ENDPOINT_POST = '_post';
 
 	/**
 	 * @return string
 	 */
 	protected function get_endpoint_keys() {
-		return array( self::ENDPOINT, self::ENDPOINT_POST );
+		return array( Brizy_Editor::prefix( self::ENDPOINT), Brizy_Editor::prefix( self::ENDPOINT_POST) );
 	}
 
 	public function process_query() {
@@ -18,14 +18,16 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 		$vars = $wp_query->query_vars;
 
 		// Check if user is not querying API
-		if ( ! isset( $vars[ self::ENDPOINT ] ) || ! is_string( $vars[ self::ENDPOINT ] ) ) {
+		$endpoint = Brizy_Editor::prefix( self::ENDPOINT );
+		$endpointPost = Brizy_Editor::prefix( self::ENDPOINT_POST );
+		if ( ! isset( $vars[ $endpoint ] ) || ! is_string( $vars[ $endpoint ] ) ) {
 			return;
 		}
 
 		session_write_close();
 
-		$blockName = $vars[ self::ENDPOINT ];
-		$blockPost = isset( $vars[ self::ENDPOINT_POST ] ) ? $vars[ self::ENDPOINT_POST ] : null;
+		$blockName = $vars[ $endpoint ];
+		$blockPost = isset( $vars[ $endpointPost ] ) ? $vars[ $endpointPost ] : null;
 
 		$types = array( 'normal', 'global', 'saved' );
 

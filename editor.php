@@ -9,6 +9,15 @@ class Brizy_Editor {
 
 	private static $instance;
 
+
+	/**
+	 * All plugin ajax actions and enpoints are going to be prefixed with this string.
+	 * This will not affect the database prefix tables or option keys and post meta keys *
+	 *
+	 * @var string
+	 */
+	private static $prefix = null;
+
 	public static function get() {
 
 		if ( self::$instance ) {
@@ -18,6 +27,48 @@ class Brizy_Editor {
 		self::$instance = new self();
 
 		return self::$instance;
+	}
+
+
+	/**
+	 * Return the prefix
+	 *
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	public static function prefix( $string = null ) {
+
+		if ( ! self::$prefix ) {
+			$savedPrefix = get_option( 'brizy_prefix', null );
+
+			if ( ! $savedPrefix ) {
+				update_option( 'brizy_prefix', 'brizy' );
+				$savedPrefix = 'brizy';
+			}
+
+			self::$prefix = $savedPrefix;
+		}
+
+		return self::$prefix . trim( $string );
+	}
+
+	/**
+	 * Return the prefix
+	 *
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	public static function setPrefix( $string ) {
+
+		if ( $string == '' ) {
+			throw new Exception( 'The prefix cannot be empty' );
+		}
+
+		update_option( 'brizy_prefix', $string );
+
+		return self::$prefix = $string;
 	}
 
 
@@ -32,6 +83,7 @@ class Brizy_Editor {
 			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );
+
 			return;
 		}
 
@@ -77,7 +129,6 @@ class Brizy_Editor {
 		Brizy_Admin_Popups_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 
-
 		$this->loadShortcodes();
 		$this->initializeAssetLoaders();
 
@@ -109,9 +160,9 @@ class Brizy_Editor {
 
 		function brizy_add_dashboard_widgets() {
 			try {
-				if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-					Brizy_Admin_DashboardWidget::_init();
-				}
+
+				Brizy_Admin_DashboardWidget::_init();
+
 			} catch ( Exception $e ) {
 				// ignore this exceptions for now.
 			}
@@ -124,7 +175,10 @@ class Brizy_Editor {
 			}
 		}
 
-		add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && !BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+		}
+
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
 
@@ -333,8 +387,8 @@ class Brizy_Editor {
 		( isset( $_POST['id'] ) ) {
 			$pid = (int) $_POST['id'];
 		} elseif
-		( isset( $_REQUEST['brizy_post'] ) ) {
-			$pid = (int) $_REQUEST['brizy_post'];
+		( isset( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] ) ) {
+			$pid = (int) $_REQUEST[ Brizy_Editor::prefix( '_post' ) ];
 		} elseif ( $wp_query->is_posts_page ) {
 			$pid = (int) get_queried_object_id();
 		} elseif

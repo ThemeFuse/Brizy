@@ -3,13 +3,13 @@
 
 class Brizy_Public_FileProxy extends Brizy_Public_AbstractProxy {
 
-	const ENDPOINT = 'brizy_file';
+	const ENDPOINT = '_file';
 
 	/**
-	 * @return string
+	 * @return []]
 	 */
 	protected function get_endpoint_keys() {
-		return array( self::ENDPOINT );
+		return array( Brizy_Editor::prefix( self::ENDPOINT ) );
 	}
 
 	/**
@@ -18,10 +18,11 @@ class Brizy_Public_FileProxy extends Brizy_Public_AbstractProxy {
 	 */
 	public function process_query() {
 		global $wp_query;
-
 		$vars = $wp_query->query_vars;
 
-		if ( isset( $vars[ self::ENDPOINT ] ) && is_string( $vars[ self::ENDPOINT ] ) && ! empty( $vars[ self::ENDPOINT ] ) ) {
+		$endpointKey = Brizy_Editor::prefix( self::ENDPOINT );
+
+		if ( isset( $vars[ $endpointKey ] ) && is_string( $vars[ $endpointKey ] ) && ! empty( $vars[ $endpointKey ] ) ) {
 			session_write_close();
 
 			try {
@@ -29,7 +30,7 @@ class Brizy_Public_FileProxy extends Brizy_Public_AbstractProxy {
 				session_write_close();
 				wp_raise_memory_limit( 'image' );
 
-				$content = self::get_asset_content( $vars[ self::ENDPOINT ] );
+				$content = self::get_asset_content( $vars[ $endpointKey ] );
 
 				if ( $content !== false ) {
 					echo $content;

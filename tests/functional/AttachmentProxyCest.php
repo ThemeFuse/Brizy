@@ -24,7 +24,7 @@ class AttachmentProxyCest {
 	 * @param FunctionalTester $I
 	 */
 	public function attachmentNotFoundTest( FunctionalTester $I ) {
-		$I->sendGET( '/', [ 'brizy_attachment' => '349ry7934hr9f37rt894' ] );
+		$I->sendGET( '/', [ 'brizy_attachment' => '349ry7934hr9fergaer37rt894' ] );
 		$I->seeResponseCodeIs( 404 );
 	}
 
