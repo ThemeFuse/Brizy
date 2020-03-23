@@ -492,6 +492,7 @@ var RuleApplyGroupField = function (params) {
 
         var elements = [
             h("span", {class: "brizy-rule-select brizy-rule-select2"}, h("select", {
+                name: params.type ? 'brizy-' + params.type + '-rule-group[]' : '',
                 style: {width: "200px"},
                 oncreate: function (element) {
                     var el = jQuery(element);
