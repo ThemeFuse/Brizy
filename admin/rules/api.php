@@ -1,6 +1,4 @@
 <?php
-
-
 class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = Brizy_Editor_API::nonce;

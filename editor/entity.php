@@ -160,6 +160,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 	/**
 	 * @return $this
+	 * @throws Brizy_Editor_Exceptions_DataVersionMismatch
 	 */
 	protected function saveDataVersion() {
 		$version = $this->getCurrentDataVersion();

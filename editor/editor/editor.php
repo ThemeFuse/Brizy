@@ -61,6 +61,8 @@ class Brizy_Editor_Editor_Editor {
 				return 'template';
 			case Brizy_Admin_Popups_Main::CP_POPUP:
 				return 'internal_popup';
+			case Brizy_Admin_Stories_Main::CP_STORY:
+				return 'story';
 			default:
 				return 'page';
 		}
@@ -164,9 +166,6 @@ class Brizy_Editor_Editor_Editor {
 
 		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
-
-
-
 
 
 	/**

@@ -127,6 +127,7 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Svg_Main::_init();
 		Brizy_Admin_Popups_Main::_init();
+		Brizy_Admin_Stories_Main::_init();
 		Brizy_Admin_OptimizeImages::_init();
 
 		$this->loadShortcodes();
@@ -175,7 +176,7 @@ class Brizy_Editor {
 			}
 		}
 
-		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && !BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
 		}
 
@@ -261,6 +262,9 @@ class Brizy_Editor {
 
 		Brizy_Admin_Popups_Main::registerCustomPosts();
 		Brizy_Admin_Popups_Main::registerSupportedPostType();
+
+		Brizy_Admin_Stories_Main::registerCustomPosts();
+		Brizy_Admin_Stories_Main::registerSupportedPostType();
 	}
 
 	/**
@@ -384,8 +388,11 @@ class Brizy_Editor {
 		( isset( $_POST['post_ID'] ) ) {
 			$pid = (int) $_POST['post_ID'];
 		} elseif
-		( isset( $_POST['id'] ) ) {
-			$pid = (int) $_POST['id'];
+		( isset( $_REQUEST['id'] ) ) {
+			$pid = (int) $_REQUEST['id'];
+		} elseif
+		( isset( $_POST['p'] ) ) {
+			$pid = (int) $_POST['p'];
 		} elseif
 		( isset( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] ) ) {
 			$pid = (int) $_REQUEST[ Brizy_Editor::prefix( '_post' ) ];
