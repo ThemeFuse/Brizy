@@ -318,7 +318,7 @@ var BrzSelect2 = function (params) {
                     options.forEach(function (option) {
                         el.append(option);
                     });
-                    el.trigger("change");
+                    el.select2('val', el.val());
                 });
             } else {
                 var options = params.convertResponseToOptions(optionRequest);
@@ -327,6 +327,8 @@ var BrzSelect2 = function (params) {
                 });
 
                 el.trigger("change");
+
+                el.select2('val', el.val());
             }
         }
     };
@@ -478,7 +480,8 @@ var RuleApplyGroupField = function (params) {
         });
 
         const attributes = {
-            name: params.type ? 'brizy-' + params.type + '-rule-group[]' : '',
+            name: params.name,
+            style: {width: "200px"},
             class: "brizy-rule-select--options[] ",
             onchange: function (e) {
                 var values = e.target.value.split("|");
@@ -491,19 +494,9 @@ var RuleApplyGroupField = function (params) {
         };
 
         var elements = [
-            h("span", {class: "brizy-rule-select brizy-rule-select2"}, h("select", {
-                name: params.type ? 'brizy-' + params.type + '-rule-group[]' : '',
-                style: {width: "200px"},
-                oncreate: function (element) {
-                    var el = jQuery(element);
-                    el.on("change", params.onChange);
-                    el.select2();
-                },
-                onremove: function (element, done) {
-                    jQuery(element).select2("destroy");
-                    done();
-                },
-            }, attributes, groups))
+            h("span", {class: "brizy-rule-select brizy-rule-select2"},
+                h("select", attributes,  groups)
+            )
         ];
 
         switch (appliedFor) {
@@ -574,7 +567,8 @@ var RuleListItem = function (params) {
             h(RuleApplyGroupField, {
                 rule: params.rule,
                 groups: params.groups,
-                type: params.type
+                type: params.type,
+                name: 'brizy-' + params.type + '-rule-group[]'
             }),
             h('div', {class: 'overlay'}, [])
         ]),
