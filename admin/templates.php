@@ -468,6 +468,7 @@ class Brizy_Admin_Templates {
 			'brizy-polyfill'
 		), BRIZY_EDITOR_VERSION, true );
 		//wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
+		wp_add_inline_script( 'brizy-preview', "jQuery(document).ready(function(){window.Brizy.emit('init.dom',jQuery(document.body))});", 'after' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
 	}
