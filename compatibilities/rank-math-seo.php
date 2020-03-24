@@ -3,21 +3,7 @@
 class Brizy_Compatibilities_RankMathSeo {
 
 	public function __construct() {
-		add_action( 'rank_math/admin/enqueue_scripts', [ $this, 'enqueue' ], 99 );
 		add_action( 'rest_api_init', [ $this, 'init_rest_api' ] );
-	}
-
-	/**
-	 * Enqueue script for the metabox.
-	 */
-	public function enqueue() {
-		wp_enqueue_script(
-			Brizy_Editor::get()->get_slug() . '-rank-math-compatible-js',
-			Brizy_Editor::get()->get_url( 'admin/static/js/rank-math-compatible.js' ),
-			[ 'wp-hooks', 'rank-math-analyzer' ],
-			Brizy_Editor::get()->get_version(),
-			true
-		);
 	}
 
 	/**
