@@ -1,94 +1,76 @@
 import { t } from "visual/utils/i18n";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
-import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementProgressBarPercentage,
-  toolbarElementProgressBarShowPercentage,
-  toolbarTypography2FontFamily,
-  toolbarTypography2FontStyle,
-  toolbarTypography2FontSize,
-  toolbarTypography2LineHeight,
-  toolbarTypography2FontWeight,
-  toolbarTypography2LetterSpacing,
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarBgColor2,
-  toolbarBgColorHexField2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2,
-  toolbarSizeWidthWidthPercent,
-  toolbarHoverTransition,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
-  // const maxBorderRadius = Math.round(
-  //   (v.fontSize * v.lineHeight + v.paddingTop * 2) / 2
-  // );
+export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device });
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
+  );
 
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarProgressBar",
-        device,
-        state: "normal"
-      }),
+      id: "toolbarProgressBar",
       type: "popover",
       devices: "desktop",
       icon: "nc-progress-bar",
       title: t("Progress"),
       position: 70,
       options: [
-        toolbarElementProgressBarPercentage({
-          v,
-          device,
+        {
+          id: "progressBarStyle",
+          label: t("Style"),
+          type: "radioGroup",
           devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementProgressBarShowPercentage({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        })
-        /*{
-          id: "borderRadius",
-          label: t("Corner"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: maxBorderRadius,
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          }
-          value: {
-            value: v.borderRadius
-          },
-          onChange: ({value: borderRadius}) => ({
-            borderRadius
+          choices: [
+            {
+              value: "style1",
+              icon: "nc-progress-bar-style-1"
+            },
+            {
+              value: "style2",
+              icon: "nc-progress-bar-style-2"
+            }
+          ],
+          value: dvv("progressBarStyle"),
+          onChange: value => ({
+            [dvk("progressBarStyle")]: value
           })
-        }*/
+        },
+        {
+          id: "percentage",
+          label: t("Fill"),
+          type: "slider-dev",
+          devices: "desktop",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "showText",
+          type: "switch-dev",
+          label: t("Title"),
+          devices: "desktop",
+          disabled: v.progressBarStyle === "style2"
+        },
+        {
+          id: "showPercentage",
+          type: "switch-dev",
+          label: t("Percentage"),
+          devices: "desktop"
+        }
       ]
     },
     {
-      id: defaultValueKey({
-        key: "popoverTypography",
-        device,
-        state: "normal"
-      }),
+      id: "popoverTypography",
       type: "popover",
       icon: "nc-font",
       size: device === "desktop" ? "large" : "auto",
@@ -97,65 +79,35 @@ export function getItems({ v, device, state }) {
       position: 70,
       options: [
         {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
+          id: "tabsTypography",
+          type: "tabs",
+          tabs: [
             {
-              width: 54,
+              id: "tabText",
+              label: t("Title"),
               options: [
-                toolbarTypography2FontFamily({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal",
-                  onChange: ["onChangeTypography2"]
-                })
+                {
+                  id: "typography",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: "desktop" === device
+                  },
+                  disabled:
+                    v.showText === "off" || v.progressBarStyle === "style2"
+                }
               ]
             },
             {
-              width: 46,
-              className: "brz-ed-popover__typography",
+              id: "tabPercent",
+              label: t("Percent"),
               options: [
-                toolbarTypography2FontStyle({ v, device, state: "normal" }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__typography",
-                  columns: [
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontSize({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LineHeight({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    },
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontWeight({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LetterSpacing({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: "desktop" === device
+                  },
+                  disabled: v.showPercentage === "off"
                 }
               ]
             }
@@ -164,7 +116,7 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: "toolbarColor",
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -173,7 +125,7 @@ export function getItems({ v, device, state }) {
       position: 90,
       icon: {
         style: {
-          backgroundColor: hexToRgba(v.bgColorHex, v.bgColorOpacity)
+          backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
         }
       },
       options: [
@@ -183,42 +135,26 @@ export function getItems({ v, device, state }) {
           tabs: [
             {
               id: "tabText",
-              label: t("Text"),
+              label: t("Title"),
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "labelColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled:
+                    v.showText === "off" || v.progressBarStyle === "style2"
+                }
+              ]
+            },
+            {
+              id: "tabPercent",
+              label: t("Percent"),
+              options: [
+                {
+                  id: "color",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.showPercentage === "off"
                 }
               ]
             },
@@ -226,41 +162,10 @@ export function getItems({ v, device, state }) {
               id: "tabBar",
               label: t("Bar"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  showSelect: false,
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "bgColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -268,43 +173,10 @@ export function getItems({ v, device, state }) {
               id: "tabBg",
               label: t("Bg"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  prefix: "bg2",
-                  showSelect: false,
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix: "bg2",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "bg2Color",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -312,64 +184,10 @@ export function getItems({ v, device, state }) {
               id: "tabBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadow2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  showSelect: false,
-                  choices: "outset",
-                  onChangeStyle: [
-                    "onChangeBoxShadowType2",
-                    "onChangeBoxShadowTypeDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBoxShadowHexAndOpacity2",
-                    "onChangeBoxShadowHexAndOpacityPalette2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBoxShadowPalette2",
-                    "onChangeBoxShadowPaletteOpacity2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadowFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowFields2",
-                            "onChangeBoxShadowFieldsDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "boxShadow",
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -377,59 +195,29 @@ export function getItems({ v, device, state }) {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: "toolbarSettings",
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({ v, device, state: "normal" }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      position: 100
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }

@@ -5,9 +5,7 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementContainerTypeAll,
   toolbarBgImage,
-  toolbarBgImageAttachment,
   toolbarBgVideoUrl,
-  toolbarBgVideoQuality,
   toolbarBgVideoLoop,
   toolbarBgVideoStart,
   toolbarBgMapAddress,
@@ -17,34 +15,22 @@ import {
   toolbarBgColor2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarBorderRadius,
   toolbarBorder2,
-  toolbarPaddingFourFieldsPxSuffix,
   toolbarBorderColorHexField2,
   toolbarBorderWidthFourFields2,
-  toolbarHoverTransition,
   toolbarElementContainerTypeImageMap,
   toolbarElementContainerType,
-  toolbarShape,
-  toolbarShapeTopType,
-  toolbarShapeTopColor,
-  toolbarShapeTopHeight,
-  toolbarShapeTopFlip,
-  toolbarShapeTopIndex,
-  toolbarShapeBottomType,
-  toolbarShapeBottomColor,
-  toolbarShapeBottomHeight,
-  toolbarShapeBottomFlip,
-  toolbarShapeBottomIndex
+  toolbarElementContainerTypeResponsive
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device, component }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
+export function getItems({ v, device, component, state }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+  const dvvHover = key => defaultValueValue({ v, key, device, state });
+  const dvk = key => defaultValueKey({ key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
-    dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvvHover("bgColorHex"),
+    dvvHover("bgColorPalette")
   );
 
   const { isSlider: inSlider } = component.props.meta.section;
@@ -100,21 +86,28 @@ export function getItems({ v, device, component }) {
                             "onChangeBgImageDependencies"
                           ]
                         }),
-                        toolbarBgImageAttachment({
-                          v,
-                          device,
+                        {
+                          id: "bgAttachment",
+                          label: t("Parallax"),
+                          type: "select-dev",
                           devices: "desktop",
                           disabled: dvv("media") !== "image" || inSlider,
-                          state: "normal"
-                        }),
+                          choices: [
+                            {
+                              title: t("None"),
+                              value: "none"
+                            },
+                            {
+                              title: t("Fixed"),
+                              value: "fixed"
+                            },
+                            {
+                              title: t("Animated"),
+                              value: "animated"
+                            }
+                          ]
+                        },
                         toolbarBgVideoUrl({
-                          v,
-                          device,
-                          devices: "desktop",
-                          disabled: dvv("media") !== "video",
-                          state: "normal"
-                        }),
-                        toolbarBgVideoQuality({
                           v,
                           device,
                           devices: "desktop",
@@ -572,7 +565,6 @@ export function getItems({ v, device, component }) {
       icon: "nc-cog",
       title: t("Settings"),
       position: 110,
-      devices: "desktop",
       options: [
         toolbarElementContainerType({
           v,
@@ -580,207 +572,19 @@ export function getItems({ v, device, component }) {
           devices: "desktop",
           state: "normal"
         }),
+        toolbarElementContainerTypeResponsive({
+          v,
+          device,
+          devices: "responsive",
+          state: "normal"
+        }),
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",
+          devices: "desktop",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),
-          icon: "nc-cog",
-          position: 30,
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("settingsStyling"),
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: [
-                    toolbarPaddingFourFieldsPxSuffix({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarBorderRadius({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: [
-                        "onChangeBorderRadiusGrouped",
-                        "onChangeBorderRadiusGroupedDependencies"
-                      ],
-                      onChangeUngrouped: [
-                        "onChangeBorderRadiusUngrouped",
-                        "onChangeBorderRadiusUngroupedDependencies"
-                      ]
-                    }),
-                    {
-                      type: "multiPicker",
-                      picker: toolbarShape({
-                        v,
-                        device,
-                        devices: "desktop",
-                        state: "normal"
-                      }),
-                      choices: {
-                        top: [
-                          toolbarShapeTopType({
-                            v,
-                            device,
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeTopColor({
-                            v,
-                            device,
-                            disabled: dvv("shapeTopType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeTopHeight({
-                            v,
-                            device,
-                            disabled: dvv("shapeTopType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeTopFlip({
-                            v,
-                            device,
-                            disabled: dvv("shapeTopType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeTopIndex({
-                            v,
-                            device,
-                            disabled: dvv("shapeTopType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          })
-                        ],
-                        bottom: [
-                          toolbarShapeBottomType({
-                            v,
-                            device,
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeBottomColor({
-                            v,
-                            device,
-                            disabled: dvv("shapeBottomType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeBottomHeight({
-                            v,
-                            device,
-                            disabled: dvv("shapeBottomType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeBottomFlip({
-                            v,
-                            device,
-                            disabled: dvv("shapeBottomType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          }),
-                          toolbarShapeBottomIndex({
-                            v,
-                            device,
-                            disabled: dvv("shapeBottomType") === "none",
-                            devices: "desktop",
-                            state: "normal"
-                          })
-                        ]
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal"
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: dvk("advancedSettings"),
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      position: 110,
-      devices: "responsive",
-      title: t("Settings"),
-      options: [
-        toolbarPaddingFourFieldsPxSuffix({
-          v,
-          device,
-          state: "normal",
-          devices: "responsive"
-        }),
-        toolbarBorderRadius({
-          v,
-          device,
-          state: "normal",
-          devices: "responsive",
-          onChangeGrouped: [
-            "onChangeBorderRadiusGrouped",
-            "onChangeBorderRadiusGroupedDependencies"
-          ],
-          onChangeUngrouped: [
-            "onChangeBorderRadiusUngrouped",
-            "onChangeBorderRadiusUngroupedDependencies"
-          ]
-        }),
-        {
-          type: "multiPicker",
-          disabled:
-            dvv("shapeTopType") === "none" && dvv("shapeBottomType") === "none",
-          picker: toolbarShape({
-            v,
-            device,
-            devices: "responsive",
-            state: "normal"
-          }),
-          choices: {
-            top: [
-              toolbarShapeTopHeight({
-                v,
-                device,
-                disabled: dvv("shapeTopType") === "none",
-                devices: "responsive",
-                state: "normal"
-              })
-            ],
-            bottom: [
-              toolbarShapeBottomHeight({
-                v,
-                device,
-                disabled: dvv("shapeBottomType") === "none",
-                devices: "responsive",
-                state: "normal"
-              })
-            ]
-          }
+          icon: "nc-cog"
         }
       ]
     }

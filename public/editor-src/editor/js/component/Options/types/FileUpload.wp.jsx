@@ -25,9 +25,8 @@ class FileUploadWP extends FileUpload {
           type: "image"
         },
         states: new wp.media.controller.Library({
-          library: wp.media.query({ type: "image" }),
           multiple: false,
-          title: "Upload media",
+          title: "Upload file",
           filterable: "uploaded",
           priority: 20
         })

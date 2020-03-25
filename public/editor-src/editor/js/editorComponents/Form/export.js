@@ -1,12 +1,12 @@
 import $ from "jquery";
 
-export default function() {
-  $("[data-form-version='1']").each(function() {
+export default function($node) {
+  $node.find("[data-form-version='1']").each(function() {
     initForm($(this));
   });
 
   // RECAPTCHA
-  var $recaptcha = $(".brz-g-recaptcha");
+  var $recaptcha = $node.find(".brz-g-recaptcha");
 
   if ($recaptcha.length) {
     // Load Script recaptcha

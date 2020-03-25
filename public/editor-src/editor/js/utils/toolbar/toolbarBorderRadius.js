@@ -4,21 +4,26 @@ import {
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarBorderRadius({
   v,
   device,
+  devices = "all",
   state,
   onChangeGrouped,
-  onChangeUngrouped
+  onChangeUngrouped,
+  prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const borderRadiusType = capByPrefix(prefix, "borderRadiusType");
 
   return {
     type: "multiPicker",
+    devices,
     picker: {
-      id: dvk("borderRadiusType"),
+      id: dvk(borderRadiusType),
       label: t("Corner"),
       type: "radioGroup",
       choices: [
@@ -31,33 +36,42 @@ export function toolbarBorderRadius({
           icon: "nc-corners-individual"
         }
       ],
-      value: dvv("borderRadiusType")
+      value: dvv(borderRadiusType)
     },
     choices: {
       ...toolbarBorderRadiusGrouped({
         v,
         device,
         state,
+        prefix,
         onChange: onChangeGrouped
       }),
       ...toolbarBorderRadiusUngrouped({
         v,
         device,
         state,
+        prefix,
         onChange: onChangeUngrouped
       })
     }
   };
 }
 
-export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
+export function toolbarBorderRadiusGrouped({
+  v,
+  device,
+  state,
+  onChange,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const borderRadius = capByPrefix(prefix, "borderRadius");
 
   return {
     grouped: [
       {
-        id: dvk("borderRadius"),
+        id: dvk(borderRadius),
         type: "slider",
         slider: {
           min: 0,
@@ -77,11 +91,11 @@ export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: dvv("borderRadius")
+          value: dvv(borderRadius)
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, prefix, onChange },
             ...{ value, sliderDragEnd }
           };
           return saveOnChanges(values);
@@ -91,14 +105,27 @@ export function toolbarBorderRadiusGrouped({ v, device, state, onChange }) {
   };
 }
 
-export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
+export function toolbarBorderRadiusUngrouped({
+  v,
+  device,
+  state,
+  onChange,
+  prefix = ""
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const borderTopLeftRadius = capByPrefix(prefix, "borderTopLeftRadius");
+  const borderTopRightRadius = capByPrefix(prefix, "borderTopRightRadius");
+  const borderBottomRightRadius = capByPrefix(
+    prefix,
+    "borderBottomRightRadius"
+  );
+  const borderBottomLeftRadius = capByPrefix(prefix, "borderBottomLeftRadius");
 
   return {
     ungrouped: [
       {
-        id: dvk("borderTopLeftRadius"),
+        id: dvk(borderTopLeftRadius),
         icon: "nc-corners-top-left",
         type: "slider",
         slider: {
@@ -119,11 +146,11 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: dvv("borderTopLeftRadius")
+          value: dvv(borderTopLeftRadius)
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, prefix, onChange },
             ...{
               current: "borderTopLeftRadius",
               value,
@@ -134,7 +161,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: dvk("borderTopRightRadius"),
+        id: dvk(borderTopRightRadius),
         icon: "nc-corners-top-right",
         type: "slider",
         slider: {
@@ -155,11 +182,11 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: dvv("borderTopRightRadius")
+          value: dvv(borderTopRightRadius)
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, prefix, onChange },
             ...{
               current: "borderTopRightRadius",
               value,
@@ -170,7 +197,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: dvk("borderBottomRightRadius"),
+        id: dvk(borderBottomRightRadius),
         icon: "nc-corners-bottom-right",
         type: "slider",
         slider: {
@@ -191,11 +218,11 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: dvv("borderBottomRightRadius")
+          value: dvv(borderBottomRightRadius)
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, prefix, onChange },
             ...{
               current: "borderBottomRightRadius",
               value,
@@ -206,7 +233,7 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: dvk("borderBottomLeftRadius"),
+        id: dvk(borderBottomLeftRadius),
         icon: "nc-corners-bottom-left",
         type: "slider",
         slider: {
@@ -227,11 +254,11 @@ export function toolbarBorderRadiusUngrouped({ v, device, state, onChange }) {
           ]
         },
         value: {
-          value: dvv("borderBottomLeftRadius")
+          value: dvv(borderBottomLeftRadius)
         },
         onChange: ({ value }, { sliderDragEnd }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, prefix, onChange },
             ...{
               current: "borderBottomLeftRadius",
               value,

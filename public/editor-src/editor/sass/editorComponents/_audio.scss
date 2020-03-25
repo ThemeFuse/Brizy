@@ -3,8 +3,7 @@
   pointer-events: auto;
   min-width: fit-content;
 
-  .audio {
-    display: flex;
+  .brz-custom-audio {
     position: relative;
     width: 100%;
     height: 100%;
@@ -14,32 +13,27 @@
     padding-right: 20px;
     z-index: 3;
 
-    .play-pause-btn {
-      display: flex;
+    .brz-audio-play-pause-btn {
       cursor: pointer;
       z-index: 3;
     }
-
-    .current-time {
+    .brz-audio-current-time {
       margin-left: 25px;
     }
-
-    .total-time {
+    .brz-audio-total-time {
       margin-left: 15px;
     }
-
-    .slider {
+    .brz-audio-slider {
       position: relative;
       flex-grow: 1;
       cursor: pointer;
 
-      .progress {
+      .brz-audio-progress {
         border-radius: inherit;
         position: absolute;
         pointer-events: none;
       }
-
-      &::before {
+      &:before {
         content: "";
         display: block;
         position: absolute;
@@ -52,59 +46,50 @@
         opacity: 0.35;
       }
     }
-
-    .controls {
-      display: flex;
+    .brz-audio-controls {
       flex-grow: 1;
       justify-content: space-between;
       align-items: center;
       z-index: 3;
 
-      .slider {
+      .brz-audio-slider {
         margin-left: 16px;
         margin-right: 16px;
         border-radius: 5px;
         height: 8px;
 
-        .progress {
+        .brz-audio-progress {
           height: 100%;
         }
       }
-
       span {
         cursor: default;
       }
     }
-
-    .controls:empty {
+    .brz-audio-controls:empty {
       display: none;
     }
-
-    .volume {
+    .brz-audio-volume {
       position: relative;
-      display: flex;
       margin-left: 15px;
       justify-content: center;
       align-items: center;
       z-index: 3;
 
-      .volume-btn {
-        display: flex;
+      .brz-audio-volume-btn {
         cursor: pointer;
       }
-
-      .volume-controls {
-        display: flex;
+      .brz-audio-volume-controls {
         width: 60px;
         height: 8px;
         margin-left: 10px;
         border-radius: 5px;
         flex-direction: column;
 
-        .slider {
+        .brz-audio-slider {
           border-radius: 3px;
 
-          .progress {
+          .brz-audio-progress {
             bottom: 0;
             height: 100%;
             width: 100%;
@@ -113,22 +98,17 @@
       }
     }
   }
-
   .brz-audio__cover {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: none;
-  }
-
-  .brz-audio__cover {
-    display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
 
-    &::before {
+    &:before {
       content: "";
       display: block;
       position: absolute;
@@ -139,16 +119,50 @@
       margin: 0 auto;
       background-repeat: no-repeat;
     }
-
     .brz-audio__cover-icon {
       position: relative;
       z-index: 1;
       color: #fff;
-      display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       transition: transform 0.3s ease;
+    }
+  }
+}
+
+// Shortcode SoundCloud
+.brz-soundcloud {
+  position: relative;
+  font-size: 0;
+
+  &:before {
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .brz-soundCloud-content {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    iframe {
+      width: 100%;
+    }
+    &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      display: block;
+      pointer-events: none;
     }
   }
 }

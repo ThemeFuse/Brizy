@@ -1,0 +1,18 @@
+.brz-ed-option-wrapper.brz-ed-option__block
+  > .brz-ed-option__input-container.brz-ed-option__input-container--dynamic {
+  width: auto;
+}
+
+.brz-ed-option-wrapper {
+  .brz-control__select-population {
+    margin-left: 10px;
+  }
+
+  .brz-control__select-population--only-icon {
+    margin-left: 0;
+  }
+
+  &.brz-ed-option-population {
+    padding: 0;
+  }
+}

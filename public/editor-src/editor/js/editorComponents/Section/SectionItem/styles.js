@@ -3,11 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleBg(v, vs, vd, props) {
   const styles = {
     ".brz &&:hover > .brz-bg-media": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBorder", "cssStyleBorderRadius"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
       standart: [
@@ -15,32 +11,16 @@ export function styleBg(v, vs, vd, props) {
         "cssStyleFilter",
         "cssStyleBgImagePosition"
       ],
-      interval: [
-        "cssStyleBgImageAttachment",
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      interval: ["cssStyleBgImageAttachment"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-map": {
-      standart: ["cssStyleFilter", "cssStyleBgMap"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleFilter", "cssStyleBgMap"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-video": {
-      standart: ["cssStyleFilter"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleFilter"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-shape__top": {
       standart: [
@@ -59,7 +39,11 @@ export function styleBg(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover > .brz-bg-content": {
-      standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
+      standart: [
+        "cssStylePaddingPreview",
+        "cssStylePaddingRightLeftForEditor",
+        "cssStyleDisplayFlex"
+      ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
       standart: ["cssStylePaddingTopForEditorResizer"]

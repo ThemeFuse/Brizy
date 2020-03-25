@@ -8,8 +8,7 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
 import { t } from "visual/utils/i18n";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 const MAX_CONTAINER_WIDTH = 292;
 

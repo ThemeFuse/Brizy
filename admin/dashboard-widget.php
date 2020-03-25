@@ -58,7 +58,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 		if ( ! ( $news = get_transient( $transient_key ) ) ) {
 
-			$request = wp_remote_get( 'https://www.brizy.io/index.php/wp-json/wp/v2/posts' );
+			$request = wp_remote_get( 'https://www.brizy.io/index.php/wp-json/wp/v2/posts?categories=6' );
 
 			if ( is_wp_error( $request ) ) {
 

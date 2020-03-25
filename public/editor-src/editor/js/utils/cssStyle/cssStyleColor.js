@@ -7,6 +7,6 @@ export function cssStyleColor({ v, device, state, prefix }) {
 }
 
 export function cssStyleLabelColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "labelColor" });
+  const color = styleColor({ v, device, state, prefix: "labelColor" });
+  return color === undefined ? "" : `color:${color};`;
 }
-

@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // --- Stepper
 .brz-ed-control__stepper {
   position: relative;
@@ -23,13 +25,16 @@
   line-height: 1;
   width: 65%;
   flex-basis: 65%;
-  padding-left: $control-padding;
   padding-top: 2px;
   max-width: 100%;
 
   .brz-ed-control__input {
     max-width: 100%;
-    padding: 0;
+    padding: 0 0 0 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    text-indent: 0;
   }
 }
 .brz-ed-control__stepper--arrows {

@@ -2,10 +2,9 @@ import Config from "visual/global/Config";
 import { getWeight } from "visual/utils/fonts";
 import { encodeToString, capitalize } from "visual/utils/string";
 import { getFontStyles, getFontStyle } from "visual/utils/fonts";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
-
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
@@ -21,11 +20,7 @@ import {
   toolbarLinkUpload
 } from "visual/utils/toolbar";
 
-import { defaultValueKey } from "visual/utils/onChange";
-
 const proEnabled = Boolean(Config.get("pro"));
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const getBlockTag = value => {
   switch (value) {
@@ -128,6 +123,16 @@ const getItems = (v, onChange) => ({ device, component }) => {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const isPopulationBlock = v.population && v.population.display === "block";
+
+  let disablePopup;
+  if (device === "desktop") {
+    disablePopup = !proEnabled || inPopup || inPopup2 || IS_GLOBAL_POPUP;
+  } else {
+    disablePopup = v.linkType !== "popup" || v.linkPopup === "";
+  }
+
+  const disableLink =
+    isPopulationBlock || (device === "desktop" ? false : disablePopup);
 
   return [
     {
@@ -543,8 +548,16 @@ const getItems = (v, onChange) => ({ device, component }) => {
       { device, component },
       onChange
     ),
+    // disable Wrapper's horizontalAlign because it is toggle-dev
+    // and we can't migrate to it yet (because of custom onChange)
     {
-      id: device === "desktop" ? "horizontalAlign" : `${device}HorizontalAlign`,
+      id: "horizontalAlign",
+      type: "toggle-dev",
+      disabled: true
+    },
+    {
+      // put a different id to not conflict with `horizontalAlign` from Wrapper
+      id: "richTextHorizontalAlign",
       label: t("Align"),
       type: "toggle",
       position: 30,
@@ -627,7 +640,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
       id: "toolbarLink",
       type: "popover",
       icon: "nc-link",
-      disabled: device !== "desktop" || isPopulationBlock,
+      disabled: disableLink,
       size: "medium",
       title: t("Link"),
       position: 80,
@@ -643,6 +656,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
               options: [
                 {
                   ...toolbarLinkExternal({ v }),
+                  disabled: device !== "desktop",
                   onChange: (
                     { value: linkExternal, population: linkPopulation },
                     { changed, changeEvent }
@@ -667,6 +681,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
                 },
                 {
                   ...toolbarLinkExternalBlank({ v }),
+                  disabled: device !== "desktop",
                   onChange: linkExternalBlank =>
                     onChange({
                       link: encodeToString({
@@ -684,6 +699,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
                 },
                 {
                   ...toolbarLinkExternalRel({ v }),
+                  disabled: device !== "desktop",
                   onChange: linkExternalRel =>
                     onChange({
                       link: encodeToString({
@@ -704,9 +720,11 @@ const getItems = (v, onChange) => ({ device, component }) => {
             {
               id: "anchor",
               label: t("Block"),
+              disabled: device !== "desktop",
               options: [
                 {
                   ...toolbarLinkAnchor({ v }),
+                  disabled: device !== "desktop",
                   onChange: linkAnchor =>
                     onChange({
                       link: encodeToString({
@@ -727,10 +745,11 @@ const getItems = (v, onChange) => ({ device, component }) => {
             {
               id: "upload",
               label: t("File"),
+              disabled: device !== "desktop",
               options: [
                 {
                   ...toolbarLinkUpload({ v, component }),
-                  disabled: !proEnabled,
+                  disabled: !proEnabled || device !== "desktop",
                   onChange: upload =>
                     onChange({
                       link: encodeToString({
@@ -753,9 +772,12 @@ const getItems = (v, onChange) => ({ device, component }) => {
               label: t("Popup"),
               options: [
                 {
-                  ...toolbarLinkPopup({ v, component }),
-                  disabled:
-                    !proEnabled || inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  ...toolbarLinkPopup({
+                    v,
+                    component,
+                    canDelete: device === "desktop"
+                  }),
+                  disabled: disablePopup,
                   onChange: ({ value: linkPopup, popups }) =>
                     onChange({
                       link: encodeToString({
@@ -792,9 +814,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: "toolbarSettings",
       type: "popover",
       title: t("Settings"),
       roles: ["admin"],
@@ -896,36 +917,11 @@ const getItems = (v, onChange) => ({ device, component }) => {
           value: v.tagName
         },
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "advancedSettings",
           type: "advancedSettings",
+          devices: "desktop",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              devices: "desktop",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }

@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
 import ContextMenu from "visual/component/ContextMenu";
@@ -48,7 +49,9 @@ class Items extends EditorArrayComponent {
         ];
       }
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig, {
+      allowExtend: false
+    });
 
     return {
       ...super.getItemProps(itemData, itemIndex, items),
@@ -56,13 +59,28 @@ class Items extends EditorArrayComponent {
     };
   }
 
-  renderItemWrapper(item, itemKey) {
+  getTags(tags = "") {
+    if (!tags) {
+      return [];
+    }
+
+    return tags.split(",").reduce((acc, curr) => {
+      const tag = curr.trim();
+      return tag ? [...acc, tag.replace(/\s/g, "-")] : acc;
+    }, []);
+  }
+
+  renderItemWrapper(item, itemKey, itemIndex, itemData) {
+    const tags = this.getTags(itemData.value.tags);
+
     return (
       <ContextMenu
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuConfig, { id: itemKey })}
       >
-        <div className="brz-image__gallery-item">{item}</div>
+        <div className={classnames("brz-image__gallery-item", tags)}>
+          {item}
+        </div>
       </ContextMenu>
     );
   }

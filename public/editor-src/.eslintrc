@@ -11,7 +11,8 @@
     "TARGET": "readonly",
     "IS_EDITOR": "readonly",
     "IS_PREVIEW": "readonly",
-    "__CONFIG__": "readonly"
+    "__CONFIG__": "readonly",
+    "YT": "readonly"
   },
   "rules": {
     "semi": ["error", "always"],
@@ -43,5 +44,23 @@
       }
     },
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
-  }
+  },
+  "overrides": [{
+    "parser":  "@typescript-eslint/parser",
+    "files": ["**/*.ts", "**/*.tsx"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+      "react/prop-types": "off"
+    }
+  }]
 }

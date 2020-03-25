@@ -10,6 +10,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const ARCHIVE = 4;
 	const TEMPLATE = 8;
 	const BRIZY_TEMPLATE = 16;
+	const ALL_FROM_TAXONOMY = 32;
 
 	/**
 	 * @var int
@@ -107,6 +108,16 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		     isset( $entity_values[0] ) &&
 		     $entity_values[0] == get_option( 'page_on_front' ) ) {
 			return true;
+		}
+
+		// check if post is in a term
+		if ( $applyFor == self::POSTS &&
+		     $this->getAppliedFor() == self::POSTS &&
+		     isset( $entity_values[0] ) && is_array($values = explode( '|', $entity_values[0] )) && count( $values ) > 1
+		) {
+
+			// check if the post is in taxonomy with name $values[0] and with id $values[1]
+			return has_term( $values[1], $values[0], $entityValues[0] );
 		}
 
 
@@ -224,7 +235,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	public function getEntityValues() {
 		return is_null( $this->entityValues ) ? array() : array_map( function ( $id ) {
-			return (int) $id;
+			return $id;
 		}, $this->entityValues );
 	}
 

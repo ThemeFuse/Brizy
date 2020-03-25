@@ -1,0 +1,24 @@
+{
+  "content": {
+    "twitterUsername": "",
+    "twitter": "embed",
+    "twitterType": "embed",
+    "twitterTheme": "light",
+    "buttonLarge": "small",
+    "buttonShowCount": "off",
+    "buttonShowScreenName": "on",
+    "tweet": ""
+  },
+  "style": {
+    "width": 100,
+    "height": 400,
+
+    "customCSS": "",
+
+    "tabletWidth": null,
+    "tabletHeight": null,
+
+    "mobileWidth": null,
+    "mobileHeight": null
+  }
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
+import Scrollbars from "react-custom-scrollbars";
 import { replaceAt, addLast, removeAt } from "timm";
 import TextField from "./common/TextField";
 import Portal from "visual/component/Portal";
@@ -10,6 +11,8 @@ import ClickOutside from "visual/component/ClickOutside";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import Toolbar from "visual/component/Toolbar";
+
+const MAX_ITEM_DROPDOWN = 5;
 
 export default class Select extends TextField {
   static get componentTitle() {
@@ -21,6 +24,8 @@ export default class Select extends TextField {
   }
 
   content = React.createRef();
+  dropdown = React.createRef();
+  scrollbar = React.createRef();
 
   state = {
     isOpen: false,
@@ -46,9 +51,15 @@ export default class Select extends TextField {
   };
 
   handleOptionsAdd = () => {
-    const options = addLast(this.props.options, this.state.newItemValue);
-    this.setState({ newItemValue: "" });
-    this.props.onChange({ options });
+    const { newItemValue } = this.state;
+    const { options, onChange } = this.props;
+
+    if (newItemValue && newItemValue.trim()) {
+      onChange({ options: addLast(options, newItemValue) });
+      this.setState({ newItemValue: "" }, () => {
+        this.scrollbar.current?.scrollToBottom();
+      });
+    }
   };
 
   handleOptionsRemove = index => {
@@ -74,9 +85,21 @@ export default class Select extends TextField {
   };
 
   handleOpen = e => {
-    this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
+    this.setState(({ isOpen }) => ({ isOpen: !isOpen }), this.forceUpdate);
     this.handleClick(e);
   };
+
+  getHeight = _.debounce(() => {
+    if (this.dropdown.current) {
+      const selectItem = this.dropdown.current.querySelector(
+        ".brz-forms2__select-item"
+      );
+
+      return selectItem.getBoundingClientRect().height * MAX_ITEM_DROPDOWN;
+    }
+
+    return "100px";
+  });
 
   renderOptions({ options }, isDesktop) {
     return options.map((item, index) => {
@@ -119,30 +142,40 @@ export default class Select extends TextField {
 
     return (
       <Portal node={node.ownerDocument.body} className={className}>
-        <Toolbar {...this.props.selectToolbarItems}>
-          <div className="brz-forms2__select-list" style={dropdownStyle}>
-            {this.renderOptions(v, isDesktop)}
-            {isDesktop && (
-              <div className="brz-forms2__select-item">
-                <div className="brz-forms2__select-item__input">
-                  <input
-                    placeholder={t("Add new option")}
-                    className="brz-input brz-input__select"
-                    value={this.state.newItemValue}
-                    onChange={({ target: { value } }) => {
-                      this.setState({ newItemValue: value });
-                    }}
-                    onKeyUp={e => this.handleKeyUp(e)}
-                  />
+        <Toolbar {...this.props.toolbarExtendSelect}>
+          <div
+            ref={this.dropdown}
+            className="brz-forms2__select-list"
+            style={dropdownStyle}
+          >
+            <Scrollbars
+              ref={this.scrollbar}
+              autoHeight={true}
+              autoHeightMax={this.getHeight()}
+            >
+              {this.renderOptions(v, isDesktop)}
+              {isDesktop && (
+                <div className="brz-forms2__select-item">
+                  <div className="brz-forms2__select-item__input">
+                    <input
+                      placeholder={t("Add new option")}
+                      className="brz-input brz-input__select"
+                      value={this.state.newItemValue}
+                      onChange={({ target: { value } }) => {
+                        this.setState({ newItemValue: value });
+                      }}
+                      onKeyUp={e => this.handleKeyUp(e)}
+                    />
+                  </div>
+                  <div
+                    className="brz-forms2__select-item__icon"
+                    onClick={this.handleOptionsAdd}
+                  >
+                    <EditorIcon icon="nc-arrow-right" />
+                  </div>
                 </div>
-                <div
-                  className="brz-forms2__select-item__icon"
-                  onClick={this.handleOptionsAdd}
-                >
-                  <EditorIcon icon="nc-arrow-right" />
-                </div>
-              </div>
-            )}
+              )}
+            </Scrollbars>
           </div>
         </Toolbar>
       </Portal>
@@ -206,7 +239,7 @@ export default class Select extends TextField {
   }
 
   renderForView(v) {
-    const { label, options, attr: _attr } = v;
+    const { label, attr: _attr } = v;
     const attr = _.omit(_attr, [
       "type",
       "accept",
@@ -214,10 +247,15 @@ export default class Select extends TextField {
       "data-max",
       "data-native"
     ]);
+    const options = v.options.filter(option => option && option.trim());
 
-    return (
+    return options.length ? (
       <div className={this.getClassName(v)}>
-        <select {...attr} className="brz-select">
+        <select
+          {...attr}
+          data-max-item-dropdown={MAX_ITEM_DROPDOWN}
+          className="brz-select"
+        >
           <option value=" ">{label}</option>
           {options.map((item, index) => (
             <option key={index} value={item}>
@@ -226,6 +264,6 @@ export default class Select extends TextField {
           ))}
         </select>
       </div>
-    );
+    ) : null;
   }
 }

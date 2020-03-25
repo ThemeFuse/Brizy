@@ -3,7 +3,6 @@ import T from "prop-types";
 import ColorPicker2 from "visual/component/Controls/ColorPicker2";
 import classNames from "classnames";
 import { ColorPalette } from "visual/component/Controls/ColorPalette";
-import BrizyFields from "visual/component/Controls/ColorPicker2/BrizyFields";
 
 export const paletteHex = (id, palettes) =>
   (palettes.find(p => p.id === id) || {}).hex;
@@ -74,9 +73,6 @@ export class ColorPicker3 extends PureComponent {
           openSettings={paletteOpenSettings}
           value={value.palette}
         />
-        {this.props.hexInput && (
-          <BrizyFields value={colorValue} onChange={this.onColorChange} />
-        )}
       </div>
     );
   }

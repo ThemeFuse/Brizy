@@ -1,31 +1,79 @@
 // Tabs
 .brz-tabs {
-  flex: 1 1 auto;
+  min-width: 0;
+
+  &--horizontal {
+    flex: 1 1 auto;
+  }
+  &--vertical {
+    display: flex;
+    width: 100%;
+  }
+  &--vertical.brz-tabs--right {
+   flex-direction: row-reverse;
+  }
 
   // Navs
   &__nav {
-    display: flex;
     overflow: hidden;
     margin: 0;
     padding: 0;
+    min-width: fit-content;
+
+    &--horizontal {
+      display: flex;
+    }
+    &--button {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-style: solid;
+      background-clip: padding-box;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      flex-direction: row;
+    }
   }
   &__nav--item {
     position: relative;
     list-style: none;
+    margin: 0;
+    line-height: unset;
     // this is put to solve z-index issues
     // with ContainerBorder that result in
     // being unable to click the tab handles
     z-index: var(--zIndex);
-
-    &:not(:last-child) {
-      margin-right: 3px;
-    }
   }
-  &__nav--active {
+  .brz-tabs__nav--style-1 .brz-tabs__nav--active {
     &:before,
     &:after {
       content: "";
       position: absolute;
+    }
+  }
+  &__nav--vertical.brz-tabs__nav--left .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      height: 100vh;
+      right: 0;
+    }
+    &:before {
+      bottom: 100%;
+    }
+  }
+  &__nav--vertical.brz-tabs__nav--right .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      height: 100vh;
+      left: 0;
+    }
+    &:before {
+      bottom: 100%;
+    }
+  }
+  &__nav--horizontal .brz-tabs__nav--active {
+    &:before,
+    &:after {
       width: 100vw;
       height: 2px;
       bottom: 0;
@@ -36,12 +84,6 @@
     &:after {
       right: -100vw;
     }
-  }
-  &__nav--button {
-    padding: 10px 15px;
-    cursor: pointer;
-    border-style: solid;
-    background-clip: padding-box;
   }
 
   // Mobile
@@ -58,7 +100,6 @@
   }
   &__items--active {
     display: block;
-    border-top: none;
 
     & > .brz-tabs__item--content {
       animation-name: fadeIn;
@@ -69,14 +110,41 @@
       min-height: 50px;
     }
   }
+  &__content--vertical {
+    flex-grow: 1;
+  }
+  &__content--vertical .brz-tabs__items {
+    height: 100%;
+  }
+  &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left .brz-tabs__items--active,
+  &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left .brz-tabs__items--active:hover {
+    border-left-style: none;
+  }
+  &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1 .brz-tabs__items--active,
+  &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1 .brz-tabs__items--active:hover {
+    border-right-style: none;
+  }
+  &__content--horizontal.brz-tabs__content--style-1 .brz-tabs__items--active,
+  &__content--horizontal.brz-tabs__content--style-1 .brz-tabs__items--active:hover {
+    border-top-style: none;
+  }
 }
 
 /// Responsive
 @include media-breakpoint-down(sm) {
   .brz-tabs {
+
+    &__nav {
+      margin: 0 !important;
+    }
     // Mobile
     &__nav--mobile {
       display: block;
+
+      & > .brz-tabs__nav--button {
+        border-width: 0 !important;
+        box-shadow: none !important;
+      }
     }
     &__nav--desktop {
       display: none;
@@ -92,14 +160,33 @@
       }
     }
     &__items--active {
-      border-top: solid;
-
       & > .brz-tabs__nav--button {
         border-bottom: solid;
       }
       & > .brz-tabs__item--content {
         display: block;
       }
+    }
+    &__content--vertical .brz-tabs__items {
+      height: fit-content;
+    }
+    &__content .brz-tabs__items--active {
+      border-top-style: solid;
+    }
+    &__content.brz-tabs__content--vertical.brz-tabs__content--left .brz-tabs__items--active,
+    &__content.brz-tabs__content--vertical.brz-tabs__content--left .brz-tabs__items--active:hover {
+      border-left-style: solid;
+    }
+    &__content.brz-tabs__content--vertical.brz-tabs__content--right .brz-tabs__items--active,
+    &__content.brz-tabs__content--vertical.brz-tabs__content--right .brz-tabs__items--active:hover {
+      border-right-style: solid;
+    }
+    &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1 .brz-tabs__items--active,
+    &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1 .brz-tabs__items--active:hover {
+      border-top-style: solid;
+    }
+    &__nav--horizontal.brz-tabs__nav.brz-tabs__nav--style-2 {
+      display: none;
     }
   }
 }

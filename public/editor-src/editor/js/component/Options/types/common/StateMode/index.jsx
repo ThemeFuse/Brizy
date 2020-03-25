@@ -5,13 +5,9 @@ import Options, { filterOptionsData } from "visual/component/Options";
 import Tabs from "visual/component/Controls/Tabs/Tabs";
 import Tab from "visual/component/Controls/Tabs/Tab";
 import { flatten, stateIcon, stateTitle, filterByState } from "./utils";
-import {
-  stateToValue,
-  states,
-  valueToState,
-  haveState,
-  defaultState
-} from "visual/utils/stateMode";
+import { states } from "visual/utils/stateMode";
+import { haveState } from "visual/utils/stateMode/editorComponent";
+import * as State from "visual/utils/stateMode";
 
 export default class StateMode extends Component {
   static propTypes = {
@@ -28,7 +24,7 @@ export default class StateMode extends Component {
     className: "",
     location: "",
     toolbar: "",
-    value: stateToValue(defaultState()),
+    value: State.toString(State.empty),
     onChange: _.noop
   };
 
@@ -37,17 +33,17 @@ export default class StateMode extends Component {
   }
 
   componentWillUnmount() {
-    if (this.active() !== defaultState()) {
-      this.props.onChange(stateToValue(defaultState()));
+    if (this.active() !== State.empty) {
+      this.props.onChange(State.toString(State.empty));
     }
   }
 
   haveState = state => haveState(state, flatten(this.props.options));
 
   active = () => {
-    const state = valueToState(this.props.value);
+    const state = State.mRead(this.props.value);
 
-    return this.haveState(state) ? state : defaultState();
+    return this.haveState(state) ? state : State.empty;
   };
 
   renderOption = state => {
@@ -66,7 +62,7 @@ export default class StateMode extends Component {
     return (
       <Tabs
         tabsPosition="left"
-        value={stateToValue(this.active())}
+        value={State.toString(this.active())}
         onChange={this.props.onChange}
       >
         {states.map(state => (
@@ -75,7 +71,7 @@ export default class StateMode extends Component {
             active={this.active() === state}
             title={stateTitle(state)}
             icon={stateIcon(state)}
-            value={stateToValue(state)}
+            value={State.toString(state)}
           >
             {this.renderOption(state)}
           </Tab>

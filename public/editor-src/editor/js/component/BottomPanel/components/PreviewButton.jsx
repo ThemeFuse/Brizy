@@ -2,11 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
+import { IS_INTERNAL_POPUP, IS_EXTERNAL_POPUP } from "visual/utils/models";
 import { pageSlugSelector } from "visual/redux/selectors";
 
 function PreviewButtons({ pageSlug }) {
+  if (IS_EXTERNAL_POPUP) {
+    return null;
+  }
+
   const { pagePreview } = Config.get("urls");
-  let url = pagePreview + "/" + pageSlug;
+  const url = IS_INTERNAL_POPUP ? pagePreview : pagePreview + "/" + pageSlug;
 
   return (
     <li

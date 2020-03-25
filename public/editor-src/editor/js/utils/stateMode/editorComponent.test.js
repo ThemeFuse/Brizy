@@ -1,5 +1,9 @@
-import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
-import { HOVER, NORMAL } from "visual/utils/stateMode/index";
+import {
+  bindStateToOption,
+  hasState,
+  haveState
+} from "visual/utils/stateMode/editorComponent";
+import { empty, HOVER, NORMAL } from "visual/utils/stateMode/index";
 
 describe("Testing `bindStateToOption` function", () => {
   const onChange = () => {};
@@ -112,5 +116,37 @@ describe("Testing `bindStateToOption` function", () => {
       tabs: []
     };
     expect(bindStateToOption(state, onChange, option)).toEqual(result);
+  });
+});
+
+describe("Testing 'hasState' function", () => {
+  test("By default, options support only default state, if the states key is not defined or empty", () => {
+    expect(hasState(empty, {})).toBe(true);
+    expect(hasState(HOVER, {})).toBe(false);
+    expect(hasState(empty, { states: [] })).toBe(true);
+    expect(hasState(HOVER, { states: [] })).toBe(false);
+  });
+
+  test("Return 'true' if 'states' key contain the requested state", () => {
+    expect(hasState(NORMAL, { states: [NORMAL] })).toBe(true);
+    expect(hasState(HOVER, { states: [NORMAL, HOVER] })).toBe(true);
+  });
+});
+
+describe("Testing 'haveState' function", () => {
+  test("By default, options support only default state, if the states key is not defined or empty", () => {
+    const options = [{}, { states: [] }];
+
+    expect(haveState(empty, options)).toBe(true);
+    expect(haveState(HOVER, options)).toBe(false);
+    expect(haveState(empty, options)).toBe(true);
+    expect(haveState(HOVER, options)).toBe(false);
+  });
+
+  test("Return 'true' if 'states' key contain the requested state", () => {
+    const options = [{ states: [NORMAL] }, { states: [NORMAL, HOVER] }];
+
+    expect(haveState(NORMAL, options)).toBe(true);
+    expect(haveState(HOVER, options)).toBe(true);
   });
 });

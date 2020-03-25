@@ -13,7 +13,7 @@ class Text extends EditorComponent {
   render(v) {
     return (
       <div className="brz-text">
-        <TextEditor value={v.text} />;
+        <TextEditor value={v.text} />
       </div>
     );
   }

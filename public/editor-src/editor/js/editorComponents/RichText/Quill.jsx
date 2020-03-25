@@ -168,7 +168,17 @@ export default class QuillComponent extends React.Component {
       const { color, colorPalette } = this.quill.getFormat();
       const attributers =
         color || colorPalette ? { color, colorPalette } : null;
-      return new Delta().insert(node.textContent, attributers);
+
+      const headerTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"];
+
+      let content = node.textContent;
+      if (headerTags.includes(node.tagName.toLowerCase())) {
+        let lineBreak = node.textContent.trim() === "" ? "\n\n " : "";
+
+        content = node.textContent.trim() + lineBreak;
+      }
+
+      return new Delta().insert(content, attributers);
     });
 
     // we add just one listener for all instances

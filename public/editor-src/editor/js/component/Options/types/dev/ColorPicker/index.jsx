@@ -3,13 +3,16 @@ import T from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
 import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import { toPalette } from "visual/utils/color/toPalette";
 import { toOpacity } from "visual/utils/cssProps/opacity";
-import { setHex, setPalette } from "./model";
-import { setOpacity } from "./utils";
+import { setHex, setPalette, setOpacity as _setOpacity } from "./model";
+import * as Utils from "./utils";
+import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+
+const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
 export const paletteHex = (id, palettes) =>
   (palettes.find(p => p.id === id) || {}).hex;
@@ -64,9 +67,9 @@ export class ColorPicker extends React.Component {
     const palette = toPalette(defaults.palette, get("palette"));
     return {
       hex: paletteHex(palette, paletteColors()) || get("hex") || defaults.hex,
-      opacity: toOpacity(defaults.opacity, get("opacity")),
+      opacity: toOpacity(get("opacity"), defaults.opacity),
       palette: palette,
-      tempOpacity: toOpacity(defaults.tempOpacity, get("tempOpacity")),
+      tempOpacity: toOpacity(get("tempOpacity"), defaults.tempOpacity),
       tempPalette: toPalette(defaults.tempPalette, get("tempPalette"))
     };
   };
@@ -89,6 +92,10 @@ export class ColorPicker extends React.Component {
         );
         break;
     }
+  };
+
+  onHexChange = hex => {
+    this.props.onChange(setHex(hex, this.props.value), { isChanged: "hex" });
   };
 
   handleSidebarOpen = () => {
@@ -116,6 +123,10 @@ export class ColorPicker extends React.Component {
           onChange={this.onChange}
           palette={paletteColors()}
           paletteOpenSettings={this.handleSidebarOpen}
+        />
+        <ColorPickerInputs
+          value={this.props.value.hex}
+          onChange={this.onHexChange}
         />
       </div>
     );

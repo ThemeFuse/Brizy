@@ -41,14 +41,8 @@ export default class AutoCorrectingInput extends React.Component {
     return null;
   }
 
-  mounted = false;
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
   componentWillUnmount() {
-    this.mounted = false;
+    this.debouncedOnChange.cancel();
   }
 
   increment() {
@@ -117,10 +111,6 @@ export default class AutoCorrectingInput extends React.Component {
   };
 
   debouncedOnChange = _.debounce(() => {
-    if (!this.mounted) {
-      return;
-    }
-
     this.setState(
       (state, props) => {
         const { min, max, step } = props;
@@ -160,7 +150,8 @@ export default class AutoCorrectingInput extends React.Component {
       onFocus,
       onBlur,
       onMouseEnter,
-      onMouseLeave
+      onMouseLeave,
+      size
     } = this.props;
     const { text } = this.state;
 
@@ -172,6 +163,7 @@ export default class AutoCorrectingInput extends React.Component {
         min={min}
         max={max}
         step={step}
+        size={size}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={this.handleChange}

@@ -93,7 +93,7 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function upload_path( $path = null ) {
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim( $path, '/' );
 		}
 
 		return wp_normalize_path( $this->upload_dir['basedir'] . $path );
@@ -120,7 +120,7 @@ class Brizy_Editor_UrlBuilder {
 	public function brizy_upload_path( $path = null ) {
 
 		if ( $path ) {
-			$path = ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = ltrim( $path, '/' );
 		}
 
 		return $this->upload_path( sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $path ) );
@@ -134,7 +134,7 @@ class Brizy_Editor_UrlBuilder {
 	public function brizy_upload_relative_path( $path = null ) {
 
 		if ( $path ) {
-			$path = ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = ltrim( $path, '/' );
 		}
 
 		return ltrim( sprintf( Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $path ), "/" );
@@ -171,7 +171,7 @@ class Brizy_Editor_UrlBuilder {
 		}
 
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim( $path, '/' );
 		}
 
 		return $this->brizy_upload_path( $post_id . $path );
@@ -183,7 +183,7 @@ class Brizy_Editor_UrlBuilder {
 		}
 
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim( $path, '/' );
 		}
 
 		return $this->brizy_upload_relative_path( $post_id . $path );
@@ -217,7 +217,7 @@ class Brizy_Editor_UrlBuilder {
 	public function editor_asset_path( $path = null ) {
 
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim( $path, '/' );
 		}
 
 		return $this->brizy_upload_path( 'editor' . $path );
@@ -239,9 +239,9 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	static public function editor_build_path( $path = null ) {
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim(
-					str_replace( array( '/', '\\' ), DIRECTORY_SEPARATOR, $path ),
-					DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim(
+					str_replace( array( '/', '\\' ), '/', $path ),
+					'/' );
 		}
 
 		return Brizy_Config::EDITOR_BUILD_PATH . $path;
@@ -254,7 +254,7 @@ class Brizy_Editor_UrlBuilder {
 	 */
 	public function media_asset_path( $path = null ) {
 		if ( $path ) {
-			$path = DIRECTORY_SEPARATOR . ltrim( $path, DIRECTORY_SEPARATOR );
+			$path = '/' . ltrim( $path, '/' );
 		}
 
 		return $this->brizy_upload_path( "media" . $path );

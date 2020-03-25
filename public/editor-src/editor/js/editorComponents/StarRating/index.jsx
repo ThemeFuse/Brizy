@@ -1,10 +1,12 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import TextEditor from "visual/editorComponents/Text/Editor";
 import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
@@ -16,7 +18,13 @@ class StarRating extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  renderStars(i, rating) {
+  handleTextChange = text => {
+    this.patchValue({ text });
+  };
+
+  renderStars(i, rating, v) {
+    const { iconName, iconType } = v;
+
     // eslint-disable-next-line no-unused-vars
     const [x, y] = String(rating).split(".");
     const needIcon = i < rating;
@@ -29,13 +37,13 @@ class StarRating extends EditorComponent {
     return (
       <div key={i} className="brz-starrating-icon-wrap">
         <ThemeIcon
-          name="star"
-          type="editor"
+          name={iconName}
+          type={iconType}
           className="brz-starrating-color-empty"
         />
         {needIcon && (
           <span className={className}>
-            <ThemeIcon name="star" type="editor" />
+            <ThemeIcon name={iconName} type={iconType} />
           </span>
         )}
       </div>
@@ -54,15 +62,21 @@ class StarRating extends EditorComponent {
     const starArray = Array(5).fill();
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            {label !== "" && (
-              <span className="brz-starrating-text">{label}</span>
+            {label !== "off" && (
+              <TextEditor
+                className="brz-starrating-text"
+                value={v.text}
+                onChange={this.handleTextChange}
+              />
             )}
 
             <div className="brz-starrating-container" title={rating}>
-              {starArray.map((_, i) => this.renderStars(i, rating))}
+              {starArray.map((_, i) => this.renderStars(i, rating, v))}
             </div>
           </div>
         </CustomCSS>

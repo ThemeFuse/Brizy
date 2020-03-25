@@ -3,19 +3,19 @@ import objectToQueryString from "visual/utils/url/objectToQueryString";
 const DEFAULT_SETTINGS = {
   autoplay: false,
   controls: true,
-  loop: false,
-  quality: "default"
+  loop: false
 };
 
 const getYouTubeOptions = (
   key,
-  { autoplay, controls, loop, suggestedVideo, start = 0 }
+  { autoplay, controls, branding = 1, loop, suggestedVideo, start = 0, end = 0 }
 ) => {
   let options = {
     autoplay: Number(autoplay),
     controls: Number(controls),
     start: Number(start),
-    modestbranding: 1,
+    end: Number(end),
+    modestbranding: branding,
     wmode: "transparent",
     enablejsapi: 1,
     loop: 0,
@@ -33,19 +33,18 @@ const getYouTubeOptions = (
   };
 };
 
-const getVimeoOptions = (key, { autoplay, loop, quality, start = 0 }) => {
+const getVimeoOptions = (key, { intro = 1, autoplay, loop, start = 0 }) => {
   return {
     url: `https://player.vimeo.com/video/${key}`,
     options: {
       autoplay: Number(autoplay),
       background: 0,
-      title: 0,
-      byline: 0,
+      title: intro,
+      byline: intro,
       badge: false,
       autopause: false,
-      portrait: false,
-      loop: Number(loop),
-      quality
+      portrait: intro,
+      loop: Number(loop)
     },
     anchor: `#t=${Number(start)}s`
   };

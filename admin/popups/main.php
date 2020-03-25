@@ -125,8 +125,8 @@ class Brizy_Admin_Popups_Main {
 
 			if ( $brizyPopup->get_needs_compile() ) {
 				$brizyPopup->compile_page();
-				$brizyPopup->save();
-				$brizyPopup->save_wp_post();
+				$brizyPopup->saveStorage();
+				$brizyPopup->savePost();
 			}
 
 			$compiledPage = $brizyPopup->get_compiled_page();

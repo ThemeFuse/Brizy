@@ -17,13 +17,15 @@ class EditorPopup extends Component {
   render() {
     const { PagePopup } = EditorGlobal.getComponents();
     const { reduxState, reduxDispatch } = this.props;
-    const { site } = Config.get("urls");
+    const { pagePreview } = Config.get("urls");
 
     const items = pageBlocksSelector(reduxState);
 
     return (
       <Fragment>
-        {Boolean(items.length) && <iframe id="brz-ed-home-page" src={site} />}
+        {Boolean(items.length) && (
+          <iframe id="brz-ed-home-page" src={pagePreview} />
+        )}
         <PagePopup
           dbValue={{ items }}
           reduxState={reduxState}

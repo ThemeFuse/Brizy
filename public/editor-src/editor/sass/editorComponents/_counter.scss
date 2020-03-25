@@ -1,7 +1,65 @@
 // --- Counter
 .brz-counter {
-  transition: all 0.3s ease;
-  cursor: default;
+  position: relative;
+
+  &-simple {
+    width: auto !important;
+  }
+  &-radial .brz-counter-figures {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &-empty .brz-counter-figures {
+    display: none;
+  }
+  &-pie .brz-counter-figures {
+    display: none;
+  }
+  .brz-ed-box__resizer {
+    height: auto;
+  }
+}
+.brz-counter-chart {
   text-align: center;
-  display: inline-block;
+  margin: 0 auto;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    background: yellowgreen;
+    border-radius: 50%;
+  }
+  &.brz-counter-chart-radial {
+    svg {
+      background: transparent;
+    }
+    .brz-counter-pie-chart {
+      fill: transparent;
+    }
+  }
+  &.brz-counter-chart-empty {
+    svg {
+      background: transparent;
+    }
+    .brz-counter-pie-chart {
+      fill: transparent;
+    }
+    .brz-counter-pie-chart {
+      stroke-width: 32;
+    }
+  }
+  &.brz-counter-chart-pie {
+    svg {
+      background: transparent;
+    }
+    .brz-counter-pie-chart {
+      stroke-width: 32;
+    }
+  }
+  .brz-counter-figures {
+    text-align: center;
+  }
 }

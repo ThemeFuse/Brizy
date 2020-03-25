@@ -123,6 +123,32 @@ gulp.task("verifications", () => {
   }
 });
 
+gulp.task("external_popups", () => {
+  const tasks = ["external_popups.popup", "external_popups.code_injection"];
+
+  runSequence(...tasks);
+});
+
+gulp.task("external_popups.popup", () => {
+  const src = paths.editor + "/js/bootstraps/popups/popup.js";
+  const dest = paths.build + "/editor/js/";
+
+  gulp
+    .src(src)
+    .pipe(gulpPlugins.terser())
+    .pipe(gulp.dest(dest));
+});
+
+gulp.task("external_popups.code_injection", () => {
+  const src = paths.editor + "/js/bootstraps/popups/popup_injection.js";
+  const dest = paths.build + "/editor/js";
+
+  gulp
+    .src(src)
+    .pipe(gulpPlugins.terser())
+    .pipe(gulp.dest(dest));
+});
+
 gulp.task("clean", [
   "clean.local",
   "clean.free",

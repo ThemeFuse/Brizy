@@ -31,3 +31,23 @@ export function cssStyleTypography2LetterSpacing({ v, device, prefix = "" }) {
     prefix
   })}px;`;
 }
+
+export function cssStyleTypography3FontFamily({ v, device }) {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "typography" });
+}
+
+export function cssStyleTypography3FontSize({ v, device }) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "typography" });
+}
+
+export function cssStyleTypography3LineHeight({ v, device }) {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "typography" });
+}
+
+export function cssStyleTypography3FontWeight({ v, device }) {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "typography" });
+}
+
+export function cssStyleTypography3LetterSpacing({ v, device }) {
+  return cssStyleTypography2LetterSpacing({ v, device, prefix: "typography" });
+}

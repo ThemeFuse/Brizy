@@ -9,11 +9,13 @@ import {
   styleElementVideoCoverZoom,
   styleElementVideoIconSizeWidth,
   styleElementVideoIconSizeHeight,
+  styleElementVideoIconCustomSize,
   styleFilterBrightness,
   styleFilterHue,
   styleFilterSaturation,
   styleFilterContrast
 } from "visual/utils/style2";
+import { cssStyleColor, cssStyleBgColor } from "visual/utils/cssStyle";
 
 export function cssStyleElementVideoPaddingRatio({ v, device, state }) {
   const paddingRatio = styleElementVideoPaddingRatio({ v, device, state });
@@ -97,4 +99,24 @@ export function cssStyleElementVideoCoverPosition({ v, device, state }) {
 
 export function cssStyleElementVideoPropertyHoverTransition() {
   return "transition-property: box-shadow, border, border-radius;";
+}
+
+export function cssStyleVideoControlsBgColor({ v, device, state }) {
+  return cssStyleBgColor({ v, device, state, prefix: "controlsBg" });
+}
+
+export function cssStyleVideoIconControls({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "iconControlsColor" });
+}
+
+export function cssStyleElementVideoControlsIconFontSize({ v, device, state }) {
+  const controlsIconCustomSize = styleElementVideoIconCustomSize({
+    v,
+    device,
+    state
+  });
+
+  return controlsIconCustomSize === undefined
+    ? ""
+    : `font-size:${controlsIconCustomSize}px;`;
 }

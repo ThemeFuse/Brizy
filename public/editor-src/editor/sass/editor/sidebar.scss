@@ -16,7 +16,6 @@
     font-family: $font-family-1;
     font-size: 13px;
     font-weight: 600;
-    margin-left: auto;
     cursor: pointer;
 
     &:hover {
@@ -54,82 +53,7 @@
     }
   }
 
-  &__checked {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-    border-radius: 50%;
-    position: absolute;
-    top: 4px;
-    left: 8px;
-    background: #000;
 
-    .brz-icon-svg {
-      color: rgb(34, 175, 218);
-    }
-  }
-
-  &__edit {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    cursor: pointer;
-
-    .brz-ed-sidebar__checked {
-      border: 1px solid rgba(129, 138, 145, 0.6);
-    }
-    .brz-icon-svg {
-      opacity: 0;
-    }
-
-    &--checked {
-      .brz-ed-sidebar__checked {
-        border: 0;
-        background-color: #0085ba;
-      }
-      .brz-icon-svg {
-        opacity: 1;
-      }
-    }
-  }
-
-  &__search {
-    width: 182px;
-    margin: 48px auto 18px 49px;
-    position: relative;
-    font-size: 12px;
-
-    .brz-input {
-      width: 100%;
-      background: transparent;
-      border: 0;
-      outline: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-left: 31px;
-      padding-top: 1px;
-      padding-bottom: 12px;
-      color: #fff;
-      font-size: 14px;
-      font-family: $font-family-1;
-
-      &::placeholder {
-        color: #818a91;
-        font-style: italic;
-      }
-    }
-  }
-  &__button-search {
-    position: absolute;
-    top: 2px;
-    left: 6px;
-
-    .brz-icon-svg {
-      color: #818a91;
-    }
-  }
 
   // Control
   &__control {
@@ -214,8 +138,9 @@
     left: $sidebar-size;
     width: $sidebar-content-size;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: $sidebar-content-bg;
-    overflow: hidden;
 
     &.active {
       animation-name: brz-ed-shadow-animation;
@@ -236,7 +161,10 @@
   }
   &__header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
     width: 100%;
     height: $sidebar-size;
     background-color: $sidebar-header-bg;
@@ -248,25 +176,9 @@
     font-family: $font-family-1 !important;
     font-weight: 600 !important;
   }
-  &__header__icon {
-    margin-left: auto;
-    cursor: pointer;
-  }
   &__main {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: $sidebar-size;
-    bottom: 0; // $sidebar-size;
-  }
-  &__footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: $sidebar-size;
-    background-color: $sidebar-content-footer-bg;
-    display: inline-flex;
+    flex-grow: 1;
+    height: 100%;
   }
 
   // Popover
@@ -706,6 +618,80 @@
     }
     &:last-child {
       padding-bottom: 40px;
+    }
+  }
+  &__checked {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    background: #000;
+
+    .brz-icon-svg {
+      color: rgb(34, 175, 218);
+    }
+  }
+  &__edit {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    cursor: pointer;
+
+    .brz-ed-sidebar__checked {
+      border: 1px solid rgba(129, 138, 145, 0.6);
+    }
+    .brz-icon-svg {
+      opacity: 0;
+    }
+
+    &--checked {
+      .brz-ed-sidebar__checked {
+        border: 0;
+        background-color: #0085ba;
+      }
+      .brz-icon-svg {
+        opacity: 1;
+      }
+    }
+  }
+  &__search {
+    width: 182px;
+    margin: 48px auto 18px 49px;
+    position: relative;
+    font-size: 12px;
+
+    .brz-input {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      outline: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-left: 31px;
+      padding-top: 1px;
+      padding-bottom: 12px;
+      color: #fff;
+      font-size: 14px;
+      font-family: $font-family-1;
+
+      &::placeholder {
+        color: #818a91;
+        font-style: italic;
+      }
+    }
+  }
+  &__button-search {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+
+    .brz-icon-svg {
+      color: #818a91;
     }
   }
 }

@@ -21,11 +21,13 @@ export function cssStyleElementProgressBarPadding({ v, device, state }) {
     : `padding:${paddingTop}px ${paddingRight}px;`;
 }
 
-export function cssStyleSizeProgressBarMaxWidthPercent({ v, device }) {
+export function cssStyleSizeProgressBarMaxWidthPercent({ v, device, state }) {
   const percentage = styleElementProgressBarPercentage({
     v,
-    device
+    device,
+    state
   });
+
   return percentage === undefined ? "" : `max-width:${percentage}%;`;
 }
 

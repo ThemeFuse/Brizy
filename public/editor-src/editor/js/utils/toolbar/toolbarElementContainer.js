@@ -124,3 +124,46 @@ export function toolbarElementContainerType({
     }
   };
 }
+
+export function toolbarElementContainerTypeResponsive({
+  v,
+  device,
+  position = 10,
+  devices = "all",
+  state
+}) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = key => defaultValueKey({ v, key, device, state });
+
+  return {
+    id: dvk("containerSize"),
+    type: "slider",
+    label: t("Width"),
+    position,
+    devices,
+    slider: {
+      min: 35,
+      max: 100
+    },
+    input: {
+      show: true,
+      min: 35,
+      max: 100
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "%",
+          value: "%"
+        }
+      ]
+    },
+    value: {
+      value: dvv("containerSize")
+    },
+    onChange: ({ value: containerSize }) => ({
+      [dvk("containerSize")]: containerSize
+    })
+  };
+}

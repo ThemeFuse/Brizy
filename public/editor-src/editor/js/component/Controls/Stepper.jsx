@@ -1,10 +1,20 @@
 import React from "react";
+import T from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import AutoCorrectingInput from "./AutoCorrectingInput";
 
 export default class Stepper extends React.Component {
+  static propTypes = {
+    className: T.string,
+    min: T.number,
+    max: T.number,
+    step: T.number,
+    value: T.number,
+    onChange: T.func
+  };
+
   static defaultProps = {
     className: "",
     min: 0,

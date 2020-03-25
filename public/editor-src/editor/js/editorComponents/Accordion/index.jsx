@@ -5,10 +5,16 @@ import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Items from "./Items";
-import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendParentConfig from "./toolbarExtendParent";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import * as toolbarFilterConfig from "./toolbarFilter";
+import * as sidebarFilterConfig from "./sidebarFilter";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import { css } from "visual/utils/cssStyle";
+import { style } from "./styles";
+import classnames from "classnames";
 
 class Accordion extends EditorComponent {
   static get componentId() {
@@ -24,10 +30,12 @@ class Accordion extends EditorComponent {
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
-      parentToolbarExtend,
+      toolbarExtendParentConfig,
+      sidebarExtendParentConfig,
       {
         allowExtend: false,
-        filterExtendName: `${this.constructor.componentId}_parent`
+        allowExtendFromThirdParty: true,
+        thirdPartyExtendId: `${this.constructor.componentId}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -37,24 +45,43 @@ class Accordion extends EditorComponent {
     this.patchValue({ activeAccordionItem });
   };
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
+  renderForEdit(v, vs, vd) {
+    const className = classnames(
+      "brz-accordion",
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+    );
 
-    const { activeAccordionItem } = v;
-    const itemProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      className: styleClassName(v),
-      style: styleCSSVars(v),
-      handleNav: this.handleNav,
+    const {
       activeAccordionItem,
+      filterStyle,
+      navIcon,
+      collapsible,
+      enableTags
+    } = v;
+    const itemProps = this.makeSubcomponentProps({
+      className,
+      filterStyle,
+      activeAccordionItem,
+      navIcon,
+      collapsible,
+      enableTags,
+      bindWithKey: "items",
+      handleNav: this.handleNav,
       meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
-        allowExtend: false
-      })
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtendConfig,
+        sidebarExtendConfig,
+        {
+          allowExtend: false
+        }
+      ),
+      toolbarExtendFilter: this.makeToolbarPropsFromConfig2(
+        toolbarFilterConfig,
+        sidebarFilterConfig,
+        {
+          allowExtend: false
+        }
+      )
     });
 
     return (

@@ -15,7 +15,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-wp__postinfo .brz-li": {
-      standart: ["cssStyleSizeTextSpacing"]
+      standart: ["cssStyleElementPostInfoSpacing"]
     },
     ".brz &&:hover .brz-wp__postinfo .brz-icon-svg": {
       standart: ["cssStyleElementPostInfoColorIcons"]

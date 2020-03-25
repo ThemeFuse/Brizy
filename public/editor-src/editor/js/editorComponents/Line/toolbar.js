@@ -5,20 +5,21 @@ import { t } from "visual/utils/i18n";
 import {
   toolbarBorder2,
   toolbarBorderColorHexField2,
-  toolbarBorderWidthOneField2,
-  toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings
+  toolbarBorderWidthOneField2
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device });
+
   const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device }),
-    defaultValueValue({ v, key: "borderColorPalette", device })
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
   );
 
   return [
     {
-      id: defaultValueKey({ key: "toolbarColor", device }),
+      id: dvk("toolbarColor"),
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -94,43 +95,30 @@ export function getItems({ v, device }) {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device }),
+      id: "toolbarSettings",
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({ v, device }),
         {
-          id: defaultValueKey({ key: "advancedSettings", device }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
+          devices: "desktop"
         }
       ]
     }

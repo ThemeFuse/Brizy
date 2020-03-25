@@ -3,6 +3,10 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+import {
+  GROUPED,
+  UNGROUPED
+} from "visual/component/Options/types/dev/Border/entities/widthType";
 
 class MultiInputPickerOptionType extends React.Component {
   static defaultProps = {
@@ -29,7 +33,7 @@ class MultiInputPickerOptionType extends React.Component {
     } = this.props;
 
     onChange({
-      type: type === "grouped" ? "ungrouped" : "grouped",
+      type: type === GROUPED ? UNGROUPED : GROUPED,
       grouped,
       ungrouped,
       isChanged: "type",
@@ -79,7 +83,7 @@ class MultiInputPickerOptionType extends React.Component {
 
     return (
       <div {...attr} className={className}>
-        <div className="brz-label">{label}</div>
+        {label && <div className="brz-label">{label}</div>}
         {this.props.value[type].map((v, index) => (
           <AutoCorrectingInput
             className="brz-input brz-ed-option__multi-input"

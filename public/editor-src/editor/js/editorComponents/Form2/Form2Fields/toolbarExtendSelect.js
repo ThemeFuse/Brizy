@@ -3,10 +3,6 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarBgColor2,
-  toolbarBgColorHexField2,
-  toolbarColor2,
-  toolbarColorHexField2,
   toolbarBorder2,
   toolbarBorderColorHexField2,
   toolbarBorderWidthOneField2,
@@ -49,40 +45,9 @@ export function getItems({ v, device }) {
               id: "tabSelectText",
               label: t("Text"),
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  prefix: "selectColor",
-                  state: "normal",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          prefix: "selectColor",
-                          state: "normal",
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "selectColor",
+                  type: "colorPicker-dev"
                 }
               ]
             },
@@ -90,44 +55,9 @@ export function getItems({ v, device }) {
               id: dvk("tabSelectBg"),
               label: t("Bg"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  prefix: "selectBg",
-                  state: "normal",
-                  showSelect: false,
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          prefix: "selectBg",
-                          state: "normal",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2",
-                            "onChangeBgColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "selectBgColor",
+                  type: "colorPicker-dev"
                 }
               ]
             },

@@ -17,8 +17,6 @@ export function styleClassName(v) {
   if (IS_EDITOR) {
     glamorObj = {
       ".brz-ed--desktop &": {
-        justifyContent: "var(--horizontalAlign)",
-
         "& .brz-mm-menu__icon": {
           display: "var(--showIcon)",
           fontSize: "var(--mMenuSize)",
@@ -29,8 +27,6 @@ export function styleClassName(v) {
         }
       },
       ".brz-ed--tablet &": {
-        justifyContent: "var(--tabletHorizontalAlign)",
-
         "& .brz-mm-menu__icon": {
           display: "var(--showTabletIcon)",
           fontSize: "var(--tabletMMenuSize)",
@@ -41,8 +37,6 @@ export function styleClassName(v) {
         }
       },
       ".brz-ed--mobile &": {
-        justifyContent: "var(--mobileHorizontalAlign)",
-
         "& .brz-mm-menu__icon": {
           display: "var(--showMobileIcon)",
           fontSize: "var(--mobileMMenuSize)",
@@ -57,7 +51,6 @@ export function styleClassName(v) {
     const {
       mMenuIconColorHex,
       mMenuIconColorOpacity,
-      horizontalAlign,
       mMenu,
       mMenuSize,
       tabletMMenu,
@@ -66,8 +59,6 @@ export function styleClassName(v) {
 
     glamorObj = {
       ".brz &": {
-        justifyContent: aligns[horizontalAlign],
-
         "& .brz-menu": {
           display: mMenu === "on" ? "none" : "block"
         },
@@ -79,7 +70,6 @@ export function styleClassName(v) {
       },
       "@media (max-width: 991px)": {
         ".brz &": {
-          justifyContent: aligns[tabletSyncOnChange(v, "horizontalAlign")],
           "& .brz-mm-menu__icon": {
             color: hexToRgba(
               tabletSyncOnChange(v, "mMenuIconColorHex"),
@@ -99,8 +89,6 @@ export function styleClassName(v) {
       },
       "@media (max-width: 767px)": {
         ".brz &": {
-          justifyContent: aligns[mobileSyncOnChange(v, "horizontalAlign")],
-
           "& .brz-menu": {
             display: mobileMMenu === "on" ? "none" : "block"
           },
@@ -130,7 +118,6 @@ export function styleCSSVars(v) {
   const {
     mMenuIconColorHex,
     mMenuIconColorOpacity,
-    horizontalAlign,
     mMenu,
     mMenuSize,
     tabletMMenu,
@@ -150,9 +137,6 @@ export function styleCSSVars(v) {
     "--mMenuSize": `${mMenuSize}px`,
     "--tabletMMenuSize": `${tabletSyncOnChange(v, "mMenuSize")}px`,
     "--mobileMMenuSize": `${mobileSyncOnChange(v, "mMenuSize")}px`,
-    "--horizontalAlign": aligns[horizontalAlign],
-    "--tabletHorizontalAlign": aligns[tabletSyncOnChange(v, "horizontalAlign")],
-    "--mobileHorizontalAlign": aligns[mobileSyncOnChange(v, "horizontalAlign")],
     "--showIcon": mMenu === "on" ? "flex" : "none",
     "--showTabletIcon": tabletMMenu === "on" ? "flex" : "none",
     "--showMobileIcon": mobileMMenu === "on" ? "flex" : "none",
@@ -234,7 +218,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Dropdown Menu Items
-        "& .brz-menu__dropdown > .brz-menu__item:not(:last-child)": {
+        "& .brz-menu__dropdown > .brz-menu__item": {
           borderBottomWidth: "var(--subMenuBorderWidth)",
           borderBottomStyle: "var(--subMenuBorderStyle)",
           borderBottomColor: "var(--subMenuBorderColor)"
@@ -653,7 +637,7 @@ export function styleMenuClassName(v, hasMMenu) {
         },
 
         // Dropdown Menu Items
-        "& .brz-menu__dropdown > .brz-menu__item:not(:last-child)": {
+        "& .brz-menu__dropdown > .brz-menu__item": {
           borderBottomWidth: `${subMenuBorderWidth}px`,
           borderBottomStyle: subMenuBorderStyle,
           borderBottomColor: hexToRgba(

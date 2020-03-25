@@ -63,9 +63,9 @@ class Brizy_Editor_Forms_Api {
 			add_action( 'wp_ajax_' . self::AJAX_GET_INTEGRATION, array( $this, 'getIntegration' ) );
 			add_action( 'wp_ajax_' . self::AJAX_UPDATE_INTEGRATION, array( $this, 'updateIntegration' ) );
 			add_action( 'wp_ajax_' . self::AJAX_DELETE_INTEGRATION, array( $this, 'deleteIntegration' ) );
-
-			add_filter( 'brizy_form_submit_data', array( $this, 'handleFileTypeFields' ), - 100, 2 );
 		}
+
+		add_filter( 'brizy_form_submit_data', array( $this, 'handleFileTypeFields' ), - 100, 2 );
 
 		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );

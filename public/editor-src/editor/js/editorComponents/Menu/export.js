@@ -1,8 +1,10 @@
 import $ from "jquery";
 import MMenu from "../../libs/mmenu/custom-build/mmenu";
 
-export default function() {
-  $("[data-mmenu-id]").each(function() {
+const hasRootContainer = $(document).find(".brz-root__container").length > 0;
+
+export default function($node) {
+  $node.find("[data-mmenu-id]").each(function() {
     const $this = $(this);
     const mmenuId = $this.data().mmenuId;
     const mmenuPosition = $this.data().mmenuPosition;
@@ -21,19 +23,26 @@ export default function() {
         title: mmenuTitle
       }
     };
-    const config = {
-      offCanvas: {
-        menu: {
-          insertSelector: ".brz-root__container"
-        },
-        page: {
-          wrapIfNeeded: false,
-          selector: ".brz-root__container"
-        }
-      }
-    };
 
-    const menu = new MMenu(mmenuId, options, config);
+    let menu;
+
+    if (hasRootContainer) {
+      const config = {
+        offCanvas: {
+          menu: {
+            insertSelector: ".brz-root__container"
+          },
+          page: {
+            wrapIfNeeded: false,
+            selector: ".brz-root__container"
+          }
+        }
+      };
+      menu = new MMenu(mmenuId, options, config);
+    } else {
+      menu = new MMenu(mmenuId, options);
+    }
+
     const menuAPI = menu.API;
 
     $icon.on("click", function() {

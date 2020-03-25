@@ -60,7 +60,7 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 					$brizyPost->set_editor_data( json_encode( $data ) );
 					$brizyPost->set_uses_editor( true );
 					$brizyPost->set_needs_compile( true );
-					$brizyPost->save();
+					$brizyPost->saveStorage();
 				}
 
 			}
@@ -79,7 +79,7 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 					$brizyPost->set_editor_data( json_encode( $data ) );
 					$brizyPost->set_uses_editor( true );
 					$brizyPost->set_needs_compile( true );
-					$brizyPost->save();
+					$brizyPost->saveStorage();
 				}
 			}
 		}

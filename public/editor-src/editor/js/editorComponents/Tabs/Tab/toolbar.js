@@ -1,38 +1,34 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-
+export function getItems({ v }) {
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
+      id: "toolbarCurrentShortcode",
       type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      icon: "nc-tabs",
+      title: t("Tabs"),
       position: 70,
       options: [
         {
-          id: dvk("currentShortcodeTabs"),
+          id: "currentShortcodeTabs",
           className: "",
           type: "tabs",
           tabs: [
             {
-              id: dvk("currentShortcodeTab"),
+              id: "currentShortcodeIcon",
               label: t("Icon"),
               options: [
                 {
                   id: "iconImage",
                   label: t("Icon"),
                   type: "iconSetter",
+                  devices: "desktop",
                   canDelete: true,
                   value: {
                     name: v.iconName,
                     type: v.iconType
                   },
                   onChange: ({ name, type }) => {
-                    console.log(name, type);
-
                     return {
                       iconName: name,
                       iconType: type

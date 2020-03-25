@@ -10,6 +10,22 @@ const defaultOptions = {
 };
 /* eslint-enabled no-console, no-unused-vars */
 
+/**
+ * @typedef {{
+ *   id: number
+ *   name: string
+ * }} Image
+ *
+ * @typedef {{
+ *   onBase64:any,
+ *   acceptedExtensions: Array<string>,
+ *   onUpload: function(image:Image):void,
+ *   onError: function(response:Response): void,
+ * }} Options
+ *
+ * @param {string} imageFile
+ * @param {Options} options
+ */
 export default function uploadImage(imageFile, options) {
   const { acceptedExtensions, onBase64, onUpload, onError } = _.extend(
     {},
@@ -28,7 +44,10 @@ export default function uploadImage(imageFile, options) {
         );
 
       if (!isAcceptedExtension) {
-        throw "EXTENSION_NOT_ACCEPTED";
+        throw {
+          status: 406,
+          message: "Extension is not accepted"
+        };
       }
 
       return file;

@@ -26,9 +26,37 @@ class CodeMirrorOptionType extends React.Component {
     onChange: _.noop
   };
 
-  onChangeDebounced = _.debounce(value => {
-    this.props.onChange(value);
+  state = {
+    value: ""
+  };
+
+  lastUpdatedValue = "";
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: props.value
+    };
+  }
+
+  onChange = value => this.setState({ value }, this.onChangeDebounced);
+
+  onChangeDebounced = _.debounce(() => {
+    this.props.onChange(this.state.value);
+    this.lastUpdatedValue = this.state.value;
   }, 1000);
+
+  componentWillReceiveProps({ value }) {
+    if (value !== this.lastUpdatedValue) {
+      if (this.state.value !== this.lastUpdatedValue) {
+        this.onChangeDebounced.cancel();
+        this.props.onChange(this.state.value);
+        this.lastUpdatedValue = this.state.value;
+      }
+      this.setState({ value });
+    }
+  }
 
   renderLabel() {
     const { label, helper: _helper, helperContent } = this.props;
@@ -65,8 +93,7 @@ class CodeMirrorOptionType extends React.Component {
       display,
       lineNumbers,
       attr: _attr,
-      placeholder,
-      value
+      placeholder
     } = this.props;
 
     const className = classnames(
@@ -84,15 +111,13 @@ class CodeMirrorOptionType extends React.Component {
       mode: "css"
     };
 
-    const defaultElement = "";
-
     return (
       <div className={className} {...attr}>
         {label || helper ? this.renderLabel() : null}
         {IS_EDITOR && (
           <CodeMirror
-            value={value || defaultElement}
-            onChange={this.onChangeDebounced}
+            value={this.state.value}
+            onChange={this.onChange}
             options={options}
           />
         )}

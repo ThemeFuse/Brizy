@@ -48,13 +48,21 @@ class Blocks extends EditorArrayComponent {
         },
         saved: {
           blocksFilter: blocks => {
-            return blocks.filter((_, { type }) => type !== "SectionPopup");
+            return blocks.filter(
+              (_, { data: blockData }) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },
         global: {
           blocksFilter: blocks => {
-            return blocks.filter((_, { type }) => type !== "SectionPopup");
+            return blocks.filter(
+              (_, { data: blockData }) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },

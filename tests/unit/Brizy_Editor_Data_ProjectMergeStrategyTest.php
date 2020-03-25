@@ -1,10 +1,16 @@
 <?php
 
-class Brizy_Editor_Data_ProjectMergeStrategyTest extends \Codeception\TestCase\Test {
+class Brizy_Editor_Data_ProjectMergeStrategyTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
 	public function testGetMergerInstance() {
 

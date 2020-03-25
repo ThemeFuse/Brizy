@@ -1,16 +1,14 @@
 import { getFontById } from "visual/utils/fonts";
+import * as Weight from "./weight";
+import { weightTitle } from "visual/utils/fonts/i10n";
 
-export const weightTypes = {
-  100: "Thin",
-  200: "Extra Light",
-  300: "Light",
-  400: "Normal",
-  500: "Medium",
-  600: "Semi Bold",
-  700: "Bold",
-  800: "Extra Bold",
-  900: "Black"
-};
+/**
+ * @type {{[number]: string}}
+ */
+export const weightTypes = Weight.weights.reduce((ws, w) => {
+  ws[w] = weightTitle(w);
+  return ws;
+}, {});
 
 export function getWeightChoices({ type, family }) {
   if (type && family) {
@@ -20,7 +18,7 @@ export function getWeightChoices({ type, family }) {
     });
 
     return weights.map(item => ({
-      title: weightTypes[item],
+      title: weightTitle(item),
       value: item
     }));
   }
@@ -28,8 +26,8 @@ export function getWeightChoices({ type, family }) {
   // Returned Default Normal Weight
   return [
     {
-      title: "Normal",
-      value: 400
+      title: weightTitle(Weight.empty),
+      value: Weight.empty
     }
   ];
 }
@@ -41,5 +39,5 @@ export function getWeight(weight, weights) {
   }
 
   // Returned Default Normal Weight
-  return 400;
+  return Weight.empty;
 }

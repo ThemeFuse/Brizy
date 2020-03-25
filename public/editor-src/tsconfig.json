@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "paths": {
+      "visual/*": ["editor/js/*"]
+    }
+  },
+  "include": [
+    "editor/**/*.ts",
+    "editor/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "kits",
+    "popups",
+    "templates",
+    "**/libs/**"
+  ]
+}

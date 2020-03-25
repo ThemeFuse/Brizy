@@ -38,36 +38,6 @@ export function toolbarBgVideoUrl({
   };
 }
 
-export function toolbarBgVideoQuality({
-  v,
-  device,
-  devices = "all",
-  state,
-  disabled = false
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("bgVideoQuality"),
-    label: t("Quality"),
-    type: "select",
-    devices,
-    disabled,
-    choices: [
-      {
-        title: t("1080p"),
-        value: 1080
-      },
-      {
-        title: t("720p"),
-        value: 720
-      }
-    ],
-    value: dvv("bgVideoQuality")
-  };
-}
-
 export function toolbarBgVideoLoop({
   v,
   device,

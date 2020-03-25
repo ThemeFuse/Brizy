@@ -1,29 +1,5 @@
+@import "../../variables";
+@import "../../mixins/arrow";
+
 // Arrows
-.brz-ed-arrow {
-  position: absolute;
-  top: -$toolbar-arrow-size;
-  height: ($toolbar-arrow-size * 2);
-  left: 50%;
-  margin-left: -$toolbar-arrow-size;
-
-  &:after {
-    content: "";
-    display: block;
-    border-bottom: $toolbar-arrow-size solid $toolbar-bg-color;
-    border-left: $toolbar-arrow-size solid transparent;
-    border-right: $toolbar-arrow-size solid transparent;
-  }
-
-  // Arrow Position
-  &--top-left,
-  &--top-right,
-  &--top-center {
-    top: auto;
-    bottom: -($toolbar-arrow-size * 2);
-
-    &:after {
-      border-top: $toolbar-arrow-size solid $toolbar-bg-color;
-      border-bottom: $toolbar-arrow-size solid transparent;
-    }
-  }
-}
+@include arrow($toolbar-arrow-size, $toolbar-bg-color);

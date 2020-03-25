@@ -30,12 +30,17 @@ export default class CustomCSS extends React.Component {
     const { selectorName, css } = this.props;
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
-    if (!css || styles[selectorName] === css) {
+    if (styles[selectorName] === css) {
       return;
     }
 
-    node.setAttribute("data-custom-id", selectorName);
-    styles[selectorName] = css;
+    if (!css) {
+      node.removeAttribute("data-custom-id", selectorName);
+      delete styles[selectorName];
+    } else {
+      node.setAttribute("data-custom-id", selectorName);
+      styles[selectorName] = css;
+    }
 
     let styleNODE = document.getElementById("custom-css");
     if (!styleNODE) {

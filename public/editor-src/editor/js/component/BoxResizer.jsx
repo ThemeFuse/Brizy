@@ -79,18 +79,17 @@ class BoxResizer extends Component {
     onChange: _.noop
   };
 
-  constructor(props) {
-    super(props);
+  state = {
+    showPoints: false
+  };
 
-    this.startValue = null;
-    this.startRect = null;
-    this.cachedPoints = arrayToObject(props.points);
-    this.content = React.createRef();
+  contentRef = React.createRef();
 
-    this.state = {
-      showPoints: false
-    };
-  }
+  startValue = null;
+
+  startRect = null;
+
+  cachedPoints = arrayToObject(this.props.points);
 
   componentWillReceiveProps(nextProps) {
     if (this.props.points !== nextProps.points) {
@@ -109,9 +108,9 @@ class BoxResizer extends Component {
   };
 
   handleDragStart = () => {
-    const node = this.content.current;
     this.startValue = this.props.value;
 
+    const node = this.contentRef.current;
     if (node) {
       this.startRect = node.getBoundingClientRect();
     }
@@ -260,7 +259,7 @@ class BoxResizer extends Component {
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>
         <div
-          ref={this.content}
+          ref={this.contentRef}
           className="brz-ed-box__resizer"
           onClick={this.handleClick}
         >

@@ -1,12 +1,18 @@
 <?php
 
 
-class Brizy_Admin_Rules_AbstractValidatorUnitTest extends \Codeception\Test\Unit {
+class Brizy_Admin_Rules_AbstractValidatorUnitTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+	}
 
 	public function testValidateRule() {
 

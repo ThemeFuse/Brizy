@@ -143,7 +143,6 @@ export default class TextField extends Component {
       tabletColumns,
       mobileColumns
     } = this.props;
-
     if (IS_EDITOR) {
       const props = {
         options,

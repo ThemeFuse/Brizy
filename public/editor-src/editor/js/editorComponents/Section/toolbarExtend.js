@@ -1,28 +1,17 @@
 import { t } from "visual/utils/i18n";
 import {
   toolbarElementSectionSlider,
-  toolbarShowOnDesktop,
   toolbarShowOnResponsive,
   toolbarElementSectionSliderColor,
-  toolbarZIndex,
-  toolbarMargin,
-  toolbarCustomCSSClass,
-  toolbarAttributes,
   toolbarElementSectionSaved,
-  toolbarElementSectionFullHeight,
-  toolbarAnchorName,
-  toolbarTags
+  toolbarElementSectionHeightStyle,
+  toolbarVerticalAlign
 } from "visual/utils/toolbar";
-
-import { getDynamicContentChoices } from "visual/utils/options";
-
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device, component }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   return [
     toolbarShowOnResponsive({
@@ -89,102 +78,19 @@ export function getItems({ v, device, component }) {
     {
       id: dvk("toolbarSettings"),
       type: "popover",
-      position: 110,
       options: [
-        toolbarElementSectionFullHeight({
+        toolbarElementSectionHeightStyle({
           v,
           device,
           devices: "desktop",
           state: "normal"
         }),
-        {
-          id: dvk("advancedSettings"),
-          devices: "desktop",
-          type: "advancedSettings",
-          sidebarLabel: t("More Settings"),
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("settingsStyling"),
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: [
-                    toolbarMargin({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: ["onChangeMarginGrouped"],
-                      onChangeUngrouped: ["onChangeMarginUngrouped"]
-                    })
-                  ]
-                },
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarShowOnDesktop({
-                      v,
-                      device,
-                      closeTooltip: true
-                    }),
-                    toolbarZIndex({
-                      v,
-                      device,
-                      state: "normal"
-                    }),
-                    toolbarAnchorName({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarCustomCSSClass({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarAttributes({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal"
-                    }),
-                    toolbarTags({
-                      v,
-                      device,
-                      state: "normal"
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: dvk("advancedSettings"),
-      type: "advancedSettings",
-      devices: "responsive",
-      options: [
-        toolbarMargin({
+        toolbarVerticalAlign({
           v,
           device,
+          devices: "desktop",
           state: "normal",
-          devices: "responsive",
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
+          disabled: dvv("fullHeight") === "off"
         })
       ]
     }

@@ -24,7 +24,7 @@ export default function addFontStylesCSS($) {
   );
 
   $("head").append(
-    `<style>${richTextFontStylesCSS}${richTextDynamicFontStylesCSS}</style>`
+    `<style class="brz-style">${richTextFontStylesCSS}${richTextDynamicFontStylesCSS}</style>`
   );
 }
 

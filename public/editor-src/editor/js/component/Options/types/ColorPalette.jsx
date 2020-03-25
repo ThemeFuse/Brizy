@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { getColorPaletteColors } from "visual/utils/color";
 import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 
 class ColorPalettePicker extends React.Component {
   static defaultProps = {

@@ -48,32 +48,28 @@
 
 // Hotkeys Container
 .brz-ed-hotkeys-combination-container {
-  margin-top: 23px;
+  margin: 23px auto 20px auto;
   display: flex;
-  width: 795px;
+  width: fit-content;
 }
 
 // Hotkeys Column
-.brz-ed-hotkeys-combination-container-column-1 {
-  display: inline-grid;
-  width: 50%;
-  height: 282px;
-}
+.brz-ed-hotkeys-combination-container-column {
+  display: table;
+  height: fit-content;
 
-.brz-ed-hotkeys-combination-container-column-2 {
-  display: inline-grid;
-  width: 50%;
-  height: 242px;
+  &:first-child {
+    margin-right: 45px;
+  }
 }
 
 .brz-ed-hotkeys-combination-container-column-list {
-  display: flex;
+  display: table-row;
 }
 
 .brz-ed-hotkeys-combination-container-column-label {
-  width: 231px;
   height: 30px;
-  display: flex;
+  display: table-cell;
   align-items: center;
   justify-content: flex-end;
   position: relative;
@@ -107,7 +103,7 @@
   font-family: $font-family-1;
   font-size: 17px;
   font-weight: 500;
-  display: flex;
+  display: table-cell;
   align-items: center;
   white-space: nowrap;
   height: 30px;

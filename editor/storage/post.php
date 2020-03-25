@@ -26,6 +26,8 @@ class Brizy_Editor_Storage_Post extends Brizy_Editor_Storage_Abstract {
 	}
 
 	/**
+	 * @todo: rename this to get_data
+	 *
 	 * @return array
 	 */
 	public function get_storage() {

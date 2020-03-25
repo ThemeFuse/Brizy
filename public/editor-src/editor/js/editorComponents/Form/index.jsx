@@ -6,10 +6,12 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Config from "visual/global/Config";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendConfigButton from "./extendToolbarButton";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as sidebarExtendButton from "./sidebarExtendButton";
 
-class Form extends EditorComponent {
+export default class Form extends EditorComponent {
   static get componentId() {
     return "Form";
   }
@@ -21,10 +23,15 @@ class Form extends EditorComponent {
   };
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      toolbarExtendParent,
+      sidebarExtendParent,
+      {
+        allowExtend: false,
+        allowExtendFromThirdParty: true,
+        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+      }
+    );
     this.props.extendParentToolbar(toolbarExtend);
   }
 
@@ -32,16 +39,29 @@ class Form extends EditorComponent {
     e.preventDefault();
   };
 
-  renderItems() {
+  renderFields() {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
+      sliceStartIndex: 0,
+      sliceEndIndex: 1,
+      itemProps: {
+        meta: this.props.meta
+      }
+    });
+
+    return <EditorArrayComponent {...itemsProps} />;
+  }
+
+  renderButton() {
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      sliceStartIndex: 1,
       itemProps: {
         meta: this.props.meta,
-        toolbarExtend: this.makeToolbarPropsFromConfig(
-          toolbarExtendConfigButton,
-          {
-            allowExtend: false
-          }
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendButton,
+          sidebarExtendButton,
+          { allowExtend: false }
         )
       }
     });
@@ -54,7 +74,8 @@ class Form extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={styleClassName(v)} style={styleCSSVars(v)}>
           <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
-            {this.renderItems(v)}
+            {this.renderFields(v)}
+            {this.renderButton(v)}
           </form>
         </div>
       </CustomCSS>
@@ -85,7 +106,8 @@ class Form extends EditorComponent {
             data-redirect={messageRedirect}
             onSubmit={this.handleSubmit}
           >
-            {this.renderItems(v)}
+            {this.renderFields(v)}
+            {this.renderButton(v)}
             {recaptchaSiteKey && (
               <div
                 className="brz-g-recaptcha"
@@ -99,5 +121,3 @@ class Form extends EditorComponent {
     );
   }
 }
-
-export default Form;

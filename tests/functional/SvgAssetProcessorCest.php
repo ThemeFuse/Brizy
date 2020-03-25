@@ -11,10 +11,9 @@ class SvgAssetProcessorCest {
 
 		$attachmentId        = $I->haveAttachmentInDatabase( codecept_data_dir( 'dump.sql' ), null, [] );
 		$this->attachmentUid = md5( $attachmentId );
-		$this->attachmentUrl = wp_get_attachment_url( $this->attachmentUid );
+		$this->attachmentUrl = wp_get_attachment_url( $attachmentId );
 		$I->havePostmetaInDatabase( $attachmentId, 'brizy_post_uid', $this->attachmentUid );
 	}
-
 
 	public function testSvgUrlReplacement( FunctionalTester $I ) {
 
@@ -26,7 +25,7 @@ class SvgAssetProcessorCest {
 			    <style>INCLUDE THIS CSS CODE</style>
 			</head>
 			<body>
-				<img src="http://brizy.local/?brizy_attachment=' . $this->attachmentUid . '" alt="">
+				<img src="http://brizy-test.local/?brizy_attachment=' . $this->attachmentUid . '" alt="">
 			</body>
 			</html>';
 
@@ -36,6 +35,4 @@ class SvgAssetProcessorCest {
 		$I->assertStringNotContainsString( '?brizy_attachment=', $content, 'It should not contain an url containing brizy_attachment' );
 		$I->assertStringContainsString( $this->attachmentUrl, $content, 'It should contain the static url to the file' );
 	}
-
-
 }

@@ -1,10 +1,16 @@
 {
   "content": {
+    "type": "soundcloud",
     "audio": "",
     "showCurrentTime": "on",
     "showDurationTime": "on",
     "showProgressBarTrack": "on",
     "showProgressBarVolume": "on",
+
+    "url": "https://soundcloud.com/englicious/lord-of-the-flies-audiobook-slightly-sped-up",
+    "autoPlay": "off",
+
+    "showArtwork": "off",
 
     "coverImageSrc": "",
 
@@ -14,7 +20,19 @@
     "coverImageExtension": null,
 
     "coverPositionY": 50,
-    "coverPositionX": 50
+    "coverPositionX": 50,
+
+    "tabletCoverPositionY": null,
+    "tabletCoverPositionX": null,
+
+    "mobileCoverPositionY": null,
+    "mobileCoverPositionX": null,
+
+    "coverZoom": 100,
+
+    "tabletCoverZoom": null,
+
+    "mobileCoverZoom": null
   },
 
   "toolbar": {
@@ -25,6 +43,11 @@
 
   "style": {
     "className": "",
+
+    "style": "basic",
+    "smallHeight": 125,
+    "mediumHeight": 175,
+    "largeHeight": 350,
 
     "iconSize": "small",
     "iconCustomSize": 16,
@@ -212,7 +235,8 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
-    "height": 60,
+    "height": 175,
+    "customHeight": 175,
 
     "customCSS": "",
 

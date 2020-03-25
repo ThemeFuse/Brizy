@@ -34,15 +34,23 @@ class MiddleBlockAdder extends React.Component {
         },
         saved: {
           blocksFilter: blocks => {
-            // eslint-disable-next-line no-unused-vars
-            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+            return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
+              ([_, { data: blockData }]) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },
         global: {
           blocksFilter: blocks => {
-            // eslint-disable-next-line no-unused-vars
-            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+            return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
+              ([_, { data: blockData }]) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },

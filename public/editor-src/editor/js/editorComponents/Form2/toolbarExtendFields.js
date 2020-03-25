@@ -1,43 +1,39 @@
-import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementForm2LabelSwitch,
-  toolbarElementForm2PlaceholderSwitch,
-  toolbarElementForm2SpacingPx
-} from "visual/utils/toolbar";
+import { t } from "visual/utils/i18n";
+import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
-      id: dvk("toolbarCurrentElement"),
+      id: "toolbarCurrentElement",
       type: "popover",
       options: [
         {
-          id: dvk("currentShortcodeTabs"),
+          id: "currentShortcodeTabs",
           type: "tabs",
           tabs: [
             {
-              id: dvk("field"),
+              id: "field",
               options: [
                 toolbarElementForm2SpacingPx({ v, device, state: "normal" })
               ]
             },
             {
-              id: dvk("advanced"),
+              id: "advanced",
               options: [
-                toolbarElementForm2LabelSwitch({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "label",
+                  label: t("Label"),
+                  type: "switch-dev",
+                  position: 15,
                   devices: "desktop"
-                }),
-                toolbarElementForm2PlaceholderSwitch({
-                  v,
-                  device,
-                  state: "normal",
+                },
+                {
+                  id: "placeholder",
+                  label: t("Placeholder"),
+                  type: "switch-dev",
+                  position: 16,
                   devices: "desktop"
-                })
+                }
               ]
             }
           ]

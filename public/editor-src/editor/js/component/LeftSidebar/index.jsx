@@ -7,7 +7,7 @@ import Drawer from "./components/Drawer";
 import DrawerAnimation from "./components/Animation";
 import PointerEvents from "visual/component/PointerEvents";
 import { currentUserRole } from "visual/component/Roles";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 import items from "./items";
 import DrawerOptions from "./components/Options";
 
@@ -136,7 +136,4 @@ const mapDispatchToProps = dispatch => ({
     )
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LeftSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(LeftSidebar);

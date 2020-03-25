@@ -28,15 +28,11 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 	 * @return float|int
 	 */
 	public function getRuleWeight( $context ) {
-		$map = array_map( function ( Brizy_Admin_RuleInterface $v ) use ( $context ) {
+		$array_map = array_map( function ( Brizy_Admin_RuleInterface $v ) use ( $context ) {
 			return $v->getRuleWeight( $context );
 		}, $this->rules );
 
-		if ( count( $map ) > 0 ) {
-			return max( $map );
-		}
-
-		return 0;
+		return count( $array_map ) > 0 ? max( $array_map ) : 0;
 	}
 
 	/**

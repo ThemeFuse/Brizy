@@ -1,3 +1,8 @@
+@import "../../variables";
+@import "../../mixins/arrow";
+
+$main-color: rgba($control-background-color, 0.92);
+
 // --- Helper Option
 .brz-ed-option__helper {
   margin-left: 7px;
@@ -14,15 +19,21 @@
   svg {
     overflow: visible;
   }
+
+  .brz-ed-tooltip__overlay {
+    background-color: transparent;
+
+    @include arrow($toolbar-arrow-size, $main-color);
+  }
   &__content {
     font-size: 13px;
     font-family: $font-family-1;
     line-height: 1.5;
     width: 240px;
-    background-color: #03080f;
+    background-color: $main-color;
     color: rgba(255, 255, 255, 0.8);
     text-align: left;
-    padding: 18px 20px;
+    padding: 13px 20px;
     border-radius: 10px;
 
     .brz-p {

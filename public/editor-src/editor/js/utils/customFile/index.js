@@ -1,1 +1,1 @@
-export { customFileUrl } from "./customFileUrl"
+export { customFileUrl } from "./customFileUrl";

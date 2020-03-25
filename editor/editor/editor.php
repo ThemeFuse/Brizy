@@ -35,7 +35,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public static function get( Brizy_Editor_Project $project, Brizy_Editor_Post $post ) {
 
-		$postId = $post && $post->get_id() ? $post->get_id() : 0;
+		$postId = $post && $post->getWpPostId() ? $post->getWpPostId() : 0;
 		if ( isset( self::$insance[ $postId ] ) ) {
 			return self::$insance[ $postId ];
 		}
@@ -52,7 +52,18 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->get_parent_id() : null );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->getWpPostParentId() : null );
+	}
+
+	private function getMode( $postType ) {
+		switch ( $postType ) {
+			case Brizy_Admin_Templates::CP_TEMPLATE:
+				return 'template';
+			case Brizy_Admin_Popups_Main::CP_POPUP:
+				return 'internal_popup';
+			default:
+				return 'page';
+		}
 	}
 
 	/**
@@ -60,7 +71,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	public function config() {
 
-		$cachePostId = $this->post ? $this->post->get_id() : 0;
+		$cachePostId = $this->post ? $this->post->getWpPostId() : 0;
 		if ( isset( self::$config[ $cachePostId ] ) ) {
 			return self::$config[ $cachePostId ];
 		}
@@ -72,19 +83,24 @@ class Brizy_Editor_Editor_Editor {
 		$change_template_url = null;
 		$templates           = null;
 
-		$parent_post_type  = get_post_type( $this->post->get_parent_id() );
-		$wp_post_id        = $this->post->get_wp_post()->ID;
-		$preview_post_link = $this->getPreviewUrl( $this->post->get_wp_post() );
+		$parent_post_type  = get_post_type( $this->post->getWpPostParentId() );
+		$wp_post_id        = $this->post->getWpPostId();
+		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
-		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->get_parent_id() . '&action=_brizy_change_template' ) );
+		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostParentId() . '&action=_brizy_change_template' ) );
 		$templates           = $this->post->get_templates();
-		$isTemplate          = $parent_post_type === Brizy_Admin_Templates::CP_TEMPLATE;
-		$isPopup             = $parent_post_type === Brizy_Admin_Popups_Main::CP_POPUP;
 
-		$config = array(
+
+		$mode = $this->getMode( $parent_post_type );
+
+
+		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
+		$config            = array(
 			'user'            => array( 'role' => 'admin' ),
 			'project'         => array(
-				'id' => $this->project->getId()
+				'id'                => $this->project->getId(),
+				'status'            => $this->getProjectStatus(),
+				'heartBeatInterval' => ( $heartBeatInterval > 10 && $heartBeatInterval < 30 ? $heartBeatInterval : 30 ) * 1000
 			),
 			'urls'            => array(
 				'site'               => home_url(),
@@ -116,7 +132,7 @@ class Brizy_Editor_Editor_Editor {
 			'wp'              => array(
 				'permalink'       => get_permalink( $wp_post_id ),
 				'page'            => $wp_post_id,
-				'ruleMatches'     => $this->getTempalteRuleMatches( $isTemplate, $wp_post_id ),
+				'ruleMatches'     => $this->getTempalteRuleMatches( $mode === 'template', $wp_post_id ),
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $templates,
@@ -124,8 +140,13 @@ class Brizy_Editor_Editor_Editor {
 					'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 					'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
-					'getPage'    => Brizy_Editor_API::AJAX_GET,
-					'updatePage' => Brizy_Editor_API::AJAX_UPDATE,
+					'heartBeat'   => Brizy_Editor_API::AJAX_HEARTBEAT,
+					'takeOver'    => Brizy_Editor_API::AJAX_TAKE_OVER,
+					'lockProject' => Brizy_Editor_API::AJAX_LOCK_PROJECT,
+					'removeLock'  => Brizy_Editor_API::AJAX_REMOVE_LOCK,
+					'getPage'     => Brizy_Editor_API::AJAX_GET,
+					'getPostInfo' => Brizy_Editor_API::AJAX_GET_POST_INFO,
+					'updatePage'  => Brizy_Editor_API::AJAX_UPDATE,
 
 					'getProject'     => Brizy_Editor_API::AJAX_GET_PROJECT,
 					'setProject'     => Brizy_Editor_API::AJAX_SET_PROJECT,
@@ -135,7 +156,7 @@ class Brizy_Editor_Editor_Editor {
 					'createGlobalBlock'    => Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
 					'updateGlobalBlock'    => Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 					'deleteGlobalBlock'    => Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
-					'getRuleGroupList'     => Brizy_Admin_Templates::RULE_GROUP_LIST,
+					'getRuleGroupList'     => Brizy_Editor_API::RULE_GROUP_LIST,
 					'createRule'           => Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 					'createRules'          => Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 					'updateRules'          => Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
@@ -199,10 +220,9 @@ class Brizy_Editor_Editor_Editor {
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => $this->getTexts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'isTemplate'      => $isTemplate,
-				'isGlobalPopup'   => $isPopup,
 				'availableRoles'  => $this->roleList()
 			),
+			'mode'            => $mode,
 			'applications'    => array(
 				'form' => array(
 					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
@@ -236,7 +256,7 @@ class Brizy_Editor_Editor_Editor {
 					{$wpdb->prefix}postmeta pm 
 				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
 				WHERE pm.meta_key='brizy_attachment_uid'
-				GROUP BY pm.post_id", $this->post->get_uid() );
+				GROUP BY pm.post_id", $this->post->getUid() );
 
 		$results         = $wpdb->get_results( $query );
 		$attachment_data = array();
@@ -342,7 +362,8 @@ class Brizy_Editor_Editor_Editor {
 								return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 							}
 
-							if ( ! Brizy_Editor_Post::checkIfPostTypeIsSupported( $p->ID, false ) || ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
+							     ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
 								$wp_post = $p;
 								break;
 							}
@@ -577,14 +598,14 @@ class Brizy_Editor_Editor_Editor {
 			// Start with post_max_size.
 			$post_max_size = $this->parseSize( ini_get( 'post_max_size' ) );
 			if ( $post_max_size > 0 ) {
-				$max_size = number_format( $post_max_size / 1048576, 2 );
+				$max_size = number_format( $post_max_size / 1048576, 2, '.', '' );
 			}
 
 			// If upload_max_size is less, then reduce. Except if upload_max_size is
 			// zero, which indicates no limit.
 			$upload_max = $this->parseSize( ini_get( 'upload_max_filesize' ) );
 			if ( $upload_max > 0 && $upload_max < $max_size ) {
-				$max_size = number_format( $upload_max / 1048576, 2 );
+				$max_size = number_format( $upload_max / 1048576, 2, '.', '' );
 			}
 		}
 
@@ -713,7 +734,7 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	private function getTexts() {
-		if (BRIZY_DEVELOPMENT) {
+		if ( BRIZY_DEVELOPMENT ) {
 			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
 		} else {
 			$version = '';
@@ -765,11 +786,28 @@ class Brizy_Editor_Editor_Editor {
 			$ruleMatches[] = array(
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
 				'group'      => Brizy_Admin_Rule::POSTS,
-				'entityType' => $this->post->get_wp_post()->post_type,
+				'entityType' => $this->post->getWpPost()->post_type,
 				'values'     => array( $wp_post_id )
 			);
 		}
 
 		return $ruleMatches;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getProjectStatus() {
+		$projectLockedBy = Brizy_Editor::get()->checkIfProjectIsLocked();
+		$userData        = WP_User::get_data_by( 'id', $projectLockedBy );
+		unset( $userData->user_pass );
+		unset( $userData->user_registered );
+		unset( $userData->user_status );
+		unset( $userData->user_activation_key );
+
+		return [
+			'locked'   => $projectLockedBy !== false,
+			'lockedBy' => $userData,
+		];
 	}
 }

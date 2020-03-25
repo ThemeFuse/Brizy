@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
+import classnames from "classnames";
 
 const keyCodes = {
   ENTER: 13,
@@ -14,6 +15,7 @@ const keyCodes = {
 
 class TextEditor extends Component {
   static defaultProps = {
+    className: "",
     value: t("Editable Text")
   };
 
@@ -103,10 +105,15 @@ class TextEditor extends Component {
   }, 1000);
 
   render() {
+    const className = classnames(
+      "brz-span brz-text__editor",
+      this.props.className
+    );
+
     return (
       <span
         ref={this.content}
-        className="brz-span brz-text__editor"
+        className={className}
         contentEditable={IS_EDITOR}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}

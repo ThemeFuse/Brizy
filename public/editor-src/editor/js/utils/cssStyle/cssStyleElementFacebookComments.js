@@ -1,3 +1,3 @@
 export function cssStyleElementFacebookCommentsPropertyHoverTransition() {
-  return "transition-property:box-shadow;";
+  return "transition-property:color,border,box-shadow;";
 }

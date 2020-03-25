@@ -1,13 +1,28 @@
 // Sidebar Right
 .brz-ed-sidebar__right {
-  right: 0;
-  left: auto;
   width: auto;
+  z-index: z("sidebar") - 1;
 
-  .brz-ed-sidebar__content {
+  &.brz-ed-sidebar__right--align-left {
+    left: 0;
+    right: auto;
+
+    .brz-ed-sidebar__content {
+      left: $sidebar-size;
+      right: auto;
+    }
+  }
+  &.brz-ed-sidebar__right--align-right {
     left: auto;
     right: 0;
 
+    .brz-ed-sidebar__content {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .brz-ed-sidebar__content {
     &.active {
       animation-name: shadow-animation;
     }
@@ -30,6 +45,67 @@
       padding-left: 0;
       padding-right: 0;
     }
+  }
+
+  // Icons
+  &__header-icons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__header-icon {
+    position: relative;
+    font-size: 0px;
+    cursor: pointer;
+
+    & > .brz-icon-svg {
+      font-size: 12px;
+    }
+    & > .brz-ed-sidebar__right__icon-tooltip {
+      top: calc(100% + 8px);
+
+      &:after {
+        top: -8px;
+        border-color: transparent;
+        border-bottom-color: #879294;
+      }
+    }
+
+    &:hover {
+      color: $brand-primary;
+
+      & > .brz-ed-sidebar__right__icon-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 750ms;
+      }
+    }
+  }
+  &__header-icon:last-child {
+    margin-left: 15px;
+  }
+
+  // Empty
+  &__empty {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 45px;
+    text-align: center;
+  }
+  &__empty-icon {
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: #818A91;
+  }
+  &__empty-text {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #7F8994;
   }
 
   // Tabs
@@ -72,39 +148,6 @@
           }
         }
       }
-    }
-  }
-
-  // Animation
-  &--animation {
-    &-enter {
-      transform: translateX($sidebar-content-size);
-      will-change: transform;
-
-      &-active {
-        transform: translateX(0);
-        transition: transform 0.3s ease;
-        will-change: transform;
-      }
-    }
-    &-leave {
-      transform: translateX(0);
-      will-change: transform;
-
-      &-active {
-        transform: translateX($sidebar-content-size);
-        transition: transform 0.3s ease;
-        will-change: transform;
-      }
-    }
-  }
-
-  // Scroll
-  &__scroll > {
-    .brz-ed-tall-track {
-      top: 42px !important;
-      height: calc(100% - 72px) !important;
-      bottom: 48px;
     }
   }
 }

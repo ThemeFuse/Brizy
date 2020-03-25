@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fontSelector } from "visual/redux/selectors";
-import { addFonts } from "visual/redux/actions";
+import { addFonts } from "visual/redux/actions2";
 import {
   getGoogleFontDetails,
   getGoogleFonts,

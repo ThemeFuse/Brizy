@@ -39,8 +39,9 @@ class Brizy_Admin_Settings {
 		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
 
 		if ( ! is_network_admin() ) {
-			add_action( 'admin_menu', array( $this, 'actionRegisterRoleManagerPage' ), 9 );
-			add_action( 'admin_menu', array( $this, 'actionRegisterGoProPage' ), 20 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 9 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGetHelpLink' ), 20 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
 		} else {
 			add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
 		}
@@ -98,8 +99,8 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	function actionRegisterRoleManagerPage() {
-		add_submenu_page( self::menu_slug(), __( 'Role Manager' ), __( 'Role Manager' ), 'manage_options', self::menu_slug(), array(
+	function actionRegisterSubMenuSettingsPage() {
+		add_submenu_page( self::menu_slug(), __( 'Settings', 'brizy' ), __( 'Settings', 'brizy' ), 'manage_options', self::menu_slug(), array(
 			$this,
 			'render'
 		) );
@@ -108,7 +109,26 @@ class Brizy_Admin_Settings {
 	/**
 	 * @internal
 	 */
-	public function actionRegisterGoProPage() {
+	function actionRegisterSubMenuGetHelpLink() {
+
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			return;
+		}
+
+		add_submenu_page(
+			self::menu_slug(),
+			'',
+			'<span class="brz-get-help-add-target-blank">' . __( 'Get Help', 'brizy' ) . '</span>',
+			'manage_options',
+			'https://support.brizy.io/hc/en-us',
+			[]
+		);
+	}
+
+	/**
+	 * @internal
+	 */
+	public function actionRegisterSubMenuGoProPage() {
 
 		if ( class_exists( 'BrizyPro_Main' ) ) {
 			return;
@@ -135,21 +155,26 @@ class Brizy_Admin_Settings {
 
 	private function get_tabs() {
 		$selected_tab = $this->get_selected_tab();
-		$tabs         = array(
-			array(
+		$tabs         = [
+			[
 				'id'          => 'general',
 				'label'       => __( 'General', 'brizy' ),
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
-				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
-			),
-			array(
+				'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=general'
+			],
+			[
 				'id'          => 'roles',
-				'label'       => __( 'Role Manager', 'brizy' ),
+				'label'       => __( 'Role Manager',  'brizy'  ),
 				'is_selected' => $selected_tab == 'roles',
-				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=roles"
-			),
-
-		);
+				'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=roles'
+			],
+            [
+				'id'          => 'maintenance',
+				'label'       => __( 'Maintenance Mode',  'brizy'  ),
+				'is_selected' => $selected_tab == 'maintenance',
+				'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=maintenance'
+			]
+        ];
 
 		return apply_filters( 'brizy_settings_tabs', $tabs );
 	}
@@ -162,6 +187,9 @@ class Brizy_Admin_Settings {
 				break;
 			case 'roles':
 				return $this->get_roles_tab();
+				break;
+			case 'maintenance':
+				return $this->get_maintenance_tab();
 				break;
 
 		}
@@ -185,11 +213,13 @@ class Brizy_Admin_Settings {
 		);
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function is_settings_page() {
-		return get_current_screen()->base === "settings_page_" . Brizy_Editor::get()->get_slug() . "-settings";
+	private function get_maintenance_tab() {
+
+		$args                    = Brizy_MaintenanceMode::get_settings();
+		$args['pages']           = wp_list_pluck( get_pages(), 'post_title', 'ID' );
+		$args['available_roles'] = $this->list_wp_roles();
+
+		return Brizy_Admin_View::render( 'settings/maintenance', $args );
 	}
 
 	public function settings_submit() {
@@ -207,9 +237,11 @@ class Brizy_Admin_Settings {
 			case 'roles':
 				$this->roles_settings_submit();
 				break;
+			case 'maintenance':
+				$this->maintenance_settings_submit();
+				break;
 		}
 	}
-
 
 	public function general_settings_submit() {
 		$error_count        = 0;
@@ -232,6 +264,10 @@ class Brizy_Admin_Settings {
 			Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
 		}
 
+	}
+
+	public function maintenance_settings_submit() {
+		Brizy_Editor_Storage_Common::instance()->set( 'maintenance', $_POST['brizy-maintenance'] );
 	}
 
 	/**

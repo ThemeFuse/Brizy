@@ -1,36 +1,65 @@
 import React from "react";
+import classnames from "classnames";
 import { noop } from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
+import { getContainerW } from "visual/utils/meta";
 import contextMenuConfig from "./contextMenu";
 import Items from "./Items";
-import * as toolbarConfig from "./toolbar";
+import * as toolbarExtend from "./toolbarExtend";
+import * as sidebarExtend from "./sidebarExtend";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import { css } from "visual/utils/cssStyle";
+import { styleTabs } from "./styles";
 
-class Tabs extends EditorComponent {
+export default class Tabs extends EditorComponent {
   static get componentId() {
     return "Tabs";
   }
 
-  static defaultProps = {
-    meta: {}
-  };
-
   static defaultValue = defaultValue;
 
   static defaultProps = {
+    meta: {},
     extendParentToolbar: noop
   };
 
+  getMeta(v) {
+    const { meta } = this.props;
+    const desktopW = getContainerW({
+      v,
+      w: meta.desktopW,
+      device: "desktop"
+    });
+    const tabletW = getContainerW({
+      v,
+      w: meta.tabletW,
+      device: "tablet"
+    });
+    const mobileW = getContainerW({
+      v,
+      w: meta.mobileW,
+      device: "mobile"
+    });
+
+    return Object.assign({}, meta, {
+      mobileW,
+      tabletW,
+      desktopW
+    });
+  }
+
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
-      parentToolbarExtend,
+      toolbarExtendParent,
+      sidebarExtendParent,
       {
         allowExtend: false,
-        filterExtendName: `${this.constructor.componentId}_parent`
+        allowExtendFromThirdParty: true,
+        thirdPartyExtendId: `${this.constructor.componentId}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -40,51 +69,82 @@ class Tabs extends EditorComponent {
     this.patchValue({ activeTab });
   };
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
-
-    const { activeTab, iconName, iconType, iconPosition } = v;
+  renderForEdit(v, vs, vd) {
+    const {
+      activeTab,
+      iconName,
+      iconType,
+      verticalMode,
+      navStyle,
+      verticalAlign,
+      action
+    } = v;
+    const meta = this.getMeta(v);
     const itemNavProps = this.makeSubcomponentProps({
       activeTab,
       iconName,
       iconType,
-      iconPosition,
+      action,
+      meta,
       bindWithKey: "items",
       renderType: "nav",
       onChangeNav: this.handleNav,
-      meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
-        allowExtend: false
-      })
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtend,
+        sidebarExtend,
+        {
+          allowExtend: false
+        }
+      )
     });
     const itemContentProps = this.makeSubcomponentProps({
       activeTab,
       iconName,
       iconType,
-      iconPosition,
+      meta,
       bindWithKey: "items",
       renderType: "content",
       onChangeNav: this.handleNav,
-      meta: this.props.meta,
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, {
-        allowExtend: false
-      })
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtend,
+        sidebarExtend,
+        {
+          allowExtend: false
+        }
+      )
     });
-    const className = styleClassName(v);
-    const style = styleCSSVars(v);
+    const className = classnames(
+      "brz-tabs",
+      verticalMode === "on" ? "brz-tabs--vertical" : "brz-tabs--horizontal",
+      `brz-tabs--${navStyle}`,
+      `brz-tabs--${verticalAlign}`,
+      css(this.constructor.componentId, this.getId(), styleTabs(v, vs, vd))
+    );
+    const classNameNav = classnames(
+      "brz-tabs__nav",
+      verticalMode === "on"
+        ? "brz-tabs__nav--vertical"
+        : "brz-tabs__nav--horizontal",
+      `brz-tabs__nav--${navStyle}`,
+      `brz-tabs__nav--${verticalAlign}`
+    );
+    const classNameContent = classnames(
+      "brz-tabs__content",
+      verticalMode === "on"
+        ? "brz-tabs__content--vertical"
+        : "brz-tabs__content--horizontal",
+      `brz-tabs__content--${navStyle}`,
+      `brz-tabs__content--${verticalAlign}`
+    );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <div className={className} style={style}>
-            <ul className="brz-tabs__nav">
+          <div className={className} data-action={action}>
+            <ul className={classNameNav}>
               <Items {...itemNavProps} />
             </ul>
-            <div className="brz-tabs__content">
+            <div className={classNameContent}>
               <Items {...itemContentProps} />
             </div>
           </div>
@@ -93,5 +153,3 @@ class Tabs extends EditorComponent {
     );
   }
 }
-
-export default Tabs;

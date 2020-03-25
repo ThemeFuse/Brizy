@@ -198,16 +198,21 @@
     position: relative;
 }
 
-.brizy-rule-select::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 7px;
-    height: 0;
-    width: 0;
-    border-color: #888 transparent transparent transparent;
-    border-style: solid;
-    border-width: 5px 4px 0 4px;
+.brizy-template-rules .select2-selection__arrow {
+    color: #32373c;
+    border-color: #7e8993;
+    box-shadow: none;
+    border-radius: 3px;
+    padding: 0 5px 0 0;
+    -webkit-appearance: none;
+    background: #fff url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat left 5px top 55%;
+    background-size: 16px 16px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.brizy-template-rules .select2-selection__arrow b {
+   display: none;
 }
 
 .brizy-rule-new-condition .brizy-rule-select2::after {
@@ -292,6 +297,20 @@
     border-top: 1px solid #eee;
 }
 
+.brizy-dashboard-widget-footer a {
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.brizy-dashboard-widget-footer a:first-child {
+    margin-left: 0;
+}
+
+.brizy-dashboard-widget-footer a .dashicons {
+    font-size: 17px;
+}
+
 .brizy-dashboard-widget-footer__go-pro {
     display:inline-flex;
     fill: #0073aa;
@@ -301,6 +320,33 @@
     fill: #00a0d2;
 }
 
+.brizy-dashboard-widget-footer__go-pro svg {
+    vertical-align: bottom;
+}
+
+/* Maintenance Mode */
+.brz-maintenance-table-access-links {
+    max-width: 1024px;
+    /*text-align: left;*/
+}
+.brz-maintenance-table-access-links th,
+.brz-maintenance-table-access-links td {
+    border: 1px solid #ccd0d4;
+}
+.brz-maintenance-table-access-links th:first-child,
+.brz-maintenance-table-access-links td:first-child {
+    width: 35px;
+    text-align: center;
+}
+.brz-maintenance-table-access-links th:not(:first-child) {
+    padding-left: 10px;
+}
+.brz-maintenance-delete-links {
+    padding-left: 10px !important;
+}
+.brz-maintenance-add-link {
+    margin-top: 15px !important;
+}
 /* Admin notice give us a rating */
 .brz-review-notice-container {
     display: flex;

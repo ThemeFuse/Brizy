@@ -5,6 +5,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
@@ -71,7 +72,9 @@ class FacebookButton extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <Facebook appId={appData.appId} type="Like" data={data} />

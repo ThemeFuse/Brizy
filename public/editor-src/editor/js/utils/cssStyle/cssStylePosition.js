@@ -6,7 +6,6 @@ export function cssStylePosition({ v, device, state }) {
   return zIndex === 0 ? "position:static;" : "position:relative;";
 }
 
-export function cssStylePositionMode({ v, device, state }) {
-  const zIndex = cssStylePosition({ v, device, state });
-  return IS_EDITOR ? "position:relative;" : zIndex;
+export function cssStylePositionMode() {
+  return "position:relative;";
 }

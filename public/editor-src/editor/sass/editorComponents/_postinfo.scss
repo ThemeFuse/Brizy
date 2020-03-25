@@ -6,24 +6,44 @@
   flex-wrap: wrap;
   word-break: break-all;
 
-  & > ul {
-    margin:0;
-    padding: 0;
+  &__column ul {
+    display: flex;
+    flex-direction: column;
 
+    .brz-li.brz-li {
+      margin-right: 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  & > ul {
+    margin: 0;
+    padding: 0;
   }
 
   .brz-li {
+    margin-left: 0;
+    margin-top: 0;
     list-style: none;
     display: inline-flex;
     align-items: center;
-    cursor: pointer;
-    &:last-child{
+    cursor: default;
+
+    &:last-child {
       margin-right: 0 !important;
     }
 
     .brz-icon-svg {
       margin-right: 0.5em;
     }
-
+  }
+  &__disabled-author ul .brz-li:first-child,
+  &__disabled-date ul .brz-li:nth-child(2),
+  &__disabled-time ul .brz-li:nth-child(3),
+  &__disabled-comments ul .brz-li:nth-child(4) {
+    display: none;
   }
 }

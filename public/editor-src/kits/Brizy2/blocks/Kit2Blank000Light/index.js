@@ -18,30 +18,7 @@ module.exports = {
           type: "SectionItem",
           value: {
             _styles: ["section-item"],
-            items: [
-              {
-                type: "Row",
-                value: {
-                  _styles: ["row", "hide-row-borders", "padding-0"],
-                  items: [
-                    {
-                      type: "Column",
-                      value: {
-                        _styles: ["column"],
-                        items: []
-                      }
-                    },
-                    {
-                      type: "Column",
-                      value: {
-                        _styles: ["column"],
-                        items: []
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            items: []
           }
         }
       ]

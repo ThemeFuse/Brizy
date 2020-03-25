@@ -46,7 +46,6 @@
   }
 }
 .slick-slide {
-  height: 100%;
   min-height: 1px;
   display: none;
   float: none;
@@ -90,20 +89,19 @@
     transform: translateZ(0);
   }
   .slick-slide > div,
-  .brz-section__items {
+  .brz-section__items,
+  .brz-section__content {
     height: 100%;
     outline: none;
   }
 
   // Animation
-  &--fade {
-    .slick-slide {
-      height: auto;
-      visibility: hidden;
+  &--fade .slick-slide {
+    height: auto;
+    visibility: hidden;
 
-      &.slick-active {
-        visibility: visible;
-      }
+    &.slick-active {
+      visibility: visible;
     }
   }
 }
@@ -151,33 +149,27 @@
     border: 2px solid currentColor;
     border-radius: 0;
     background-color: transparent;
-    transition: linear 0.2s transform, linear 0.2s background-color;
+    transition: transform linear 0.2s, background-color linear 0.2s;
   }
   .slick-active button {
     background-color: currentColor;
-    transition: linear 0.2s transform, linear 0.2s background-color;
+    transition: transform linear 0.2s, background-color linear 0.2s;
   }
 
   // Type
-  &--circle {
-    button {
-      width: 10px;
-      height: 10px;
-      border-radius: 10px;
-    }
+  &--circle button {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
   }
-  &--diamond {
-    button {
-      width: 10px;
-      height: 10px;
-      transform: rotate(-45deg);
-    }
+  &--diamond button {
+    width: 10px;
+    height: 10px;
+    transform: rotate(-45deg);
   }
-  &--square {
-    button {
-      width: 10px;
-      height: 10px;
-    }
+  &--square button {
+    width: 10px;
+    height: 10px;
   }
 }
 
@@ -189,13 +181,14 @@
   z-index: 2;
   font-size: 30px;
   cursor: pointer;
-  transition: linear 0.2s opacity;
+  transition: opacity linear 0.2s;
   color: #000;
   background-color: transparent;
   border: none;
+  overflow: auto;
 
   &:hover {
-    transition: linear 0.2s opacity;
+    transition: opacity linear 0.2s;
   }
   .brz-icon-svg {
     display: block;

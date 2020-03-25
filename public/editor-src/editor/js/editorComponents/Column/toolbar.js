@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
@@ -12,35 +9,22 @@ import {
   toolbarBgColorHexField2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarPaddingFourFields,
-  toolbarMargin,
-  toolbarBorderRadius,
   toolbarBorder2,
   toolbarBorderColorHexField2,
   toolbarBorderWidthFourFields2,
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
-  toolbarHoverTransition,
-  toolbarShowOnDesktop,
   toolbarShowOnResponsive,
-  toolbarZIndex,
-  toolbarCustomCSSClass,
-  toolbarCSSID,
-  toolbarEntranceAnimation,
   toolbarImageLinkExternal,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
   toolbarLinkAnchor,
-  toolbarVerticalAlign,
-  toolbarTags
+  toolbarVerticalAlign
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvk = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -678,18 +662,18 @@ export function getItems({ v, device }) {
                   state: "normal",
                   devices: "desktop"
                 }),
-                toolbarLinkExternalBlank({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "linkExternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch-dev",
                   devices: "desktop"
-                }),
-                toolbarLinkExternalRel({
-                  v,
-                  device,
-                  state: "normal",
+                },
+                {
+                  id: "linkExternalRel",
+                  label: t("Make it Nofollow"),
+                  type: "switch-dev",
                   devices: "desktop"
-                })
+                }
               ]
             },
             {
@@ -728,150 +712,7 @@ export function getItems({ v, device }) {
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),
           icon: "nc-cog",
-          devices: "desktop",
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("settingsStyling"),
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: [
-                    toolbarPaddingFourFields({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarMargin({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: ["onChangeMarginGrouped"],
-                      onChangeUngrouped: ["onChangeMarginUngrouped"]
-                    }),
-                    toolbarBorderRadius({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: [
-                        "onChangeBorderRadiusGrouped",
-                        "onChangeBorderRadiusGroupedDependencies"
-                      ],
-                      onChangeUngrouped: [
-                        "onChangeBorderRadiusUngrouped",
-                        "onChangeBorderRadiusUngroupedDependencies"
-                      ]
-                    })
-                  ]
-                },
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarShowOnDesktop({ v, devices: "desktop" }),
-                    toolbarZIndex({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarCSSID({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarCustomCSSClass({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarEntranceAnimation({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    }),
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      state: "normal",
-                      position: 60,
-                      devices: "desktop"
-                    }),
-                    toolbarTags({
-                      v,
-                      device,
-                      state: "normal"
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: dvk("advancedSettings"),
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
-      title: t("Settings"),
-      position: 110,
-      devices: "responsive",
-      options: [
-        {
-          id: dvk("settingsTabs"),
-          type: "tabs",
-          align: "start",
-          tabs: [
-            {
-              id: dvk("settingsStyling"),
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: [
-                toolbarPaddingFourFields({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "responsive"
-                }),
-                toolbarMargin({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "responsive",
-                  onChangeGrouped: ["onChangeMarginGrouped"],
-                  onChangeUngrouped: ["onChangeMarginUngrouped"]
-                }),
-                toolbarBorderRadius({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "responsive",
-                  onChangeGrouped: [
-                    "onChangeBorderRadiusGrouped",
-                    "onChangeBorderRadiusGroupedDependencies"
-                  ],
-                  onChangeUngrouped: [
-                    "onChangeBorderRadiusUngrouped",
-                    "onChangeBorderRadiusUngroupedDependencies"
-                  ]
-                })
-              ]
-            }
-          ]
+          devices: "desktop"
         }
       ]
     }

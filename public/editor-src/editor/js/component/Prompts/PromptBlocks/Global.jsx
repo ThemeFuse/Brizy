@@ -124,11 +124,11 @@ class Global extends Component {
     const { globalBlocks, blocksFilter } = this.props;
     const thumbnails = blocksFilter(Object.entries(globalBlocks)).reduce(
       (acc, [globalBlockId, block]) => {
-        if (block.deleted) {
+        if (block.data.deleted) {
           return acc;
         }
 
-        const { url, width, height } = blockThumbnailData(block);
+        const { url, width, height } = blockThumbnailData(block.data);
         const thumbnailData = {
           id: globalBlockId,
           thumbnailSrc: url,
@@ -137,7 +137,7 @@ class Global extends Component {
           showRemoveIcon: true,
           resolve: {
             type: "GlobalBlock",
-            blockId: block.blockId,
+            blockId: block.data.blockId,
             value: { globalBlockId }
           }
         };
@@ -162,7 +162,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Global);
+export default connect(mapStateToProps, mapDispatchToProps)(Global);

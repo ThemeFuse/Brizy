@@ -19,8 +19,9 @@ import {
 import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
-import { CollapsibleToolbar } from "visual/component/Toolbar";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import {
   styleSection,
   styleBg,
@@ -48,6 +49,8 @@ class SectionFooter extends EditorComponent {
 
   mounted = false;
 
+  collapsibleToolbarRef = React.createRef();
+
   componentDidMount() {
     this.mounted = true;
   }
@@ -70,6 +73,10 @@ class SectionFooter extends EditorComponent {
       tabsCurrentElement: "tabCurrentElement",
       tabsColor: "tabOverlay"
     });
+  };
+
+  handleToolbarEscape = () => {
+    this.collapsibleToolbarRef.current.open();
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);
@@ -131,7 +138,8 @@ class SectionFooter extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
@@ -215,7 +223,9 @@ class SectionFooter extends EditorComponent {
           >
             <ContainerBorder showBorder={false} activateOnContentClick={false}>
               {this.renderToolbar(v)}
-              {this.renderItems(v, vs, vd)}
+              <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                {this.renderItems(v, vs, vd)}
+              </ToolbarExtend>
             </ContainerBorder>
           </Roles>
         </footer>
@@ -329,7 +339,7 @@ class SectionFooter extends EditorComponent {
     } = this.props;
     const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
-    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
     globalsData.value._id = this.getId();
 
     onChange(globalsData, {

@@ -1,17 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarDisabledMedia,
   toolbarContainerPopup2CloseBorderRadius,
   toolbarContainerPopup2CloseCustomSize,
   toolbarContainerPopup2CloseBgSize,
-  toolbarContainerPopup2ClosePosition,
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarBgColor2,
-  toolbarBgColorHexField2,
-  toolbarContainerPopup2CloseAlign,
-  toolbarDisabledAdvancedSettings,
   toolbarContainerPopup2CloseHorizontalPosition,
   toolbarContainerPopup2CloseVerticalPosition
 } from "visual/utils/toolbar";
@@ -20,7 +12,7 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -28,8 +20,8 @@ export function getItems({ v, device, state }) {
     dvv("closeColorHex"),
     dvv("closeColorPalette")
   );
+
   return [
-    toolbarDisabledMedia({ device, state: "normal" }),
     {
       id: "toolbarCurrentElement",
       type: "popover",
@@ -102,42 +94,10 @@ export function getItems({ v, device, state }) {
               id: dvk("tabIcon"),
               label: t("Icon"),
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  prefix: "closeColor",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix: "closeColor",
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "closeColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -145,43 +105,10 @@ export function getItems({ v, device, state }) {
               id: dvk("tabBackground"),
               label: t("Background"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  prefix: "closeBg",
-                  showSelect: false,
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix: "closeBg",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "closeBgColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -189,20 +116,43 @@ export function getItems({ v, device, state }) {
         }
       ]
     },
-    toolbarContainerPopup2ClosePosition({
-      v,
-      device,
-      state: "normal"
-    }),
-    toolbarContainerPopup2CloseAlign({ v, device, state: "normal" }),
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
-      position: 110,
-      options: [toolbarDisabledAdvancedSettings({ v, device, state: "normal" })]
+      id: "closePosition",
+      type: "toggle-dev",
+      position: 100,
+      choices: [
+        {
+          icon: "nc-position-in",
+          value: "inside"
+        },
+        {
+          icon: "nc-position-out",
+          value: "outside"
+        }
+      ]
+    },
+    {
+      id: "closeAlign",
+      type: "toggle-dev",
+      position: 100,
+      choices: [
+        {
+          icon: "nc-align-top-left",
+          value: "topLeft"
+        },
+        {
+          icon: "nc-align-top-right",
+          value: "topRight"
+        },
+        {
+          icon: "nc-align-bottom-right",
+          value: "bottomRight"
+        },
+        {
+          icon: "nc-align-bottom-left",
+          value: "bottomLeft"
+        }
+      ]
     }
   ];
 }

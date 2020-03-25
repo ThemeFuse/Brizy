@@ -1,73 +1,217 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 
-import {
-  toolbarElementFbCommentsNumPosts,
-  toolbarElementFbCommentsTargetUrl,
-  toolbarElementFbCommentsHref,
-  toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarBorderWidthFourFields2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2,
-  toolbarCustomCSS,
-  toolbarHoverTransition,
-  toolbarDisabledHorizontalAlign,
-  toolbarDisabledToolbarSettings
-} from "visual/utils/toolbar";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
+const wordpress = Boolean(Config.get("wp"));
+
 export function getItems({ v, device, state }) {
+  const dvkn = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device, state }),
-    defaultValueValue({ v, key: "borderColorPalette", device, state })
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
   );
+
+  const choicesType = wordpress
+    ? [
+        {
+          title: t("Facebook"),
+          value: "facebook"
+        },
+        {
+          title: t("Disqus"),
+          value: "disqus"
+        },
+        {
+          title: t("WordPress"),
+          value: "WPComments"
+        }
+      ]
+    : [
+        {
+          title: t("Facebook"),
+          value: "facebook"
+        },
+        {
+          title: t("Disqus"),
+          value: "disqus"
+        }
+      ];
 
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarCurrentElement",
-        device,
-        state: "normal"
-      }),
+      id: dvkn("toolbarCurrentElement"),
       type: "popover",
-      icon: "nc-facebook",
+      icon: "nc-comments",
       title: t("Comments"),
       devices: "desktop",
       position: 70,
       options: [
-        toolbarElementFbCommentsTargetUrl({
-          v,
-          device,
+        {
+          id: "type",
+          type: "select-dev",
+          label: t("Comments"),
           devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementFbCommentsHref({
-          v,
-          device,
+          choices: choicesType
+        },
+        {
+          id: "skin",
+          label: t("Skin"),
+          type: "select-dev",
+          disabled: v.type !== "WPComments",
           devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementFbCommentsNumPosts({
-          v,
-          device,
+          choices: [
+            {
+              title: t("Skin 1"),
+              value: "skin1"
+            },
+            {
+              title: t("Skin 2"),
+              value: "skin2"
+            },
+            {
+              title: t("Skin 3"),
+              value: "skin3"
+            },
+            {
+              title: t("Skin 4"),
+              value: "skin4"
+            }
+          ]
+        },
+        {
+          id: "numPosts",
+          label: t("Posts"),
+          type: "slider-dev",
+          disabled: v.type !== "facebook" && v.type !== "WPComments",
           devices: "desktop",
-          state: "normal"
-        })
+          config: {
+            min: 5,
+            max: 20,
+            debounceUpdate: true
+          }
+        },
         /*{
           id: "darkScheme",
           type: "switch",
           label: t("Dark Scheme"),
           value: v.darkScheme
         }*/
+        {
+          id: "disqusShortname",
+          type: "inputText-dev",
+          label: t("Shortname"),
+          disabled: v.type !== "disqus",
+          devices: "desktop",
+          placeholder: "shortname"
+        },
+        {
+          id: "logoSize",
+          label: t("Avatar"),
+          type: "slider-dev",
+          disabled: v.type !== "WPComments",
+          config: {
+            min: 10,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        }
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: dvkn("toolbarTypography"),
+      type: "popover",
+      icon: "nc-font",
+      size: device === "desktop" ? "large" : "auto",
+      title: t("Typography"),
+      roles: ["admin"],
+      position: 70,
+      options: [
+        {
+          id: dvkn("tabsTypography"),
+          type: "tabs",
+          tabs: [
+            {
+              id: dvkn("tabTypographyName"),
+              label: t("Name"),
+              options: [
+                {
+                  id: "name",
+                  type: "typography-dev",
+                  disabled: v.type !== "WPComments",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: dvkn("tabTypographyComment"),
+              label: t("Comment"),
+              options: [
+                {
+                  id: "comment",
+                  type: "typography-dev",
+                  disabled: v.type !== "WPComments",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: dvkn("tabTypographyDate"),
+              label: t("Date"),
+              options: [
+                {
+                  id: "date",
+                  type: "typography-dev",
+                  disabled: v.type !== "WPComments",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: dvkn("tabTypographyReply"),
+              label: t("Reply"),
+              options: [
+                {
+                  id: "reply",
+                  type: "typography-dev",
+                  disabled: v.type !== "WPComments",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: dvkn("tabTypographyPostButton"),
+              label: t("Button"),
+              options: [
+                {
+                  id: "postButton",
+                  type: "typography-dev",
+                  disabled: v.type !== "WPComments",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: dvkn("toolbarColor"),
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -86,133 +230,50 @@ export function getItems({ v, device, state }) {
           hideHandlesWhenOne: false,
           tabs: [
             {
-              id: "tabBorder",
-              label: t("Border"),
+              id: "tabNameColor",
+              label: t("Name"),
               options: [
-                toolbarBorder2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeStyle: [
-                    "onChangeBorderStyle2",
-                    "onChangeElementBorderStyleDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBorderColorHexAndOpacity2",
-                    "onChangeBorderColorHexAndOpacityPalette2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBorderColorPalette2",
-                    "onChangeBorderColorPaletteOpacity2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 38,
-                      options: [
-                        toolbarBorderColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity2",
-                            "onChangeBorderColorHexAndOpacityPalette2",
-                            "onChangeElementBorderColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 54,
-                      options: [
-                        toolbarBorderWidthFourFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChangeType: ["onChangeBorderWidthType2"],
-                          onChangeGrouped: [
-                            "onChangeBorderWidthGrouped2",
-                            "onChangeBorderWidthGroupedDependencies2"
-                          ],
-                          onChangeUngrouped: [
-                            "onChangeBorderWidthUngrouped2",
-                            "onChangeBorderWidthUngroupedDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "nameColor",
+                  disabled: v.type !== "WPComments",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
             {
-              id: "tabBoxShadow",
-              label: t("Shadow"),
+              id: "tabCommentsColor",
+              label: t("Comments"),
               options: [
-                toolbarBoxShadow2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeType: [
-                    "onChangeBoxShadowType2",
-                    "onChangeBoxShadowTypeDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBoxShadowHexAndOpacity2",
-                    "onChangeBoxShadowHexAndOpacityPalette2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBoxShadowPalette2",
-                    "onChangeBoxShadowPaletteOpacity2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadowFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowFields2",
-                            "onChangeBoxShadowFieldsDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "commentsColor",
+                  disabled: v.type !== "WPComments",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabPostButtonColor",
+              label: t("Btn Color"),
+              options: [
+                {
+                  id: "postButtonColor",
+                  type: "colorPicker-dev",
+                  disabled: v.type !== "WPComments",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabPostButtonBg",
+              label: t("Btn Bg"),
+              options: [
+                {
+                  id: "postButtonBgColor",
+                  type: "colorPicker-dev",
+                  disabled: v.type !== "WPComments",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -220,63 +281,40 @@ export function getItems({ v, device, state }) {
         }
       ]
     },
-    toolbarDisabledToolbarSettings({ device }),
     {
-      id: defaultValueKey({
-        key: "advancedSettings",
-        device,
-        state: "normal"
-      }),
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      roles: ["admin"],
-      position: 110,
-      icon: "nc-cog",
+      id: dvkn("toolbarLink"),
+      type: "popover",
+      icon: "nc-link",
+      title: t("Link"),
+      size: "medium",
+      position: 90,
       options: [
         {
-          id: "settingsTabs",
-          type: "tabs",
+          id: "targetUrl",
+          label: t("Target URL"),
+          type: "select-dev",
           devices: "desktop",
-          align: "start",
-          tabs: [
+          choices: [
             {
-              id: "settingsStyling",
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: []
+              title: t("Current Page"),
+              value: "current"
             },
             {
-              id: defaultValueKey({
-                key: "moreSettingsAdvanced",
-                device,
-                state: "normal"
-              }),
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              options: [
-                toolbarCustomCSS({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop"
-                }),
-                toolbarHoverTransition({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop",
-                  position: 100
-                })
-              ]
+              title: t("Custom Page"),
+              value: "custom"
             }
           ]
+        },
+        {
+          id: "href",
+          label: t("Link"),
+          type: "inputText-dev",
+          placeholder: "http://",
+          disabled: dvv("targetUrl") === "current",
+          devices: "desktop"
         }
       ]
-    },
-    toolbarDisabledHorizontalAlign({
-      device,
-      state: "normal"
-    })
+    }
     /*{
       id: "apps",
       type: "integrationsApps",

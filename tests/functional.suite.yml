@@ -30,7 +30,7 @@ modules:
       user: '%TEST_SITE_DB_USER%'
       password: '%TEST_SITE_DB_PASSWORD%'
       dump: 'tests/_data/dump-active-brizy.sql'
-      reconect: true
+      reconect: false
       populate: true
       cleanup: false
       waitlock: 10
@@ -38,7 +38,7 @@ modules:
       urlReplacement: true
       tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
     WPLoader:
-      loadOnly: true
+      loadOnly: false
       wpRootFolder: "%WP_ROOT_FOLDER%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"
@@ -46,7 +46,7 @@ modules:
       dbPassword: "%TEST_SITE_DB_PASSWORD%"
       tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
       wpDebug: true
-      plugins: ['brizy/brizy.php']
-      activatePlugins: ['brizy/brizy.php']
+      plugins: ['brizy/brizy.php','brizy-pro/brizy-pro.php']
+      activatePlugins: ['brizy/brizy.php','brizy-pro/brizy-pro.php']
     WPFilesystem:
       wpRootFolder: "%WP_ROOT_FOLDER%"

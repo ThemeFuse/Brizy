@@ -21,9 +21,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 	/**
 	 * @param $apost
+	 * @param null $uid
 	 *
-	 * @return Brizy_Editor_Block|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed
+	 * @throws Exception
 	 */
 	public static function get( $apost, $uid = null ) {
 
@@ -37,30 +38,74 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		}
 
 		return self::$block_instance[ $wp_post_id ] = new self( $wp_post_id, $uid );
-
 	}
+
+	public function createResponse() {
+
+		$data = array(
+			'uid'    => $this->getUid(),
+			'status' => get_post_status( $this->getWpPostId() ),
+			'data'   => $this->get_editor_data(),
+			'dataVersion'   => $this->getCurrentDataVersion(),
+		);
+
+
+		if ( $this->getWpPost()->post_type === Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
+			$ruleManager      = new Brizy_Admin_Rules_Manager();
+			$data['position'] = $this->getPosition();
+			$data['rules']    = $ruleManager->getRules( $this->getWpPostId() );
+		}
+
+		return $data;
+	}
+
 
 	public function __construct( $wp_post_id, $uid = null ) {
 
-		self::checkIfPostTypeIsSupported( $wp_post_id );
-		$this->wp_post_id = (int) $wp_post_id;
-
-		if ( $this->wp_post_id ) {
-			$this->wp_post = get_post( $this->wp_post_id );
-		}
-
-		// get the storage values
-		$storage      = $this->storage();
-		$storage_post = $storage->get( self::BRIZY_POST, false );
-
-		$this->loadStorageData( $storage_post );
-
 		if ( $uid ) {
 			$this->uid = $uid;
-			update_post_meta( $this->get_parent_id(), 'brizy_post_uid', $this->uid );
-		} else {
-			$this->create_uid();
 		}
+
+		parent::__construct( $wp_post_id );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function uses_editor() {
+		return true;
+	}
+
+	/**
+	 * This should always return true
+	 *
+	 * @param $val
+	 *
+	 * @return $this
+	 */
+	public function set_uses_editor( $val ) {
+		$this->uses_editor = true;
+
+		return $this;
+	}
+
+	/**
+	 * @return mixed|string
+	 */
+	protected function createUid() {
+
+		$post_parent_id = $this->getWpPostParentId();
+		$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
+
+		if ( ! $uid && $this->uid ) {
+			update_post_meta( $post_parent_id, 'brizy_post_uid', $this->uid );
+		}
+
+		if ( ! $this->uid && $uid ) {
+			$this->uid = $uid;
+		}
+
+		return $this->uid;
 	}
 
 	public function setPosition( $position ) {
@@ -79,7 +124,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 
-		$data['rules']    = $ruleManager->getRules( $this->get_id() );
+		$data['rules']    = $ruleManager->getRules( $this->getWpPostId() );
 		$data['position'] = $this->getPosition();
 
 		unset( $data['wp_post'] );
@@ -87,11 +132,12 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $data;
 	}
 
-	public function loadStorageData( $data ) {
-		parent::loadStorageData( $data );
-
-		if ( isset( $data['position'] ) ) {
-			$this->position = $data['position'];
+	public function loadInstanceData() {
+		parent::loadInstanceData();
+		$storage      = $this->getStorage();
+		$storage_post = $storage->get( self::BRIZY_POST, false );
+		if ( isset( $storage_post['position'] ) ) {
+			$this->position = $storage_post['position'];
 		}
 	}
 
@@ -101,7 +147,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$data['position'] = $this->getPosition();
 
 		$ruleManager   = new Brizy_Admin_Rules_Manager();
-		$data['rules'] = $ruleManager->getRules( $this->get_id() );
+		$data['rules'] = $ruleManager->getRules( $this->getWpPostId() );
 
 		return $data;
 	}
@@ -143,35 +189,21 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$blocks   = array();
 
 		foreach ( $wpBlocks as $wpPost ) {
-			$blocks[] = self::postData( Brizy_Editor_Block::get( $wpPost ) );
+			$blocks[] = Brizy_Editor_Block::get( $wpPost )->createResponse();
 		}
 
 		return $blocks;
 	}
 
+	public function save( $autosave = 0 ) {
 
-	/**
-	 * @param Brizy_Editor_Block $post
-	 *
-	 * @return array
-	 */
-	public static function postData( Brizy_Editor_Block $post ) {
+		parent::save( $autosave );
 
-		$p_id        = (int) $post->get_id();
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-		$global      = array(
-			'uid'    => $post->get_uid(),
-			'status' => get_post_status( $p_id ),
-			'data'   => $post->get_editor_data(),
-		);
-
-		if ( $post->get_wp_post()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {
-			$global['position'] = $post->getPosition();
-			$global['rules']    = $ruleManager->getRules( $p_id );
+		if ( $autosave !== 1 ) {
+			$this->savePost();
+			do_action( 'brizy_global_data_updated' );
 		}
 
-		return $global;
 	}
-
 
 }

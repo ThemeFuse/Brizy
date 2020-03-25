@@ -38,15 +38,23 @@ class LastBlockAdder extends React.Component {
         },
         saved: {
           blocksFilter: blocks => {
-            // eslint-disable-next-line no-unused-vars
-            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+            return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
+              ([_, { data: blockData }]) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },
         global: {
           blocksFilter: blocks => {
-            // eslint-disable-next-line no-unused-vars
-            return blocks.filter(([_, block]) => block.type !== "SectionPopup");
+            return blocks.filter(
+              // eslint-disable-next-line no-unused-vars
+              ([_, { data: blockData }]) =>
+                blockData.type !== "SectionPopup" &&
+                blockData.type !== "SectionPopup2"
+            );
           },
           onAddBlocks: this.handleBlockAdd
         },
@@ -79,5 +87,7 @@ class LastBlockAdder extends React.Component {
 
 export default rolesHOC({
   allow: ["admin"],
-  component: connect()(LastBlockAdder)
+  component: connect(undefined, undefined, undefined, {
+    forwardRef: true
+  })(LastBlockAdder)
 });

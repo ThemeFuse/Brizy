@@ -2,8 +2,8 @@ import $ from "jquery";
 import "./lib/jquery.countdown.js";
 import * as languages from "./languages";
 
-export default function() {
-  $(".brz-countdown").each(function() {
+export default function($node) {
+  $node.find(".brz-countdown").each(function() {
     var $this = $(this);
 
     // timer
@@ -42,7 +42,7 @@ export default function() {
     $this.countdown({
       now: Date.now(),
       endDate: endTime,
-      timeZoneOffset: -timezone * 60 * 1000,
+      timeZoneOffset: timezone * 60 * 1000,
       tickInterval: 1000,
       language: languages[language] || languages["en"],
       onTick: function(remaining) {

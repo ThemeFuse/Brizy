@@ -774,4 +774,10 @@ $option-color: #626b70;
       }
     }
   }
+
+  // Email
+  .brz-ed-popup-integration-email__template-body .brz-textarea {
+    height: 130px;
+    max-height: 130px;
+  }
 }

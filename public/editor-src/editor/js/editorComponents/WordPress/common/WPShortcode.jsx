@@ -10,6 +10,7 @@ export class WPShortcode extends Component {
   static defaultProps = {
     name: "",
     attributes: {},
+    height: null,
     raw: null,
     placeholderIcon: "wp-shortcode",
     resizerPoints: null,
@@ -89,7 +90,8 @@ class Inner extends Component {
     raw: null,
     placeholderIcon: "wp-shortcode",
     renderHTMLInEditor: true,
-    render: null
+    render: null,
+    onLoadHTML: _.noop
   };
 
   state = {
@@ -116,12 +118,7 @@ class Inner extends Component {
       return true;
     }
 
-    const stateChanged = currentState.shortcodeHTML !== nextState.shortcodeHTML;
-    if (stateChanged) {
-      return true;
-    }
-
-    return false;
+    return currentState.shortcodeHTML !== nextState.shortcodeHTML;
   }
 
   componentDidUpdate(prevProps) {
@@ -142,9 +139,10 @@ class Inner extends Component {
       return;
     }
 
-    return shortcodeContent(shortcodeString).then(({ shortcode }) =>
-      this.setState({ shortcodeHTML: shortcode })
-    );
+    shortcodeContent(shortcodeString).then(({ shortcode }) => {
+      this.props.onLoadHTML(shortcode);
+      this.setState({ shortcodeHTML: shortcode });
+    });
   }
 
   getShortcodeString() {
@@ -168,11 +166,18 @@ class Inner extends Component {
   }
 
   renderForEdit() {
-    const { placeholderIcon, blocked, render } = this.props;
+    const { placeholderIcon, blocked, render, height } = this.props;
     const { shortcodeHTML } = this.state;
 
     if (!shortcodeHTML) {
-      return <Placeholder icon={placeholderIcon} />;
+      const style = height
+        ? {
+            minHeight: `${height}px`,
+            height: `${height}px`
+          }
+        : {};
+
+      return <Placeholder style={style} icon={placeholderIcon} />;
     }
 
     if (typeof render === "function") {
@@ -180,7 +185,7 @@ class Inner extends Component {
     } else {
       return (
         <div
-          className={blocked && "brz-blocked"}
+          className={blocked ? "brz-blocked" : ""}
           dangerouslySetInnerHTML={this.renderMarkup(shortcodeHTML)}
         />
       );

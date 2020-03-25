@@ -66,7 +66,7 @@ class Brizy_Admin_Blocks_Main {
 
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
-			$uid                              = $brizy_editor_block->get_uid();
+			$uid                              = $brizy_editor_block->getUid();
 			$globalData->globalBlocks[ $uid ] = json_decode( $brizy_editor_block->get_editor_data() );
 		}
 

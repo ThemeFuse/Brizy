@@ -28,12 +28,13 @@ class Items extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex) {
     const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
+          devices: "desktop",
           position: 200,
           roles: ["admin"],
           onChange: () => {
@@ -45,6 +46,7 @@ class Items extends EditorArrayComponent {
           type: "button",
           icon: "nc-trash",
           title: t("Delete"),
+          devices: "desktop",
           position: 250,
           roles: ["admin"],
           onChange: () => {
@@ -52,11 +54,9 @@ class Items extends EditorArrayComponent {
             this.removeItem(itemIndex);
           }
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
     return {
       ...this.props.itemProps,

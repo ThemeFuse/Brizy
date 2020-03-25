@@ -36,7 +36,7 @@ export default class KeyHelper extends Component {
             </picture>
           </div>
           <div className="brz-ed-hotkeys-combination-container">
-            <div className="brz-ed-hotkeys-combination-container-column-1">
+            <div className="brz-ed-hotkeys-combination-container-column">
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
                   {isMac ? "cmd + C" : "Ctrl + C"}
@@ -112,7 +112,7 @@ export default class KeyHelper extends Component {
                 </span>
               </div>
             </div>
-            <div className="brz-ed-hotkeys-combination-container-column-2">
+            <div className="brz-ed-hotkeys-combination-container-column">
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
                   {isMac ? "cmd + Z" : "Ctrl + Z"}
@@ -172,6 +172,14 @@ export default class KeyHelper extends Component {
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Add New Block / Layout")}
+                </span>
+              </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "esc" : "Esc"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Select Parent Element")}
                 </span>
               </div>
             </div>

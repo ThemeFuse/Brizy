@@ -10,10 +10,18 @@
     "mobileTabsColor": null
   },
 
+  "content": {
+    "iconName": "shape-star",
+    "iconType": "outline"
+  },
+
   "style": {
     "className": "",
 
-    "label": "Rating",
+    "label": "on",
+
+    "text": "Rating",
+
     "rating": 2.5,
     "spacing": 15,
 

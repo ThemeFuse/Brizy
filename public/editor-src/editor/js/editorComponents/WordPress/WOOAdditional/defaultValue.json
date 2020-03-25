@@ -1,0 +1,128 @@
+{
+  "toolbar": {
+    "tabsColor": ""
+  },
+  "style": {
+    "className": "",
+
+    "spacing": 10,
+
+    "titleFontStyle": "",
+    "titleFontFamilyType": "google",
+    "titleFamilies": {
+      "titleFontFamily": "lato"
+    },
+    "titleFontSize": 40,
+    "titleFontWeight": 300,
+    "titleLineHeight": 1.3,
+    "titleLetterSpacing": -1.5,
+
+    "attributesFontStyle": "",
+    "attributesFontFamilyType": "google",
+    "attributesFamilies": {
+      "attributesFontFamily": "lato"
+    },
+    "attributesFontSize": 20,
+    "attributesFontWeight": 300,
+    "attributesLineHeight": 1.3,
+    "attributesLetterSpacing": -0.1,
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "color1",
+
+    "tempTitleColorOpacity": 1,
+    "tempTitleColorPalette": "color1",
+
+    "hoverTitleColorHex": null,
+    "hoverTitleColorOpacity": null,
+    "hoverTitleColorPalette": null,
+
+    "tempHoverTitleColorOpacity": null,
+    "tempHoverTitleColorPalette": null,
+
+    "attributeColorHex": "#000000",
+    "attributeColorOpacity": 1,
+    "attributeColorPalette": "color1",
+
+    "tempAttributeColorOpacity": 1,
+    "tempAttributeColorPalette": "color1",
+
+    "hoverAttributeColorHex": null,
+    "hoverAttributeColorOpacity": null,
+    "hoverAttributeColorPalette": null,
+
+    "tempHoverAttributeColorOpacity": null,
+    "tempHoverAttributeColorPalette": null,
+
+    "borderColorHex": "#000000",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "color1",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "color1",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "tabletSpacing": null,
+
+    "tabletTitleFontStyle": "",
+    "tabletTitleFontFamilyType": null,
+    "tabletTitleFamilies": {
+      "tabletTitleFontFamily": null
+    },
+    "tabletTitleFontSize": 15,
+    "tabletTitleFontWeight": 300,
+    "tabletTitleLineHeight": 1.3,
+    "tabletTitleLetterSpacing": 0,
+
+    "tabletAttributesFontStyle": "",
+    "tabletAttributesFontFamilyType": null,
+    "tabletAttributesFamilies": {
+      "tabletAttributesFontFamily": null
+    },
+    "tabletAttributesFontSize": 15,
+    "tabletAttributesFontWeight": 300,
+    "tabletAttributesLineHeight": 1.3,
+    "tabletAttributesLetterSpacing": 0,
+
+    "mobileSpacing": null,
+
+    "mobileTitleFontStyle": "",
+    "mobileTitleFontFamilyType": null,
+    "mobileTitleFamilies": {
+      "mobileTitleFontFamily": null
+    },
+    "mobileTitleFontSize": 15,
+    "mobileTitleFontWeight": 300,
+    "mobileTitleLineHeight": 1.3,
+    "mobileTitleLetterSpacing": 0,
+
+    "mobileAttributesFontStyle": "",
+    "mobileAttributesFontFamilyType": null,
+    "mobileAttributesFamilies": {
+      "mobileAttributesFontFamily": null
+    },
+    "mobileAttributesFontSize": 15,
+    "mobileAttributesFontWeight": 300,
+    "mobileAttributesLineHeight": 1.3,
+    "mobileAttributesLetterSpacing": 0
+  }
+}

@@ -1,11 +1,12 @@
 import { t } from "visual/utils/i18n";
 import { hideToolbar } from "visual/component/Toolbar/index";
 
-export function getItemsForDesktop(v) {
+export function getItems({ v, device }) {
   return [
     {
       id: "duplicate",
       type: "button",
+      devices: "desktop",
       icon: "nc-duplicate",
       title: t("Duplicate"),
       roles: ["admin"],
@@ -16,11 +17,12 @@ export function getItemsForDesktop(v) {
         };
       }
     },
-    ...(v.columns > v.slidesToShow
+    ...(v.columns > v.slidesToShow && device === "desktop"
       ? [
           {
             id: "remove",
             type: "button",
+            devices: "desktop",
             title: t("Delete"),
             roles: ["admin"],
             icon: "nc-trash",
@@ -36,12 +38,4 @@ export function getItemsForDesktop(v) {
         ]
       : [])
   ];
-}
-
-export function getItemsForTablet() {
-  return [];
-}
-
-export function getItemsForMobile() {
-  return [];
 }

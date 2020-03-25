@@ -3,7 +3,8 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
 import * as types from "./types/index";
-import * as toolbarConfig from "./toolbar";
+import * as toolbar from "./toolbar";
+import * as sidebar from "./sidebar";
 import defaultValue from "./defaultValue";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
@@ -21,8 +22,8 @@ class Form2Field extends EditorComponent {
       placeholder: showPlaceholder,
       className,
       selectClassName,
-      labelToolbarExtend,
-      selectToolbarExtend
+      toolbarExtendLabel,
+      toolbarExtendSelect
     } = this.props;
     const { type } = v;
     const Component = types[type];
@@ -39,7 +40,7 @@ class Form2Field extends EditorComponent {
     return (
       <div className={classNameField}>
         {labelType === "outside" && (
-          <Toolbar {...labelToolbarExtend}>
+          <Toolbar {...toolbarExtendLabel}>
             <Component.Label
               id={this.getId()}
               value={v}
@@ -47,13 +48,13 @@ class Form2Field extends EditorComponent {
             />
           </Toolbar>
         )}
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
           <div>
             <Component
               {...v}
               showPlaceholder={showPlaceholder}
               labelType={labelType}
-              selectToolbarItems={selectToolbarExtend}
+              toolbarExtendSelect={toolbarExtendSelect}
               selectClassName={selectClassName}
               onChange={value => this.patchValue(value)}
             />

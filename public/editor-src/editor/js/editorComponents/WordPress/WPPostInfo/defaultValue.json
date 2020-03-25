@@ -13,7 +13,13 @@
   "style": {
     "customCSS": "",
 
+    "postElements": "[\"author\", \"date\", \"time\", \"comments\"]",
+
+    "large": "inline",
+
     "textSpacing": 30,
+
+    "hoverTransition": 50,
 
     "fontStyle": "",
     "fontFamilyType": "google",

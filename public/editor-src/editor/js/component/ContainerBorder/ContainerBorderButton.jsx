@@ -41,7 +41,7 @@ class ContainerBorderButton extends Component {
   }
 
   render() {
-    const { innerRef, className: className_, position, onClick } = this.props;
+    const { innerRef, className: className_, position } = this.props;
     const { active } = this.state;
 
     const className = classnames("brz-ed-border__button", className_, {
@@ -55,7 +55,6 @@ class ContainerBorderButton extends Component {
         ref={innerRef}
         className={className}
         data-sortable-handle={this.props["data-sortable-handle"]}
-        onClick={onClick}
       >
         {this.renderIcon()}
       </div>

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.117<br>
+Stable tag: 1.0.118<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,10 +101,10 @@ $html = new Brizy_Editor_CompiledHtml( $post->get_compiled_html() );
 
 // the <head> content
 // the $headHtml contains all the assets the page needs
-$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+$headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Project::get(), $post->getWpPost() );
 
 // the <body> content
-$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+$bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() );
 ```
 
 
@@ -117,6 +117,39 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.118 - 2020-03-25 ###
+* New: Notification system for errors and if two users work on the same page.
+* New: Maintenance Mode
+* New: Add a Get Help link
+* New: Shortcut, press Esc key to select parent container
+* New: Added toggle options to make the More settings right sidebar sticky
+* New: Changed the template rules to allow users to create templates for posts from a specific category
+* New: Added compatibility Broken Link Checker
+* New: Added compatibility with SeoPress
+* New: Added compatibility with RankMath
+* New: Add Maintenance Mode Link in the admin toolbar
+* New: Changed the template rules to allow users to create templates for posts from a specific category
+* New: Added compatibility Broken Link Checker
+* New: Added compatibility with SeoPress
+* New: Added compatibility with RankMath
+* New: Add Maintenance Mode Link in the admin toolbar
+* Improved: Added 2 styles for Progress element
+* Improved: Added icons, vertical/horizontal options for Tabs element
+* Improved: Added icons, tags for the Accordion element
+* Improved: Added styles, redirect, message for the Countdown element
+* Improved: Added 3 styles for the Counter element
+* Improved: Element toolbar doesn’t cover the content you are editing anymore
+* Improved: Optimised and re-written options in the builder for Border, Box Shadow, Code Mirror, Color Picker, Image upload, Input Text, Multi Select, Element Toolbar, Select, Slider, Switch, Tabs, Toggle, Textarea, Typography
+* Fixed: Enable/Disable editing with Brizy
+* Fixed: Brizy post revisions
+* Fixed: Brizy templates that are using the default theme template
+* Fixed: Enable/Disable editing with brizy
+* Fixed: Refactoring the post type field in editor config
+* Fixed: Post field shortcode to use a sample post for templates
+* Fixed: Brizy post revisions
+* Fixed: Brizy templates that are using the default theme template
+* Fixed: Removed header To from email headers
 
 ### 1.0.117 - 2020-03-12 ###
 * Fixed: Export errors for certain users
