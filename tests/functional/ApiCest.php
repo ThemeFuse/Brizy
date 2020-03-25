@@ -415,7 +415,8 @@ class ApiCest {
 				'version'      => BRIZY_EDITOR_VERSION,
 				'placeholders' => [
 					'{{brizy_dc_permalink post_id=\'' . $postId . '\'}}',
-					'{{brizy_dc_post_title post_id=\'' . $postId . '\'}}'
+					'{{brizy_dc_post_title post_id=\'' . $postId . '\'}}',
+					'{{brizy_dc_post_title post_id="' . $postId . '"}}'
 				]
 			] ) );
 		$I->seeResponseCodeIsSuccessful();
@@ -425,11 +426,11 @@ class ApiCest {
 
 		$I->assertTrue( isset( $response->data->placeholders ), 'The response should have the property placeholders' );
 
-		$I->assertCount( 2, $response->data->placeholders, 'It should return two responses' );
+		$I->assertCount( 3, $response->data->placeholders, 'It should return two responses' );
 
 		$I->assertStringNotContainsString( '{{brizy_dc_permalink post_id=\'' . $postId . '\'}}', $response->data->placeholders[0], 'Is should replace the place holder with the post permalink' );
-
 		$I->assertStringNotContainsString( '{{brizy_dc_post_title post_id=\'' . $postId . '\'}}', $response->data->placeholders[1], 'Is should replace the place holder with the post title' );
+		$I->assertStringNotContainsString( '{{brizy_dc_post_title post_id="' . $postId . '"}}', $response->data->placeholders[2], 'Is should replace the place holder with the post title' );
 	}
 
 	public function setTemplateTypeTest( FunctionalTester $I ) {
