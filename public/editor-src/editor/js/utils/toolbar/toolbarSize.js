@@ -137,11 +137,16 @@ export function toolbarSizeHeightHeightPx({
   device,
   state,
   config,
+  prefix = "",
   devices = "all",
   disabled = false
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const height = capByPrefix(prefix, "height");
+
   return {
-    id: defaultValueKey({ key: "height", device, state }),
+    id: dvk(height),
     label: t("Height"),
     type: "slider",
     devices,
@@ -163,10 +168,10 @@ export function toolbarSizeHeightHeightPx({
       ]
     },
     value: {
-      value: defaultValueValue({ v, key: "height", device, state })
+      value: dvv(height)
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "height", device, state })]: value
+      [dvk(height)]: value
     })
   };
 }
@@ -216,42 +221,5 @@ export function toolbarSizeContainerSize({
     onChange: ({ value: containerSize }) => ({
       containerSize
     })
-  };
-}
-
-export function toolbarSizeSpacing({ v, device, devices = "all", state }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("spacing"),
-    label: t("Spacing"),
-    type: "slider",
-    devices,
-    roles: ["admin"],
-    slider: {
-      min: 0,
-      max: 100
-    },
-    input: {
-      show: true
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "px",
-          value: "px"
-        }
-      ]
-    },
-    value: {
-      value: dvv("spacing")
-    },
-    onChange: ({ value: spacing }) => {
-      return {
-        [dvk("spacing")]: spacing
-      };
-    }
   };
 }

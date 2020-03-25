@@ -1,16 +1,13 @@
 import thunk from "redux-thunk";
-import {
-  sideEffects,
-  screenshots,
-  browserSupportsScreenshots,
-  api
-} from "visual/redux/middleware";
+import { browserSupports } from "visual/utils/screenshots";
+import { error, sideEffects, screenshots, api } from "visual/redux/middleware";
 
 export default async function getMiddleware() {
-  let screenshotsSupported = await browserSupportsScreenshots();
+  let screenshotsSupported = await browserSupports();
 
   return [
     thunk,
+    error,
     sideEffects({ document, parentDocument: window.parent.document }),
     ...(screenshotsSupported ? [screenshots] : []),
     api

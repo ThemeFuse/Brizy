@@ -18,6 +18,7 @@ import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleSection } from "./styles";
 
 const STICKY_ITEM_INDEX = 1;
@@ -208,7 +209,10 @@ class SectionHeader extends EditorComponent {
       bindWithKey: "items",
       sliceStartIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfig,
+          sidebarExtendConfig
+        ),
         meta: this.getMeta(v)
       }
     });
@@ -259,7 +263,10 @@ class SectionHeader extends EditorComponent {
       sliceStartIndex: 0,
       sliceEndIndex: STICKY_ITEM_INDEX,
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfig,
+          sidebarExtendConfig
+        ),
         meta: this.getMeta(v)
       }
     });
@@ -401,7 +408,7 @@ class SectionHeader extends EditorComponent {
     } = this.props;
     const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
-    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
     globalsData.value._id = this.getId();
 
     onChange(globalsData, {

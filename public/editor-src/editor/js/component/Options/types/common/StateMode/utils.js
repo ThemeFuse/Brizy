@@ -1,6 +1,6 @@
 import _ from "underscore";
-import { hasState, HOVER, NORMAL } from "visual/utils/stateMode";
-import { capitalize } from "visual/utils/string";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { hasState } from "visual/utils/stateMode/editorComponent";
 import { t } from "visual/utils/i18n";
 import { toArray } from "visual/utils/array";
 
@@ -69,7 +69,7 @@ export const flatten = options => {
 /**
  * Returns option state state icon code
  *
- * @param {string} state
+ * @param {StateMode} state
  * @return {string}
  */
 export const stateIcon = state => {
@@ -78,15 +78,15 @@ export const stateIcon = state => {
       return "nc-circle";
     case HOVER:
       return "nc-hover";
-    default:
-      return state;
+    case ACTIVE:
+      return "nc-target";
   }
 };
 
 /**
  * Returns option state state title
  *
- * @param {string} state
+ * @param {StateMode} state
  * @return {string}
  */
 export const stateTitle = state => {
@@ -95,7 +95,7 @@ export const stateTitle = state => {
       return t("Normal");
     case HOVER:
       return t("Hover");
-    default:
-      return capitalize(state);
+    case ACTIVE:
+      return t("Active");
   }
 };

@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import _ from "underscore";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarElementCountdownDate({
   v,
@@ -8,23 +9,21 @@ export function toolbarElementCountdownDate({
   devices = "all",
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "date", device, state }),
+    id: dvk("date"),
     label: t("Date"),
     type: "input",
     devices,
     inputSize: "medium",
     placeholder: "dd/mm/yyyy",
     value: {
-      value: defaultValueValue({
-        v,
-        key: "date",
-        device,
-        state
-      })
+      value: dvv("date")
     },
     onChange: ({ value }) => ({
-      [defaultValueKey({ key: "date", device, state })]: value
+      [dvk("date")]: value
     })
   };
 }
@@ -35,8 +34,11 @@ export function toolbarElementCountdownHour({
   devices = "all",
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "hours", device, state }),
+    id: dvk("hours"),
     type: "select",
     label: t("Hour"),
     devices,
@@ -49,12 +51,7 @@ export function toolbarElementCountdownHour({
         value: `${hour} ${suffix}`
       };
     }),
-    value: defaultValueValue({
-      v,
-      key: "hours",
-      device,
-      state
-    })
+    value: dvv("hours")
   };
 }
 
@@ -64,8 +61,11 @@ export function toolbarElementCountdownMinute({
   devices = "all",
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "minutes", device, state }),
+    id: dvk("minutes"),
     type: "select",
     devices,
     label: t("Minutes"),
@@ -76,12 +76,7 @@ export function toolbarElementCountdownMinute({
         value: current
       };
     }),
-    value: defaultValueValue({
-      v,
-      key: "minutes",
-      device,
-      state
-    })
+    value: dvv("minutes")
   };
 }
 
@@ -91,8 +86,11 @@ export function toolbarElementCountdownTimeZone({
   devices = "all",
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "timeZone", device, state }),
+    id: dvk("timeZone"),
     label: t("Time Zone"),
     type: "select",
     devices,
@@ -194,12 +192,7 @@ export function toolbarElementCountdownTimeZone({
         title: t("+ 12:00 (Auckland)")
       }
     ],
-    value: defaultValueValue({
-      v,
-      key: "timeZone",
-      device,
-      state
-    })
+    value: dvv("timeZone")
   };
 }
 
@@ -209,8 +202,11 @@ export function toolbarElementCountdownLanguage({
   devices = "all",
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ key: "language", device, state }),
+    id: dvk("language"),
     label: t("Language"),
     type: "select",
     devices,
@@ -244,11 +240,117 @@ export function toolbarElementCountdownLanguage({
         value: "ru"
       }
     ],
-    value: defaultValueValue({
-      v,
-      key: "language",
-      device,
-      state
-    })
+    value: dvv("language")
+  };
+}
+
+export function toolbarElementCountdown2Style({
+  v,
+  device,
+  devices = "all",
+  state
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return {
+    id: dvk("style"),
+    label: t("Style"),
+    type: "radioGroup",
+    position: 20,
+    devices,
+    choices: [
+      {
+        value: "style1",
+        icon: "nc-countdown-style1"
+      },
+      {
+        value: "style2",
+        icon: "nc-countdown-style2"
+      },
+      {
+        value: "style3",
+        icon: "nc-countdown-style3"
+      }
+    ],
+    value: dvv("style")
+  };
+}
+
+export function toolbarElementCountdown2Redirect({
+  v,
+  device,
+  state,
+  prefix = "",
+  devices = "all"
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const message = dvk(capByPrefix(prefix, "messageRedirect"));
+
+  return {
+    devices,
+    id: message,
+    type: "input",
+    label: t("Go to"),
+    placeholder: "http://",
+    value: {
+      value: dvv(message)
+    },
+    onChange: ({ value }) => ({ [message]: value })
+  };
+}
+
+export function toolbarElementCountdown2Actions({
+  v,
+  device,
+  devices = "all",
+  state,
+  prefix = ""
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const message = dvk(capByPrefix(prefix, "messageText"));
+
+  return {
+    type: "multiPicker",
+    roles: ["admin"],
+    devices,
+    picker: {
+      id: dvk("actions"),
+      label: t("When Finished"),
+      type: "select",
+      devices,
+      choices: [
+        {
+          title: t("None"),
+          value: "none"
+        },
+        {
+          title: t("Hide"),
+          value: "hide"
+        },
+        {
+          title: t("Show message"),
+          value: "showMessage"
+        }
+      ],
+      value: dvv("actions")
+    },
+    choices: {
+      showMessage: [
+        {
+          devices,
+          id: message,
+          type: "input",
+          label: t("Message"),
+          placeholder: t("Message sent"),
+          value: {
+            value: dvv(message)
+          },
+          onChange: ({ value }) => ({ [message]: value })
+        }
+      ]
+    }
   };
 }

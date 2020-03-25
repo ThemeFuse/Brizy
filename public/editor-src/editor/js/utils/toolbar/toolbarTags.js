@@ -13,7 +13,7 @@ export function toolbarTags({
 
   return {
     id: dvk("tagName"),
-    label: t("Html Tags"),
+    label: t("Html Tag"),
     type: "select",
     devices,
     choices: [

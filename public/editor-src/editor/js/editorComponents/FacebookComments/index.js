@@ -7,9 +7,11 @@ import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
-import Facebook from "visual/component/Facebook";
-import Toolbar from "visual/component/Toolbar";
+import Comments from "visual/component/Comments";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendParentConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
 import defaultValue from "./defaultValue.json";
 
 class FacebookComments extends EditorComponent {
@@ -49,19 +51,61 @@ class FacebookComments extends EditorComponent {
     };
   }
 
+  componentDidMount() {
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      toolbarExtendParentConfig,
+      sidebarExtendConfig,
+      {
+        allowExtend: false,
+        allowExtendFromThirdParty: true,
+        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+      }
+    );
+    this.props.extendParentToolbar(toolbarExtend);
+  }
+
+  handleValueChange(newValue, meta) {
+    super.handleValueChange(newValue, meta);
+
+    if (meta.patch.type) {
+      hideToolbar();
+    }
+  }
+
   renderForEdit(v, vs, vd) {
-    const { numPosts, darkScheme, targetUrl, href } = v;
+    const {
+      type,
+      numPosts,
+      darkScheme,
+      targetUrl,
+      href,
+      disqusShortname,
+      skin
+    } = v;
+
     const appData = this.getAppDataEditor();
     const data = {
-      width: "100%",
-      numPosts,
-      colorScheme: darkScheme === "on" ? "dark" : "light",
-      href: targetUrl === "custom" && href !== "" ? href : appData.href,
-      lang: appData.lang
+      facebook: {
+        width: "100%",
+        numPosts,
+        colorScheme: darkScheme === "on" ? "dark" : "light",
+        href: targetUrl === "custom" && href !== "" ? href : appData.href,
+        lang: appData.lang
+      },
+      disqus: {
+        shortname: disqusShortname,
+        config: {
+          url: targetUrl === "custom" && href !== "" ? href : appData.href,
+          identifier:
+            targetUrl === "custom" && href !== "" ? href : appData.href
+        }
+      },
+      WPComments: { skin }
     };
 
     const className = classnames(
-      "brz-fb-comments",
+      "brz-comments",
+      { "brz-fb-comments": type === "facebook" },
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -73,7 +117,7 @@ class FacebookComments extends EditorComponent {
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            <Facebook appId={appData.appId} type="Comments" data={data} />
+            <Comments appId={appData.appId} type={type} data={data[type]} />
           </div>
         </CustomCSS>
       </Toolbar>
@@ -81,18 +125,40 @@ class FacebookComments extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { numPosts, darkScheme, targetUrl, href } = v;
+    const {
+      type,
+      numPosts,
+      darkScheme,
+      targetUrl,
+      href,
+      disqusShortname,
+      skin
+    } = v;
     const appData = this.getAppDataPreview();
     const data = {
-      "data-width": "100%",
-      "data-numposts": numPosts,
-      "data-colorscheme": darkScheme === "on" ? "dark" : "light",
-      "data-href": targetUrl === "custom" && href !== "" ? href : appData.href,
-      "data-lang": appData.lang
+      facebook: {
+        "data-width": "100%",
+        "data-numposts": numPosts,
+        "data-colorscheme": darkScheme === "on" ? "dark" : "light",
+        "data-href":
+          targetUrl === "custom" && href !== "" ? href : appData.href,
+        "data-lang": appData.lang
+      },
+      disqus: {
+        "data-shortname": disqusShortname,
+        "data-url": targetUrl === "custom" && href !== "" ? href : appData.href,
+        "data-identifier":
+          targetUrl === "custom" && href !== "" ? href : appData.href
+      },
+      WPComments: {
+        limit: numPosts,
+        skin,
+        linkPage: targetUrl === "custom" && href !== "" ? href : appData.href
+      }
     };
 
     const className = classnames(
-      "brz-fb-comments",
+      "brz-comments",
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -103,7 +169,7 @@ class FacebookComments extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
-          <Facebook appId={appData.appId} type="Comments" data={data} />
+          <Comments appId={appData.appId} type={type} data={data[type]} />
         </div>
       </CustomCSS>
     );

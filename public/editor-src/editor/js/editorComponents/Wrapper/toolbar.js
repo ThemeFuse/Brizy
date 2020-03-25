@@ -1,187 +1,44 @@
 import { t } from "visual/utils/i18n";
-
-import {
-  toolbarHorizontalAlign,
-  toolbarPaddingFourFields,
-  toolbarMargin,
-  toolbarShowOnDesktop,
-  toolbarShowOnResponsive,
-  toolbarZIndex,
-  toolbarCSSID,
-  toolbarCustomCSSClass,
-  toolbarEntranceAnimation
-} from "visual/utils/toolbar";
-import { defaultValueKey } from "visual/utils/onChange";
-
-import { getDynamicContentChoices } from "visual/utils/options";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
-
   return [
     toolbarShowOnResponsive({
       v,
       device,
       state: "normal",
-      devices: "responsive"
+      devices: "responsive",
+      position: 1
     }),
-    toolbarHorizontalAlign({ v, device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device }),
-      type: "popover",
-      title: t("Settings"),
-      position: 110,
-      options: [
+      id: "horizontalAlign",
+      type: "toggle-dev",
+      position: 100,
+      choices: [
         {
-          id: defaultValueKey({ key: "advancedSettings", device }),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: [
-                    toolbarPaddingFourFields({
-                      v,
-                      device,
-                      state: "normal"
-                    }),
-                    toolbarMargin({
-                      v,
-                      device,
-                      state: "normal",
-                      onChangeGrouped: ["onChangeMarginGrouped"],
-                      onChangeUngrouped: ["onChangeMarginUngrouped"]
-                    })
-                  ]
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  devices: "desktop",
-                  options: [
-                    toolbarShowOnDesktop({ v, device }),
-                    toolbarZIndex({ v, device }),
-                    toolbarCSSID({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarCustomCSSClass({
-                      v,
-                      device,
-                      devices: "desktop",
-                      state: "normal",
-                      population: cssIDDynamicContentChoices
-                    }),
-                    toolbarEntranceAnimation({ v, device })
-                  ]
-                }
-              ]
-            },
-            toolbarPaddingFourFields({
-              v,
-              device,
-              devices: "responsive",
-              state: "normal"
-            }),
-            toolbarMargin({
-              v,
-              device,
-              devices: "responsive",
-              state: "normal",
-              onChangeGrouped: ["onChangeMarginGrouped"],
-              onChangeUngrouped: ["onChangeMarginUngrouped"]
-            })
-          ]
+          icon: "nc-text-align-left",
+          title: t("Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-text-align-center",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-text-align-right",
+          title: t("Align"),
+          value: "right"
         }
       ]
     },
     {
-      id: defaultValueKey({ key: "advancedSettings", device }),
+      id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      icon: "nc-cog",
+      devices: "desktop",
       position: 110,
-      options: [
-        {
-          id: "settingsTabs",
-          type: "tabs",
-          devices: "desktop",
-          align: "start",
-          tabs: [
-            {
-              id: "settingsStyling",
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: [
-                toolbarPaddingFourFields({
-                  v,
-                  device,
-                  state: "normal"
-                }),
-                toolbarMargin({
-                  v,
-                  device,
-                  state: "normal",
-                  onChangeGrouped: ["onChangeMarginGrouped"],
-                  onChangeUngrouped: ["onChangeMarginUngrouped"]
-                })
-              ]
-            },
-            {
-              id: "moreSettingsAdvanced",
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              devices: "desktop",
-              options: [
-                toolbarShowOnDesktop({ v, device }),
-                toolbarZIndex({ v, device }),
-                toolbarCSSID({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal",
-                  population: cssIDDynamicContentChoices
-                }),
-                toolbarCustomCSSClass({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal",
-                  population: cssIDDynamicContentChoices
-                }),
-                toolbarEntranceAnimation({ v, device })
-              ]
-            }
-          ]
-        },
-        toolbarPaddingFourFields({
-          v,
-          device,
-          devices: "responsive",
-          state: "normal"
-        }),
-        toolbarMargin({
-          v,
-          device,
-          devices: "responsive",
-          state: "normal",
-          onChangeGrouped: ["onChangeMarginGrouped"],
-          onChangeUngrouped: ["onChangeMarginUngrouped"]
-        })
-      ]
+      roles: ["admin"],
+      icon: "nc-cog"
     }
   ];
 }

@@ -1,9 +1,8 @@
 import $ from "jquery";
 
-export default function() {
-  var elements = [];
-
-  $(".brz-counter").each(function() {
+var elements = [];
+export default function($node) {
+  $node.find(".brz-counter").each(function() {
     var $this = $(this);
     elements.push({
       elem: this,
@@ -11,6 +10,8 @@ export default function() {
       end: $this.attr("data-end"),
       duration: $this.attr("data-duration")
     });
+
+    $this.addClass("brz-initialized");
   });
 
   var isScrolledIntoView = function(el) {
@@ -23,6 +24,17 @@ export default function() {
   };
 
   var animate = function(value) {
+    var $figures = $(value.elem).find(
+      ".brz-counter-figures .brz-counter-numbers"
+    );
+    var $chart = $(value.elem).find(".brz-counter-pie-chart");
+
+    var step = function(countNum) {
+      $figures.text(parseInt(countNum));
+      $chart &&
+        $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
+    };
+
     $({ countNum: Number(value.start) }).animate(
       {
         countNum: Number(value.end)
@@ -32,11 +44,11 @@ export default function() {
         easing: "linear",
 
         step: function() {
-          $(value.elem).text(Math.floor(this.countNum));
+          step(this.countNum);
         },
 
         complete: function() {
-          $(value.elem).text(this.countNum);
+          step(value.end);
         }
       }
     );
@@ -56,6 +68,7 @@ export default function() {
     }
   };
 
+  $(document).on("brz.popup.show", onScroll);
   document.addEventListener("scroll", onScroll);
   onScroll();
 }

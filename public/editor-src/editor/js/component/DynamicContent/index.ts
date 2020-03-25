@@ -1,0 +1,1 @@
+export { useDynamicContent } from "./useDynamicContent";

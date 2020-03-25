@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette, getShapes } from "visual/utils/options";
-import { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
 export function toolbarShape({ v, device, devices = "all", state }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -73,37 +72,9 @@ export function toolbarShapeTopColor({
       }
     },
     options: [
-      toolbarColor2({
-        v,
-        device,
-        prefix: "shapeTopColor",
-        state,
-        onChangeHex: [
-          "onChangeColorHexAndOpacity",
-          "onChangeColorHexAndOpacityPalette"
-        ],
-        onChangePalette: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
-      }),
       {
-        type: "grid",
-        className: "brz-ed-grid__color-fileds",
-        columns: [
-          {
-            width: 100,
-            options: [
-              toolbarColorHexField2({
-                v,
-                device,
-                prefix: "shapeTopColor",
-                state,
-                onChange: [
-                  "onChangeColorHexAndOpacity",
-                  "onChangeColorHexAndOpacityPalette"
-                ]
-              })
-            ]
-          }
-        ]
+        id: "shapeTopColor",
+        type: "colorPicker-dev"
       }
     ]
   };
@@ -266,37 +237,9 @@ export function toolbarShapeBottomColor({
       }
     },
     options: [
-      toolbarColor2({
-        v,
-        device,
-        prefix: "shapeBottomColor",
-        state,
-        onChangeHex: [
-          "onChangeColorHexAndOpacity",
-          "onChangeColorHexAndOpacityPalette"
-        ],
-        onChangePalette: ["onChangeColorPalette", "onChangeColorPaletteOpacity"]
-      }),
       {
-        type: "grid",
-        className: "brz-ed-grid__color-fileds",
-        columns: [
-          {
-            width: 100,
-            options: [
-              toolbarColorHexField2({
-                v,
-                device,
-                prefix: "shapeBottomColor",
-                state,
-                onChange: [
-                  "onChangeColorHexAndOpacity",
-                  "onChangeColorHexAndOpacityPalette"
-                ]
-              })
-            ]
-          }
-        ]
+        id: "shapeBottomColor",
+        type: "colorPicker-dev"
       }
     ]
   };

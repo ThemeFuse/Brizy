@@ -3,7 +3,7 @@ import produce from "immer";
 import _ from "underscore";
 import { getStore } from "visual/redux/store";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
-import { updateGlobalBlock } from "visual/redux/actions";
+import { updateGlobalBlock } from "visual/redux/actions2";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { setIds } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
@@ -38,7 +38,7 @@ function attachGlobalBlocks(value, source) {
         const { globalBlockId } = cursor.value;
 
         if (globalBlocks[globalBlockId]) {
-          Object.assign(cursor, globalBlocks[globalBlockId], {
+          Object.assign(cursor, globalBlocks[globalBlockId].data, {
             __tmp_global_original__: JSON.stringify(cursor)
           });
         }

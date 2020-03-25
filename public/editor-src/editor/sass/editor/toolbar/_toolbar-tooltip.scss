@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // --- Tooltip
 .brz-ed-popover__tooltip {
   &.brz-ed-tooltip--opened .brz-ed-tooltip__content {
@@ -21,4 +23,28 @@
   background-color: $toolbar-bg-color;
   box-shadow: $toolbar-box-shadow;
   border-radius: $toolbar-border-radius;
+
+  .brz-ed-tooltip--top-start,
+  .brz-ed-tooltip--right-end {
+    border-radius: $toolbar-border-radius $toolbar-border-radius
+      $toolbar-border-radius ($toolbar-border-radius/2);
+  }
+
+  .brz-ed-tooltip--top-end,
+  .brz-ed-tooltip--left-end {
+    border-radius: $toolbar-border-radius $toolbar-border-radius
+      ($toolbar-border-radius/2) $toolbar-border-radius;
+  }
+
+  .brz-ed-tooltip--bottom-start,
+  .brz-ed-tooltip--right-start {
+    border-radius: ($toolbar-border-radius/2) $toolbar-border-radius
+      $toolbar-border-radius $toolbar-border-radius;
+  }
+
+  .brz-ed-tooltip--bottom-end,
+  .brz-ed-tooltip--left-start {
+    border-radius: $toolbar-border-radius ($toolbar-border-radius/2)
+      $toolbar-border-radius $toolbar-border-radius;
+  }
 }

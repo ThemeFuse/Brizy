@@ -14,6 +14,7 @@ class Form2FieldsItems extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
+    const props = super.getItemProps(itemData, itemIndex, items);
     const cloneRemoveConfig = {
       getItems: () => [
         {
@@ -46,24 +47,9 @@ class Form2FieldsItems extends EditorArrayComponent {
           : [])
       ]
     };
-    const {
-      className,
-      selectClassName,
-      labelType,
-      placeholder,
-      labelToolbarExtend,
-      selectToolbarExtend,
-      style
-    } = this.props;
 
     return {
-      className,
-      selectClassName,
-      labelType,
-      placeholder,
-      style,
-      labelToolbarExtend,
-      selectToolbarExtend,
+      ...props,
       toolbarExtend: this.makeToolbarPropsFromConfig2(cloneRemoveConfig)
     };
   }

@@ -2,28 +2,11 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementStarRatingLabel,
-  toolbarElementStarRatingRating,
-  toolbarSizeSpacing,
-  toolbarIconSpacing,
-  toolbarIconSize,
-  toolbarTypography2FontFamily,
-  toolbarTypography2FontStyle,
-  toolbarTypography2FontSize,
-  toolbarTypography2LineHeight,
-  toolbarTypography2FontWeight,
-  toolbarTypography2LetterSpacing,
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarCustomCSS,
-  toolbarHoverTransition,
-  toolbarDisabledToolbarSettings
-} from "visual/utils/toolbar";
+import { toolbarIconSize } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -49,21 +32,40 @@ export function getItems({ v, device, state }) {
               label: t("Rating"),
               roles: ["admin"],
               options: [
-                toolbarElementStarRatingLabel({
-                  v,
-                  device,
-                  state: "normal"
-                }),
-                toolbarElementStarRatingRating({
-                  v,
-                  device,
-                  state: "normal"
-                }),
-                toolbarSizeSpacing({
-                  v,
-                  device,
-                  state: "normal"
-                })
+                {
+                  id: "label",
+                  label: t("Label"),
+                  type: "switch-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "rating",
+                  label: t("Rating"),
+                  type: "slider-dev",
+                  devices: "desktop",
+                  config: {
+                    min: 0,
+                    max: 5,
+                    step: 0.1,
+                    units: [
+                      {
+                        title: "/5",
+                        value: "/5"
+                      }
+                    ]
+                  }
+                },
+                {
+                  id: "spacing",
+                  label: t("Spacing"),
+                  type: "slider-dev",
+                  disabled: v.label === "off",
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                }
               ]
             },
             {
@@ -71,102 +73,34 @@ export function getItems({ v, device, state }) {
               label: t("Icons"),
               roles: ["admin"],
               options: [
+                {
+                  id: "iconImage",
+                  label: t("Icon"),
+                  type: "iconSetter",
+                  devices: "desktop",
+                  value: {
+                    name: v.iconName,
+                    type: v.iconType
+                  },
+                  onChange: ({ name, type }) => ({
+                    iconName: name,
+                    iconType: type
+                  })
+                },
                 toolbarIconSize({
                   v,
                   device,
                   state: "normal"
                 }),
-                toolbarIconSpacing({
-                  v,
-                  device,
-                  state: "normal"
-                })
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: "large",
-      title: t("Typography"),
-      roles: ["admin"],
-      position: 70,
-      devices: "desktop",
-      options: [
-        {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          devices: "desktop",
-          columns: [
-            {
-              width: 54,
-              options: [
-                toolbarTypography2FontFamily({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal",
-                  onChange: ["onChangeTypography2"]
-                })
-              ]
-            },
-            {
-              width: 46,
-              className: "brz-ed-popover__typography",
-              options: [
-                toolbarTypography2FontStyle({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__typography",
-                  columns: [
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontSize({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LineHeight({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    },
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontWeight({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LetterSpacing({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "iconSpacing",
+                  label: t("Spacing"),
+                  type: "slider-dev",
+                  config: {
+                    min: 0,
+                    max: 20,
+                    units: [{ value: "px", title: "px" }]
+                  }
                 }
               ]
             }
@@ -178,74 +112,18 @@ export function getItems({ v, device, state }) {
       id: dvk("toolbarTypography"),
       type: "popover",
       icon: "nc-font",
-      size: "auto",
+      size: device === "desktop" ? "large" : "auto",
       title: t("Typography"),
       roles: ["admin"],
       position: 70,
-      devices: "responsive",
       options: [
         {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 46,
-              className: "brz-ed-popover__typography",
-              options: [
-                toolbarTypography2FontStyle({
-                  v,
-                  device,
-                  devices: "responsive",
-                  state: "normal"
-                }),
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__typography",
-                  devices: "responsive",
-                  columns: [
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontSize({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "responsive",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LineHeight({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "responsive",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    },
-                    {
-                      width: "50",
-                      options: [
-                        toolbarTypography2FontWeight({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "responsive",
-                          onChange: ["onChangeTypography2"]
-                        }),
-                        toolbarTypography2LetterSpacing({
-                          v,
-                          device,
-                          state: "normal",
-                          devices: "responsive",
-                          onChange: ["onChangeTypography2"]
-                        })
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "typography-dev",
+          disabled: v.label === "off",
+          config: {
+            fontFamily: device === "desktop"
+          }
         }
       ]
     },
@@ -271,42 +149,12 @@ export function getItems({ v, device, state }) {
               label: t("Text"),
               devices: "desktop",
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  devices: "desktop",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "color",
+                  type: "colorPicker-dev",
+                  disabled: v.label === "off",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -315,44 +163,11 @@ export function getItems({ v, device, state }) {
               label: t("Rating"),
               devices: "desktop",
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  prefix: "ratingColor",
-                  devices: "desktop",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix: "ratingColor",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "ratingColor",
+                  type: "colorPicker-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -361,44 +176,11 @@ export function getItems({ v, device, state }) {
               label: t("Background"),
               devices: "desktop",
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  prefix: "ratingBackgroundColor",
-                  devices: "desktop",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 100,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix: "ratingBackgroundColor",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "ratingBackgroundColor",
+                  type: "colorPicker-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -406,44 +188,13 @@ export function getItems({ v, device, state }) {
         }
       ]
     },
-    toolbarDisabledToolbarSettings({ device }),
     {
       id: dvk("advancedSettings"),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
-      options: [
-        {
-          id: dvk("settingsTabs"),
-          type: "tabs",
-          align: "start",
-          tabs: [
-            {
-              id: dvk("settingsStyling"),
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: []
-            },
-            {
-              id: dvk("moreSettingsAdvanced"),
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              options: [
-                toolbarCustomCSS({ v, devices: "desktop" }),
-                toolbarHoverTransition({
-                  v,
-                  device,
-                  state: "normal",
-                  position: 70,
-                  devices: "desktop"
-                })
-              ]
-            }
-          ]
-        }
-      ]
+      icon: "nc-cog"
     }
   ];
 }

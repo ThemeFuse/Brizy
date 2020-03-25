@@ -6,6 +6,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
 import defaultValue from "./defaultValue.json";
@@ -90,7 +91,7 @@ class SoundCloud extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer

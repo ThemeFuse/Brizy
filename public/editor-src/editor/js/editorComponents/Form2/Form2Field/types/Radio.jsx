@@ -48,12 +48,10 @@ export default class Radio extends TextField {
     const { options, onChange } = this.props;
     const { value } = this.state;
 
-    onChange({
-      options: [...options, value]
-    });
-    this.setState({
-      value: ""
-    });
+    if (value && value.trim()) {
+      onChange({ options: [...options, value] });
+      this.setState({ value: "" });
+    }
   };
 
   handleRemoveOption(index) {
@@ -131,10 +129,11 @@ export default class Radio extends TextField {
   }
 
   renderForView(v) {
-    const { options, attr } = v;
+    const { attr } = v;
+    const options = v.options.filter(option => option && option.trim());
     const defaultValue = options[0] || "";
 
-    return (
+    return options.length ? (
       <div className={this.getClassName()}>
         <RadioControls
           name={attr.name}
@@ -157,6 +156,6 @@ export default class Radio extends TextField {
           ))}
         </RadioControls>
       </div>
-    );
+    ) : null;
   }
 }

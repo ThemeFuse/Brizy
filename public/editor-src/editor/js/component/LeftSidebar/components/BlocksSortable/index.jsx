@@ -11,10 +11,8 @@ import EditorIcon from "visual/component/EditorIcon";
 import { pageAssembledSelector } from "visual/redux/selectors";
 import { removeBlock, reorderBlocks } from "visual/redux/actions";
 import { t } from "visual/utils/i18n";
-import Config from "visual/global/Config";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const DragHandle = SortableHandle(({ item }) => (
   <BlockThumbnail blockData={item} />

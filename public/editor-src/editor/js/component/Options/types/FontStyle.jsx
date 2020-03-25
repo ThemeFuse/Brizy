@@ -3,7 +3,7 @@ import Select from "./Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 import { getFontStyles } from "visual/utils/fonts";
 
 class FontStyle extends Select {

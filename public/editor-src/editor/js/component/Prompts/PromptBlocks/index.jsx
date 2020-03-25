@@ -3,17 +3,15 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import _ from "underscore";
 import classnames from "classnames";
-import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 import Layouts from "./Layouts";
 import Blocks from "./Blocks";
 import Saved from "./Saved";
 import Global from "./Global";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 const TABS = [
   {

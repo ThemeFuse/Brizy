@@ -1,4 +1,4 @@
-// Defaul Buttons for BrizyEditor
+// Default Buttons
 .brz-ed-btn {
   display: inline-flex;
   justify-content: center;
@@ -66,9 +66,16 @@
     border-color: transparent !important;
   }
 }
+
+// Corners
 .brz-ed-btn-rounded {
   border-radius: 3px;
 }
+.brz-ed-btn-round {
+  border-radius: 100px;
+}
+
+// Size
 .brz-ed-btn-sm {
   padding: 11px 17px;
   font-size: 14px;
@@ -86,7 +93,12 @@
 }
 .brz-ed-btn-xs {
   font-size: 10px;
-  padding: 9px 18px
+  padding: 9px 18px;
+}
+.brz-ed-btn-xs-2 {
+  font-size: 13px;
+  padding: 6px 18px;
+  line-height: 1.1;
 }
 .brz-ed-btn-full {
   width: 100%;
@@ -100,6 +112,10 @@
 .brz-ed-btn-width-3 {
   min-width: 102px;
 }
+
+// Colors
+//
+// Default
 .brz-ed-btn-default {
   border-color: transparent;
   background-color: transparent;
@@ -135,13 +151,13 @@
 
 // Teal
 .brz-ed-btn-teal {
-  border-color: $floating-button-blue;
-  background-color: $floating-button-blue;
+  border-color: $floating-button-tail !important;
+  background-color: $floating-button-tail !important;
   color: #fff !important;
 
   &:hover {
-    border-color: #35a9d6;
-    background-color: #35a9d6;
+    border-color: #35a9d6 !important;
+    background-color: #35a9d6 !important;
   }
 }
 .brz-ed-btn-teal-outline {
@@ -153,6 +169,18 @@
   &:focus {
     background-color: #34beea;
     color: #fff !important;
+  }
+}
+
+// Blue
+.brz-ed-btn-blue {
+  border-color: $floating-button-blue !important;
+  background-color: $floating-button-blue !important;
+  color: #fff !important;
+
+  &:hover {
+    border-color: #0092cc !important;
+    background-color: #0092cc !important;
   }
 }
 
@@ -241,10 +269,11 @@
 }
 
 // Hover
+//
 // Teal
 .brz-ed-btn-teal--hover:hover {
-  border-color: $floating-button-blue !important;
-  background-color: $floating-button-blue !important;
+  border-color: $floating-button-tail !important;
+  background-color: $floating-button-tail !important;
 }
 .brz-ed-btn-red--hover:hover {
   border-color: $floating-button-red !important;

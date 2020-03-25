@@ -1,4 +1,5 @@
 import jQuery from "jquery";
+import { compose } from "underscore";
 import Config from "visual/global/Config";
 import {
   parsePage,
@@ -10,6 +11,7 @@ import {
   parseSavedBlock,
   stringifySavedBlock
 } from "./adapter";
+import * as Response from "./response";
 
 const apiUrl = Config.get("urls").api;
 const paginationData = {
@@ -35,12 +37,8 @@ export function request(ajaxSettings) {
     jQuery.ajax({
       ...hardcodedAjaxSettings,
       ...ajaxSettings,
-      success(data) {
-        resolve(data);
-      },
-      error(jqXHR) {
-        reject(jqXHR.responseText);
-      }
+      success: resolve,
+      error: compose(reject, Response.fromJqXHR)
     });
   });
 }
@@ -70,9 +68,9 @@ export function persistentRequest(ajaxSettings) {
 
           if (this.failedAttempts <= 5) {
             setTimeout(() => jQuery.ajax(this), 5000 * this.failedAttempts);
-          } else {
-            reject(jqXHR);
           }
+        } else {
+          reject(jqXHR);
         }
       }
     });
@@ -121,9 +119,10 @@ export function getProject() {
 export function updateProject(project, meta = {}) {
   const projectId = Config.get("project").id;
   const { is_autosave = 1 } = meta;
-  const { data } = stringifyProject(project);
+  const { data, dataVersion } = stringifyProject(project);
   const requestData = {
     data,
+    dataVersion,
     is_autosave
   };
 
@@ -131,6 +130,116 @@ export function updateProject(project, meta = {}) {
     type: "PUT",
     dataType: "json",
     url: apiUrl + "/projects/" + projectId,
+    data: requestData
+  });
+}
+
+export function addProjectLockedBeacon() {
+  const projectId = Config.get("project").id;
+  return request2(`${apiUrl}/projects/${projectId}/locks`, {
+    method: "POST"
+  });
+}
+
+export function removeProjectLockedSendBeacon() {
+  const projectId = Config.get("project").id;
+  return navigator.sendBeacon(`${apiUrl}/projects/${projectId}/remove_locks`);
+}
+
+// popups
+export function getExternalPopups() {
+  const project = Config.get("project").id;
+  const requestData = {
+    project,
+    ...paginationData
+  };
+
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/external_popups",
+    data: requestData
+  }).then(r => {
+    return r.map(parsePage);
+  });
+}
+
+export function createExternalPopup(data, meta = {}) {
+  const { is_autosave = 0 } = meta;
+  const requestData = {
+    ...data,
+    is_autosave
+  };
+
+  return persistentRequest({
+    type: "POST",
+    dataType: "json",
+    url: apiUrl + "/external_popups",
+    data: requestData
+  }).then(r => {
+    return parsePage(r);
+  });
+}
+
+export function updateExternalPopup(popup, meta = {}) {
+  const { id, data, dataVersion, status } = stringifyPage(popup);
+  const { is_autosave = 1 } = meta;
+  const requestData = {
+    data,
+    dataVersion,
+    status,
+    is_autosave
+  };
+
+  return persistentRequest({
+    type: "PUT",
+    dataType: "json",
+    url: apiUrl + "/external_popups/" + id,
+    data: requestData
+  });
+}
+
+export function getInternalPopups() {
+  const project = Config.get("project").id;
+  const requestData = {
+    project,
+    ...paginationData
+  };
+
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/popups",
+    data: requestData
+  }).then(r => {
+    return r.map(parsePage);
+  });
+}
+
+export function getInternalPopup(id) {
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/popups/" + id
+  }).then(r => {
+    return parsePage(r);
+  });
+}
+
+export function updateInternalPopup(popup, meta = {}) {
+  const { id, data, dataVersion, status } = stringifyPage(popup);
+  const { is_autosave = 1 } = meta;
+  const requestData = {
+    data,
+    dataVersion,
+    status,
+    is_autosave
+  };
+
+  return persistentRequest({
+    type: "PUT",
+    dataType: "json",
+    url: apiUrl + "/popups/" + id,
     data: requestData
   });
 }
@@ -172,10 +281,11 @@ export function createPage(data, meta = {}) {
 }
 
 export function updatePage(page, meta = {}) {
-  const { id, data, status } = stringifyPage(page);
+  const { id, data, dataVersion, status } = stringifyPage(page);
   const { is_autosave = 1 } = meta;
   const requestData = {
     data,
+    dataVersion,
     status,
     is_autosave
   };
@@ -186,6 +296,40 @@ export function updatePage(page, meta = {}) {
     url: apiUrl + "/pages/" + id,
     data: requestData
   });
+}
+
+export function getRulesList() {
+  const project = Config.get("project").id;
+  const popup = Config.get(Config.get("mode")).id;
+  const requestData = {
+    project
+  };
+
+  return persistentRequest({
+    type: "GET",
+    dataType: "json",
+    url: apiUrl + "/popups/" + popup,
+    data: requestData
+  }).then(({ rules }) => JSON.parse(rules));
+}
+
+export function updateRules(page) {
+  const { rules, dataVersion, status } = stringifyPage(page);
+  const requestData = {
+    rules: JSON.stringify(rules),
+    dataVersion,
+    status,
+    is_autosave: 0
+  };
+
+  const popup = Config.get(Config.get("mode")).id;
+
+  return persistentRequest({
+    type: "PUT",
+    dataType: "json",
+    url: apiUrl + "/popups/" + popup,
+    data: requestData
+  }).then(({ rules }) => rules);
 }
 
 export function deletePage(id) {
@@ -211,25 +355,28 @@ export function getGlobalBlocks() {
     url: apiUrl + "/global_blocks",
     data: requestData
   }).then(r => {
-    return r.map(parseGlobalBlock).reduce((acc, { id, uid, data }) => {
-      // map uids to ids to use them in updates
-      uidToApiId[uid] = id;
+    return r
+      .map(parseGlobalBlock)
+      .reduce((acc, { id, uid, data, dataVersion }) => {
+        // map uids to ids to use them in updates
+        uidToApiId[uid] = id;
 
-      acc[uid] = data;
+        acc[uid] = { id: uid, data, dataVersion };
 
-      return acc;
-    }, {});
+        return acc;
+      }, {});
   });
 }
 
 export function createGlobalBlock(globalBlock, meta = {}) {
-  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
+  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
   const projectId = Config.get("project").id;
   const { is_autosave = 0 } = meta;
   const requestData = {
-    uid,
     project: projectId,
+    uid,
     data,
+    dataVersion,
     is_autosave
   };
 
@@ -245,12 +392,13 @@ export function createGlobalBlock(globalBlock, meta = {}) {
 }
 
 export function updateGlobalBlock(globalBlock, meta = {}) {
-  const { id: uid, data } = stringifyGlobalBlock(globalBlock);
+  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = meta;
     const requestData = {
       uid,
       data,
+      dataVersion,
       is_autosave
     };
 
@@ -281,26 +429,29 @@ export function getSavedBlocks() {
     url: apiUrl + "/saved_blocks",
     data: requestData
   }).then(r => {
-    return r.map(parseSavedBlock).reduce((acc, { id, uid, data }) => {
-      // map uids to ids to use them in updates
-      uidToApiId[uid] = id;
+    return r
+      .map(parseSavedBlock)
+      .reduce((acc, { id, uid, data, dataVersion }) => {
+        // map uids to ids to use them in updates
+        uidToApiId[uid] = id;
 
-      acc[uid] = data;
+        acc[uid] = { uid, data, dataVersion };
 
-      return acc;
-    }, {});
+        return acc;
+      }, {});
   });
 }
 
 export function createSavedBlock(savedBlock, meta = {}) {
-  const { id: uid, data } = stringifySavedBlock(savedBlock);
-  const libraryId = Config.get("library").id;
+  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
+  const containerId = Config.get("container").id;
   const { is_autosave = 0 } = meta;
   const requestData = {
     uid,
-    library: libraryId,
     data,
-    is_autosave
+    dataVersion,
+    is_autosave,
+    container: containerId
   };
 
   return persistentRequest({
@@ -315,12 +466,13 @@ export function createSavedBlock(savedBlock, meta = {}) {
 }
 
 export function updateSavedBlock(savedBlock, meta = {}) {
-  const { id: uid, data } = stringifySavedBlock(savedBlock);
+  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = meta;
     const requestData = {
       uid,
       data,
+      dataVersion,
       is_autosave
     };
 
@@ -425,4 +577,20 @@ export async function uploadFile(file) {
       reader.onerror = error => reject(error);
     });
   }
+}
+
+// heartBeat
+
+export function sendHeartBeat() {
+  const projectId = Config.get("project").id;
+  return request2(`${apiUrl}/projects/${projectId}/pings`, {
+    method: "POST"
+  }).then(r => r.json());
+}
+
+export function sendHearBeatTakeOver() {
+  const projectId = Config.get("project").id;
+  return request2(`${apiUrl}/projects/${projectId}/take_overs`, {
+    method: "POST"
+  });
 }

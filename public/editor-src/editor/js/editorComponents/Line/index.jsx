@@ -4,6 +4,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import BoxResizer from "visual/component/BoxResizer";
 import { css } from "visual/utils/cssStyle";
@@ -27,7 +28,7 @@ class Line extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer

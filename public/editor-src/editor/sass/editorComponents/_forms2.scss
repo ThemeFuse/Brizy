@@ -1,6 +1,7 @@
 // import datepicker from node_modules
 @import "flatpickr/dist/flatpickr.min";
 @import "select2/dist/css/select2.min";
+@import "perfect-scrollbar/css/perfect-scrollbar";
 
 // --- Form
 .brz-forms2 {
@@ -225,7 +226,7 @@
     width: 100%;
     visibility: hidden;
   }
-  .select2 {
+  .brz-forms2__field-select .select2 {
     &-dropdown {
       background-color: #fff;
       border: none;
@@ -304,7 +305,6 @@
         color: inherit;
       }
     }
-
     &-container .select2-search--inline {
       margin: 2.5px;
       flex: 1;
@@ -339,10 +339,38 @@
     }
     &-container--open .select2-dropdown {
       top: 1px;
+      max-height: 200px;
+      overflow: hidden;
     }
     &-dropdown--below {
       background-color: transparent;
     }
+  }
+  .brz-forms2__field-select .ps__thumb-y {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .brz-forms2__field-select .ps .ps__rail-x:hover,
+  .brz-forms2__field-select .ps .ps__rail-y:hover,
+  .brz-forms2__field-select .ps .ps__rail-x:focus,
+  .brz-forms2__field-select .ps .ps__rail-y:focus,
+  .brz-forms2__field-select .ps .ps__rail-x.ps--clicking,
+  .brz-forms2__field-select .ps .ps__rail-y.ps--clicking {
+    background-color: transparent;
+  }
+  .brz-forms2__field-select .ps__rail-y:hover > .ps__thumb-y,
+  .brz-forms2__field-select .ps__rail-y:focus > .ps__thumb-y,
+  .brz-forms2__field-select .ps__rail-y.ps--clicking .ps__thumb-y {
+    width: 6px;
+  }
+  .brz-forms2__field-select .ps__rail-x,
+  .brz-forms2__field-select .ps__rail-y,
+  .brz-forms2__field-select .ps:hover > .ps__rail-x,
+  .brz-forms2__field-select .ps:hover > .ps__rail-y,
+  .brz-forms2__field-select .ps--focus > .ps__rail-x,
+  .brz-forms2__field-select .ps--focus > .ps__rail-y,
+  .brz-forms2__field-select .ps--scrolling-x > .ps__rail-x,
+  .brz-forms2__field-select .ps--scrolling-y > .ps__rail-y {
+    opacity: 1;
   }
 
   // Date & Time

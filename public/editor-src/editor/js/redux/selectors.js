@@ -33,6 +33,8 @@ export const extraFontStylesSelector = state => state.extraFontStyles;
 
 export const screenshotsSelector = state => state.screenshots || {};
 
+export const errorSelector = state => state.error;
+
 // === END 0 DEPENDENCIES ===
 
 // === 1 DEPENDENCY ===
@@ -184,37 +186,9 @@ export const globalBlocksAssembled2Selector = createSelector(
           return entry;
         }
 
-        const value_ = { ...value, value: update };
-
-        return [key, value_];
-      })
-    );
-  }
-);
-
-// published globalBlocks + published screenshots (those made when the global blocks is created)
-// this is when saving the screenshot, after the globalBlock was created
-export const globalBlocksAssembled3Selector = createSelector(
-  globalBlocksSelector,
-  screenshotsSelector,
-  (globalBlocks, screenshots) => {
-    return objectFromEntries(
-      Object.entries(globalBlocks).map(entry => {
-        const [key, value] = entry;
-        const screenshot =
-          screenshots._published && screenshots._published[key];
-
-        if (!screenshot) {
-          return entry;
-        }
-
-        const value_ = {
-          ...value,
-          value: {
-            ...value.value,
-            ...screenshot
-          }
-        };
+        const value_ = produce(value, draft => {
+          draft.data.value = update;
+        });
 
         return [key, value_];
       })
@@ -447,7 +421,9 @@ export const pageDataNoRefsSelector = createSelector(
             const { globalBlockId } = obj.value;
 
             if (globalBlocks[globalBlockId]) {
-              transformData(Object.assign(obj, globalBlocks[globalBlockId]));
+              transformData(
+                Object.assign(obj, globalBlocks[globalBlockId].data)
+              );
             }
           }
         });
@@ -466,7 +442,7 @@ export const copiedElementNoRefsSelector = createSelector(
           const { globalBlockId } = obj.value;
 
           if (globalBlocks[globalBlockId]) {
-            Object.assign(obj, globalBlocks[globalBlockId]);
+            Object.assign(obj, globalBlocks[globalBlockId].data);
           }
         }
       });
@@ -520,14 +496,14 @@ export const globalBlocksAssembledSelector = createSelector(
 
         let value_ = produce(value, draft => {
           if (update) {
-            draft.value = update;
+            draft.data.value = update;
           }
 
           if (screenshot) {
-            Object.assign(draft.value, screenshot);
+            Object.assign(draft.data.value, screenshot);
           }
 
-          objectTraverse2(draft.value, obj => {
+          objectTraverse2(draft.data.value, obj => {
             if (
               obj.type &&
               obj.type !== "GlobalBlock" &&

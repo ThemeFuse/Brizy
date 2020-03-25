@@ -1,0 +1,68 @@
+// timeline
+.brz-timeline {
+  &__tab {
+    position: relative;
+    list-style: none;
+    min-width: 280px;
+
+    &:after {
+      content: "";
+      position: absolute;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+    }
+    &:last-child:after {
+      display: none;
+    }
+  }
+  &__nav--title {
+    position: relative;
+    text-align: center;
+    left: -10px;
+    min-width: 116px;
+    max-width: 116px;
+    width: 116px;
+  }
+  &__nav--icon {
+    margin-left: 20px;
+  }
+
+  // Content
+  &__content {
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(52, 49, 75, 0.1);
+    position: relative;
+  }
+  &__content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  // Mobile
+  &__nav--mobile {
+    display: none;
+  }
+}
+//.brz-timeline__tabs--horizontal.brz-timeline {
+//  &__tabs {
+//    &::-webkit-scrollbar {
+//      height: 10px;
+//    }
+//    &::-webkit-scrollbar-track {
+//      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//      border-radius: 10px;
+//    }
+//    &::-webkit-scrollbar-thumb {
+//      border-radius: 10px;
+//      background: #141923;
+//      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+//    }
+//  }
+//}

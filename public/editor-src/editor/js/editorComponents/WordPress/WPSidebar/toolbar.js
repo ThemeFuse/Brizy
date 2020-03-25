@@ -1,6 +1,5 @@
 import { t } from "visual/utils/i18n";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
 export default sidebars => {
   const sidebarsList = sidebars.map(sidebar => ({
@@ -16,7 +15,6 @@ export default sidebars => {
 };
 
 const getItemsForDesktop = sidebars => v => {
-  const device = "desktop";
   return [
     {
       id: "toolbarWPSidebar",
@@ -27,13 +25,12 @@ const getItemsForDesktop = sidebars => v => {
         {
           id: "sidebar",
           label: t("Sidebar"),
-          type: "select",
-          choices: sidebars,
-          value: v.sidebar
+          type: "select-dev",
+          devices: "desktop",
+          choices: sidebars
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "toolbarSettings",
       type: "popover",
@@ -70,28 +67,7 @@ const getItemsForDesktop = sidebars => v => {
           id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }
@@ -99,10 +75,7 @@ const getItemsForDesktop = sidebars => v => {
 };
 
 const getItemsForTablet = v => {
-  const device = "tablet";
-
   return [
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "tabletToolbarSettings",
       type: "popover",
@@ -141,10 +114,7 @@ const getItemsForTablet = v => {
 };
 
 const getItemsForMobile = v => {
-  const device = "mobile";
-
   return [
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "mobileToolbarSettings",
       type: "popover",

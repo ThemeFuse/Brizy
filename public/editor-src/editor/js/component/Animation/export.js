@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function() {
-  const $animated = $(".brz-animated");
+export default function($node) {
+  const $animated = $node.find(".brz-animated");
 
   if ($animated.length > 0) {
     const handleIntersection = function(entries) {
@@ -30,6 +30,8 @@ export default function() {
       const $this = $(this);
       const delay = $this.data("animate-delay");
       const duration = $this.data("animate-duration");
+
+      $this.addClass("brz-initialized");
 
       if (delay) {
         $this.css({

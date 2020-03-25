@@ -4,6 +4,7 @@ import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import { getMenus } from "visual/utils/api/editor/index";
 import toolbarConfigFn from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { styleClassName, styleCSSVars } from "./styles";
 
@@ -41,7 +42,9 @@ class WPNavigation extends EditorComponent {
     const toolbarConfig = toolbarConfigFn(this.state.menus);
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <WPShortcode
           name="brizy_navigation"
           attributes={attributes}

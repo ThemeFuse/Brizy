@@ -1,59 +1,50 @@
 import { hexToRgba } from "visual/utils/color";
+import Config from "visual/global/Config";
 import {
   getOptionColorHexByPalette,
   getDynamicContentChoices
 } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarElementVideoLink,
-  toolbarElementVideoRatio,
+  toolbarElementVideoUpload,
   toolbarElementVideoControls,
-  toolbarElementVideoStart,
-  toolbarElementVideoCover,
-  toolbarElementVideoCoverZoom,
-  toolbarElementVideoPlaySize,
-  toolbarBorderRadius,
-  toolbarBorderWidthFourFields2,
-  toolbarSizeSizeSizePercent,
-  toolbarHoverTransition,
-  toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarBgColor2,
-  toolbarBgColorHexField2,
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2,
-  toolbarDisabledAdvancedSettings
+  toolbarElementVideoPlaySize
 } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+
   const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
   );
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device, state }),
-    defaultValueValue({ v, key: "borderColorPalette", device, state })
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
   );
 
   const videoDynamicContentChoices = getDynamicContentChoices("richText");
 
+  const IS_PRO = Boolean(Config.get("pro"));
+
+  const customRatio = IS_PRO
+    ? [
+        {
+          title: t("Custom Video"),
+          value: "custom"
+        }
+      ]
+    : [];
+
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarCurrentElement",
-        device,
-        state: "normal"
-      }),
+      id: "toolbarCurrentElement",
       type: "popover",
       icon: "nc-play",
-      devices: "desktop",
       title: t("Video"),
       position: 80,
       options: [
@@ -65,54 +56,166 @@ export function getItems({ v, device, state }) {
               id: "tabCurrentElement",
               label: t("Video"),
               options: [
-                toolbarElementVideoLink({
+                {
+                  id: "type",
+                  label: t("Type"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    {
+                      title: t("Youtube"),
+                      value: "youtube"
+                    },
+                    {
+                      title: t("Vimeo"),
+                      value: "vimeo"
+                    },
+                    ...customRatio
+                  ]
+                },
+                {
+                  id: "ratio",
+                  label: t("Ratio"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    { title: "1:1", value: "1:1" },
+                    { title: "3:2", value: "3:2" },
+                    { title: "4:3", value: "4:3" },
+                    { title: "9:16", value: "9:16" },
+                    { title: "16:9", value: "16:9" },
+                    { title: "21:9", value: "21:9" }
+                  ]
+                },
+                toolbarElementVideoUpload({
                   v,
                   device,
                   devices: "desktop",
                   state: "normal",
-                  population: videoDynamicContentChoices
+                  disabled: v.type !== "custom"
                 }),
-                toolbarElementVideoRatio({
-                  v,
-                  device,
+                {
+                  id: "video",
+                  label: t("Link"),
+                  type: "inputText-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  population: videoDynamicContentChoices,
+                  disabled: v.type === "custom",
+                  placeholder:
+                    v.type === "youtube"
+                      ? t("Youtube")
+                      : v.type === "vimeo"
+                      ? t("Vimeo")
+                      : ""
+                }
+              ]
+            },
+            {
+              id: "tabCurrentElementAdvanced",
+              label: t("Advanced"),
+              options: [
                 toolbarElementVideoControls({
                   v,
                   device,
                   devices: "desktop",
-                  state: "normal"
+                  state: "normal",
+                  disabled: v.type === "vimeo"
                 }),
-                toolbarElementVideoStart({
-                  v,
-                  device,
+                {
+                  id: "branding",
+                  label: t("Branding"),
+                  type: "switch-dev",
                   devices: "desktop",
-                  state: "normal"
-                })
+                  disabled: v.controls !== "on" || v.type !== "youtube"
+                },
+                {
+                  id: "intro",
+                  label: t("Intro"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: v.type !== "vimeo"
+                },
+                {
+                  id: "autoplay",
+                  label: t("Autoplay"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled:
+                    v.type !== "custom" ||
+                    v.controls === "off" ||
+                    v.coverImageSrc !== ""
+                },
+                {
+                  id: "muted",
+                  label: t("Muted"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled:
+                    v.type !== "custom" ||
+                    (!v.coverImageSrc && v.controls === "off") ||
+                    (!v.coverImageSrc && v.autoplay === "on")
+                },
+                {
+                  id: "loop",
+                  label: t("Loop"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: v.type !== "custom"
+                },
+                {
+                  id: "start",
+                  label: t("Start"),
+                  helper: {
+                    content: t("Specify a start time (in seconds)")
+                  },
+                  config: {
+                    size: "short"
+                  },
+                  type: "inputText-dev",
+                  placeholder: "seconds",
+                  roles: ["admin"]
+                },
+                {
+                  id: "end",
+                  label: t("End"),
+                  helper: {
+                    content: t("Specify an end time (in seconds)")
+                  },
+                  config: {
+                    size: "short"
+                  },
+                  type: "inputText-dev",
+                  placeholder: "seconds",
+                  roles: ["admin"]
+                }
               ]
             },
             {
               id: "tabCurrentElementCover",
               label: t("Cover"),
               options: [
-                toolbarElementVideoCover({
-                  v,
-                  device,
+                {
+                  label: t("Cover"),
+                  id: "cover",
+                  type: "imageUpload-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "coverZoom",
+                  label: t("Zoom"),
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementVideoCoverZoom({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
+                  type: "slider-dev",
+                  config: {
+                    min: 100,
+                    max: 300,
+                    units: [{ value: "%", title: "%" }]
+                  }
+                },
                 toolbarElementVideoPlaySize({
                   v,
                   device,
-                  devices: "desktop",
-                  state: "normal"
+                  state: "normal",
+                  devices: "desktop"
                 })
               ]
             }
@@ -121,7 +224,26 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarColor", device, state: "normal" }),
+      id: "popoverTypography",
+      type: "popover",
+      icon: "nc-font",
+      size: device === "desktop" ? "large" : "auto",
+      title: t("Typography"),
+      roles: ["admin"],
+      position: 90,
+      disabled: v.type !== "custom" || v.controls === "off",
+      options: [
+        {
+          id: "typography",
+          type: "typography-dev",
+          config: {
+            fontFamily: "desktop" === device
+          }
+        }
+      ]
+    },
+    {
+      id: "toolbarColor",
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -142,46 +264,50 @@ export function getItems({ v, device, state }) {
           type: "tabs",
           tabs: [
             {
+              id: "tabIcon",
+              label: t("Icons"),
+              options: [
+                {
+                  id: "iconControlsColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.type !== "custom" || v.controls === "off"
+                }
+              ]
+            },
+            {
+              id: "tabBg",
+              label: t("Bar"),
+              options: [
+                {
+                  id: "controlsBgColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.type !== "custom" || v.controls === "off"
+                }
+              ]
+            },
+            {
+              id: "tabBgProgress",
+              label: t("Slider"),
+              options: [
+                {
+                  id: "bg2Color",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.type !== "custom" || v.controls === "off"
+                }
+              ]
+            },
+            {
               id: "tabPlay",
               label: t("Play"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  disabled: v.coverImageSrc === "",
-                  showSelect: false,
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  disabled: v.coverImageSrc === "",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "bgColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.coverImageSrc === "" || v.autoplay === "on"
                 }
               ]
             },
@@ -189,42 +315,11 @@ export function getItems({ v, device, state }) {
               id: "icon",
               label: t("Icon"),
               options: [
-                toolbarColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  disabled: v.coverImageSrc === "",
-                  onChangeHex: [
-                    "onChangeColorHexAndOpacity",
-                    "onChangeColorHexAndOpacityPalette"
-                  ],
-                  onChangePalette: [
-                    "onChangeColorPalette",
-                    "onChangeColorPaletteOpacity"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  disabled: v.coverImageSrc === "",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 38,
-                      options: [
-                        toolbarColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeColorHexAndOpacity",
-                            "onChangeColorHexAndOpacityPalette"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "color",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.coverImageSrc === "" || v.autoplay === "on"
                 }
               ]
             },
@@ -232,67 +327,10 @@ export function getItems({ v, device, state }) {
               id: "tabBorder",
               label: t("Border"),
               options: [
-                toolbarBorder2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeStyle: [
-                    "onChangeBorderStyle2",
-                    "onChangeElementBorderStyleDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBorderColorHexAndOpacity2",
-                    "onChangeBorderColorHexAndOpacityPalette2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBorderColorPalette2",
-                    "onChangeBorderColorPaletteOpacity2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 38,
-                      options: [
-                        toolbarBorderColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity2",
-                            "onChangeBorderColorHexAndOpacityPalette2",
-                            "onChangeElementBorderColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 54,
-                      options: [
-                        toolbarBorderWidthFourFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChangeType: ["onChangeBorderWidthType2"],
-                          onChangeGrouped: [
-                            "onChangeBorderWidthGrouped2",
-                            "onChangeBorderWidthGroupedDependencies2"
-                          ],
-                          onChangeUngrouped: [
-                            "onChangeBorderWidthUngrouped2",
-                            "onChangeBorderWidthUngroupedDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "border",
+                  type: "border-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -300,62 +338,11 @@ export function getItems({ v, device, state }) {
               id: "tabBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadow2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeType: [
-                    "onChangeBoxShadowType2",
-                    "onChangeBoxShadowTypeDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBoxShadowHexAndOpacity2",
-                    "onChangeBoxShadowHexAndOpacityPalette2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBoxShadowPalette2",
-                    "onChangeBoxShadowPaletteOpacity2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadowFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowFields2",
-                            "onChangeBoxShadowFieldsDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "boxShadow",
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: v.type === "custom"
                 }
               ]
             }
@@ -363,79 +350,30 @@ export function getItems({ v, device, state }) {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: "toolbarSettings",
       type: "popover",
       icon: "nc-cog",
       title: t("Settings"),
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeSizeSizePercent({
-          v,
-          device,
-          state: "normal"
-        }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "size",
+          label: t("Size"),
+          position: 80,
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  devices: "desktop",
-                  options: [
-                    toolbarBorderRadius({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      onChangeGrouped: [
-                        "onChangeBorderRadiusGrouped",
-                        "onChangeBorderRadiusGroupedDependencies"
-                      ],
-                      onChangeUngrouped: [
-                        "onChangeBorderRadiusUngrouped",
-                        "onChangeBorderRadiusUngroupedDependencies"
-                      ]
-                    })
-                  ]
-                },
-                {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarHoverTransition({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop",
-                      position: 100
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }

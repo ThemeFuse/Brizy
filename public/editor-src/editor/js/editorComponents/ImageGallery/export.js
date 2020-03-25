@@ -3,14 +3,18 @@ import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import "magnific-popup";
 
-export default function() {
+export default function($node) {
   // Isotope
-  $(".brz-image__gallery").each(function() {
-    var _this = this;
+  $node.find(".brz-image__gallery").each(function() {
+    const _this = this;
+    const wrapper = $(this)
+      .children(".brz-image__gallery-wrapper")
+      .get(0);
+    let iso;
 
-    ImagesLoaded(_this, function() {
+    ImagesLoaded(wrapper, function() {
       // init Isotope after all images have loaded
-      var iso = new Isotope(_this, {
+      iso = new Isotope(wrapper, {
         itemSelector: ".brz-image__gallery-item",
         masonry: {
           columnWidth: ".brz-image__gallery-item"
@@ -18,12 +22,24 @@ export default function() {
       });
 
       // add isotope for data attr uses in tabs and accordion
-      $(_this).data("isotope", iso);
+      $(wrapper).data("isotope", iso);
+    });
+
+    $(".brz-image__gallery--filter-wrapper", _this).on("click", e => {
+      const node = e.target;
+
+      if (node.className.includes("brz-image__gallery-filter__item")) {
+        const { filter = "*" } = node.dataset;
+
+        iso.arrange({
+          filter: filter === "*" ? "*" : `.${filter}`
+        });
+      }
     });
   });
 
   // MagnificPopup
-  $(".brz-image__gallery-lightbox").each(function() {
+  $node.find(".brz-image__gallery-lightbox").each(function() {
     $(this).magnificPopup({
       delegate: "a",
       type: "image",

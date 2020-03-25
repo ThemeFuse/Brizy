@@ -1,13 +1,36 @@
 // Image Gallery
 .brz-image__gallery {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
 
-  .brz-image {
+  &-wrapper .brz-image {
     display: block;
   }
-
   &-item {
     transition: none !important;
   }
+}
+.brz-image__gallery--filter-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.brz-image__gallery-filter {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+}
+.brz-image__gallery-filter--style-2 {
+  width: fit-content;
+}
+.brz-image__gallery-filter__item {
+  cursor: pointer;
+}
+.brz-image__gallery-filter__item:first-child {
+  margin-left: 0 !important;
+}
+.brz-image__gallery-filter__item:last-child {
+  margin-right: 0 !important;
 }

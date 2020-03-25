@@ -1,3 +1,6 @@
+@import "../../mixins/input";
+@import "../../variables";
+
 // TextField
 .brz-ed-option__text-box {
   width: 44px;
@@ -64,33 +67,10 @@
   }
 }
 .brz-ed-control__text-box--resizer {
-  background-color: transparent;
-  color: $options-label-color;
-  font-weight: 400;
-  border: none;
-  outline: 0;
-  padding: 0;
-  line-height: 1;
-  -moz-appearance: textfield; // Remove spin button on Firefox
+  @include small-input;
+
   position: absolute;
-  top: 0;
-  left: 0;
   width: 105%;
   height: 100%;
-  transition: 0.2s linear color;
-
-  &:focus,
-  &:active {
-    background-color: transparent;
-    color: #fff;
-    transition: 0.2s linear color;
-    box-shadow: none;
-    border: none;
-    outline: 0;
-  }
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  border: none;
 }

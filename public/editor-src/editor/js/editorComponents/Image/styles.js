@@ -3,7 +3,7 @@ import { css } from "glamor";
 import { roundTo } from "visual/utils/math";
 import {
   styleHoverTransition,
-  styleHoverTransitionProperty
+  styleHoverTransitionPropertyImage
 } from "visual/utils/style";
 
 import {
@@ -22,7 +22,7 @@ export function imageStylesClassName(v, sizes, props) {
   const {
     meta: { desktopW, tabletW, mobileW, inGallery }
   } = props;
-  let glamorObj = {};
+  let glamorObj;
 
   if (IS_PREVIEW) {
     const {
@@ -71,10 +71,22 @@ export function imageStylesClassName(v, sizes, props) {
         filter: filterNormal !== "" ? filterNormal : null
       },
 
+      ":after": {
+        boxShadow: shadowDesktopNormal !== "" ? shadowDesktopNormal : null
+      },
+
       "@media (min-width: 992px)": {
         transition: styleHoverTransition({ v }),
-        transitionProperty: styleHoverTransitionProperty(),
+        transitionProperty: styleHoverTransitionPropertyImage(),
 
+        ":after": {
+          transition: styleHoverTransition({ v }),
+          transitionProperty: styleHoverTransitionPropertyImage()
+        },
+
+        ":hover:after": {
+          boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
+        },
         ".brz &:hover": {
           boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
         }
@@ -189,13 +201,13 @@ export function wrapperStyleClassName(v) {
       transition: "var(--hoverTransition)",
       transitionProperty: "var(--hoverTransitionProperty)",
 
-      ":before": {
+      ":after": {
         boxShadow: "var(--boxShadow)",
 
         transition: "var(--hoverTransition)",
         transitionProperty: "var(--hoverTransitionProperty)"
       },
-      ":hover:before": {
+      ":hover:after": {
         boxShadow: "var(--hoverBoxShadow)"
       },
       ":hover": {
@@ -208,7 +220,7 @@ export function wrapperStyleClassName(v) {
       borderRadius: "var(--tabletBorderRadius)",
       boxShadow: "var(--tabletBoxShadow)",
 
-      ":before": {
+      ":after": {
         boxShadow: "var(--tabletBoxShadow)"
       }
     },
@@ -218,7 +230,7 @@ export function wrapperStyleClassName(v) {
       borderRadius: "var(--mobileBorderRadius)",
       boxShadow: "var(--mobileBoxShadow)",
 
-      ":before": {
+      ":after": {
         boxShadow: "var(--mobileBoxShadow)"
       }
     }
@@ -273,7 +285,7 @@ export function wrapperStyleCSSVars(v, sizes) {
 
     // Hover Transition
     "--hoverTransition": styleHoverTransition({ v }),
-    "--hoverTransitionProperty": styleHoverTransitionProperty({ v }),
+    "--hoverTransitionProperty": styleHoverTransitionPropertyImage({ v }),
 
     //####--- Tablet ---####//
 

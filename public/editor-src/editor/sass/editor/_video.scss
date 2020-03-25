@@ -1,0 +1,15 @@
+.brz-custom-video {
+  padding-bottom: 0;
+
+  .brz-video-content {
+    .brz-shortcode__placeholder {
+      z-index: 999;
+    }
+    .brz-video__cover-icon {
+      z-index: 999;
+    }
+  }
+  .brz-video-custom-progress {
+    width: 25%;
+  }
+}

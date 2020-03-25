@@ -1,22 +1,9 @@
+@import "../../variables";
+
 .brz-ed-control__colorPicker3 {
-  $topMargin: 10px;
-  
+  $topMargin: $control-padding;
+
   .brz-ed-control__color-palette {
     margin-top: $topMargin;
-  }
-
-  .brz-input {
-    margin-top: $topMargin;
-    background-color: transparent;
-    border: none;
-    outline: 0;
-    color: #828b92;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    text-align: left;
-    text-transform: uppercase;
-    padding: 2px 0;
-    -webkit-transition: .2s linear color,.2s border-color linear;
-    transition: .2s linear color,.2s border-color linear;
-    width: 58px;
   }
 }

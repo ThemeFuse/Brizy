@@ -1,12 +1,8 @@
-import Config from "visual/global/Config";
 import Input from "../common/Input";
 import Scroll from "../common/Scroll";
 import Showing from "../common/Showing";
 import Referrer from "../common/Referrer";
-import LoggedIn from "../common/LoggedIn";
 import Devices from "../common/Devices";
-
-const { availableRoles } = Config.get("wp");
 
 export default [
   {
@@ -67,16 +63,6 @@ export default [
     },
     duplicatesAmount: Infinity,
     Component: Referrer
-  },
-  {
-    id: "loggedIn",
-    title: "Hide for logged in users",
-    defaultValue: {
-      value: "all",
-      user: availableRoles[0].role
-    },
-    duplicatesAmount: Infinity,
-    Component: LoggedIn
   },
   {
     id: "devices",

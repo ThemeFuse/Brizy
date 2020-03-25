@@ -29,11 +29,22 @@ class InputOptionType extends React.Component {
     onChange: _.noop
   };
 
+  lastChange = this.props.value.value;
+
   state = {
     value: this.props.value.value
   };
 
   isFocused = false;
+
+  componentWillReceiveProps(nextProps) {
+    const value = nextProps?.value?.value ?? "";
+    if (this.lastChange !== value) {
+      this.setState({ value }, () => {
+        this.lastChange = this.state.value;
+      });
+    }
+  }
 
   componentWillUnmount() {
     this.isFocused && this.handleInputBlur();
@@ -76,6 +87,7 @@ class InputOptionType extends React.Component {
     };
 
     this.props.onChange(value, meta);
+    this.lastChange = this.state.value;
   };
 
   debouncedHandleChange = _.debounce(

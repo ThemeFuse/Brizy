@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-export default function() {
+export default function($node) {
   function formatTime(time) {
     var min = Math.floor(time / 60);
     var sec = Math.floor(time % 60);
@@ -32,13 +32,19 @@ export default function() {
     return (offsetLeft * 100) / sliderWidth;
   }
 
-  $(".brz-audio .play-pause-btn").click(function() {
+  $node.find(".brz-audio .brz-audio-play-pause-btn").click(function() {
     var $this = $(this);
     var $shortcodeAudio = $(this).closest(".brz-audio");
-    var $slider = $shortcodeAudio.find(".controls .slider");
-    var $volumeSlider = $shortcodeAudio.find(".volume-controls .slider");
-    var $progress = $shortcodeAudio.find(".controls .progress");
-    var $volumeProgress = $shortcodeAudio.find(".volume-controls .progress");
+    var $slider = $shortcodeAudio.find(".brz-audio-controls .brz-audio-slider");
+    var $volumeSlider = $shortcodeAudio.find(
+      ".brz-audio-volume-controls .brz-audio-slider"
+    );
+    var $progress = $shortcodeAudio.find(
+      ".brz-audio-controls .brz-audio-progress"
+    );
+    var $volumeProgress = $shortcodeAudio.find(
+      ".brz-audio-volume-controls .brz-audio-progress"
+    );
     var audio = $shortcodeAudio.find("audio")[0];
 
     if (!audio.src) return;
@@ -49,7 +55,7 @@ export default function() {
     if (!audio.duration) {
       audio.addEventListener("loadedmetadata", function(event) {
         var duration = formatTime(event.target.duration);
-        $shortcodeAudio.find(".total-time").html(duration);
+        $shortcodeAudio.find(".brz-audio-total-time").html(duration);
       });
 
       audio.addEventListener("timeupdate", function(event) {
@@ -58,7 +64,9 @@ export default function() {
         var progressPercent = (currentTime / duration) * 100;
 
         $progress.css("width", roundTo(progressPercent) + "%");
-        $shortcodeAudio.find(".current-time").html(formatTime(currentTime));
+        $shortcodeAudio
+          .find(".brz-audio-current-time")
+          .html(formatTime(currentTime));
       });
 
       audio.addEventListener("ended", function() {
@@ -84,10 +92,12 @@ export default function() {
     }
   });
 
-  $(".brz-audio .volume-btn").click(function() {
+  $node.find(".brz-audio .brz-audio-volume-btn").click(function() {
     var $this = $(this);
     var $shortcodeAudio = $(this).closest(".brz-audio");
-    var $volumeProgress = $shortcodeAudio.find(".volume-controls .progress");
+    var $volumeProgress = $shortcodeAudio.find(
+      ".brz-audio-volume-controls .brz-audio-progress"
+    );
     var audio = $shortcodeAudio.find("audio")[0];
 
     if (!audio.src) return;

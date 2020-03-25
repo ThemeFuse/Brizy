@@ -22,9 +22,10 @@ import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { triggersSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
-import * as toolbarConfig from "./toolbar";
-import * as toolbarExtendConfig from "./extendToolbar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import * as toolbar from "./toolbar";
+import * as sidebar from "./sidebar";
+import * as toolbarExtend from "./toolbarExtend";
 import {
   styleCloseButton,
   styleBg,
@@ -45,8 +46,6 @@ import { SectionPopupInstances as Instances } from "./instances";
  * @type {Map<any, any>}
  */
 export let SectionPopupInstances = Instances;
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class SectionPopup extends EditorComponent {
   static get componentId() {
@@ -161,8 +160,9 @@ class SectionPopup extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig, {
-          allowExtend: false
+        {...this.makeToolbarPropsFromConfig2(toolbar, sidebar, {
+          allowExtend: false,
+          allowExtendFromThirdParty: true
         })}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
@@ -204,7 +204,7 @@ class SectionPopup extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
+        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
           allowExtend: false
         }),
         meta,
@@ -421,7 +421,7 @@ class SectionPopup extends EditorComponent {
     } = this.props;
     const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
-    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
     globalsData.value._id = this.getId();
 
     onChange(globalsData, {

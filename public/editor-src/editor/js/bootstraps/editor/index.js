@@ -1,5 +1,3 @@
-import "./webpack-public-path";
-
 import "@babel/polyfill";
 
 import React from "react";
@@ -10,10 +8,10 @@ import Config from "visual/global/Config";
 
 import {
   getProject,
-  getPages,
-  createPage,
   getGlobalBlocks,
-  getSavedBlocks
+  getSavedBlocks,
+  removeProjectLockedSendBeacon,
+  addProjectLockedBeacon
 } from "visual/utils/api/editor";
 import { assetUrl } from "visual/utils/asset";
 
@@ -24,12 +22,16 @@ import {
 } from "visual/utils/traverse";
 import { normalizeFonts } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
+import { CustomError, PageError } from "visual/utils/errors";
 
 import { createStore } from "visual/redux/store";
 import getMiddleware from "./middleware";
 import { hydrate, editorRendered } from "visual/redux/actions";
+import { t } from "visual/utils/i18n";
 
 import Editor from "visual/component/Editor";
+import { ToastNotification } from "visual/component/Notifications";
+import { getCurrentPage } from "./getCurrentPage";
 import "../registerEditorParts";
 
 const appDiv = document.querySelector("#brz-ed-root");
@@ -41,57 +43,37 @@ const pageCurtain = window.parent.document.querySelector(
   try {
     if (!appDiv) {
       pageCurtain.classList.add("has-load-error");
-      throw new Error("could not find #brz-ed-root");
+      throw new PageError("could not find #brz-ed-root");
+    }
+
+    const projectStatus = Config.get("project").status || {};
+
+    if (projectStatus && !projectStatus.locked) {
+      await addProjectLockedBeacon();
     }
 
     const [
       project,
-      pages,
+      currentPage,
       globalBlocks,
       savedBlocks,
       blocksThumbnailSizes
     ] = await Promise.all([
       getProject(),
-      getPages(),
+      getCurrentPage(),
       getGlobalBlocks(),
       getSavedBlocks(),
       fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then(r => r.json())
     ]);
 
-    // create the index page when api returns no pages
-    // this should never happen in WP,
-    // the TARGET check is put here just in case
-    if (pages.length === 0 && TARGET !== "WP") {
-      const indexPageData = {
-        project: Config.get("project").id,
-        data: null,
-        is_index: true,
-        status: "draft"
-      };
-      const meta = { is_autosave: 0 };
-      let indexPage;
-
-      try {
-        indexPage = await createPage(indexPageData, meta);
-        pages.push(indexPage);
-      } catch (e) {
-        throw `Could not create index page ${e}`;
-      }
-    }
-
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
       console.log("Project loaded", project);
-      console.log("Pages loaded", pages);
+      console.log("currentPage loaded", currentPage);
       console.log("Global blocks loaded", globalBlocks);
       console.log("Saved blocks loaded", savedBlocks);
     }
     /* eslint-enabled no-console */
-
-    const configPageId = Config.get("page") && Config.get("page").id;
-    const currentPage = configPageId
-      ? pages.find(page => page.id === configPageId)
-      : pages.find(page => page.is_index);
 
     // NEW FONTS FOUND
     // some fonts are found in models
@@ -120,11 +102,12 @@ const pageCurtain = window.parent.document.querySelector(
     store.dispatch(
       hydrate({
         project,
-        fonts: deepMerge(fonts, newFonts),
-        page: currentPage,
+        projectStatus,
         globalBlocks,
         savedBlocks,
-        blocksThumbnailSizes
+        blocksThumbnailSizes,
+        fonts: deepMerge(fonts, newFonts),
+        page: currentPage
       })
     );
 
@@ -132,6 +115,13 @@ const pageCurtain = window.parent.document.querySelector(
     if (IS_EDITOR) {
       window.brzStore = store;
       window.parent.brzStore = store;
+
+      // beacon send data
+      window.parent.addEventListener(
+        "unload",
+        removeProjectLockedSendBeacon,
+        false
+      );
     }
 
     ReactDOM.render(
@@ -146,8 +136,23 @@ const pageCurtain = window.parent.document.querySelector(
       }
     );
   } catch (e) {
+    const isCustomError = e instanceof CustomError;
+
     /* eslint-disable no-console */
-    console.error("editor bootstrap error", e);
+    if (isCustomError) {
+      console.error("editor bootstrap error", e.getMessage());
+    } else {
+      console.error("editor bootstrap error", e);
+    }
     /* eslint-enabled no-console */
+
+    const message = isCustomError
+      ? `${t("Something went wrong with the")} ${e.getName()}`
+      : t("Something went wrong");
+
+    ToastNotification.error(message, {
+      hideAfter: 0,
+      toastContainer: pageCurtain
+    });
   }
 })();

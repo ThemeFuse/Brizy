@@ -1,9 +1,21 @@
 // --- MultiPicker
+.brz-ed-option__multiPicker {
+  .brz-ed-multiPicker__head,
+  .brz-ed-multiPicker__body {
+    &__option.brz-ed-option-wrapper,
+    .brz-ed-multiPicker__option.brz-ed-option-wrapper {
+      padding: 0;
+      min-height: unset;
+    }
+  }
+}
+
 .brz-ed-option__multiPicker.brz-ed-option__inline {
   flex-direction: column;
   align-items: unset;
   justify-content: unset;
 }
+
 .brz-ed-multiPicker {
   &__head__option,
   &__option {

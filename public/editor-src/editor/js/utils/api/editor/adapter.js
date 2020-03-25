@@ -1,15 +1,22 @@
+import {
+  ProjectError,
+  PageError,
+  GlobalBlocksError,
+  SavedBlocksError
+} from "visual/utils/errors";
+
 // project
 
 export const parseProject = project => {
   let data;
 
   if (!project.data) {
-    throw new Error("Project data should exist");
+    throw new ProjectError("Project data should exist");
   } else {
     try {
       data = JSON.parse(project.data);
     } catch (e) {
-      throw `Failed to parse project data ${project.data}`;
+      throw new ProjectError(`Failed to parse project data ${project.data}`);
     }
   }
 
@@ -34,7 +41,7 @@ export const parsePage = page => {
     try {
       data = JSON.parse(page.data);
     } catch (e) {
-      throw `Failed to parse page ${page.data}`;
+      throw new PageError(`Failed to parse page ${page.data}`);
     }
   }
 
@@ -53,12 +60,14 @@ export const parseGlobalBlock = globalBlock => {
   let data;
 
   if (!globalBlock.data) {
-    throw new Error("globalBlock data should exist");
+    throw new GlobalBlocksError("globalBlock data should exist");
   } else {
     try {
       data = JSON.parse(globalBlock.data);
     } catch (e) {
-      throw `Failed to parse globalBlock data ${globalBlock.data}`;
+      throw new GlobalBlocksError(
+        `Failed to parse globalBlock data ${globalBlock.data}`
+      );
     }
   }
 
@@ -76,12 +85,14 @@ export const parseSavedBlock = savedBlock => {
   let data;
 
   if (!savedBlock.data) {
-    throw new Error("savedBlock data should exist");
+    throw new SavedBlocksError("savedBlock data should exist");
   } else {
     try {
       data = JSON.parse(savedBlock.data);
     } catch (e) {
-      throw `Failed to parse savedBlock data ${savedBlock.data}`;
+      throw new SavedBlocksError(
+        `Failed to parse savedBlock data ${savedBlock.data}`
+      );
     }
   }
 

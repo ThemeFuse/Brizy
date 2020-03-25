@@ -4,11 +4,11 @@ const WorkerPlugin = require("worker-plugin");
 const babelrc = require("./babelrc.config.all");
 
 const getExtensions = target => {
-  const defaultExtensions = [".js", ".jsx", ".json"];
+  const defaultExtensions = [".ts", ".tsx", ".js", ".jsx", ".json"];
 
   switch (target) {
     case "WP":
-      return [".wp.js", ".wp.jsx", ...defaultExtensions];
+      return [".wp.ts", ".wp.tsx", ".wp.js", ".wp.jsx", ...defaultExtensions];
     default:
       return defaultExtensions;
   }
@@ -31,12 +31,13 @@ module.exports = (options = {}) => {
     entry: {
       editor: [
         "./editor/js/bootstraps/initConfig.js",
+        "./editor/js/bootstraps/editor/webpack-public-path.js",
         "./editor/js/bootstraps/initBrizyGlobal.js",
         "./editor/js/bootstraps/editor/index.js"
       ]
     },
     output: {
-      path: path.resolve(BUILD_PATH, `editor/js`),
+      path: path.resolve(BUILD_PATH, "editor/js"),
       filename: "[name].js"
     },
     resolve: {
@@ -48,7 +49,7 @@ module.exports = (options = {}) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(ts|js)x?$/,
           include: [path.resolve(__dirname, "editor")],
           loader: "babel-loader",
           options: babelrc.editor()
@@ -84,7 +85,7 @@ module.exports = (options = {}) => {
     devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
     watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {
-      ignored: new RegExp(`config/icons`)
+      ignored: new RegExp("config/icons")
     }
   };
 };

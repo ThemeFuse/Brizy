@@ -3,7 +3,6 @@ import _ from "underscore";
 import UIState from "visual/global/UIState";
 import Icon from "./PromptIcon";
 import Apps from "./PromptApps";
-// import Popup from "./PromptPopup";
 import Blocks from "./PromptBlocks";
 import Form from "./PromptForm";
 import KeyHelper from "./KeyHelper";
@@ -60,9 +59,6 @@ class Prompts extends React.Component {
         case "apps-integrations":
           content = <Apps {...props} onClose={this.close} />;
           break;
-        // case "popup":
-        //   content = <Popup {...props} onClose={this.close} />;
-        //   break;
         case "blocks":
           content = <Blocks {...props} onClose={this.close} />;
           break;

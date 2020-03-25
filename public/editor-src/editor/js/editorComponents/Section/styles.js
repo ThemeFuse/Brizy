@@ -11,10 +11,10 @@ export function styleSection(v, vs, vd) {
       ]
     },
     ".brz &&:hover .brz-container__wrap": {
-      interval: ["cssStyleVisibleMode|||editor"]
+      interval: ["cssStyleVisibleMode|||editor", "cssStyleFlexVerticalAlign"]
     },
     ".brz &&:hover .brz-section__content": {
-      standart: ["cssStyleSectionSliderHeight"]
+      standart: ["cssStyleSectionHeightStyle"]
     },
     ".brz && > .slick-slider > .brz-slick-slider__dots:hover": {
       standart: ["cssStyleSectionColorDots"]

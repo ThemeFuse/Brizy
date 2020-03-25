@@ -23,7 +23,6 @@ import {
   getDefaultFont
 } from "visual/utils/fonts";
 
-import Config from "visual/global/Config";
 import { createStore } from "visual/redux/store";
 import { hydrate } from "visual/redux/actions";
 
@@ -43,7 +42,7 @@ import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { flatMap } from "visual/utils/array";
 
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 export default function main({
   pageId,
@@ -56,8 +55,8 @@ export default function main({
     .find(page => (pageId ? page.id === pageId : page.is_index));
   const globalBlocks = globalBlocks_
     .map(parseGlobalBlock)
-    .reduce((acc, block) => {
-      acc[block.uid] = block.data;
+    .reduce((acc, { uid, data, dataVersion }) => {
+      acc[uid] = { id: uid, data, dataVersion };
       return acc;
     }, {});
 
@@ -119,7 +118,8 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
       project,
       fonts: _fonts,
       globalBlocks,
-      savedBlocks: {}
+      savedBlocks: {},
+      projectStatus: {}
     })
   );
 
@@ -147,7 +147,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   // ===========
 
   const $pageHTML = cheerio.load(
-    `<html><head><style>${glamorCSS}</style><style>${brzCss}</style></head><body>${html}</body></html>`
+    `<html><head><style class="brz-style">${glamorCSS}</style><style class="brz-style">${brzCss}</style></head><body>${html}</body></html>`
   );
 
   // get all Fonts from page

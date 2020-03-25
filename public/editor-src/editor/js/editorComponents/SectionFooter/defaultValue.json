@@ -19,7 +19,6 @@
     "contrast": 100,
 
     "bgVideo": "",
-    "bgVideoQuality": 1080,
     "bgVideoLoop": "off",
 
     "bgMapAddress": "Wall Street",
@@ -39,6 +38,12 @@
     "hoverHue": null,
     "hoverSaturation": null,
     "hoverContrast": null,
+
+    "sectionHeightStyle": "auto",
+    "sectionHeight": 400,
+    "sectionHeightSuffix": "px",
+
+    "verticalAlign": "center",
 
     "anchorName": "",
 
@@ -65,6 +70,10 @@
     "tabletSaturation": null,
     "tabletContrast": null,
 
+    "tabletSectionHeightStyle": null,
+    "tabletSectionHeight": null,
+    "tabletSectionHeightSuffix": null,
+
     "tabletBgMapZoom": null,
 
     "showOnMobile": "on",
@@ -83,6 +92,10 @@
     "mobileHue": null,
     "mobileSaturation": null,
     "mobileContrast": null,
+
+    "mobileSectionHeightStyle": null,
+    "mobileSectionHeight": null,
+    "mobileSectionHeightSuffix": null,
 
     "mobileBgMapZoom": null
   },

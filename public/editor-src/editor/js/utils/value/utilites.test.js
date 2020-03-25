@@ -5,19 +5,19 @@ test("Prevent jest complaining that files has not tests", () => {});
  *  - if it is, return it
  *  - otherwise, return orElse value
  *
- * @param {function(orElse: *, v: *):*} f
+ * @param {function(v: *, orElse: *):*} f
  * @param {*[]} valid, a list of valid values that should be returned
  * @param {*[]} invalid, a list of invalid values that should be not returned
  */
 export const testToValue = (f, valid, invalid) => {
   describe("Testing reader function behaviors", function() {
     test("Return value if it is valid", () => {
-      valid.map(v => expect(f({}, v)).toBe(v));
+      valid.map(v => expect(f(v, {})).toBe(v));
     });
 
     test("Return orElse if value is invalid", () => {
       const orElse = {};
-      invalid.map(v => expect(f(orElse, v)).toBe(orElse));
+      invalid.map(v => expect(f(v, orElse)).toBe(orElse));
     });
   });
 };

@@ -1,36 +1,21 @@
 import React from "react";
 import T from "prop-types";
 import classNames from "classnames";
-import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
-import {
-  getColorPaletteColor,
-  getColorPaletteColors
-} from "visual/utils/color";
+import { getColorPaletteColors } from "visual/utils/color";
 import { BoxShadow as ShadowControl } from "visual/component/Controls/BoxShadow";
-import { toHex } from "visual/utils/color/isHex";
-import { toBlur, toSpread } from "visual/utils/cssProps";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import { toNumber } from "visual/utils/math";
 import {
   getSetter,
   getTypesItems,
   getConfig,
   _setOpacity,
-  fromModel
+  toElementModel,
+  fromElementModel
 } from "./utils";
 import { get } from "visual/utils/model";
 import * as Type from "visual/component/Options/types/dev/BoxShadow/entities/type";
-import { toOpacity } from "visual/utils/cssProps/opacity";
 
-const openPaletteSidebar = () => {
-  getStore().dispatch(
-    updateUI("leftSidebar", {
-      isOpen: true,
-      drawerContentType: "styling"
-    })
-  );
-};
+import { openPaletteSidebar } from "visual/component/Options/types/dev/ColorPicker/store";
 
 export const BoxShadow = ({ onChange, value, ...props }) => {
   const className = classNames("brz-ed-option__boxShadow", props.className);
@@ -39,12 +24,8 @@ export const BoxShadow = ({ onChange, value, ...props }) => {
       // Opacity has a special cas where we need to update tempOpacity when the slider drag ends
 
       onChange(
-        fromModel(
-          _setOpacity(
-            get(undefined, "opacity", m),
-            value,
-            !!meta.opacityDragEnd
-          )
+        toElementModel(
+          _setOpacity(get("opacity", m), value, !!meta.opacityDragEnd)
         ),
         meta
       );
@@ -52,10 +33,7 @@ export const BoxShadow = ({ onChange, value, ...props }) => {
       const setter = getSetter(meta.isChanged);
 
       if (setter) {
-        onChange(
-          fromModel(setter(get(undefined, meta.isChanged, m), value)),
-          meta
-        );
+        onChange(toElementModel(setter(get(meta.isChanged, m), value)), meta);
       }
     }
   };
@@ -77,40 +55,7 @@ export const BoxShadow = ({ onChange, value, ...props }) => {
  * @param {(function(key: string): string|number)} get
  * @returns {{}}
  */
-BoxShadow.getModel = get => {
-  const value = get("value");
-  const tValue = get("tempValue");
-
-  const type = value === "" ? Type.NONE : value === "on" ? Type.OUTSET : value;
-  const tType =
-    tValue === "" ? Type.NONE : tValue === "on" ? Type.OUTSET : tValue;
-  const palette = Palette.toPalette(
-    get("palette") || Palette.empty,
-    get("colorPalette")
-  );
-  const hex = (getColorPaletteColor(palette) || {}).hex;
-
-  return {
-    type: Type.toType(get("type") || Type.empty, type),
-    tempType: Type.toType(get("tempType") || Type.INSET, tType),
-    hex: toHex(get("colorHex") || get("hex") || "#000000", hex),
-    opacity: toOpacity(get("opacity") || 0, get("colorOpacity")),
-    tempOpacity: toOpacity(get("tempOpacity") || 1, get("tempColorOpacity")),
-    palette: palette,
-    tempPalette: Palette.toPalette(
-      get("tempPalette") || Palette.empty,
-      get("tempColorPalette")
-    ),
-    blur: toBlur(0, get("blur")),
-    tempBlur: toBlur(4, get("tempBlur")),
-    spread: toSpread(0, get("spread")),
-    tempSpread: toSpread(2, get("tempSpread")),
-    vertical: toNumber(0, get("vertical")),
-    tempVertical: toNumber(0, get("tempVertical")),
-    horizontal: toNumber(0, get("horizontal")),
-    tempHorizontal: toNumber(0, get("tempHorizontal"))
-  };
-};
+BoxShadow.getModel = fromElementModel;
 
 BoxShadow.propTypes = {
   className: T.string,

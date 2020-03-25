@@ -5,7 +5,8 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./items";
-import * as toolbarExtendConfig from "./extendToolbar";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
 import classnames from "classnames";
 import { styleContainer, styleItem, styleWrap, style } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -239,7 +240,10 @@ class Cloneable extends EditorComponent {
       minItems,
       maxItems,
       meta: this.getMeta(v),
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtendConfig,
+        sidebarExtendConfig
+      ),
       onSortableStart: this.handleSortableStart,
       onSortableEnd: this.handleSortableEnd
     });

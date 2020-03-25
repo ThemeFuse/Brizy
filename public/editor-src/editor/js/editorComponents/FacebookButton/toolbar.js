@@ -2,38 +2,22 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementFbButtonType,
-  toolbarElementFbButtonLayout,
-  toolbarElementFbButtonSize,
-  toolbarElementFbButtonShare,
-  toolbarElementFbButtonCounter,
-  toolbarElementFbButtonFriends,
-  toolbarLinkTargetUrl,
-  toolbarLinkHref,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2,
-  toolbarCustomCSS,
-  toolbarHoverTransition,
-  toolbarDisabledToolbarSettings
-} from "visual/utils/toolbar";
+import { toolbarElementFbButtonSize } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
+  const dvkn = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "boxShadowColorHex", device, state }),
-    defaultValueValue({ v, key: "boxShadowColorPalette", device, state })
+    dvv("boxShadowColorHex"),
+    dvv("boxShadowColorPalette")
   );
 
   return [
     {
-      id: defaultValueKey({
-        key: "popoverCurrentElement",
-        device,
-        state: "normal"
-      }),
+      id: dvkn("popoverCurrentElement"),
       type: "popover",
       icon: "nc-facebook",
       title: t("Button"),
@@ -48,54 +32,100 @@ export function getItems({ v, device, state }) {
               id: "tabCurrentElement",
               label: t("Button"),
               options: [
-                toolbarElementFbButtonType({
-                  v,
-                  device,
+                {
+                  id: "targetUrl",
+                  label: t("Target URL"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementFbButtonLayout({
-                  v,
-                  device,
+                  choices: [
+                    {
+                      title: t("Current Page"),
+                      value: "current"
+                    },
+                    {
+                      title: t("Custom Page"),
+                      value: "custom"
+                    }
+                  ]
+                },
+                {
+                  id: "href",
+                  label: t("Link"),
+                  type: "inputText-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  disabled: v.targetUrl === "current",
+                  placeholder: "http://"
+                },
+                {
+                  id: "type",
+                  label: t("Type"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    {
+                      title: t("Like"),
+                      value: "like"
+                    },
+                    {
+                      title: t("Recommend"),
+                      value: "recommend"
+                    }
+                  ]
+                },
+                {
+                  id: "layout",
+                  label: t("Layout"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    {
+                      title: t("Button"),
+                      value: "button"
+                    },
+                    {
+                      title: t("Boxed"),
+                      value: "boxed"
+                    }
+                  ]
+                },
                 toolbarElementFbButtonSize({
                   v,
                   device,
                   devices: "desktop",
                   state: "normal"
                 }),
-                toolbarElementFbButtonShare({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
+                {
+                  id: "share",
+                  label: t("Include Share Button"),
+                  type: "switch-dev",
+                  devices: "desktop"
+                }
               ]
             },
             {
               id: "tabAdvanced",
               label: t("Advanced"),
               options: [
-                toolbarElementFbButtonCounter({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementFbButtonFriends({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
-                /*{
-                  id: "darkScheme",
-                  type: "switch",
-                  label: t("Dark Scheme"),
-                  value: v.darkScheme
-                }*/
+                {
+                  id: "showCounter",
+                  label: t("Show Button Counter"),
+                  type: "switch-dev",
+                  disabled: v.layout === "boxed" ? true : false,
+                  devices: "desktop"
+                },
+                {
+                  id: "showFriends",
+                  label: t("Show Friends' Faces"),
+                  type: "switch-dev",
+                  disabled: v.layout === "boxed" ? true : false,
+                  devices: "desktop"
+                }
+                // {
+                //   id: "darkScheme",
+                //   label: t("Dark Scheme"),
+                //   type: "switch-dev",
+                //   devices: "desktop"
+                // }
               ]
             }
           ]
@@ -103,7 +133,7 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "popoverColor", device, state: "normal" }),
+      id: dvkn("popoverColor"),
       type: "popover",
       size: "auto",
       title: t("Colors"),
@@ -125,62 +155,10 @@ export function getItems({ v, device, state }) {
               id: "tabBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadow2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeType: [
-                    "onChangeBoxShadowType2",
-                    "onChangeBoxShadowTypeDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBoxShadowHexAndOpacity2",
-                    "onChangeBoxShadowHexAndOpacityPalette2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBoxShadowPalette2",
-                    "onChangeBoxShadowPaletteOpacity2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadowFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          onChange: [
-                            "onChangeBoxShadowFields2",
-                            "onChangeBoxShadowFieldsDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "boxShadow",
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -189,74 +167,12 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarLink", device, state: "normal" }),
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      devices: "desktop",
-      position: 80,
-      options: [
-        toolbarLinkTargetUrl({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        }),
-        toolbarLinkHref({ v, device, devices: "desktop", state: "normal" })
-      ]
-    },
-    toolbarDisabledToolbarSettings({ device }),
-    {
-      id: defaultValueKey({
-        key: "advancedSettings",
-        device,
-        state: "normal"
-      }),
+      id: dvkn("advancedSettings"),
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
-      options: [
-        {
-          id: "settingsTabs",
-          type: "tabs",
-          devices: "desktop",
-          align: "start",
-          tabs: [
-            {
-              id: "settingsStyling",
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: []
-            },
-            {
-              id: defaultValueKey({
-                key: "moreSettingsAdvanced",
-                device,
-                state: "normal"
-              }),
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              options: [
-                toolbarCustomCSS({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop"
-                }),
-                toolbarHoverTransition({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop",
-                  position: 100
-                })
-              ]
-            }
-          ]
-        }
-      ]
+      icon: "nc-cog"
     }
   ];
 }

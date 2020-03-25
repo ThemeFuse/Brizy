@@ -7,8 +7,9 @@ import contextMenuConfig from "./contextMenu";
 import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
 import { styleClassName, styleCSSVars } from "./styles";
-import * as parentToolbarExtend from "./parentExtendToolbar";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarExtend from "./toolbarExtend";
+import * as sidebarExtendParent from "./sidebarExtendParent";
 import defaultValue from "./defaultValue.json";
 
 class Carousel extends EditorComponent {
@@ -23,10 +24,13 @@ class Carousel extends EditorComponent {
   };
 
   componentDidMount() {
-    const toolbarExtend = this.makeToolbarPropsFromConfig(parentToolbarExtend, {
-      allowExtend: false,
-      filterExtendName: `${this.constructor.componentId}_parent`
-    });
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      toolbarExtendParent,
+      sidebarExtendParent,
+      {
+        allowExtend: false
+      }
+    );
 
     this.props.extendParentToolbar(toolbarExtend);
   }
@@ -149,8 +153,9 @@ class Carousel extends EditorComponent {
     } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      toolbarExtend: this.makeToolbarPropsFromConfig(toolbarExtend, {
-        allowExtend: false
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
+        allowExtend: false,
+        allowExtendFromThirdParty: true
       }),
       className: styleClassName(v),
       style: styleCSSVars(v),

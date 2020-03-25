@@ -1,4 +1,4 @@
-import { apply, get, set } from "visual/utils/model";
+import { _apply, get, set, setter } from "visual/utils/model";
 import {
   getHex,
   getOpacity,
@@ -8,7 +8,7 @@ import * as ColorPicker from "visual/component/Options/types/dev/ColorPicker/mod
 import { toBlur, toSpread } from "visual/utils/cssProps";
 import { toNumber } from "visual/utils/math";
 import {
-  setField,
+  fieldsEnabled,
   toggleColor,
   toggleFields,
   toggleType
@@ -16,18 +16,16 @@ import {
 import { toObject } from "visual/utils/object";
 import { toPalette } from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import { toHex } from "visual/utils/color/isHex";
-import {
-  NONE,
-  toType
-} from "visual/component/Options/types/dev/BoxShadow/entities/type";
+import * as Type from "./entities/type";
 import { toOpacity } from "visual/utils/cssProps/opacity";
+import { capitalize } from "visual/utils/string";
 
 /**
  * @param {string} orElse
  * @param {object} m
  * @return {string}
  */
-export const getType = (orElse, m) => toType(orElse, toObject(m).type);
+export const getType = (m, orElse = undefined) => Type.read(m?.type) ?? orElse;
 
 /**
  * Set box shadow type
@@ -37,19 +35,19 @@ export const getType = (orElse, m) => toType(orElse, toObject(m).type);
  * @return {object}
  */
 export const setType = (v, m) => {
-  if (undefined === toType(undefined, v) || getType(undefined, m) === v) {
+  if (undefined === Type.read(v) || getType(m) === v) {
     return m;
   }
 
-  const isNone = v === NONE;
+  const isNone = v === Type.empty;
   const setters = [
-    [set, "tempType", isNone ? get(undefined, "type", m) : undefined],
+    [set, "tempType", isNone ? get("type", m) : undefined],
     [set, "type", v],
     [toggleFields, !isNone],
     [toggleColor, !isNone]
   ];
 
-  return apply(setters, m);
+  return _apply(setters, m);
 };
 
 /**
@@ -60,12 +58,18 @@ export const setType = (v, m) => {
  * @return {object}
  */
 export const setOpacity = (v, m) => {
-  if (toOpacity(undefined, v) === undefined || getOpacity(undefined, m) === v) {
+  if (toOpacity(v) === undefined || getOpacity(m) === v) {
     return m;
   }
 
   const enable = v > 0;
-  return apply([[ColorPicker.setOpacity, v], [toggleType, enable]], m);
+  return _apply(
+    [
+      [ColorPicker.setOpacity, v],
+      [toggleType, enable]
+    ],
+    m
+  );
 };
 
 /**
@@ -76,12 +80,18 @@ export const setOpacity = (v, m) => {
  * @return {object}
  */
 export const setHex = (v, m) => {
-  if (toHex(undefined, v) === undefined || getHex(undefined, m) === v) {
+  if (toHex(undefined, v) === undefined || getHex(m) === v) {
     return m;
   }
 
   const enable = v !== "";
-  return apply([[ColorPicker.setHex, v], [toggleType, enable]], m);
+  return _apply(
+    [
+      [ColorPicker.setHex, v],
+      [toggleType, enable]
+    ],
+    m
+  );
 };
 
 /**
@@ -93,13 +103,19 @@ export const setHex = (v, m) => {
  */
 export const setPalette = (v, m) => {
   const i = {};
-  if (toPalette(i, v) === i || getPalette(i, m) === v) {
+  if (toPalette(v, i) === i || getPalette(m, i) === v) {
     return m;
   }
 
-  const enable = v !== NONE;
+  const enable = v !== Type.empty;
 
-  return apply([[ColorPicker.setPalette, v], [toggleType, enable]], m);
+  return _apply(
+    [
+      [ColorPicker.setPalette, v],
+      [toggleType, enable]
+    ],
+    m
+  );
 };
 
 /**
@@ -107,7 +123,15 @@ export const setPalette = (v, m) => {
  * @param {object} m
  * @return {number}
  */
-export const getBlur = (orElse, m) => toBlur(orElse, toObject(m).blur);
+export const getBlur = (m, orElse) => toBlur(toObject(m).blur, orElse);
+
+const setTempField = (k, v, m) => {
+  return set(
+    `temp${capitalize(k)}`,
+    v ? v : fieldsEnabled(m) ? 0 : m[k] || undefined,
+    m
+  );
+};
 
 /**
  * Set box shadow blur
@@ -116,13 +140,22 @@ export const getBlur = (orElse, m) => toBlur(orElse, toObject(m).blur);
  * @param {object} m
  * @return {object}
  */
-export const setBlur = (v, m) => setField("blur", v, m);
+export const setBlur = setter(toBlur, getBlur, (v, m) =>
+  _apply(
+    [
+      [set, "blur", v],
+      [setTempField, "blur", v],
+      [m => toggleType(fieldsEnabled(m), m)]
+    ],
+    m
+  )
+);
 
 /**
  * @param {number} orElse
  * @param {object} m
  */
-export const getSpread = (orElse, m) => toSpread(orElse, toObject(m).spread);
+export const getSpread = (m, orElse) => toSpread(toObject(m).spread, orElse);
 
 /**
  * Set box shadow spread
@@ -131,14 +164,23 @@ export const getSpread = (orElse, m) => toSpread(orElse, toObject(m).spread);
  * @param {object} m
  * @return {object}
  */
-export const setSpread = (v, m) => setField("spread", v, m);
+export const setSpread = setter(toSpread, getSpread, (v, m) =>
+  _apply(
+    [
+      [set, "spread", v],
+      [setTempField, "spread", v],
+      [m => toggleType(fieldsEnabled(m), m)]
+    ],
+    m
+  )
+);
 
 /**
  * @param {number} orElse
  * @param {object} m
  */
-export const getHorizontal = (orElse, m) =>
-  toNumber(orElse, get(orElse, "horizontal", m));
+export const getHorizontal = (m, orElse) =>
+  toNumber(get("horizontal", m, orElse), orElse);
 
 /**
  * Set box shadow horizontal
@@ -147,14 +189,22 @@ export const getHorizontal = (orElse, m) =>
  * @param {object} m
  * @return {object}
  */
-export const setHorizontal = (v, m) => setField("horizontal", v, m);
+export const setHorizontal = setter(toNumber, getHorizontal, (v, m) =>
+  _apply(
+    [
+      [set, "horizontal", v],
+      [set, "tempHorizontal", v]
+    ],
+    m
+  )
+);
 
 /**
  * @param {number} orElse
  * @param {object} m
  */
-export const getVertical = (orElse, m) =>
-  toNumber(orElse, get(orElse, "vertical", m));
+export const getVertical = (m, orElse) =>
+  toNumber(get("vertical", m, orElse), orElse);
 
 /**
  * Set box shadow vertical
@@ -163,6 +213,14 @@ export const getVertical = (orElse, m) =>
  * @param {object} m
  * @return {object}
  */
-export const setVertical = (v, m) => setField("vertical", v, m);
+export const setVertical = setter(toNumber, getVertical, (v, m) =>
+  _apply(
+    [
+      [set, "vertical", v],
+      [set, "tempVertical", v]
+    ],
+    m
+  )
+);
 
 export { getHex, getOpacity, getPalette };

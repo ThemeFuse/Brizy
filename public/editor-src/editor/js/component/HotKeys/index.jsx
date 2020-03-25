@@ -67,6 +67,15 @@ class HotKeys extends React.Component {
   handleFilterItems(items) {
     // It's hack only for shortcodes. We calculate current active shortcode and return his callback
     if (items.length && items[0].id.startsWith("key-helper")) {
+      // this enables toolbar's escape handler to work properly inside SectionPopup.
+      // It filters out the popup's own escape handler when the toolbar is open
+      const toolbarEscapeItem = items.find(
+        item => item.id === "key-helper-toolbar-escape"
+      );
+      if (toolbarEscapeItem) {
+        return [toolbarEscapeItem];
+      }
+
       return items;
     }
 

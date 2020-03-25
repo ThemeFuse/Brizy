@@ -1,7 +1,6 @@
 import { mergeDeep } from "timm";
-import _ from "underscore";
-import { uuid } from "visual/utils/uuid";
 import { fontSelector } from "./selectors";
+import { updateUI } from "./actions2";
 
 export const HYDRATE = "HYDRATE";
 export const EDITOR_RENDERED = "EDITOR_RENDERED";
@@ -32,9 +31,11 @@ export const DELETE_FONTS = "DELETE_FONTS";
 export const UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT";
 export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
 export const UPDATE_TRIGGERS = "UPDATE_TRIGGERS";
+export const UPDATE_ERROR = "UPDATE_ERROR";
 
 export function hydrate({
   project,
+  projectStatus,
   fonts,
   page,
   globalBlocks,
@@ -45,6 +46,7 @@ export function hydrate({
     type: HYDRATE,
     payload: {
       project,
+      projectStatus,
       fonts,
       page,
       globalBlocks,
@@ -100,41 +102,6 @@ export function publish() {
           onError: rej
         }
       });
-    });
-  };
-}
-
-export function addFonts(addedFonts) {
-  return (dispatch, getState) => {
-    const usedFonts = fontSelector(getState());
-    const newFonts = addedFonts.reduce((acc, curr) => {
-      const { type, fonts } = curr;
-      const fontData = (usedFonts[type] && usedFonts[type].data) || [];
-
-      // Separated Deleted Font with Normal Font
-      const [deletedFonts, normalFont] = _.partition(fonts, font =>
-        font.hasOwnProperty("deleted")
-      );
-      const newFonts = normalFont.map(font => ({ ...font, brizyId: uuid() }));
-
-      // Make new Data, check deleted Font
-      return {
-        ...acc,
-        [`${type}`]: {
-          data: fontData
-            .map(
-              font =>
-                deletedFonts.find(({ brizyId }) => font.brizyId === brizyId) ||
-                font
-            )
-            .concat(newFonts)
-        }
-      };
-    }, {});
-
-    return dispatch({
-      type: ADD_FONTS,
-      payload: mergeDeep(usedFonts, newFonts)
     });
   };
 }
@@ -237,20 +204,6 @@ export function createGlobalBlock({ id, data, meta }) {
   };
 }
 
-export function updateGlobalBlock({ id, data, meta }) {
-  return {
-    type: UPDATE_GLOBAL_BLOCK,
-    payload: {
-      id,
-      data
-    },
-    meta: {
-      is_autosave: 1,
-      ...meta
-    }
-  };
-}
-
 export function deleteGlobalBlock({ id }) {
   return {
     type: DELETE_GLOBAL_BLOCK,
@@ -318,14 +271,6 @@ export function importKit(kit) {
 
 // ui
 
-export function updateUI(key, value) {
-  return {
-    type: UPDATE_UI,
-    key,
-    value
-  };
-}
-
 export function setDeviceMode(mode) {
   return updateUI("deviceMode", mode);
 }
@@ -367,5 +312,14 @@ export function updateScreenshot({ blockId, data, meta }) {
       data
     },
     meta
+  };
+}
+
+// error
+
+export function updateError(data) {
+  return {
+    type: UPDATE_ERROR,
+    payload: data
   };
 }

@@ -1,26 +1,15 @@
-// BG
-export { toolbarBgType } from "./toolbarBg";
-
 // BG Image
-export { toolbarBgImage, toolbarBgImageAttachment } from "./toolbarBgImage";
+export { toolbarBgImage } from "./toolbarBgImage";
 
 // BG Video
 export {
   toolbarBgVideoUrl,
-  toolbarBgVideoQuality,
   toolbarBgVideoLoop,
   toolbarBgVideoStart
 } from "./toolbarBgVideo";
 
 // BG Map
 export { toolbarBgMapAddress, toolbarBgMapZoom } from "./toolbarBgMap";
-
-// Slider
-export {
-  toolbarSliderColorHexAndOpacity,
-  toolbarSliderColorPalette,
-  toolbarSliderColorFields
-} from "./toolbarSlider";
 
 // Border Radius
 export {
@@ -64,23 +53,13 @@ export {
   toolbarLinkExternal,
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
-  toolbarLinkTargetUrl,
-  toolbarLinkHref,
   toolbarLinkPopup,
   toolbarLinkUpload,
-  toolbarActionClosePopup,
-  toolbarLinkMessageSuccess,
-  toolbarLinkMessageError,
-  toolbarLinkMessageRedirect
+  toolbarActionClosePopup
 } from "./toolbarLink";
 
 // Horizontal Align
-export {
-  toolbarHorizontalAlign2,
-  toolbarHorizontalAlign,
-  toolbarVerticalAlign,
-  toolbarVerticalAlignToggle
-} from "./toolbarAlign";
+export { toolbarVerticalAlign } from "./toolbarAlign";
 
 // Size
 export {
@@ -88,8 +67,7 @@ export {
   toolbarSizeHeightHeightPx,
   toolbarSizeSizeSizePercent,
   toolbarSizeWidthSizePercent,
-  toolbarSizeContainerSize,
-  toolbarSizeSpacing
+  toolbarSizeContainerSize
 } from "./toolbarSize";
 
 // Padding
@@ -108,9 +86,6 @@ export {
   toolbarShowOnMobile,
   toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
-
-// Revers Columns
-export { toolbarReverseColumns } from "./toolbarReverseColumns";
 
 // zIndex
 export { toolbarZIndex } from "./toolbarZIndex";
@@ -144,7 +119,6 @@ export {
 // Disabled
 export {
   toolbarDisabledMedia,
-  toolbarDisabledHorizontalAlign,
   toolbarDisabledAdvancedSettings,
   toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
@@ -152,43 +126,50 @@ export {
   toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile,
-  toolbarDisabledZIndex
+  toolbarDisabledZIndex,
+  toolbarDisabledPadding,
+  toolbarDisabledMargin,
+  toolbarDisabledDuplicate,
+  toolbarDisabledRemove
 } from "./toolbarDisabled";
 
 // Element Containers
 export {
   toolbarElementContainerTypeAll,
   toolbarElementContainerTypeImageMap,
-  toolbarElementContainerType
+  toolbarElementContainerType,
+  toolbarElementContainerTypeResponsive
 } from "./toolbarElementContainer";
 
 // Element Section
 export {
   toolbarElementSectionBoxShadow,
   toolbarElementSectionSaved,
-  toolbarElementSectionFullHeight,
   toolbarElementSectionSlider,
   toolbarElementSectionSliderColor,
   toolbarElementSectionGlobal,
-  toolbarElementSectionHeaderType
+  toolbarElementSectionHeaderType,
+  toolbarElementSectionHeightStyle
 } from "./toolbarElementSection";
 
 // Element Row
-export {
-  toolbarElementRowColumnsHeightStyle,
-  toolbarElementRowColumnsHeight
-} from "./toolbarElementRow";
+export { toolbarElementRowColumnsHeight } from "./toolbarElementRow";
 
 // Element Video
 export {
-  toolbarElementVideoLink,
-  toolbarElementVideoRatio,
+  toolbarElementVideoUpload,
   toolbarElementVideoControls,
   toolbarElementVideoStart,
-  toolbarElementVideoCover,
-  toolbarElementVideoCoverZoom,
+  toolbarElementVideoEnd,
   toolbarElementVideoPlaySize
 } from "./toolbarElementVideo";
+
+// Element Video Playlist
+export {
+  toolbarElementVideoPlaylistSizeWidthPixel,
+  toolbarElementVideoPlaylistItemImageSize,
+  toolbarElementVideoPlaylistItemGrid
+} from "./toolbarElementVideoPlaylist";
 
 // Element Countdown
 export {
@@ -196,22 +177,21 @@ export {
   toolbarElementCountdownHour,
   toolbarElementCountdownMinute,
   toolbarElementCountdownTimeZone,
-  toolbarElementCountdownLanguage
+  toolbarElementCountdownLanguage,
+  toolbarElementCountdown2Style,
+  toolbarElementCountdown2Redirect,
+  toolbarElementCountdown2Actions
 } from "./toolbarElementCountdown";
 
 //Element Counter
 export {
   toolbarElementCounterStart,
   toolbarElementCounterEnd,
-  toolbarElementCounterDuration
+  toolbarElementCounterStyles
 } from "./toolbarElementCounter";
 
 // Element SoundCloud
-export {
-  toolbarElementSoundCloudLink,
-  toolbarElementSoundCloudAutoPlay,
-  toolbarElementSoundCloudStyle
-} from "./toolbarElementSoundCloud";
+export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 
 // Element Cloneable
 export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
@@ -219,30 +199,17 @@ export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 // Element Embed
 export { toolbarElementEmbedCode } from "./toolbarElementEmbed";
 
-// Element ImageGallery
-export {
-  toolbarElementImageGalleryGridColumn,
-  toolbarElementImageGallerySpacing,
-  toolbarElementImageGalleryLightBox
-} from "./toolbarElementImageGallery";
-
 // Element Line
 export {
   toolbarElementLineBorderStyle,
   toolbarElementLineBorderWidth
 } from "./toolbarElementLine";
 
-// Element ProgressBar
-export {
-  toolbarElementProgressBarPercentage,
-  toolbarElementProgressBarShowPercentage,
-  toolbarElementProgressBarBg2ColorHexAndOpacity,
-  toolbarElementProgressBarBg2ColorPalette,
-  toolbarElementProgressBarBg2ColorFields
-} from "./toolbarElementProgressBar";
-
 // Element Image
-export { toolbarImageLinkExternal } from "./toolbarElementImage";
+export {
+  toolbarImageLinkExternal,
+  toolbarImageTags
+} from "./toolbarElementImage";
 
 // Element Popup2
 export {
@@ -252,10 +219,8 @@ export {
   toolbarContainerPopup2CloseVerticalPosition,
   toolbarContainerPopup2CloseFill,
   toolbarContainerPopup2CloseBorderRadius,
-  toolbarContainerPopup2CloseAlign,
   toolbarContainerPopup2CloseCustomSize,
   toolbarContainerPopup2CloseBgSize,
-  toolbarContainerPopup2ClosePosition,
   toolbarContainerPopup2ScrollPage,
   toolbarContainerPopup2ClickOutsideToClose,
   toolbarContainerPopup2ShowCloseButton
@@ -272,119 +237,35 @@ export {
 } from "./toolbarTypography2";
 
 // Icon
-export { toolbarIconSize, toolbarIconSpacing } from "./toolbarIcon";
+export { toolbarIconSize } from "./toolbarIcon";
 
 // Element Facebook Button
-export {
-  toolbarElementFbButtonType,
-  toolbarElementFbButtonLayout,
-  toolbarElementFbButtonSize,
-  toolbarElementFbButtonShare,
-  toolbarElementFbButtonCounter,
-  toolbarElementFbButtonFriends
-} from "./toolbarElementFbButton";
-
-// Element Map
-export {
-  toolbarElementMapAddress,
-  toolbarElementMapZoom
-} from "./toolbarElementMap";
-
-// Element Facebook Page
-export {
-  toolbarElementFbPageTabs,
-  toolbarElementFbPageHeight,
-  toolbarElementFbPageSmallHeader,
-  toolbarElementFbPageHideCover,
-  toolbarElementFbPageShowFacepile,
-  toolbarElementFbPageLink
-} from "./toolbarElementFbPage";
-
-// Element Facebook Group
-export {
-  toolbarElementFbGroupWidth,
-  toolbarElementFbGroupSkin,
-  toolbarElementFbGroupShowSocialContext,
-  toolbarElementFbGroupShowMetaData,
-  toolbarElementFbGroupLink
-} from "./toolbarElementFbGroup";
-
-// Element Facebook Comments
-export {
-  toolbarElementFbCommentsNumPosts,
-  toolbarElementFbCommentsTargetUrl,
-  toolbarElementFbCommentsHref
-} from "./toolbarElementFbComments";
-
-// Element Facebook Embed
-export {
-  toolbarElementFbEmbedType,
-  toolbarElementFbEmbedPostAndVideoShowText,
-  toolbarElementFbEmbedVideoAllowFullScreen,
-  toolbarElementFbEmbedVideoAutoPlay,
-  toolbarElementFbEmbedVideoCaptions,
-  toolbarElementFbEmbedPostHref,
-  toolbarElementFbEmbedVideoHref
-} from "./toolbarElementFbEmbed";
+export { toolbarElementFbButtonSize } from "./toolbarElementFbButton";
 
 // Elements WOO
 export {
-  toolbarElementWOOProductPageProductID,
-  toolbarElementWOOCategoriesColumns,
-  toolbarElementWOOCategoriesNumber,
-  toolbarElementWOOCategoriesOrderBy,
   toolbarElementWOOCategoriesOrder,
-  toolbarElementWOOPagesShortCode
+  toolbarElementWOOProductsOrder
 } from "./toolbarElementsWOO";
 
 //Element WP Posts
-export {
-  toolbarElementWPPostsType,
-  toolbarElementWPPostsNumber,
-  toolbarElementWPPostsCategory,
-  toolbarElementWPPostsAuthor,
-  toolbarElementWPPostsInclude,
-  toolbarElementWPPostsExclude,
-  toolbarElementWPPostsStatus,
-  toolbarElementWPPostsMetaKey,
-  toolbarElementWPPostsMetaValue,
-  toolbarElementWPPostsOrderBy,
-  toolbarElementWPPostsOrder
-} from "./toolbarElementWPPosts";
+export { toolbarElementWPPostsNumber } from "./toolbarElementWPPosts";
 
 // WP Custom Shortcode
-export {
-  toolbarElementWPCustomShortCode
-} from "./toolbarElementWPCustomShortCode";
+export { toolbarElementWPCustomShortCode } from "./toolbarElementWPCustomShortCode";
 
 export {
   toolbarElementForm2SpacingPx,
-  toolbarElementForm2Type,
-  toolbarElementForm2Required,
-  toolbarElementForm2DateTimeOptions,
-  toolbarElementForm2RadioCheckboxOptions,
-  toolbarElementForm2FileUploadOptions,
-  toolbarElementForm2SelectOptions,
   toolbarElementForm2NumberOptions,
   toolbarElementForm2Apps,
-  toolbarElementForm2LabelSwitch,
   toolbarElementForm2Size,
-  toolbarElementForm2BorderRadius,
-  toolbarElementForm2PlaceholderSwitch,
-  toolbarElementForm2FieldsLabelSpacing
+  toolbarElementForm2BorderRadius
 } from "./toolbarElementForm2";
-
-// Elements WOO
-export {
-  toolbarElementWOOAddToCartProductID,
-  toolbarElementWOOAddToCartStyle
-} from "./toolbarElementsWOO";
 
 // Element Icon Text
 export {
   toolbarElementIconTextListDisabled,
   toolbarElementIconTextIconPosition,
-  toolbarElementIconTextIconSpacing,
   toolbarElementIconDisabledSettings
 } from "./toolbarElementIconText";
 
@@ -409,24 +290,41 @@ export { toolbarAnchorName } from "./toolbarAnchorName";
 //CSS ID
 export { toolbarCSSID } from "./toolbarCSSID";
 
-// Element Breadcrumbs
-export { toolbarElementBreadcrumbsSpacing } from "./toolbarElementBreadcrumbs";
-
-// Element Post info
-export { toolbarElementPostInfoSpacing } from "./toolbarElementPostInfo";
-
-// Element Star Rating
-export {
-  toolbarElementStarRatingRating,
-  toolbarElementStarRatingLabel
-} from "./toolbarElementStarRating";
-
+// Element Audio
 export {
   toolbarElementAudioUpload,
-  toolbarElementAudioShowCurrentTime,
-  toolbarElementAudioShowDurationTime,
-  toolbarElementAudioShowProgressBarTrack,
-  toolbarElementAudioShowProgressBarVolume,
-  toolbarElementAudioIconSize,
-  toolbarElementAudioCover
+  toolbarElementAudioIconSize
 } from "./toolbarElementAudio";
+
+// Element WOOPrice
+export {
+  toolbarElementWOOPriceColumn,
+  toolbarElementWOOPriceSpacing
+} from "./toolbarElementWOOPrice";
+
+// Element WP Posts
+export {
+  toolbarElementPostsTaxonomy,
+  toolbarElementPostsOrder,
+  toolbarElementPostsPagination
+} from "./toolbarElementPosts";
+
+// Element Carousel
+export {
+  toolbarElementCarouselAutoPlay,
+  toolbarElementCarouselNavigationArrow,
+  toolbarElementCarouselNavigationDots,
+  toolbarElementCarouselTaxonomy,
+  toolbarElementCarouselOrderBy,
+  toolbarElementCarouselOrder,
+  toolbarElementCarouselPadding
+} from "./toolbarElementCarousel";
+
+// Twitter
+export { toolbarElementTwitter } from "./toolbarElementTwitter";
+
+// Element Accordion
+export { toolbarElementAccordionSpacing } from "./toolbarElementAccordion";
+
+// Element Search
+export { toolbarElementSearchStyle } from "./toolbarElementSearch";

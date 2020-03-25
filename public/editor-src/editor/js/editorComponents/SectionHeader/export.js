@@ -1,8 +1,8 @@
 import $ from "jquery";
 
 // brzSticky is imported in export.js from Component/Sticky
-export default function() {
-  $(".brz-section__header--animated").brzSticky({
+export default function($node) {
+  $node.find(".brz-section__header--animated").brzSticky({
     type: "animated",
     refNode: function() {
       return $(this)
@@ -14,7 +14,7 @@ export default function() {
       $(this).toggleClass("brz-section__header--animated-opened", isSticky);
     }
   });
-  $(".brz-section__header--fixed").brzSticky({
+  $node.find(".brz-section__header--fixed").brzSticky({
     type: "fixed",
     refNode: function() {
       return $(this)

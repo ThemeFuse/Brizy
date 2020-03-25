@@ -10,10 +10,11 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
-import Toolbar from "visual/component/Toolbar";
+import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import ColumnResizer from "./components/ColumnResizer";
@@ -40,7 +41,9 @@ class Column extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  containerBorder = React.createRef();
+  containerBorderRef = React.createRef();
+
+  toolbarRef = React.createRef();
 
   shouldComponentUpdate(nextProps) {
     const { meta, tabletReversed, mobileReversed } = this.props;
@@ -54,8 +57,8 @@ class Column extends EditorComponent {
   }
 
   handleResizeStart = position => {
-    if (this.containerBorder.current) {
-      this.containerBorder.current.setActive(true);
+    if (this.containerBorderRef.current) {
+      this.containerBorderRef.current.setActive(true);
     }
 
     this.props.onResizeStart(position);
@@ -66,11 +69,15 @@ class Column extends EditorComponent {
   };
 
   handleResizeEnd = position => {
-    if (this.containerBorder.current) {
-      this.containerBorder.current.setActive(false);
+    if (this.containerBorderRef.current) {
+      this.containerBorderRef.current.setActive(false);
     }
 
     this.props.onResizeEnd(position);
+  };
+
+  handleToolbarEscape = () => {
+    this.toolbarRef.current.show();
   };
 
   getMeta(v) {
@@ -117,7 +124,10 @@ class Column extends EditorComponent {
 
   renderToolbar = ContainerBorderButton => {
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.toolbarRef}
+      >
         <SortableHandle>
           <ContainerBorderButton />
         </SortableHandle>
@@ -185,7 +195,7 @@ class Column extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -256,7 +266,7 @@ class Column extends EditorComponent {
               >
                 <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
                   <ContainerBorder
-                    ref={this.containerBorder}
+                    ref={this.containerBorderRef}
                     color={isInnerRow && inGrid ? "red" : "blue"}
                     borderStyle="solid"
                     activateOnContentClick={false}
@@ -266,7 +276,9 @@ class Column extends EditorComponent {
                   >
                     {this.renderResizer("left")}
                     {this.renderResizer("right")}
-                    {this.renderContent(v, vs, vd)}
+                    <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                      {this.renderContent(v, vs, vd)}
+                    </ToolbarExtend>
                   </ContainerBorder>
                 </ContextMenu>
               </Roles>

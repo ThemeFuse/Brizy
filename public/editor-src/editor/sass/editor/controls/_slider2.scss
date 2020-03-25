@@ -1,0 +1,53 @@
+@import "../../variables";
+
+// UI Slider 2
+@function encodeHex($colour) {
+  @return "%23" + str-slice("#{$colour}", 2, -1);
+}
+
+@mixin thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.45);
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='7' width='7'%3E%3Cline x1='0' y1='0' x2='7' y2='0' style='stroke:#{encodeHex($brand-primary)};stroke-width:1' shape-rendering='crispEdges' /%3E%3Cline x1='0' y1='50%25' x2='7' y2='50%25' style='stroke:#{encodeHex($brand-primary)};stroke-width:1' shape-rendering='crispEdges' /%3E%3Cline x1='0' y1='99%25' x2='7' y2='99%25' style='stroke:#{encodeHex($brand-primary)};stroke-width:1' shape-rendering='crispEdges' /%3E%3C/svg%3E");
+  background-size: 7px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@mixin track {
+  height: $options-control-radius;
+  background-color: $brand-primary;
+  border-radius: $options-control-radius;
+  display: flex;
+  align-items: center;
+}
+
+input.brz-ed-control--slider2 {
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+
+  &::-moz-range-track {
+    @include track;
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+}

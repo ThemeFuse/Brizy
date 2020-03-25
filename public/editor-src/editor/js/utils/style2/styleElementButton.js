@@ -14,7 +14,9 @@ export function styleElementButtonBorderRadius({ v, device, state }) {
     state
   });
 
-  return tempBorderRadiusType === undefined
+  // todo: find other solution for hover check.
+  // We should know from toolbar if the option has hover support or not
+  return tempBorderRadiusType === undefined || state === "hover"
     ? undefined
     : tempBorderRadiusType === "rounded"
     ? 500

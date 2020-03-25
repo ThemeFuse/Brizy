@@ -1,25 +1,14 @@
+@import "../../variables";
+@import "../../mixins/input";
+
 // --- Input Control
 .brz-ed-control__textarea {
-  font-family: $font-family-1;
-  font-size: $control-font-size;
-  letter-spacing: $control-letter-spacing;
-  line-height: 22px;
-  background-color: $control-background-color;
-  color: #fff;
-  width: auto;
-  flex: 1 1 auto;
-  height: 136px;
-  padding: 5px 10px;
-  border-radius: $control-border-radius;
-  border: 0;
-  outline: 0;
-  resize: none;
+  @include textarea;
 
-  @include placeholder {
-    & {
-      color: rgba(234, 241, 255, 0.2);
-      font-style: italic;
-      font-size: 1em;
-    }
-  }
+  height: 136px;
+  flex: 1 1 auto;
+}
+
+.brz-ed-control__textarea2 {
+  @include textarea;
 }

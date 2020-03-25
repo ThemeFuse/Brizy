@@ -1,30 +1,14 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueKey } from "visual/utils/onChange";
 
-const getToolbar = (v, level) => {
-  const disabledItems = [
-    {
-      id: "iconSize",
-      type: "slider",
-      disabled: true
-    },
-    {
-      id: "iconSpacing",
-      type: "slider",
-      disabled: true
-    }
-  ];
-  const subMenuDisabledItems = [
-    {
-      id: "subMenuIconSize",
-      type: "slider",
-      disabled: true
-    },
-    {
-      id: "subMenuIconSpacing",
-      type: "slider",
-      disabled: true
-    }
-  ];
+export default (level, isMMenu) => {
+  return {
+    getItems: isMMenu ? getItemsMMenu(level) : getItemsSimple(level)
+  };
+};
+
+const getItemsSimple = level => ({ v, device }) => {
+  const dvk = key => defaultValueKey({ key, device });
 
   return [
     {
@@ -36,9 +20,10 @@ const getToolbar = (v, level) => {
       disabled: level >= 1,
       options: [
         {
-          id: "iconImage",
-          label: t("Icon"),
+          id: "icon",
           type: "iconSetter",
+          devices: "desktop",
+          label: t("Icon"),
           canDelete: true,
           position: 10,
           value: {
@@ -50,7 +35,20 @@ const getToolbar = (v, level) => {
             iconType: type
           })
         },
-        ...(v.iconName === "" ? disabledItems : [])
+        ...(v.iconName === ""
+          ? [
+              {
+                id: dvk("iconSize"),
+                type: "slider",
+                disabled: true
+              },
+              {
+                id: "iconSpacing",
+                type: "slider",
+                disabled: true
+              }
+            ]
+          : [])
       ]
     },
     {
@@ -63,8 +61,9 @@ const getToolbar = (v, level) => {
       options: [
         {
           id: "iconImage",
-          label: t("Icon"),
           type: "iconSetter",
+          devices: "desktop",
+          label: t("Icon"),
           position: 10,
           canDelete: true,
           value: {
@@ -76,25 +75,65 @@ const getToolbar = (v, level) => {
             iconType: type
           })
         },
-        ...(v.iconName === "" ? subMenuDisabledItems : [])
+        ...(v.iconName === ""
+          ? [
+              {
+                id: "subMenuIconSize",
+                type: "slider",
+                disabled: true
+              },
+              {
+                id: "subMenuIconSpacing",
+                type: "slider",
+                disabled: true
+              }
+            ]
+          : [])
       ]
-    }
+    },
+    ...(level < 1
+      ? [
+          {
+            id: "subMenuToolbarTypography",
+            type: "popover",
+            disabled: true,
+            options: []
+          },
+          {
+            id: "subMenuToolbarColor",
+            type: "popover",
+            disabled: true,
+            options: []
+          }
+        ]
+      : []),
+    ...(level >= 1
+      ? [
+          {
+            id: "advancedSettings",
+            type: "advancedSettings",
+            devices: "desktop"
+          },
+          {
+            id: "toolbarTypography",
+            type: "popover",
+            disabled: true,
+            options: []
+          },
+          {
+            id: "toolbarColor",
+            type: "popover",
+            disabled: true,
+            options: []
+          }
+        ]
+      : [])
   ];
 };
 
-const getMMenuToolbar = v => {
-  const mMenuDisabledItems = [
-    {
-      id: "mMenuIconSize",
-      type: "slider",
-      disabled: true
-    },
-    {
-      id: "mMenuIconSpacing",
-      type: "slider",
-      disabled: true
-    }
-  ];
+// eslint-disable-next-line no-unused-vars
+const getItemsMMenu = level => ({ v, device }) => {
+  const dvk = key => defaultValueKey({ key, device });
 
   return [
     {
@@ -105,9 +144,10 @@ const getMMenuToolbar = v => {
       position: 20,
       options: [
         {
-          id: "iconImage",
-          label: t("Icon"),
+          id: "icon",
           type: "iconSetter",
+          devices: "desktop",
+          label: t("Icon"),
           canDelete: true,
           position: 10,
           value: {
@@ -119,69 +159,21 @@ const getMMenuToolbar = v => {
             iconType: type
           })
         },
-        ...(v.iconName === "" ? mMenuDisabledItems : [])
+        ...(v.iconName === ""
+          ? [
+              {
+                id: dvk("mMenuIconSize"),
+                type: "slider",
+                disabled: true
+              },
+              {
+                id: dvk("mMenuIconSpacing"),
+                type: "slider",
+                disabled: true
+              }
+            ]
+          : [])
       ]
     }
   ];
 };
-
-export function getItemsForDesktop(v, component) {
-  const { level, mMenu } = component.props;
-
-  return [
-    ...(mMenu ? getMMenuToolbar(v) : getToolbar(v, level)),
-    {
-      id: "toolbarMenu",
-      type: "popover",
-      disabled: true
-    }
-  ];
-}
-
-export function getItemsForTablet(v) {
-  const mMenuDisabledItems = [
-    {
-      id: "tabletToolbarMenuItem",
-      type: "popover",
-      disabled: true
-    },
-    {
-      id: "tabletMMenuToolbarMenuItem",
-      type: "popover",
-      disabled: true
-    }
-  ];
-
-  return [
-    ...(v.iconName === "" ? mMenuDisabledItems : []),
-    {
-      id: "tabletToolbarMenu",
-      type: "popover",
-      disabled: true
-    }
-  ];
-}
-
-export function getItemsForMobile(v) {
-  const mMenuDisabledItems = [
-    {
-      id: "mobileToolbarMenuItem",
-      type: "popover",
-      disabled: true
-    },
-    {
-      id: "mobileMMenuToolbarMenuItem",
-      type: "popover",
-      disabled: true
-    }
-  ];
-
-  return [
-    ...(v.iconName === "" ? mMenuDisabledItems : []),
-    {
-      id: "mobileToolbarMenu",
-      type: "popover",
-      disabled: true
-    }
-  ];
-}

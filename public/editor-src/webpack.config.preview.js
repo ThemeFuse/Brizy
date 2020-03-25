@@ -21,7 +21,7 @@ module.exports = options => {
     module: {
       rules: [
         {
-          test: /\.js?$/,
+          test: /\.(ts|js)$/,
           include: [path.resolve(__dirname, "editor")],
           loader: "babel-loader",
           options: babelrc.preview()

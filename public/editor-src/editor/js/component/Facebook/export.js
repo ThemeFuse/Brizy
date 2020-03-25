@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 function createElementFb(lang, appId) {
   var node = document.createElement("div");
   node.className = "fb-root";
@@ -22,9 +20,9 @@ function createElementFb(lang, appId) {
   })(document, "script", "facebook-jssdk");
 }
 
-export default function() {
-  var $facebook = $(".brz-facebook");
-  var $fbRoot = $(".fb-root");
+export default function($node) {
+  var $facebook = $node.find(".brz-facebook");
+  var $fbRoot = $node.find(".fb-root");
 
   if ($facebook.length && $fbRoot.length === 0) {
     var lang = $facebook.attr("lang");

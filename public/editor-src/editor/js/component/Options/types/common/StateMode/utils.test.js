@@ -4,12 +4,8 @@ import {
   stateIcon,
   stateTitle
 } from "visual/component/Options/types/common/StateMode/utils";
-import {
-  defaultState,
-  HOVER,
-  NORMAL,
-  stateToValue
-} from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import * as State from "visual/utils/stateMode";
 
 describe("Testing 'filterByState' function", () => {
   const normHover = { id: "1", states: [NORMAL, HOVER] };
@@ -28,7 +24,7 @@ describe("Testing 'filterByState' function", () => {
     const options = [empty, noStates];
     const result = [empty, noStates];
 
-    expect(filterByState(defaultState(), options)).toEqual(result);
+    expect(filterByState(State.empty, options)).toEqual(result);
   });
 
   test("For 'grid' option type, check options that it wraps", () => {
@@ -101,30 +97,21 @@ describe("Testing 'flatten' function", () => {
 });
 
 describe("Testing 'stateIcon' function", function() {
-  test("For 'normal' return 'nc-circle'", () => {
-    expect(stateIcon(NORMAL)).toBe("nc-circle");
-  });
-
-  test("For 'hover' return 'nc-circle'", () => {
-    expect(stateIcon(HOVER)).toBe("nc-hover");
-  });
-
-  test("For any other state return state name", () => {
-    ["a", "b", "c"].map(state => expect(stateIcon(state)).toBe(state));
+  test.each([
+    [NORMAL, "nc-circle"],
+    [HOVER, "nc-hover"],
+    [ACTIVE, "nc-target"]
+  ])(`For '%s' return '%s'`, (state, icon) => {
+    expect(stateIcon(state)).toBe(icon);
   });
 });
 
 describe("Testing 'stateTitle' function", function() {
-  test("For 'normal' return 'Normal'", () => {
-    expect(stateTitle(NORMAL)).toBe("Normal");
-  });
-
-  test("For 'hover' return 'Hover'", () => {
-    expect(stateTitle(HOVER)).toBe("Hover");
-  });
-
-  test("For any other state return capitalized state name", () => {
-    const names = { a: "A", b: "B", c: "C" };
-    ["a", "b", "c"].map(state => expect(stateTitle(state)).toBe(names[state]));
+  test.each([
+    [NORMAL, "Normal"],
+    [HOVER, "Hover"],
+    [ACTIVE, "Active"]
+  ])(`For '%s' return '%s'`, (state, icon) => {
+    expect(stateTitle(state)).toBe(icon);
   });
 });

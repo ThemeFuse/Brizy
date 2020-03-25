@@ -1,18 +1,5 @@
 import { defaultValueKey } from "visual/utils/onChange";
 
-export function toolbarDisabledHorizontalAlign({
-  device,
-  state,
-  devices = "all"
-}) {
-  return {
-    id: defaultValueKey({ key: "horizontalAlign", device, state }),
-    type: "toggle",
-    devices,
-    disabled: true
-  };
-}
-
 export function toolbarDisabledAdvancedSettings({
   device,
   devices = "all",
@@ -101,4 +88,42 @@ export function toolbarDisabledShowOnResponsive({ device }) {
   }
 
   return r;
+}
+
+export function toolbarDisabledDuplicate({ device, devices = "all" }) {
+  return {
+    id: defaultValueKey({ key: "duplicate", device }),
+    type: "button",
+    devices,
+    disabled: true
+  };
+}
+
+export function toolbarDisabledRemove({ device, devices = "all" }) {
+  return {
+    id: defaultValueKey({ key: "remove", device }),
+    type: "button",
+    devices,
+    disabled: true
+  };
+}
+
+export function toolbarDisabledPadding({ device, state, devices = "all" }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  return {
+    id: dvk("padding"),
+    devices,
+    type: "multiPicker",
+    disabled: true
+  };
+}
+
+export function toolbarDisabledMargin({ device, state, devices = "all" }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  return {
+    id: dvk("margin"),
+    devices,
+    type: "multiPicker",
+    disabled: true
+  };
 }

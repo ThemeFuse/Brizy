@@ -1,14 +1,11 @@
-import { OUTSET, toType, types } from "./type";
+import * as Type from "./type";
+import { testReader } from "visual/utils/types/Type.test";
+import { testMonoid } from "visual/utils/types/Monoid.test";
 
-describe("Testing 'toType' function", function() {
-  test("Return value if it is a valid type", () => {
-    types.map(t => expect(toType({}, t)).toBe(t));
-  });
+describe("Testing 'read' function", function() {
+  testReader(Type.read, Type.types, [undefined, null, "test", 1, [], {}]);
+});
 
-  test("Return orElse if value is not valid type", () => {
-    const orElse = {};
-    [undefined, null, 1, "test", []].map(t =>
-      expect(toType(orElse, t)).toBe(orElse)
-    );
-  });
+describe("Testing BoxShadow Type monoidal behavior", function() {
+  testMonoid(Type, Type.types);
 });

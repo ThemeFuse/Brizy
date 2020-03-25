@@ -1,3 +1,6 @@
+// Spacing
+$space-between-controls: 15px;
+
 // Colors
 //
 // Gray scale and brand colors for use across Bootstrap.
@@ -28,12 +31,11 @@ $desktop-paddings: 48px;
 $z-indexes: (
   "select-portal": 1110,
   "brz-ed-fixed": 1100,
-  "notification": 1090,
   "popup-overlay": 1080,
   "toolbar": 1070,
   "sidebar": 1060,
   "toolbar-collapsible": 1050,
-  "section-menu": 1050,
+  "section-menu": 1055,
   "section-popup": 1060,
   "forms-select": 1065,
   "toolbar-column": 1040,
@@ -42,7 +44,8 @@ $z-indexes: (
   "column-resize": 1055,
   "adder-block": 1051,
   "padding-resizer": 99,
-  "mega-menu": 1050
+  "mega-menu": 1050,
+  "notifications": 1120
 );
 
 // Sidebar
@@ -68,6 +71,14 @@ $sidebar-content-footer-bg: $sidebar-header-bg;
 $sidebar-font-color: #fff;
 $sidebar-btn-bg: #91a652;
 $sidebar-dropdown-bg: #3c424c;
+
+// Notifications
+//
+// Color
+$notification-success-color: #3caa1a;
+$notification-info-color: #1a86f2;
+$notification-warn-color: #f19117;
+$notification-error-color: #f00;
 
 // Toolbar
 //
@@ -170,14 +181,15 @@ $spinner-border-animate-color: rgba(3, 8, 15, 0.9);
 //
 // Styles
 $floating-button-grey: #879294;
-$floating-button-blue: $brand-primary;
+$floating-button-tail: $brand-primary;
+$floating-button-blue: #0085ba;
 $floating-button-red: #ed2164;
 
 // Borders
 //
 // Colors
 $by-block-border-grey: $floating-button-grey;
-$by-block-border-blue: $floating-button-blue;
+$by-block-border-blue: $brand-primary;
 $by-block-border-red: $floating-button-red;
 
 // Options

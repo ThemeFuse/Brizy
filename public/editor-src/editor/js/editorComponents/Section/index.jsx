@@ -17,6 +17,7 @@ import { stripIds } from "visual/utils/models";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleSection } from "./styles";
 import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -37,7 +38,14 @@ class Section extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const { showOnDesktop, showOnMobile, showOnTablet, slider } = v;
+    const {
+      showOnDesktop,
+      showOnMobile,
+      showOnTablet,
+      slider,
+      verticalAlign,
+      fullHeight
+    } = v;
     const desktopFullW = getContainerW({
       v,
       w: wInFullPage,
@@ -69,7 +77,9 @@ class Section extends EditorComponent {
         showOnDesktop: showOnDesktop === "on",
         showOnMobile: showOnMobile === "on",
         showOnTablet: showOnTablet === "on",
-        marginType: this.marginType
+        marginType: this.marginType,
+        verticalAlign,
+        fullHeight
       }
     });
   }
@@ -140,7 +150,10 @@ class Section extends EditorComponent {
       meta: this.getMeta(v),
       className: "brz-section__items",
       sliderAutoPlay: sliderAutoPlay === "on",
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig)
+      toolbarExtend: this.makeToolbarPropsFromConfig2(
+        toolbarExtendConfig,
+        sidebarExtendConfig
+      )
     });
 
     return <SectionItems {...itemsProps} />;
@@ -283,7 +296,7 @@ class Section extends EditorComponent {
     } = this.props;
     const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
-    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
     globalsData.value._id = this.getId();
 
     onChange(globalsData, {

@@ -1,6 +1,5 @@
-import $ from "jquery";
 import "./lib/jquery.brzThemeIcon";
 
-export default function() {
-  $(".brz-icon-svg").brzThemeIcon();
+export default function($node) {
+  $node.find(".brz-icon-svg").brzThemeIcon();
 }

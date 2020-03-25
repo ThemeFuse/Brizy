@@ -7,8 +7,9 @@ import Background from "visual/component/Background";
 import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
-import { CollapsibleToolbar } from "visual/component/Toolbar";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
@@ -32,6 +33,8 @@ class SectionItem extends EditorComponent {
 
   mounted = false;
 
+  collapsibleToolbarRef = React.createRef();
+
   componentDidMount() {
     this.mounted = true;
   }
@@ -41,10 +44,12 @@ class SectionItem extends EditorComponent {
       meta: {
         section: {
           isSlider,
+          verticalAlign,
           marginType,
           showOnDesktop,
           showOnMobile,
-          showOnTablet
+          showOnTablet,
+          fullHeight
         }
       }
     } = this.props;
@@ -54,7 +59,9 @@ class SectionItem extends EditorComponent {
           marginType: newMarginType,
           showOnDesktop: newShowOnDesktop,
           showOnMobile: newShowOnMobile,
-          showOnTablet: newShowOnTablet
+          showOnTablet: newShowOnTablet,
+          verticalAlign: newVerticalAlign,
+          fullHeight: newFullHeight
         }
       }
     } = nextProps;
@@ -63,9 +70,18 @@ class SectionItem extends EditorComponent {
       (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
       (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
       (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
-    const marginUpdate = marginType !== newMarginType;
 
-    return isSlider || deviceUpdate || marginUpdate;
+    const verticalAlignChanged = verticalAlign !== newVerticalAlign;
+    const marginUpdate = marginType !== newMarginType;
+    const heightStyleUpdate = fullHeight !== newFullHeight;
+
+    return (
+      isSlider ||
+      verticalAlignChanged ||
+      deviceUpdate ||
+      marginUpdate ||
+      heightStyleUpdate
+    );
   }
 
   shouldComponentUpdate(nextProps) {
@@ -86,6 +102,10 @@ class SectionItem extends EditorComponent {
       tabsCurrentElement: "tabCurrentElement",
       tabsColor: "tabOverlay"
     });
+  };
+
+  handleToolbarEscape = () => {
+    this.collapsibleToolbarRef.current.open();
   };
 
   handlePaddingResizerChange = patch => this.patchValue(patch);
@@ -123,7 +143,8 @@ class SectionItem extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
@@ -175,9 +196,10 @@ class SectionItem extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className } = v;
+    const { className, containerType } = v;
     const classNameSectionContent = classnames(
       "brz-section__content",
+      `brz-section--${containerType}`,
       className
     );
 
@@ -190,7 +212,9 @@ class SectionItem extends EditorComponent {
           >
             <ContainerBorder showBorder={false} activateOnContentClick={false}>
               {this.renderToolbar()}
-              {this.renderItems(v, vs, vd)}
+              <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                {this.renderItems(v, vs, vd)}
+              </ToolbarExtend>
             </ContainerBorder>
           </Roles>
         </div>
@@ -199,9 +223,10 @@ class SectionItem extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className } = v;
+    const { className, containerType } = v;
     const classNameSectionContent = classnames(
       "brz-section__content",
+      `brz-section--${containerType}`,
       className
     );
 

@@ -10,8 +10,12 @@
     "tabsColor": ""
   },
 
+  "type": "simple",
+
   "style": {
     "className": "",
+
+    "strokeWidth": 7,
 
     "fontStyle": "",
     "fontFamilyType": "google",
@@ -37,7 +41,47 @@
     "tempHoverColorOpacity": 1,
     "tempHoverColorPalette": "color3",
 
+    "strokeColorType": "solid",
+
+    "strokeColorHex": "#eeeeee",
+    "strokeColorOpacity": 1,
+    "strokeColorPalette": "color3",
+
+    "hoverStrokeColorType": null,
+
+    "hoverStrokeColorHex": null,
+    "hoverStrokeColorOpacity": null,
+    "hoverStrokeColorPalette": null,
+
+    "tempHoverStrokeColorOpacity": null,
+    "tempHoverStrokeColorPalette": null,
+
+    "tempStrokeColorOpacity": 1,
+    "tempStrokeColorPalette": "color3",
+
+    "fillColorType": "solid",
+
+    "fillColorHex": "#cccccc",
+    "fillColorOpacity": 1,
+    "fillColorPalette": "color6",
+
+    "tempFillColorOpacity": 1,
+    "tempFillColorPalette": "",
+
+    "hoverFillColorType": null,
+
+    "hoverFillColorHex": null,
+    "hoverFillColorOpacity": null,
+    "hoverFillColorPalette": null,
+
+    "tempHoverFillColorOpacity": null,
+    "tempHoverFillColorPalette": null,
+
+    "width": 35,
+
     "customCSS": "",
+
+    "hoverTransition": 50,
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,

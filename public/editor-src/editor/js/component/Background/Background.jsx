@@ -58,7 +58,6 @@ class Background extends Component {
     const {
       video,
       bgVideoLoop,
-      bgVideoQuality,
       bgVideoStart,
       image,
       parallax,
@@ -83,7 +82,6 @@ class Background extends Component {
               <Video
                 video={video}
                 bgVideoLoop={bgVideoLoop}
-                bgVideoQuality={bgVideoQuality}
                 bgVideoStart={bgVideoStart}
               />
             )}

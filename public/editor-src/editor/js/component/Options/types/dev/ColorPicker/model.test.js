@@ -28,20 +28,20 @@ describe("Testing 'getOpacity' function", function() {
   testGetterValidation(getOpacity, "opacity", validOpacity, invalidOpacity);
 
   test("Return 0.5", () => {
-    expect(getOpacity(0.7, { opacity: 0.5 })).toBe(0.5);
+    expect(getOpacity({ opacity: 0.5 }, 0.7)).toBe(0.5);
   });
 
   test("Return default value if opacity is not a number", () => {
-    expect(getOpacity(0.7, {})).toBe(0.7);
-    expect(getOpacity(0.7, { opacity: "test" })).toBe(0.7);
+    expect(getOpacity({}, 0.7)).toBe(0.7);
+    expect(getOpacity({ opacity: "test" }, 0.7)).toBe(0.7);
   });
 
   test("Return default value if opacity is lower then 0", () => {
-    expect(getOpacity(0.7, { opacity: -3 })).toBe(0.7);
+    expect(getOpacity({ opacity: -3 }, 0.7)).toBe(0.7);
   });
 
   test("Return default value if opacity is higher then 1", () => {
-    expect(getOpacity(0.7, { opacity: 3 })).toBe(0.7);
+    expect(getOpacity({ opacity: 3 }, 0.7)).toBe(0.7);
   });
 });
 
@@ -55,7 +55,7 @@ describe("Testing 'setOpacity' function", function() {
   );
 
   test("If the value is not a valid opacity return the original model", () => {
-    [undefined, null, "1", -3, 1.1].map(v =>
+    [undefined, null, -3, 1.1].map(v =>
       expect(setOpacity(v, model)).toBe(model)
     );
   });
@@ -102,12 +102,12 @@ describe("Testing 'getHex' function", function() {
   );
 
   test("Return hex value if it is a valid HEX string", () => {
-    expect(getHex("#111111", { hex: "#333333" })).toBe("#333333");
+    expect(getHex({ hex: "#333333" }, "#111111")).toBe("#333333");
   });
 
   test("Return orElse if hex value is not a valid HEX string", () => {
     [undefined, null, "123", 3, "#zzzz"].map(v =>
-      expect(getHex("#111111", { hex: "v" })).toBe("#111111")
+      expect(getHex({ hex: "v" }, "#111111")).toBe("#111111")
     );
   });
 });
@@ -154,13 +154,6 @@ describe("Testing 'setHex' function", function() {
   test("If palette has no value, keep the value", () => {
     expect(setHex("#456789", { ...model, palette: "" }).palette).toBe("");
   });
-
-  test("Set tempPalette to empty string", () => {
-    expect(setHex("#456789", model)).toMatchObject({ tempPalette: "" });
-    expect(setHex("#456789", { ...model, tempPalette: "" })).toMatchObject({
-      tempPalette: ""
-    });
-  });
 });
 
 describe("Testing 'getPalette' function", function() {
@@ -172,12 +165,12 @@ describe("Testing 'getPalette' function", function() {
   );
 
   test("Return the palette if it is a valid palette value", () => {
-    expect(getPalette("color3", { palette: "color7" })).toBe("color7");
+    expect(getPalette({ palette: "color7" }, "color3")).toBe("color7");
   });
 
   test("Return default value if the palette value is not valid", () => {
     [undefined, null, 3, "test3", {}].map(palette =>
-      expect(getPalette("color3", { palette })).toBe("color3")
+      expect(getPalette({ palette }, "color3")).toBe("color3")
     );
   });
 });

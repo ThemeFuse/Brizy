@@ -32,8 +32,8 @@ export class NotFound extends EditorComponent {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig, {
-          extendFilter: toolbarExtendFilter
+        {...this.makeToolbarPropsFromConfig(toolbarConfig, null, {
+          parentItemsFilter: toolbarExtendFilter
         })}
       >
         <div style={style}>

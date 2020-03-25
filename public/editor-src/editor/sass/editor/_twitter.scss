@@ -1,0 +1,10 @@
+.brz-twitter {
+  & > div {
+    height: 100%;
+    margin-bottom: -3px;
+    pointer-events: none;
+  }
+  &.brz-customSize > div {
+    margin-bottom: 0;
+  }
+}

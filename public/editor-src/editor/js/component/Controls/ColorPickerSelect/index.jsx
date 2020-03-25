@@ -2,7 +2,7 @@ import React from "react";
 import T from "prop-types";
 import classNames from "classnames";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
-import Select from "visual/component/Controls/Select";
+import { Select2 } from "visual/component/Controls/Select2";
 
 export const ColorPickerSelect = props => {
   const className = classNames(
@@ -15,14 +15,15 @@ export const ColorPickerSelect = props => {
   return (
     <div className={className}>
       {props.children.length && (
-        <Select
+        <Select2
           className="brz-control__select--dark brz-control__select__auto"
-          defaultValue={props.value.select}
-          itemHeight={props.itemHeight}
+          value={props.value.select}
+          editable={false}
           onChange={onSelectChange}
+          size={"short"}
         >
           {props.children}
-        </Select>
+        </Select2>
       )}
       <ColorPicker3
         onChange={props.onChange}

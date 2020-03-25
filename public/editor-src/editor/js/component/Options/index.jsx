@@ -33,8 +33,19 @@ export const filterOptionsData = data =>
       return false;
     }
 
+    const optionType = OptionTypes[type];
+
+    if (process.env.NODE_ENV === "development") {
+      if (!optionType) {
+        /* eslint-disable no-console */
+        console.error(`Option type "${type}" is not defined`);
+        /* eslint-enabled no-console */
+      }
+    }
+
     if (
-      typeof OptionTypes[type].shouldOptionBeFiltered === "function" &&
+      optionType &&
+      typeof optionType.shouldOptionBeFiltered === "function" &&
       OptionTypes[type].shouldOptionBeFiltered(option)
     ) {
       return false;

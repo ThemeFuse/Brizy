@@ -2,7 +2,12 @@ import React from "react";
 import Input from "./Input";
 import Select from "./Select";
 
-export default function Population({ choices, value, renderUnset, onChange }) {
+export default function Population({
+  choices,
+  value = "",
+  renderUnset,
+  onChange
+}) {
   let input;
 
   if (value) {

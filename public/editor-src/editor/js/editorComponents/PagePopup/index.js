@@ -7,11 +7,12 @@ import HotKeys from "visual/component/HotKeys";
 import UIEvents from "visual/global/UIEvents";
 import { getStore } from "visual/redux/store";
 import { triggersAmountSelector } from "visual/redux/selectors";
-import { addFonts, updateTriggers } from "visual/redux/actions";
+import { updateTriggers } from "visual/redux/actions";
+import { addFonts } from "visual/redux/actions2";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import defaultValue from "./defaultValue.json";
-import { uuid } from "visual/utils/uuid.js";
+import { uuid } from "visual/utils/uuid";
 import { stripSystemKeys, setIds } from "visual/utils/models";
 
 class PagePopup extends EditorComponent {
@@ -130,11 +131,16 @@ class PagePopup extends EditorComponent {
       })
     });
 
-    return <EditorArrayComponent {...popupsProps} />;
+    return (
+      <React.Fragment>
+        <EditorArrayComponent {...popupsProps} />
+        <div className="brz-root__container-after" />
+      </React.Fragment>
+    );
   }
 
   renderForEdit(v) {
-    if (v.items.length === 0) {
+    if (IS_EDITOR && v.items.length === 0) {
       return (
         <React.Fragment>
           <FirstBlockAdder

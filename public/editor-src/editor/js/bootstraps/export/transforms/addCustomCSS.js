@@ -11,5 +11,7 @@ export default function addCustomCSS($) {
     $this.replaceWith(children);
   });
 
-  $("head").append(`<style id="custom-css">${styles}</style>`);
+  $("head").append(
+    `<style class="brz-style" id="custom-css">${styles}</style>`
+  );
 }
