@@ -44,26 +44,20 @@ export default class TooltipContent extends React.Component {
     }
   }
 
-  /*
-   * commented because reposition causes react perf problems (cascading updates)
-   * and it seems unnecessary because when commented nothing seems changes visually.
-   * Will leave here for a number of releases and potentially remove in the future
-   */
-  // componentDidUpdate() {
-  //   if (this.isRepositioning) {
-  //     return;
-  //   }
+  componentDidUpdate() {
+    if (this.isRepositioning) {
+      return;
+    }
 
-  //   const { toolbar } = this.props;
+    const { toolbar } = this.props;
 
-  //   if (toolbar) {
-  //     this.repositionByToolbar(toolbar);
-  //   }
-  // }
+    if (toolbar) {
+      this.repositionByToolbar(toolbar);
+    }
+  }
 
   repositionByToolbar(toolbar) {
     let { placement, arrowPlacementStyle } = this.props;
-    const vertical = placement.split("-")[0];
 
     // eslint-disable-next-line react/no-find-dom-node
     const toolbarNode = ReactDOM.findDOMNode(toolbar);
@@ -98,32 +92,22 @@ export default class TooltipContent extends React.Component {
     const toolbarItemCenter =
       Math.round((toolbarItemWidthCenter - contentWidth / 2) * 10) / 10;
 
-    const contentTop = windowTop + toolbarTop - TOOLTIP_SPACE;
+    const contentTop = windowTop + toolbarTop - TOOLTIP_SPACE - contentHeight;
     const contentLeft = toolbarLeft + toolbarItemCenter;
     const contentMinLeft = SIDEBAR_WIDTH;
     const contentMaxLeft = document.documentElement.clientWidth - contentWidth;
-    const viewBottom =
-      document.documentElement.clientHeight - toolbarTop - contentHeight;
 
     let placementStyle = {
-      top: "unset",
-      bottom: `calc(100vh - ${contentTop}px)`,
+      top: contentTop,
       left: contentLeft,
       position: toolbarCSSPosition
     };
 
     // try to open in the same way (above, below) as the toolbar did
-    if (
-      getPosition() === "below" ||
-      contentTop - contentHeight <= windowTop ||
-      (vertical === "bottom" && viewBottom > contentHeight)
-    ) {
-      placementStyle.bottom = "";
+    if (getPosition() === "below" || contentTop <= windowTop) {
       placementStyle.top =
         windowTop + toolbarTop + toolbarHeight + TOOLTIP_SPACE;
       placement = `bottom-${placement.split("-")[1]}`;
-    } else if (vertical === "bottom" && viewBottom <= contentHeight) {
-      placement = `top-${placement.split("-")[1]}`;
     }
     if (contentLeft >= contentMaxLeft) {
       const arrowPosition =

@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.0.118
+Stable tag: 1.0.119
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,11 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.119 - 2020-03-25 =
+* Fixed: Tooltip position
+* Fixed: Brizy content for subpages
+
 
 = 1.0.118 - 2020-03-25 =
 * New: Notification system for errors and if two users work on the same page.
