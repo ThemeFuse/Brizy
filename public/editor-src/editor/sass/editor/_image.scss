@@ -1,0 +1,40 @@
+// Image
+.brz-image {
+  overflow: initial;
+}
+.brz-ed-image__content {
+  position: relative;
+  width: 100%;
+}
+.brz-ed-image__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+
+  .brz-img {
+    max-width: none;
+    user-select: none;
+    display: block;
+  }
+  .brz-picture:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+  }
+}

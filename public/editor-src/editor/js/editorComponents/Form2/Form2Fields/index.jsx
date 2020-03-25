@@ -2,9 +2,11 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
 import Form2FieldsItems from "./Items";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as toolbarExtendConfigLabel from "./toolbarExtendLabel";
-import * as toolbarExtendConfigSelect from "./toolbarExtendSelect";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendLabel from "./toolbarExtendLabel";
+import * as sidebarExtendLabel from "./sidebarExtendLabel";
+import * as toolbarExtendSelect from "./toolbarExtendSelect";
+import * as sidebarExtendSelect from "./sidebarExtendSelect";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { styleFormFields, styleFormSelect } from "./styles";
@@ -33,20 +35,24 @@ class Form2Fields extends EditorComponent {
       )
     );
     const itemsProps = this.makeSubcomponentProps({
-      labelType,
-      placeholder,
-      className,
-      selectClassName,
       bindWithKey: "items",
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig),
-      labelToolbarExtend: this.makeToolbarPropsFromConfig2(
-        toolbarExtendConfigLabel,
-        { allowExtend: false }
-      ),
-      selectToolbarExtend: this.makeToolbarPropsFromConfig2(
-        toolbarExtendConfigSelect,
-        { allowExtend: false }
-      )
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend),
+      itemProps: {
+        labelType,
+        placeholder,
+        className,
+        selectClassName,
+        toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
+          toolbarExtendLabel,
+          sidebarExtendLabel,
+          { allowExtend: false }
+        ),
+        toolbarExtendSelect: this.makeToolbarPropsFromConfig2(
+          toolbarExtendSelect,
+          sidebarExtendSelect,
+          { allowExtend: false }
+        )
+      }
     });
 
     return <Form2FieldsItems {...itemsProps} />;

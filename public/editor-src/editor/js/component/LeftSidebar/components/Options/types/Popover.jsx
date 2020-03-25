@@ -4,7 +4,7 @@ import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/LeftSidebar/components/Options";
 import { getStore } from "visual/redux/store";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 
 export default class DrawerPopover extends React.Component {
   static defaultProps = {

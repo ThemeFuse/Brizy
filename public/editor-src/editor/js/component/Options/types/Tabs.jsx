@@ -61,6 +61,19 @@ class TabsOptionType extends React.Component {
     return tabs.filter(tab => filterOptionsData(tab.options).length !== 0);
   }
 
+  sortTabs(tabs) {
+    // try to avoid creating a new object when unnecessary
+    for (const tab of tabs) {
+      if (tab.position !== undefined) {
+        return [...tabs].sort(
+          (a, b) => (a.position || 100) - (b.position || 100)
+        );
+      }
+    }
+
+    return tabs;
+  }
+
   render() {
     const {
       tabs,
@@ -72,7 +85,7 @@ class TabsOptionType extends React.Component {
       location,
       toolbar
     } = this.props;
-    const items = this.filterTabs(tabs).map(
+    const items = this.sortTabs(this.filterTabs(tabs)).map(
       ({ id, title, label, options, tabIcon }) => {
         const newValue = id || label || tabIcon;
         return (

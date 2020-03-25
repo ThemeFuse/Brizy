@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.0.117
+Stable tag: 1.0.118
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,39 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.118 - 2020-03-25 =
+* New: Notification system for errors and if two users work on the same page.
+* New: Maintenance Mode
+* New: Add a Get Help link
+* New: Shortcut, press Esc key to select parent container
+* New: Added toggle options to make the More settings right sidebar sticky
+* New: Changed the template rules to allow users to create templates for posts from a specific category
+* New: Added compatibility Broken Link Checker
+* New: Added compatibility with SeoPress
+* New: Added compatibility with RankMath
+* New: Add Maintenance Mode Link in the admin toolbar
+* New: Changed the template rules to allow users to create templates for posts from a specific category
+* New: Added compatibility Broken Link Checker
+* New: Added compatibility with SeoPress
+* New: Added compatibility with RankMath
+* New: Add Maintenance Mode Link in the admin toolbar
+* Improved: Added 2 styles for Progress element
+* Improved: Added icons, vertical/horizontal options for Tabs element
+* Improved: Added icons, tags for the Accordion element
+* Improved: Added styles, redirect, message for the Countdown element
+* Improved: Added 3 styles for the Counter element
+* Improved: Element toolbar doesn’t cover the content you are editing anymore
+* Improved: Optimised and re-written options in the builder for Border, Box Shadow, Code Mirror, Color Picker, Image upload, Input Text, Multi Select, Element Toolbar, Select, Slider, Switch, Tabs, Toggle, Textarea, Typography
+* Fixed: Enable/Disable editing with Brizy
+* Fixed: Brizy post revisions
+* Fixed: Brizy templates that are using the default theme template
+* Fixed: Enable/Disable editing with brizy
+* Fixed: Refactoring the post type field in editor config
+* Fixed: Post field shortcode to use a sample post for templates
+* Fixed: Brizy post revisions
+* Fixed: Brizy templates that are using the default theme template
+* Fixed: Removed header To from email headers
 
 = 1.0.117 - 2020-03-12 =
 * Fixed: Export errors for certain users

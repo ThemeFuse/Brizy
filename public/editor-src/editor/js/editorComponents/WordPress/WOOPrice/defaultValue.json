@@ -1,0 +1,93 @@
+{
+  "style": {
+    "fontStyle": "",
+    "fontFamilyType": "google",
+    "families": {
+      "fontFamily": "lato"
+    },
+    "fontSize": 12,
+    "fontWeight": 700,
+    "lineHeight": 1.3,
+    "letterSpacing": 3,
+
+    "saleFontStyle": "",
+    "saleFontFamilyType": "google",
+    "saleFamilies": {
+      "saleFontFamily": "lato"
+    },
+    "saleFontSize": 12,
+    "saleFontWeight": 700,
+    "saleLineHeight": 1.3,
+    "saleLetterSpacing": 3,
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "color1",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color1",
+
+    "saleColorHex": "#000000",
+    "saleColorOpacity": 1,
+    "saleColorPalette": "color1",
+
+    "tempSaleColorOpacity": 1,
+    "tempSaleColorPalette": "color1",
+
+    "spacing": 0,
+
+    "column": "off",
+
+    "hoverSpacing": null,
+
+    "hoverColumn": null,
+
+    "tabletFontStyle": "",
+    "tabletFontFamilyType": "google",
+    "tabletFamilies": {
+      "tabletFontFamily": "lato"
+    },
+    "tabletFontSize": 11,
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1.8,
+    "tabletLetterSpacing": 1,
+
+    "tabletSaleFontStyle": "",
+    "tabletSaleFontFamilyType": "google",
+    "tabletSaleFamilies": {
+      "tabletSaleFontFamily": "lato"
+    },
+    "tabletSaleFontSize": 12,
+    "tabletSaleFontWeight": 700,
+    "tabletSaleLineHeight": 1.8,
+    "tabletSaleLetterSpacing": 1,
+
+    "tabletSpacing": null,
+
+    "tabletColumn": null,
+
+    "mobileFontStyle": "",
+    "mobileFontFamilyType": "google",
+    "mobileFamilies": {
+      "mobileFontFamily": "lato"
+    },
+    "mobileFontSize": 11,
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1.8,
+    "mobileLetterSpacing": 1,
+
+    "mobileSaleFontStyle": "",
+    "mobileSaleFontFamilyType": "google",
+    "mobileSaleFamilies": {
+      "mobileSaleFontFamily": "lato"
+    },
+    "mobileSaleFontSize": 12,
+    "mobileSaleFontWeight": 700,
+    "mobileSaleLineHeight": 1.8,
+    "mobileSaleLetterSpacing": 1,
+
+    "mobileSpacing": null,
+
+    "mobileColumn": null
+  }
+}

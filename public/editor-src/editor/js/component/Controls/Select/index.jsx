@@ -43,11 +43,16 @@ class Select extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.inPortal && !this.isRepositioning) {
-      this.reposition();
-    }
-  }
+  /*
+   * commented because reposition causes react perf problems (cascading updates)
+   * and it seems unnecessary because when commented nothing seems changes visually.
+   * Will leave here for a number of releases and potentially remove in the future
+   */
+  // componentDidUpdate() {
+  //   if (!this.props.inPortal && !this.isRepositioning) {
+  //     this.reposition();
+  //   }
+  // }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.defaultValue !== nextProps.defaultValue) {

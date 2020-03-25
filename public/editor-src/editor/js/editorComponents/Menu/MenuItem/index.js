@@ -6,25 +6,10 @@ import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import ClickOutside from "visual/component/ClickOutside";
 import MenuItemItems from "./items";
-import * as toolbarConfig from "./toolbar";
+import toolbarConfigFn from "./toolbar";
+import sidebarConfigFn from "./sidebar";
 import { styleClassName, styleMmMenuClassName } from "./styles";
 import defaultValue from "./defaultValue.json";
-
-const filteredToolbarExtends = item =>
-  item.id !== "toolbarColor" &&
-  item.id !== "horizontalAlign" &&
-  item.id !== "toolbarTypography" &&
-  item.id !== "tabletHorizontalAlign" &&
-  item.id !== "tabletToolbarTypography" &&
-  item.id !== "mobileHorizontalAlign" &&
-  item.id !== "mobileToolbarTypography";
-
-const filteredSubMenuToolbarExtends = item =>
-  item.id !== "subMenuToolbarColor" &&
-  item.id !== "subMenuToolbarTypography" &&
-  item.id !== "subMenuAdvancedSettings" &&
-  item.id !== "tabletSubMenuToolbarTypography" &&
-  item.id !== "mobileSubMenuToolbarTypography";
 
 class MenuItem extends EditorComponent {
   static get componentId() {
@@ -90,42 +75,42 @@ class MenuItem extends EditorComponent {
     );
   }
 
-renderLink(v, content) {
-  const { url, target, classes, attrTitle } = v;
+  renderLink(v, content) {
+    const { url, target, classes, attrTitle } = v;
 
-  const trimUrl = url.trim();
+    const trimUrl = url.trim();
 
-  let type = "";
-  let href = "";
+    let type = "";
+    let href = "";
 
-  if (trimUrl.charAt(0) === "#") {
-    type = "anchor";
-    href = url.replace("#", "");
-  } else {
-    type = "external";
-    href = trimUrl;
-  }
-
-  let props = {
-    href,
-    type,
-    target: target === "_blank" ? "on" : "off",
-    className: classes,
-    attr: {
-      title: attrTitle
+    if (trimUrl.charAt(0) === "#") {
+      type = "anchor";
+      href = url.replace("#", "");
+    } else {
+      type = "external";
+      href = trimUrl;
     }
-  };
 
-  if (IS_EDITOR) {
-    props.onDragStart = e => {
-      e.preventDefault();
-      return false;
+    let props = {
+      href,
+      type,
+      target: target === "_blank" ? "on" : "off",
+      className: classes,
+      attr: {
+        title: attrTitle
+      }
     };
-    props.draggable = "false";
-  }
 
-  return <Link {...props}>{content}</Link>;
-}
+    if (IS_EDITOR) {
+      props.onDragStart = e => {
+        e.preventDefault();
+        return false;
+      };
+      props.draggable = "false";
+    }
+
+    return <Link {...props}>{content}</Link>;
+  }
 
   renderMegaMenu() {
     const itemProps = this.makeSubcomponentProps({
@@ -155,14 +140,13 @@ renderLink(v, content) {
     const clickOutsideExceptions = [
       ".brz-ed-sidebar",
       ".brz-ed-toolbar",
+      ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed"
     ];
-    const { level } = this.props;
-    const toolbarExtendFilter =
-      level >= 1
-        ? toolbarItems => toolbarItems.filter(filteredToolbarExtends)
-        : toolbarItems => toolbarItems.filter(filteredSubMenuToolbarExtends);
+    const { level, mMenu } = this.props;
+    const toolbarConfig = toolbarConfigFn(level, mMenu);
+    const sidebarConfig = sidebarConfigFn(level, mMenu);
 
     return (
       <ClickOutside
@@ -174,10 +158,7 @@ renderLink(v, content) {
           onClick={this.handleClick}
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig(toolbarConfig, {
-              allowExtend: true,
-              extendFilter: toolbarExtendFilter
-            })}
+            {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
           >
             {this.renderLink(v, content)}
           </Toolbar>
@@ -190,9 +171,15 @@ renderLink(v, content) {
   }
 
   renderMMenu(v, content) {
+    const { level, mMenu } = this.props;
+    const toolbarConfig = toolbarConfigFn(level, mMenu);
+    const sidebarConfig = sidebarConfigFn(level, mMenu);
+
     return (
       <li className={styleMmMenuClassName(v)}>
-        <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig)}>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        >
           {this.renderLink(v, content)}
         </Toolbar>
         {this.renderDropDown(v)}

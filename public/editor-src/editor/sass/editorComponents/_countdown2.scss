@@ -1,0 +1,68 @@
+// Countdown
+.brz-countdown2 {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    word-break: break-word;
+    word-wrap: break-word;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+    &:last-child {
+      margin-right: 0 !important;
+    }
+  }
+  &__number {
+    font-size: 1em;
+  }
+  &__label {
+    text-transform: capitalize;
+  }
+  .brz-countdown2-parts {
+    display: inline-flex;
+    width: 100%;
+  }
+  .brz-countdown2-message {
+    display: none;
+    min-height: 55px;
+    width: 100%;
+    margin-top: 15px;
+    padding: 17px 30px;
+    padding-bottom: 0;
+    text-align: center;
+  }
+}
+.brz-countdown2-style1 {
+  flex-direction: column;
+}
+.brz-countdown2-style2 {
+  .brz-countdown2__item {
+    flex-direction: row;
+  }
+  .brz-countdown2__label {
+    margin-left: 5px;
+  }
+}
+.brz-countdown2-style3 {
+  .brz-countdown2-parts {
+    align-items: center;
+  }
+  .brz-countdown2__item {
+    .brz-countdown2__label {
+      display: none;
+    }
+  }
+}
+.brz-countdown2_custom {
+  height: auto !important;
+  margin: 0 !important;
+}

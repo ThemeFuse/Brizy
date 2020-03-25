@@ -14,6 +14,10 @@ class BackgroundImage extends Inline {
 
   static formats(node) {
     let src = node.getAttribute("data-image_src");
+    if (!src) {
+      return null;
+    }
+
     let population = node.getAttribute("data-image_population");
     const x = parseInt(node.style.backgroundPositionX) || null;
     const y = parseInt(node.style.backgroundPositionY) || null;

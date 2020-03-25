@@ -4,12 +4,7 @@ import { videoUrl } from "visual/utils/video";
 
 import "../lib/jquery.background-video.js";
 
-export default function Video({
-  video,
-  bgVideoLoop,
-  bgVideoQuality,
-  bgVideoStart
-}) {
+export default function Video({ video, bgVideoLoop, bgVideoStart }) {
   const iframeStyle = {
     display: video ? "block" : "none"
   };
@@ -47,12 +42,6 @@ export default function Video({
 
   useLayoutEffect(() => {
     if (!isInitialMount.current) {
-      jQuery(videoRef.current).backgroundVideo("setQuality", bgVideoQuality);
-    }
-  }, [bgVideoQuality]);
-
-  useLayoutEffect(() => {
-    if (!isInitialMount.current) {
       jQuery(videoRef.current).backgroundVideo("seekTo", bgVideoStart);
     }
   }, [bgVideoStart]);
@@ -64,7 +53,6 @@ export default function Video({
       jQuery(videoRef.current).backgroundVideo({
         type: video.type,
         key: video.key,
-        quality: bgVideoQuality,
         loop: bgVideoLoop,
         start: bgVideoStart
       });
@@ -72,7 +60,6 @@ export default function Video({
       jQuery(videoRef.current).backgroundVideo("typeChange", {
         type: video.type,
         key: video.key,
-        quality: bgVideoQuality,
         loop: bgVideoLoop,
         start: bgVideoStart
       });
@@ -85,7 +72,6 @@ export default function Video({
       className="brz-bg-video"
       data-type={dataType}
       data-key={video.key}
-      data-quality={settings.quality}
       data-loop={settings.loop}
       data-start={bgVideoStart}
     >

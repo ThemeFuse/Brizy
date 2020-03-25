@@ -8,12 +8,20 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ThemeIcon from "visual/component/ThemeIcon";
 import EditorIcon from "visual/component/EditorIcon";
-import Toolbar, { CollapsibleToolbar } from "visual/component/Toolbar";
+import Toolbar, {
+  CollapsibleToolbar,
+  ToolbarExtend
+} from "visual/component/Toolbar";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
 import HotKeys from "visual/component/HotKeys";
 import { uuid } from "visual/utils/uuid";
-import { stripIds } from "visual/utils/models";
+import {
+  stripIds,
+  IS_INTERNAL_POPUP,
+  IS_EXTERNAL_POPUP,
+  IS_GLOBAL_POPUP
+} from "visual/utils/models";
 import {
   wInTabletPage,
   wInMobilePage,
@@ -23,12 +31,14 @@ import { getStore } from "visual/redux/store";
 import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
 import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { triggersSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
 import * as toolbarConfig from "./toolbar";
-import { style } from "./styles";
-import * as toolbarExtendConfig from "./extendToolbar";
-import * as toolbarConfigClose from "./toolbarClose";
+import * as sidebarConfig from "./sidebar";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import * as toolbarCloseConfig from "./toolbarClose";
+import * as sidebarCloseConfig from "./sidebarClose";
 import { css } from "visual/utils/cssStyle";
+import { style } from "./styles";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
 import {
@@ -43,8 +53,6 @@ import { SectionPopup2Instances as Instances } from "visual/editorComponents/Sec
  * @type {*|Map|Map|"default"}
  */
 export const SectionPopup2Instances = Instances;
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class SectionPopup2 extends EditorComponent {
   static get componentId() {
@@ -63,6 +71,8 @@ class SectionPopup2 extends EditorComponent {
   // popup after it is unmounted when switching
   // from Global to normal
   static tmpGlobal = null;
+
+  collapsibleToolbarRef = React.createRef();
 
   constructor(...args) {
     super(...args);
@@ -118,6 +128,10 @@ class SectionPopup2 extends EditorComponent {
 
   handleDropClick = () => {
     this.close();
+  };
+
+  handleToolbarEscape = () => {
+    this.collapsibleToolbarRef.current.open();
   };
 
   getMeta(v) {
@@ -176,9 +190,11 @@ class SectionPopup2 extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig, {
-          allowExtend: false
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig, {
+          allowExtend: false,
+          allowExtendFromThirdParty: true
         })}
+        ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
@@ -206,9 +222,11 @@ class SectionPopup2 extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
-          allowExtend: false
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfig,
+          sidebarExtendConfig,
+          { allowExtend: false }
+        ),
         meta
       }
     });
@@ -226,7 +244,13 @@ class SectionPopup2 extends EditorComponent {
       <Background className={classNameBg} value={v} meta={meta}>
         <SortableZIndex zindex={1}>
           <div className="brz-container__wrap">
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfigClose)}>
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarCloseConfig,
+                sidebarCloseConfig,
+                { allowExtend: false }
+              )}
+            >
               <div className={className}>
                 <ThemeIcon name="close-popup" type="editor" />
               </div>
@@ -282,7 +306,9 @@ class SectionPopup2 extends EditorComponent {
           >
             <ContainerBorder showBorder={false} activateOnContentClick={false}>
               {this.renderToolbar()}
-              {this.renderItems(v, vs, vd)}
+              <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                {this.renderItems(v, vs, vd)}
+              </ToolbarExtend>
             </ContainerBorder>
           </Roles>
         </div>
@@ -353,7 +379,10 @@ class SectionPopup2 extends EditorComponent {
       "brz-popup2",
       "brz-popup2__preview",
       {
-        "brz-conditions-popup": IS_GLOBAL_POPUP
+        "brz-simple-popup": !IS_GLOBAL_POPUP,
+        "brz-conditions-popup": IS_GLOBAL_POPUP,
+        "brz-conditions-internal-popup": IS_INTERNAL_POPUP,
+        "brz-conditions-external-popup": IS_EXTERNAL_POPUP
       },
       className,
       customClassName
@@ -458,7 +487,7 @@ class SectionPopup2 extends EditorComponent {
     } = this.props;
     const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
 
-    const globalsData = stripIds(globalBlocks[globalBlockId]);
+    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
     globalsData.value._id = this.getId();
 
     onChange(globalsData, {

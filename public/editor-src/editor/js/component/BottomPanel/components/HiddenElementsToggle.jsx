@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { showHiddenElementsSelector } from "visual/redux/selectors";
-import { updateUI } from "visual/redux/actions";
+import { updateUI } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 
 function HiddenElementsToggle({ showHiddenElements, dispatch }) {

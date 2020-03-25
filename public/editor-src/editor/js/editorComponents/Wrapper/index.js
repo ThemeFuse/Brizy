@@ -6,9 +6,11 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
 import { Roles, currentUserRole } from "visual/component/Roles";
-import Toolbar from "visual/component/Toolbar";
+import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
-import * as toolbarExtendConfig from "./extendToolbar";
+import * as sidebarConfig from "./sidebar";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as sidebarExtendConfig from "./sidebarExtend";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import { percentageToPixels } from "visual/utils/meta";
@@ -28,10 +30,14 @@ class Wrapper extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  containerBorder = React.createRef();
+  toolbarRef = React.createRef();
 
   handleExtendParentToolbar = childToolbarExtend => {
     this.childToolbarExtend = childToolbarExtend;
+  };
+
+  handleToolbarEscape = () => {
+    this.toolbarRef.current.show();
   };
 
   getMeta(v) {
@@ -199,7 +205,10 @@ class Wrapper extends EditorComponent {
 
   renderToolbar = ContainerBorderButton => {
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.toolbarRef}
+      >
         <SortableHandle>
           <ContainerBorderButton />
         </SortableHandle>
@@ -220,11 +229,14 @@ class Wrapper extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         meta: this.getMeta(v),
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtendConfig, {
-          allowExtend: true,
-          allowExtendChild: false,
-          extendFilter: toolbarExtendFilter
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfig,
+          sidebarExtendConfig,
+          {
+            allowExtendFromChild: false,
+            parentItemsFilter: toolbarExtendFilter
+          }
+        ),
         extendParentToolbar: this.handleExtendParentToolbar
       }
     });
@@ -289,14 +301,19 @@ class Wrapper extends EditorComponent {
               fallbackRender={() => this.renderContent(v, vs, vd)}
             >
               <ContainerBorder
-                ref={this.containerBorder}
                 color="grey"
                 borderStyle="dotted"
                 showButton={v.showToolbar === "on"}
                 buttonPosition="topRight"
                 renderButtonWrapper={this.renderToolbar}
               >
-                {this.renderContent(v, vs, vd)}
+                {v.showToolbar === "on" ? (
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderContent(v, vs, vd)}
+                  </ToolbarExtend>
+                ) : (
+                  this.renderContent(v, vs, vd)
+                )}
               </ContainerBorder>
             </Roles>
           </ContextMenu>

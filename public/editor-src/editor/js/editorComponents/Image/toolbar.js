@@ -19,8 +19,7 @@ import {
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
-  toolbarHoverTransition,
-  toolbarDisabledAdvancedSettings
+  toolbarImageTags
 } from "visual/utils/toolbar";
 
 export const getMinSize = () => 5;
@@ -45,26 +44,26 @@ export default ({
   tabletContainerWidth,
   mobileWrapperSizes,
   mobileContainerWidth,
-  inGallery
+  gallery
 }) => ({
   getItemsForDesktop: getItemsForDesktop(
     desktopWrapperSizes,
     desktopContainerWidth,
-    inGallery
+    gallery
   ),
   getItemsForTablet: getItemsForTablet(
     tabletWrapperSizes,
     tabletContainerWidth,
-    inGallery
+    gallery
   ),
   getItemsForMobile: getItemsForMobile(
     mobileWrapperSizes,
     mobileContainerWidth,
-    inGallery
+    gallery
   )
 });
 
-export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
+export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
   const device = "desktop";
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
@@ -74,6 +73,7 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
     defaultValueValue({ v, key: "boxShadowColorHex", device }),
     defaultValueValue({ v, key: "boxShadowColorPalette", device })
   );
+  const { inGallery = false } = gallery || {};
 
   return [
     {
@@ -188,12 +188,17 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
                 },
                 {
                   id: "linkLightBox",
-                  disabled: inGallery,
                   label: t("Open in Lightbox"),
-                  type: "switch",
-                  value: v.linkLightBox
+                  type: "switch-dev",
+                  disabled: inGallery,
+                  devices: "desktop"
                 }
               ]
+            },
+            {
+              id: "tags",
+              label: t("Tags"),
+              options: [toolbarImageTags({ v, device, gallery })]
             }
           ]
         }
@@ -396,7 +401,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarImageLinkExternal({ v, inGallery }),
+                toolbarImageLinkExternal({
+                  v,
+                  inGallery
+                }),
                 toolbarLinkExternalBlank({ v }),
                 toolbarLinkExternalRel({ v })
               ]
@@ -410,7 +418,6 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "toolbarSettings",
       type: "popover",
@@ -544,36 +551,16 @@ export const getItemsForDesktop = (wrapperSizes, cW, inGallery) => v => {
           id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Styling"),
-                  tabIcon: "nc-styling",
-                  options: []
-                },
-                {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [toolbarHoverTransition({ v, position: 100 })]
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }
   ];
 };
 
-export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
-  const device = "tablet";
+export const getItemsForTablet = (wrapperSizes, cW, gallery) => v => {
+  const { inGallery = false } = gallery || {};
+
   return [
     {
       id: "toolbarImage",
@@ -656,7 +643,6 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
       position: 90,
       options: []
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "tabletToolbarSettings",
       type: "popover",
@@ -716,8 +702,8 @@ export const getItemsForTablet = (wrapperSizes, cW, inGallery) => v => {
   ];
 };
 
-export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
-  const device = "mobile";
+export const getItemsForMobile = (wrapperSizes, cW, gallery) => v => {
+  const { inGallery = false } = gallery || {};
 
   return [
     {
@@ -821,7 +807,6 @@ export const getItemsForMobile = (wrapperSizes, cW, inGallery) => v => {
       position: 90,
       options: []
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
       id: "mobileToolbarSettings",
       type: "popover",

@@ -1,0 +1,56 @@
+@import "../variables";
+
+/// @param {number} $size - arrow size
+/// @param {color} $color - arrow color
+/// @param {string} $root [.brz-ed-arrow] - arrow root selector
+@mixin arrow($size, $color, $root: ".brz-ed-arrow") {
+  // Arrows
+  #{$root} {
+    position: absolute;
+    top: -$size;
+    height: ($size * 2);
+    left: 50%;
+    margin-left: -$size;
+
+    &:after {
+      content: "";
+      display: block;
+      border-bottom: $size solid $color;
+      border-left: $size solid transparent;
+      border-right: $size solid transparent;
+    }
+
+    // Arrow Position
+    &--top,
+    &--top-start,
+    &--top-end,
+    &--top-left,
+    &--top-right,
+    &--top-center {
+      top: auto;
+      bottom: -($size * 2);
+
+      &:after {
+        border-top: $size solid $color;
+        border-bottom: $size solid transparent;
+      }
+    }
+
+    // Arrow Position
+    &--left,
+    &--left-start,
+    &--left-end {
+      left: unset;
+      right: -$size;
+      transform: rotate(90deg);
+    }
+
+    // Arrow Position
+    &--right,
+    &--right-start,
+    &--right-end {
+      left: -$size;
+      transform: rotate(-90deg);
+    }
+  }
+}

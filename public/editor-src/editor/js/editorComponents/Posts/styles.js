@@ -55,7 +55,12 @@ export function styleClassName(v) {
         gridGap: `${padding}px`
       },
       ".brz & ul.page-numbers": {
-        color: styleColor({ v, device: "desktop", state: "normal" }),
+        color: styleColor({
+          v,
+          device: "desktop",
+          state: "normal",
+          prefix: "paginationColor"
+        }),
         marginTop: `${paginationSpacing}px`
       },
       "@media (max-width: 991px)": {
@@ -108,7 +113,12 @@ export function styleCSSVars(v) {
   return {
     "--gridTemplateColumn": `repeat(${gridColumn}, minmax(0, ${columnWidth}))`,
     "--gridGap": `${padding}px`,
-    "--color": styleColor({ v, device: "desktop", state: "normal" }),
+    "--color": styleColor({
+      v,
+      device: "desktop",
+      state: "normal",
+      prefix: "paginationColor"
+    }),
     "--marginTop": `${paginationSpacing}px`,
     "--tabletGridTemplateColumn": `repeat(${tabletGridColumn}, minmax(0, ${tabletColumnWidth}))`,
     "--tabletGridGap": `${tabletPadding}px`,

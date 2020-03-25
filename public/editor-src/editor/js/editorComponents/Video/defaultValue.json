@@ -1,10 +1,18 @@
 {
   "content": {
-    "video": "",
-    "videoPopulation": "",
+    "type": "youtube",
     "ratio": "16:9",
+    "video": "",
+    "custom": "",
+    "videoPopulation": "",
     "controls": "on",
+    "branding": "on",
+    "intro": "on",
+    "autoplay": "off",
+    "muted": "off",
+    "loop": "off",
     "start": 0,
+    "end": 0,
 
     "coverImageSrc": "",
 
@@ -16,7 +24,17 @@
     "coverPositionY": 50,
     "coverPositionX": 50,
 
-    "coverZoom": 100
+    "coverZoom": 100,
+
+    "tabletCoverPositionY": null,
+    "tabletCoverPositionX": null,
+
+    "mobileCoverPositionY": null,
+    "mobileCoverPositionX": null,
+
+    "tabletCoverZoom": null,
+
+    "mobileCoverZoom": null
   },
 
   "toolbar": {
@@ -32,12 +50,124 @@
     "iconSizeWidth": 80,
     "iconSizeHeight": 80,
 
+    "controlsIconCustomSize": 16,
+
     "brightness": 100,
     "hue": 0,
     "saturation": 100,
     "contrast": 100,
 
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFamilies": {
+      "typographyFontFamily": "lato"
+    },
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.1,
+    "typographyLetterSpacing": 0,
+
+    "colorHex": "#0000ee",
+    "colorOpacity": 1.0,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1.0,
+    "tempColorPalette": "color8",
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "iconControlsColorType": "solid",
+
+    "iconControlsColorHex": "#0000ee",
+    "iconControlsColorOpacity": 1.0,
+    "iconControlsColorPalette": "color2",
+
+    "tempIconControlsColorOpacity": 1.0,
+    "tempIconControlsColorPalette": "color2",
+
+    "hoverIconControlsColorType": null,
+
+    "hoverIconControlsColorHex": null,
+    "hoverIconControlsColorOpacity": null,
+    "hoverIconControlsColorPalette": null,
+
+    "tempHoverIconControlsColorOpacity": null,
+    "tempHoverIconControlsColorPalette": null,
+
+    "controlsBgColorType": "solid",
+
+    "controlsBgColorHex": "#0000ee",
+    "controlsBgColorOpacity": 1.0,
+    "controlsBgColorPalette": "color6",
+
+    "tempControlsBgColorOpacity": 1.0,
+    "tempControlsBgColorPalette": "color6",
+
+    "hoverControlsBgColorType": null,
+
+    "hoverControlsBgColorHex": null,
+    "hoverControlsBgColorOpacity": null,
+    "hoverControlsBgColorPalette": null,
+
+    "tempHoverControlsBgColorOpacity": null,
+    "tempHoverControlsBgColorPalette": null,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#d62b63",
+    "bgColorOpacity": 0.75,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 0.75,
+    "tempBgColorPalette": "",
+
+    "hoverBgColorType": null,
+
+    "hoverBgColorHex": "#239ddb",
+    "hoverBgColorOpacity": 0.75,
+    "hoverBgColorPalette": "",
+
+    "tempHoverBgColorOpacity": 0.75,
+    "tempHoverBgColorPalette": "",
+
+    "bg2ColorType": "solid",
+
+    "bg2ColorHex": "#05CAB6",
+    "bg2ColorOpacity": 1,
+    "bg2ColorPalette": "color3",
+
+    "tempBg2ColorOpacity": 1,
+    "tempBg2ColorPalette": "color3",
+
+    "hoverBg2ColorType": null,
+
+    "hoverBg2ColorHex": null,
+    "hoverBg2ColorOpacity": null,
+    "hoverBg2ColorPalette": null,
+
+    "tempHoverBg2ColorOpacity": null,
+    "tempHoverBg2ColorPalette": null,
+
     "borderStyle": "",
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
 
     "tempBorderStyle": "solid",
 
@@ -97,54 +227,6 @@
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
 
-    "bgColorType": "solid",
-
-    "bgColorHex": "#d62b63",
-    "bgColorOpacity": 0.75,
-    "bgColorPalette": "",
-
-    "tempBgColorOpacity": 0.75,
-    "tempBgColorPalette": "",
-
-    "colorHex": "#0000ee",
-    "colorOpacity": 1.0,
-    "colorPalette": "",
-
-    "tempColorOpacity": 1.0,
-    "tempColorPalette": "color8",
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBgColorHex": "#239ddb",
-    "hoverBgColorOpacity": 0.75,
-    "hoverBgColorPalette": "",
-
-    "tempHoverBgColorOpacity": 0.75,
-    "tempHoverBgColorPalette": "",
-
-    "borderColorHex": "#66738d",
-    "borderColorOpacity": 0,
-    "borderColorPalette": "",
-
-    "tempBorderColorOpacity": 1,
-    "tempBorderColorPalette": "",
-
-    "hoverBgColorType": "solid",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
-    "size": 100,
-
     "boxShadow": "",
 
     "tempBoxShadow": "on",
@@ -187,12 +269,24 @@
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
 
+    "size": 100,
+
     "customCSS": "",
 
     "hoverTransition": 50,
 
     "tabletCoverImageWidth": null,
     "tabletCoverImageHeight": null,
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFamilies": {
+      "tabletTypographyFontFamily": null
+    },
+    "tabletTypographyFontSize": 16,
+    "tabletTypographyFontWeight": 400,
+    "tabletTypographyLineHeight": 1.1,
+    "tabletTypographyLetterSpacing": 0,
 
     "tabletBorderStyle": null,
 
@@ -254,6 +348,16 @@
 
     "mobileCoverImageWidth": null,
     "mobileCoverImageHeight": null,
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFamilies": {
+      "mobileTypographyFontFamily": null
+    },
+    "mobileTypographyFontSize": 16,
+    "mobileTypographyFontWeight": 400,
+    "mobileTypographyLineHeight": 1.1,
+    "mobileTypographyLetterSpacing": 0,
 
     "mobileBorderStyle": null,
 

@@ -53,8 +53,8 @@ describe("Testing 'getBlur' function", () => {
 });
 
 describe("Testing 'getSpread' function", () => {
-  const invalid = [undefined, null, "test", "test2", -1, -0.3];
-  const valid = times(1000, identity);
+  const invalid = [undefined, null, "test", "test2"];
+  const valid = [...times(10, identity), ...times(10, i => i * -1)];
   testGetterValidation(getSpread, "spread", valid, invalid);
 });
 
@@ -102,13 +102,41 @@ describe("Testing 'setBlur' function", function() {
   const invalid = [undefined, null, "test", -2, -1];
 
   testSetterValidation(setBlur, getBlur, {}, valid, invalid);
+
+  test("Setting the blur to 0 when spread is not 0, sets tempBlur 0 also", () => {
+    expect(setBlur(0, { spread: 1, blur: 1, tempBlur: 2 })).toMatchObject({
+      blur: 0,
+      tempBlur: 0
+    });
+  });
+
+  test("Setting the blur to 0 when spread is 0, do not set tempBlur", () => {
+    expect(setBlur(0, { spread: 0, blur: 1, tempBlur: 2 })).toMatchObject({
+      blur: 0,
+      tempBlur: 2
+    });
+  });
 });
 
 describe("Testing 'setSpread' function", function() {
-  const valid = times(100, identity);
-  const invalid = [undefined, null, "test", -2, -1];
+  const valid = [...times(15, identity), ...times(15, i => (i + 1) * -1)];
+  const invalid = [undefined, null, "test"];
 
   testSetterValidation(setSpread, getSpread, {}, valid, invalid);
+
+  test("Setting the spread to 0 when blur is not 0, sets tempSpread 0 also", () => {
+    expect(setSpread(0, { spread: 1, blur: 1, tempSpread: 2 })).toMatchObject({
+      spread: 0,
+      tempSpread: 0
+    });
+  });
+
+  test("Setting the spread to 0 when blur is 0, do not set tempSpread", () => {
+    expect(setSpread(0, { blur: 0, spread: 1, tempSpread: 2 })).toMatchObject({
+      spread: 0,
+      tempSpread: 2
+    });
+  });
 });
 
 describe("Testing 'setVertical' function", function() {

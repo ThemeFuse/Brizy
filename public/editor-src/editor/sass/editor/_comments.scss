@@ -1,0 +1,9 @@
+.brz-comments {
+  & > .brz-disqus-no-data {
+    text-align: center;
+    pointer-events: none;
+  }
+  & > #disqus_thread {
+    pointer-events: none;
+  }
+}

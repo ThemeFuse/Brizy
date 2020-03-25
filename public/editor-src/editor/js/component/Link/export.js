@@ -1,10 +1,9 @@
 import $ from "jquery";
 
-export default function() {
-  $(document).on(
-    "click",
-    ".brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a",
-    function(event) {
+export default function($node) {
+  $node
+    .find(".brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a")
+    .on("click", function(event) {
       var anchorHash = this.hash;
       var $target = $(document.getElementById(anchorHash.slice(1)));
 
@@ -24,6 +23,5 @@ export default function() {
             }
           );
       }
-    }
-  );
+    });
 }

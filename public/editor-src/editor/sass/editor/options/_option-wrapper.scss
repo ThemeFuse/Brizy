@@ -1,0 +1,24 @@
+.brz-ed-option-wrapper {
+  &.brz-ed-option__block {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1 1 auto;
+    }
+
+    & > .brz-ed-option__label,
+    & > .brz-control__select-population {
+      flex: none;
+    }
+
+    & > .brz-ed-option__label {
+      width: 100%;
+    }
+  }
+
+  &.brz-ed-grid__option {
+    padding: 0;
+  }
+}

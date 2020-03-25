@@ -421,48 +421,6 @@ export function toolbarContainerPopup2CloseBorderRadius({
   };
 }
 
-export function toolbarContainerPopup2CloseAlign({
-  v,
-  device,
-  state,
-  devices = "all",
-  position = 100
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("closeAlign"),
-    type: "toggle",
-    devices,
-    position,
-    choices: [
-      {
-        icon: "nc-align-top-left",
-        value: "topLeft"
-      },
-      {
-        icon: "nc-align-top-right",
-        value: "topRight"
-      },
-      {
-        icon: "nc-align-bottom-right",
-        value: "bottomRight"
-      },
-      {
-        icon: "nc-align-bottom-left",
-        value: "bottomLeft"
-      }
-    ],
-    value: dvv("closeAlign"),
-    onChange: value => {
-      return {
-        [dvk("closeAlign")]: value
-      };
-    }
-  };
-}
-
 export function toolbarContainerPopup2CloseCustomSize({
   v,
   device,
@@ -588,45 +546,12 @@ export function toolbarContainerPopup2CloseBgSize({
   };
 }
 
-export function toolbarContainerPopup2ClosePosition({
-  v,
-  device,
-  state,
-  devices = "all",
-  position = 100
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("closePosition"),
-    type: "toggle",
-    devices,
-    position,
-    choices: [
-      {
-        icon: "nc-position-in",
-        value: "inside"
-      },
-      {
-        icon: "nc-position-out",
-        value: "outside"
-      }
-    ],
-    value: dvv("closePosition"),
-    onChange: value => {
-      return {
-        [dvk("closePosition")]: value
-      };
-    }
-  };
-}
-
 export function toolbarContainerPopup2ScrollPage({
   v,
   device,
   state,
-  devices = "desktop"
+  devices = "desktop",
+  disabled = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -636,6 +561,7 @@ export function toolbarContainerPopup2ScrollPage({
     label: t("Scroll Page Behind"),
     type: "switch",
     devices,
+    disabled,
     position: 100,
     value: dvv("scrollPage")
   };

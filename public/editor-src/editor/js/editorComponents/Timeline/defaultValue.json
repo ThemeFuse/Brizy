@@ -1,0 +1,244 @@
+{
+  "content": {
+    "items": [],
+    "activeTab": 0,
+    "enableText": "on",
+    "verticalMode": "off",
+    "tabletVerticalMode": "off",
+    "mobileVerticalMode": "off",
+    "timelineStyle": "style-1",
+    "tabletTimelineStyle": "style-1",
+    "mobileTimelineStyle": "style-1",
+    "tabsCount" : 2,
+    "spacing": 20,
+    "tabletSpacing": 15,
+    "mobileSpacing": 10,
+    "type": "glyph",
+    "name": "favourite-31"
+  },
+
+  "style": {
+    "className": "",
+
+    "width": 350,
+    "widthSuffix": "px",
+
+    "size": "medium",
+    "customSize": 32,
+    "smallSize": 32,
+    "mediumSize": 48,
+    "largeSize": 64,
+    "iconPadding": 10,
+    "iconBorderWidth": 2,
+    "iconBgColorOpacity": 1,
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "families": {
+      "typographyFontFamily": "noto_serif"
+    },
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.5,
+    "typographyLetterSpacing": 0,
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 30,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "lineBorderStyle": "solid",
+
+    "tempLineBorderStyle": "solid",
+
+    "lineBorderWidthType": "grouped",
+    "lineBorderWidth": 2,
+    "lineBorderTopWidth": 2,
+    "lineBorderRightWidth": 2,
+    "lineBorderBottomWidth": 2,
+    "lineBorderLeftWidth": 2,
+
+    "tempLineBorderWidth": 2,
+    "tempLineBorderTopWidth": 2,
+    "tempLineBorderRightWidth": 2,
+    "tempLineBorderBottomWidth": 2,
+    "tempLineBorderLeftWidth": 2,
+
+    "lineBorderRadiusType": "grouped",
+    "lineBorderRadius": 30,
+    "lineBorderTopLeftRadius": 0,
+    "lineBorderTopRightRadius": 0,
+    "lineBorderBottomRightRadius": 0,
+    "lineBorderBottomLeftRadius": 0,
+
+    "tempLineBorderRadius": 0,
+    "tempLineBorderTopLeftRadius": 0,
+    "tempLineBorderTopRightRadius": 0,
+    "tempLineBorderBottomRightRadius": 0,
+    "tempLineBorderBottomLeftRadius": 0,
+
+    "labelColorHex": "#73777f",
+    "labelColorOpacity": 0.7,
+    "labelColorPalette": "",
+
+    "labelTempColorOpacity": 0.7,
+    "labelTempColorPalette": "color8",
+
+    "labelBgColorHex": "#ffffff",
+    "labelBgColorOpacity": 1,
+    "labelBgColorPalette": "",
+
+    "labelTempBgColorOpacity": 1,
+    "labelTempBgColorPalette": "",
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "lineBorderColorHex": "#dcdee1",
+    "lineBorderColorOpacity": 1,
+    "lineBorderColorPalette": "",
+
+    "hoverLineBorderColorHex": null,
+    "hoverLineBorderColorOpacity": null,
+    "hoverLineBorderColorPalette": null,
+
+    "tempLineBorderColorOpacity": 1,
+    "tempLineBorderColorPalette": "",
+
+    "tempHoverLineBorderColorOpacity": null,
+    "tempHoverLineBorderColorPalette": null,
+
+    "tempBorderRadiusType": "rounded",
+
+    "paddingType": "ungrouped",
+    "padding": 16,
+    "paddingTop": 0,
+    "paddingRight": 10,
+    "paddingBottom": 0,
+    "paddingLeft": 10,
+
+    "tempPadding": 10,
+    "tempPaddingTop": 10,
+    "tempPaddingRight": 10,
+    "tempPaddingBottom": 10,
+    "tempPaddingLeft": 10,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "marginType": "ungrouped",
+    "margin": 0,
+    "marginTop": 0,
+    "marginRight": 10,
+    "marginBottom": 0,
+    "marginLeft": 10,
+
+    "marginSuffix": "px",
+    "marginTopSuffix": "px",
+    "marginRightSuffix": "px",
+    "marginBottomSuffix": "px",
+    "marginLeftSuffix": "px",
+
+    "customCSS": "",
+    "tabletWidth": 270,
+
+    "typographyTabletFontStyle": "",
+    "typographyTabletFontSize": 14,
+    "typographyTabletLineHeight": 1.5,
+    "typographyTabletLetterSpacing": 0,
+    "typographyTabletFontWeight": 400,
+
+    "tabletPaddingType": "ungrouped",
+    "tabletPadding": 0,
+    "tabletPaddingTop": 0,
+    "tabletPaddingRight": 10,
+    "tabletPaddingBottom": 0,
+    "tabletPaddingLeft": 10,
+
+    "tabletMarginType": "ungrouped",
+    "tabletMargin": 0,
+    "tabletMarginTop": 0,
+    "tabletMarginRight": 10,
+    "tabletMarginBottom": 0,
+    "tabletMarginLeft": 10,
+
+    "tabletMarginSuffix": "px",
+    "tabletMarginTopSuffix": "px",
+    "tabletMarginRightSuffix": "px",
+    "tabletMarginBottomSuffix": "px",
+    "tabletMarginLeftSuffix": "px",
+
+    "mobileWidth": 150,
+
+    "typographyMobileFontStyle": "",
+    "typographyMobileFontSize": 14,
+    "typographyMobileLineHeight": 1.5,
+    "typographyMobileLetterSpacing": 0,
+    "typographyMobileFontWeight": 400,
+
+    "mobilePaddingType": "ungrouped",
+    "mobilePadding": 0,
+    "mobilePaddingTop": 0,
+    "mobilePaddingRight": 10,
+    "mobilePaddingBottom": 0,
+    "mobilePaddingLeft": 10,
+
+    "mobileMarginType": "ungrouped",
+    "mobileMargin": 0,
+    "mobileMarginTop": 0,
+    "mobileMarginRight": 10,
+    "mobileMarginBottom": 0,
+    "mobileMarginLeft": 10,
+
+    "mobileMarginSuffix": "px",
+    "mobileMarginTopSuffix": "px",
+    "mobileMarginRightSuffix": "px",
+    "mobileMarginBottomSuffix": "px",
+    "mobileMarginLeftSuffix": "px"
+  }
+}

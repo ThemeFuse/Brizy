@@ -20,3 +20,7 @@ export function styleTypographyElementCountdownLabelFontSize({
 
   return `calc(${fontSize}px - ${labelFontSize}%)`;
 }
+
+export function styleElementCountdown2Spacing({ v, device }) {
+  return `${defaultValueValue({ v, key: "spacing", device })}px`;
+}

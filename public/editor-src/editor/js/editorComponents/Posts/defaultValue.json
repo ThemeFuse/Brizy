@@ -19,10 +19,17 @@
     "className": "",
 
     "padding": 0,
+
     "paginationSpacing": 20,
+
     "paginationColorHex": "#ffffff",
     "paginationColorOpacity": 1,
     "paginationColorPalette": "color3",
+
+    "//1": "Aici ii hernea cu 2 temp dar sa gresit mai demult si acum sa corectat",
+    "tempPaginationColorOpacity": 1,
+    "tempPaginationColorPalette": "color3",
+
     "paginationTempColorOpacity": 1,
     "paginationTempColorPalette": "color3",
 

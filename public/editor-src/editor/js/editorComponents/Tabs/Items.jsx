@@ -3,7 +3,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
-class TabsItems extends EditorArrayComponent {
+export default class TabsItems extends EditorArrayComponent {
   static get componentId() {
     return "Tabs.Items";
   }
@@ -16,13 +16,7 @@ class TabsItems extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
-    const {
-      renderType,
-      meta,
-      activeTab,
-      iconPosition,
-      onChangeNav
-    } = this.props;
+    const { renderType, meta, activeTab, onChangeNav, action } = this.props;
     const cloneRemoveConfig = {
       getItems: () => [
         {
@@ -58,8 +52,8 @@ class TabsItems extends EditorArrayComponent {
 
     return {
       meta,
-      iconPosition,
       renderType,
+      action,
       active: itemIndex === activeTab,
       onChangeNav() {
         onChangeNav(itemIndex);
@@ -79,5 +73,3 @@ class TabsItems extends EditorArrayComponent {
     }, 0);
   }
 }
-
-export default TabsItems;

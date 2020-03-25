@@ -13,9 +13,10 @@ import {
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { CollapsibleToolbar } from "visual/component/Toolbar";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
@@ -37,6 +38,8 @@ class SectionHeaderItem extends EditorComponent {
   static defaultValue = defaultValue;
 
   mounted = false;
+
+  collapsibleToolbarRef = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
@@ -86,6 +89,10 @@ class SectionHeaderItem extends EditorComponent {
     });
   };
 
+  handleToolbarEscape = () => {
+    this.collapsibleToolbarRef.current.open();
+  };
+
   handlePaddingResizerChange = patch => this.patchValue(patch);
 
   getMeta(v) {
@@ -132,7 +139,8 @@ class SectionHeaderItem extends EditorComponent {
 
     return (
       <CollapsibleToolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
         badge={Boolean(globalBlockId)}
@@ -195,7 +203,9 @@ class SectionHeaderItem extends EditorComponent {
           >
             <ContainerBorder showBorder={false} activateOnContentClick={false}>
               {this.renderToolbar()}
-              {this.renderItems(v, vs, vd)}
+              <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                {this.renderItems(v, vs, vd)}
+              </ToolbarExtend>
             </ContainerBorder>
           </Roles>
         </div>

@@ -7,3 +7,7 @@ export function styleElementImageGalleryGridColumn({ v, device }) {
 export function styleElementImageGallerySpacing({ v, device }) {
   return defaultValueValue({ v, key: "spacing", device });
 }
+
+export function styleElementImageGalleryFilterStyle({ v, device }) {
+  return defaultValueValue({ v, key: "filterStyle", device });
+}

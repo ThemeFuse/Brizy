@@ -3,7 +3,7 @@ import produce from "immer";
 export default function importState(
   data,
   state,
-  options = { page: true, project: true }
+  options = { page: true, project: true, globalBlocks: true }
 ) {
   return produce(data, draft => {
     if (options.page) {
@@ -12,6 +12,10 @@ export default function importState(
 
     if (options.project) {
       draft.project.data = state.project.data;
+    }
+
+    if (options.globalBlocks) {
+      draft.globalBlocks = state.globalBlocks;
     }
   });
 }

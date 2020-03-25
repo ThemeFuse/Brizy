@@ -52,14 +52,19 @@ function ThirdPartyIframe({ src, onRequestClose }) {
           break;
         case "NAVIGATE":
           if (e.data.url) {
-            if (process.env.NODE_ENV === "development" && TARGET === "none") {
+            if (
+              process.env.NODE_ENV === "development" &&
+              TARGET === "node_local"
+            ) {
               const url = new URL(window.parent.location.href);
-              const match = /\/(\d+)$/.exec(e.data.url);
+              const match = /\/(\d+)(?:$|\/(internal_popup))/.exec(e.data.url);
 
               if (match) {
-                const [, pageId] = match;
+                const [, pageId, isInternalPopup] = match;
 
-                url.pathname = `editor/${pageId}`;
+                url.pathname = isInternalPopup
+                  ? `editor/${pageId}/internal_popup`
+                  : `editor/${pageId}`;
               } else {
                 url.pathname = "editor";
               }

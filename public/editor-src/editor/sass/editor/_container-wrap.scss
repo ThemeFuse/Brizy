@@ -18,9 +18,6 @@
   &-plus {
     position: relative;
     z-index: z("adder-block");
-    height: 2px;
-    margin-top: -2px;
-    background-color: $brand-primary;
 
     &--fixed {
       position: fixed;

@@ -85,6 +85,9 @@ $dropdown-arrow-size: 7px;
             right: 0;
           }
         }
+        .brz-menu__item + .brz-menu__item:last-child {
+          border-bottom: 0;
+        }
       }
     }
 
@@ -432,6 +435,6 @@ $dropdown-arrow-size: 7px;
   .brz-popup,
   .brz-popup2,
   .brz-section__header {
-    z-index: 1;
+    z-index: 2;
   }
 }

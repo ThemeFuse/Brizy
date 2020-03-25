@@ -12,12 +12,11 @@ import HotKeys from "visual/component/HotKeys";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import Quill from "./Quill";
 import toolbarConfigFn from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class RichText extends EditorComponent {
   static get componentId() {
@@ -182,7 +181,7 @@ class RichText extends EditorComponent {
           // TODO: some kind of error handling
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -232,7 +231,10 @@ class RichText extends EditorComponent {
         >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Toolbar
-              {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarConfig,
+                sidebarConfig
+              )}
               ref={this.toolbarRef}
               manualControl={true}
               onOpen={this.handleToolbarOpen}

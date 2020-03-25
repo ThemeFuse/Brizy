@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
-import { setIds } from "visual/utils/models";
+import { setIds, isGlobalPopup } from "visual/utils/models";
 import {
   getOptionColorHexByPalette,
   getAnimations,
@@ -47,7 +47,9 @@ import {
   toolbarCustomCSS,
   toolbarLinkPopup,
   toolbarLinkUpload,
-  toolbarActionClosePopup
+  toolbarActionClosePopup,
+  toolbarElementAudioUpload,
+  toolbarElementAudioIconSize
 } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -57,7 +59,13 @@ global.Brizy = {
   applyFilter,
   t,
   utils: {
+    stateMode: {
+      NORMAL,
+      HOVER
+    },
+
     setIds,
+    isGlobalPopup,
 
     getAnimations,
     getDynamicContentChoices,
@@ -102,6 +110,8 @@ global.Brizy = {
     toolbarCustomCSS,
     toolbarLinkPopup,
     toolbarLinkUpload,
-    toolbarActionClosePopup
+    toolbarActionClosePopup,
+    toolbarElementAudioUpload,
+    toolbarElementAudioIconSize
   }
 };

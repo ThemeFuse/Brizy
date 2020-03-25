@@ -1,0 +1,39 @@
+@import "../../mixins/input";
+@import "../../variables";
+
+.brz-ed-control__number-unit {
+  margin-left: $space-between-controls;
+  flex: none;
+  width: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__input {
+    position: relative;
+    flex: 1 0 auto;
+    min-width: 35%;
+
+    .brz-invisible {
+      line-height: 1.4em;
+      padding-right: 5px;
+    }
+
+    input {
+      @include small-input;
+
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+  &__unit {
+    flex: none;
+    margin-left: 5px;
+    color: $options-label-color;
+
+    &--active {
+      color: $brand-primary;
+    }
+  }
+}

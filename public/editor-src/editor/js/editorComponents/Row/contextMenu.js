@@ -1,7 +1,5 @@
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 export default {
   getItems

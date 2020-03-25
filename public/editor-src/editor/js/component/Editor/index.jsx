@@ -6,10 +6,10 @@ import BottomPanel from "visual/component/BottomPanel";
 import Prompts from "visual/component/Prompts";
 import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
-import Config from "visual/global/Config";
+import Notifications from "visual/component/Notifications";
+import { RightSidebar } from "visual/component/RightSidebar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import EditorPopup from "./EditorPopup";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 class Editor extends React.Component {
   constructor(props) {
@@ -32,10 +32,16 @@ class Editor extends React.Component {
           <LeftSidebar />
         </Portal>
         <Portal node={this.parentWindowDocument.body}>
+          <RightSidebar />
+        </Portal>
+        <Portal node={this.parentWindowDocument.body}>
           <BottomPanel />
         </Portal>
         <Portal node={this.parentWindowDocument.body}>
           <Prompts />
+        </Portal>
+        <Portal node={this.parentWindowDocument.body}>
+          <Notifications />
         </Portal>
         <HotKeys
           keyNames={["ctrl+/", "cmd+/", "right_cmd+/"]}

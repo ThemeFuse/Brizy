@@ -13,6 +13,7 @@ export function toolbarTypography2FontFamily({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all",
   onChange
 }) {
@@ -43,6 +44,7 @@ export function toolbarTypography2FontFamily({
     label: t("Font Family"),
     type: "fontFamily",
     devices,
+    disabled,
     value: fontFamilyValue,
     onChange: ({ id, weights, type }) => {
       const values = {
@@ -60,6 +62,7 @@ export function toolbarTypography2FontStyle({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all"
 }) {
   const fontStyleKey = defaultValueKey({
@@ -80,6 +83,7 @@ export function toolbarTypography2FontStyle({
     label: t("Typography"),
     type: "fontStyle",
     devices,
+    disabled,
     className: "brz-ed-popover__font-style",
     display: "block",
     value: fontStyleValue,
@@ -96,6 +100,7 @@ export function toolbarTypography2FontSize({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all",
   onChange
 }) {
@@ -126,6 +131,7 @@ export function toolbarTypography2FontSize({
     label: t("Size"),
     type: "stepper",
     devices,
+    disabled,
     display: "block",
     min: 1,
     max: 100,
@@ -147,6 +153,7 @@ export function toolbarTypography2LineHeight({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all",
   onChange
 }) {
@@ -177,6 +184,7 @@ export function toolbarTypography2LineHeight({
     label: t("Line Hgt."),
     type: "stepper",
     devices,
+    disabled,
     display: "block",
     min: 1,
     max: 10,
@@ -198,6 +206,7 @@ export function toolbarTypography2FontWeight({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all",
   onChange
 }) {
@@ -260,6 +269,7 @@ export function toolbarTypography2FontWeight({
     label: t("Weight"),
     type: "select",
     devices,
+    disabled,
     display: "block",
     choices: getWeightChoices({
       type: fontFamilyTypeValue,
@@ -282,6 +292,7 @@ export function toolbarTypography2LetterSpacing({
   prefix = "",
   device,
   state,
+  disabled = false,
   devices = "all",
   onChange
 }) {
@@ -312,6 +323,7 @@ export function toolbarTypography2LetterSpacing({
     label: t("Letter Sp."),
     type: "stepper",
     devices,
+    disabled,
     display: "block",
     min: -20,
     max: 20,

@@ -1,55 +1,56 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementWOOPagesShortCode,
-  toolbarSizeWidthWidthPercent,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ device }) {
+  const dvk = key => defaultValueKey({ key, device });
+
   return [
     {
-      id: defaultValueKey({
-        key: "toolbarWOOPages",
-        device,
-        state: "normal"
-      }),
+      id: dvk("toolbarWOOPages"),
       type: "popover",
       devices: "desktop",
       icon: "nc-woo-2",
       position: 10,
       options: [
-        toolbarElementWOOPagesShortCode({
-          v,
-          device,
+        {
+          id: "shortcode",
+          label: t("Page"),
+          type: "select-dev",
           devices: "desktop",
-          state: "normal"
-        })
+          choices: [
+            { title: t("Cart"), value: "woocommerce_cart" },
+            { title: t("Checkout"), value: "woocommerce_checkout" },
+            { title: t("My Account"), value: "woocommerce_my_account" },
+            {
+              title: t("Order Tracking"),
+              value: "woocommerce_order_tracking"
+            }
+          ]
+        }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: dvk("toolbarSettings"),
       type: "popover",
       roles: ["admin"],
       icon: "nc-cog",
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({
-          v,
-          device,
-          state: "normal"
-        }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: []
+          icon: "nc-cog"
         }
       ]
     }

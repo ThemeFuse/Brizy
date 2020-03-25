@@ -6,6 +6,7 @@ import { WPShortcode } from "../common/WPShortcode";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -30,7 +31,7 @@ class WPPostExcerpt extends EditorComponent {
         if (itemData.type === "GlobalBlock") {
           itemData = globalBlocksSelector(getStore().getState())[
             itemData.value.globalBlockId
-          ];
+          ].data;
           isGlobal = true;
         }
 
@@ -54,7 +55,15 @@ class WPPostExcerpt extends EditorComponent {
   }
 
   renderWrapper(content, v) {
-    const { linkType, linkAnchor, linkExternalType, linkPopup, linkUpload } = v;
+    const {
+      linkType,
+      linkExternalBlank,
+      linkExternalRel,
+      linkAnchor,
+      linkExternalType,
+      linkPopup,
+      linkUpload
+    } = v;
     const hrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
@@ -67,6 +76,8 @@ class WPPostExcerpt extends EditorComponent {
         className={IS_EDITOR && "brz-blocked"}
         href={hrefs[linkType]}
         type={linkType}
+        target={linkExternalBlank}
+        rel={linkExternalRel}
       >
         <span
           className="brz-span"
@@ -101,7 +112,9 @@ class WPPostExcerpt extends EditorComponent {
 
     return (
       <Fragment>
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <WPShortcode
               attributes={attributes}

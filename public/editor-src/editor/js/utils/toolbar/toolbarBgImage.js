@@ -51,37 +51,3 @@ export function toolbarBgImage({
     }
   };
 }
-
-export function toolbarBgImageAttachment({
-  v,
-  device,
-  devices = "all",
-  disabled = false,
-  state
-}) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const dvk = key => defaultValueKey({ key, device, state });
-
-  return {
-    id: dvk("bgAttachment"),
-    label: t("Parallax"),
-    type: "select",
-    devices,
-    choices: [
-      {
-        title: t("None"),
-        value: "none"
-      },
-      {
-        title: t("Fixed"),
-        value: "fixed"
-      },
-      {
-        title: t("Animated"),
-        value: "animated"
-      }
-    ],
-    disabled,
-    value: dvv("bgAttachment")
-  };
-}

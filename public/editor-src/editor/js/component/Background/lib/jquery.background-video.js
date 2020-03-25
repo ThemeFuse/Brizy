@@ -11,7 +11,7 @@ function youtubeLoadScript(cb) {
       script.src = "https://www.youtube.com/iframe_api";
 
       script.onerror = function() {
-        cb(new Error("Failed to load" + src));
+        cb(new Error("Failed to load" + script.src));
       };
 
       window.onYouTubeIframeAPIReady = function() {
@@ -32,7 +32,6 @@ function youtubeLoadScript(cb) {
 }
 
 function Youtube($iframe, settings) {
-  var quality = settings.quality;
   this._loop = settings.loop;
   this._start = settings.start || 0;
 
@@ -76,9 +75,6 @@ $.extend(Youtube.prototype, {
     this.play();
     this._loop = value;
   },
-  setQuality: function() {
-    console.log("this method was deprecated");
-  },
   seekTo: function(seconds = 0) {
     this._start = seconds;
     this.player.seekTo(seconds);
@@ -90,7 +86,6 @@ $.extend(Youtube.prototype, {
 });
 
 function Vimeo($iframe, settings) {
-  var quality = settings.quality;
   var loop = settings.loop;
   var start = settings.start || 0;
 
@@ -156,9 +151,6 @@ function Vimeo($iframe, settings) {
       this.play();
       loop = value;
     },
-    setQuality: function() {
-      console.log("this method was deprecated");
-    },
     seekTo: function(seconds = 0) {
       start = seconds;
       sendMessage("setCurrentTime", seconds);
@@ -171,7 +163,7 @@ function Vimeo($iframe, settings) {
   };
 }
 
-(function($, window, document, undefined) {
+(function($, window) {
   var pluginName = "backgroundVideo";
   var dataKey = "plugin_" + pluginName;
 

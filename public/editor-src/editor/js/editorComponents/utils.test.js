@@ -3,7 +3,8 @@ import {
   inDevelopment,
   optionMode,
   optionState,
-  setOptionPrefix
+  setOptionPrefix,
+  makeToolbarPropsFromConfigDefaults
 } from "./utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { MOBILE, TABLET, defaultMode } from "visual/utils/responsiveMode";
@@ -16,6 +17,14 @@ describe("Testing 'createOptionId' function", function() {
 
   test("If the suffix === 'value', return id without suffixing it", () => {
     expect(createOptionId("test", "value")).toBe("test");
+  });
+
+  test("If suffix starts with 'temp', move 'temp' before id", () => {
+    expect(createOptionId("test", "tempOpacity")).toBe("tempTestOpacity");
+    expect(createOptionId("test", "tempColoOpacity")).toBe(
+      "tempTestColoOpacity"
+    );
+    expect(createOptionId("test", "tempValue")).toBe("tempTest");
   });
 });
 
@@ -94,5 +103,198 @@ describe("Testing 'optionMode' function", function() {
   test("Return 'desktop' if the option does not support the provided mode", () => {
     expect(optionMode(TABLET, { devices: DESKTOP })).toBe(DESKTOP);
     expect(optionMode(MOBILE, { devices: DESKTOP })).toBe(defaultMode());
+  });
+});
+
+describe("Testing 'makeToolbarPropsFromConfigDefaults' function", () => {
+  test.each([
+    [
+      "empty",
+      {},
+      {
+        allowExtend: true,
+        allowExtendFromParent: true,
+        allowExtendFromChild: true,
+        allowExtendFromThirdParty: true,
+        allowSidebarExtend: true,
+        allowSidebarExtendFromParent: true,
+        allowSidebarExtendFromChild: true,
+        allowSidebarExtendFromThirdParty: true
+      }
+    ],
+    [
+      "allowExtend 1",
+      {
+        allowExtend: true
+      },
+      {
+        allowExtend: true,
+        allowExtendFromParent: true,
+        allowExtendFromChild: true,
+        allowExtendFromThirdParty: true,
+        allowSidebarExtend: true,
+        allowSidebarExtendFromParent: true,
+        allowSidebarExtendFromChild: true,
+        allowSidebarExtendFromThirdParty: true
+      }
+    ],
+    [
+      "allowExtend 2",
+      {
+        allowExtend: false
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowExtendFromParent 1",
+      {
+        allowExtend: false,
+        allowExtendFromParent: true
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: true,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: true,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowExtendFromParent 2",
+      {
+        allowExtend: false,
+        allowExtendFromParent: true,
+        allowSidebarExtendFromParent: false
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: true,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowExtendFromChild 1",
+      {
+        allowExtend: false,
+        allowExtendFromChild: true
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: true,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: true,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowExtendFromChild 2",
+      {
+        allowExtend: false,
+        allowExtendFromChild: true,
+        allowSidebarExtendFromChild: false
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: true,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowExtendFromThirdParty 1",
+      {
+        allowExtend: false,
+        allowExtendFromThirdParty: true
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: true,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: true
+      }
+    ],
+    [
+      "allowExtendFromThirdParty 2",
+      {
+        allowExtend: false,
+        allowExtendFromThirdParty: true,
+        allowSidebarExtendFromThirdParty: false
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: true,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ],
+    [
+      "allowSidebarExtend 1",
+      {
+        allowExtend: false,
+        allowSidebarExtend: true
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: false,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: true,
+        allowSidebarExtendFromParent: true,
+        allowSidebarExtendFromChild: true,
+        allowSidebarExtendFromThirdParty: true
+      }
+    ],
+    [
+      "allowSidebarExtend 2",
+      {
+        allowExtend: false,
+        allowExtendFromParent: true,
+        allowSidebarExtend: false
+      },
+      {
+        allowExtend: false,
+        allowExtendFromParent: true,
+        allowExtendFromChild: false,
+        allowExtendFromThirdParty: false,
+        allowSidebarExtend: false,
+        allowSidebarExtendFromParent: false,
+        allowSidebarExtendFromChild: false,
+        allowSidebarExtendFromThirdParty: false
+      }
+    ]
+  ])("%s", (testId, options, expected) => {
+    expect(makeToolbarPropsFromConfigDefaults(options)).toEqual(expected);
   });
 });

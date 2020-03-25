@@ -94,6 +94,12 @@
     "tempHoverSliderArrowsColorOpacity": 1,
     "tempHoverSliderArrowsColorPalette": "",
 
+    "sectionHeightStyle": "auto",
+    "sectionHeight": 400,
+    "sectionHeightSuffix": "px",
+
+    "verticalAlign": "center",
+
     "marginType": "grouped",
     "margin": 0,
     "marginTop": 0,
@@ -117,6 +123,10 @@
     "tempTabletSliderDotsColorOpacity": null,
     "tempTabletSliderDotsColorPalette": null,
 
+    "tabletSectionHeightStyle": null,
+    "tabletSectionHeight": null,
+    "tabletSectionHeightSuffix": null,
+
     "tabletMarginType": "ungrouped",
     "tabletMargin": 0,
     "tabletMarginTop": 0,
@@ -139,6 +149,10 @@
 
     "tempMobileSliderDotsColorOpacity": null,
     "tempMobileSliderDotsColorPalette": null,
+
+    "mobileSectionHeightStyle": null,
+    "mobileSectionHeight": null,
+    "mobileSectionHeightSuffix": null,
 
     "mobileMarginType": "ungrouped",
     "mobileMargin": 0,

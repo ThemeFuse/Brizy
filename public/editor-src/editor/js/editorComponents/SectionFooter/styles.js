@@ -16,31 +16,22 @@ export function styleSection(v, vs, vd) {
 
 export function styleBg(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": { interval: ["cssStyleVisibleMode|||editor"] },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleSectionHeightStyle",
+        "cssStyleFlexVerticalAlign",
+        "cssStyleDisplayFlex"
+      ],
+      interval: ["cssStyleVisibleMode|||editor"]
+    },
     ".brz &&:hover > .brz-bg-media": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBorder", "cssStyleBorderRadius"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
-      standart: [
-        "cssStyleBgImage",
-        "cssStyleFilter",
-        "cssStyleBgImagePosition"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
     ".brz &&:hover > .brz-bg-media > .brz-bg-shape__top": {
       standart: [
@@ -63,10 +54,6 @@ export function styleBg(v, vs, vd) {
         "cssStyleBoxShadowSection",
         "cssStylePaddingPreview",
         "cssStylePaddingRightLeftForEditor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
       ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {

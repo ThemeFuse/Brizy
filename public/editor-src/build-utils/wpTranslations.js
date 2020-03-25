@@ -39,6 +39,7 @@ exports.wpTranslations = async function wpTranslations({
 
 async function extractFromEditor(paths) {
   const editorJSFolderPath = path.resolve(paths.editor, "./js");
+  const allowedExtensions = [".js", ".jsx", ".ts", ".tsx"];
   const files = await readRecursive(editorJSFolderPath, [
     (file, stats) => {
       if (stats.isDirectory()) {
@@ -47,7 +48,7 @@ async function extractFromEditor(paths) {
 
       const ext = path.extname(file);
 
-      return ext !== ".js" && ext !== ".jsx";
+      return !allowedExtensions.includes(ext);
     }
   ]);
 
@@ -94,7 +95,7 @@ function extractFromTemplates(paths) {
 function extractTranslationsFromT(code) {
   const ast = parser.parse(code, {
     sourceType: "unambiguous",
-    plugins: ["classProperties", "jsx"]
+    plugins: ["classProperties", "jsx", "typescript"]
   });
 
   const t = new Set();

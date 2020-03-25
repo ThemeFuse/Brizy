@@ -68,7 +68,6 @@ export default function BackgroundContainer({
   const {
     bgVideo,
     bgVideoLoop,
-    bgVideoQuality,
     bgVideoStart,
     bgMapZoom,
     bgMapAddress,
@@ -93,7 +92,6 @@ export default function BackgroundContainer({
 
   if (currentMedia === "video") {
     props.video = media && videoData(bgVideo);
-    props.bgVideoQuality = bgVideoQuality;
     props.bgVideoStart = bgVideoStart;
     props.bgVideoLoop = bgVideoLoop === "on";
   }

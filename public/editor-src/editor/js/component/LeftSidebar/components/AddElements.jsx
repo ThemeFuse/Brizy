@@ -174,6 +174,7 @@ class DrawerComponent extends Component {
           <input
             type="text"
             className="brz-input"
+            autoFocus={true}
             placeholder={t("Search element")}
             value={inputValue}
             onChange={({ target: { value } }) =>

@@ -12,6 +12,12 @@ export default class WPImageSetter extends ImageSetter {
   wpMediaFrame = null;
 
   handleWpImageChange = () => {
+    const { onlyPointer } = this.props;
+
+    if (onlyPointer) {
+      return;
+    }
+
     const wp = global.wp || global.parent.wp;
 
     if (!wp) {

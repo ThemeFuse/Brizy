@@ -1,0 +1,37 @@
+// WOOPrice
+.brz-wooprice {
+  min-height: fit-content !important;
+  display: flex;
+  justify-content: inherit;
+
+  & > div {
+    font-size: 0;
+
+    & > .brz-price-none {
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+
+  .price {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    del {
+      opacity: 1 !important;
+
+      .woocommerce-Price-amount {
+        color: inherit !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        font-weight: inherit !important;
+        letter-spacing: inherit !important;
+      }
+    }
+    ins {
+      background: transparent;
+    }
+  }
+}

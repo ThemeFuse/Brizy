@@ -33,7 +33,9 @@ function changeRichTextDCColor($) {
       $(this).removeAttr("data-color");
     });
 
-  $("head").append(`<style id="dc-color">${rules.join("")}</style>`);
+  $("head").append(
+    `<style class="brz-style" id="dc-color">${rules.join("")}</style>`
+  );
 }
 
 export default changeRichTextDCColor;

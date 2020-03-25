@@ -1,25 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementWPPostsType,
-  toolbarElementWPPostsNumber,
-  toolbarElementWPPostsCategory,
-  toolbarElementWPPostsAuthor,
-  toolbarElementWPPostsInclude,
-  toolbarElementWPPostsExclude,
-  toolbarElementWPPostsStatus,
-  toolbarElementWPPostsMetaKey,
-  toolbarElementWPPostsMetaValue,
-  toolbarElementWPPostsOrderBy,
-  toolbarElementWPPostsOrder,
-  toolbarSizeWidthWidthPercent,
-  toolbarCustomCSS
-} from "visual/utils/toolbar";
+import { toolbarElementWPPostsNumber } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
+  const dvkn = key => defaultValueKey({ key, device });
+
   return [
     {
-      id: defaultValueKey({ key: "toolbarWPPosts", device, state: "normal" }),
+      id: dvkn("toolbarWPPosts"),
       type: "popover",
       icon: "nc-wp-shortcode",
       devices: "desktop",
@@ -33,78 +21,115 @@ export function getItems({ v, device }) {
               id: "queryTab",
               label: t("Query"),
               options: [
-                toolbarElementWPPostsType({
-                  v,
-                  device,
+                {
+                  id: "postType",
+                  label: t("Post Type"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  config: {
+                    choices: [
+                      { title: t("Post"), value: "post" },
+                      { title: t("Page"), value: "page" }
+                    ]
+                  }
+                },
                 toolbarElementWPPostsNumber({
                   v,
                   device,
                   devices: "desktop",
                   state: "normal"
                 }),
-                toolbarElementWPPostsCategory({
-                  v,
-                  device,
+                {
+                  id: "category",
+                  label: t("Category"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "author",
+                  label: t("Author"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "include",
+                  label: t("Include"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "exclude",
+                  label: t("Exclude"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "postStatus",
+                  label: t("Status"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsAuthor({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsInclude({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsExclude({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsStatus({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsMetaKey({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsMetaValue({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
+                  choices: [
+                    { title: t("Publish"), value: "publish" },
+                    { title: t("Future"), value: "future" },
+                    { title: t("Draft"), value: "draft" },
+                    { title: t("Pending"), value: "pending" },
+                    { title: t("Private"), value: "private" },
+                    { title: t("Trash"), value: "trash" },
+                    { title: t("Auto-Draft"), value: "auto-draft" },
+                    { title: t("Inherit"), value: "inherit" }
+                  ]
+                },
+                {
+                  id: "metaKey",
+                  label: t("Meta Key"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
+                {
+                  id: "metaValue",
+                  label: t("Meta Value"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                }
               ]
             },
             {
               id: "layoutTab",
               label: "Layout",
               options: [
-                toolbarElementWPPostsOrderBy({
-                  v,
-                  device,
+                {
+                  id: "orderBy",
+                  label: t("Order By"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementWPPostsOrder({
-                  v,
-                  device,
+                  choices: [
+                    { title: t("None"), value: "none" },
+                    { title: t("ID"), value: "ID" },
+                    { title: t("Author"), value: "author" },
+                    { title: t("Date"), value: "date" },
+                    { title: t("Modified"), value: "modified" },
+                    { title: t("Parent"), value: "parent" },
+                    { title: t("Random"), value: "rand" },
+                    { title: t("Comment Count"), value: "comment_count" },
+                    { title: t("Menu order"), value: "menu_order" }
+                  ]
+                },
+                {
+                  id: "order",
+                  label: t("Order"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state: "normal"
-                })
+                  choices: [
+                    {
+                      title: t("Asc"),
+                      value: "ASC"
+                    },
+                    {
+                      title: t("Desc"),
+                      value: "DESC"
+                    }
+                  ]
+                }
               ]
             }
           ]
@@ -112,53 +137,27 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
+      id: dvkn("toolbarSettings"),
       type: "popover",
       icon: "nc-cog",
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({
-          v,
-          device,
-          state: "normal"
-        }),
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: dvkn("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
-          icon: "nc-cog",
-          options: [
-            {
-              id: "settingsTabs",
-              type: "tabs",
-              devices: "desktop",
-              align: "start",
-              tabs: [
-                {
-                  id: defaultValueKey({
-                    key: "moreSettingsAdvanced",
-                    device,
-                    state: "normal"
-                  }),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: [
-                    toolbarCustomCSS({
-                      v,
-                      device,
-                      state: "normal",
-                      devices: "desktop"
-                    })
-                  ]
-                }
-              ]
-            }
-          ]
+          icon: "nc-cog"
         }
       ]
     }

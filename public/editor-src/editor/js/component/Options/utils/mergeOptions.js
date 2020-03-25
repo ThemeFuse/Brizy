@@ -28,16 +28,11 @@ function canMergeOption(option1, option2) {
 }
 
 function mergeOption(option1, option2) {
-  for (let prop of ["columns", "options", "tabs"]) {
-    if (option1[prop] && option2[prop]) {
-      option1[prop] = mergeOptions(option1[prop], option2[prop]);
-      //option1[prop] = option1[prop].concat(option2[prop]);
-    }
-  }
-
-  for (let prop of ["disabled"]) {
-    if (option2[prop]) {
-      option1[prop] = option2[prop];
+  for (const key of Object.keys(option2)) {
+    if (key === "columns" || key === "options" || key === "tabs") {
+      option1[key] = mergeOptions(option1[key] || [], option2[key] || []);
+    } else if (key === "disabled" && option2[key] === true) {
+      option1[key] = option2[key];
     }
   }
 

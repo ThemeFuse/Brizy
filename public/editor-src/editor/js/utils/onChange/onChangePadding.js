@@ -1,20 +1,27 @@
 import { onChangeMeGrouped, onChangeMeUngrouped } from "./onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function onChangePaddingGrouped({
   v,
   device,
   state,
   me = "padding",
-  childs,
+  childs: _childs,
   value,
   suffix,
-  sliderDragEnd
+  sliderDragEnd,
+  prefix = ""
 }) {
+  const childs = [];
   const childsSuffix = [];
+  const mePadding = capByPrefix(prefix, me);
 
-  for (var i = 0; i < childs.length; i++) {
-    childsSuffix[i] = `${childs[i]}Suffix`;
-  }
+  _childs.forEach(child => {
+    const childPref = capByPrefix(prefix, child);
+
+    childs.push(childPref);
+    childsSuffix.push(capByPrefix(childPref, "suffix"));
+  });
 
   return {
     /**
@@ -30,7 +37,7 @@ export function onChangePaddingGrouped({
       v,
       device,
       state,
-      me: `${me}Suffix`,
+      me: `${mePadding}Suffix`,
       childs: childsSuffix,
       value: suffix,
       dragEnd: sliderDragEnd
@@ -49,9 +56,9 @@ export function onChangePaddingGrouped({
       v,
       device,
       state,
-      me,
       childs,
       value,
+      me: mePadding,
       dragEnd: sliderDragEnd
     })
   };
@@ -61,18 +68,25 @@ export function onChangePaddingUngrouped({
   v,
   device,
   state,
-  me = "padding",
-  current,
-  childs,
   value,
   suffix,
-  sliderDragEnd
+  sliderDragEnd,
+  childs: _childs,
+  current: _current,
+  me = "padding",
+  prefix = ""
 }) {
+  const childs = [];
   const childsSuffix = [];
+  const mePadding = capByPrefix(prefix, me);
+  const current = capByPrefix(prefix, _current);
 
-  for (var i = 0; i < childs.length; i++) {
-    childsSuffix[i] = `${childs[i]}Suffix`;
-  }
+  _childs.forEach(child => {
+    const childPref = capByPrefix(prefix, child);
+
+    childs.push(childPref);
+    childsSuffix.push(capByPrefix(childPref, "suffix"));
+  });
 
   return {
     /**
@@ -95,7 +109,7 @@ export function onChangePaddingUngrouped({
       v,
       device,
       state,
-      me: `${me}Suffix`,
+      me: `${mePadding}Suffix`,
       childs: childsSuffix,
       current: `${current}Suffix`,
       value: suffix,
@@ -121,10 +135,10 @@ export function onChangePaddingUngrouped({
       v,
       device,
       state,
-      me,
       childs,
       current,
       value,
+      me: mePadding,
       dragEnd: sliderDragEnd
     })
   };

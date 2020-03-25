@@ -1,4 +1,4 @@
-import { isNumber } from "visual/utils/math";
+import { isNumber, toNumber } from "visual/utils/math";
 
 /**
  * Converts a value to valid CSS blur value
@@ -7,19 +7,19 @@ import { isNumber } from "visual/utils/math";
  *  - If value is not valid, return orElse value
  *
  * @param {number} orElse
- * @param {number} v
+ * @param {*} v
  * @returns {number}
  */
-export const toBlur = (orElse, v) => (isNumber(v) && v >= 0 ? v : orElse);
+export const toBlur = (v, orElse = undefined) =>
+  isNumber(v) && v >= 0 ? v : orElse;
 
 /**
  * Converts a value to valid CSS spread value
  *  - Value should be a number
- *  - Value should be >= 0
  *  - If value is not valid, return orElse value
  *
  * @param {number} orElse
- * @param {number} v
+ * @param {*} v
  * @returns {number}
  */
-export const toSpread = toBlur;
+export const toSpread = toNumber;

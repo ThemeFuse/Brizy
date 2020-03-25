@@ -24,8 +24,10 @@ function generateGoogleAssets($, fonts) {
   const richTextFamiliesCSS = makeRichTextFontGoogleCSS(fonts);
 
   $("head")
-    .append(`<link type="text/css" rel="stylesheet" href="${fontsUrl}" />`)
-    .append(`<style>${richTextFamiliesCSS}</style>`);
+    .append(
+      `<link class="brz-link brz-link-google" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
+    )
+    .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
 }
 
 function generateUploadAssets($, fonts) {
@@ -35,6 +37,8 @@ function generateUploadAssets($, fonts) {
   const richTextFamiliesCSS = makeRichTextFontUploadCSS(fonts);
 
   $("head")
-    .append(`<link type="text/css" rel="stylesheet" href="${fontsUrl}" />`)
-    .append(`<style>${richTextFamiliesCSS}</style>`);
+    .append(
+      `<link class="brz-link brz-link-upload" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
+    )
+    .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
 }

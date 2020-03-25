@@ -1,10 +1,15 @@
-// Desktop
-
 // Mobile
 &.brz-ed--mobile,
 &.brz-ed--tablet {
   padding-left: $mobile-paddings;
   padding-right: $mobile-paddings;
+
+  .brz-section__header--animated,
+  .brz-section__header--fixed-opened {
+    left: $mobile-paddings;
+    right: $mobile-paddings;
+    width: calc(100% - #{$mobile-paddings * 2});
+  }
 }
 
 // Section
@@ -22,7 +27,16 @@
   > .brz-ed-border > .brz-bg > .brz-bg-content {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    align-content: space-between;
+    justify-content: space-between;
+    flex-direction: column;
   }
+  .brz-container__wrap {
+    flex: 1;
+  }
+}
+
+// Section Footer
+.brz-footer > .brz-ed-border > .brz-bg {
+  flex-wrap: wrap;
+  height: 100%;
 }

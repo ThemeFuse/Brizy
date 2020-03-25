@@ -14,17 +14,17 @@ import {
   getPalette,
   getOpacity,
   getType
-} from "visual/component/Options/types/dev/BoxShadow/model";
-import * as ColoPicker from "visual/component/Options/types/dev/ColorPicker/utils";
-import { get, apply, set } from "visual/utils/model";
-import { capByPrefix } from "visual/utils/string";
+} from "./model";
+import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
+import { get, _apply } from "visual/utils/model";
 import { toBlur, toSpread } from "visual/utils/cssProps";
-import { isNumber } from "visual/utils/math";
 import { t } from "visual/utils/i18n";
 import { toObject } from "visual/utils/object";
 import * as T from "visual/component/Options/types/dev/BoxShadow/entities/type";
-import { NONE } from "visual/component/Options/types/dev/BoxShadow/entities/type";
-import { OUTSET } from "visual/component/Options/types/dev/BoxShadow/entities/type";
+import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import * as Hex from "visual/utils/color/isHex";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { NumberSpec } from "visual/utils/math/number";
 
 /**
  * Toggles shadow type
@@ -36,14 +36,16 @@ import { OUTSET } from "visual/component/Options/types/dev/BoxShadow/entities/ty
  * @return {object}
  */
 export const toggleColor = (enable, m) => {
-  const opacity = enable
-    ? getOpacity(undefined, m) || get(undefined, "tempOpacity", m)
-    : 0;
-  const palette = enable
-    ? getPalette(undefined, m) || get(undefined, "tempPalette", m)
-    : "";
+  const opacity = enable ? getOpacity(m) || get("tempOpacity", m) : 0;
+  const palette = enable ? getPalette(m) || get("tempPalette", m) : "";
 
-  return apply([[setOpacity, opacity], [setPalette, palette]], m);
+  return _apply(
+    [
+      [setOpacity, opacity],
+      [setPalette, palette]
+    ],
+    m
+  );
 };
 
 /**
@@ -56,9 +58,7 @@ export const toggleColor = (enable, m) => {
  * @return {object}
  */
 export const toggleType = (enable, m) => {
-  const value = enable
-    ? T.onEmpty(get(undefined, "tempType", m), getType(undefined, m))
-    : T.NONE;
+  const value = enable ? T.noEmpty(getType(m)) ?? T.read(m?.tempType) : T.NONE;
 
   return setType(value, m);
 };
@@ -71,10 +71,10 @@ export const toggleType = (enable, m) => {
  */
 export const toggleFields = (enable, m) => {
   const u = undefined;
-  const blur = getBlur(u, m) || get(0, "tempBlur", m);
-  const spread = getSpread(u, m) || get(0, "tempSpread", m);
-  const horizontal = getHorizontal(u, m) || get(0, "tempHorizontal", m);
-  const vertical = getVertical(u, m) || get(0, "tempVertical", m);
+  const blur = getBlur(m, u) || get("tempBlur", m, 0);
+  const spread = getSpread(m, u) || get("tempSpread", m, 0);
+  const horizontal = getHorizontal(m, u) || get("tempHorizontal", m, 0);
+  const vertical = getVertical(m, u) || get("tempVertical", m, 0);
   const model = { ...toObject(m) };
 
   model.blur = enable ? blur : 0;
@@ -89,89 +89,13 @@ export const toggleFields = (enable, m) => {
   return model;
 };
 
-export const setField = (key, v, m) => {
-  const getter = fieldGetter(key);
-  const valid = fieldValidation(key);
-
-  if (valid(undefined, v) === undefined || getter(undefined, m) === v) {
-    return m;
-  }
-
-  const value = v === 0 ? getter(undefined, m) : undefined;
-
-  return apply(
-    [
-      [set, "blur", getBlur(0, m)],
-      [set, "tempBlur", getBlur(0, m)],
-      [set, "spread", getSpread(0, m)],
-      [set, "tempSpread", getSpread(0, m)],
-      [set, "vertical", getVertical(0, m)],
-      [set, "tempVertical", getVertical(0, m)],
-      [set, "horizontal", getHorizontal(0, m)],
-      [set, "tempHorizontal", getHorizontal(0, m)],
-      [set, capByPrefix("temp", key), value],
-      [set, key, v],
-      [toggleType, v || fieldsEnabled(m)]
-    ],
-    m
-  );
-};
-
-/**
- * Returns a shadow getter
- *
- * @param {string} key
- * @return {function}
- */
-export const fieldGetter = key => {
-  switch (key) {
-    case "blur":
-      return getBlur;
-    case "spread":
-      return getSpread;
-    case "horizontal":
-      return getHorizontal;
-    case "vertical":
-      return getVertical;
-    default:
-      return get;
-  }
-};
-
-/**
- * Returns a shadow getter
- *
- * @param {string} key
- * @return {function}
- */
-export const fieldValidation = key => {
-  switch (key) {
-    case "blur":
-      return toBlur;
-    case "spread":
-      return toSpread;
-    case "horizontal":
-    case "vertical":
-      return (orElse, v) => (isNumber(v) && v >= 0 ? v : orElse);
-    default:
-      return (_, v) => v;
-  }
-};
-
 /**
  * Check if shadow options are enabled
  *
  * @param {object} m
  * @return {boolean}
  */
-export const fieldsEnabled = m => {
-  return !!(
-    getBlur(0, m) &&
-    getSpread(0, m) &&
-    getHorizontal(0, m) &&
-    getVertical(0, m)
-  );
-};
+export const fieldsEnabled = m => !!(getBlur(m, 0) || getSpread(m, 0));
 
 export const getTypeTitle = type => {
   switch (type) {
@@ -219,6 +143,68 @@ export const getSetter = id => {
 };
 
 /**
+ * Converts a legacy box shadow value to a valid box shadow type value
+ *
+ * @param {string} v
+ * @return {string}
+ */
+export const fromLegacyType = v => (v === "on" ? T.OUTSET : v);
+
+/**
+ * Converts a box shadow type value to a legacy value
+ *
+ * @param {string} v
+ * @return {string}
+ */
+export const toLegacyType = v => {
+  switch (v) {
+    case T.NONE:
+      return "";
+    case T.OUTSET:
+      return "on";
+    default:
+      return v;
+  }
+};
+
+/**
+ *
+ * @param get
+ * @return {object}
+ */
+export const fromElementModel = get => {
+  const partial = {
+    type: T.mRead(fromLegacyType(get("value"))),
+    opacity: Opacity.mRead(get("colorOpacity")),
+    blur: toBlur(get("blur"), 0),
+    spread: toSpread(get("spread"), 0)
+  };
+
+  const isEmpty =
+    partial.type === T.empty ||
+    partial.opacity === Opacity.empty ||
+    (partial.blur === 0 && partial.spread === 0);
+
+  return {
+    type: isEmpty ? T.empty : partial.type,
+    tempType: T.read(fromLegacyType(get("tempValue"))) ?? T.OUTSET,
+    hex: Hex.read(get("colorHex")) ?? "#000000",
+    opacity: isEmpty ? Opacity.empty : partial.opacity,
+    tempOpacity: Opacity.read(get("tempColorOpacity")) ?? 1,
+    palette: isEmpty ? Palette.empty : Palette.mRead(get("colorPalette")),
+    tempPalette: Palette.mRead(get("tempColorPalette")),
+    blur: isEmpty ? 0 : partial.blur,
+    tempBlur: toBlur(get("tempBlur"), 4),
+    spread: isEmpty ? 0 : partial.spread,
+    tempSpread: toSpread(get("tempSpread"), 2),
+    vertical: isEmpty ? 0 : NumberSpec.read(get("vertical")) ?? 0,
+    tempVertical: NumberSpec.read(get("tempVertical")) ?? 0,
+    horizontal: isEmpty ? 0 : NumberSpec.read(get("horizontal")) ?? 0,
+    tempHorizontal: NumberSpec.read(get("tempHorizontal")) ?? 0
+  };
+};
+
+/**
  * Converts box shadow model to db model
  * @param {{
  *   type: string,
@@ -256,13 +242,10 @@ export const getSetter = id => {
  *   tempHorizontal: number,
  * }}
  */
-export const fromModel = m => {
-  const type = m.type === NONE ? "" : m.type === OUTSET ? "on" : m.type;
-  const tempType =
-    m.tempType === NONE ? "" : m.tempType === OUTSET ? "on" : m.tempType;
+export const toElementModel = m => {
   return {
-    value: type,
-    tempValue: tempType,
+    value: toLegacyType(m.type),
+    tempValue: toLegacyType(m.tempType),
     colorHex: m.hex,
     colorPalette: m.palette,
     tempColorPalette: m.tempPalette,
@@ -288,8 +271,8 @@ export const fromModel = m => {
  * @return {*}
  */
 export const getConfig = (defaultConfig, newConfig, key) => {
-  const r = get(undefined, key, newConfig);
-  return r === undefined ? get(undefined, key, defaultConfig) : r;
+  const r = get(key, newConfig);
+  return r === undefined ? get(key, defaultConfig) : r;
 };
 
 /**
@@ -316,4 +299,4 @@ export const getConfig = (defaultConfig, newConfig, key) => {
  *   tempHorizontal: number,
  * }}
  */
-export const _setOpacity = ColoPicker.setOpacity;
+export const _setOpacity = ColorUtils.setOpacity.bind(undefined, setOpacity);

@@ -16,7 +16,6 @@
     "bgAttachment": "none",
 
     "bgVideo": "",
-    "bgVideoQuality": 1080,
     "bgVideoLoop": "off",
     "bgVideoStart": 0,
 
@@ -226,6 +225,9 @@
 
     "containerType": "boxed",
     "containerSize": 100,
+
+    "hoverContainerType": null,
+    "hoverContainerSize": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",

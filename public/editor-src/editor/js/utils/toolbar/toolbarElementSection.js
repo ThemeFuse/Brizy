@@ -65,23 +65,117 @@ export function toolbarElementSectionSaved({
   };
 }
 
-export function toolbarElementSectionFullHeight({
+function toolbarElementSectionColumnsHeightStyle({
   v,
   device,
-  position = 20,
+  state,
   devices = "all",
-  state
+  disabled = false
 }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
   const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("fullHeight"),
-    label: t("Full Height"),
-    type: "switch",
-    position,
+    label: t("Height"),
+    type: "select",
     devices,
+    disabled,
+    choices: [
+      {
+        title: t("Auto"),
+        value: "off"
+      },
+      {
+        title: t("Custom"),
+        value: "custom"
+      },
+      {
+        title: t("Full Height"),
+        value: "on"
+      }
+    ],
     value: dvv("fullHeight")
+  };
+}
+
+function toolbarElementSectionColumnsCustomHeightStyle({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled = false
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const sectionHeightSuffix = dvv("sectionHeightSuffix");
+
+  return {
+    id: dvk("sectionHeight"),
+    devices,
+    disabled,
+    type: "slider",
+    slider: {
+      min: 20,
+      max: sectionHeightSuffix === "px" ? 500 : 100
+    },
+    input: {
+      show: true,
+      min: 0
+    },
+    suffix: {
+      show: true,
+      choices: [
+        {
+          title: "px",
+          value: "px"
+        },
+        {
+          title: "%",
+          value: "vh"
+        }
+      ]
+    },
+    value: {
+      value: dvv("sectionHeight"),
+      suffix: sectionHeightSuffix
+    },
+    onChange: ({ value: sectionHeight, suffix: sectionHeightSuffix }) => ({
+      sectionHeight,
+      sectionHeightSuffix
+    })
+  };
+}
+
+export function toolbarElementSectionHeightStyle({
+  v,
+  device,
+  state,
+  devices = "all",
+  position = 100,
+  disabled = false
+}) {
+  return {
+    id: "toolbarContainerTypeAndHeight",
+    type: "multiPicker",
+    devices,
+    position,
+    disabled,
+    picker: toolbarElementSectionColumnsHeightStyle({
+      v,
+      device,
+      state
+    }),
+    choices: {
+      custom: [
+        toolbarElementSectionColumnsCustomHeightStyle({
+          v,
+          device,
+          state
+        })
+      ]
+    }
   };
 }
 
@@ -286,7 +380,7 @@ export function toolbarElementSectionSliderColor({
   state
 }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
-  const dvk = key => defaultValueKey({ key, device, state });
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
 
   const slider = dvv("slider");
 

@@ -1,5 +1,6 @@
-import { capByPrefix } from "visual/utils/string";
-import { defaultState, hasState } from "visual/utils/stateMode";
+import { camelCase } from "visual/utils/string";
+import * as State from "visual/utils/stateMode";
+import { hasState } from "visual/utils/stateMode/editorComponent";
 import { getDevice, supportsMode } from "visual/utils/devices";
 import { defaultMode } from "visual/utils/responsiveMode";
 
@@ -8,12 +9,17 @@ import { defaultMode } from "visual/utils/responsiveMode";
  * - The result is a string in camelCase style
  * - If the suffix === 'value', return id without suffixing it
  *
- * @param id
- * @param suffix
+ * @param {string} id
+ * @param {string} suffix
  * @returns {string}
  */
-export const createOptionId = (id, suffix) =>
-  suffix === "value" ? id : capByPrefix(id, suffix);
+export const createOptionId = (id, suffix) => {
+  const temp = suffix.startsWith("temp") ? "temp" : "";
+  const key = temp.length ? suffix.substr(4) : suffix;
+  const _suffix = key === "value" || key === "Value" ? "" : key;
+
+  return camelCase([temp, id, _suffix]);
+};
 
 /**
  * Prefixes option value keys with a specific prefix
@@ -55,7 +61,7 @@ export const inDevelopment = type => String(type).endsWith("-dev");
  * @returns {string}
  */
 export const optionState = (state, option) =>
-  hasState(state, option) ? state : defaultState();
+  hasState(state, option) ? state : State.empty;
 
 /**
  * Checks if the option supports provided responsive mode
@@ -68,3 +74,37 @@ export const optionState = (state, option) =>
  */
 export const optionMode = (mode, option) =>
   supportsMode(mode, getDevice(option)) ? mode : defaultMode();
+
+export const makeToolbarPropsFromConfigDefaults = options => {
+  const allowExtend = options.allowExtend ?? true;
+  const allowExtendFromParent = options.allowExtendFromParent ?? allowExtend;
+  const allowExtendFromChild = options.allowExtendFromChild ?? allowExtend;
+  const allowExtendFromThirdParty =
+    options.allowExtendFromThirdParty ?? allowExtend;
+
+  const allowSidebarExtend = options.allowSidebarExtend ?? allowExtend;
+  const allowSidebarExtendFromParent =
+    options.allowSidebarExtendFromParent ??
+    options.allowSidebarExtend ??
+    allowExtendFromParent;
+  const allowSidebarExtendFromChild =
+    options.allowSidebarExtendFromChild ??
+    options.allowSidebarExtend ??
+    allowExtendFromChild;
+  const allowSidebarExtendFromThirdParty =
+    options.allowSidebarExtendFromThirdParty ??
+    options.allowSidebarExtend ??
+    allowExtendFromThirdParty;
+
+  return {
+    ...options,
+    allowExtend,
+    allowExtendFromParent,
+    allowExtendFromChild,
+    allowExtendFromThirdParty,
+    allowSidebarExtend,
+    allowSidebarExtendFromParent,
+    allowSidebarExtendFromChild,
+    allowSidebarExtendFromThirdParty
+  };
+};

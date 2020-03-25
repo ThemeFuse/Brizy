@@ -102,6 +102,9 @@ export function styleFormSelect(v, vs, vd) {
     }
   };
   const styleSelectView = {
+    ".brz &&:hover .select2-dropdown": {
+      standart: ["cssStyleElementForm2FieldsSelectBoxShadow"]
+    },
     ".brz &&:hover .select2-results__options": {
       standart: [
         "cssStyleTypography2FontFamily",
@@ -111,8 +114,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleTypography2LetterSpacing",
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
-        "cssStyleElementForm2FieldsSelectBorderRadius",
-        "cssStyleElementForm2FieldsSelectBoxShadow"
+        "cssStyleElementForm2FieldsSelectBorderRadius"
       ]
     },
     ".brz &&:hover .select2-results__option": {

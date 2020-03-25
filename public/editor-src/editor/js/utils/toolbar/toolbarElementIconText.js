@@ -51,46 +51,6 @@ export function toolbarElementIconTextIconPosition({
   };
 }
 
-export function toolbarElementIconTextIconSpacing({
-  v,
-  device,
-  devices = "all",
-  state
-}) {
-  return {
-    id: defaultValueKey({ key: "iconSpacing", device, state }),
-    devices,
-    label: t("Spacing"),
-    type: "slider",
-    roles: ["admin"],
-    slider: {
-      min: 0,
-      max: 100
-    },
-    input: {
-      show: true
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "px",
-          value: "px"
-        }
-      ]
-    },
-    position: 70,
-    value: {
-      value: defaultValueValue({ v, key: "iconSpacing", device, state })
-    },
-    onChange: ({ value }) => {
-      return {
-        [defaultValueKey({ v, key: "iconSpacing", device, state })]: value
-      };
-    }
-  };
-}
-
 export function toolbarElementIconDisabledSettings({
   device,
   devices = "all",

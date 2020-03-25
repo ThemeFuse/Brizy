@@ -1,80 +1,33 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarElementImageGalleryGridColumn({ v, device, state }) {
-  return {
-    id: defaultValueKey({ key: "gridColumn", device, state }),
-    label: t("Columns"),
-    type: "slider",
-    slider: {
-      min: 1,
-      max: 6
-    },
-    input: {
-      show: true,
-      max: 6
-    },
-    value: {
-      value: defaultValueValue({
-        v,
-        key: "gridColumn",
-        device,
-        state
-      })
-    },
-    onChange: ({ value }) => ({
-      [defaultValueKey({ v, key: "gridColumn", device, state })]: value
-    })
-  };
-}
-
-export function toolbarElementImageGallerySpacing({ v, device, state }) {
-  return {
-    id: defaultValueKey({ key: "spacing", device, state }),
-    label: t("Spacing"),
-    type: "slider",
-    slider: {
-      min: 0,
-      max: 20
-    },
-    input: {
-      show: true,
-      min: 0
-    },
-    suffix: {
-      show: true,
-      choices: [
-        {
-          title: "px",
-          value: "px"
-        }
-      ]
-    },
-    value: {
-      value: defaultValueValue({
-        v,
-        key: "spacing",
-        device,
-        state
-      })
-    },
-    onChange: ({ value }) => ({
-      [defaultValueKey({ key: "spacing", device, state })]: value
-    })
-  };
-}
-
-export function toolbarElementImageGalleryLightBox({
+export function toolbarElementImageGalleryStyle({
   v,
   device,
-  state,
-  devices = "all"
+  devices = "all",
+  state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    id: defaultValueKey({ v, key: "lightBox", device, state }),
-    label: t("Open in Lightbox"),
-    type: "switch",
+    id: dvk("filterStyle"),
+    label: t("Style"),
+    type: "radioGroup",
     devices,
-    value: defaultValueValue({ v, key: "lightBox", device, state })
+    choices: [
+      {
+        value: "style-1",
+        icon: "nc-tags-style-2"
+      },
+      {
+        value: "style-2",
+        icon: "nc-tags-style-1"
+      }
+    ],
+    value: dvv("filterStyle"),
+    onChange: value => ({
+      [dvk("filterStyle")]: value
+    })
   };
 }

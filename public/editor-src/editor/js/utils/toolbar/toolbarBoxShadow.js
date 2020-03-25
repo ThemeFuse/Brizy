@@ -10,6 +10,7 @@ import { capByPrefix } from "visual/utils/string";
 export function toolbarBoxShadow2({
   v,
   device,
+  disabled = false,
   state,
   states,
   onChangeType,
@@ -46,6 +47,7 @@ export function toolbarBoxShadow2({
   return {
     devices,
     states,
+    disabled,
     id: dvk(boxShadow),
     type: "colorPicker2",
     select: {
@@ -97,6 +99,7 @@ export function toolbarBoxShadow2({
 export function toolbarBoxShadowHexField2({
   v,
   device,
+  disabled = false,
   state,
   states,
   onChange,
@@ -114,6 +117,7 @@ export function toolbarBoxShadowHexField2({
 
   return {
     devices,
+    disabled,
     id: dvk(field),
     type: "colorFields",
     states,
@@ -135,6 +139,7 @@ export function toolbarBoxShadowHexField2({
 export function toolbarBoxShadowFields2({
   v,
   device,
+  disabled = false,
   state,
   states,
   onChange,
@@ -152,6 +157,7 @@ export function toolbarBoxShadowFields2({
 
   return {
     devices,
+    disabled,
     states,
     id: dvk(fields),
     type: "multiInput",

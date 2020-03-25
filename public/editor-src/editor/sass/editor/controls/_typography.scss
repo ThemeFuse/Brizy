@@ -1,0 +1,69 @@
+.brz-ed-control__typography {
+  display: flex;
+
+  .brz-ed-font__typography {
+    width: 54%;
+    height: 185px;
+    padding: 7px 3px 30px 0;
+
+    .brz-ed-font__name {
+      &:first-child {
+        padding-top: 0;
+      }
+
+      padding-left: 10px;
+      background: none;
+    }
+
+    .brz-ed-font__typography-adder {
+      bottom: 0;
+      left: 12px;
+    }
+  }
+
+  .brz-ed-control__typography-styles {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 145px;
+
+    &:nth-child(2) {
+      width: 46%;
+      padding-left: 14px;
+    }
+
+    .brz-ed-component__label {
+      margin-right: 0;
+    }
+
+    .brz-ed__col {
+      padding: 6px 0 0 0;
+    }
+
+    .brz-ed__col-1-1 {
+      width: 100%;
+    }
+
+    .brz-ed__col-1-2 {
+      &:nth-of-type(even) {
+        padding-right: 10px;
+      }
+
+      &:nth-of-type(odd) {
+        padding-left: 10px;
+      }
+
+      width: 50%;
+    }
+
+    .brz-control__select {
+      flex: 1 1 auto;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .brz-ed-control__stepper {
+      width: 100%;
+    }
+  }
+}

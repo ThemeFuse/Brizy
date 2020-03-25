@@ -4,7 +4,6 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import UIState from "visual/global/UIState";
-import ConfigIcons from "visual/config/icons";
 
 export default class IconSetter extends React.Component {
   static defaultProps = {
@@ -56,7 +55,6 @@ export default class IconSetter extends React.Component {
 
   renderIcon = () => {
     const { name, type } = this.props.value;
-    const { name: typeName } = _.find(ConfigIcons.types, { name: type });
 
     return [
       <div
@@ -65,7 +63,7 @@ export default class IconSetter extends React.Component {
         onClick={this.handleClick}
       >
         <div className="brz-ed-control__icon-setter--active">
-          <ThemeIcon className="grid-16 stroke-2" name={name} type={typeName} />
+          <ThemeIcon className="grid-16 stroke-2" name={name} type={type} />
         </div>
       </div>,
       this.renderRemoveIcon()

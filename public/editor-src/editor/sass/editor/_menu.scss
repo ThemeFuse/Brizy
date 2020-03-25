@@ -1,3 +1,7 @@
+@import "../default-variables";
+@import "../variables";
+@import "../functions/functions";
+
 // Wordpress Menu
 &.brz-ed--mobile {
   .brz-wp-shortcode__menu {
@@ -129,12 +133,12 @@
   }
 
   // Popups
-  .brz-popup,
-  .brz-popup2,
   .brz-section__header,
   .brz-root__container {
     z-index: 1;
   }
+  .brz-popup,
+  .brz-popup2,
   .brz-section__header--animated {
     z-index: 2;
   }

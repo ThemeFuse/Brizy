@@ -1,19 +1,38 @@
 import "@babel/polyfill";
 import jQuery from "jquery";
-import addTriggersForPopups from "./addTriggersForPopups.js";
-import * as Components from "../../component/index.export.js";
-import * as EditorComponents from "../../editorComponents/index.export.js";
+import { createNanoEvents } from "nanoevents";
+import initExports from "./initExports";
 
-window.jQuery = jQuery;
+if (!window.jQuery) {
+  window.jQuery = jQuery;
+} else {
+  const plugins = [
+    "scrollPane",
+    "backgroundVideo",
+    "parallax",
+    "brzSticky",
+    "brzThemeIcon",
+    "countdown",
+    "countdown2"
+  ];
 
-jQuery(document).ready(function() {
-  Object.values(Components).forEach(fn => {
-    fn();
+  plugins.forEach(plugin => {
+    window.jQuery.fn[plugin] = jQuery.fn[plugin];
   });
+}
 
-  Object.values(EditorComponents).forEach(fn => {
-    fn();
-  });
+window.Brizy = {
+  emitter: createNanoEvents(),
+
+  on(id, f) {
+    return this.emitter.on(id, f);
+  },
+
+  emit(id, ...args) {
+    this.emitter.emit(id, ...args);
+  }
+};
+
+window.Brizy.on("init.dom", $node => {
+  initExports($node);
 });
-
-addTriggersForPopups();

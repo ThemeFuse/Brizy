@@ -1,0 +1,24 @@
+.brz-ed-control__select-single {
+  .brz-ed-control__multiSelect--value-container {
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 0 10px;
+    justify-content: space-between;
+    cursor: pointer;
+
+    input {
+      padding: 0;
+    }
+  }
+
+  .brz-ed-control__multiSelect--tag {
+    box-shadow: none;
+    background: none;
+    margin: 0 10px 0 0;
+    padding: 0;
+
+    & > .brz-icon-svg {
+      display: none;
+    }
+  }
+}

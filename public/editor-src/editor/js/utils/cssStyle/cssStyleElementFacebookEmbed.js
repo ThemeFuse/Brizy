@@ -1,3 +1,3 @@
 export function cssStyleElementFacebookEmbedPropertyHoverTransition() {
-  return "transition-property:box-shadow;";
+  return "transition-property:border, box-shadow;";
 }

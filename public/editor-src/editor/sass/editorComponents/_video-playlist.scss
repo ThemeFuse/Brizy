@@ -1,0 +1,220 @@
+// Video Playlist
+.brz-video-playlist {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    pointer-events: none;
+  }
+  .brz-iframe,
+  .brz-video-playlist__cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .brz-video-playlist__cover {
+    align-items: center;
+    justify-content: center;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .brz-video-playlist__cover-icon {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      font-size: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      z-index: 1;
+      color: #fff;
+      transition: transform 0.3s ease;
+
+      .brz-icon-svg {
+        width: 100%;
+        left: 2px;
+      }
+      a {
+        line-height: 0;
+      }
+    }
+    &:hover {
+      cursor: pointer;
+
+      .brz-video-playlist__cover-icon {
+        transform: scale(1.1);
+      }
+    }
+  }
+  .brz-video-playlist-main,
+  .brz-video-playlist-video-element {
+    position: relative;
+
+    .brz-shortcode__placeholder,
+    .brz-img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .brz-video-playlist-main__cover:after,
+  .brz-video-playlist-video-element:after {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: 56.25%;
+  }
+  .brz-video-playlist-main__content {
+    padding-top: 56.25%;
+  }
+  .brz-video-playlist-video-item {
+    cursor: pointer;
+  }
+  .brz-video-playlist-title-video {
+    word-break: break-word;
+
+    .brz-span {
+      display: block;
+    }
+    .brz-span:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Horizontal Mode
+.brz-video-playlist-horizontal {
+  .brz-video-playlist-sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: auto;
+  }
+  .brz-video-playlist-video-item {
+    cursor: pointer;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .brz-video-playlist-title-video {
+      margin-left: 10px;
+    }
+    .brz-img {
+      object-fit: cover;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 95px;
+    cursor: pointer;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+  }
+}
+
+// Vertical Mode
+.brz-video-playlist-vertical {
+  .brz-video-playlist-sidebar {
+    white-space: nowrap;
+    overflow: auto;
+  }
+  .brz-video-playlist-video-item {
+    text-align: center;
+  }
+  .brz-video-playlist-video-element {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+    cursor: pointer;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Vertical Mode Thumbs
+.brz-video-playlist-vertical.brz-video-playlist-under {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .brz-video-playlist__container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+// Responsive
+@include media-breakpoint-down(ms) {
+  .brz-video-playlist {
+    .brz-video-playlist-main {
+      position: fixed;
+      z-index: 99999;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: none;
+      width: 100% !important;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .brz-video-playlist-main__placeholder .brz-video-playlist-main__content,
+    .brz-video-playlist-main__video .brz-video-playlist-main__content {
+      width: 100%;
+    }
+    .brz-video-playlist-sidebar {
+      position: static;
+      height: auto !important;
+      width: 100% !important;
+    }
+    .brz-video-playlist-modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // --- Toolbar
 #brz-toolbar-portal {
   // Added Position Static for Portal becouse has problems with mmenu
@@ -97,8 +99,14 @@
   .brz-ed-popover {
     padding: 0;
   }
+
+  .brz-ed-option__toggle,
   .brz-ed-tooltip__content {
     padding: $toolbar-item-padding;
+  }
+
+  .brz-ed-option-wrapper {
+    padding: 0;
   }
 }
 

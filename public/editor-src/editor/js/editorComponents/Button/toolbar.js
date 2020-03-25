@@ -1,20 +1,15 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getWeightChoices, getWeight, getFontStyle } from "visual/utils/fonts";
+import { getFontStyle } from "visual/utils/fonts";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
   defaultValueValue,
-  onChangeTypography,
-  onChangeTypographyTablet,
-  onChangeTypographyMobile,
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
   toolbarColor2,
   toolbarColorHexField2,
   toolbarBoxShadow2,
@@ -26,22 +21,15 @@ import {
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
   toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarHoverTransition
+  toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
-  const {
-    fontSize,
-    fontFamily,
-    fontFamilyType,
-    fontWeight,
-    lineHeight,
-    letterSpacing
-  } = fontStyle === "" ? v : getFontStyle(fontStyle);
+  const { fontSize, lineHeight } =
+    fontStyle === "" ? v : getFontStyle(fontStyle);
 
   // Border Radius
   let contentHeight =
@@ -865,139 +853,8 @@ export function getItemsForDesktop(v) {
       position: 70,
       options: [
         {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 54,
-              options: [
-                {
-                  id: "fontFamily",
-                  label: t("Font Family"),
-                  type: "fontFamily",
-                  value: fontFamily,
-                  onChange: ({ id, weights, type }) =>
-                    onChangeTypography(
-                      {
-                        fontFamily: id,
-                        fontWeight: getWeight(fontWeight, weights),
-                        fontFamilyType: type
-                      },
-                      v
-                    )
-                }
-              ]
-            },
-            {
-              width: 46,
-              className: "brz-ed-popover__typography",
-              options: [
-                {
-                  id: "fontStyle",
-                  type: "fontStyle",
-                  label: t("Typography"),
-                  className: "brz-ed-popover__font-style",
-                  display: "block",
-                  value: fontStyle,
-                  onChange: newFontStyle => {
-                    return {
-                      fontStyle: newFontStyle
-                    };
-                  }
-                },
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__typography",
-                  columns: [
-                    {
-                      width: "50",
-                      options: [
-                        {
-                          id: "fontSize",
-                          label: t("Size"),
-                          type: "stepper",
-                          display: "block",
-                          min: 1,
-                          max: 100,
-                          step: 1,
-                          value: fontSize,
-                          onChange: newFontSize => {
-                            return {
-                              ...onChangeTypography(
-                                { fontSize: newFontSize },
-                                v
-                              ),
-
-                              borderRadius:
-                                v.borderRadiusType === "rounded"
-                                  ? maxBorderRadius
-                                  : v.borderRadius
-                            };
-                          }
-                        },
-                        {
-                          id: "lineHeight",
-                          label: t("Line Hgt."),
-                          type: "stepper",
-                          display: "block",
-                          min: 1,
-                          max: 10,
-                          step: 0.1,
-                          value: lineHeight,
-                          onChange: newLineHeight => {
-                            return {
-                              ...onChangeTypography(
-                                { lineHeight: newLineHeight },
-                                v
-                              ),
-
-                              borderRadius:
-                                v.borderRadiusType === "rounded"
-                                  ? maxBorderRadius
-                                  : v.borderRadius
-                            };
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      width: "50",
-                      options: [
-                        {
-                          id: "fontWeight",
-                          label: t("Weight"),
-                          type: "select",
-                          display: "block",
-                          choices: getWeightChoices({
-                            family: fontFamily,
-                            type: fontFamilyType
-                          }),
-                          value: fontWeight,
-                          onChange: newFontWeight =>
-                            onChangeTypography({ fontWeight: newFontWeight }, v)
-                        },
-                        {
-                          id: "letterSpacing",
-                          label: t("Letter Sp."),
-                          type: "stepper",
-                          display: "block",
-                          min: -20,
-                          max: 20,
-                          step: 0.5,
-                          value: letterSpacing,
-                          onChange: newLetterSpacing =>
-                            onChangeTypography(
-                              { letterSpacing: newLetterSpacing },
-                              v
-                            )
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "typography-dev"
         }
       ]
     },
@@ -1562,8 +1419,16 @@ export function getItemsForDesktop(v) {
               label: t("URL"),
               options: [
                 toolbarLinkExternal({ v }),
-                toolbarLinkExternalBlank({ v }),
-                toolbarLinkExternalRel({ v })
+                {
+                  id: "linkExternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch-dev"
+                },
+                {
+                  id: "linkExternalRel",
+                  label: t("Make it Nofollow"),
+                  type: "switch-dev"
+                }
               ]
             },
             {
@@ -1578,48 +1443,21 @@ export function getItemsForDesktop(v) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
+      disabled: v.type === "submit",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
-      title: t("Settings"),
-      options: [
-        {
-          id: "settingsTabs",
-          type: "tabs",
-          align: "start",
-          tabs: [
-            {
-              id: "settingsStyling",
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: []
-            },
-            {
-              id: "moreSettingsAdvanced",
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              options: [toolbarHoverTransition({ v, position: 100 })]
-            }
-          ]
-        }
-      ]
+      title: t("Settings")
     }
   ];
 }
 
 export function getItemsForTablet(v) {
   // Typography
-  const { fontFamily, fontFamilyType } =
-    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const tabletFontStyle = v.tabletFontStyle;
-  const {
-    tabletFontSize,
-    tabletFontWeight,
-    tabletLineHeight,
-    tabletLetterSpacing
-  } = tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
+  const { tabletFontSize, tabletLineHeight } =
+    tabletFontStyle === "" ? v : getFontStyle(tabletFontStyle);
 
   return [
     {
@@ -1857,83 +1695,11 @@ export function getItemsForTablet(v) {
       position: 70,
       options: [
         {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "tabletFontSize",
-                  label: t("Size"),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 100,
-                  step: 1,
-                  value: tabletFontSize,
-                  onChange: newTabletFontSize =>
-                    onChangeTypographyTablet(
-                      { tabletFontSize: newTabletFontSize },
-                      v
-                    )
-                },
-                {
-                  id: "tabletLineHeight",
-                  label: t("Line Hgt."),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 10,
-                  step: 0.1,
-                  value: tabletLineHeight,
-                  onChange: newTabletLineHeight =>
-                    onChangeTypographyTablet(
-                      { tabletLineHeight: newTabletLineHeight },
-                      v
-                    )
-                }
-              ]
-            },
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "tabletFontWeight",
-                  label: t("Weight"),
-                  type: "select",
-                  display: "block",
-                  choices: getWeightChoices({
-                    family: fontFamily,
-                    type: fontFamilyType
-                  }),
-                  value: tabletFontWeight,
-                  onChange: newTabletFontWeight =>
-                    onChangeTypographyTablet(
-                      { tabletFontWeight: newTabletFontWeight },
-                      v
-                    )
-                },
-                {
-                  id: "tabletLetterSpacing",
-                  label: t("Letter Sp."),
-                  type: "stepper",
-                  display: "block",
-                  min: -20,
-                  max: 20,
-                  step: 0.5,
-                  value: tabletLetterSpacing,
-                  onChange: newTabletLetterSpacing =>
-                    onChangeTypographyTablet(
-                      { tabletLetterSpacing: newTabletLetterSpacing },
-                      v
-                    )
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "typography-dev",
+          config: {
+            fontFamily: false
+          }
         }
       ]
     },
@@ -1949,16 +1715,10 @@ export function getItemsForTablet(v) {
 
 export function getItemsForMobile(v) {
   // Typography
-  const { fontFamily, fontFamilyType } =
-    v.fontStyle === "" ? v : getFontStyle(v.fontStyle);
 
   const mobileFontStyle = v.mobileFontStyle;
-  const {
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing
-  } = mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
+  const { mobileFontSize, mobileLineHeight } =
+    mobileFontStyle === "" ? v : getFontStyle(mobileFontStyle);
 
   return [
     {
@@ -2196,83 +1956,11 @@ export function getItemsForMobile(v) {
       position: 70,
       options: [
         {
-          type: "grid",
-          className: "brz-ed-grid__typography",
-          columns: [
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "mobileFontSize",
-                  label: t("Size"),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 100,
-                  step: 1,
-                  value: mobileFontSize,
-                  onChange: newMobileFontSize =>
-                    onChangeTypographyMobile(
-                      { mobileFontSize: newMobileFontSize },
-                      v
-                    )
-                },
-                {
-                  id: "mobileLineHeight",
-                  label: t("Line Hgt."),
-                  type: "stepper",
-                  display: "block",
-                  min: 1,
-                  max: 10,
-                  step: 0.1,
-                  value: mobileLineHeight,
-                  onChange: newMobileLineHeight =>
-                    onChangeTypographyMobile(
-                      { mobileLineHeight: newMobileLineHeight },
-                      v
-                    )
-                }
-              ]
-            },
-            {
-              width: 50,
-              className: "brz-ed-popover__typography--small",
-              options: [
-                {
-                  id: "mobileFontWeight",
-                  label: t("Weight"),
-                  type: "select",
-                  display: "block",
-                  choices: getWeightChoices({
-                    family: fontFamily,
-                    type: fontFamilyType
-                  }),
-                  value: mobileFontWeight,
-                  onChange: newMobileFontWeight =>
-                    onChangeTypographyMobile(
-                      { mobileFontWeight: newMobileFontWeight },
-                      v
-                    )
-                },
-                {
-                  id: "mobileLetterSpacing",
-                  label: t("Letter Sp."),
-                  type: "stepper",
-                  display: "block",
-                  min: -20,
-                  max: 20,
-                  step: 0.5,
-                  value: mobileLetterSpacing,
-                  onChange: newMobileLetterSpacing =>
-                    onChangeTypographyMobile(
-                      { mobileLetterSpacing: newMobileLetterSpacing },
-                      v
-                    )
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "typography-dev",
+          config: {
+            fontFamily: false
+          }
         }
       ]
     },

@@ -1,20 +1,24 @@
 import $ from "jquery";
 
-export default function() {
+export default function($node) {
   const $document = $(document);
 
-  $document.on("click", "[data-brz-link-type='popup']", function(e) {
+  $node.find("[data-brz-link-type='popup']").on("click", function(e) {
     e.preventDefault();
 
     const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
-      $(`[data-brz-popup="${popupId}"]`).addClass("brz-popup--opened");
-      $("html").addClass("brz-ow-hidden");
+      const $elem = $(`[data-brz-popup="${popupId}"]`);
+
+      if ($elem.hasClass("brz-popup")) {
+        $(`[data-brz-popup="${popupId}"]`).addClass("brz-popup--opened");
+        $("html").addClass("brz-ow-hidden");
+      }
     }
   });
 
-  $document.on("click", ".brz-popup", function(e) {
+  $node.find(".brz-popup:not(.brz-initialized)").click(function(e) {
     const clickedInsideContent =
       $(e.target).closest(".brz-container").length === 0;
 
@@ -22,6 +26,8 @@ export default function() {
       closePopup(this);
     }
   });
+
+  $(".brz-popup").addClass("brz-initialized");
 
   // closes a popup when an anchor link is clicked inside it
   $document.on("brz.anchor.click", function(e, anchor) {

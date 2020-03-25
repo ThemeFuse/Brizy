@@ -2,23 +2,36 @@ import _ from "underscore";
 import {
   updateProject as apiUpdateProject,
   updatePage as apiUpdatePage,
+  updateInternalPopup as apiUpdateInternalPopup,
+  updateExternalPopup as apiUpdateExternalPopup,
   createGlobalBlock as apiCreateGlobalBlock,
   updateGlobalBlock as apiUpdateGlobalBlock,
   createSavedBlock as apiCreateSavedBlock,
   updateSavedBlock as apiUpdateSavedBlock,
   deleteSavedBlock as apiDeleteSavedBlock,
-  updateRules as apiUpdateRules
+  updateRules as apiUpdateRules,
+  sendHeartBeat as apiSendHeartBeat
 } from "visual/utils/api/editor";
+import Config from "visual/global/Config";
+import { IS_PAGE, IS_INTERNAL_POPUP } from "visual/utils/models/modes";
+
+const updateFn =
+  IS_PAGE || Config.get("wp")
+    ? apiUpdatePage
+    : IS_INTERNAL_POPUP
+    ? apiUpdateInternalPopup
+    : apiUpdateExternalPopup;
 
 export {
   apiUpdateProject,
-  apiUpdatePage,
+  updateFn as apiUpdatePage,
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
   apiCreateSavedBlock,
   apiUpdateSavedBlock,
   apiDeleteSavedBlock,
-  apiUpdateRules
+  apiUpdateRules,
+  apiSendHeartBeat
 };
 
 const DEBOUNCE_WAIT = 2000;
@@ -28,7 +41,7 @@ export const debouncedApiUpdateProject = _.debounce(
   DEBOUNCE_WAIT
 );
 
-export const debouncedApiUpdatePage = _.debounce(apiUpdatePage, DEBOUNCE_WAIT);
+export const debouncedApiUpdatePage = _.debounce(updateFn, DEBOUNCE_WAIT);
 
 export const debouncedApiCreateGlobalBlock = debounceById(
   apiCreateGlobalBlock,
@@ -72,4 +85,29 @@ function debounceById(fn, wait, maxCacheItems = 5) {
 
     return cache[idToCacheIndex.get(id)];
   };
+}
+
+// Polling
+export function pollingSendHeartBeat(heartBeat) {
+  let init = false;
+
+  return new Promise((res, rej) => {
+    if (!init) {
+      init = true;
+
+      const polling = () => {
+        setTimeout(() => {
+          apiSendHeartBeat().then(r => {
+            if (r.locked === false) {
+              polling();
+            } else {
+              rej({ heartBeat: true, data: r });
+            }
+          });
+        }, heartBeat);
+      };
+
+      polling();
+    }
+  });
 }

@@ -1,7 +1,7 @@
-import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
@@ -10,18 +10,14 @@ import {
   toolbarBgColor2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarHorizontalAlign2,
   toolbarElementSectionSaved,
   toolbarContainerPopup2ScrollPage,
   toolbarContainerPopup2ClickOutsideToClose,
   toolbarContainerPopup2ShowCloseButton,
   toolbarContainerPopup2ContainerWidth,
   toolbarContainerPopup2ContainerTypeAndHeight,
-  toolbarVerticalAlign,
-  toolbarVerticalAlignToggle
+  toolbarVerticalAlign
 } from "visual/utils/toolbar";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
 export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
@@ -240,18 +236,51 @@ export function getItems({ v, device, component }) {
       component,
       devices: "desktop"
     }),
-    toolbarHorizontalAlign2({
-      v,
-      device,
+    {
+      id: "horizontalAlign",
+      type: "toggle-dev",
       position: 90,
-      state: "normal"
-    }),
-    toolbarVerticalAlignToggle({
-      v,
-      device,
+      choices: [
+        {
+          icon: "nc-hrz-align-left",
+          title: t("Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-hrz-align-center",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-hrz-align-right",
+          title: t("Align"),
+          value: "right"
+        }
+      ]
+    },
+    {
+      id: "verticalAlign",
+      type: "toggle-dev",
       disabled: dvv("columnsHeightStyle") === "fullHeight",
-      state: "normal"
-    }),
+      position: 110,
+      choices: [
+        {
+          icon: "nc-ver-align-top",
+          title: t("Align"),
+          value: "top"
+        },
+        {
+          icon: "nc-ver-align-middle",
+          title: t("Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-ver-align-bottom",
+          title: t("Align"),
+          value: "bottom"
+        }
+      ]
+    },
     {
       id: dvk("toolbarSettings"),
       type: "popover",
@@ -276,24 +305,9 @@ export function getItems({ v, device, component }) {
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
           devices: "desktop",
-          options: [
-            {
-              id: dvk("settingsTabs"),
-              type: "tabs",
-              align: "start",
-              tabs: [
-                {
-                  id: dvk("moreSettingsAdvanced"),
-                  label: t("Advanced"),
-                  tabIcon: "nc-cog",
-                  options: []
-                }
-              ]
-            }
-          ]
+          label: t("More Settings"),
+          icon: "nc-cog"
         }
       ]
     },

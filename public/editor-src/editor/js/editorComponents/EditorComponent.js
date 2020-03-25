@@ -8,19 +8,21 @@ import { applyFilter } from "visual/utils/filters";
 import { objectFlat } from "visual/utils/object";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import {
-  defaultValueKey2,
-  defaultValueValue2,
-  isDefault
+  defaultValueKey,
+  defaultValueValue
 } from "visual/utils/onChange/device";
-import { valueToState } from "visual/utils/stateMode";
+import * as State from "visual/utils/stateMode";
+import * as Responsive from "visual/utils/responsiveMode";
 import {
   createOptionId,
   inDevelopment,
   optionMode,
   optionState,
-  setOptionPrefix
+  setOptionPrefix,
+  makeToolbarPropsFromConfigDefaults
 } from "./utils";
 import { getModel } from "visual/component/Options/types";
+import { wrapOption } from "visual/utils/options/utils";
 
 const capitalize = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
@@ -243,13 +245,8 @@ export class EditorComponent extends React.Component {
 
   makeToolbarPropsFromConfig(
     config,
-    {
-      allowExtend = true,
-      allowExtendParent = null,
-      allowExtendChild = null,
-      extendFilter = null,
-      filterExtendName = null
-    } = {} /* options */
+    sidebarConfig = null,
+    options = {} /* options */
   ) {
     const {
       onToolbarOpen,
@@ -257,20 +254,34 @@ export class EditorComponent extends React.Component {
       onToolbarEnter,
       onToolbarLeave
     } = this.props;
+    const {
+      allowExtendFromParent,
+      parentItemsFilter,
+      allowExtendFromChild,
+      allowExtendFromThirdParty,
+      thirdPartyExtendId = this.constructor.componentId,
+
+      // sidebar
+      allowSidebarExtendFromParent,
+      allowSidebarExtendFromChild,
+      allowSidebarExtendFromThirdParty,
+      sidebarThirdPartyExtendId = thirdPartyExtendId
+    } = makeToolbarPropsFromConfigDefaults(options);
 
     // WARNING: we use getStore instead of this.getReduxState()
     // because the page does not rerender when changing deviceMode
     // and thus we might get false (outdated) results
-    const getItems = (deviceMode = getStore().getState().ui.deviceMode) => {
+    const getItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
       const getItemsFnName = `getItemsFor${capitalize(deviceMode, true)}`;
 
       if (process.env.NODE_ENV === "development") {
         if (!config[getItemsFnName]) {
-          /* eslint-disable no-console */
+          // eslint-disable-next-line no-console
           console.warn(
             `${this.constructor.componentId}. ${getItemsFnName} not found in toolbarConfig`
           );
-          /* eslint-enabled no-console */
         }
       }
 
@@ -281,57 +292,138 @@ export class EditorComponent extends React.Component {
         v,
         deviceMode,
         stateMode,
-        getItemsFn ? getItemsFn(v, this) : []
+        getItemsFn?.(v, this) ?? []
       );
 
       // allow extend from parent
-      if (
-        (allowExtendParent !== null ? allowExtendParent : allowExtend) &&
-        this.props.toolbarExtend
-      ) {
+      if (allowExtendFromParent && this.props.toolbarExtend) {
         const { getItems } = this.props.toolbarExtend;
         let extendItems = getItems(deviceMode);
 
-        if (extendFilter) {
-          extendItems = extendFilter(extendItems);
+        if (typeof parentItemsFilter === "function") {
+          extendItems = parentItemsFilter(extendItems);
         }
 
         items = mergeOptions(items, extendItems);
       }
 
       // allow extend from child
-      if (
-        (allowExtendChild !== null ? allowExtendChild : allowExtend) &&
-        this.childToolbarExtend
-      ) {
+      if (allowExtendFromChild && this.childToolbarExtend) {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
-        items = mergeOptions(items, extendItems);
+        items = mergeOptions(extendItems, items);
       }
 
-      // allow extend from filter
-      const filterToolbarExtend = applyFilter(
-        `toolbarItemsExtend_${filterExtendName ||
-          this.constructor.componentId}`,
-        null
-      );
-      if (filterToolbarExtend && filterToolbarExtend[getItemsFnName]) {
-        const filterItems = this.bindToolbarItems(
-          v,
-          deviceMode,
-          stateMode,
-          filterToolbarExtend[getItemsFnName](v, this)
+      // allow extend from third party
+      if (allowExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `toolbarItemsExtend_${thirdPartyExtendId}`,
+          null
         );
 
-        items = mergeOptions(items, filterItems);
+        if (thirdPartyConfig?.[getItemsFnName]) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig[getItemsFnName](v, this)
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
       }
 
       return items;
     };
 
+    const getSidebarItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
+      const v = this.getValue();
+      const stateMode = State.mRead(v.tabsState);
+      let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
+        sidebarConfig?.getItems?.({
+          v,
+          component: this,
+          device: deviceMode,
+          state: stateMode
+        }) || []
+      );
+
+      // allow extend from parent
+      if (
+        allowSidebarExtendFromParent &&
+        this.props.toolbarExtend?.getSidebarItems
+      ) {
+        const { getSidebarItems } = this.props.toolbarExtend;
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarItems } = this.childToolbarExtend;
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(extendItems, items);
+      }
+
+      // allow extend from third party
+      if (allowSidebarExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `sidebarItemsExtend_${sidebarThirdPartyExtendId}`,
+          null
+        );
+
+        if (thirdPartyConfig?.getItems) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig.getItems({
+              v,
+              component: this,
+              device: deviceMode,
+              state: stateMode
+            })
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
+      }
+
+      return items;
+    };
+
+    const getSidebarTitle = () => {
+      let title = sidebarConfig?.title;
+
+      // allow extend from parent
+      if (allowSidebarExtendFromParent && this.props.toolbarExtend) {
+        const { getSidebarTitle } = this.props.toolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarTitle } = this.childToolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      return title || "";
+    };
+
     return {
       getItems,
+      getSidebarItems,
+      getSidebarTitle,
       onBeforeOpen: () => (global.Brizy.activeEditorComponent = this),
       onBeforeClose: () => (global.Brizy.activeEditorComponent = null),
       onOpen: onToolbarOpen,
@@ -353,7 +445,7 @@ export class EditorComponent extends React.Component {
       const { id, type, onChange: oldOnchange } = option;
       const stateOnChange = mode => this.patchValue({ tabsState: mode });
 
-      if (isDefault(device)) {
+      if (Responsive.defaultMode() === device) {
         // Apply state mode only in desktop device mode
         option = bindStateToOption(state, stateOnChange, option);
       }
@@ -364,15 +456,20 @@ export class EditorComponent extends React.Component {
       const deps = option.dependencies || _.identity;
 
       if (inDev) {
-        option.id = defaultValueKey2({
+        option.id = defaultValueKey({
           key: option.id,
           device: optionMode(device, option),
           state: optionState(state, option)
         });
 
-        option.value = getModel(type)(key =>
-          defaultValueValue2({ v, key: createOptionId(id, key), device, state })
-        );
+        option.value = getModel(type)(key => {
+          return defaultValueValue({
+            v,
+            key: createOptionId(id, key),
+            device,
+            state
+          });
+        });
       }
 
       option.onChange = (value, meta) => {
@@ -388,25 +485,30 @@ export class EditorComponent extends React.Component {
       };
 
       return option;
-    }, items);
+    }, optionMap(wrapOption, items));
   }
 
-  makeToolbarPropsFromConfig2(
-    config,
-    {
-      allowExtend = true,
-      allowExtendParent = null,
-      allowExtendChild = null,
-      extendFilter = null,
-      filterExtendName = null
-    } = {} /* options */
-  ) {
+  makeToolbarPropsFromConfig2(config, sidebarConfig = null, options = {}) {
     const {
       onToolbarOpen,
       onToolbarClose,
       onToolbarEnter,
       onToolbarLeave
     } = this.props;
+    const {
+      allowExtendFromParent,
+      parentItemsFilter,
+      parentExtendProp = "toolbarExtend",
+      allowExtendFromChild,
+      allowExtendFromThirdParty,
+      thirdPartyExtendId = this.constructor.componentId,
+
+      // sidebar
+      allowSidebarExtendFromParent,
+      allowSidebarExtendFromChild,
+      allowSidebarExtendFromThirdParty,
+      sidebarThirdPartyExtendId = thirdPartyExtendId
+    } = makeToolbarPropsFromConfigDefaults(options);
 
     // WARNING: we use getStore instead of this.getReduxState()
     // because the page does not rerender when changing deviceMode
@@ -416,83 +518,162 @@ export class EditorComponent extends React.Component {
     ) => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
-          /* eslint-disable no-console */
+          // eslint-disable-next-line no-console
           console.warn(
             `${this.constructor.componentId}. getItems not found in toolbarConfig`
           );
-          /* eslint-enabled no-console */
         }
       }
 
       const v = this.getValue();
-      const stateMode = valueToState(v.tabsState);
+      const stateMode = State.mRead(v.tabsState);
+
       let items = this.bindToolbarItems(
         v,
         deviceMode,
         stateMode,
-        config.getItems
-          ? config.getItems({
-              v,
-              component: this,
-              device: deviceMode,
-              state: stateMode
-            })
-          : []
+        config?.getItems({
+          v,
+          component: this,
+          device: deviceMode,
+          state: stateMode
+        }) ?? []
       );
 
       // allow extend from parent
-      if (
-        (allowExtendParent !== null ? allowExtendParent : allowExtend) &&
-        this.props.toolbarExtend
-      ) {
-        const { getItems } = this.props.toolbarExtend;
+      if (allowExtendFromParent && this.props[parentExtendProp]) {
+        const { getItems } = this.props[parentExtendProp];
         let extendItems = getItems(deviceMode);
 
-        if (extendFilter) {
-          extendItems = extendFilter(extendItems);
+        if (typeof parentItemsFilter === "function") {
+          extendItems = parentItemsFilter(extendItems);
         }
 
         items = mergeOptions(items, extendItems);
       }
 
       // allow extend from child
-      if (
-        (allowExtendChild !== null ? allowExtendChild : allowExtend) &&
-        this.childToolbarExtend
-      ) {
+      if (allowExtendFromChild && this.childToolbarExtend) {
         const { getItems } = this.childToolbarExtend;
         const extendItems = getItems(deviceMode);
 
         items = mergeOptions(extendItems, items);
       }
 
-      // allow extend from filter
-      const filterToolbarExtend = applyFilter(
-        `toolbarItemsExtend_${filterExtendName ||
-          this.constructor.componentId}`,
-        null
-      );
-      if (filterToolbarExtend && filterToolbarExtend.getItems) {
-        const filterItems = this.bindToolbarItems(
-          v,
-          deviceMode,
-          stateMode,
-          filterToolbarExtend.getItems({
-            v,
-            component: this,
-            device: deviceMode,
-            state: stateMode
-          })
+      // allow extend from third party
+      if (allowExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `toolbarItemsExtend_${thirdPartyExtendId}`,
+          null
         );
 
-        items = mergeOptions(items, filterItems);
+        if (thirdPartyConfig?.getItems) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig.getItems({
+              v,
+              component: this,
+              device: deviceMode,
+              state: stateMode
+            })
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
       }
 
       return items;
     };
 
+    const getSidebarItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
+      const v = this.getValue();
+      const stateMode = State.mRead(v.tabsState);
+      let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
+        sidebarConfig?.getItems?.({
+          v,
+          component: this,
+          device: deviceMode,
+          state: stateMode
+        }) || []
+      );
+
+      // allow extend from parent
+      if (
+        allowSidebarExtendFromParent &&
+        this.props[parentExtendProp]?.getSidebarItems
+      ) {
+        const { getSidebarItems } = this.props[parentExtendProp];
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarItems } = this.childToolbarExtend;
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(extendItems, items);
+      }
+
+      // allow extend from third party
+      if (allowSidebarExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `sidebarItemsExtend_${sidebarThirdPartyExtendId}`,
+          null
+        );
+
+        if (thirdPartyConfig?.getItems) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig.getItems({
+              v,
+              component: this,
+              device: deviceMode,
+              state: stateMode
+            })
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
+      }
+
+      return items;
+    };
+
+    const getSidebarTitle = () => {
+      let title = sidebarConfig?.title;
+
+      // allow extend from parent
+      if (allowSidebarExtendFromParent && this.props.toolbarExtend) {
+        const { getSidebarTitle } = this.props.toolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarTitle } = this.childToolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      return title || "";
+    };
+
     return {
       getItems,
+      getSidebarItems,
+      getSidebarTitle,
       onBeforeOpen: () => (global.Brizy.activeEditorComponent = this),
       onBeforeClose: () => (global.Brizy.activeEditorComponent = null),
       onOpen: onToolbarOpen,

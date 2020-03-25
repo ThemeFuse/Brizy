@@ -1,6 +1,8 @@
-import { camelCase, capitalize } from "visual/utils/string";
-import { defaultMode, toMode } from "visual/utils/responsiveMode";
-import { defaultState, valueToState } from "visual/utils/stateMode";
+import { onNullish } from "visual/utils/value";
+import { memoize } from "underscore";
+import { camelCase } from "visual/utils/string";
+import * as Responsive from "visual/utils/responsiveMode";
+import * as State from "visual/utils/stateMode";
 
 /**
  * Returns default device
@@ -24,7 +26,7 @@ function syncOnChange(device, v, key) {
       .toUpperCase() + String(key).substr(1);
   const deviceKey = device + capKey;
 
-  return v[deviceKey] === null ? v[key] : v[deviceKey];
+  return onNullish(v[key], v[deviceKey]);
 }
 
 export function tabletSyncOnChange(v, key) {
@@ -37,17 +39,21 @@ export function mobileSyncOnChange(v, key) {
 
 // Utilities
 export function keySyncOnChange(key, deviceKey) {
-  return deviceKey === null ? key : deviceKey;
+  return onNullish(key, deviceKey);
 }
 
+/**
+ *
+ * @param {string} key
+ * @param {string} device
+ * @param {StateMode} state
+ * @return {string}
+ */
 export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
-  return device && state
-    ? defaultValueKeyByDevice(defaultValueKeyByState(key, state), device)
-    : device
-    ? defaultValueKeyByDevice(key, device)
-    : state
-    ? defaultValueKeyByState(key, state)
-    : key;
+  const temp = key.substr(0, 4) === "temp" ? "temp" : "";
+  const newKey = temp.length > 0 ? key.substr(4) : key;
+
+  return camelCase([temp, defaultValueKey2({ key: newKey, device, state })]);
 }
 
 /**
@@ -66,11 +72,11 @@ export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
  * @returns {string}
  */
 export function defaultValueKey2({ key, device, state }) {
-  const _state = valueToState(state);
-  const _device = toMode(device);
+  const _state = State.mRead(state);
+  const _device = Responsive.toMode(device);
 
-  const statePrefix = _state === defaultState() ? "" : _state;
-  const devicePrefix = _device === defaultMode() ? "" : _device;
+  const statePrefix = _state === State.empty ? "" : _state;
+  const devicePrefix = _device === Responsive.defaultMode() ? "" : _device;
 
   return camelCase([statePrefix, devicePrefix, key]);
 }
@@ -83,7 +89,7 @@ export function defaultValueValue({
 }) {
   const deviceKey = defaultValueKey({ key, device, state });
 
-  return v[deviceKey] === null ? v[key] : v[deviceKey];
+  return onNullish(v[key], v[deviceKey]);
 }
 
 /**
@@ -101,55 +107,31 @@ export function defaultValueValue({
 export function defaultValueValue2({ v, key, device, state }) {
   const deviceKey = defaultValueKey2({ key, device, state });
 
-  return v[deviceKey] === null ? v[key] : v[deviceKey];
+  return onNullish(v[key], v[deviceKey]);
 }
 
-function defaultValueKeyByState(key, state) {
-  return key.substr(0, 4) === "temp" && state === "hover"
-    ? `tempHover${key.substr(4)}`
-    : state === "hover"
-    ? `hover${capitalize(key)}`
-    : key;
-}
+/**
+ * Returns a combination of all devices and states
+ *
+ * @return {({device: string, state: StateMode}[])}
+ */
+const states = memoize(() => {
+  return Responsive.modes().reduce((acc, device) => {
+    const item = State.states().reduce((acc, state) => {
+      acc.push({ device, state });
+      return acc;
+    }, []);
 
-function defaultValueKeyByDevice(key, device) {
-  return key.substr(0, 4) === "temp" && device === "mobile"
-    ? `tempMobile${key.substr(4)}`
-    : key.substr(0, 4) === "tempHover" && device === "mobile"
-    ? `tempHoverMobile${key.substr(9)}`
-    : device === "mobile"
-    ? `mobile${capitalize(key)}`
-    : key.substr(0, 4) === "temp" && device === "tablet"
-    ? `tempTablet${key.substr(4)}`
-    : key.substr(0, 4) === "tempHover" && device === "tablet"
-    ? `tempHoverTablet${key.substr(9)}`
-    : device === "tablet"
-    ? `tablet${capitalize(key)}`
-    : key;
-}
+    return acc.concat(item);
+  }, []);
+});
 
 export function deviceStateValueByKey(v, key) {
-  const states = [
-    { device: "desktop", state: "normal" },
-    { device: "desktop", state: "hover" },
-    { device: "tablet", state: "normal" },
-    { device: "mobile", state: "normal" }
-  ];
-
-  return states.reduce((acc, state) => {
+  return states().reduce((acc, state) => {
     return acc || defaultValueValue({ v, key, ...state });
   }, "");
 }
 
 export function makeKeyByStateDevice(v, key) {
-  const states = [
-    { device: "desktop", state: "normal" },
-    { device: "desktop", state: "hover" },
-    { device: "tablet", state: "normal" },
-    { device: "tablet", state: "hover" },
-    { device: "mobile", state: "normal" },
-    { device: "mobile", state: "hover" }
-  ];
-
-  return states.map(state => defaultValueKey({ key, ...state }));
+  return states().map(state => defaultValueKey({ key, ...state }));
 }

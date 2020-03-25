@@ -1,14 +1,14 @@
 import Config from "visual/global/Config";
 import nonWP from "./index.js";
 // import WPPosts from "./WordPress/WPPosts";
-import WPSidebar from "./WordPress/WPSidebar";
-import WPCustomShortcode from "./WordPress/WPCustomShortcode";
-import WPNavigation from "./WordPress/WPNavigation";
-import WOOProducts from "./WordPress/WOOProducts";
-import WOOProductPage from "./WordPress/WOOProductPage";
-import WOOCategories from "./WordPress/WOOCategories";
-// import WOOAddToCart from "./WordPress/WOOAddToCart";
-import WOOPages from "./WordPress/WOOPages";
+import WPSidebar from "./WPSidebar";
+import WPCustomShortcode from "./WPCustomShortcode";
+import WPNavigation from "./WPNavigation";
+import WOOProducts from "./WOOProducts";
+import WOOProductPage from "./WOOProductPage";
+import WOOCategories from "./WOOCategories";
+// import WOOAddToCart from "./WOOAddToCart";
+import WOOPages from "./WOOPages";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 

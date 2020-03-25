@@ -6,12 +6,9 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
-
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
@@ -23,8 +20,7 @@ import {
   toolbarColor2,
   toolbarColorHexField2,
   toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarHoverTransition
+  toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v) {
@@ -1155,8 +1151,16 @@ export function getItemsForDesktop(v) {
               label: t("URL"),
               options: [
                 toolbarLinkExternal({ v }),
-                toolbarLinkExternalBlank({ v }),
-                toolbarLinkExternalRel({ v })
+                {
+                  id: "linkExternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch-dev"
+                },
+                {
+                  id: "linkExternalRel",
+                  label: t("Make it Nofollow"),
+                  type: "switch-dev"
+                }
               ]
             },
             {
@@ -1171,32 +1175,10 @@ export function getItemsForDesktop(v) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
-      title: t("Settings"),
-      options: [
-        {
-          id: "settingsTabs",
-          type: "tabs",
-          align: "start",
-          tabs: [
-            {
-              id: "settingsStyling",
-              label: t("Styling"),
-              tabIcon: "nc-styling",
-              options: []
-            },
-            {
-              id: "moreSettingsAdvanced",
-              label: t("Advanced"),
-              tabIcon: "nc-cog",
-              options: [toolbarHoverTransition({ v, position: 100 })]
-            }
-          ]
-        }
-      ]
+      title: t("Settings")
     }
   ];
 }

@@ -1,14 +1,15 @@
 import flatpickr from "flatpickr";
+import Scrollbars from "perfect-scrollbar";
 import $ from "jquery";
 import "select2";
 
-export default function() {
-  $("[data-form-version='2']").each(function() {
+export default function($node) {
+  $node.find("[data-form-version='2']").each(function() {
     initForm($(this));
   });
 
   // For Date
-  $(".brz-forms2__field-date").each(function() {
+  $node.find(".brz-forms2__field-date").each(function() {
     const $this = $(this);
     const data = $this.data();
     const minDate = data.min;
@@ -28,7 +29,7 @@ export default function() {
   });
 
   // For Time
-  $(".brz-forms2__field-time").each(function() {
+  $node.find(".brz-forms2__field-time").each(function() {
     const $this = $(this);
     const data = $this.data();
     const minDate = data.min;
@@ -50,10 +51,11 @@ export default function() {
   });
 
   // Select
-  $(".brz-forms2__field-select").each(function() {
+  $node.find(".brz-forms2__field-select").each(function() {
     const $this = $(this);
     const $select = $this.find(".brz-select");
     const placeholder = $select.data("placeholder");
+    const maxItemDropdown = $select.data("max-item-dropdown");
     let initialized = false;
 
     $select.select2({
@@ -64,11 +66,40 @@ export default function() {
       }
     });
 
+    // Custom Scrollbars
+    let scrollbars;
+    $select.on("select2:opening", function() {
+      // waiting appear the dropdown in the dom
+      setTimeout(function() {
+        const $dropdown = $this.find(".select2-dropdown");
+        const itemHeight = parseInt(
+          $dropdown
+            .find(".select2-results__options .select2-results__option")
+            .css("height")
+        );
+
+        $dropdown.css("maxHeight", itemHeight * maxItemDropdown);
+
+        if ($dropdown.length) {
+          const node = $dropdown.get(0);
+          scrollbars = new Scrollbars(node);
+        }
+      }, 0);
+    });
+
+    // destroy custom scrollbar when dropdown closed
+    $select.on("select2:close", function() {
+      if (scrollbars) {
+        scrollbars.destroy();
+        scrollbars = null;
+      }
+    });
+
     initialized = true;
   });
 
   // RECAPTCHA
-  const $recaptcha = $(".brz-g-recaptcha");
+  const $recaptcha = $node.find(".brz-g-recaptcha");
 
   if ($recaptcha.length) {
     // Load Script recaptcha

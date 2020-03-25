@@ -1,33 +1,21 @@
+@import "../../mixins/input";
+
 .brz-ed-option__multi-border {
   position: relative;
   justify-content: flex-end;
 
   .brz-input {
-    color: #818a91;
+    @include small-input;
+
     width: 17px;
-    background: transparent;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-right: 6px;
 
     &:hover {
       border-bottom: 1px solid $options-label-color;
       transition: 0.2s border-color linear;
     }
-    &:focus,
-    &:active {
-      border-bottom: 1px solid $brand-primary;
-      color: #fff;
-      transition: 0.2s linear color, 0.2s border-color linear;
-    }
     &:last-of-type {
       margin-right: 3px;
-    }
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
     }
   }
 

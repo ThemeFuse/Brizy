@@ -1,18 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Popper } from "react-popper";
+import { getPosition } from "visual/component/Toolbar/PortalToolbar/state";
 
 const SIDEBAR_WIDTH = 48;
 const TOOLTIP_SPACE = 14;
 const TOOLBAR_PADDING = 12;
 
 export default class TooltipContent extends React.Component {
-  static contextTypes = {
-    position: PropTypes.string
-  };
-
   static defaultProps = {
     className: "",
     isOpen: false,
@@ -48,40 +44,51 @@ export default class TooltipContent extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    if (this.isRepositioning) {
-      return;
-    }
+  /*
+   * commented because reposition causes react perf problems (cascading updates)
+   * and it seems unnecessary because when commented nothing seems changes visually.
+   * Will leave here for a number of releases and potentially remove in the future
+   */
+  // componentDidUpdate() {
+  //   if (this.isRepositioning) {
+  //     return;
+  //   }
 
-    const { toolbar } = this.props;
+  //   const { toolbar } = this.props;
 
-    if (toolbar) {
-      this.repositionByToolbar(toolbar);
-    }
-  }
+  //   if (toolbar) {
+  //     this.repositionByToolbar(toolbar);
+  //   }
+  // }
 
   repositionByToolbar(toolbar) {
+    let { placement, arrowPlacementStyle } = this.props;
+    const vertical = placement.split("-")[0];
+
     // eslint-disable-next-line react/no-find-dom-node
-    const toolbarTarget = ReactDOM.findDOMNode(toolbar);
+    const toolbarNode = ReactDOM.findDOMNode(toolbar);
+    const {
+      top: toolbarTop,
+      right: toolbarRight,
+      left: toolbarLeft,
+      width: toolbarWidth,
+      height: toolbarHeight
+    } = toolbarNode.getBoundingClientRect();
+    const {
+      toolbarItemIndex,
+      toolbarItemsLength,
+      toolbarCSSPosition
+    } = toolbar;
+
     const {
       width: contentWidth,
       height: contentHeight
     } = this.contentRef.current.getBoundingClientRect();
-    const {
-      top: targetTop,
-      right: targetRight,
-      left: targetLeft,
-      height: targetHeight,
-      width: targetWidth
-    } = toolbarTarget.getBoundingClientRect();
 
-    let { placement, arrowPlacementStyle } = this.props;
-    const { position } = this.context;
-    const windowTop = position === "fixed" ? 0 : window.scrollY;
-    const { toolbarItemIndex, toolbarItemsLength } = toolbar;
+    const windowTop = toolbarCSSPosition === "fixed" ? 0 : window.scrollY;
 
     const toolbarItemWidth =
-      (targetWidth - TOOLBAR_PADDING) / toolbarItemsLength;
+      (toolbarWidth - TOOLBAR_PADDING) / toolbarItemsLength;
 
     const toolbarItemWidthCenter =
       toolbarItemWidth * toolbarItemIndex -
@@ -91,16 +98,32 @@ export default class TooltipContent extends React.Component {
     const toolbarItemCenter =
       Math.round((toolbarItemWidthCenter - contentWidth / 2) * 10) / 10;
 
-    const contentTop = windowTop + targetTop - TOOLTIP_SPACE - contentHeight;
-    const contentLeft = targetLeft + toolbarItemCenter;
+    const contentTop = windowTop + toolbarTop - TOOLTIP_SPACE;
+    const contentLeft = toolbarLeft + toolbarItemCenter;
     const contentMinLeft = SIDEBAR_WIDTH;
     const contentMaxLeft = document.documentElement.clientWidth - contentWidth;
+    const viewBottom =
+      document.documentElement.clientHeight - toolbarTop - contentHeight;
 
-    let placementStyle = { top: contentTop, left: contentLeft, position };
+    let placementStyle = {
+      top: "unset",
+      bottom: `calc(100vh - ${contentTop}px)`,
+      left: contentLeft,
+      position: toolbarCSSPosition
+    };
 
-    if (contentTop <= windowTop) {
-      placementStyle.top = windowTop + targetTop + targetHeight + TOOLTIP_SPACE;
+    // try to open in the same way (above, below) as the toolbar did
+    if (
+      getPosition() === "below" ||
+      contentTop - contentHeight <= windowTop ||
+      (vertical === "bottom" && viewBottom > contentHeight)
+    ) {
+      placementStyle.bottom = "";
+      placementStyle.top =
+        windowTop + toolbarTop + toolbarHeight + TOOLTIP_SPACE;
       placement = `bottom-${placement.split("-")[1]}`;
+    } else if (vertical === "bottom" && viewBottom <= contentHeight) {
+      placement = `top-${placement.split("-")[1]}`;
     }
     if (contentLeft >= contentMaxLeft) {
       const arrowPosition =
@@ -108,12 +131,12 @@ export default class TooltipContent extends React.Component {
         toolbarItemWidth / 2 +
         TOOLBAR_PADDING / 2;
       placement = `${placement.split("-")[0]}-right`;
-      placementStyle.left = targetRight - contentWidth;
+      placementStyle.left = toolbarRight - contentWidth;
       arrowPlacementStyle = { left: contentWidth - arrowPosition };
     }
     if (contentLeft <= contentMinLeft) {
       placement = `${placement.split("-")[0]}-left`;
-      placementStyle.left = targetLeft;
+      placementStyle.left = toolbarLeft;
       arrowPlacementStyle = { left: toolbarItemWidthCenter };
     }
 

@@ -53,7 +53,7 @@ class ReactSelect extends Component {
         const newValue = Array.isArray(value) ? value : [];
         onChange(addLast(newValue, changes.value));
       }
-    } else {
+    } else if (changes) {
       this.setState({
         inputValue: changes.value
       });
