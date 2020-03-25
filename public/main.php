@@ -399,7 +399,7 @@ class Brizy_Public_Main {
 		global $post;
 
 		if ( false === strpos( $content, 'brz-root__container' ) ||
-		     ( $post && $post->ID !== $this->post->getWpPostParentId() ) ) {
+		     ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
 			return $content;
 		}
 
