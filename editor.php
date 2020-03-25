@@ -224,7 +224,7 @@ class Brizy_Editor {
 
 		$this->registerCustomPostTemplates();
 
-		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
+		if ( defined( 'BRIZY_PRO_VERSION' ) && class_exists('BrizyPro_Main') ) {
 			$mainInstance = new BrizyPro_Main();
 			$mainInstance->registerCustomPosts();
 		}
