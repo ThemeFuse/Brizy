@@ -15,6 +15,7 @@ import Countdown2 from "./Countdown2";
 import Tabs from "./Tabs";
 import ProgressBar from "./ProgressBar";
 import Accordion from "./Accordion";
+import MenuSimple from "./MenuSimple";
 
 import Row from "./Row";
 import Columns from "./Columns";
@@ -37,7 +38,8 @@ export default {
     Countdown2,
     Tabs,
     ProgressBar,
-    Accordion
+    Accordion,
+    MenuSimple
   ],
   grid: [Row, Columns],
   social: []

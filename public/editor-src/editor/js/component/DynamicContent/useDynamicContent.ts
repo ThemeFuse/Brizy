@@ -1,38 +1,49 @@
 import { useState, useEffect } from "react";
-import { getDynamicContent } from "visual/utils/api/editor/index.wp";
+import { getDynamicContent } from "visual/utils/api/editor/index";
 import {
   TGetDynamicContentResolve,
   TGetDynamicContentReject
 } from "visual/utils/api/editor/types";
 
-type TState =
+export type DynamicContentState =
   | {
-      status: "waiting";
+      status: "empty" | "idle" | "waiting";
       data: null;
       error: null;
     }
   | {
-      status: "resolved" | "rejected";
-      data: TGetDynamicContentResolve;
+      status: "success";
+      data: string;
       error: null;
     }
   | {
-      status: "rejected";
+      status: "failed";
       data: null;
-      error: TGetDynamicContentReject;
+      error: string;
     };
 
-export function useDynamicContent(placeholder: string): TState {
+export function useDynamicContent(
+  placeholder: string | undefined | null,
+  delayMs = 0
+): DynamicContentState {
+  if (placeholder === undefined || placeholder === null || placeholder === "") {
+    return {
+      status: "empty",
+      data: null,
+      error: null
+    };
+  }
+
   if (IS_PREVIEW) {
     return {
-      status: "resolved",
+      status: "success",
       data: placeholder,
       error: null
     };
   }
 
-  const [state, setState] = useState<TState>({
-    status: "waiting",
+  const [state, setState] = useState<DynamicContentState>({
+    status: delayMs > 0 ? "idle" : "waiting",
     data: null,
     error: null
   });
@@ -40,16 +51,17 @@ export function useDynamicContent(placeholder: string): TState {
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
+    let tid: number;
 
     getDynamicContent({
-      placeholder,
+      placeholders: [placeholder],
       signal
     })
       .then((r: TGetDynamicContentResolve) => {
         if (signal.aborted === false) {
           setState({
-            status: "resolved",
-            data: r,
+            status: "success",
+            data: r[0],
             error: null
           });
         }
@@ -57,12 +69,29 @@ export function useDynamicContent(placeholder: string): TState {
       .catch((e: TGetDynamicContentReject) => {
         if (signal.aborted === false) {
           setState({
-            status: "rejected",
+            status: "failed",
             data: null,
             error: e
           });
         }
+      })
+      .finally(() => {
+        window.clearTimeout(tid);
       });
+
+    if (delayMs > 0) {
+      tid = window.setTimeout(() => {
+        setState(state =>
+          state.status === "success" || state.status === "failed"
+            ? state
+            : {
+                status: "waiting",
+                data: null,
+                error: null
+              }
+        );
+      }, delayMs);
+    }
 
     return (): void => {
       controller.abort();

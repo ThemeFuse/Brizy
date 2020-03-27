@@ -2,7 +2,6 @@ import nonWP from "./index.js";
 // import WPPosts from "./WordPress/WPPosts";
 import WPSidebar from "./WordPress/WPSidebar";
 import WPCustomShortcode from "./WordPress/WPCustomShortcode";
-import WPNavigation from "./WordPress/WPNavigation";
 import WOOProducts from "./WordPress/WOOProducts";
 import WOOProductPage from "./WordPress/WOOProductPage";
 import WOOCategories from "./WordPress/WOOCategories";
@@ -27,7 +26,6 @@ export default {
   Posts,
   ...(hasSidebars() ? { WPSidebar } : {}),
   WPCustomShortcode,
-  WPNavigation,
   WPBreadcrumbs,
   WPPostsTitle,
   WPPostExcerpt,

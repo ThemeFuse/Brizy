@@ -1,0 +1,120 @@
+// Wordpress Menu
+&.brz-ed--mobile {
+  .brz-menu-simple {
+    width: auto;
+    text-align: center;
+
+    &__toggle--mobile {
+      .menu {
+        display: none;
+        flex-flow: column nowrap;
+        max-height: 0;
+        align-items: flex-start;
+        transition: max-height 0.2s ease-out;
+
+        .sub-menu {
+          position: relative;
+          display: block;
+          width: 100%;
+          left: 15px;
+          padding: 0;
+          background-color: transparent;
+
+          .menu-item a {
+            padding: 5px;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+          .sub-menu {
+            display: block;
+            left: 15px;
+          }
+        }
+        & > .menu-item {
+          padding: 0;
+
+          & > .sub-menu {
+            top: 100%;
+            padding: 5px 0;
+          }
+        }
+      }
+      .brz-menu-simple__icon {
+        display: inline-block;
+      }
+    }
+  }
+}
+&.brz-ed--tablet {
+  .brz-menu-simple {
+    width: auto;
+    text-align: center;
+
+    &__toggle--tablet {
+      .menu {
+        display: none;
+        flex-flow: column nowrap;
+        max-height: 0;
+        align-items: flex-start;
+        transition: max-height 0.2s ease-out;
+
+        .sub-menu {
+          position: relative;
+          display: block;
+          width: 100%;
+          left: 15px;
+          padding: 0;
+          background-color: transparent;
+
+          .menu-item a {
+            padding: 5px;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+          .sub-menu {
+            display: block;
+            left: 15px;
+          }
+        }
+        & > .menu-item {
+          padding: 0;
+
+          & > .sub-menu {
+            top: 100%;
+            padding: 5px 0;
+          }
+        }
+      }
+      .brz-menu-simple__icon {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.brz-menu {
+
+  // Error
+  &__error {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 3px;
+    background-color: #ececec;
+    font-family: $font-family-1;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    .brz-a {
+      font-weight: 700;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}

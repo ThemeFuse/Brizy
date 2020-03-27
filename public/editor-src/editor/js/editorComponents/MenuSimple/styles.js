@@ -13,14 +13,14 @@ export function styleClassName(v) {
       ".brz & .menu": {
         fontFamily: "var(--fontFamily)"
       },
-      ".brz & .menu > li[class*='menu-item'] a": {
+      ".brz & .menu > .menu-item a": {
         color: "var(--color)"
       },
       ".brz-ed--desktop &": {
         maxWidth: "var(--maxWidth)",
         width: "var(--width)",
 
-        "& .menu > li[class*='menu-item']": {
+        "& .menu > .menu-item": {
           fontSize: "var(--fontSize)",
           lineHeight: "var(--lineHeight)",
           fontWeight: "var(--fontWeight)",
@@ -46,7 +46,7 @@ export function styleClassName(v) {
             marginBottom: "var(--tabletMarginBottom)"
           }
         },
-        "& .brz-wp-shortcode__menu__icon--bars": {
+        "& .brz-menu-simple__icon--bars": {
           backgroundColor: "var(--color)",
           color: "var(--color)"
         }
@@ -55,7 +55,7 @@ export function styleClassName(v) {
         maxWidth: "var(--mobileMaxWidth)",
         width: "var(--width)",
 
-        "& .menu > li[class*='menu-item']": {
+        "& .menu > .menu-item": {
           fontSize: "var(--mobileFontSize)",
           lineHeight: "var(--mobileLineHeight)",
           fontWeight: "var(--mobileFontWeight)",
@@ -66,7 +66,7 @@ export function styleClassName(v) {
             marginBottom: "var(--mobileMarginBottom)"
           }
         },
-        "& .brz-wp-shortcode__menu__icon--bars": {
+        "& .brz-menu-simple__icon--bars": {
           backgroundColor: "var(--color)",
           color: "var(--color)"
         }
@@ -108,7 +108,7 @@ export function styleClassName(v) {
         fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
           .family
       },
-      ".brz & .menu > li[class*='menu-item']": {
+      ".brz & .menu > .menu-item": {
         fontSize,
         lineHeight,
         fontWeight,
@@ -145,10 +145,10 @@ export function styleClassName(v) {
                 : 0
           }
         },
-        "& .brz-wp-shortcode__menu__toggle--tablet .menu .sub-menu a": {
+        "& .brz-menu-simple__toggle--tablet .menu .sub-menu a": {
           color: styleColor({ v, device: "desktop", state: "normal" })
         },
-        "& .brz-wp-shortcode__menu__icon--bars": {
+        "& .brz-menu-simple__icon--bars": {
           backgroundColor: styleColor({
             v,
             device: "desktop",
@@ -161,7 +161,7 @@ export function styleClassName(v) {
         ".brz &": {
           maxWidth: `${mobileSyncOnChange(v, "width")}%`
         },
-        ".brz & .menu > li[class*='menu-item']": {
+        ".brz & .menu > .menu-item": {
           fontSize: `${mobileFontSize}px`,
           lineHeight: mobileLineHeight,
           fontWeight: mobileFontWeight,
@@ -178,10 +178,10 @@ export function styleClassName(v) {
                 : 0
           }
         },
-        "& .brz-wp-shortcode__menu__toggle--mobile .menu .sub-menu a": {
+        "& .brz-menu-simple__toggle--mobile .menu .sub-menu a": {
           color: styleColor({ v, device: "desktop", state: "normal" })
         },
-        "& .brz-wp-shortcode__menu__icon--bars": {
+        "& .brz-menu-simple__icon--bars": {
           backgroundColor: styleColor({
             v,
             device: "desktop",
@@ -195,7 +195,12 @@ export function styleClassName(v) {
 
   const glamorClassName = String(css(glamorObj));
 
-  return classnames("brz-wp-shortcode__menu", glamorClassName, className);
+  return classnames(
+    "brz-menu-simple",
+    { "brz-menu-simple--cloud": TARGET !== "WP" },
+    glamorClassName,
+    className
+  );
 }
 
 export function styleCSSVars(v) {

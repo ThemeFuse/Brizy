@@ -63,15 +63,17 @@ export const Population: Type = ({
   }
 
   return (
-    <React.Fragment>
+    <div className="brz-ed-control__population">
       {input}
-      <Select
-        className={_className}
-        choices={choices}
-        value={value.population}
-        onChange={_onChange}
-      />
-    </React.Fragment>
+      {choices.length > 0 ? (
+        <Select
+          className={_className}
+          choices={choices}
+          value={value.population}
+          onChange={_onChange}
+        />
+      ) : null}
+    </div>
   );
 };
 
@@ -81,4 +83,4 @@ const getModel: GetModel<Value> = get => ({
 
 Population.getModel = getModel;
 Population.shouldOptionBeFiltered = ({ config }): boolean =>
-  (config?.choices ?? []).length === 0;
+  !!config?.iconOnly && (config?.choices ?? []).length === 0;

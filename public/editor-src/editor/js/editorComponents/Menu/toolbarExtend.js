@@ -16,7 +16,7 @@ import { DESKTOP } from "visual/utils/responsiveMode";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v, device, state }) {
-  return v.mMenu === "on"
+  return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
     ? getItemsMMenu({ v, device, state })
     : getItemsSimple({ v, device, state });
 }

@@ -17,6 +17,7 @@ export type PortalToolbarPositionerProps = {
   offsetTop?: number;
   offsetBottom?: number;
   offsetLeft?: number;
+  repositionOnUpdates?: boolean;
 } & Omit<
   ToolbarItemsProps,
   "containerRef" | "arrowRef" | "arrow" | "onContentChange"
@@ -37,6 +38,12 @@ export class PortalToolbarPositioner extends React.Component<
 
   componentDidMount(): void {
     this.reposition();
+  }
+
+  componentDidUpdate(): void {
+    if (this.props.repositionOnUpdates) {
+      this.reposition();
+    }
   }
 
   reposition = (): void => {

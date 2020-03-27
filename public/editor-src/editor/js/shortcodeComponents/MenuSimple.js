@@ -1,9 +1,9 @@
 import { t } from "visual/utils/i18n";
 
 export default {
-  id: "WPNavigation",
+  id: "MenuSimple",
   title: t("Menu"),
-  icon: "nc-wp-shortcode",
+  icon: "nc-menu-3",
   resolve: {
     type: "Wrapper",
     value: {
