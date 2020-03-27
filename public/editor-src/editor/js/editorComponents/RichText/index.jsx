@@ -239,6 +239,7 @@ class RichText extends EditorComponent {
               manualControl={true}
               onOpen={this.handleToolbarOpen}
               onClose={this.handleToolbarClose}
+              repositionOnUpdates={true}
             >
               <div className={this.getClassName(v)}>
                 <Quill

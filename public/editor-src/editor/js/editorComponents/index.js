@@ -48,6 +48,7 @@ import SectionPopup from "./SectionPopup";
 import SectionPopup2 from "./SectionPopup2";
 import Carousel from "./Carousel";
 import StarRating from "./StarRating";
+import MenuSimple from "./MenuSimple";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 
@@ -111,6 +112,7 @@ export default {
   SectionPopup2,
   Carousel,
   StarRating,
+  MenuSimple,
   Menu,
   MenuItem,
   // SectionMegaMenu

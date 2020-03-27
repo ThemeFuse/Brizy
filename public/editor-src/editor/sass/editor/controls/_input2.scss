@@ -42,22 +42,14 @@
 
   // Size Styles
   &--large input {
-    width: $control-lg-width;
+    max-width: $control-lg-width;
   }
 
   &--medium input {
-    width: $control-md-width;
+    max-width: $control-md-width;
   }
 
   &--short input {
-    width: $control-sm-width;
-  }
-}
-
-.brz-ed-option-population > .brz-ed-control__input2,
-.brz-ed-option__block > .brz-ed-control__input2 {
-  &,
-  & input {
-    width: 100%;
+    max-width: $control-sm-width;
   }
 }

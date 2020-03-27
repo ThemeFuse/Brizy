@@ -1,0 +1,45 @@
+@import "../../mixins/input";
+
+.brz-ed-control__population {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &__input {
+    font-family: $font-family-1;
+    font-size: $control-font-size;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    background: $control-background-color none;
+    color: #fff;
+    flex: 1 1 auto;
+    height: $control-height;
+    text-indent: 5px;
+    padding: 0 5px;
+    border-radius: $control-border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .brz-ed-icon-svg {
+      cursor: pointer;
+    }
+  }
+
+  .brz-control__select-population {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    flex: 0;
+
+    &--only-icon {
+      margin-left: 0;
+    }
+
+    .brz-control__select-options {
+      top: 100%;
+    }
+  }
+}

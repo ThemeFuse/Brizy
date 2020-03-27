@@ -4,7 +4,10 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 
 export default menus => {
-  const menuList = menus.map(item => ({ title: item.name, value: item.slug }));
+  const menuList = menus.map(item => ({
+    title: item.name,
+    value: TARGET === "WP" ? item.slug : item.id
+  }));
 
   return {
     getItems: getItems(menuList)
@@ -22,17 +25,16 @@ const getItems = menuList => ({ v, device }) => {
 
   return [
     {
-      id: "toolbarWPNavigation",
+      id: "toolbarCurrentElement",
       type: "popover",
-      icon: "nc-wp-shortcode",
+      icon: "nc-menu-3",
       position: 60,
       options: [
         {
-          id: dvk("toggleMenu"),
+          id: "toggleMenu",
+          type: "switch-dev",
           label: t("Toggle Menu"),
-          devices: "responsive",
-          type: "switch",
-          value: v.tabletToggleMenu
+          devices: "responsive"
         },
         {
           id: "menuName",

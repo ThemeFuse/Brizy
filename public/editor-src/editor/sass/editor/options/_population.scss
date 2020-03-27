@@ -1,18 +1,13 @@
-.brz-ed-option-wrapper.brz-ed-option__block
-  > .brz-ed-option__input-container.brz-ed-option__input-container--dynamic {
-  width: auto;
-}
-
 .brz-ed-option-wrapper {
-  .brz-control__select-population {
-    margin-left: 10px;
-  }
-
-  .brz-control__select-population--only-icon {
-    margin-left: 0;
-  }
-
-  &.brz-ed-option-population {
-    padding: 0;
+  &.brz-ed-option-type__population {
+    &,
+    &-dev {
+      .brz-ed-option-population:not(.brz-control__select-population) {
+        padding: 0;
+        min-height: unset;
+        flex: 1 1 auto;
+        justify-content: flex-end;
+      }
+    }
   }
 }
