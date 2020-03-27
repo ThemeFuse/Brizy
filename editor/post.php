@@ -676,5 +676,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		return $uid;
 	}
 
+	/**
+	 * @deprecated  Use getWpPost();
+	 *
+	 * @return WP_Post
+	 */
+	public function get_wp_post() {
+		return $this->getWpPost();
+	}
+
 }
 
