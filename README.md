@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.121<br>
+Stable tag: 1.0.122<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.122 - 2020-03-27 ###
+* Fixed: Progress element text editor
+* Fixed: Hidden population options
+* Improved: RichText toolbar doesn't overlap the text
 
 ### 1.0.121 - 2020-03-27 ###
 * Fixed: Added backward compatibility with old PRO plugins

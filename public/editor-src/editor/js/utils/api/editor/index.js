@@ -79,16 +79,12 @@ export function persistentRequest(ajaxSettings) {
 
 // a thin wrapper around fetch
 export function request2(url, config = {}) {
-  const defaultHeaders = {
-    "x-editor-version": Config.get("editorVersion")
-  };
-
   if (process.env.NODE_ENV === "development") {
     return fetch(url, {
       ...config,
       headers: {
         ...config.headers,
-        ...defaultHeaders,
+        "x-editor-version": Config.get("editorVersion"),
         "x-auth-user-token": Config.get("accessToken")
       }
     });
@@ -98,7 +94,7 @@ export function request2(url, config = {}) {
       ...config,
       headers: {
         ...config.headers,
-        ...defaultHeaders
+        "x-editor-version": Config.get("editorVersion")
       }
     });
   }
@@ -551,6 +547,33 @@ export function updateBlockScreenshot({ id, base64 }) {
       attachment
     })
   }).then(r => r.json());
+}
+
+// dynamic content
+
+export function getDynamicContent({ placeholders, signal }) {
+  const apiUrl = Config.get("urls").api;
+  const projectId = Config.get("project").id;
+  const qs = new URLSearchParams();
+
+  for (const p of placeholders) {
+    qs.append("placeholders[]", p);
+  }
+
+  // mapped uid cloud to font id what used in models
+  return request2(`${apiUrl}/projects/${projectId}/placeholders?${qs}`, {
+    method: "GET",
+    // mode: "cors",
+    // redirect: "error"
+    signal
+  }).then(r => {
+    if (!r.ok) {
+      // TODO: add proper error handling
+      throw new Error("fetch dynamic content error");
+    }
+
+    return r.json();
+  });
 }
 
 export async function uploadFile(file) {

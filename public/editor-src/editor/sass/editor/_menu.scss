@@ -1,115 +1,3 @@
-@import "../default-variables";
-@import "../variables";
-@import "../functions/functions";
-
-// Wordpress Menu
-&.brz-ed--mobile {
-  .brz-wp-shortcode__menu {
-    width: auto;
-    text-align: center;
-
-    &__toggle--mobile {
-      .menu {
-        display: none;
-        flex-flow: column nowrap;
-        max-height: 0;
-        align-items: flex-start;
-        transition: max-height 0.2s ease-out;
-
-        .sub-menu {
-          position: relative;
-          display: block;
-          width: 100%;
-          left: 15px;
-          background-color: transparent;
-
-          .menu-item a {
-            padding: 5px;
-
-            &:hover {
-              background-color: transparent;
-            }
-          }
-          .sub-menu {
-            display: block;
-            left: 15px;
-          }
-        }
-        & > .menu-item {
-          padding: 0;
-
-          & > .sub-menu {
-            top: 100%;
-            padding: 5px 0;
-          }
-        }
-      }
-      .brz-wp-shortcode__menu__icon {
-        display: inline-block;
-      }
-    }
-  }
-}
-&.brz-ed--tablet {
-  .brz-wp-shortcode__menu {
-    width: auto;
-    text-align: center;
-
-    &__toggle--tablet {
-      .menu {
-        display: none;
-        flex-flow: column nowrap;
-        max-height: 0;
-        align-items: flex-start;
-        transition: max-height 0.2s ease-out;
-
-        .sub-menu {
-          position: relative;
-          display: block;
-          width: 100%;
-          left: 15px;
-          background-color: transparent;
-
-          .menu-item a {
-            padding: 5px;
-
-            &:hover {
-              background-color: transparent;
-            }
-          }
-          .sub-menu {
-            display: block;
-            left: 15px;
-          }
-        }
-        & > .menu-item {
-          padding: 0;
-
-          & > .sub-menu {
-            top: 100%;
-            padding: 5px 0;
-          }
-        }
-      }
-      .brz-wp-shortcode__menu__icon {
-        display: inline-block;
-      }
-    }
-  }
-
-  // Editor Shortcode Menu
-  .brz-mm-menu--tablet {
-    position: fixed;
-  }
-}
-&.brz-ed--desktop {
-  // Editor Shortcode Menu
-  .brz-mm-menu--desktop {
-    position: fixed;
-  }
-}
-
-// Editor Shortcode Menu
 .brz-menu__editor {
   .brz-menu__item--opened > {
     .brz-menu__sub-menu,
@@ -144,3 +32,13 @@
   }
 }
 
+&.brz-ed--desktop {
+  .brz-mm-menu--desktop {
+    position: fixed;
+  }
+}
+&.brz-ed--tablet {
+  .brz-mm-menu--tablet {
+    position: fixed;
+  }
+}
