@@ -119,7 +119,7 @@ class Brizy_Admin_Main {
 
 			$bpost = Brizy_Editor_Post::get( $post );
 
-			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->getWpPostParentId() );
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $bpost->getWpPostId() );
 
 			$pageUploadPath = $urlBuilder->page_upload_path( "assets/images" );
 
