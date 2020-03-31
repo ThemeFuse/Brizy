@@ -165,7 +165,7 @@ class Brizy_Public_Main {
 		wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
 		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'brizy-preview-polyfill' ), null, true );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
-		wp_add_inline_script( 'brizy-preview', "jQuery(document).ready(function(){window.Brizy.emit('init.dom',jQuery(document.body))});", 'after' );
+		wp_add_inline_script( 'brizy-preview', 'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});', 'after' );
 
 		do_action( 'brizy_preview_enqueue_scripts' );
 	}
