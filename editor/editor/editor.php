@@ -52,7 +52,7 @@ class Brizy_Editor_Editor_Editor {
 	public function __construct( Brizy_Editor_Project $project, Brizy_Editor_Post $post = null ) {
 		$this->post       = $post;
 		$this->project    = $project;
-		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->getWpPostParentId() : null );
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post ? $post->getWpPostId() : null );
 	}
 
 	private function getMode( $postType ) {
@@ -82,11 +82,11 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link   = null;
 		$change_template_url = null;
 
-		$parent_post_type  = get_post_type( $this->post->getWpPostParentId() );
+		$parent_post_type  = get_post_type( $this->post->getWpPostId() );
 		$wp_post_id        = $this->post->getWpPostId();
 		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
-		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostParentId() . '&action=_brizy_change_template' ) );
+		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template' ) );
 
 		$mode = $this->getMode( $parent_post_type );
 

@@ -61,7 +61,7 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 		switch ( $blockType ) {
 			case Brizy_Editor_BlockScreenshotApi::BLOCK_TYPE_NORMAL:
 				$brizyPost = Brizy_Editor_Post::get( $blockPost );
-				$this->urlBuilder->set_post_id( $brizyPost->getWpPostParentId() );
+				$this->urlBuilder->set_post_id( $brizyPost->getWpPostId() );
 				$folderPath = $this->urlBuilder->page_upload_path( 'blockThumbnails' );
 				break;
 			case Brizy_Editor_BlockScreenshotApi::BLOCK_TYPE_GLOBAL:

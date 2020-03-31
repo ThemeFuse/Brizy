@@ -621,7 +621,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$apost   = (int) $_REQUEST['post_id'];
 			$post    = Brizy_Editor_Post::get( $apost );
 
-			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->getWpPostParentId() );
+			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->getWpPostId() );
 			$media_cacher->download_original_image( $_REQUEST['media'] );
 
 			$this->success( array(), 200 );
