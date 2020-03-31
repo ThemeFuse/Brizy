@@ -175,9 +175,11 @@ class Brizy_Editor {
 			}
 		}
 
-		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && !BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-			add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
-		}
+        if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+            if ( current_user_can( 'manage_options' ) ) {
+                add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+            }
+        }
 
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
@@ -490,7 +492,7 @@ class Brizy_Editor {
 			}
 		}
 
-		if ( $feedback ) {
+		if ( $feedback && current_user_can( 'manage_options' ) ) {
 			new Brizy_Admin_Feedback();
 		}
 	}
