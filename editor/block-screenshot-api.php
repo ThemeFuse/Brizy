@@ -82,7 +82,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		}
 
 		$manager = new Brizy_Editor_Screenshot_Manager( new Brizy_Editor_UrlBuilder( $brizyPost ) );
-		$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $_REQUEST['brizy_post'] );
+		$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
 
 		if ( $result ) {
 			$screenPath = $manager->getScreenshot( $screenId,  $brizyPost );
