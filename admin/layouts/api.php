@@ -11,11 +11,11 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const GET_LAYOUT_BY_UID_ACTION = 'brizy-get-layout-by-uid';
-	const GET_LAYOUTS_ACTION = 'brizy-get-layouts';
-	const CREATE_LAYOUT_ACTION = 'brizy-create-layout';
-	const UPDATE_LAYOUT_ACTION = 'brizy-update-layout';
-	const DELETE_LAYOUT_ACTION = 'brizy-delete-layout';
+	const GET_LAYOUT_BY_UID_ACTION = '-get-layout-by-uid';
+	const GET_LAYOUTS_ACTION = '-get-layouts';
+	const CREATE_LAYOUT_ACTION = '-create-layout';
+	const UPDATE_LAYOUT_ACTION = '-update-layout';
+	const DELETE_LAYOUT_ACTION = '-delete-layout';
 
 	/**
 	 * @return Brizy_Admin_Layouts_Api
@@ -35,11 +35,12 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::GET_LAYOUT_BY_UID_ACTION, array( $this, 'actionGetLayoutByUid' ) );
-		add_action( 'wp_ajax_' . self::GET_LAYOUTS_ACTION, array( $this, 'actionGetLayouts' ) );
-		add_action( 'wp_ajax_' . self::CREATE_LAYOUT_ACTION, array( $this, 'actionCreateLayout' ) );
-		add_action( 'wp_ajax_' . self::UPDATE_LAYOUT_ACTION, array( $this, 'actionUpdateLayout' ) );
-		add_action( 'wp_ajax_' . self::DELETE_LAYOUT_ACTION, array( $this, 'actionDeleteLayout' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::GET_LAYOUT_BY_UID_ACTION, array( $this, 'actionGetLayoutByUid' ) );
+		add_action( $pref . self::GET_LAYOUTS_ACTION, array( $this, 'actionGetLayouts' ) );
+		add_action( $pref . self::CREATE_LAYOUT_ACTION, array( $this, 'actionCreateLayout' ) );
+		add_action( $pref . self::UPDATE_LAYOUT_ACTION, array( $this, 'actionUpdateLayout' ) );
+		add_action( $pref . self::DELETE_LAYOUT_ACTION, array( $this, 'actionDeleteLayout' ) );
 	}
 
 	public function actionGetLayoutByUid() {

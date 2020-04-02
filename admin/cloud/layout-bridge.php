@@ -71,11 +71,11 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		if ( $post ) {
 			$brizyPost = Brizy_Editor_Layout::get( $post, $layout['uid'] );
 			$brizyPost->setMeta( $layout['meta'] );
-			$brizyPost->setCloudId( $layout['id'] );
 			$brizyPost->set_editor_data( $layout['data'] );
 			$brizyPost->set_uses_editor( true );
 			$brizyPost->set_needs_compile( true );
 			$brizyPost->saveStorage();
+			$brizyPost->setSynchronized( Brizy_Editor_Project::get()->getCloudAccountId(), $layout['uid'] );
 		}
 	}
 

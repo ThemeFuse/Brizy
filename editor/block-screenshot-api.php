@@ -8,19 +8,9 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	const AJAX_UPDATE_BLOCK_SCREENSHOT = '_update_block_screenshot';
 
 	/**
-	 * @var Brizy_Editor_Project
-	 */
-	private $project;
-
-	/**
 	 * @var Brizy_Editor_Post
 	 */
 	private $post;
-
-	/**
-	 * @var Brizy_Editor_UrlBuilder
-	 */
-	private $urlBuilder;
 
 	/**
 	 * @var array
@@ -72,14 +62,11 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		}
 
 		// obtain the image content from POST
-		$imageContent = null;
 		$fileName     = null;
 		$screenId     = null;
 		$brizyPost    = isset( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 		$base64       = $_REQUEST['ibsf'];
 		$imageContent = base64_decode( $base64 );
-
-		$img_type = 'jpeg';
 
 		if ( isset( $_REQUEST['id'] ) ) {
 			$screenId = $_REQUEST['id'];

@@ -48,7 +48,7 @@ class LayoutApiCest {
 	public function getLayoutByIdTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+				'action'  => 'brizy-get-layout-by-uid',
 				'uid'     => 'gffbf00297b0b4e9ee27af32a7b79c3331',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -78,7 +78,7 @@ class LayoutApiCest {
 	public function getLayoutsWithoutFieldsTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+				'action'  => 'brizy-get-layouts',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 
@@ -107,7 +107,7 @@ class LayoutApiCest {
 	public function getLayoutsWithFieldsTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+				'action'  => 'brizy-get-layouts',
 				'version' => BRIZY_EDITOR_VERSION,
 				'fields'  => [ 'uid', 'meta','synchronized' ]
 			] ) );
@@ -137,7 +137,7 @@ class LayoutApiCest {
 
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+				'action'  => 'brizy-create-layout',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'uid'   => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
@@ -163,7 +163,7 @@ class LayoutApiCest {
 	public function createLayoutWithInvalidDataTest( FunctionalTester $I ) {
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+				'action'  => 'brizy-create-layout',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'uid'   => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
@@ -174,7 +174,7 @@ class LayoutApiCest {
 		$I->seeResponseCodeIs( 400 );
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+				'action'  => 'brizy-create-layout',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'uid'  => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
@@ -185,7 +185,7 @@ class LayoutApiCest {
 		$I->seeResponseCodeIs( 400 );
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+				'action'  => 'brizy-create-layout',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'uid'   => 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso',
@@ -196,7 +196,7 @@ class LayoutApiCest {
 		$I->seeResponseCodeIs( 400 );
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+				'action'  => 'brizy-create-layout',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), [
 			'data'  => '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
@@ -245,7 +245,7 @@ class LayoutApiCest {
 
 
 		$newMeta = '{"_thumbnailSrc": "1","_thumbnailWidth": "1"}';
-		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION ] ), [
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-update-layout' ] ), [
 			'uid'         => $uid,
 			'data'        => $newLayoutData,
 			'meta'        => $newMeta,

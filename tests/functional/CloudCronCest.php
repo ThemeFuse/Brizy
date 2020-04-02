@@ -31,7 +31,7 @@ class CloudCronCest {
 		Brizy_Admin_Cloud_Cron::_init();
 		$schedules = wp_get_schedules();
 		$I->assertTrue( isset( $schedules['5minute'] ), 'It should register 5minute schedule interval' );
-		$I->assertEquals( $schedules['5minute']['interval'], 300, 'It should have a 300 seconds interval' );
+		$I->assertEquals( 300, $schedules['5minute']['interval'], 'It should have a 300 seconds interval' );
 	}
 
 	public function syncSaveBlockTest( FunctionalTester $I ) {

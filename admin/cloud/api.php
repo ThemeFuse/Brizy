@@ -13,11 +13,11 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const AJAX_SIGNIN_ACTION = 'brizy-cloud-signin';
-	const AJAX_SIGNUP_ACTION = 'brizy-cloud-signup';
-	const AJAX_SIGNOUT_ACTION = 'brizy-cloud-signout';
-	const AJAX_RESET_PASSWORD_ACTION = 'brizy-cloud-resetpassword';
-	const AJAX_TRIGGER_SYNC_ACTION = 'brizy-cloud-sync';
+	const AJAX_SIGNIN_ACTION = '-cloud-signin';
+	const AJAX_SIGNUP_ACTION = '-cloud-signup';
+	const AJAX_SIGNOUT_ACTION = '-cloud-signout';
+	const AJAX_RESET_PASSWORD_ACTION = '-cloud-resetpassword';
+	const AJAX_TRIGGER_SYNC_ACTION = '-cloud-sync';
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -42,11 +42,12 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::AJAX_SIGNIN_ACTION, array( $this, 'actionSignIn' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SIGNUP_ACTION, array( $this, 'actionSignUp' ) );
-		add_action( 'wp_ajax_' . self::AJAX_SIGNOUT_ACTION, array( $this, 'actionSignOut' ) );
-		add_action( 'wp_ajax_' . self::AJAX_RESET_PASSWORD_ACTION, array( $this, 'actionResetPassword' ) );
-		add_action( 'wp_ajax_' . self::AJAX_TRIGGER_SYNC_ACTION, array( $this, 'actionSync' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::AJAX_SIGNIN_ACTION, array( $this, 'actionSignIn' ) );
+		add_action( $pref . self::AJAX_SIGNUP_ACTION, array( $this, 'actionSignUp' ) );
+		add_action( $pref . self::AJAX_SIGNOUT_ACTION, array( $this, 'actionSignOut' ) );
+		add_action( $pref . self::AJAX_RESET_PASSWORD_ACTION, array( $this, 'actionResetPassword' ) );
+		add_action( $pref . self::AJAX_TRIGGER_SYNC_ACTION, array( $this, 'actionSync' ) );
 	}
 
 

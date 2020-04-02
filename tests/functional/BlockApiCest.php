@@ -116,7 +116,7 @@ class BlockApiCest {
 
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'action'  => 'brizy-get-global-blocks',
 				'fields'  => [ 'uid', 'meta', 'status', 'synchronized' ],
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -170,7 +170,7 @@ class BlockApiCest {
 
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+				'action'  => 'brizy-get-saved-blocks',
 				'fields'  => [ 'uid', 'meta', 'synchronized' ],
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -200,7 +200,7 @@ class BlockApiCest {
 	public function getSavedBlockByUidTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'action'  => 'brizy-get-saved-block',
 				'uid'     => 'sffbf00297b0b4e9ee27af32a7b79c3331',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -228,7 +228,7 @@ class BlockApiCest {
 	public function getSavedBlockByUid404Test( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'action'  => 'brizy-get-saved-block',
 				'uid'     => md5( time() ),
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -236,7 +236,7 @@ class BlockApiCest {
 		$I->seeResponseCodeIs( 404 );
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+				'action'  => 'brizy-get-saved-block',
 				'uid'     => 'gffbf00297b0b4e9ee27af32a7b79c3331',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
@@ -468,7 +468,7 @@ class BlockApiCest {
 			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
 		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
+				'action'      => 'brizy-update-block-positions',
 				'version'     => BRIZY_EDITOR_VERSION,
 				'is_autosave' => 0
 			] ),
@@ -479,7 +479,7 @@ class BlockApiCest {
 		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
 
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'action'  => 'brizy-get-global-blocks',
 				'version' => BRIZY_EDITOR_VERSION,
 			] ) );
 
@@ -508,7 +508,7 @@ class BlockApiCest {
 			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
 		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'      => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
+				'action'      => 'brizy-update-block-positions',
 				'version'     => BRIZY_EDITOR_VERSION,
 				'is_autosave' => 1
 			] ),
@@ -518,7 +518,7 @@ class BlockApiCest {
 		$I->seePostInDatabase( [ 'post_type' => 'revision' ] );
 
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+				'action'  => 'brizy-get-global-blocks',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 
@@ -545,7 +545,7 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsFailsTest( FunctionalTester $I ) {
 		//------------------------------------------------------------------
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION,
+				'action'  => 'brizy-update-block-positions',
 				'version' => BRIZY_EDITOR_VERSION
 			] ), json_encode(
 			[
@@ -557,7 +557,7 @@ class BlockApiCest {
 
 
 		//------------------------------------------------------------------
-		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => Brizy_Admin_Blocks_Api::UPDATE_BLOCK_POSITIONS_ACTION ] ), 'Invalid Json' );
+		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-update-block-positions' ] ), 'Invalid Json' );
 		$I->seeResponseCodeIs( 400 );
 	}
 

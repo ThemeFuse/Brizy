@@ -333,7 +333,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$postId        = (int) $this->param( 'post_id' );
 			$defaultFields = [ 'ID', 'post_title', 'post_content' ];
-			$post_fields   = array_intersect( $this->param( 'fields' ), $defaultFields );
+			$post_fields   = array_intersect( (array)$this->param( 'fields' ), $defaultFields );
 
 			if ( count( $post_fields ) == 0 ) {
 				$post_fields = $defaultFields;

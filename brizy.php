@@ -18,7 +18,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 }
 
 
-define( 'BRIZY_DEVELOPMENT', false );
+define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '1.0.124' );
 define( 'BRIZY_EDITOR_VERSION', 'cloud-popup-2-test-3-cloud' );
