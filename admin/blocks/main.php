@@ -143,6 +143,4 @@ class Brizy_Admin_Blocks_Main {
 			return $posts;
 		} );
 	}
-
-
 }

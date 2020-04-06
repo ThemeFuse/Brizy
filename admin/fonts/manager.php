@@ -36,9 +36,9 @@ class Brizy_Admin_Fonts_Manager {
 				'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
 				'family'  => $font->post_title,
 				'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
-				'weights' => array_map( function ( $v ) {
+				'weights' => array_values( array_unique( array_map( function ( $v ) {
 					return $v['meta_value'];
-				}, $weights )
+				}, $weights ) ) )
 			);
 		}
 

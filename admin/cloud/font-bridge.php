@@ -32,13 +32,11 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$fontData = $this->fontManager->getFontForExport( $fontUid );
 
 		if ( ! $fontData ) {
-			throw new Exception( "Unable to find font {$fontUid}" );
+			throw new \Exception( "Unable to find font {$fontUid}" );
 		}
 
-		try {
+		if ( ! $this->client->getFont( $fontUid ) ) {
 			$this->client->createFont( $fontData );
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->critical( $e->getMessage(), [ 'exceptionTrace' => $e->getTraceAsString() ] );
 		}
 	}
 
@@ -50,6 +48,10 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 */
 	public function import( $fontUid ) {
 
+		if ( $font = $this->fontManager->getFont( $fontUid ) ) {
+			return $font;
+		}
+
 		$font = $this->client->getFont( $fontUid );
 
 		$family  = $font['family'];
@@ -57,7 +59,6 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$newWeights = array();
 
-		// transform font urls to local files
 		foreach ( $weights as $weight => $weightType ) {
 			foreach ( $weightType as $type => $fileUrl ) {
 				$newWeights[ $weight ][ $type ] = $this->downloadFileToTemporaryFile( $fileUrl );

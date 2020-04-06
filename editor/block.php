@@ -83,7 +83,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 				'rules',
 				'dataVersion',
 				'synchronized',
-				'synchronizable'
+				'synchronizable',
+				'isCloudEntity'
 			);
 		}
 
@@ -112,6 +113,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
 
+			if ( in_array( 'isCloudEntity', $fields ) ) {
+				$global['isCloudEntity'] = false;
+			}
+
 			if ( in_array( 'synchronized', $fields ) ) {
 				$global['synchronized'] = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
 			}
@@ -119,6 +124,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			if ( in_array( 'synchronizable', $fields ) ) {
 				$global['synchronizable'] = $this->isSynchronizable();
 			}
+
+
 		}
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {

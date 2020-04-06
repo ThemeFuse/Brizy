@@ -234,7 +234,6 @@ class FontApiCest {
 			$I->seeResponseCodeIs( 400 );
 			$response = $I->grabResponse();
 			$font     = json_decode( $response );
-
 			$I->assertFalse( $font->success, 'The success status of the request should be false' );
 		}
 	}

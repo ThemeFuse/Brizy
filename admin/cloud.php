@@ -2,15 +2,10 @@
 
 class Brizy_Admin_Cloud {
 
-	const PAGE_KEY = 'brizy-cloud';
-	const GET_CLOUD_PROJECTS_ACTION = 'brizy-cloud-projects';
-
-	static private $subpageId = null;
-
 	/**
-	 * @var Brizy_TwigEngine
+	 * @var self
 	 */
-	private $twig;
+	static $instance;
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -22,216 +17,355 @@ class Brizy_Admin_Cloud {
 	 */
 	private $cloudClient;
 
+	/**
+	 * @var Brizy_Admin_Cloud_BlockBridge
+	 */
+	private $blockBridge;
 
 	/**
+	 * @var Brizy_Admin_Cloud_LayoutBridge
+	 */
+	private $layoutBridge;
+
+	/**
+	 * @param Brizy_Editor_Project|null $project
+	 * @param Brizy_Admin_Cloud_Client|null $cloudClient
+	 *
 	 * @return Brizy_Admin_Cloud
 	 * @throws Exception
 	 */
-	public static function _init() {
+	public static function _init( Brizy_Editor_Project $project = null, Brizy_Admin_Cloud_Client $cloudClient = null ) {
 
-		static $instance;
+		if ( ! $project ) {
+			$project = Brizy_Editor_Project::get();
+		}
 
-		return $instance ? $instance : $instance = new self( Brizy_Editor_Project::get() );
+		if ( ! $cloudClient ) {
+			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+		}
+
+
+		return self::$instance ? self::$instance : ( self::$instance = new self( $project, $cloudClient ) );
 	}
 
 	/**
 	 * Brizy_Admin_Cloud constructor.
 	 *
 	 * @param Brizy_Editor_Project $project
-	 *
-	 * @throws Exception
+	 * @param Brizy_Admin_Cloud_Client $client
 	 */
-	private function __construct( Brizy_Editor_Project $project ) {
+	private function __construct( Brizy_Editor_Project $project, Brizy_Admin_Cloud_Client $client ) {
 
-		$this->project     = $project;
-		$this->cloudClient = new Brizy_Admin_Cloud_Client( $project, new WP_Http() );
+		$this->setProject( $project );
+		$this->setCloudClient( $client );
+
+		$this->blockBridge  = new Brizy_Admin_Cloud_BlockBridge( $client );
+		$this->layoutBridge = new Brizy_Admin_Cloud_LayoutBridge( $client );
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_action( 'wp_ajax_' . self::GET_CLOUD_PROJECTS_ACTION, array( $this, 'actionGetProjects' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'registersCloudAssets' ) );
-		add_action( 'admin_menu', array( $this, 'actionRegisterCloutLoginPage' ), 11 );
+	}
 
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			add_action( 'admin_init', array( $this, 'handleSubmit' ), 10 );
-		}
+	/**
+	 * @param Brizy_Editor_Project $project
+	 *
+	 * @return Brizy_Admin_Cloud
+	 */
+	public function setProject( Brizy_Editor_Project $project ): Brizy_Admin_Cloud {
+		$this->project = $project;
 
-		if ( isset( $_REQUEST['brizy-cloud-logout'] ) ) {
-			add_action( 'admin_init', array( $this, 'handleLogout' ), 10 );
-		}
+		return $this;
+	}
 
-		$this->twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/cloud/" );
+	/**
+	 * @param Brizy_Admin_Cloud_Client $cloudClient
+	 *
+	 * @return Brizy_Admin_Cloud
+	 */
+	public function setCloudClient( Brizy_Admin_Cloud_Client $cloudClient ): Brizy_Admin_Cloud {
+		$this->cloudClient = $cloudClient;
+
+		return $this;
+	}
+
+	/**
+	 * @param Brizy_Admin_Cloud_BlockBridge $blockBridge
+	 *
+	 * @return Brizy_Admin_Cloud
+	 */
+	public function setBlockBridge( Brizy_Admin_Cloud_BlockBridge $blockBridge ): Brizy_Admin_Cloud {
+		$this->blockBridge = $blockBridge;
+
+		return $this;
+	}
+
+	/**
+	 * @param Brizy_Admin_Cloud_LayoutBridge $layoutBridge
+	 *
+	 * @return Brizy_Admin_Cloud
+	 */
+	public function setLayoutBridge( Brizy_Admin_Cloud_LayoutBridge $layoutBridge ): Brizy_Admin_Cloud {
+		$this->layoutBridge = $layoutBridge;
+
+		return $this;
 	}
 
 	public function initializeActions() {
 		Brizy_Admin_Cloud_Api::_init( $this->project );
-	}
 
-	public function registersCloudAssets() {
-		$current_screen = get_current_screen();
-		if ( $current_screen->id == self::$subpageId ) {
-			wp_enqueue_script(
-				Brizy_Editor::get()->get_slug() . '-cloud-js',
-				Brizy_Editor::get()->get_url( 'admin/static/js/cloud.js' ),
-				array( 'jquery' ),
-				true
-			);
+		if ( wp_doing_ajax() && $this->project->getCloudToken() && $this->project->getCloudContainer() ) {
+			$versions = $this->cloudClient->getCloudEditorVersions();
+			if ( $versions['sync'] == BRIZY_SYNC_VERSION ) {
+				self::registerCloudFilters();
+			}
 		}
 	}
 
-	public function actionGetProjects() {
-		$projects = $this->cloudClient->getProjects( array( 'container' => isset( $_REQUEST['container'] ) ? (int) $_REQUEST['container'] : null ) );
-		wp_send_json_success( $projects );
-		exit;
+	static public function registerCloudFilters() {
+		add_filter( 'brizy_get_saved_block', [ self::$instance, 'onGetSavedBlock' ], 10, 3 );
+		add_filter( 'brizy_get_saved_blocks', [ self::$instance, 'onGetSavedBlocks' ], 10, 3 );
+		add_action( 'brizy_saved_block_delete', [ self::$instance, 'onDeleteSavedBlock' ] );
+
+		add_filter( 'brizy_get_layout', [ self::$instance, 'onGetLayout' ], 10, 3 );
+		add_filter( 'brizy_get_layouts', [ self::$instance, 'onGetLayouts' ], 10, 3 );
+		add_action( 'brizy_layout_delete', [ self::$instance, 'onDeleteLayout' ] );
 	}
 
-	public function actionRegisterCloutLoginPage() {
-		self::$subpageId = add_submenu_page( Brizy_Admin_Settings::menu_slug(),
-			__( 'Cloud' ),
-			__( 'Cloud' ),
-			'manage_options',
-			self::menu_slug(),
-			array( $this, 'render' )
-		);
+	static public function unRegisterCloudFilters() {
+		remove_filter( 'brizy_get_saved_block', [ self::$instance, 'onGetSavedBlock' ] );
+		remove_filter( 'brizy_get_saved_blocks', [ self::$instance, 'onGetSavedBlocks' ] );
+		remove_action( 'brizy_saved_block_delete', [ self::$instance, 'onDeleteSavedBlock' ] );
+
+		remove_filter( 'brizy_get_layout', [ self::$instance, 'onGetLayout' ] );
+		remove_filter( 'brizy_get_layouts', [ self::$instance, 'onGetLayouts' ] );
+		remove_action( 'brizy_layout_delete', [ self::$instance, 'onDeleteLayout' ] );
 	}
 
-	public function render() {
+	/**
+	 * @param Brizy_Editor_Entity[] $blocks
+	 * @param string[] $fields
+	 * @param Brizy_Admin_Blocks_Manager $manager
+	 */
+	public function onGetSavedBlocks( $blocks, $fields, $manager ) {
 
-		$token = $this->project->getMetaValue( 'brizy-cloud-token' );
-
-		if ( ! $token ) {
-			$this->handleLoginPage();
-		} else {
-			$this->handleProjectPage();
-		}
-	}
-
-	private function handleLoginPage() {
-		$context = array(
-			'nonce'    => wp_nonce_field( 'validate-cloud', '_wpnonce', true, false ),
-			'username' => '',
-			'password' => ''
-		);
-
-		echo $this->twig->render( 'cloud-login.html.twig', $context );
-	}
-
-	private function handleProjectPage() {
-		$pageUrl       = menu_page_url( self::menu_slug(), false );
-		$containers    = $this->cloudClient->getContainers();
-		$project       = $this->cloudClient->getProject( $this->project->getMetaValue( 'brizy-cloud-project' ) );
-		$usedContainer = isset( $_REQUEST['container'] ) ? (int) $_REQUEST['container'] : ( isset( $containers[0] ) ? $containers[0]->id : null );
-		$projects      = $this->cloudClient->getProjects( array( 'container' => $usedContainer ) );
-		$context       = array(
-			'nonce'             => wp_nonce_field( 'validate-cloud', '_wpnonce', true, false ),
-			'logoutUrl'         => add_query_arg( array( 'brizy-cloud-logout' => 1 ), menu_page_url( self::menu_slug(), false ) ),
-			'containers'        => $containers,
-			'selectedContainer' => is_object( $project ) ? $project->container : ( isset( $containers[0] ) ? array( 'container' => $containers[0]->id ) : null ),
-			'projects'          => $projects,
-			'pageUrl'           => $pageUrl,
-			'projectObject'     => $project
-		);
-
-		echo $this->twig->render( 'cloud-projects.html.twig', $context );
-	}
-
-	public function handleSubmit() {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'validate-cloud' ) ) {
-			return;
-		}
-		$pageUrl = menu_page_url( self::menu_slug(), false );
-
-		if ( isset( $_REQUEST['brizy-cloud-login'] ) ) {
-			$this->handleLogin();
-		}
-
-		if ( isset( $_REQUEST['brizy-cloud-logout'] ) ) {
-			$this->handleLogout();
-		}
-
-		if ( isset( $_REQUEST['brizy-cloud-use-container'] ) ) {
-			$this->handleUseContainer();
-		}
-
-		wp_redirect( $pageUrl );
-		exit;
-	}
-
-	public function handleLogin() {
-		if ( ! isset( $_REQUEST['cloud-username'] ) || ! isset( $_REQUEST['cloud-password'] ) ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the username and password.' ) );
-
-			return;
+		if ( ! is_array( $blocks ) ) {
+			$blocks = [];
 		}
 
 		try {
-			$token = $this->cloudClient->signIn( $_REQUEST['cloud-username'], $_REQUEST['cloud-password'] );
+			$cloudBlocks = $this->cloudClient->getBlocks( array( 'fields' => $fields ) );
 
-			if ( ! $token ) {
-				Brizy_Admin_Flash::instance()->add_error( __( 'Unable to obtain authorization data. Please check your credentials.' ) );
-			} else {
-				$this->project->setCloudToken( $token );
-
-				$containers = $this->cloudClient->getContainers();
-
-				if ( isset( $containers[0] ) ) {
-					$this->project->setCloudContainer( $containers[0]->id );
+			// remove all local block that came from cloud and are deleted from cloud
+			foreach ( $blocks as $i => $block ) {
+				$existingBlock = false;
+				foreach ( (array) $cloudBlocks as $cblock ) {
+					if ( $cblock->uid == $block['uid'] ) {
+						$existingBlock = true;
+						break;
+					}
 				}
 
-				$this->project->save();
+				if ( ! $existingBlock &&
+				     ( $localBlock = $manager->getEntity( $block['uid'] ) ) &&
+				     $localBlock->isSynchronized( $this->cloudClient->getBrizyProject()->getCloudAccountId() ) ) {
+					// delete this block as this block does not exist anymore in cloud
+					$manager->deleteEntity( $localBlock );
 
+					unset( $blocks[ $i ] );
+				}
+			}
 
+			$blocks = array_values( $blocks );
+
+			// remove cloud blocks that are already saved localy
+			foreach ( (array) $cloudBlocks as $cblock ) {
+				$existingBlock = false;
+				foreach ( $blocks as $block ) {
+					if ( $cblock->uid == $block['uid'] ) {
+						$existingBlock = true;
+						break;
+					}
+				}
+
+				if ( ! $existingBlock ) {
+
+					if ( in_array( 'synchronized', $fields ) ) {
+						$localBlock = $manager->getEntity( $cblock->uid );
+						if ( $localBlock ) {
+							$cblock->synchronized = $localBlock->isSynchronized( $this->cloudClient->getBrizyProject()->getCloudAccountId() );
+						} else {
+							$cblock->synchronized = false;
+						}
+					}
+
+					if ( in_array( 'isCloudEntity', $fields ) ) {
+						$cblock->isCloudEntity = true;
+					}
+
+					if ( in_array( 'synchronizable', $fields ) ) {
+						$cblock->synchronizable = true;
+					}
+
+					$blocks[] = (array) $cblock;
+				}
 			}
 
 		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( 'Unable to obtain cloud token', $e );
-			Brizy_Admin_Flash::instance()->add_error( __( 'Unable to obtain authorization data. Please check your credentials.' ) );
+			// do nothing...
 		}
 
-		$pageUrl = menu_page_url( self::menu_slug(), false );
-		wp_redirect( $pageUrl );
-		exit;
-	}
-
-	public function handleLogout() {
-		$this->project->setCloudToken( null );
-		$this->project->setCloudContainer( null );
-		$this->project->save();
-	}
-
-	public function handleUseContainer() {
-		if ( ! isset( $_REQUEST['brizy-cloud-use-container'] ) || $_REQUEST['brizy-cloud-use-container'] == '' ) {
-			Brizy_Admin_Flash::instance()->add_error( __( 'Please provide the container id' ) );
-
-			return;
-		}
-
-		$projectId = $_REQUEST['brizy-cloud-use-container'];
-
-		if ( $projectId ) {
-			$this->project->setCloudContainer( $projectId );
-			Brizy_Admin_Flash::instance()->add_success( __( 'Success' ) );
-		} else {
-			$this->project->removeMetaValue( 'cloudContainer' );
-		}
-
-		$this->project->save();
-
-		$pageUrl = menu_page_url( self::menu_slug(), false );
-		wp_redirect( $pageUrl );
-		exit;
+		return $blocks;
 	}
 
 	/**
-	 * @return string
+	 * @param Brizy_Editor_Entity $block
+	 * @param string $uid
+	 * @param Brizy_Admin_Blocks_Manager $manager
+	 *
+	 * @throws Exception
 	 */
-	public function menu_slug() {
-		return self::PAGE_KEY;
+	public function onGetSavedBlock( $block, $uid, $manager ) {
+		try {
+			if ( ! $block ) {
+				$this->blockBridge->import( $uid );
+				$block = $manager->getEntity( $uid );
+			}
+		} catch ( Exception $e ) {
+
+		}
+
+		return $block;
 	}
 
 	/**
-	 * @return bool
+	 * @param $blockUid
 	 */
-	public function isLoggedIn() {
-		return ! ! $this->project->getCloudToken();
+	public function onDeleteSavedBlock( $blockUid ) {
+		try {
+			$blocks = $this->cloudClient->getBlocks( [ 'uid' => $blockUid ] );
+
+			if ( isset( $blocks[0] ) ) {
+				$block = (array) $blocks[0];
+				$this->cloudClient->deleteBlock( $block['id'] );
+			}
+
+		} catch ( Exception $e ) {
+
+		}
 	}
+
+	/**
+	 * @param Brizy_Editor_Entity[] $layouts
+	 * @param string[] $fields
+	 * @param Brizy_Admin_Layouts_Manager $manager
+	 */
+	public function onGetLayouts( $layouts, $fields, $manager ) {
+
+		if ( ! is_array( $layouts ) ) {
+			$layouts = [];
+		}
+
+		try {
+			$cloudLayouts = $this->cloudClient->getLayouts( array( 'fields' => $fields ) );
+
+			// remove all local block that came from cloud and are deleted from cloud
+			foreach ( $layouts as $i => $block ) {
+				$existingBlock = false;
+				foreach ( (array) $cloudLayouts as $cblock ) {
+					if ( $cblock->uid == $block['uid'] ) {
+						$existingBlock = true;
+						break;
+					}
+				}
+
+				if ( ! $existingBlock &&
+				     ( $localLayout = $manager->getEntity( $block['uid'] ) ) &&
+				     $localLayout->isSynchronized( $this->cloudClient->getBrizyProject()->getCloudAccountId() ) ) {
+					// delete this block as this block does not exist anymore in cloud
+					$manager->deleteEntity( $localLayout );
+
+					unset( $layouts[ $i ] );
+				}
+			}
+
+			$layouts = array_values( $layouts );
+
+			foreach ( (array) $cloudLayouts as $aLayout ) {
+				$existingLayout = false;
+				foreach ( $layouts as $block ) {
+					if ( $aLayout->uid == $block['uid'] ) {
+						$existingLayout = true;
+						break;
+					}
+				}
+
+				if ( ! $existingLayout ) {
+
+					$localLayout = $manager->getEntity( $aLayout->uid );
+
+					if ( in_array( 'synchronized', $fields ) ) {
+						if ( $localLayout ) {
+							$aLayout->synchronized = $localLayout->isSynchronized( $this->cloudClient->getBrizyProject()->getCloudAccountId() );
+						} else {
+							$aLayout->synchronized = false;
+						}
+					}
+
+					if ( in_array( 'isCloudEntity', $fields ) ) {
+						$aLayout->isCloudEntity = true;
+					}
+
+					if ( in_array( 'synchronizable', $fields ) ) {
+						$aLayout->synchronizable = true;
+					}
+
+					$layouts[] = (array) $aLayout;
+				}
+			}
+
+		} catch ( Exception $e ) {
+			// do nothing...
+		}
+
+		return $layouts;
+	}
+
+
+	/**
+	 * @param Brizy_Editor_Entity $block
+	 * @param string $uid
+	 * @param Brizy_Admin_Layouts_Manager $manager
+	 *
+	 * @throws Exception
+	 */
+	public function onGetLayout( $block, $uid, $manager ) {
+		try {
+			if ( ! $block ) {
+				$this->layoutBridge->import( $uid );
+				$block = $manager->getEntity( $uid );
+			}
+		} catch ( Exception $e ) {
+
+		}
+
+		return $block;
+	}
+
+	/**
+	 * @param $blockUid
+	 */
+	public function onDeleteLayout( $blockUid ) {
+		try {
+			$blocks = $this->cloudClient->getLayouts( [ 'uid' => $blockUid ] );
+
+			if ( isset( $blocks[0] ) ) {
+				$block = (array) $blocks[0];
+				$this->cloudClient->deleteLayout( $block['id'] );
+			}
+
+		} catch ( Exception $e ) {
+
+		}
+	}
+
+
 }

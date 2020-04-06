@@ -64,6 +64,15 @@ class BlockApiCest {
 			],
 		] );
 
+		$I->haveTransientInDatabase( 'brizy_cloud_editor_versions',
+			[
+				"sync"   => BRIZY_SYNC_VERSION,
+				"editor" => "import-export-1-cloud",
+				"free"   => "import-export-1-cloud",
+				"pro"    => "import-export-1-cloud"
+			]
+		);
+
 		$I->loginAs( 'admin', 'admin' );
 	}
 
@@ -79,11 +88,10 @@ class BlockApiCest {
 	public function getGlobalBlocksTest( FunctionalTester $I ) {
 
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
-				'action'  =>  'brizy-get-global-blocks',
+				'action'  => 'brizy-get-global-blocks',
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
-
 		$I->seeResponseCodeIsSuccessful();
 
 

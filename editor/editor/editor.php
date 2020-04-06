@@ -156,7 +156,7 @@ class Brizy_Editor_Editor_Editor {
 				'maxUploadSize' => $this->fileUploadMaxSize()
 			),
 			'branding'        => array( 'brizy' => __bt( 'brizy', 'Brizy' ) ),
-			'cloud'           => array( 'token' => $this->project->getMetaValue( 'brizy-cloud-token' ) ),
+			'cloud'           => $this->getCloudInfo(),
 			'editorVersion'   => BRIZY_EDITOR_VERSION
 		);
 
@@ -761,23 +761,24 @@ class Brizy_Editor_Editor_Editor {
 			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
 			'getRuleGroupList'           => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
-			'getLayoutByUid'             => $pref .Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
-			'getLayoutList'              => $pref .Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
-			'createLayout'               => $pref .Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
-			'updateLayout'               => $pref .Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
-			'deleteLayout'               => $pref .Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
-			'cloudSignIn'                => $pref .Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
-			'cloudSignUp'                => $pref .Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
-			'cloudSignOut'               => $pref .Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
-			'cloudResetPassword'         => $pref .Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
-			'cloudSync'                  => $pref .Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
+			'getLayoutByUid'             => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+			'getLayoutList'              => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+			'createLayout'               => $pref . Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+			'updateLayout'               => $pref . Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+			'deleteLayout'               => $pref . Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+			'cloudSignIn'                => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+			'cloudSignUp'                => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+			'cloudSignOut'               => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
+			'cloudSyncAllowed'           => $pref . Brizy_Admin_Cloud_Api::AJAX_SYNC_ALLOWED,
+			'cloudResetPassword'         => $pref . Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
+			'cloudSync'                  => $pref . Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
 			'createRule'                 => $pref . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
 			'createRules'                => $pref . Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
 			'updateRules'                => $pref . Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
 			'deleteRule'                 => $pref . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
 			'getRuleList'                => $pref . Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
 			'updateBlockPositions'       => $pref . Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
-			'getSavedBlockByUid'         => $pref .Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+			'getSavedBlockByUid'         => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
 			'getSavedBlockList'          => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
 			'createSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
 			'updateSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
@@ -816,5 +817,25 @@ class Brizy_Editor_Editor_Editor {
 			'deleteAccount'              => $pref . Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
 			'validateRecaptchaAccount'   => $pref . Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
 		);
+	}
+
+	/**
+	 * @return array
+	 * @throws Exception
+	 */
+	public function getCloudInfo(): array {
+
+		// we 'allow' sync if you are not
+		$response = array(
+			'isSyncAllowed' => true
+		);
+
+		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
+			$cloudClient               = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$versions                  = $cloudClient->getCloudEditorVersions();
+			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+		}
+
+		return $response;
 	}
 }

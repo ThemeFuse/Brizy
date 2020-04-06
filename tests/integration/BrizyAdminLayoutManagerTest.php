@@ -65,8 +65,9 @@ class BrizyAdminLayoutManagerTest extends \Codeception\TestCase\WPTestCase {
 		               ->shouldBeCalled();
 
 		// WHen
-		$manager = new Brizy_Admin_Layouts_Manager( $clientObserver->reveal() );
-		$layouts  = $manager->getAllLayouts( [], [ 'uid', 'meta' ] );
+		$manager = new Brizy_Admin_Layouts_Manager();
+		$entities = $manager->getEntities( [] );
+		$layouts = $manager->createResponseForEntities( $entities, [ 'uid', 'meta' ] );
 
 		// Then
 		$this->assertCount( 2, $layouts, 'It should return only two layouts' );

@@ -17,10 +17,7 @@ class Brizy_Admin_Cloud_ScreenshotBridge extends Brizy_Admin_Cloud_AbstractBridg
 		$meta      = json_decode( $block->getMeta() );
 		$screenUid = $meta->_thumbnailSrc;
 
-
-		// aca;sdca;sd
-
-		$manager    = new Brizy_Editor_Screenshot_Manager( new  Brizy_Editor_UrlBuilder( null ) );
+		$manager    = new Brizy_Editor_Screenshot_Manager( new  Brizy_Editor_UrlBuilder( $this->client->getBrizyProject() ) );
 		$screenPath = $manager->getScreenshot( $screenUid );
 
 		if ( $screenPath ) {
@@ -35,16 +32,7 @@ class Brizy_Admin_Cloud_ScreenshotBridge extends Brizy_Admin_Cloud_AbstractBridg
 	 * @throws Exception
 	 */
 	public function import( $block ) {
-		$meta            = json_decode( $block->getMeta() );
-		$screenUid       = $meta->_thumbnailSrc;
-		$cloudScreenPath = $this->client->getScreenshotUrl( $screenUid );
-
-		$manager  = new Brizy_Editor_Screenshot_Manager( new  Brizy_Editor_UrlBuilder( null ) );
-		$response = $manager->saveScreenshot( $screenUid, Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_SAVED, file_get_contents( $cloudScreenPath ), null );
-
-		if ( !$response ) {
-
-		}
+		throw new Exception('Import screenshots not implemented yet');
 	}
 
 	/**

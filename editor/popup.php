@@ -65,7 +65,7 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	}
 
 	public function isSavedPopup() {
-		return $this->getWpPost() instanceof WP_Post && $this->getWpPost()->post_type == Brizy_Admin_Popups_Main::CP_SAVED_POPUP;
+		return $this->getWpPost() instanceof WP_Post && $this->getWpPost()->post_type == Brizy_Admin_Popups_Main::CP_POPUP;
 	}
 
 	/**

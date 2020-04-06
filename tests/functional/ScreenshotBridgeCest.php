@@ -24,18 +24,6 @@ class ScreenshotBridgeCest {
 
 	/**
 	 * @param FunctionalTester $I
-	 */
-	public function testImport( FunctionalTester $I ) {
-		$fontUid = 'some_fonr_uid';
-		$client  = $this->getCloudClientObserver();
-
-		$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $client->reveal() );
-
-		$fontId = $bridge->import( $fontUid, 'some uid' );
-	}
-
-	/**
-	 * @param FunctionalTester $I
 	 *
 	 * @throws Exception
 	 */

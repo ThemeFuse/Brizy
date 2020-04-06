@@ -52,9 +52,19 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'Invalid layout id' );
 			}
 
-			$layout = $this->getLayout( $uid );
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 
-			$this->success( $layout->createResponse() );
+			$layoutManager = new Brizy_Admin_Layouts_Manager();
+
+			$layout = $layoutManager->getEntity( $this->param( 'uid' ) );
+
+			$layout = apply_filters( 'brizy_get_layout', $layout, $this->param( 'uid' ), $layoutManager );
+
+			if ( ! $layout ) {
+				$this->error( 404, 'Block not found' );
+			}
+
+			$this->success( $layout->createResponse( $fields ) );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -65,11 +75,12 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$cloudClient   = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http );
-			$layoutManager = new Brizy_Admin_Layouts_Manager( $cloudClient );
+			$layoutManager = new Brizy_Admin_Layouts_Manager();
 
-			$layouts = $layoutManager->getAllLayouts( array(), is_array( $this->param( 'fields' ) ) ? $this->param( 'fields' ) : array() );
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 
+			$layouts = $layoutManager->getEntities( array() );
+			$layouts = apply_filters( 'brizy_get_layouts', $layoutManager->createResponseForEntities( $layouts, $fields ), $fields, $layoutManager );
 			$this->success( $layouts );
 
 		} catch ( Exception $exception ) {
@@ -97,9 +108,9 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		try {
-			$editorData = stripslashes( $this->param( 'data' ) );
-
-			$layout = $this->createLayout( $this->param( 'uid' ), 'publish', Brizy_Admin_Layouts_Main::CP_LAYOUT );
+			$editorData    = stripslashes( $this->param( 'data' ) );
+			$layoutManager = new Brizy_Admin_Layouts_Manager();
+			$layout        = $layoutManager->createEntity( $this->param( 'uid' ), 'publish' );
 
 			$layout->setMedia( stripslashes( $this->param( 'media' ) ) );
 			$layout->setMeta( stripslashes( $this->param( 'meta' ) ) );
@@ -139,8 +150,13 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			if ( ! $this->param( 'dataVersion' ) ) {
 				$this->error( 400, 'Invalid data version' );
 			}
+			$layoutManager = new Brizy_Admin_Layouts_Manager();
+			$layout        = $layoutManager->getEntity( $this->param( 'uid' ) );
 
-			$layout = $this->getLayout( $this->param( 'uid' ), Brizy_Admin_Layouts_Main::CP_LAYOUT );
+			if ( ! $layout ) {
+				$this->error( 400, 'Layout not found' );
+			}
+
 			/**
 			 * @var Brizy_Editor_Layout $layout ;
 			 */
@@ -157,8 +173,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			}
 
 			$this->success( $layout->createResponse() );
-		} catch
-		( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
 		}
 	}
@@ -169,92 +184,102 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 		if ( ! $this->param( 'uid' ) ) {
 			$this->error( '400', 'Invalid uid' );
 		}
+		$layoutManager = new Brizy_Admin_Layouts_Manager();
+		$layout        = $layoutManager->getEntity( $this->param( 'uid' ) );
 
-		$layout = $this->getLayout( $this->param( 'uid' ) );
+		do_action( 'brizy_layout_delete', $this->param( 'uid' ) );
 
 		if ( $layout ) {
 			do_action( 'brizy_layout_deleted', $layout );
 			do_action( 'brizy_global_data_deleted' );
-			$this->deleteLayout( $this->param( 'uid' ) );
+
+			$layoutManager->deleteEntity( $layout );
 			$this->success( null );
 		}
 
 		$this->error( '404', 'Layout not found' );
 	}
 
-	/**
-	 * @param $uid
-	 * @param $postType
-	 *
-	 * @return string|null
-	 */
-	private function getLayoutIdByUid( $uid ) {
-		global $wpdb;
-
-		$prepare = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} p 
-								JOIN {$wpdb->postmeta} pm  ON 
-								pm.post_id=p.ID and 
-								meta_key='brizy_post_uid' and 
-								meta_value='%s'   
-								ORDER BY p.ID DESC
-								LIMIT 1", array( $uid, ) );
-
-		return $wpdb->get_var( $prepare );
-	}
-
-	/**
-	 * @param $id
-	 * @param $postType
-	 *
-	 * @return Brizy_Editor_Layout|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	private function getLayout( $uid ) {
-		$postId = $this->getLayoutIdByUid( $uid );
-
-		return Brizy_Editor_Layout::get( $postId );
-	}
-
-	/**
-	 * @param $uid
-	 * @param $status
-	 * @param $type
-	 *
-	 * @return Brizy_Editor_Layout|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	private function createLayout( $uid, $status, $type ) {
-		$name = md5( time() );
-		$post = wp_insert_post( array(
-			'post_title'  => $name,
-			'post_name'   => $name,
-			'post_status' => $status,
-			'post_type'   => $type
-		) );
-
-		if ( $post ) {
-			$brizyPost = Brizy_Editor_Layout::get( $post, $uid );
-			$brizyPost->set_uses_editor( true );
-			$brizyPost->set_needs_compile( true );
-
-			return $brizyPost;
-		}
-
-		throw new Exception( 'Unable to create layout' );
-	}
-
-
-	/***
-	 * @param $postUid
-	 *
-	 * @return false|WP_Post|null
-	 */
-	private function deleteLayout( $postUid ) {
-
-		$postId = $this->getLayoutIdByUid( $postUid );
-
-		return wp_delete_post( $postId );
-	}
+//	/**
+//	 * @param $uid
+//	 * @param $postType
+//	 *
+//	 * @return string|null
+//	 */
+//	private function getLayoutIdByUid( $uid ) {
+//		global $wpdb;
+//
+//		$prepare = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} p
+//								JOIN {$wpdb->postmeta} pm  ON
+//								pm.post_id=p.ID and
+//								meta_key='brizy_post_uid' and
+//								meta_value='%s'
+//								ORDER BY p.ID DESC
+//								LIMIT 1", array( $uid, ) );
+//
+//		return $wpdb->get_var( $prepare );
+//	}
+//
+//	/**
+//	 * @param $id
+//	 * @param $postType
+//	 *
+//	 * @return Brizy_Editor_Layout|null
+//	 * @throws Brizy_Editor_Exceptions_NotFound
+//	 */
+//	private function getLayout( $uid ) {
+//
+//		$postId = $this->getLayoutIdByUid( $uid );
+//
+//		if ( $postId ) {
+//			return Brizy_Editor_Layout::get( $postId );
+//		}
+//
+//		return null;
+//
+//	}
+//
+//	/**
+//	 * @param $uid
+//	 * @param $status
+//	 * @param $type
+//	 *
+//	 * @return Brizy_Editor_Layout|null
+//	 * @throws Brizy_Editor_Exceptions_NotFound
+//	 */
+//	private function createLayout( $uid, $status, $type ) {
+//		$name = md5( time() );
+//		$post = wp_insert_post( array(
+//			'post_title'  => $name,
+//			'post_name'   => $name,
+//			'post_status' => $status,
+//			'post_type'   => $type
+//		) );
+//
+//		if ( $post ) {
+//			$brizyPost = Brizy_Editor_Layout::get( $post, $uid );
+//			$brizyPost->set_uses_editor( true );
+//			$brizyPost->set_needs_compile( true );
+//			$brizyPost->setDataVersion( 1 );
+//
+//			return $brizyPost;
+//		}
+//
+//		throw new Exception( 'Unable to create layout' );
+//	}
+//
+//
+//	/***
+//	 * @param $postUid
+//	 *
+//	 * @return false|WP_Post|null
+//	 */
+//	private function deleteLayout( $postUid ) {
+//
+//		$postId = $this->getLayoutIdByUid( $postUid );
+//
+//		return wp_delete_post( $postId );
+//	}
 
 
 }

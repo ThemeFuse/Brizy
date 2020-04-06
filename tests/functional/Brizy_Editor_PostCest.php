@@ -10,6 +10,8 @@ class Brizy_Editor_PostCest {
 		wp_cache_flush();
 		$I->dontHavePostInDatabase( [ 'post_type' => 'page', ] );
 		$I->dontHavePostInDatabase( [ 'post_type' => 'revision', ] );
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	public function testCreateResponse( FunctionalTester $I ) {

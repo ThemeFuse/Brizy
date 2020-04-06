@@ -27,7 +27,6 @@ class Brizy_Admin_Layouts_Main {
 	public function initialize() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
-		//add_filter( 'brizy_content', array( $this, 'insertLayoutsHtml' ), PHP_INT_MIN, 4 );
 	}
 
 	static public function registerCustomPosts() {

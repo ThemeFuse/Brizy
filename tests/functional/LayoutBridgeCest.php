@@ -8,33 +8,53 @@ class LayoutBridgeCest {
 	protected function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		$I->dontHavePostInDatabase( [] );
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
+	/**
+	 * @return \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private function getProjectObserver() {
+		$prophet  = new Prophet();
+		$observer = $prophet->prophesize( Brizy_Editor_Project::class );
+		$observer->getCloudAccountId()->willReturn( 'SOME_ACCOUNT_ID' );
+
+		return $observer;
+	}
 
 	/**
 	 * @return \Prophecy\Prophecy\ObjectProphecy
 	 */
 	private function getCloudClientObserver() {
-		$prophet             = new Prophet();
-		$cloudClientObserver = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$prophet  = new Prophet();
+		$observer = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$observer->getBrizyProject()->willReturn( $this->getProjectObserver()->reveal() );
 
-		return $cloudClientObserver;
+		return $observer;
 	}
 
 	public function testImport( FunctionalTester $I ) {
 
 
 		$layoutId   = md5( 'layout' );
-		$client     = $this->getCloudClientObserver();
 		$fakeLayout = [
 			'uid'  => $layoutId,
 			'id'   => $layoutId,
-			'meta' => 'some data',
+			'meta' => '{"_thumbnailSrc":"thumbain_src"}',
+			'media' => '{"fonts":[]}',
 			'data' => 'some data'
 		];
-		$client->getLayouts( [ 'filter' => [ 'uid' => $layoutId ] ] )
+
+		$project = $this->getProjectObserver();
+		$client  = $this->getCloudClientObserver();
+
+		$client->getLayouts( [ 'uid' => $layoutId  ] )
 		       ->willReturn( [ $fakeLayout ] )
 		       ->shouldBeCalled();
+
+		$client->getScreenshotUrl( 'thumbain_src' )
+		       ->willReturn( codecept_data_dir( 'images/cat.jpeg' ) );
 
 		$bridge = new Brizy_Admin_Cloud_LayoutBridge( $client->reveal() );
 		$bridge->import( $layoutId );
@@ -48,6 +68,10 @@ class LayoutBridgeCest {
 			'meta_value' => $layoutId
 		] );
 
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => false
+		] );
 
 	}
 
@@ -87,7 +111,7 @@ class LayoutBridgeCest {
 						],
 					]
 				),
-				'brizy_post_meta'             => 'sffbf00297b0b4e9ee27af32a7b79c333',
+				'brizy-meta'                  => '{"_thumbnailSrc": "1234567890","_thumbnailWidth": 0}',
 				'brizy_post_uid'              => 'sffbf00297b0b4e9ee27af32a7b79c333',
 				'brizy-post-editor-version'   => '1.0.101',
 				'brizy-post-compiler-version' => '1.0.101',
@@ -149,7 +173,13 @@ class LayoutBridgeCest {
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$fontManager->createFont( $fontUid, $family, $fontWeights, $fontType );
 
-		$layout->setMeta( json_encode( (object) [] ) );
+		$layout->setMeta( '{"_thumbnailSrc": "test-screen","_thumbnailWidth": 0}' );
+		// prepare screenshot file
+		$url_builder = new  Brizy_Editor_UrlBuilder(Brizy_Editor_Project::get(),$layoutId);
+
+		//$I->makeUploadsDir($url_builder->page_upload_relative_path('blockThumbnails'));
+		//file_put_contents( $screenPath = $url_builder->page_upload_path('blockThumbnails/test-screen.jpeg'), file_get_contents(codecept_data_dir( 'images/cat.jpeg' )) );
+
 		$layout->setMedia( json_encode( [ 'images' => [ $mediaUid ], 'fonts' => [ $fontUid ] ] ) );
 
 		$font = $fontManager->getFontForExport( $fontUid );
@@ -158,9 +188,32 @@ class LayoutBridgeCest {
 		//$client->isMediaUploaded( Argument::exact( $mediaUid ) )->shouldBeCalled();
 		$client->uploadMedia( Argument::exact( $mediaUid ), Argument::exact( $attachmentPath ) )->shouldBeCalled();
 		$client->createFont( $font )->willReturn( true )->shouldBeCalled();
-		$client->createOrUpdateLayout( $layout )->willReturn( true )->shouldBeCalled();
+		$client->createOrUpdateLayout( $layout )->willReturn( (object) [ 'uid' => 'sffbf00297b0b4e9ee27af32a7b79c333' ] )->shouldBeCalled();
+		$client->createScreenshot( "test-screen",Argument::any() )->shouldBeCalled();
 
 		$bridge = new Brizy_Admin_Cloud_LayoutBridge( $client->reveal() );
 		$bridge->export( $layout );
+
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => false
+		] );
+	}
+
+	public function testDelete() {
+		$prophet       = new Prophet();
+		$layoutObserver = $prophet->prophesize( Brizy_Editor_Layout::class );
+		$layoutObserver->getCloudId()->willReturn( 'SOME_ID' );
+
+		$project = $this->getProjectObserver();
+		$client  = $this->getCloudClientObserver();
+
+		$client->getBrizyProject()->willReturn( $project->reveal() );
+		$client->deleteLayout( 'SOME_ID' )
+		       ->willReturn( true )
+		       ->shouldBeCalled();
+
+		$bridge = new Brizy_Admin_Cloud_LayoutBridge( $client->reveal() );
+		$bridge->delete( $layoutObserver->reveal() );
 	}
 }

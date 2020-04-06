@@ -11,7 +11,7 @@
   "require-dev": {
     "phpunit/phpunit": "8.1",
     "facebook/webdriver": "^1.7",
-    "codeception/codeception": "^3.0",
+    "codeception/codeception": "^3.1.2",
     "codeception/remote-debug": "^0.3",
     "lucatume/wp-browser": "^2.2",
     "squizlabs/php_codesniffer": "^3.0@dev"

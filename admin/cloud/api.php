@@ -18,6 +18,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	const AJAX_SIGNOUT_ACTION = '-cloud-signout';
 	const AJAX_RESET_PASSWORD_ACTION = '-cloud-resetpassword';
 	const AJAX_TRIGGER_SYNC_ACTION = '-cloud-sync';
+	const AJAX_SYNC_ALLOWED = '-cloud-sync-allowed';
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -41,6 +42,23 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 		parent::__construct();
 	}
 
+	/**
+	 * @param Brizy_Editor_Project $project
+	 *
+	 * @return Brizy_Admin_Cloud_Api
+	 * @throws Exception
+	 */
+	public static function _init( Brizy_Editor_Project $project ) {
+		static $instance;
+
+		if ( ! $instance ) {
+			$instance = new self( $project );
+		}
+
+		return $instance;
+	}
+
+
 	protected function initializeApiActions() {
 		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
 		add_action( $pref . self::AJAX_SIGNIN_ACTION, array( $this, 'actionSignIn' ) );
@@ -48,8 +66,8 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::AJAX_SIGNOUT_ACTION, array( $this, 'actionSignOut' ) );
 		add_action( $pref . self::AJAX_RESET_PASSWORD_ACTION, array( $this, 'actionResetPassword' ) );
 		add_action( $pref . self::AJAX_TRIGGER_SYNC_ACTION, array( $this, 'actionSync' ) );
+		add_action( $pref . self::AJAX_SYNC_ALLOWED, array( $this, 'actionSyncAllowed' ) );
 	}
-
 
 	public function actionSignIn() {
 
@@ -62,15 +80,19 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		if ( $token = $this->getClient()->signIn( $data->email, $data->password ) ) {
+
 			$this->project->setCloudToken( $token );
 
 			$containers = $this->getClient()->getContainers();
 
 			if ( isset( $containers[0] ) ) {
 				$this->project->setCloudContainer( $containers[0]->id );
+			} else {
+				$this->error( 400, 'SingIn failed. Invalid container.' );
 			}
 
 			$this->project->saveStorage();
+
 			$this->success( [] );
 		} else {
 			$this->error( 400, 'SingIn failed' );
@@ -129,22 +151,6 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-	/**
-	 * @param Brizy_Editor_Project $project
-	 *
-	 * @return Brizy_Admin_Cloud_Api
-	 * @throws Exception
-	 */
-	public static function _init( Brizy_Editor_Project $project ) {
-		static $instance;
-
-		if ( ! $instance ) {
-			$instance = new self( $project );
-		}
-
-		return $instance;
-	}
-
 	public function actionSync() {
 		try {
 
@@ -156,10 +162,25 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 			return $this->success( [ 'synchronized' => count( $merged ) ] );
 		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( 'Sync failed', [ $e ] );
 			$this->error( 500, 'Sync failed' );
+
 		}
 	}
 
+	public function actionSyncAllowed() {
+
+		try {
+			$versions                  = $this->getClient()->getCloudEditorVersions();
+			$response                  = [];
+			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+
+			return $this->success( $response );
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->critical( 'Sync failed', [ $e ] );
+			$this->error( 400, 'Sync unauthorized.' );
+		}
+	}
 
 	/**
 	 * @return null

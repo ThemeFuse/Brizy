@@ -34,7 +34,13 @@ class CloudCronCest {
 		$I->assertEquals( 300, $schedules['5minute']['interval'], 'It should have a 300 seconds interval' );
 	}
 
-	public function syncSaveBlockTest( FunctionalTester $I ) {
+
+	/**
+	 * Disabled because this has cloud api cals
+	 *
+	 * @param FunctionalTester $I
+	 */
+	private function syncSaveBlockTest( FunctionalTester $I ) {
 
 		// Given
 		$I->haveManyPostsInDatabase( 2, [
@@ -68,11 +74,12 @@ class CloudCronCest {
 
 		// When
 		$client = $this->getCloudClientObserver( $I );
+
 		$cron   = new Brizy_Admin_Cloud_Cron( $client->reveal() );
 		$cron->syncBlocksAction();
 
 		// Then
-		$I->seePostMetaInDatabase( [ 'meta_key' => 'brizy-cloud-update-required', 'meta_value' => 0 ] );
+		$I->seePostMetaInDatabase( [ 'meta_key' => 'brizy-cloud-update-required', 'meta_value' => '' ] );
 	}
 
 	public function syncGlobalBlockTest( FunctionalTester $I ) {
@@ -119,15 +126,23 @@ class CloudCronCest {
 
 
 	/**
-	 * @param FunctionalTester $I
-	 *
 	 * @return \Prophecy\Prophecy\ObjectProphecy
 	 */
-	private function getCloudClientObserver( FunctionalTester $I ) {
+	private function getCloudClientObserver() {
 		$prophet             = new Prophet();
-		$cloudClientObserver = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$observer = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$observer->getBrizyProject()->willReturn($this->getProjectObserver()->reveal());
+		return $observer;
+	}
 
-		return $cloudClientObserver;
+	/**
+	 * @return \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private function getProjectObserver() {
+		$prophet             = new Prophet();
+		$observer = $prophet->prophesize( Brizy_Editor_Project::class );
+		$observer->getCloudAccountId()->willReturn('SOME_ACCOUNT_ID');
+		return $observer;
 	}
 
 }

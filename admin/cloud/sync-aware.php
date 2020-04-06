@@ -52,15 +52,15 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function syncBlocks( $throwException = false ) {
 		$postIds      = $this->getBlocksForSync();
 		$synchronized = [];
-		foreach ( $postIds as $blockId ) {
+		foreach ( $postIds as $block ) {
 			try {
-				if ( $this->syncBlock( $blockId->ID ) ) {
-					$synchronized[] = $blockId->ID;
+				if ( $this->syncBlock( $block->ID ) ) {
+					$synchronized[] = $block->ID;
 				}
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->critical( 'Failed to sync block',
 					[
-						'blockId' => $blockId->ID
+						'blockId' => $block->ID
 					] );
 
 				if ( $throwException ) {

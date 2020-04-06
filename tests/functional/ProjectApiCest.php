@@ -31,7 +31,6 @@ class ProjectApiCest {
 				'version' => BRIZY_EDITOR_VERSION
 			] ) );
 		$jsonResponse = $I->grabResponse();
-
 		$I->seeResponseCodeIsSuccessful();
 
 		$projectObject = json_decode( $jsonResponse );

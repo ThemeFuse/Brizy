@@ -48,30 +48,39 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $popupId ) {
-		$popups = $this->client->getPopups( [ 'filter' => [ 'uid' => $popupId ] ] );
+		global $wpdb;
+
+		$popups = $this->client->getPopups( [ 'uid' => $popupId ] );
 
 		if ( ! isset( $popups[0] ) ) {
 			return;
 		}
 
 		$popup = $popups[0];
+		try {
+			$wpdb->query( 'START TRANSACTION ' );
+			$name = md5( time() );
+			$post = wp_insert_post( array(
+				'post_title'  => $name,
+				'post_name'   => $name,
+				'post_status' => 'publish',
+				'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP
+			) );
 
-		$name = md5( time() );
-		$post = wp_insert_post( array(
-			'post_title'  => $name,
-			'post_name'   => $name,
-			'post_status' => 'publish',
-			'post_type'   => Brizy_Admin_Popups_Main::CP_SAVED_POPUP
-		) );
-
-		if ( $post ) {
-			$brizyPost = Brizy_Editor_Popup::get( $post, $popup['uid'] );
-			$brizyPost->setMeta( $popup['meta'] );
-			$brizyPost->setCloudId( $popup['id'] );
-			$brizyPost->set_editor_data( $popup['data'] );
-			$brizyPost->set_uses_editor( true );
-			$brizyPost->set_needs_compile( true );
-			$brizyPost->save();
+			if ( $post ) {
+				$brizyPost = Brizy_Editor_Popup::get( $post, $popup['uid'] );
+				$brizyPost->setMeta( $popup['meta'] );
+				$brizyPost->setCloudId( $popup['id'] );
+				$brizyPost->set_editor_data( $popup['data'] );
+				$brizyPost->set_uses_editor( true );
+				$brizyPost->set_needs_compile( true );
+				$brizyPost->setDataVersion( 1 );
+				$brizyPost->save();
+			}
+			$wpdb->query( 'COMMIT' );
+		} catch ( Exception $e ) {
+			$wpdb->query( 'ROLLBACK' );
+			Brizy_Logger::instance()->critical( 'Importing layout ' . $popupId . ' failed', [ $e ] );
 		}
 	}
 

@@ -8,6 +8,7 @@ class BlockBridgeCest {
 	protected function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		$I->dontHavePostInDatabase( [] );
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 
@@ -15,28 +16,48 @@ class BlockBridgeCest {
 	 * @return \Prophecy\Prophecy\ObjectProphecy
 	 */
 	private function getCloudClientObserver() {
-		$prophet             = new Prophet();
-		$cloudClientObserver = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$prophet  = new Prophet();
+		$observer = $prophet->prophesize( Brizy_Admin_Cloud_Client::class );
+		$observer->getBrizyProject()->willReturn( $this->getProjectObserver()->reveal() );
 
-		return $cloudClientObserver;
+		return $observer;
+	}
+
+	/**
+	 * @return \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private function getProjectObserver() {
+		$prophet  = new Prophet();
+		$observer = $prophet->prophesize( Brizy_Editor_Project::class );
+		$observer->getCloudAccountId()->willReturn( 'SOME_ACCOUNT_ID' );
+
+		return $observer;
 	}
 
 	public function testImport( FunctionalTester $I ) {
 
 
 		$blockId   = md5( 'block' );
-		$client    = $this->getCloudClientObserver();
-		$fakeBlock = [
-			'uid'  => $blockId,
-			'id'   => $blockId,
-			'meta' => 'some data',
-			'data' => 'some data'
+		$fakeBlock = (object) [
+			'uid'   => $blockId,
+			'id'    => $blockId,
+			'meta'  => '{"_thumbnailSrc":"thumbain_src"}',
+			'media' => '{"fonts":[]}',
+			'data'  => 'some data'
 		];
-		$client->getBlocks( [ 'filter' => [ 'uid' => $blockId ] ] )
+
+		$project = $this->getProjectObserver();
+		$client  = $this->getCloudClientObserver();
+
+		$client->getBrizyProject()->willReturn( $project->reveal() );
+		$client->getBlocks( [ 'uid' => $blockId ] )
 		       ->willReturn( [
 			       $fakeBlock
 		       ] )
 		       ->shouldBeCalled();
+
+		$client->getScreenshotUrl( 'thumbain_src' )
+		       ->willReturn( codecept_data_dir( 'images/cat.jpeg' ) );
 
 		$bridge = new Brizy_Admin_Cloud_BlockBridge( $client->reveal() );
 		$bridge->import( $blockId );
@@ -50,7 +71,10 @@ class BlockBridgeCest {
 			'meta_value' => $blockId
 		] );
 
-
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => false
+		] );
 	}
 
 	public function testImportInvalidMediaBlock( FunctionalTester $I ) {
@@ -64,12 +88,10 @@ class BlockBridgeCest {
 		$I->expectThrowable( 'Exception', function () use ( $bridge, $blockObserver ) {
 			$bridge->export( $blockObserver->reveal() );
 		} );
-
-
 	}
 
 	public function testExport( FunctionalTester $I ) {
-
+		$I->dontHavePostInDatabase( [] );
 		$blockId = $I->havePostInDatabase( [
 			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED,
 			'post_title'  => 'Save',
@@ -150,7 +172,11 @@ class BlockBridgeCest {
 		$fontManager = new Brizy_Admin_Fonts_Manager();
 		$fontManager->createFont( $fontUid, $family, $fontWeights, $fontType );
 
-		$block->setMeta( '{"_thumbnailSrc": "1234567890","_thumbnailWidth": 0}' );
+		$block->setMeta( '{"_thumbnailSrc": "test-screen","_thumbnailWidth": 0}' );
+		// preapre screen file\
+		//$url_builder = new  Brizy_Editor_UrlBuilder();
+		//file_put_contents( $screenPath = $url_builder->brizy_upload_path('blockThumbnails/saved/test-screen.jpeg'), file_get_contents(codecept_data_dir( 'images/cat.jpeg' )) );
+
 		$block->setMedia( json_encode( [ 'images' => [ $mediaUid ], 'fonts' => [ $fontUid ] ] ) );
 
 		$font = $fontManager->getFontForExport( $fontUid );
@@ -160,9 +186,34 @@ class BlockBridgeCest {
 		//$client->isMediaUploaded( Argument::exact( $mediaUid ) )->shouldBeCalled();
 		$client->uploadMedia( Argument::exact( $mediaUid ), Argument::exact( $attachmentPath ) )->shouldBeCalled();
 		$client->createFont( $font )->willReturn( true )->shouldBeCalled();
-		$client->createOrUpdateBlock( $block )->willReturn( true )->shouldBeCalled();
+		$client->createOrUpdateBlock( $block )->willReturn( (object) [ 'uid' => 'sffbf00297b0b4e9ee27af32a7b79c333' ] )->shouldBeCalled();
+		$client->createScreenshot( "test-screen", Argument::any() )->shouldBeCalled();
 
 		$bridge = new Brizy_Admin_Cloud_BlockBridge( $client->reveal() );
 		$bridge->export( $block );
+
+
+		$I->seePostMetaInDatabase( [
+			'meta_key'   => 'brizy-cloud-update-required',
+			'meta_value' => false
+		] );
+
+	}
+
+	public function testDelete() {
+		$prophet       = new Prophet();
+		$blockObserver = $prophet->prophesize( Brizy_Editor_Block::class );
+		$blockObserver->getCloudId()->willReturn( 'SOME_ID' );
+
+		$project = $this->getProjectObserver();
+		$client  = $this->getCloudClientObserver();
+
+		$client->getBrizyProject()->willReturn( $project->reveal() );
+		$client->deleteBlock( 'SOME_ID' )
+		       ->willReturn( true )
+		       ->shouldBeCalled();
+
+		$bridge = new Brizy_Admin_Cloud_BlockBridge( $client->reveal() );
+		$bridge->delete( $blockObserver->reveal() );
 	}
 }

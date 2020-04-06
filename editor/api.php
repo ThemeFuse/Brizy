@@ -670,7 +670,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$uid = get_post_meta( $attachmentId, 'brizy_post_uid', true );
 
 			if ( ! $uid ) {
-				$uid = "wp-" . md5( $attachmentId . time() );
+				$file = get_attached_file( $attachmentId );
+				$path_parts = pathinfo($file);
+				$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
 				update_post_meta( $attachmentId, 'brizy_post_uid', $uid );
 			}
 
@@ -723,7 +725,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
 
 		if ( ! $uid ) {
-			$uid = "wp-" . md5( $attachmentId . time() );
+			$file = get_attached_file( $attachmentId );
+			$path_parts = pathinfo($file);
+			$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
 			update_post_meta( $attachmentId, 'brizy_attachment_uid', $uid );
 		}
 

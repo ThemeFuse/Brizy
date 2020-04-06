@@ -5,6 +5,7 @@ class Brizy_Editor_Screenshot_Manager {
 	const BLOCK_TYPE_NORMAL = 'normal';
 	const BLOCK_TYPE_GLOBAL = 'global';
 	const BLOCK_TYPE_SAVED = 'saved';
+	const BLOCK_TYPE_LAYOUT = 'layout';
 
 	/**
 	 * @var Brizy_Editor_UrlBuilder
@@ -32,7 +33,7 @@ class Brizy_Editor_Screenshot_Manager {
 	public function saveScreenshot( $screenUid, $blockType, $imageContent, $postId ) {
 		$path = $this->getScreenshotPath( $screenUid, $blockType, $postId );
 
-		$extension = 'jpeg';
+		$extension      = 'jpeg';
 		$screenFileName = $screenUid . '.' . $extension;
 		$screenFullPath = $path . DIRECTORY_SEPARATOR . $screenFileName;
 		try {
@@ -43,16 +44,15 @@ class Brizy_Editor_Screenshot_Manager {
 	}
 
 	public function getScreenshot( $screenUid, $postId = null ) {
-		$types = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED );
+		$types = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED, self::BLOCK_TYPE_LAYOUT );
 
 		foreach ( $types as $type ) {
 			$filePath = $this->getScreenshotPath( $screenUid, $type, $postId );
 
-			$globStr     = $filePath . DIRECTORY_SEPARATOR . "{$screenUid}.*";
-			$screenshots = glob( $globStr );
+			$filePath = $filePath . DIRECTORY_SEPARATOR . "{$screenUid}.jpeg";
 
-			if ( isset( $screenshots[0] ) && file_exists( $screenshots[0] ) ) {
-				return $screenshots[0];
+			if ( file_exists( $filePath ) ) {
+				return $filePath;
 			}
 		}
 
@@ -73,6 +73,9 @@ class Brizy_Editor_Screenshot_Manager {
 				break;
 			case self::BLOCK_TYPE_SAVED:
 				$folderPath = $this->urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' );
+				break;
+			case self::BLOCK_TYPE_LAYOUT:
+				$folderPath = $this->urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'layout' );
 				break;
 			default:
 				return null;

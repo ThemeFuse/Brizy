@@ -8,10 +8,11 @@ class Brizy_Admin_Popups_MainUnitTest extends \Codeception\TestCase\WPTestCase {
 	protected $tester;
 
 	protected function _before() {
-		wp_cache_flush();
-		global $wpdb;
-		$wpdb->db_connect();
+//		wp_cache_flush();
+//		global $wpdb;
+//		$wpdb->db_connect();
 	}
+
 
 	public function testPopulateSupportedPosts() {
 		$posts = apply_filters( 'brizy_supported_post_types', [] );

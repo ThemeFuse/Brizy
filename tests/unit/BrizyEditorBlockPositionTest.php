@@ -1,6 +1,6 @@
 <?php
 
-class BrizyEditorBlockPositionTest extends \Codeception\Test\Unit {
+class BrizyEditorBlockPositionTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */

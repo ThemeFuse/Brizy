@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2db9f90ea2856e7a86269c435c87748b",
+    "content-hash": "4665f8b7fecb10be26df4970d69114c8",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -1687,7 +1687,7 @@
                 "password",
                 "security"
             ],
-            "time": "2016-12-06T22:52:10+00:00"
+            "time": "2012-08-31T00:00:00+00:00"
         },
         {
             "name": "hoa/consistency",
@@ -2303,12 +2303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "6b5a135637bf901e5dd9c0e3d906a97d550d4cee"
+                "reference": "c4849d68618a7b64e08e255d12bf40f91fb42dc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/6b5a135637bf901e5dd9c0e3d906a97d550d4cee",
-                "reference": "6b5a135637bf901e5dd9c0e3d906a97d550d4cee",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/c4849d68618a7b64e08e255d12bf40f91fb42dc6",
+                "reference": "c4849d68618a7b64e08e255d12bf40f91fb42dc6",
                 "shasum": ""
             },
             "require": {
@@ -2357,7 +2357,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-03-30T13:52:20+00:00"
+            "time": "2020-04-03T00:27:21+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2427,16 +2427,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "7cf18f20082be15afff3c705cf774a2bd6c4a1d5"
+                "reference": "6a0e83e77128c31160bf4c6d843f421ee7a9c14c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/7cf18f20082be15afff3c705cf774a2bd6c4a1d5",
-                "reference": "7cf18f20082be15afff3c705cf774a2bd6c4a1d5",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/6a0e83e77128c31160bf4c6d843f421ee7a9c14c",
+                "reference": "6a0e83e77128c31160bf4c6d843f421ee7a9c14c",
                 "shasum": ""
             },
             "require": {
@@ -2495,7 +2495,7 @@
                 "codeception",
                 "wordpress"
             ],
-            "time": "2020-04-01T15:26:08+00:00"
+            "time": "2020-04-03T11:07:29+00:00"
         },
         {
             "name": "mck89/peast",
@@ -2503,12 +2503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "1c3984ba9fc3cb93848748f141f5ddac0a65c5e1"
+                "reference": "6d1100f39f684c9e004f808b27f6c824b083d8d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/1c3984ba9fc3cb93848748f141f5ddac0a65c5e1",
-                "reference": "1c3984ba9fc3cb93848748f141f5ddac0a65c5e1",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/6d1100f39f684c9e004f808b27f6c824b083d8d8",
+                "reference": "6d1100f39f684c9e004f808b27f6c824b083d8d8",
                 "shasum": ""
             },
             "require": {
@@ -2520,7 +2520,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.10.2-dev"
+                    "dev-master": "1.10.3-dev"
                 }
             },
             "autoload": {
@@ -2540,7 +2540,7 @@
                 }
             ],
             "description": "Peast is PHP library that generates AST for JavaScript code",
-            "time": "2020-03-15T16:03:55+00:00"
+            "time": "2020-04-03T09:06:20+00:00"
         },
         {
             "name": "mikemclin/laravel-wp-password",
@@ -2747,12 +2747,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc"
+                "reference": "5181d7266b1dbf46495bf5e8ff59f334d1a7ca07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
-                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/5181d7266b1dbf46495bf5e8ff59f334d1a7ca07",
+                "reference": "5181d7266b1dbf46495bf5e8ff59f334d1a7ca07",
                 "shasum": ""
             },
             "require": {
@@ -2810,7 +2810,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-03-31T13:43:19+00:00"
+            "time": "2020-04-05T15:47:25+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -5285,12 +5285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "4430042c08c3e31010ae126425e400312785bd57"
+                "reference": "74fc47fc130f1ff96f93dff4716da29d4b1fc8fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/4430042c08c3e31010ae126425e400312785bd57",
-                "reference": "4430042c08c3e31010ae126425e400312785bd57",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/74fc47fc130f1ff96f93dff4716da29d4b1fc8fd",
+                "reference": "74fc47fc130f1ff96f93dff4716da29d4b1fc8fd",
                 "shasum": ""
             },
             "require": {
@@ -5355,7 +5355,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-30T11:43:41+00:00"
+            "time": "2020-04-05T07:04:12+00:00"
         },
         {
             "name": "symfony/translation-contracts",

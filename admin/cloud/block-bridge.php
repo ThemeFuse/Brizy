@@ -15,10 +15,6 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 */
 	public function export( $block ) {
 
-		// check if the assets are uploaded in cloud
-		// upload them if needed
-		// create the block in cloud
-
 		$media = json_decode( $block->getMedia() );
 
 		if ( ! $media || ! isset( $media->fonts ) ) {
@@ -44,7 +40,9 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$cloudBlockObject = $this->client->createOrUpdateBlock( $block );
 
-		$block->setSynchronized( Brizy_Editor_Project::get()->getCloudAccountId(), $cloudBlockObject->uid );
+		if ( $cloudBlockObject ) {
+			$block->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $cloudBlockObject->uid );
+		}
 
 		$block->saveStorage();
 	}
@@ -56,6 +54,8 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function import( $blockId ) {
+		global $wpdb;
+
 		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ] );
 
 		if ( ! isset( $blocks[0] ) ) {
@@ -64,36 +64,72 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$block = (array) $blocks[0];
 
-		$name = md5( time() );
-		$post = wp_insert_post( array(
-			'post_title'  => $name,
-			'post_name'   => $name,
-			'post_status' => 'publish',
-			'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED
-		) );
+		try {
 
-		if ( $post ) {
-			$brizyPost = Brizy_Editor_Block::get( $post, $block['uid'] );
-			$brizyPost->setMeta( $block['meta'] );
-			$brizyPost->set_editor_data( $block['data'] );
-			$brizyPost->set_uses_editor( true );
-			$brizyPost->set_needs_compile( true );
-			$brizyPost->setDataVersion( 1 );
-			$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
-			$brizyPost->save();
+			//  create local block
+			$wpdb->query( 'START TRANSACTION ' );
+			$name = md5( time() );
+			$post = wp_insert_post( array(
+				'post_title'  => $name,
+				'post_name'   => $name,
+				'post_status' => 'publish',
+				'post_type'   => Brizy_Admin_Blocks_Main::CP_SAVED
+			) );
 
-			$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $this->client );
-			$bridge->import( $brizyPost );
+			if ( $post ) {
+				$brizyPost = Brizy_Editor_Block::get( $post, $block['uid'] );
+				if ( isset( $block['media'] ) ) {
+					$brizyPost->setMedia( $block['media'] );
+				}
+				if ( isset( $block['meta'] ) ) {
+					$brizyPost->setMeta( $block['meta'] );
+				}
+				$brizyPost->set_editor_data( $block['data'] );
+				$brizyPost->set_uses_editor( true );
+				$brizyPost->set_needs_compile( true );
+				$brizyPost->setDataVersion( 1 );
+				$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
+				$brizyPost->save();
+
+
+				// import fonts
+				if ( isset( $block['media'] ) ) {
+					$blockMedia = json_decode( $block['media'] );
+
+					$fontBridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
+					if ( isset( $blockMedia->fonts ) ) {
+						foreach ( $blockMedia->fonts as $cloudFontUid ) {
+							$fontBridge->import( $cloudFontUid );
+						}
+					}
+
+					$mediaBridge = new Brizy_Admin_Cloud_MediaBridge( $this->client );
+					$mediaBridge->setBlockId( $post );
+					if ( isset( $blockMedia->images ) ) {
+						foreach ( $blockMedia->images as $mediaUid ) {
+							$mediaBridge->import( $mediaUid );
+						}
+					}
+				}
+			}
+
+
+			$wpdb->query( 'COMMIT' );
+		} catch ( Exception $e ) {
+			$wpdb->query( 'ROLLBACK' );
+			Brizy_Logger::instance()->critical( 'Importing block ' . $blockId . ' failed', [ $e ] );
 		}
 	}
 
 	/**
-	 * @param Brizy_Editor_Block $layout
+	 * @param Brizy_Editor_Block $block
 	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 */
-	public function delete( $layout ) {
-		$this->client->deleteBlock( $layout->getCloudId() );
+	public function delete( $block ) {
+		if ( $block->getCloudId() ) {
+			$this->client->deleteBlock( $block->getCloudId() );
+		}
 	}
 }

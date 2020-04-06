@@ -12,6 +12,9 @@ class BrizyEditorScreenshotManagerTest extends \Codeception\TestCase\WPTestCase 
 		wp_cache_flush();
 		global $wpdb;
 		$wpdb->db_connect();
+
+
+		//$this->tester->cleanUploadsDir('brizy');
 	}
 
 	/**
@@ -31,45 +34,34 @@ class BrizyEditorScreenshotManagerTest extends \Codeception\TestCase\WPTestCase 
 			[
 				'screenUid'    => '123',
 				'blockType'    => 'normal',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.png' ) ),
+				'imageContent' => file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ),
 				'postId'       => 1,
-				'expectedFile' => 'brizy/1/blockThumbnails/123.png'
-			],
-			[
-				'screenUid'    => '456',
-				'blockType'    => 'normal',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.jpg' ) ),
-				'postId'       => 1,
-				'expectedFile' => 'brizy/1/blockThumbnails/456.jpeg'
+				'expectedFile' => 'brizy/1/blockThumbnails/123.jpeg'
 			],
 			[
 				'screenUid'    => '789',
 				'blockType'    => 'global',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.jpg' ) ),
+				'imageContent' => file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ),
 				'postId'       => 1,
 				'expectedFile' => 'brizy/blockThumbnails/global/789.jpeg'
 			],
-			[
-				'screenUid'    => '164',
-				'blockType'    => 'global',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.png' ) ),
-				'postId'       => 1,
-				'expectedFile' => 'brizy/blockThumbnails/global/164.png'
-			],
+
 			[
 				'screenUid'    => '346',
 				'blockType'    => 'saved',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.jpg' ) ),
+				'imageContent' => file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ),
 				'postId'       => 1,
 				'expectedFile' => 'brizy/blockThumbnails/saved/346.jpeg'
-			],
-			[
-				'screenUid'    => '678',
-				'blockType'    => 'saved',
-				'imageContent' => file_get_contents( codecept_data_dir( 'images/1.png' ) ),
-				'postId'       => 1,
-				'expectedFile' => 'brizy/blockThumbnails/saved/678.png'
 			]
+			,
+			[
+				'screenUid'    => '346',
+				'blockType'    => 'layout',
+				'imageContent' => file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ),
+				'postId'       => 1,
+				'expectedFile' => 'brizy/blockThumbnails/layout/346.jpeg'
+			]
+
 		];
 	}
 

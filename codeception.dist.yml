@@ -22,6 +22,6 @@ extensions:
             sessionName: XDEBUG_ECLIPSE
 params:
     - .env.testing
-#settings:
-#    shuffle: true
+settings:
+    shuffle: true
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"

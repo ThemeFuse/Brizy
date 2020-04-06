@@ -75,7 +75,7 @@ class BrizyAdminPopupsManagerTest extends \Codeception\TestCase\WPTestCase {
 		// Having
 		$popupUid = md5( time() );
 		$popupId  = $this->tester->havePostInDatabase( [
-			'post_type'   => Brizy_Admin_Popups_Main::CP_SAVED_POPUP,
+			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
 			'post_title'  => 'Global',
 			'post_name'   => 'Global',
 			'post_status' => 'publish',
@@ -112,7 +112,7 @@ class BrizyAdminPopupsManagerTest extends \Codeception\TestCase\WPTestCase {
 
 		// WHen
 		$manager = new Brizy_Admin_Popups_Manager( $clientObserver->reveal() );
-		$popups  = $manager->getAllPopups( Brizy_Admin_Popups_Main::CP_SAVED_POPUP,  [], [ 'uid', 'meta' ] );
+		$popups  = $manager->getAllPopups( Brizy_Admin_Popups_Main::CP_POPUP,  [], [ 'uid', 'meta' ] );
 
 		// Then
 		$this->assertCount( 2, $popups, 'It should return only two popups' );

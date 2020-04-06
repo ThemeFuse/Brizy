@@ -39,7 +39,7 @@ class BrizyAdminCloudPopupBridgeTest extends \Codeception\TestCase\WPTestCase {
 	public function testExport() {
 
 		$popupId = $this->tester->havePostInDatabase( [
-			'post_type'   => Brizy_Admin_Popups_Main::CP_SAVED_POPUP,
+			'post_type'   => Brizy_Admin_Popups_Main::CP_POPUP,
 			'post_title'  => 'Save',
 			'post_name'   => 'Save',
 			'post_status' => 'publish',

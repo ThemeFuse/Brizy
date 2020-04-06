@@ -1,54 +1,141 @@
 <?php
 
-class Brizy_Admin_Blocks_Manager {
+
+class Brizy_Admin_Blocks_Manager extends Brizy_Admin_Entity_AbstractManager {
 
 	/**
-	 * @var \Brizy_Admin_Cloud_Client
+	 * @var
 	 */
-	private $cloud;
+	private $blockType;
 
-	public function __construct( \Brizy_Admin_Cloud_Client $cloudApi = null ) {
-		$this->cloud = $cloudApi;
+	/**
+	 * Brizy_Admin_Blocks_Manager constructor.
+	 *
+	 * @param $type
+	 *
+	 * @throws Exception
+	 */
+	public function __construct( $type ) {
+		if ( ! in_array( $type, [ Brizy_Admin_Blocks_Main::CP_GLOBAL, Brizy_Admin_Blocks_Main::CP_SAVED ] ) ) {
+			throw new Exception();
+		}
+
+		$this->blockType = $type;
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return Brizy_Editor_Block[]
+	 * @throws Exception
+	 */
+	public function getEntities( $args ) {
+		return $this->getEntitiesByType( $this->blockType, $args );
+	}
+
+	/**
+	 * @param $uid
+	 *
+	 * @return Brizy_Editor_Block
+	 * @throws Exception
+	 */
+	public function getEntity( $uid ) {
+		return $this->getEntityUidAndType( $uid, $this->blockType );
+	}
+
+	/**
+	 * @param $uid
+	 * @param string $status
+	 *
+	 * @return mixed|null+
+	 */
+	public function createEntity( $uid, $status = 'publish' ) {
+		return $this->createEntityByType( $uid, $this->blockType, $status );
+	}
+
+	/**
+	 * @param $post
+	 * @param null $uid
+	 *
+	 * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed$uid
+	 * @throws Exception
+	 */
+	protected function convertWpPostToEntity( $post, $uid = null ) {
+		return Brizy_Editor_Block::get( $post, $uid );
+	}
+
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+//=====================================================================
+
+
+	/**
+	 * @param $type
+	 * @param $arags
+	 * @param array $fields
+	 *
+	 * @return array
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 */
 	public function getAllBlocks( $type, $arags, $fields = array() ) {
 
 		$blocks = $this->getLocalBlocks( $type, $arags, $fields );
 
-		if ( $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
-			$cloudBlocks = $this->cloud->getBlocks( array( 'fields' => $fields ) );
+		try {
+			$versions = $this->cloud->getCloudEditorVersions();
 
-			foreach ( (array) $cloudBlocks as $cblock ) {
-				$existingBlock = false;
-				foreach ( $blocks as $block ) {
-					if ( $cblock->uid == $block['uid'] ) {
-						$existingBlock = true;
+			if ( $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED && $versions['sync'] == BRIZY_SYNC_VERSION ) {
+
+				$cloudBlocks = $this->cloud->getBlocks( array( 'fields' => $fields ) );
+
+				foreach ( (array) $cloudBlocks as $cblock ) {
+					$existingBlock = false;
+					foreach ( $blocks as $block ) {
+						if ( $cblock->uid == $block['uid'] ) {
+							$existingBlock = true;
+						}
+					}
+
+					if ( ! $existingBlock ) {
+
+						$localBlock = $this->getLocalBlock( Brizy_Admin_Blocks_Main::CP_SAVED, $cblock->uid );
+
+						if ( in_array( 'synchronized', $fields ) ) {
+							if ( $localBlock ) {
+								$cblock->synchronized = $localBlock->isSynchronized( $this->cloud->getBrizyProject()->getCloudAccountId() );
+							} else {
+								$cblock->synchronized = false;
+							}
+						}
+
+						if ( in_array( 'isCloudEntity', $fields ) ) {
+							$cblock->isCloudEntity = true;
+						}
+
+						if ( in_array( 'synchronizable', $fields ) ) {
+							$cblock->synchronizable = true;
+						}
+
+						$blocks[] = (array) $cblock;
 					}
 				}
 
-				if ( ! $existingBlock ) {
-
-					$localBlock = $this->getLocalBlock( Brizy_Admin_Blocks_Main::CP_SAVED, $cblock->uid );
-
-					if ( $localBlock ) {
-						$cblock->synchronized = $localBlock->isSynchronized( $this->cloud->getBrizyProject()->getCloudAccountId() );
-					} else {
-						$cblock->synchronized = false;
-					}
-
-					$cblock->synchronizable = true;
-					$blocks[]               = (array) $cblock;
-				}
 			}
+		} catch ( Exception $e ) {
+			// do nothing...
 		}
 
 		return $blocks;
 	}
 
 	public function getBlockByUid( $type, $uid ) {
-		$block = $this->getLocalBlock( $type, $uid );
+		$block    = $this->getLocalBlock( $type, $uid );
+		$versions = $this->cloud->getCloudEditorVersions();
 
-		if ( ! $block && $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
+		if ( ! $block && $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED && $versions['sync'] == BRIZY_SYNC_VERSION ) {
 			$bridge = new Brizy_Admin_Cloud_BlockBridge( $this->cloud );
 			$bridge->import( $uid );
 
@@ -80,7 +167,7 @@ class Brizy_Admin_Blocks_Manager {
 		$blocks   = array();
 
 		foreach ( $wpBlocks as $wpPost ) {
-			$blocks[] = \Brizy_Editor_Block::get( $wpPost )->createResponse( $fields );
+			$blocks[] = Brizy_Editor_Block::get( $wpPost )->createResponse( $fields );
 		}
 
 		return $blocks;
@@ -112,5 +199,4 @@ class Brizy_Admin_Blocks_Manager {
 
 		return $block;
 	}
-
 }

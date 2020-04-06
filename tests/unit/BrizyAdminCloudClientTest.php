@@ -2,13 +2,32 @@
 
 use \Prophecy\Argument;
 
-class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
+class BrizyAdminCloudClientTest extends \Codeception\TestCase\WPTestCase {
 
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
+
+
+	protected function _before() {
+		wp_cache_flush();
+		global $wpdb;
+		$wpdb->db_connect();
+		set_transient( 'brizy_cloud_editor_versions',
+			[
+				"sync"   => "import-export-1",
+				"editor" => "import-export-1-cloud",
+				"free"   => "import-export-1-cloud",
+				"pro"    => "import-export-1-cloud"
+			], 3600 );
+
+	}
 
 	/**
 	 * @return \Prophecy\Prophecy\ObjectProphecy
 	 */
-	private function getProjectObjserver() {
+	private function getProjectObserver() {
 		$projectObserver = $this->prophesize( Brizy_Editor_Project::class );
 		$projectObserver->getMetaValue( 'brizy-cloud-token' )->willReturn( 'brizy-cloud-token-hash' );
 		$projectObserver->getMetaValue( 'brizy-cloud-container' )->willReturn( 'brizy-cloud-container' );
@@ -20,7 +39,7 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	/**
 	 * @return \Prophecy\Prophecy\ObjectProphecy
 	 */
-	private function getHttpObjserver() {
+	private function getHttpObserver() {
 		return $httpObserver = $this->prophesize( WP_Http::class );;
 	}
 
@@ -28,8 +47,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	 * @throws Exception
 	 */
 	public function testConstructor() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -38,8 +57,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testSetters() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$httpObserver = $httpObserver->reveal();
 		$client       = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver );
@@ -59,14 +78,15 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	 */
 	public function testGetLibraries() {
 
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
 		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
 			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-			'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION
+			'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+			'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 		] ) )->shouldBeCalled();
 
 		$client->getLibraries();
@@ -77,8 +97,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	 */
 	public function testGetScreenshotByUid() {
 
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 		$uid = 'some-uid';
@@ -92,8 +112,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	 */
 	public function testCreateScreenshot() {
 
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 		$uid            = 'some-uid';
@@ -102,7 +122,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			Argument::exact( [
 				'headers' => [
 					'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-					'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+					'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+					'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 				],
 				'body'    => [
 					'uid'        => $uid,
@@ -116,8 +137,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 
 	public function testSignIn() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -125,9 +146,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNIN;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
-				'Content-type'      => 'application/x-www-form-urlencoded'
+				'X-SYNC-VERSION' => BRIZY_SYNC_VERSION,
+				'Content-type'   => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
 				'email'    => 'username@email.com',
@@ -139,8 +159,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testSignUp() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -148,9 +168,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SIGNUP;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
-				'Content-type'      => 'application/x-www-form-urlencoded'
+				'X-SYNC-VERSION' => BRIZY_SYNC_VERSION,
+				'Content-type'   => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
 
@@ -169,9 +188,47 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'password' );
 	}
 
+	public function testGetCloudEditorVersions() {
+
+
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
+
+		delete_transient( 'brizy_cloud_editor_versions' );
+
+		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_EDITOR_VERSIONS;
+		$httpObserver->get( $apiEndpointUrl )
+		             ->willReturn( [
+			             'code'     => 200,
+			             'headers'  => [],
+			             'body'     => '{"sync": "import-export-1",  "editor": "import-export-1-cloud",  "free": "import-export-1-cloud",  "pro": "import-export-1-cloud"}',
+			             'response' => [ 'code' => 200, 'message' => 'OK' ],
+		             ] )
+		             ->shouldBeCalled();
+
+		$client->getCloudEditorVersions();
+
+
+		// check if the value is cached in session
+		$httpObserver = $this->getHttpObserver();
+		$client       = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
+
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_EDITOR_VERSIONS;
+		$httpObserver->get( $apiEndpointUrl, Argument::exact( [
+			'headers' => [
+				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
+			]
+		] ) )->shouldNotBeCalled();
+
+		$client->getCloudEditorVersions();
+	}
+
 	public function testResetPassword() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -179,9 +236,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_RESET_PASSWORD;
 		$httpObserver->post( $apiEndpointUrl, Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 				'Content-type'      => 'application/x-www-form-urlencoded'
 			],
 			'body'    => [
@@ -193,8 +250,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testGetContainers() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -203,7 +260,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'headers' => [
 
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -211,8 +269,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testGetProjects() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -220,9 +278,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_PROJECTS . '?' . http_build_query( $filters );
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -230,8 +288,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testGetProject() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -241,7 +299,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'headers' => [
 
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
@@ -249,8 +308,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testCreateProject() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -260,23 +319,25 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'headers' => [
 
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 			'body'    => [
 				'name'      => 'name',
 				'container' => 'container',
 				'globals'   => null,
-				'site_id'   => null
+				'site_id'   => null,
 			]
 		] ) )->shouldBeCalled();
 
 		$client->createProject( 'container', 'name' );
 	}
 
+	//=================================================================================================================
 
 	public function testGetBlocks() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -289,17 +350,17 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'headers' => [
 
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			]
 		] ) )->shouldBeCalled();
 
 		$client->getBlocks( $filters );
 	}
 
-
 	public function testCreateBlock() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 
@@ -309,11 +370,13 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$blockObserver->getUid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( null );
 		$blockObserver->getMeta()->willReturn( array() );
+		$blockObserver->getMedia()->willReturn( array() );
 		$block = $blockObserver->reveal();
 
 		$cloudBlockData = array(
 			'container'   => 'container',
 			'meta'        => array(),
+			'media'       => array(),
 			'data'        => $block->get_editor_data(),
 			'uid'         => $block->getUid(),
 			'dataVersion' => 1
@@ -323,7 +386,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -332,12 +396,10 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->createOrUpdateBlock( $block );
 	}
 
-
 	public function testUpdateBlock() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
-
 
 		// set up reuqest for library list
 		$this->observerGetLibraryRequest( $httpObserver );
@@ -347,12 +409,14 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$blockObserver->get_editor_data()->willReturn( "SOME_ENCODED_JSON" );
 		$blockObserver->getUid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( "CLOUD_UID" );
-		$blockObserver->getMeta()->willReturn( array() );
+		$blockObserver->getMeta()->willReturn( '{}' );
+		$blockObserver->getMedia()->willReturn( '{}' );
 		$block = $blockObserver->reveal();
 
 		$cloudBlockData = array(
 			'container'   => 'container',
-			'meta'        => array(),
+			'meta'        => '{}',
+			'media'       => '{}',
 			'data'        => $block->get_editor_data(),
 			'uid'         => $block->getUid(),
 			'dataVersion' => 1
@@ -362,7 +426,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'method'  => 'PUT',
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -372,8 +437,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testDeleteBlock() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -382,7 +447,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 			'method'  => 'DELETE'
 		] ) )->shouldBeCalled();
@@ -390,10 +456,11 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->deleteBlock( 100 );
 	}
 
+	//=================================================================================================================
 
 	public function testIsMediaUploaded() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -402,7 +469,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 		] ) )->shouldBeCalled();
 
@@ -411,8 +479,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 	public function testUploadMedia() {
 
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$uid             = md5( time() );
 
 		$filePath = tempnam( '/tmp', 'test' );
@@ -422,15 +490,13 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA;
-
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
 			],
 			'body'    => array(
-				'container'  => 'container',
 				'attachment' => base64_encode( 'content' ),
 				'name'       => $uid,
 				'filename'   => basename( $filePath )
@@ -441,8 +507,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testUploadFonts() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -450,7 +516,7 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$fontToCreate = [
 			'id'        => 'askdalskdlaksd',
-			'container' => 'container',
+			'container' => 'brizy-cloud-container',
 			'family'    => 'proxima-nova',
 			'type'      => 'uploaded',
 			'weights'   => [
@@ -475,16 +541,29 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->post( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION,
+				'Content-Type'      => 'multipart/form-data'
 			],
 			'body'    => array(
-				'container' => 'container',
-				'uid'       => $fontToCreate['id'],
-				'family'    => $fontToCreate['family'],
-				'files'     => $fontToCreate['weights'],
+				'container'         => 'container',
+				'uid'               => $fontToCreate['id'],
+				'family'            => $fontToCreate['family'],
+				'files[400][ttf]'   => new CURLFile( codecept_data_dir( 'fonts/pn-regular-webfont.ttf' ) ),
+				'files[400][eot]'   => new CURLFile( codecept_data_dir( 'fonts/pn-regular-webfont.eot' ) ),
+				'files[400][woff]'  => new CURLFile( codecept_data_dir( 'fonts/pn-regular-webfont.woff' ) ),
+				'files[400][woff2]' => new CURLFile( codecept_data_dir( 'fonts/pn-regular-webfont.woff2' ) ),
+
+				'files[500][eot]'   => new CURLFile( codecept_data_dir( 'fonts/pn-medium-webfont.eot' ) ),
+				'files[500][woff]'  => new CURLFile( codecept_data_dir( 'fonts/pn-medium-webfont.woff' ) ),
+				'files[500][woff2]' => new CURLFile( codecept_data_dir( 'fonts/pn-medium-webfont.woff2' ) ),
+
+				'files[700][eot]'   => new CURLFile( codecept_data_dir( 'fonts/pn-bold-webfont.eot' ) ),
+				'files[700][woff]'  => new CURLFile( codecept_data_dir( 'fonts/pn-bold-webfont.woff' ) ),
+				'files[700][woff2]' => new CURLFile( codecept_data_dir( 'fonts/pn-bold-webfont.woff2' ) ),
 			),
+			"timeout" => 40
 		] ) )->shouldBeCalled();
 
 
@@ -493,22 +572,19 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testGetFont() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$uid = md5( time() );
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS . '?' . http_build_query( [
-				'uid'       => $uid,
-				'container' => 'container'
-			] );
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_FONTS . '/' . $uid;
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			]
 		] ) )->shouldBeCalled();
 
@@ -519,8 +595,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	//=================================================================================================================
 
 	public function testGetPopups() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -531,19 +607,18 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			] );
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			]
 		] ) )->shouldBeCalled();
 
 		$client->getPopups( $filters );
 	}
 
-
 	public function testCreatePopup() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 
@@ -570,7 +645,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->post( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_POPUPS ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -580,8 +656,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testUpdatePopup() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 		// set up reuqest for library list
@@ -608,7 +684,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'method'  => 'PUT',
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -618,8 +695,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testDeletePopup() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -630,7 +707,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'method'  => 'DELETE'
 		] ) )->shouldBeCalled();
@@ -641,8 +719,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	//=================================================================================================================
 
 	public function testGetLayouts() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -655,7 +733,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 			'headers' => [
 
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			]
 		] ) )->shouldBeCalled();
 
@@ -663,8 +742,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testCreateLayout() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 
@@ -677,11 +756,13 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$blockObserver->getUid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( null );
 		$blockObserver->getMeta()->willReturn( "{}" );
+		$blockObserver->getMedia()->willReturn( "{}" );
 		$layout = $blockObserver->reveal();
 
 		$cloudBlockData = array(
 			'container'   => 'container',
 			'meta'        => '{}',
+			'media'       => '{}',
 			'data'        => $layout->get_editor_data(),
 			'uid'         => $layout->getUid(),
 			'dataVersion' => 1
@@ -691,7 +772,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->post( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
@@ -700,10 +782,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->createOrUpdateLayout( $layout );
 	}
 
-
 	public function testUpdateLayout() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 		$client          = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
 
@@ -716,11 +797,13 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$blockObserver->getUid()->willReturn( "SOME_UID" );
 		$blockObserver->getCloudId()->willReturn( "CLOUD_UID" );
 		$blockObserver->getMeta()->willReturn( "{}" );
+		$blockObserver->getMedia()->willReturn( "{}" );
 		$layout = $blockObserver->reveal();
 
 		$cloudBlockData = array(
 			'container'   => 'container',
 			'meta'        => '{}',
+			'media'       => '{}',
 			'data'        => $layout->get_editor_data(),
 			'uid'         => $layout->getUid(),
 			'dataVersion' => 1
@@ -730,7 +813,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$httpObserver->request( Argument::exact( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LAYOUTS ), Argument::exact( [
 			'headers' => [
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'method'  => 'PUT',
 			'body'    => $cloudBlockData
@@ -741,8 +825,8 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 	}
 
 	public function testDeleteLayout() {
-		$projectObserver = $this->getProjectObjserver();
-		$httpObserver    = $this->getHttpObjserver();
+		$projectObserver = $this->getProjectObserver();
+		$httpObserver    = $this->getHttpObserver();
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
@@ -752,9 +836,9 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 
 		$httpObserver->request( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [
-
 				'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-				'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+				'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+				'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 			],
 			'method'  => 'DELETE'
 		] ) )->shouldBeCalled();
@@ -762,13 +846,14 @@ class BrizyAdminCloudClientTest extends \Codeception\Test\Unit {
 		$client->deleteLayout( 100 );
 	}
 
+	//=================================================================================================================
 
 	private function observerGetLibraryRequest( $httpObserver ) {
 		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_LIBRARY;
 		$httpObserver->get( $apiEndpointUrl, Argument::containing( [
-
 			'X-AUTH-USER-TOKEN' => 'brizy-cloud-token-hash',
-			'X-EDITOR-VERSION'  => BRIZY_EDITOR_VERSION,
+			'X-EDITOR-VERSION'  => 'import-export-1-cloud',
+			'X-SYNC-VERSION'    => BRIZY_SYNC_VERSION
 		] ) )->willReturn(
 			[
 				'body'     => '[{"id":4,"name":"My Personal Projects"},{"id":58930,"name":"fsfaf"}]',

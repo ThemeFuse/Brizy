@@ -59,13 +59,15 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( empty( $fields ) ) {
 			$fields = array(
+				'id',
 				'uid',
 				'meta',
 				'data',
 				'status',
 				'dataVersion',
 				'synchronized',
-				'synchronizable'
+				'synchronizable',
+				'isCloudEntity'
 			);
 		}
 
@@ -97,6 +99,10 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( in_array( 'synchronizable', $fields ) ) {
 			$global['synchronizable'] = $this->isSynchronizable();
+		}
+
+		if ( in_array( 'isCloudEntity', $fields ) ) {
+			$global['isCloudEntity'] = false;
 		}
 
 		return $global;
@@ -216,8 +222,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	public function convertToOptionValue() {
 		$data = parent::convertToOptionValue();
 
-		$data['cloudId'] = $this->getCloudId();
 		$data['media']   = $this->getMedia();
+		$data['cloudId'] = $this->getCloudId();
 		$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
 		$data['synchronizable'] = $this->isSynchronizable();
 

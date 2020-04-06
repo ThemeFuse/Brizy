@@ -36,8 +36,8 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 		$screenPath = $manager->getScreenshot( $screenUID, $postID );
 
 		if ( $screenPath ) {
-
 			$this->send_file( $screenPath, $noCacheHeaders );
+			return;
 		}
 
 		// try to get the screenshot from cloud

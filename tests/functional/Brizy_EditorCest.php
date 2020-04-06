@@ -24,6 +24,8 @@ class Brizy_EditorCest {
 		$this->userId2 = $I->haveUserInDatabase( 'test-user2', 'administrator' );
 		$I->haveUserInDatabase( 'test-user2', 'administrator' );
 		wp_set_current_user( $this->userId1 );
+
+
 	}
 
 	public function testSetProjectLock( FunctionalTester $I ) {

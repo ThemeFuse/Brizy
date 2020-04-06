@@ -58,7 +58,18 @@ class FontBridgeCest {
 			'post_type'   => 'attachment',
 			'post_parent' => $fontId
 		] );
+	}
 
+	public function testImportExistingFont( FunctionalTester $I ) {
+
+		list( $fontPostId, $fontUid ) = $this->createTestFont( $I );
+
+		$client             = $this->getCloudClientObserver();
+		$client->getFont( $fontUid )
+		       ->shouldNotBeCalled();
+
+		$bridge = new Brizy_Admin_Cloud_FontBridge( $client->reveal() );
+		$fontId = $bridge->import( $fontUid );
 	}
 
 	public function testExport( FunctionalTester $I ) {
@@ -83,7 +94,7 @@ class FontBridgeCest {
 
 		$bridge = new Brizy_Admin_Cloud_FontBridge( $client->reveal() );
 
-		$I->expectThrowable( 'Exception', function () use ( $bridge ) {
+		$I->expectException( \Exception::class, function () use ( $bridge ) {
 			$bridge->export( md5( time() ) );
 		} );
 	}

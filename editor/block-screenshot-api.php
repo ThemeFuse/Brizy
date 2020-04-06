@@ -29,7 +29,8 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		$this->blockTypes = array(
 			Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_NORMAL,
 			Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_GLOBAL,
-			Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_SAVED
+			Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_SAVED,
+			Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_LAYOUT
 		);
 		parent::__construct();
 	}

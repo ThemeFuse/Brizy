@@ -51,7 +51,7 @@ class Brizy_Editor_EntityTest extends  \Codeception\TestCase\WPTestCase {
 		$this->assertEquals( $id, $stub->getWpPostId(), 'It should return the wp post id' );
 		$this->assertInstanceOf( WP_Post::class, $post = $stub->getWpPost(), 'It should return the correct instance of post' );
 		$this->assertEquals( $id, $post->ID, 'It should return the correct instance of post' );
-		$this->assertEquals( 100, $stub->getWpPostId(), 'It should return the correct parent id' );
+		$this->assertEquals( 100, $stub->getWpPostParentId(), 'It should return the correct parent id' );
 	}
 
 	public function testDataVersionSave() {

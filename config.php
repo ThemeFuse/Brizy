@@ -33,6 +33,7 @@ class Brizy_Config {
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
+	const CLOUD_EDITOR_VERSIONS = '/api/versions';
 	const CLOUD_LIBRARY = '/dev/library';
 	const CLOUD_SIGNIN = '/api/sign_ins';
 	const CLOUD_SIGNUP = '/api/sign_ups';
@@ -44,7 +45,7 @@ class Brizy_Config {
 	const CLOUD_FONTS = '/api/fonts';
 	const CLOUD_POPUPS = '/api/saved_popups';
 	const CLOUD_LAYOUTS = '/api/layouts';
-	const CLOUD_SCREENSHOT = '/screenshot/%s/uid';
+	const CLOUD_SCREENSHOT = '/screenshot/%s';
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
 
 	static public function getCompilerUrls() {

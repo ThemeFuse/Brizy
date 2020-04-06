@@ -47,6 +47,7 @@ class BlockCest {
 
 		$this->globalBlockObject = Brizy_Editor_Block::get( $this->globalBlockId );
 
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 

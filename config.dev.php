@@ -31,7 +31,8 @@ class Brizy_Config {
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
-	const CLOUD_ENDPOINT = ' http://www.brizysites.com';
+	const CLOUD_ENDPOINT = 'http://www.brizysites.com';
+	const CLOUD_EDITOR_VERSIONS = '/api/versions';
 	const CLOUD_LIBRARY = '/dev/library';
 	const CLOUD_SIGNIN = '/api/sign_ins';
 	const CLOUD_SIGNUP = '/api/sign_ups';
@@ -43,7 +44,7 @@ class Brizy_Config {
 	const CLOUD_FONTS = '/api/fonts';
 	const CLOUD_POPUPS = '/api/saved_popups';
 	const CLOUD_LAYOUTS = '/api/layouts';
-	const CLOUD_SCREENSHOT = '/screenshot/%s/uid';
+	const CLOUD_SCREENSHOT = '/screenshot/%s';
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
 
 	static public function getCompilerUrls() {
@@ -55,26 +56,26 @@ class Brizy_Config {
 		);
 	}
 
-static public function getStaticUrls() {
-	return new Brizy_Admin_UrlIterator(
-		array(
-			'http://bitblox.local/static'
-		)
-	);
-}
+	static public function getStaticUrls() {
+		return new Brizy_Admin_UrlIterator(
+			array(
+				'http://bitblox.local/static'
+			)
+		);
+	}
 
 	static public function getEditorBaseUrls() {
-	return new Brizy_Admin_UrlIterator(
-		array(
-			'http://www.brizysites.com'
-		)
-	);
-}
+		return new Brizy_Admin_UrlIterator(
+			array(
+				'http://www.brizysites.com'
+			)
+		);
+	}
 
 	static public function getOptimizerConfig( $className ) {
-	switch ( $className ) {
-		case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
-			return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
+		switch ( $className ) {
+			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
+				return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
+		}
 	}
-}
 }

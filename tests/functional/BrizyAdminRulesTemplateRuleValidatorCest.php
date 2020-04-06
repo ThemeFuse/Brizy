@@ -45,6 +45,8 @@ class BrizyAdminRulesTemplateRuleValidatorCest {
 		] );
 
 		wp_cache_flush();
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	public function testValidateRuleForPostId( FunctionalTester $I ) {
