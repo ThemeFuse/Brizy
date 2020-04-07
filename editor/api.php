@@ -295,7 +295,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-
 			$this->success( $project->createResponse() );
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );

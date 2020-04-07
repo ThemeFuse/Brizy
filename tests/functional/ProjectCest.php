@@ -174,6 +174,19 @@ class ProjectCest {
 		] );
 	}
 
+	public function revisionSaveNoDataTest( FunctionalTester $I ) {
+		$project = Brizy_Editor_Project::get();
+		$project->setDataVersion(1);
+		$project->save( 0 );
+		$project->savePost();
+
+		$I->cantSeePostInDatabase( [
+			'post_parent' => $project->getWpPostId(),
+			'post_type'   => 'revision',
+			'post_name'   => $project->getWpPostId() . '-revision-v1'
+		] );
+	}
+
 	public function getMetaValueTest( FunctionalTester $I ) {
 		$project = Brizy_Editor_Project::get();
 		$data    = $project->convertToOptionValue();

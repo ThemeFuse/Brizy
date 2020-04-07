@@ -43,6 +43,8 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	protected $image_optimizer_settings;
 	protected $data;
 	//---------------------------------------------------------------------------------------------------
+	protected $isDataChanged = false;
+	//---------------------------------------------------------------------------------------------------
 
 	/**
 	 * Brizy_Editor_Project constructor.
@@ -279,6 +281,10 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 
 		parent::save( $autosave );
 
+		if ( ! $this->isDataChanged ) {
+			return;
+		}
+
 		if ( $autosave == 0 ) {
 			$this->saveStorage();
 		} else {
@@ -298,6 +304,10 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 * Create revision
 	 */
 	public function savePost() {
+
+		if ( ! $this->isDataChanged ) {
+			return;
+		}
 
 		$post_type        = $this->getWpPost()->post_type;
 		$post_type_object = get_post_type_object( $post_type );
@@ -576,7 +586,9 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_Project
 	 */
 	public function setData( $data ) {
-		$this->data = $data;
+
+		$this->isDataChanged = $data !== $this->data;
+		$this->data          = $data;
 
 		return $this;
 	}
@@ -740,7 +752,6 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	public function getApiProject() {
 		return $this->api_project;
 	}
-
 
 
 }
