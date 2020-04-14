@@ -162,7 +162,6 @@ class Brizy_Editor {
 			try {
 
 				Brizy_Admin_DashboardWidget::_init();
-
 			} catch ( Exception $e ) {
 				// ignore this exceptions for now.
 			}

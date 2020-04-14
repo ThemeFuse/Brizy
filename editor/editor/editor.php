@@ -87,7 +87,6 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
 		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template' ) );
-
 		$mode = $this->getMode( $parent_post_type );
 
 
