@@ -529,7 +529,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	private function getCustomPostsList( $groupValue, $templateType ) {
-		global $wp_post_types;
+        $wp_post_types = get_post_types( [ 'exclude_from_search' => false, 'show_in_nav_menus' => true ], 'objects' );
 
 		return array_values( array_filter( $wp_post_types, function ( $type ) use ( $groupValue, $templateType ) {
 			$type->groupValue = $groupValue;
