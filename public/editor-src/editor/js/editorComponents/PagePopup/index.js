@@ -54,8 +54,8 @@ class PagePopup extends EditorComponent {
   blocksFilter(blocks) {
     /* eslint-disable no-unused-vars */
     return blocks.filter(
-      ([_, block]) =>
-        block.type === "SectionPopup" || block.type === "SectionPopup2"
+      ([_, { data: blockData }]) =>
+        blockData.type === "SectionPopup" || blockData.type === "SectionPopup2"
     );
     /* eslint-enabled no-unused-vars */
   }

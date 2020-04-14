@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.3.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.122<br>
+Stable tag: 1.0.123<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.123 - 2020-04-14 ###
+* Improved: The message when the page was edited from another tab or window is now clearer
+* Fixed: Search Element not appearing in the elements list
+* Fixed: Popup conditions bug
+* Fixed: Saved popup blocks not being shown in the global popup editor
+* Fixed: Mobile menu now closes when clicking on an anchor link from it
+* Fixed: Edit sub-pages with Brizy
+* Fixed: Load feedback and widget news only for admin users
+* Fixed: Hide Gutenberg of WordPress 5.4
 
 ### 1.0.122 - 2020-03-27 ###
 * Fixed: Progress element text editor

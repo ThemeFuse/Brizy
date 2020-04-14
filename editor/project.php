@@ -307,7 +307,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		$this->deleteOldAutoSaves( $this->getWpPostParentId() );
 
 		wp_update_post( array(
-			'ID'           => $this->getWpPostParentId(),
+			'ID'           => $this->getWpPostId(),
 			'post_status'  => $post_status,
 			'post_content' => md5( time() )
 		) );

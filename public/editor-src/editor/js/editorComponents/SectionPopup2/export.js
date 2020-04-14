@@ -101,6 +101,9 @@ export default function($node) {
           Object.assign({}, data, {
             show: function() {
               this.show();
+            }.bind(popup),
+            hide: function() {
+              this.close();
             }.bind(popup)
           })
         );

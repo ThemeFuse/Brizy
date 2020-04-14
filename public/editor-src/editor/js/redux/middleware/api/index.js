@@ -61,6 +61,7 @@ import {
   PROJECT_DATA_VERSION_ERROR,
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
+import { t } from "visual/utils/i18n";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
@@ -385,8 +386,9 @@ function apiCatch(next, p, onSuccess = _.noop, onError = _.noop) {
         next(
           updateError({
             code: PROJECT_DATA_VERSION_ERROR,
-            data:
-              "Something went wrong, maybe your data is old, please refresh your page and try again"
+            data: t(
+              "This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser."
+            )
           })
         );
 

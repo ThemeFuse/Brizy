@@ -150,7 +150,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	 */
 	private function saveScreenshot( $type, $blockFileName, $content ) {
 		try {
-			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $this->post ? $this->post->getWpPostParentId() : null );
+			$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $this->post ? $this->post->getWpPostId() : null );
 
 			switch ( $type ) {
 				case self::BLOCK_TYPE_NORMAL:

@@ -220,7 +220,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 			return $uid;
 		}
 
-		$post_parent_id = $this->getWpPostParentId();
+		$post_parent_id = $this->getWpPostId();
 		$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
 
 		if ( ! $uid ) {

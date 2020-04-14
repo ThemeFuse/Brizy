@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_136Wp_Texts {
+class Brizy_Public_EditorBuild_137Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -617,6 +617,7 @@ class Brizy_Public_EditorBuild_136Wp_Texts {
 			"The integration is not responding, please try again or verify the account credentials" => __("The integration is not responding, please try again or verify the account credentials", "brizy"),
 			"Theme" => __("Theme", "brizy"),
 			"Thin" => __("Thin", "brizy"),
+			"This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser." => __("This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser.", "brizy"),
 			"Thumbs" => __("Thumbs", "brizy"),
 			"Time" => __("Time", "brizy"),
 			"Time Zone" => __("Time Zone", "brizy"),

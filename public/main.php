@@ -413,7 +413,7 @@ class Brizy_Public_Main {
 
 		if ( $is_preview ) {
 			$user_id      = get_current_user_id();
-			$postParentId = $this->post->getWpPostParentId();
+			$postParentId = $this->post->getWpPostId();
 			$autosaveId   = Brizy_Editor_AutoSaveAware::getAutoSavePost( $postParentId, $user_id );
 
 			if ( $autosaveId ) {

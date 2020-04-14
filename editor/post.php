@@ -201,7 +201,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$this->deleteOldAutosaves( $this->getWpPostParentId() );
 
 		$params = array(
-			'ID'           => $this->getWpPostParentId(),
+			'ID'           => $this->getWpPostId(),
 			'post_content' => $brizy_compiled_page->get_body() ?: '<div class="brz-root__container"></div>'
 		);
 
@@ -550,7 +550,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	public function edit_url() {
 		return add_query_arg(
 			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
-			get_permalink( $this->getWpPostParentId() )
+			get_permalink( $this->getWpPostId() )
 		);
 	}
 
