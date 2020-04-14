@@ -48,5 +48,9 @@ export default function($node) {
     $icon.on("click", function() {
       menuAPI.open();
     });
+
+    window.Brizy.on("elements.anchor.scrolled", () => {
+      menuAPI.close();
+    });
   });
 }
