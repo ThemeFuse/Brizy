@@ -92,7 +92,7 @@ class Brizy_Admin_Settings {
 			array( $this, 'render' ),
 			__bt( 'brizy-logo', plugins_url( 'static/img/brizy-logo.svg', __FILE__ ) ),
 			//plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
-			81
+			'58'
 		);
 	}
 

@@ -176,6 +176,7 @@ class Brizy_MaintenanceMode {
 			'who'   => 'logged',
 			'roles' => [],
 			'ips'   => '',
+            'page'  => ''
 		] );
 	}
 }
