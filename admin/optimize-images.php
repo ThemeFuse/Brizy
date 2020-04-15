@@ -234,7 +234,8 @@ class Brizy_Admin_OptimizeImages {
 		$site_url = str_replace( array( 'http://', 'https://', '/', '.' ), array( '', '', '\/', '\.' ), home_url() );
 
 		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		$endpoint = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $urls;
@@ -253,11 +254,11 @@ class Brizy_Admin_OptimizeImages {
 
 			parse_str( $parsed_url['query'], $params );
 
-			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
+			if ( ! isset( $params[ $endpoint ] ) ) {
 				continue;
 			}
 
-			$mediaUid = $params[ Brizy_Public_CropProxy::ENDPOINT ];
+			$mediaUid = $params[ $endpoint ];
 
 			//if ( strpos( $mediaUid, 'wp-' ) !== false ) {
 			$attachmentUids[] = array(
@@ -309,7 +310,7 @@ class Brizy_Admin_OptimizeImages {
 
 			parse_str( $parsed_url['query'], $params );
 
-			if ( ! isset( $params[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ] ) ) {
+			if ( ! isset( $params[ $endpoint ] ) ) {
 				continue;
 			}
 
