@@ -89,25 +89,6 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $this;
 	}
 
-	/**
-	 * @return mixed|string
-	 */
-	protected function createUid() {
-
-		$post_parent_id = $this->getWpPostId();
-		$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
-
-		if ( ! $uid && $this->uid ) {
-			update_post_meta( $post_parent_id, 'brizy_post_uid', $this->uid );
-		}
-
-		if ( ! $this->uid && $uid ) {
-			$this->uid = $uid;
-		}
-
-		return $this->uid;
-	}
-
 	public function setPosition( $position ) {
 		$this->position = $position;
 
