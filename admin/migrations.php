@@ -63,6 +63,7 @@ class Brizy_Admin_Migrations {
 			new Brizy_Admin_Migrations_RulesMigration,
 			new Brizy_Admin_Migrations_ShortcodesMobileOneMigration,
 			new Brizy_Admin_Migrations_FixGlobalsToDataMigration,
+			new Brizy_Admin_Migrations_ScreenshotMigration,
 		);
 
 		usort( $migrations, function ( $a, $b ) {
