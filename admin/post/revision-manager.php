@@ -16,8 +16,14 @@ class Brizy_Admin_Post_RevisionManager {
 	 * Brizy_Admin_Post_RevisionManager constructor.
 	 */
 	public function __construct() {
-		add_action( 'save_post', array( $this, 'savePost' ), 11, 2 );
+
 		add_action( 'wp_restore_post_revision', array( $this, 'restorePostRevisionMeta' ), 11, 2 );
+
+		if ( ! defined( 'WP_POST_REVISIONS' ) || ( defined( 'WP_POST_REVISIONS' ) && WP_POST_REVISIONS !== false ) ) {
+			add_action( 'save_post', array( $this, 'savePost' ), 11, 2 );
+		}
+
+
 	}
 
 	/**
@@ -110,7 +116,7 @@ class Brizy_Admin_Post_RevisionManager {
 		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
 		$params           = array( (int) $revision, (int) $post );
 
-		$this->cleanMetaData($post,$revision,$monitor);
+		$this->cleanMetaData( $post, $revision, $monitor );
 
 		$query = "INSERT INTO {$tablePostMeta} (post_Id, meta_key, meta_value) 
 									SELECT %d, meta_key, meta_value 
@@ -129,12 +135,12 @@ class Brizy_Admin_Post_RevisionManager {
 
 	private function cleanMetaData( $post, $revision, $monitor ) {
 		global $wpdb;
-		$params        = array( (int) $revision );
+		$params           = array( (int) $revision );
 		$meta_key_count   = count( $monitor->getPostMetaKeys() );
 		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
-		$tablePostMeta = "{$wpdb->prefix}postmeta";
-		$query         = "DELETE FROM {$tablePostMeta} WHERE post_id=%d and meta_key IN ({$meta_keys_params})";
-		$params = array_merge( $params, $monitor->getPostMetaKeys() );
+		$tablePostMeta    = "{$wpdb->prefix}postmeta";
+		$query            = "DELETE FROM {$tablePostMeta} WHERE post_id=%d and meta_key IN ({$meta_keys_params})";
+		$params           = array_merge( $params, $monitor->getPostMetaKeys() );
 		$wpdb->query( $wpdb->prepare( $query, $params ) );
 	}
 
