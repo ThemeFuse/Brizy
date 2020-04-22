@@ -103,7 +103,10 @@ class Brizy_Editor {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
-		add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
+		if(!defined('WP_POST_REVISIONS') || (defined('WP_POST_REVISIONS') && WP_POST_REVISIONS!==false)) {
+			add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
+		}
+
 	}
 
 	public function runMigrations() {
