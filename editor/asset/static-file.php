@@ -101,7 +101,7 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			include_once ABSPATH . "/wp-admin/includes/image.php";
 		}
 
-		$attach_data = wp_generate_attachment_metadata( $attachment_id, $relative_asset_path );
+		$attach_data = wp_generate_attachment_metadata( $attachment_id, $absolute_asset_path );
 		wp_update_attachment_metadata( $attachment_id, $attach_data );
 
 		return $attachment_id;
