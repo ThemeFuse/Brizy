@@ -72,8 +72,9 @@ class Brizy_Editor_Forms_Api {
 		add_action( $pref_nopriv . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
 
+
 	protected function error( $code, $message ) {
-		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
+		wp_send_json_error( array( 'code' => $code, 'message' => $message ), 200 );
 	}
 
 	protected function success( $data, $code = 200 ) {
@@ -85,7 +86,6 @@ class Brizy_Editor_Forms_Api {
 			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
 	}
-
 
 	public function get_form() {
 		try {
