@@ -1,40 +1,47 @@
+@import "icons/fa/solid";
+@import "icons/fa/brands";
+
 // Import Font
 @font-face {
   font-family: "nunito";
-  src: url('../fonts/nunito-regular-webfont.eot');
-  src: url('../fonts/nunito-regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/nunito-regular-webfont.woff2') format('woff2'),
-       url('../fonts/nunito-regular-webfont.woff') format('woff');
+  src: url("../fonts/nunito-regular-webfont.eot");
+  src: url("../fonts/nunito-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/nunito-regular-webfont.woff2") format("woff2"),
+    url("../fonts/nunito-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "nunito";
-  src: url('../fonts/nunito-italic-webfont.eot');
-  src: url('../fonts/nunito-italic-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/nunito-italic-webfont.woff2') format('woff2'),
-       url('../fonts/nunito-italic-webfont.woff') format('woff');
+  src: url("../fonts/nunito-italic-webfont.eot");
+  src: url("../fonts/nunito-italic-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/nunito-italic-webfont.woff2") format("woff2"),
+    url("../fonts/nunito-italic-webfont.woff") format("woff");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "nunito";
-  src: url('../fonts/nunito-semibold-webfont.eot');
-  src: url('../fonts/nunito-semibold-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/nunito-semibold-webfont.woff2') format('woff2'),
-       url('../fonts/nunito-semibold-webfont.woff') format('woff');
+  src: url("../fonts/nunito-semibold-webfont.eot");
+  src: url("../fonts/nunito-semibold-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/nunito-semibold-webfont.woff2") format("woff2"),
+    url("../fonts/nunito-semibold-webfont.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "nunito";
-  src: url('../fonts/nunito-bold-webfont.eot');
-  src: url('../fonts/nunito-bold-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/nunito-bold-webfont.woff2') format('woff2'),
-       url('../fonts/nunito-bold-webfont.woff') format('woff');
+  src: url("../fonts/nunito-bold-webfont.eot");
+  src: url("../fonts/nunito-bold-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/nunito-bold-webfont.woff2") format("woff2"),
+    url("../fonts/nunito-bold-webfont.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }

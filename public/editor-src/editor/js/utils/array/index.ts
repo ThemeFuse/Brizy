@@ -2,6 +2,12 @@ import { mApply, MValue } from "visual/utils/value";
 
 export { flatMap } from "./flatMap";
 
+export const empty = [];
+
+export const append = <T>(a: T[], b: T[]): T[] => [...a, ...b];
+
+export const concat = <T>(as: T[][]): T[] => as.reduce(append, []);
+
 /**
  * Check is the values is an array.
  *  - if it is, return that value
