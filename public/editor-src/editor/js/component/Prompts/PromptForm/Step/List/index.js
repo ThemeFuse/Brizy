@@ -150,9 +150,10 @@ class List extends Component {
 
     if (!keysValue.some(key => !key)) {
       const { status, data } = await createIntegrationList({
-        ...appData,
         formId,
-        data: apiKeyValue
+        id: appData.id,
+        data: apiKeyValue,
+        usedAccount: appData.usedAccount
       });
 
       if (status !== 200) {
