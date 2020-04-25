@@ -49,6 +49,8 @@ const {
   paths
 } = argvVars(process.argv);
 
+const WP = TARGET === "WP";
+
 const postsCssProcessors = [
   sass({
     includePaths: ["node_modules"],
@@ -200,10 +202,15 @@ gulp.task("editor.js.compile", done => {
   });
 });
 gulp.task("editor.css", () => {
+  const icons = WP
+    ? [paths.editor + "/sass/main.editor.icons.wp.scss"]
+    : [paths.editor + "/sass/main.editor.icons.scss"];
+
   const src = [
     paths.editor + "/lib/common/*/*.css",
     paths.editor + "/lib/editor/*/*.css",
-    paths.editor + "/sass/main.editor.scss"
+    paths.editor + "/sass/main.editor.scss",
+    ...icons
   ];
   const dest = paths.build + "/editor/css";
 
@@ -638,7 +645,8 @@ gulp.task("pro.js", done => {
   });
 });
 gulp.task("pro.editor.css", () => {
-  const src = paths.editor + "/sass/main.editor.pro.scss";
+  const icons = WP ? [paths.editor + "/sass/main.editor.icons.scss"] : [];
+  const src = [paths.editor + "/sass/main.editor.pro.scss", ...icons];
   const dest = paths.buildPro + "/css";
 
   return gulp

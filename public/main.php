@@ -261,11 +261,19 @@ class Brizy_Public_Main {
 			'editorVersion' => BRIZY_EDITOR_VERSION,
 			'iframe_url'    => $iframe_url,
 			'page_title'    => apply_filters( 'the_title', $this->post->getWpPost()->post_title, $this->post->getWpPostId() ),
-			'favicon'       => $favicon
+			'favicon'       => $favicon,
+			'styles'        => [ $config_object->urls->assets . "/editor/css/editor.css" ],
+			'scripts'       => [ $config_object->urls->assets . "/editor/js/polyfill.js" ]
 		);
 
 		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
 			$context['DEBUG'] = true;
+		}
+
+		$context = apply_filters( 'brizy_editor_page_context', $context );
+
+		if(!$context) {
+			throw new Exception('Invalid template context. Probably a bad filter implementation');
 		}
 
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )

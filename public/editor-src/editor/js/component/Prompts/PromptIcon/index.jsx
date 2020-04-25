@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useRef, useState } from "react";
-import classnames from "classnames";
+import classNames from "classnames";
 import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
 import Select from "visual/component/Controls/Select";
@@ -7,16 +7,21 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import EditorIcon from "visual/component/EditorIcon";
 import { PromiseComponent } from "visual/component/PromiseComponent";
-import iconsMeta from "visual/config/icons.meta";
+import { loadFonts } from "visual/component/Prompts/PromptIcon/utils";
+import {
+  getTypes,
+  getCategories,
+  getIconClassName,
+  getIcons
+} from "visual/config/icons";
 
-const { types: TYPES, categories: CATEGORIES } = iconsMeta;
+const TYPES = getTypes();
+
 const typeIdsToNames = TYPES.reduce((acc, { id, name }) => {
   acc[id] = name;
 
   return acc;
 }, {});
-
-const iconFontsInDocument = new WeakMap();
 
 export default class PromptIcon extends Component {
   state = {
@@ -28,18 +33,9 @@ export default class PromptIcon extends Component {
   containerRef = React.createRef();
 
   componentDidMount() {
-    const node = this.containerRef.current;
-    const document = node.ownerDocument;
+    const { templateFonts } = Config.get("urls");
 
-    if (node && iconFontsInDocument.get(document) === undefined) {
-      const { templateFonts } = Config.get("urls");
-      const style = document.createElement("style");
-
-      style.innerHTML = `@font-face{font-family:'Nucleo Outline';src:url('${templateFonts}/a');src:url('${templateFonts}/a') format('embedded-opentype'),url('${templateFonts}/b') format('woff2'),url('${templateFonts}/c') format('woff'),url('${templateFonts}/d') format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Nucleo Glyph';src:url('${templateFonts}/a1');src:url('${templateFonts}/a1') format('embedded-opentype'),url('${templateFonts}/b1') format('woff2'),url('${templateFonts}/c1') format('woff'),url('${templateFonts}/d1') format('truetype');font-weight:400;font-style:normal}`;
-      document.head.appendChild(style);
-
-      iconFontsInDocument.set(node.ownerDocument, true);
-    }
+    loadFonts(this.containerRef.current, templateFonts);
   }
 
   onIconClick = icon => {
@@ -55,7 +51,7 @@ export default class PromptIcon extends Component {
     const tabs = TYPES.map(item => (
       <div
         key={item.id}
-        className={classnames("brz-ed-popup-tab-item", {
+        className={classNames("brz-ed-popup-tab-item", {
           active: item.id === this.state.typeId
         })}
         onClick={() => this.setState({ typeId: item.id })}
@@ -76,14 +72,14 @@ export default class PromptIcon extends Component {
   }
 
   renderFilters() {
-    const { categoryId, search } = this.state;
+    const { categoryId, search, typeId } = this.state;
     const categories = [
       {
         id: "*",
         name: "all",
         title: "All Categories"
       },
-      ...CATEGORIES
+      ...getCategories(typeId)
     ];
 
     return (
@@ -116,7 +112,7 @@ export default class PromptIcon extends Component {
             value={search}
           />
           <div
-            className={classnames("brz-ed-popup__search--icon", {
+            className={classNames("brz-ed-popup__search--icon", {
               active: search.length > 0
             })}
           >
@@ -151,13 +147,8 @@ export default class PromptIcon extends Component {
               </div>
               <div className="brz brz-ed-popup-icons__grid">
                 <PromiseComponent
-                  getPromise={() =>
-                    import(
-                      /* webpackChunkName: "config.icons" */ "visual/config/icons"
-                    )
-                  }
-                  renderResolved={iconConfigModule => {
-                    const { icons } = iconConfigModule.default;
+                  getPromise={() => getIcons(getTypes().map(t => t.id))}
+                  renderResolved={icons => {
                     const filteredIcons = this.filterIcons(icons);
 
                     return (
@@ -232,7 +223,7 @@ function IconGrid({ icons, value, onChange }) {
           type: typeIdsToNames[icon.type],
           name: icon.name
         };
-        const className = classnames("brz-ed-popup-icons__grid__item", {
+        const className = classNames("brz-ed-popup-icons__grid__item", {
           active: type === value.type && name === value.name
         });
 
@@ -250,7 +241,9 @@ function IconGrid({ icons, value, onChange }) {
               onChange({ type, name });
             }}
           >
-            <i className={`nc-icon nc-${type} nc-${type}-${name}`} />
+            <i
+              className={classNames(["brz-font-icon", getIconClassName(icon)])}
+            />
           </div>
         );
       }}

@@ -3,21 +3,20 @@
     "allowJs": true,
     "checkJs": false,
     "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "jsx": "react",
     "paths": {
       "visual/*": ["editor/js/*"]
     }
   },
-  "include": [
-    "editor/**/*.ts",
-    "editor/**/*.tsx"
-  ],
+  "include": ["editor/**/*.ts", "editor/**/*.tsx"],
   "exclude": [
     "node_modules",
     "build",
