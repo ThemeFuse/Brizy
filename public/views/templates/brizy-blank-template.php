@@ -23,15 +23,7 @@ if (!defined('ABSPATH')) {
 	?>
 </head>
 <body <?php body_class(); ?>>
-
-<?php if ( is_category() || is_archive() || is_tag() || is_404() || is_search() || is_home() ) : ?>
-	<?php do_action( 'brizy_template_content' ); ?>
-<?php else: ?>
-	<?php while ( have_posts() ) : the_post() ?>
-		<?php the_content() ?>
-	<?php endwhile ?>
-<?php endif; ?>
-
+    <?php do_action( 'brizy_template_content' ); ?>
 <?php wp_footer(); ?>
 </body>
 </html>
