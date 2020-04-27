@@ -606,3 +606,9 @@
     animation: brz-rotation 2s linear infinite;
     margin-top: 10px;
 }
+
+.brz-leads-export-disable {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+}
