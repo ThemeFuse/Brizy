@@ -249,23 +249,27 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 * @return mixed|string
 	 */
 	protected function createUid() {
+
+		$post_parent_id = $this->getWpPostId();
+
 		if ( $uid = $this->getUid() ) {
+			$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
+			if ( ! $uid ) {
+				update_post_meta( $post_parent_id, 'brizy_post_uid', $this->getUid() );
+			}
 			return $uid;
 		}
 
 		$post_parent_id = $this->getWpPostId();
 		$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
 
-		if ( ! $uid && $this->uid ) {
+		if ( ! $uid ) {
 			$uid = md5( $post_parent_id . time() );
 			update_post_meta( $post_parent_id, 'brizy_post_uid', $uid );
 		}
 
-		if ( ! $this->uid && $uid ) {
-			$this->uid = $uid;
-		}
-
-		return $this->uid;
+		return $this->uid = $uid;
 	}
+
 
 }
