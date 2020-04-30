@@ -22,7 +22,7 @@ class Brizy_Editor_RestExtend {
 					return true;
 				},
 				'schema'          => array(
-					'description' => __( 'Birzy attached media' ),
+					'description' => __( 'Brizy attached media' ),
 					'type'        => 'array'
 				),
 			) );
