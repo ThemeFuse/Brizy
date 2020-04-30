@@ -52,9 +52,14 @@ function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
         <p>
-			<?php echo __bt( 'brizy', 'Brizy' ) ?> requires PHP version 5.6+, you currently running
-            PHP <?php echo PHP_VERSION ?>.
-            <b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> IS NOT RUNNING. </b>
+            <?php
+                printf(
+                    __( '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>', 'brizy' ),
+                    __bt( 'brizy', 'Brizy' ),
+                    PHP_VERSION,
+                    strtoupper( __bt( 'brizy', 'Brizy' ) )
+                );
+            ?>
         </p>
     </div>
 	<?php
