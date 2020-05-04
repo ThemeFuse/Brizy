@@ -23,6 +23,11 @@ class Brizy_MaintenanceMode {
 		$args = self::get_settings();
 
 		if ( 'maintenance' === $args['mode'] ) {
+
+		    if ( $this->is_requested_a_file() ) {
+		        return;
+            }
+
 			add_action( 'template_redirect', [ $this, '_action_template_redirect' ], 11 );
 		}
 
@@ -178,5 +183,9 @@ class Brizy_MaintenanceMode {
 			'ips'   => '',
             'page'  => ''
 		] );
+	}
+
+	private function is_requested_a_file() {
+		return isset( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST ) ] );
 	}
 }
