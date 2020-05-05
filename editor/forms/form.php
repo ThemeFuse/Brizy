@@ -312,12 +312,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 */
 	public function getEmailTemplateContent( $fields ) {
 
-		if ( $this->hasEmailTemplate() ) {
-			$email_template = $this->getEmailTemplate();
-
-			return str_replace( [ "\n" ], [ "<br>" ], $email_template );
-		}
-
 		$field_string = array();
 		foreach ( $fields as $field ) {
 			$field_string[] = "{$field->label}: " . esc_html( $field->value );
