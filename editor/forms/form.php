@@ -108,7 +108,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 
-
 	/**
 	 * @return Brizy_Editor_Forms_Form
 	 * @throws Exception
@@ -312,6 +311,12 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	 * @return string
 	 */
 	public function getEmailTemplateContent( $fields ) {
+
+		if ( $this->hasEmailTemplate() ) {
+			$email_template = $this->getEmailTemplate();
+
+			return str_replace( [ "\n" ], [ "<br>" ], $email_template );
+		}
 
 		$field_string = array();
 		foreach ( $fields as $field ) {

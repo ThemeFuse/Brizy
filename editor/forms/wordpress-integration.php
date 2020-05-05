@@ -93,8 +93,9 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 		$email_body = $form->getEmailTemplateContent( $fields );
 
-		$headers    = apply_filters( 'brizy_form_email_headers', $headers, $fields, $form );
-		$email_body = apply_filters( 'brizy_form_email_body', $email_body, $fields, $form );
+		$headers       = apply_filters( 'brizy_form_email_headers', $headers, $fields, $form );
+		$email_body    = apply_filters( 'brizy_form_email_body', $email_body, $fields, $form );
+		$email_subject = apply_filters( 'brizy_form_email_subject', $this->getSubject(), $fields, $form );
 
 		$email_body = $this->insertMetaDataFields( $email_body );
 
@@ -104,7 +105,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 		return wp_mail(
 			$this->getEmailTo(),
-			$this->getSubject(),
+			$email_subject,
 			$email_body,
 			$headers
 		);
