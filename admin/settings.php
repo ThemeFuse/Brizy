@@ -176,7 +176,7 @@ class Brizy_Admin_Settings {
 			]
         ];
 
-		return apply_filters( 'brizy_settings_tabs', $tabs );
+		return apply_filters( 'brizy_settings_tabs', $tabs, $selected_tab );
 	}
 
 	private function get_tab_content( $tab ) {
@@ -350,7 +350,7 @@ class Brizy_Admin_Settings {
 	}
 
 	public function render_tabs() {
-		$tabs = $this->get_tabs();
+        $tabs = $this->get_tabs();
 		foreach ( $tabs as $tab ) {
 			$is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
 			?>
@@ -363,7 +363,7 @@ class Brizy_Admin_Settings {
 	public function render_tab_content() {
 		$tab = $this->get_selected_tab();
 
-		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ) );
+		echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ), $tab );
 	}
 
 
