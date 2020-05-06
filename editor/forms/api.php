@@ -245,7 +245,7 @@ class Brizy_Editor_Forms_Api {
 			$result = null;
 			foreach ( $form->getIntegrations() as $integration ) {
 
-				if ( ! $integration->isCompleted() ) {
+				if ( ! ( $integration->isCompleted() and $integration->isEnabled() ) ) {
 					continue;
 				}
 

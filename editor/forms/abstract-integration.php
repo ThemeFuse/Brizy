@@ -14,6 +14,11 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	 */
 	protected $completed;
 
+	/**
+	 * @var bool
+	 */
+	protected $enabled = false;
+
 
 	/**
 	 * @var WP_Error
@@ -60,6 +65,25 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isEnabled() {
+		return $this->enabled;
+	}
+
+	/**
+	 * @param bool $enabled
+	 *
+	 * @return Brizy_Editor_Forms_AbstractIntegration
+	 */
+	public function setEnabled( $enabled ) {
+		$this->enabled = (bool) $enabled;
+
+		return $this;
+	}
+
+
+	/**
 	 * @return string
 	 */
 	public function serialize() {
@@ -73,6 +97,7 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 		$get_object_vars = array(
 			'id'        => $this->getId(),
 			'completed' => $this->isCompleted(),
+			'enabled'   => $this->isEnabled(),
 		);
 
 		return $get_object_vars;
@@ -112,6 +137,7 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 			if ( $instance ) {
 				$instance->setId( $json_obj->id );
 				$instance->setCompleted( $json_obj->completed );
+				$instance->setEnabled( $json_obj->enabled );
 			}
 
 			add_action( 'wp_mail_failed', array( $instance, 'handleFailToSendMessage' ) );
@@ -160,6 +186,7 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 			if ( $instance ) {
 				$instance->setId( $data['id'] );
 				$instance->setCompleted( $data['completed'] );
+				$instance->setEnabled( $data['enabled'] );
 			}
 		}
 
