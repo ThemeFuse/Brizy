@@ -75,7 +75,7 @@ class Brizy_Admin_Post_RevisionManager {
 	 * @param $postId
 	 * @param $post
 	 */
-	public function savePost( $postId, $post ) {
+	public function savePost( $postId, $post, $update = false ) {
 		$postParentId = wp_is_post_revision( $postId );
 		$postType     = get_post_type( $post->post_parent );
 
@@ -159,8 +159,6 @@ class Brizy_Admin_Post_RevisionManager {
 
 			$wpdb->query( "START TRANSACTION" );
 
-			$this->cleanMetakeys( $post, $monitor );
-
 			$revisionMetaValues = $this->getRevisionMetaValues( $revision, $monitor );
 
 			if ( $revisionMetaValues === false ) {
@@ -169,14 +167,22 @@ class Brizy_Admin_Post_RevisionManager {
 
 			foreach ( $revisionMetaValues as $meta ) {
 
-				$existingMeta   = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$tablePostMeta}  WHERE meta_key = %s AND post_id = %d", $meta->meta_key, $post ) );
-				$existingMetaId = isset( $existingMeta->meta_id ) ? $existingMeta->meta_id : 0;
-				$res            = $wpdb->query( $wpdb->prepare( "REPLACE INTO {$tablePostMeta} VALUES (%d,%d,%s,%s)", $existingMetaId, $post, $meta->meta_key, $meta->meta_value ) );
+				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}postmeta WHERE post_id=%d and meta_key=%s", $post, $meta->meta_key ) );
+				$res = $wpdb->query( $wpdb->prepare( "INSERT INTO {$tablePostMeta} (post_id,meta_key,meta_value) VALUES (%d,%s,%s)", $post, $meta->meta_key, $meta->meta_value ) );
 
 				if ( $res === false ) {
 					throw new Exception();
 				}
 			}
+
+			Brizy_Editor_Post::cleanClassCache();
+			$brizyPost = Brizy_Editor_Post::get( $post );
+
+			if ( $brizyPost->uses_editor() ) {
+				$brizyPost->set_needs_compile( true );
+				$brizyPost->saveStorage();
+			}
+
 			$wpdb->query( 'COMMIT' );
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );

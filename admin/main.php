@@ -25,11 +25,6 @@ class Brizy_Admin_Main {
 			return;
 		}
 
-		// watch all supported posts and create meta revisions
-		$metaManager = new Brizy_Admin_Post_RevisionManager();
-		$metaManager->addMonitor( new Brizy_Admin_Post_BrizyPostsMonitor() );
-		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
-
 		// enqueue admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 

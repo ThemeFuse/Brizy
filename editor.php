@@ -123,7 +123,11 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
-		Brizy_Editor_Asset_Cleaner::_init();
+		// watch all supported posts and create meta revisions
+		$metaManager = new Brizy_Admin_Post_RevisionManager();
+		$metaManager->addMonitor( new Brizy_Admin_Post_BrizyPostsMonitor() );
+		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
+
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Blocks_Main::_init();
