@@ -27,6 +27,8 @@ class Brizy_Editor_RestExtend {
 				),
 			) );
 		} );
+
+        add_action( 'rest_api_init', array( $this, 'create_feature_image_focal_point_field' ) );
 	}
 
 	private function get_page_attachments( $uid ) {
@@ -58,4 +60,27 @@ class Brizy_Editor_RestExtend {
 
 		return $attachment_data;
 	}
+
+    public function create_feature_image_focal_point_field() {
+
+        if ( ! Brizy_Editor_User::is_user_allowed() ) {
+            return;
+        }
+
+        $post_types = array_keys( get_post_types( [ 'exclude_from_search' => false, 'show_in_nav_menus' => true ] ) );
+
+        $post_types = array_filter( $post_types, function( $post_type ) {
+            return post_type_supports( $post_type, 'thumbnail' );
+        } );
+
+        register_rest_field( $post_types, 'brizy_attachment_focal_point', array(
+                'get_callback'    => function ( $post, $field_name, $request ) {
+                    return get_post_meta( $post['id'], $field_name, true );
+                },
+                'update_callback' => function ( $meta_value, $post ) {
+                    update_post_meta( $post->ID, 'brizy_attachment_focal_point', $meta_value );
+                }
+            )
+        );
+    }
 }

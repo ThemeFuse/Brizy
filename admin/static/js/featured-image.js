@@ -15,9 +15,11 @@ jQuery(document).ready(function ($) {
                         return el(originalElement, origianalProps);
                     }
 
-                    var clickAndMouseMoveHandler = function (e) {
+                    var clickAndMouseMoveHandler = function ( e ) {
 
-                        if (!isDragging && e.type !== 'click') return;
+                        if ( ! isDragging && e.type !== 'click' ) {
+	                        return;
+                        }
 
                         var $this = $(e.target);
                         var imageW = $this.width();
@@ -29,6 +31,12 @@ jQuery(document).ready(function ($) {
                         $focalPointDiv.on('mouseup', function () {
                             isDragging = false;
                         });
+
+	                    if ( window.getSelection ) {
+	                    	window.getSelection().removeAllRanges();
+	                    } else if ( document.selection ) {
+	                    	document.selection.empty();
+	                    }
 
                         // Calculate FocusPoint coordinates
                         var offsetX = e.pageX - $this.offset().left;
@@ -56,7 +64,25 @@ jQuery(document).ready(function ($) {
                     };
 
                     return el('div', {class: 'brizy-featured-image hide-if-no-js'}, [
-                        el('div', {class: 'wrapper'}, [
+	                    el('input', {
+		                    id: '_thumbnail_focal_point_x',
+		                    name: '_thumbnail_focal_point_x',
+		                    type: 'hidden',
+		                    value: Brizy_Admin_Data.page.focalPoint.x
+	                    }),
+	                    el('input', {
+		                    id: '_thumbnail_focal_point_y',
+		                    name: '_thumbnail_focal_point_y',
+		                    type: 'hidden',
+		                    value: Brizy_Admin_Data.page.focalPoint.y
+	                    }),
+                        el('div',
+	                        {
+                        	    class: 'wrapper',
+		                        onMouseLeave: function () {
+		                            isDragging = false;
+	                            }
+	                        }, [
                             el('img', {
                                 id: 'featured-image-el',
                                 src: origianalProps.media.guid.raw,
@@ -74,7 +100,10 @@ jQuery(document).ready(function ($) {
                             el('div', {
                                 class: 'focal-point',
                                 id: '_thumbnail_focal_point_div',
-                                style: {left: x + "%", top: y + "%"}
+                                style: {left: x + "%", top: y + "%"},
+	                            onMouseDown: function () {
+		                            isDragging = true;
+	                            }
                             }),
                             el('div', {class: 'deleteImage'}, [
                                 el('a', {
