@@ -186,6 +186,27 @@ var actions = {
 
     resetRule: function () {
         return function (state) {
+
+            switch (state.templateType) {
+                case 'archive':
+                    defaultAppliedFor = RULE_TAXONOMY;
+                    defaultEntityType = 'category';
+                    break;
+
+                default:
+                    defaultAppliedFor = RULE_POSTS;
+                    defaultEntityType = 'post';
+                    break;
+            }
+
+            var defaultRule = {
+                type: RULE_TYPE_INCLUDE,
+                appliedFor: defaultAppliedFor,
+                entityType: defaultEntityType,
+                entityValues: []
+            };
+
+
             return {errors: "", rule: defaultRule};
         };
     },
