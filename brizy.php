@@ -45,6 +45,9 @@ function brizy_load() {
 		return;
 	}
 
+	if (!session_id())
+		session_start();
+
 	$instance = Brizy_Editor::get();
 }
 

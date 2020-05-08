@@ -133,6 +133,9 @@
 /**
  * Style Brizy Templates
  */
+.brizy-template-rules .error {
+    color: red;
+}
 
 .brizy-template-rules input[type="text"],
 .brizy-template-rules select {
@@ -225,7 +228,7 @@
     vertical-align: middle;
 }
 
-.brizy-template-rules .brizy-template-type label{
+.brizy-template-rules .brizy-template-type label {
     margin-right: 20px;
 }
 

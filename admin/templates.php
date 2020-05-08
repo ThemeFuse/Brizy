@@ -52,6 +52,7 @@ class Brizy_Admin_Templates {
 			add_action( 'admin_init', array( $this, 'addTemplateRoleCaps' ), 10000 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 			add_filter( 'save_post', array( $this, 'save_template_rules' ), 10, 2 );
+			add_action( 'admin_notices', array( $this, 'save_template_rules_notices' ) );
 		} elseif ( ! defined( 'DOING_AJAX' ) &&
 		           ! is_admin() &&
 		           ! isset( $_REQUEST[ Brizy_Editor::prefix( '_media' ) ] ) &&
@@ -704,7 +705,16 @@ class Brizy_Admin_Templates {
 		}
 	}
 
+	public function save_template_rules_notices() {
+		if ( ! empty( $_SESSION['brizy_rules_admin_notices'] ) ) {
+			print  $_SESSION['brizy_rules_admin_notices'];
+		}
+		unset ( $_SESSION['brizy_rules_admin_notices'] );
+	}
+
 	public function save_template_rules( $post_id ) {
+
+
 		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
 			$post_id = $parent_id;
 		}
@@ -741,7 +751,7 @@ class Brizy_Admin_Templates {
 				$values = explode( "|", $_POST[ 'brizy-' . $type . '-rule-group' ][ $i ] );
 				list( $appliedFor, $entityType ) = $values;
 
-				// ingnore invalid groiup value
+				// ingnore invalid group value
 				if ( ! $appliedFor || ! $entityType ) {
 					continue;
 				}
@@ -755,8 +765,24 @@ class Brizy_Admin_Templates {
 			}
 		}
 
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-		$ruleManager->setRules( $post_id, $rules );
+		try {
+			// validate rule
+			$ruleValidator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $post_id );
+
+			if ( ! $ruleValidator ) {
+				$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>Brizy: Unable to get the rule validator for this post type.</p></div>';
+			}
+
+			$ruleValidator->validateRulesForPostId( $rules, $post_id );
+
+			$ruleManager = new Brizy_Admin_Rules_Manager();
+			$ruleManager->setRules( $post_id, $rules );
+
+		} catch ( Brizy_Editor_Exceptions_DataVersionMismatch $e ) {
+			$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>Brizy:Invalid data version.</p></div>';
+		} catch ( Exception $e ) {
+			$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>' . $e->getMessage() . '.</p></div>';
+		}
 	}
 
 	/**

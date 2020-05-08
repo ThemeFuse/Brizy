@@ -697,46 +697,36 @@ var ruleView = function (state, actions) {
                         groups: state.groups,
                         errors: state.errors,
                         onSubmit: function () {
-
                             var rules = state.rules[state.templateType] || [];
 
                             try {
-
                                 rules.forEach(rule => {
-
                                     if (rule.type !== state.rule.type) return;
                                     if (rule.appliedFor !== state.rule.appliedFor) return;
                                     if (rule.entityType !== state.rule.entityType) return;
                                     if (arr_diff(rule.entityValues, state.rule.entityValues).length > 0) return;
-
                                     throw 'This rule already exist';
 
                                 });
                             } catch (error) {
                                 actions.addFormErrors('This rule already exist');
-
                                 return;
                             }
 
-                            actions.addRule(state.rule);
-                            console.log(state.rule);
-                            //actions.resetRule();
-
-
-                            // api
-                            //     .validateRule(state.rule)
-                            //     .done(function () {
-                            //         actions.addRule(state.rule);
-                            //         actions.resetRule();
-                            //     })
-                            //     .fail(function (response) {
-                            //         if (response.responseJSON && response.responseJSON.data) {
-                            //             if (response.responseJSON.data.message)
-                            //                 actions.addFormErrors(response.responseJSON.data.message);
-                            //             else
-                            //                 actions.addFormErrors("Failed to add the rule");
-                            //         }
-                            //     });
+                            api
+                                .validateRule(state.rule)
+                                .done(function () {
+                                    actions.addRule(state.rule);
+                                    actions.resetRule();
+                                })
+                                .fail(function (response) {
+                                    if (response.responseJSON && response.responseJSON.data) {
+                                        if (response.responseJSON.data.message)
+                                            actions.addFormErrors(response.responseJSON.data.message);
+                                        else
+                                            actions.addFormErrors("Failed to add the rule");
+                                    }
+                                });
                         }
                     })] :
                 [],
