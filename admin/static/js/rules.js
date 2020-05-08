@@ -217,12 +217,12 @@ var actions = {
         return function (state) {
             return {
                 templateType: type,
-                rules: {
-                    single: [],
-                    archive: [],
-                    single_product: [],
-                    product_archive: [],
-                }
+                // rules: {
+                //     single: [],
+                //     archive: [],
+                //     single_product: [],
+                //     product_archive: [],
+                // }
             };
         };
     }
@@ -318,7 +318,7 @@ var BrzSelect2 = function (params) {
                     options.forEach(function (option) {
                         el.append(option);
                     });
-                    el.select2('val', el.val());
+                    el.trigger("change");
                 });
             } else {
                 var options = params.convertResponseToOptions(optionRequest);
@@ -327,8 +327,6 @@ var BrzSelect2 = function (params) {
                 });
 
                 el.trigger("change");
-
-                el.select2('val', el.val());
             }
         }
     };
@@ -675,7 +673,6 @@ var ruleView = function (state, actions) {
                         actions.setTemplateType(type);
                         api.getGroupList(type).done(function (response) {
                             actions.updateGroups(response.data);
-
                             actions.rule.setAppliedFor(String(response.data[0].value));
                             actions.rule.setEntityType(String(response.data[0].items[0].value));
                         });
