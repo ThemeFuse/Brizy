@@ -663,6 +663,19 @@ class Brizy_Admin_Templates {
 
 					$array = get_terms( $args );
 
+					$term = array_pop( $array );
+
+					$array = get_posts( [
+						'post_status' => 'publish',
+						'tax_query' => array(
+							array(
+								'taxonomy' => $term->taxonomy,
+								'field' => 'term_id',
+								'terms' => $term->term_id,
+							)
+						)
+                    ] );
+
 					return array_pop( $array );
 					break;
 				case  Brizy_Admin_Rule::ARCHIVE :
