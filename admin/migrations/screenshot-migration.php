@@ -31,7 +31,7 @@ class Brizy_Admin_Migrations_ScreenshotMigration implements Brizy_Admin_Migratio
 
 		try {
 
-			if ( ! class_exists( 'BlockScreenshotContext' ) || ! class_exists( 'BlockScreenshotTransformer' ) ) {
+			if ( ! class_exists( 'Brizy\BlockScreenshotContext' ) || ! class_exists( 'Brizy\BlockScreenshotTransformer' ) ) {
 				throw new Exception();
 			}
 
@@ -75,8 +75,8 @@ class Brizy_Admin_Migrations_ScreenshotMigration implements Brizy_Admin_Migratio
 
 		$dataObject = json_decode( $dataJson );
 
-		$transformerContext = new BlockScreenshotContext( $dataObject );
-		$transformer        = new BlockScreenshotTransformer();
+		$transformerContext = new \Brizy\BlockScreenshotContext( $dataObject );
+		$transformer        = new \Brizy\BlockScreenshotTransformer();
 		$transformer->execute( $transformerContext );
 
 
