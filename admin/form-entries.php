@@ -326,7 +326,7 @@ class Brizy_Admin_FormEntries {
 				'public'              => false,
 				'has_archive'         => false,
 				'description'         => __( 'Leads', 'brizy' ),
-				'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
+				'publicly_queryable'  => false,
 				'show_ui'             => true,
 				'show_in_menu'        => false, //Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,
