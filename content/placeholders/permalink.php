@@ -23,7 +23,7 @@ class Brizy_Content_Placeholders_Permalink extends Brizy_Content_Placeholders_Si
 	 */
 	public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
 		$attributes = $contentPlaceholder->getAttributes();
-		if ( isset( $attributes['post_id'] ) && $attributes['post_id']>0 ) {
+		if ( isset( $attributes['post_id'] ) && (int) $attributes['post_id'] > 0 ) {
 			return get_permalink( (int) $attributes['post_id'] );
 		}
 

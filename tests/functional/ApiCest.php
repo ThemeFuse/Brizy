@@ -280,6 +280,7 @@ class ApiCest {
 
 		$I->seeResponseCodeIs( 200 );
 
+
 		$check = Brizy_Editor::get()->checkIfProjectIsLocked();
 		$I->assertTrue( $check !== false, 'It should be return true as the project is locked' );
 	}

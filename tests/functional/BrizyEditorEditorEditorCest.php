@@ -69,6 +69,8 @@ class BrizyEditorEditorEditorCest {
 				'brizy-need-compile'          => 1
 			],
 		] );
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	public function testConfigSingleton( FunctionalTester $I ) {

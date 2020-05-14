@@ -10,17 +10,24 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 	/**
 	 * @var int
 	 */
-	protected $index;
+	protected $top;
+
+	/**
+	 * @var int
+	 */
+	protected $bottom;
 
 	/**
 	 * Brizy_Editor_BlockPosition constructor.
 	 *
-	 * @param string $align
-	 * @param int $index
+	 * @param null $top
+	 * @param null $bottom
+	 * @param null $align
 	 */
-	public function __construct( $align, $index ) {
-		$this->align = $align;
-		$this->index = $index;
+	public function __construct( $top = null, $bottom = null, $align = null ) {
+		$this->align  = $align;
+		$this->top    = $top;
+		$this->bottom = $bottom;
 	}
 
 	/**
@@ -44,17 +51,35 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 	/**
 	 * @return int
 	 */
-	public function getIndex() {
-		return $this->index;
+	public function getTop() {
+		return $this->top;
 	}
 
 	/**
-	 * @param int $index
+	 * @param int $top
 	 *
 	 * @return Brizy_Editor_BlockPosition
 	 */
-	public function setIndex( $index ) {
-		$this->index = $index;
+	public function setTop( $top ) {
+		$this->top = (int) $top;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBottom() {
+		return $this->bottom;
+	}
+
+	/**
+	 * @param int $bottom
+	 *
+	 * @return Brizy_Editor_BlockPosition
+	 */
+	public function setBottom( $bottom ) {
+		$this->bottom = (int) $bottom;
 
 		return $this;
 	}
@@ -65,8 +90,9 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 	 */
 	public function serialize() {
 		$get_object_vars = array(
-			'align' => $this->getAlign(),
-			'index' => $this->getIndex()
+			'align'  => $this->getAlign(),
+			'top'    => $this->getTop(),
+			'bottom' => $this->getBottom()
 		);
 
 		return serialize( $get_object_vars );
@@ -74,8 +100,9 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 
 	public function jsonSerialize() {
 		$get_object_vars = array(
-			'index' => $this->getIndex(),
-			'align' => $this->getAlign()
+			'top'    => $this->getTop(),
+			'bottom' => $this->getBottom(),
+			'align'  => $this->getAlign()
 		);
 
 		return $get_object_vars;
@@ -83,15 +110,20 @@ class Brizy_Editor_BlockPosition extends Brizy_Admin_Serializable {
 
 	public function convertToOptionValue() {
 		$get_object_vars = array(
-			'align' => $this->getAlign(),
-			'index' => $this->getIndex()
+			'align'  => $this->getAlign(),
+			'top'    => $this->getTop(),
+			'bottom' => $this->getBottom()
 		);
 
 		return $get_object_vars;
 	}
 
 	static public function createFromSerializedData( $data ) {
-		$instance = new self( $data['align'], $data['index'] );
+		$instance = new self(
+			isset( $data['top'] ) ? $data['top'] : null,
+			isset( $data['bottom'] ) ? $data['bottom'] : null,
+			isset( $data['align'] ) ? $data['align'] : null
+		);
 
 		return $instance;
 	}

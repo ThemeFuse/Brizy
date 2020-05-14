@@ -5,9 +5,12 @@ class ScreenshotApiCest {
 
 	const PIXEL_IMG_JPG = 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
+	private $postId;
+
 	public function _before( FunctionalTester $I ) {
 		wp_cache_flush();
 		$I->loginAs( 'admin', 'admin' );
+		$this->postId = $I->havePostInDatabase( [ 'post_type' => 'post', 'post_status' => 'publish' ] );
 	}
 
 	public function requestWithoutVersionKey( FunctionalTester $I ) {
@@ -20,7 +23,7 @@ class ScreenshotApiCest {
 		$I->seeResponseCodeIs( 400 );
 	}
 
-	protected function invalidDataProvider() {
+	public function invalidDataProvider() {
 		return [
 			[ 'block_type' => 'normal', 'ibsf' => null ],
 			[ 'block_type' => 'normal', 'ibsf' => '' ],
@@ -32,9 +35,10 @@ class ScreenshotApiCest {
 		];
 	}
 
-	protected function validDataProvider( FunctionalTester $I ) {
-
-		$postId = $I->havePostInDatabase( [ 'post_type' => 'post', 'post_status' => 'publish' ] );
+	/**
+	 * @return array
+	 */
+	public function validDataProvider( ) {
 
 		return [
 			[
@@ -53,7 +57,7 @@ class ScreenshotApiCest {
 				'block_type' => 'normal',
 				'ibsf'       => self::PIXEL_IMG_JPG,
 				'file_type'  => '.jpeg',
-				'post'       => $postId
+				'post'       => $this->postId
 			],
 
 		];
@@ -74,25 +78,14 @@ class ScreenshotApiCest {
 		$I->seeResponseCodeIs( 400 );
 	}
 
-	/**
-	 * @param FunctionalTester $I
-	 *
-	 * @throws Exception
-	 */
-	public function postScreenShotTest( FunctionalTester $I ) {
-		foreach ( $this->validDataProvider( $I ) as $data ) {
-			$this->_postScreenShotTest( $I, $data );
-		}
-	}
 
 	/**
 	 * @dataProvider validDataProvider
 	 *
 	 * @param FunctionalTester $I
-	 *
-	 * @throws Exception
+	 * @param \Codeception\Example $example
 	 */
-	private function _postScreenShotTest( FunctionalTester $I, $example ) {
+	public function postScreenShotTest( FunctionalTester $I, \Codeception\Example $example ) {
 
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy_create_block_screenshot',
@@ -101,7 +94,6 @@ class ScreenshotApiCest {
 			'block_type' => $example['block_type'],
 			'ibsf'       => $example['ibsf'],
 			'post'       => $example['post'],
-
 		] );
 		$I->seeResponseCodeIs( 200 );
 
@@ -158,7 +150,10 @@ class ScreenshotApiCest {
 
 	}
 
-
+	/**
+	 * @param FunctionalTester $I
+	 * @param $object
+	 */
 	private function assertScreenshotResponse( FunctionalTester $I, $object ) {
 		$I->assertArrayHasKey( 'data', (array) $object, 'It should contain key "data"' );
 		$I->assertArrayHasKey( 'id', (array) $object->data, 'It should contain screenshot id' );

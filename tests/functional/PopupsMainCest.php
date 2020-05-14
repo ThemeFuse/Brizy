@@ -72,6 +72,12 @@ class PopupsMainCest {
 		] );
 	}
 
+	public function checkIfCustomPostsRegistered( FunctionalTester $I ) {
+		$I->wantToTest( 'Request with invalid editor version' );
+		$I->assertTrue( post_type_exists( 'brizy-popup' ) ,'It should register popup post type');
+	}
+
+
 	public function testInsertPopupsHtml( FunctionalTester $I ) {
 
 		global $wp_query;

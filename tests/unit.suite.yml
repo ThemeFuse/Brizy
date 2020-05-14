@@ -8,9 +8,10 @@ modules:
     - \Helper\Unit
     - Asserts
     - WPLoader
+    - WPFilesystem
   config:
     WPLoader:
-      loadOnly: true
+      loadOnly: false
       wpRootFolder: "%WP_ROOT_FOLDER%"
       dbName: "%TEST_SITE_DB_NAME%"
       dbHost: "%TEST_SITE_DB_HOST%"
@@ -18,5 +19,7 @@ modules:
       dbPassword: "%TEST_SITE_DB_PASSWORD%"
       tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
       wpDebug: true
-      plugins: ['brizy/brizy.php','brizy/brizy-pro.php']
-      activatePlugins: ['brizy/brizy.php','brizy/brizy-pro.php']
+      plugins: ['brizy/brizy.php']
+      activatePlugins: ['brizy/brizy.php']
+    WPFilesystem:
+      wpRootFolder: "%WP_ROOT_FOLDER%"

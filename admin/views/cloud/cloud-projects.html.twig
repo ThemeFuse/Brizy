@@ -1,0 +1,40 @@
+{% extends "cloud-base.html.twig" %}
+
+{% block content %}
+
+    <p>
+        <a href="{{ logoutUrl }}">Logout</a>
+    </p>
+    <br>
+
+    <h3>Project</h3>
+    {% if  containers|length > 0 %}
+        <div class="projects">
+            <form method="post" id="cloud-form" action="{{ pageUrl }}">
+                {{ nonce | raw }}
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="project-account">Select Account</label>
+                        </th>
+                        <td>
+                            <select name="brizy-cloud-use-container" id="project-account" class="regular-text">
+                                {% for container in containers %}
+                                    <option value="{{ container.id }}" {{ container.id==projectObject.container?'selected':'' }}>{{ container.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <p class="submit">
+                    <input type="submit" name="brizy-cloud-use-project-submit" id="submit" class="button button-primary"
+                           value="Save">
+                </p>
+            </form>
+        </div>
+    {% else %}
+        <div class="no-projects">
+            You do not have an account yet.
+        </div>
+    {% endif %}
+{% endblock %}

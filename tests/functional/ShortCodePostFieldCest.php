@@ -182,12 +182,12 @@ class ShortCodePostFieldCest {
 	 * @param FunctionalTester $I
 	 * @param \Codeception\Example $example
 	 */
-	public function checkReturnWhenAjaxRequest( FunctionalTester $I ) {
-
-		define( 'DOING_AJAX', true );
-		$output = do_shortcode( '[brizy_post_field property="post_content"]' );
-		$I->assertEquals( "<p>field_post_content</p>\n", $output, 'The short code should return the correct field value' );
-	}
+//	public function checkReturnWhenAjaxRequest( FunctionalTester $I ) {
+//
+//		define( 'DOING_AJAX', true );
+//		$output = do_shortcode( '[brizy_post_field property="post_content"]' );
+//		$I->assertEquals( "<p>field_post_content</p>\n", $output, 'The short code should return the correct field value' );
+//	}
 
 	/**
 	 * @param FunctionalTester $I

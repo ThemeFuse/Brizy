@@ -102,7 +102,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	/**
 	 * @return mixed
 	 */
-	abstract public function createResponse();
+	abstract public function createResponse($fields = array());
 
 	/**
 	 * Save post data and and trigger post update

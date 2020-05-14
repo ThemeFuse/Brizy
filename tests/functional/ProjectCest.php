@@ -1,6 +1,5 @@
 <?php
 
-
 class ProjectCest {
 	/**
 	 * @var \IntegrationTester
@@ -13,8 +12,8 @@ class ProjectCest {
 	 * @throws \Codeception\Exception\ModuleException
 	 */
 	public function _before( FunctionalTester $I ) {
+		$I->dontHavePostInDatabase( [ 'post_type' => Brizy_Editor_Project::BRIZY_PROJECT ] );
 		wp_cache_flush();
-		$I->dontHavePostInDatabase( [ 'post_type' => 'brizy-project' ] );
 	}
 
 	public function getStorageTest( FunctionalTester $I ) {
@@ -77,18 +76,16 @@ class ProjectCest {
 
 	public function createdMetaKeysTest( FunctionalTester $I ) {
 
-		Brizy_Editor_Project::get();
+		$project = Brizy_Editor_Project::get();
 
 		$I->seePostInDatabase( [
 			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
-			'post_title'     => 'Brizy Project',
 			'post_status'    => 'publish',
-			'comment_status' => 'closed',
-			'ping_status'    => 'closed'
 		] );
 
 		$I->seePostMetaInDatabase( [
 			'meta_key' => 'brizy-project',
+			'post_id'  => $project->getWpPostId()
 		] );
 
 	}

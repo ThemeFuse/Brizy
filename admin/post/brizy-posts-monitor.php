@@ -11,6 +11,7 @@ class Brizy_Admin_Post_BrizyPostsMonitor extends Brizy_Admin_Post_AbstractMonito
 			'brizy-post-compiler-version',
 			'brizy-post-editor-version',
 			'brizy_post_uid',
+			'brizy-rules',
 			'brizy_data_version'
 		) );
 	}

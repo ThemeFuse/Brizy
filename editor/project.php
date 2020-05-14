@@ -38,7 +38,9 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	protected $accounts;
 	protected $license_key;
 	protected $forms;
+	protected $cloud_account_id;
 	protected $cloud_token;
+	protected $cloudContainer;
 	protected $cloud_project;
 	protected $image_optimizer_settings;
 	protected $data;
@@ -173,22 +175,25 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		}
 
 		$project_data = array(
-			'id'                       => md5( uniqid( 'Local project', true ) ),
-			'title'                    => 'Brizy Project',
-			'name'                     => uniqid( 'Local project', true ),
-			'user'                     => null,
-			'template'                 => array( 'slug' => 'brizy' ),
-			'created'                  => new DateTime(),
-			'updated'                  => new DateTime(),
-			'languages'                => array(),
-			'pluginVersion'            => BRIZY_VERSION,
-			'editorVersion'            => BRIZY_EDITOR_VERSION,
-			'signature'                => Brizy_Editor_Signature::get(),
-			'accounts'                 => array(),
-			'forms'                    => array(),
-			'data'                     => base64_encode( file_get_contents( $defaultJsonPath ) ),
-			'brizy-license-key'        => null,
-			'brizy-cloud-token'        => null,
+			'id'                     => md5( uniqid( 'Local project', true ) ),
+			'title'                  => 'Brizy Project',
+			'name'                   => uniqid( 'Local project', true ),
+			'user'                   => null,
+			'template'               => array( 'slug' => 'brizy' ),
+			'created'                => new DateTime(),
+			'updated'                => new DateTime(),
+			'languages'              => array(),
+			'pluginVersion'          => BRIZY_VERSION,
+			'editorVersion'          => BRIZY_EDITOR_VERSION,
+			'signature'              => Brizy_Editor_Signature::get(),
+			'accounts'               => array(),
+			'forms'                  => array(),
+			'data'                   => base64_encode( file_get_contents( $defaultJsonPath ) ),
+			'cloudContainer'         => null,
+			'brizy-license-key'      => null,
+			'brizy-cloud-token'      => null,
+			'brizy-cloud-account-id' => null,
+
 			'brizy-cloud-project'      => null,
 			'image-optimizer-settings' => array(),
 		);
@@ -214,7 +219,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	/**
 	 * This will be returned by api when project is requested
 	 */
-	public function createResponse() {
+	public function createResponse( $fields = array() ) {
 		$data = array(
 			'id'          => $this->getId(),
 			'data'        => $this->getDataAsJson(),
@@ -247,6 +252,8 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 			'brizy-license-key'        => $this->license_key,
 			'brizy-cloud-token'        => $this->cloud_token,
 			'brizy-cloud-project'      => $this->cloud_project,
+			'brizy-cloud-account-id'   => $this->cloud_account_id,
+			'cloudContainer'           => $this->cloudContainer,
 			'image-optimizer-settings' => $this->image_optimizer_settings,
 		);
 	}
@@ -269,6 +276,8 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		$this->license_key              = isset( $data['brizy-license-key'] ) ? $data['brizy-license-key'] : null;
 		$this->cloud_token              = isset( $data['brizy-cloud-token'] ) ? $data['brizy-cloud-token'] : null;
 		$this->cloud_project            = isset( $data['brizy-cloud-project'] ) ? $data['brizy-cloud-project'] : null;
+		$this->cloud_account_id         = isset( $data['brizy-cloud-account-id'] ) ? $data['brizy-cloud-account-id'] : null;
+		$this->cloudContainer           = isset( $data['cloudContainer'] ) ? $data['cloudContainer'] : null;
 		$this->image_optimizer_settings = isset( $data['image-optimizer-settings'] ) ? $data['image-optimizer-settings'] : array();
 	}
 
@@ -522,6 +531,24 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	/**
 	 * @return mixed
 	 */
+	public function getCloudContainer() {
+		return $this->cloudContainer;
+	}
+
+	/**
+	 * @param mixed $cloudContainer
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setCloudContainer( $cloudContainer ) {
+		$this->cloudContainer = $cloudContainer;
+
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
 	public function getCloudProject() {
 		return $this->cloud_project;
 	}
@@ -532,6 +559,25 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	public function setCloudProject( $cloud_project ) {
 		$this->cloud_project = $cloud_project;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCloudAccountId() {
+		return $this->cloud_account_id;
+	}
+
+	/**
+	 * @param mixed $cloud_account_id
+	 *
+	 * @return Brizy_Editor_Project
+	 */
+	public function setCloudAccountId( $cloud_account_id ) {
+		$this->cloud_account_id = $cloud_account_id;
+
+		return $this;
+	}
+
 	//====================================================================================================================================================================================
 
 	/**
@@ -673,8 +719,15 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		if ( $key == 'brizy-cloud-token' ) {
 			$this->setCloudToken( $value );
 		}
+		if ( $key == 'brizy-cloud-account-id' ) {
+			$this->setCloudAccountId( $value );
+		}
 		if ( $key == 'brizy-cloud-project' ) {
 			$this->setCloudProject( $value );
+		}
+
+		if ( $key == 'brizy-cloud-container' ) {
+			$this->setCloudContainer( $value );
 		}
 
 		if ( $key == 'image-optimizer-settings' ) {
@@ -697,6 +750,9 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 
 		if ( $key == 'brizy-license-key' ) {
 			$this->setLicenseKey( null );
+		}
+		if ( $key == 'brizy-cloud-account-id' ) {
+			$this->setCloudAccountId( null );
 		}
 		if ( $key == 'brizy-cloud-token' ) {
 			$this->setCloudToken( null );
@@ -729,6 +785,11 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		if ( $key == 'brizy-license-key' ) {
 			return $this->getLicenseKey();
 		}
+
+		if ( $key == 'brizy-cloud-account-id' ) {
+			$this->getCloudAccountId();
+		}
+
 		if ( $key == 'brizy-cloud-token' ) {
 			return $this->getCloudToken();
 		}

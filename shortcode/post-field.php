@@ -58,10 +58,8 @@ class Brizy_Shortcode_PostField extends Brizy_Shortcode_AbstractShortcode {
 				return self::wp_trim_excerpt( $post->post_excerpt, $post );
 			case 'post_content':
 				$GLOBALS['post'] = $post;
-				setup_postdata( $post );
-
+				setup_postdata($post);
 				// remove all brizy the_content fitlers
-
 				remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
 				$brizyPost = Brizy_Editor_Post::get( $post );
 				Brizy_Public_Main::get( $brizyPost )->removeTheContentFilters();

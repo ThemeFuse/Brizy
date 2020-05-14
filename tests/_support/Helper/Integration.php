@@ -66,7 +66,6 @@ class Integration extends \Codeception\Module {
 	 */
 	public function haveFontInDataBase( $uid, $fontFamily, $weights, $type, $status = 'publish' ) {
 
-
 		$db = $this->getModule( 'WPDb' );
 
 		$fontId = $db->havePostInDatabase( [
@@ -80,7 +79,7 @@ class Integration extends \Codeception\Module {
 		] );
 
 		foreach ( (array) $weights as $weigth => $types ) {
-			foreach ( (array) $types as $$type ) {
+			foreach ( (array) $types as $type ) {
 
 				$db->havePostInDatabase( [
 					'post_type'   => 'attachment',

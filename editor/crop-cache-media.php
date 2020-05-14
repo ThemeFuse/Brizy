@@ -2,6 +2,8 @@
 
 class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
+	use Brizy_Editor_Asset_AttachmentAware;
+
 	const BASIC_CROP_TYPE = 1;
 	const ADVANCED_CROP_TYPE = 2;
 
@@ -29,11 +31,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 	/**
 	 * @param $madia_name
+	 * @param bool $ignore_wp_media
 	 *
-	 * @return string
-	 * @throws Exception
+	 * @return false|string
+	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function download_original_image( $madia_name ) {
+	public function download_original_image( $madia_name, $ignore_wp_media=true ) {
 
 		// Check if user is querying API
 		if ( ! $madia_name ) {
@@ -41,7 +44,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
 
-		if ( strpos( $madia_name, "wp-" ) === 0 ) {
+		if ( $ignore_wp_media && strpos( $madia_name, "wp-" ) === 0 ) {
 			Brizy_Logger::instance()->error( 'Invalid try to download wordpress file from application server' );
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
@@ -197,32 +200,5 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return $resized_image_path;
 	}
 
-	/**
-	 * @param $media_name
-	 *
-	 * @return null|string
-	 */
-	private function getAttachmentByMediaName( $media_name ) {
 
-		global $wpdb;
-
-		$pt = $wpdb->posts;
-		$mt  = $wpdb->postmeta;
-
-		return $wpdb->get_var( $wpdb->prepare(
-			"SELECT 
-						{$pt}.ID
-					FROM {$pt}
-						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
-					WHERE 
-						( {$mt}.meta_key = 'brizy_attachment_uid' 
-						AND {$mt}.meta_value = %s )
-						AND {$pt}.post_type = 'attachment'
-						AND {$pt}.post_status = 'inherit'
-					GROUP BY {$pt}.ID
-					ORDER BY {$pt}.post_date DESC",
-			$media_name
-		) );
-
-	}
 }

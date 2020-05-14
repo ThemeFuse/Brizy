@@ -203,7 +203,6 @@ class Brizy_Admin_Main {
 //		}
 //	}
 
-
 	/**
 	 * @param $post_id
 	 * @param $post
@@ -494,6 +493,8 @@ class Brizy_Admin_Main {
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
 
+
+
 		try {
 
 			$update_post = false;
@@ -608,6 +609,13 @@ class Brizy_Admin_Main {
 		return $existing;
 	}
 
+	/**
+	 * @param $postMeta
+	 * @param $post_id
+	 * @param $post
+	 *
+	 * @return null
+	 */
 	public function handleNewProjectMetaImport( $postMeta, $post_id, $post ) {
 		if ( $post['post_type'] == Brizy_Editor_Project::BRIZY_PROJECT ) {
 			return null;
