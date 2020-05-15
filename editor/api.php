@@ -435,6 +435,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$post = $this->getPostSample( $postId );
 
+			setup_postdata( $post );
+
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
 				$placeholder = stripslashes($placeholder);
