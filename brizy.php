@@ -50,6 +50,8 @@ function brizy_load() {
 		session_start();
 
 	$instance = Brizy_Editor::get();
+
+	do_action( 'brizy_plugin_included' );
 }
 
 function brizy_notices() {
@@ -91,4 +93,3 @@ function brizy_clean() {
 
 new Brizy_Compatibilities_Init();
 
-do_action( 'brizy_plugin_included' );
