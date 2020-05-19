@@ -244,9 +244,10 @@ class Brizy_Admin_OptimizeImages {
 		$time           = time();
 		$t              = null;
 		$attachmentUids = array();
-		foreach ( $matches[0] as $i => $url ) {
+		$uniqueUrls = array_unique($matches[0]);
+		foreach ( $uniqueUrls as $i => $url ) {
 
-			$parsed_url = parse_url( html_entity_decode( $matches[0][ $i ] ) );
+			$parsed_url = parse_url( html_entity_decode( $url ) );
 
 			if ( ! isset( $parsed_url['query'] ) ) {
 				continue;
@@ -264,6 +265,7 @@ class Brizy_Admin_OptimizeImages {
 			$attachmentUids[] = array(
 				'url'        => $url,
 				'parsed_url' => $parsed_url,
+				'parsed_query' => $params,
 				'uid'        => $mediaUid,
 				'uidQuery'   => "'{$mediaUid}'"
 			);
@@ -292,7 +294,7 @@ class Brizy_Admin_OptimizeImages {
 		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
 			foreach ( $attachmentIds as $row ) {
 				if ( $row->UID === $o['uid'] ) {
-					$o['ID'] = $row->ID;
+					$o['attachmentID'] = $row->ID;
 				}
 
 				return $o;
@@ -304,17 +306,14 @@ class Brizy_Admin_OptimizeImages {
 
 			$parsed_url = $uidRes['parsed_url'];
 
-			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['ID'] ) ) {
+			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['attachmentID'] ) ) {
 				continue;
 			}
 
-			parse_str( $parsed_url['query'], $params );
+			$params = $uidRes['parsed_query'];
 
-			if ( ! isset( $params[ $endpoint ] ) ) {
-				continue;
-			}
 
-			$media_url   = get_attached_file( $uidRes['ID'] );
+			$media_url   = get_attached_file( $uidRes['attachmentID'] );
 			$brizy_media = basename( $media_url );
 
 			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params[ Brizy_Editor::prefix( '_post' ) ], $params[ Brizy_Editor::prefix( '_crop' ) ], $brizy_media );
