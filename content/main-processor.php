@@ -36,7 +36,7 @@ class Brizy_Content_MainProcessor {
 
 		$this->processors = apply_filters( 'brizy_content_processors', $this->processors, $context );
 
-		array_unshift( $this->processors, new Brizy_Content_DynamicContentProcessor() );
+		array_unshift( $this->processors, new Brizy_Content_ShortcodeToPlaceholderProcessor(), new Brizy_Content_DynamicContentProcessor() );
 	}
 
 	/**
