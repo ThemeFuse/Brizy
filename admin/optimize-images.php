@@ -293,12 +293,13 @@ class Brizy_Admin_OptimizeImages {
 
 		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
 			foreach ( $attachmentIds as $row ) {
-				if ( $row->UID === $o['uid'] ) {
+				if ( $row->UID == $o['uid'] ) {
 					$o['attachmentID'] = $row->ID;
+					return $o;
 				}
-
-				return $o;
 			}
+
+			return $o;
 		}, $attachmentUids );
 
 

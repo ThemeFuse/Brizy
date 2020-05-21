@@ -148,7 +148,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.ID FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment' and p.post_status='publish'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 

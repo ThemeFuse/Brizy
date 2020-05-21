@@ -11,8 +11,7 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 	 * Brizy_Editor_Asset_Optimize_Optimizer constructor.
 	 */
 	public function __construct() {
-
-		$this->optimizers = array( 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer' );
+		$this->optimizers = array( 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer','Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer' );
 	}
 
 	/**
@@ -29,11 +28,14 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 				/**
 				 * @var Brizy_Editor_Asset_Optimize_OptimizerInterface $optimizer ;
 				 */
-				if ( $settings = $settings[ $optimizerClass::getId() ] ) {
+				if ( $settings = $settings[ $optimizerClass::getId() ] ?? null ) {
 					$optimizer = new $optimizerClass( $settings );
-
-					return $optimizer->optimize( $source, $target );
+				} else {
+					$optimizer = new $optimizerClass( [] );
 				}
+
+				return $optimizer->optimize( $source, $target );
+
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 				continue;

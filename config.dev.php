@@ -11,6 +11,7 @@ class Brizy_Config {
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'http://api.brizy.org';
+	const CDN = 'http://466a01f2.ngrok.io/upload';
 
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
