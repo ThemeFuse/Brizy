@@ -11,7 +11,7 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 	 * Brizy_Editor_Asset_Optimize_Optimizer constructor.
 	 */
 	public function __construct() {
-		$this->optimizers = array( 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer','Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer' );
+		$this->optimizers = array( /*'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer',*/'Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer' );
 	}
 
 	/**
