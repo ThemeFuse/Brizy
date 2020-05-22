@@ -64,9 +64,9 @@ class Brizy_Admin_OptimizeImages {
 			case 'general':
 				echo $this->get_general_tab( $context );
 				break;
-			case 'settings':
-				echo $this->get_settings_tab( $context );
-				break;
+//			case 'settings':
+//				echo $this->get_settings_tab( $context );
+//				break;
 
 		}
 	}
@@ -206,17 +206,17 @@ class Brizy_Admin_OptimizeImages {
 		}
 	}
 
-	private function get_settings_tab( $context ) {
-		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-		$context['submit_label'] = __( 'Save' );
-		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
-		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
-			'API_KEY' => '',
-			"lossy"   => 1
-		);
-
-		return $this->twig->render( 'optimizer-settings.html.twig', $context );
-	}
+//	private function get_settings_tab( $context ) {
+//		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+//		$context['submit_label'] = __( 'Save' );
+//		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
+//		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
+//			'API_KEY' => '',
+//			"lossy"   => 1
+//		);
+//
+//		return $this->twig->render( 'optimizer-settings.html.twig', $context );
+//	}
 
 	/**
 	 * @param $content
@@ -293,12 +293,13 @@ class Brizy_Admin_OptimizeImages {
 
 		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
 			foreach ( $attachmentIds as $row ) {
-				if ( $row->UID === $o['uid'] ) {
+				if ( $row->UID == $o['uid'] ) {
 					$o['attachmentID'] = $row->ID;
+					return $o;
 				}
-
-				return $o;
 			}
+
+			return $o;
 		}, $attachmentUids );
 
 
@@ -357,12 +358,12 @@ class Brizy_Admin_OptimizeImages {
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
-			array(
-				'id'          => 'settings',
-				'label'       => __( 'Settings', 'brizy' ),
-				'is_selected' => $selected_tab == 'settings',
-				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
-			),
+//			array(
+//				'id'          => 'settings',
+//				'label'       => __( 'Settings', 'brizy' ),
+//				'is_selected' => $selected_tab == 'settings',
+//				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
+//			),
 		);
 
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );
