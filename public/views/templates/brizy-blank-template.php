@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 	?>
 </head>
 <body <?php body_class(); ?>>
-
+<?php wp_body_open(); ?>
 <?php if ( is_category() || is_archive() || is_tag() || is_404() || is_search() || is_home() ) : ?>
 	<?php do_action( 'brizy_template_content' ); ?>
 <?php else: ?>
