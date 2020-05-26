@@ -433,6 +433,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( 'Placeholder string not provided.', 400 );
 			}
 
+			global $post;
+
 			$post = $this->getPostSample( $postId );
 
 			setup_postdata( $post );
