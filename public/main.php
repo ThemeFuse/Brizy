@@ -296,6 +296,12 @@ class Brizy_Public_Main {
 		$classes[] = 'brz-ed';
 		$classes[] = 'brz-ed--desktop';
 
+		if ( class_exists( 'WooCommerce' ) ) {
+			if ( $this->post->getWpPost()->post_type == Brizy_Admin_Templates::CP_TEMPLATE ) {
+				$classes[] = 'woocommerce';
+			}
+		}
+
 		return $classes;
 	}
 
