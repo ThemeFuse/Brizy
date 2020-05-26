@@ -61,9 +61,11 @@ import { Popover as PopoverDev } from "./dev/Popover";
 import { Tabs as TabsDev } from "./dev/Tabs";
 import { Textarea as TextareaDev } from "./dev/Textarea";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { Alert } from "./dev/Alert";
 
 export const types = {
   advancedSettings: AdvancedSettings,
+  "alert-dev": Alert,
   blockThumbnail: BlockThumbnail,
   button: Button,
   buttonTooltip: ButtonTooltip,
