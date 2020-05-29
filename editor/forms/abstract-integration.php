@@ -111,7 +111,10 @@ abstract class Brizy_Editor_Forms_AbstractIntegration extends Brizy_Admin_Serial
 
 			if ( $instance ) {
 				$instance->setId( $json_obj->id );
-				$instance->setCompleted( $json_obj->completed );
+
+				if ( isset( $json_obj->completed ) ) {
+                    $instance->setCompleted( $json_obj->completed );
+                }
 			}
 
 			add_action( 'wp_mail_failed', array( $instance, 'handleFailToSendMessage' ) );
