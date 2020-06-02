@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
@@ -27,7 +28,7 @@ const resizerRestrictions = {
   }
 };
 
-class EmbedCode extends EditorComponent {
+export default class EmbedCode extends EditorComponent {
   static get componentId() {
     return "EmbedCode";
   }
@@ -37,6 +38,7 @@ class EmbedCode extends EditorComponent {
   handleResizerChange = patch => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
+    const { isApproved } = Config.get("user");
     const { code } = v;
 
     const className = classnames(
@@ -48,17 +50,20 @@ class EmbedCode extends EditorComponent {
       )
     );
 
-    const content = !code ? (
-      <Placeholder icon="iframe" />
-    ) : (
-      <div
-        className={classnames({ "brz-blocked": IS_EDITOR })}
-        dangerouslySetInnerHTML={{ __html: code }}
-      />
-    );
+    const content =
+      code && (TARGET === "WP" ? true : isApproved) ? (
+        <div
+          className={classnames({ "brz-blocked": IS_EDITOR })}
+          dangerouslySetInnerHTML={{ __html: code }}
+        />
+      ) : (
+        <Placeholder icon="iframe" />
+      );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer
@@ -75,6 +80,14 @@ class EmbedCode extends EditorComponent {
       </Toolbar>
     );
   }
-}
 
-export default EmbedCode;
+  renderForView(v, vs, vd) {
+    if (TARGET === "WP") {
+      return this.renderForEdit(v, vs, vd);
+    } else {
+      const { isApproved } = Config.get("user");
+
+      return isApproved ? this.renderForEdit(v, vs, vd) : null;
+    }
+  }
+}

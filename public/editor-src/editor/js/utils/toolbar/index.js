@@ -196,9 +196,6 @@ export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 // Element Cloneable
 export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 
-// Element Embed
-export { toolbarElementEmbedCode } from "./toolbarElementEmbed";
-
 // Element Line
 export {
   toolbarElementLineBorderStyle,

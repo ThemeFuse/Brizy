@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_140Wp_Texts {
+class Brizy_Public_EditorBuild_144Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -630,6 +630,7 @@ class Brizy_Public_EditorBuild_140Wp_Texts {
 			"Title" => __("Title", "brizy"),
 			"Titles" => __("Titles", "brizy"),
 			"To Dashboard" => __("To Dashboard", "brizy"),
+			"To use this element you must %s" => __("To use this element you must %s", "brizy"),
 			"Toggle Menu" => __("Toggle Menu", "brizy"),
 			"Trash" => __("Trash", "brizy"),
 			"Travel" => __("Travel", "brizy"),
@@ -694,6 +695,7 @@ class Brizy_Public_EditorBuild_140Wp_Texts {
 			"ZoomInUp" => __("ZoomInUp", "brizy"),
 			"block-name" => __("block-name", "brizy"),
 			"component" => __("component", "brizy"),
+			"create & validate your account" => __("create & validate your account", "brizy"),
 			"here" => __("here", "brizy"),
 			"in your WordPress admin" => __("in your WordPress admin", "brizy"),
 			"is already editing project" => __("is already editing project", "brizy"),
@@ -703,7 +705,8 @@ class Brizy_Public_EditorBuild_140Wp_Texts {
 			"open an issue" => __("open an issue", "brizy"),
 			"or" => __("or", "brizy"),
 			"remove this block" => __("remove this block", "brizy"),
-			"required" => __("required", "brizy")
+			"required" => __("required", "brizy"),
+			"validate your account" => __("validate your account", "brizy")
 		));
 	}
 }

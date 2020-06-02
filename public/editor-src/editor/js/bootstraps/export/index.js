@@ -7,6 +7,8 @@ import { renderStatic } from "glamor/server";
 import cheerio from "cheerio";
 import deepMerge from "deepmerge";
 
+import Config from "visual/global/Config";
+
 import {
   parsePage,
   parseProject,
@@ -37,6 +39,7 @@ import addCustomCSS from "./transforms/addCustomCSS";
 import changeRichText from "./transforms/changeRichText";
 import changeRichTextDCColor from "./transforms/changeRichTextDCColor";
 import extractPopups from "./transforms/extractPopups";
+import preventAbuse from "./transforms/preventAbuse";
 
 import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
@@ -210,6 +213,13 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   addCustomCSS($pageHTML);
   changeRichText($pageHTML);
   extractPopups($pageHTML);
+
+  if (TARGET !== "WP") {
+    const { isApproved } = Config.get("user");
+    if (!isApproved) {
+      preventAbuse($pageHTML);
+    }
+  }
 
   return {
     head: $pageHTML("head").html(),

@@ -72,14 +72,15 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
-		Brizy_Admin_FormEntries::_init();
-		Brizy_Admin_Templates::_init();
-		Brizy_Admin_Blocks_Main::_init();
-		Brizy_Admin_Fonts_Main::_init();
-		Brizy_Admin_Svg_Main::_init();
-		Brizy_Admin_Popups_Main::_init();
-		Brizy_Admin_OptimizeImages::_init();
-
+        if ( Brizy_Editor::is_user_allowed() ) {
+            Brizy_Admin_FormEntries::_init();
+            Brizy_Admin_Templates::_init();
+            Brizy_Admin_Blocks_Main::_init();
+            Brizy_Admin_Fonts_Main::_init();
+            Brizy_Admin_Svg_Main::_init();
+            Brizy_Admin_Popups_Main::_init();
+            Brizy_Admin_OptimizeImages::_init();
+        }
 
 		$this->loadShortcodes();
 		$this->initializeAssetLoaders();
@@ -251,12 +252,14 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
-			new Brizy_Editor_RestExtend(  );
-			new Brizy_Editor_API( $post );
-			new Brizy_Editor_BlockScreenshotApi( $post );
-			new Brizy_Editor_Forms_Api( $post );
+            if ( Brizy_Editor::is_user_allowed() ) {
+                new Brizy_Editor_RestExtend();
+                new Brizy_Editor_API( $post );
+                new Brizy_Editor_BlockScreenshotApi( $post );
+                Brizy_Editor_Accounts_Api::_init();
+            }
 
-			Brizy_Editor_Accounts_Api::_init();
+            new Brizy_Editor_Forms_Api( $post );
 
 			// for other apis
 			do_action( 'brizy_register_api_methods', $user, $post );
