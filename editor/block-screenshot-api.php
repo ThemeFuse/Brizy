@@ -36,7 +36,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getRequestNonce() {
-		return self::nonce;
+        return $this->param( 'hash' );
 	}
 
 

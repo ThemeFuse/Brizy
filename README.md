@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.4.1<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.124<br>
+Stable tag: 1.0.125<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 1.0.125 - 2020-06-02 ###
+* Fix: Security fixes
 
 ### 1.0.124 - 2020-04-25 ###
 * New: Switched Nucleo icons for Font Awesome

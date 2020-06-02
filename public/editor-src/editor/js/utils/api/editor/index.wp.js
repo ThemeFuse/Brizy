@@ -108,14 +108,15 @@ export function updateProject(project, meta = {}) {
 }
 
 export function addProjectLockedBeacon() {
-  const { lockProject } = Config.get("wp").api;
+  const { hash, lockProject } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
   return request2(apiUrl, {
     method: "POST",
     body: new URLSearchParams({
       version,
-      action: lockProject
+      action: lockProject,
+      hash
     })
   })
     .then(r => r.json())
@@ -426,20 +427,20 @@ export function getAttachmentById(id) {
 export function createBlockScreenshot({ base64, blockType }) {
   const {
     page,
-    api: { createBlockScreenshot }
+    api: { hash, createBlockScreenshot }
   } = Config.get("wp");
   const version = Config.get("editorVersion");
   const attachment = base64.replace(/data:image\/.+;base64,/, "");
 
   return request2(apiUrl, {
     method: "POST",
-    credentials: "omit",
     body: new URLSearchParams({
       action: createBlockScreenshot,
       post: page,
       block_type: blockType,
       ibsf: attachment,
-      version
+      version,
+      hash
     })
   })
     .then(r => r.json())
@@ -455,21 +456,21 @@ export function createBlockScreenshot({ base64, blockType }) {
 export function updateBlockScreenshot({ id, base64, blockType }) {
   const {
     page,
-    api: { updateBlockScreenshot }
+    api: { hash, updateBlockScreenshot }
   } = Config.get("wp");
   const version = Config.get("editorVersion");
   const attachment = base64.replace(/data:image\/.+;base64,/, "");
 
   return request2(apiUrl, {
     method: "POST",
-    credentials: "omit",
     body: new URLSearchParams({
       action: updateBlockScreenshot,
       post: page,
       block_type: blockType,
       id,
       ibsf: attachment,
-      version
+      version,
+      hash
     })
   })
     .then(r => r.json())
@@ -487,7 +488,7 @@ export function updateBlockScreenshot({ id, base64, blockType }) {
 export function getDynamicContent({ placeholder, signal }) {
   const {
     page,
-    api: { placeholderContent }
+    api: { hash, placeholderContent }
   } = Config.get("wp");
   const version = Config.get("editorVersion");
 
@@ -497,7 +498,8 @@ export function getDynamicContent({ placeholder, signal }) {
       action: placeholderContent,
       version,
       post_id: page,
-      placeholder
+      placeholder,
+      hash
     }),
     signal
   })
@@ -535,14 +537,15 @@ export function getConditions() {
 
 // heartBeat
 export function sendHeartBeat() {
-  const { heartBeat } = Config.get("wp").api;
+  const { hash, heartBeat } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
   return request2(apiUrl, {
     method: "POST",
     body: new URLSearchParams({
       version,
-      action: heartBeat
+      action: heartBeat,
+      hash
     })
   })
     .then(r => r.json())
@@ -557,14 +560,15 @@ export function sendHeartBeat() {
 
 // take over
 export function sendHearBeatTakeOver() {
-  const { takeOver } = Config.get("wp").api;
+  const { hash, takeOver } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
   return request2(apiUrl, {
     method: "POST",
     body: new URLSearchParams({
       version,
-      action: takeOver
+      action: takeOver,
+      hash
     })
   })
     .then(r => r.json())

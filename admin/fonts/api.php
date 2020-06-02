@@ -46,7 +46,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	 * @return null
 	 */
 	protected function getRequestNonce() {
-		return self::nonce;
+        return $this->param( 'hash' );
 	}
 
 	protected function initializeApiActions() {
