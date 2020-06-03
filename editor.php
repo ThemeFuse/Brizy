@@ -366,7 +366,7 @@ class Brizy_Editor {
 			return false;
 		}
 
-		return is_admin() || is_super_admin();
+		return is_super_admin();
 	}
 
 	public static function is_subscriber() {
