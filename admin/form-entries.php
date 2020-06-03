@@ -27,17 +27,19 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
-		//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
-		//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
-		add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
+		if ( is_admin() && Brizy_Editor::is_administrator() ) {
+			add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
+			//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
+			//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
+			add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
 
-		add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
-		add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
-		add_action( 'manage_' . self::CP_FORM_ENTRY . '_posts_custom_column', array(
-			$this,
-			'manageCustomColumns'
-		), 10, 2 );
+			add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
+			add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
+			add_action( 'manage_' . self::CP_FORM_ENTRY . '_posts_custom_column', array(
+				$this,
+				'manageCustomColumns'
+			), 10, 2 );
+		}
 
 		$this->enableLog = get_option( self::OPTION_SUBMIT_LOG, true );
 
@@ -188,16 +190,15 @@ class Brizy_Admin_FormEntries {
 
 		$title = '';
 
-		foreach ( $fields as $i=>$field ) {
+		foreach ( $fields as $i => $field ) {
 			if ( strtolower( $field->type ) == 'email' ) {
 				$title = $field->value;
 			}
 
-			if($field->name=='g-recaptcha-response')
-            {
-                unset($fields[$i]);
-	            $fields = array_values($fields);
-            }
+			if ( $field->name == 'g-recaptcha-response' ) {
+				unset( $fields[ $i ] );
+				$fields = array_values( $fields );
+			}
 		}
 
 		$params = array(

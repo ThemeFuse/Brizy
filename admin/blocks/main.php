@@ -29,7 +29,11 @@ class Brizy_Admin_Blocks_Main {
 	 * BrizyPro_Admin_Popups constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
+
+		if ( Brizy_Editor::is_user_allowed() ) {
+			add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
+		}
+
 		add_filter( 'brizy_global_data', array( $this, 'populateGlobalData' ) );
 	}
 
@@ -127,7 +131,7 @@ class Brizy_Admin_Blocks_Main {
 				'labels'              => $labels,
 				'public'              => false,
 				'has_archive'         => false,
-				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' .__( 'global block.' ),
+				'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'global block.' ),
 				'publicly_queryable'  => false,
 				'show_ui'             => false,
 				'show_in_menu'        => false,
