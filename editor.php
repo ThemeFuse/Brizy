@@ -72,13 +72,14 @@ class Brizy_Editor {
 
 	public function wordpressInit() {
 
-        if ( Brizy_Editor::is_user_allowed() ) {
-            Brizy_Admin_FormEntries::_init();
-            Brizy_Admin_Templates::_init();
-            Brizy_Admin_Blocks_Main::_init();
-            Brizy_Admin_Fonts_Main::_init();
-            Brizy_Admin_Svg_Main::_init();
-            Brizy_Admin_Popups_Main::_init();
+		Brizy_Admin_Templates::_init();
+		Brizy_Admin_Popups_Main::_init();
+		Brizy_Admin_FormEntries::_init();
+		Brizy_Admin_Fonts_Main::_init();
+		Brizy_Admin_Blocks_Main::_init();
+
+		if ( Brizy_Editor::is_user_allowed() ) {
+			Brizy_Admin_Svg_Main::_init();
             Brizy_Admin_OptimizeImages::_init();
         }
 
@@ -366,7 +367,7 @@ class Brizy_Editor {
 			return false;
 		}
 
-		return is_admin() || is_super_admin();
+		return is_super_admin();
 	}
 
 	public static function is_subscriber() {

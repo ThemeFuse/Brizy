@@ -29,12 +29,15 @@ class Brizy_Admin_Fonts_Main {
 	 * BrizyPro_Admin_Popups constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'upload_mimes', array( $this, 'addFontTypes' ) );
-		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$handler    = new Brizy_Admin_Fonts_Handler( $urlBuilder, null );
+
+		if ( Brizy_Editor::is_user_allowed() ) {
+			add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
+			add_filter( 'upload_mimes', array( $this, 'addFontTypes' ) );
+			add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
+		}
 	}
 
 	public function initializeActions() {
