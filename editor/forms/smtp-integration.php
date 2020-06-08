@@ -118,7 +118,7 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 				$instance->setPassword( trim( $json_obj->password ) );
 			}
 			if ( isset( $json_obj->encryption ) ) {
-				$instance->setEncryption( (bool) $json_obj->encryption );
+				$instance->setEncryption( $json_obj->encryption );
 			} else {
 				$instance->setEncryption( true );
 			}
@@ -268,7 +268,7 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	 * @return Brizy_Editor_Forms_SmtpIntegration
 	 */
 	public function setEncryption( $encryption ) {
-		$this->encryption = (bool) $encryption;
+		$this->encryption = $encryption;
 
 		return $this;
 	}
