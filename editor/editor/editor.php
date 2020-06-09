@@ -87,7 +87,7 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
 		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template' ) );
-		$mode = $this->getMode( $parent_post_type );
+		$mode                = $this->getMode( $parent_post_type );
 
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
@@ -758,7 +758,9 @@ class Brizy_Editor_Editor_Editor {
 			'setProjectMeta'             => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 			'getGlobalBlockList'         => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 			'createGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+			'createGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCKS_ACTION,
 			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
+			'updateGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
 			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
 			'getRuleGroupList'           => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
 			'getLayoutByUid'             => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,

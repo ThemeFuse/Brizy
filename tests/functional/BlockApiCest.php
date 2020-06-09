@@ -294,6 +294,49 @@ class BlockApiCest {
 		$I->assertFalse( isset( $block->synchronizable ), 'Block should not contain property:  synchronizable' );
 	}
 
+	public function createGlobalBlocksTest( FunctionalTester $I ) {
+		$meta  = '{"_thumbnailSrc": "","_thumbnailWidth": 0}';
+		$media = '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}';
+
+
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'      => 'brizy-create-global-blocks',
+				'version'     => BRIZY_EDITOR_VERSION,
+				'dataVersion' => 1,
+			] ), [
+
+			'uid'      => [ 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso1', 'rvnmxwnzfehrukgcaepiaaucgfzaseyygfso2' ],
+			'data'     => [
+				'{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}',
+				'{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892714552}}'
+			],
+			'position' => [ '{"align": "top","top": 1,"bottom":2}', '{"align": "top","top": 1,"bottom":2}' ],
+			'rules'    => [ [], [] ],
+			'meta'     => [ $meta, $meta ],
+			'media'    => [ $media, $media ],
+			'status'   => [ 'draft', 'draft' ]
+		] );
+
+		$I->seeResponseCodeIsSuccessful();
+		$jsonResponse = $I->grabResponse();
+		$blocks       = json_decode( $jsonResponse );
+		foreach ( $blocks->data as $block ) {
+			$I->assertNotNull( $block->uid, 'Block should contain property: uid' );
+			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
+			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
+			$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
+			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+			$I->assertEquals( 'draft', $block->status, 'Block status should be draft' );
+			$I->assertEquals( $block->position->align, 'top', 'Block position should contain updated align property' );
+			$I->assertEquals( $block->meta, $meta, 'Block should contain the meta property and the correct value' );
+			$I->assertEquals( $block->position->top, 1, 'Block position should contain updated top property' );
+			$I->assertEquals( $block->position->bottom, 2, 'Block position should contain updated bottom property' );
+			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
+			$I->assertFalse( isset( $block->synchronized ), 'Block should not contain property:  synchronized' );
+			$I->assertFalse( isset( $block->synchronizable ), 'Block should not contain property:  synchronizable' );
+		}
+	}
+
 	/**
 	 * @param FunctionalTester $I
 	 */
@@ -368,6 +411,80 @@ class BlockApiCest {
 			'meta_key' => 'brizy-media',
 		] );
 	}
+
+	public function updateGlobalBlocksTest( FunctionalTester $I ) {
+
+		$uid         = 'sffbf00297';
+		$newPosition = [ 'top' => 1, 'bottom' => 2, 'align' => "bottom" ];
+
+		$newBlockData = '{"type":"Section","blockId":"Blank000Light","value":{"_styles":["section"],"items":[{"type":"SectionItem","value":{"_styles":["section-item"],"items":[{"type":"Wrapper","value":{"_styles":["wrapper","wrapper--richText"],"items":[{"type":"RichText","value":{"_styles":["richText"],"_id":"syjtlzsdrwrgnmwxpstedqobpsdfxmavczha"}}],"_id":"xkthoywyegkdidqznqjrkccydqiaycgawlty"}}],"_id":"avqjytdqwvbxwvezdfrayhrcutiggckqhdet"}}],"_id":"djopvkarfnjwvlvidjswzhfcpqhmvnahxvdj","_thumbnailSrc":"rvnmxwnzfehrukgcaepiaaucgfzaseyygfso","_thumbnailWidth":600,"_thumbnailHeight":70,"_thumbnailTime":1559892726684}}';
+
+		$blockId = $I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			'post_title'  => 'Global',
+			'post_name'   => 'Global',
+			'post_status' => 'draft',
+			'meta_input'  => [
+				'brizy'                       => serialize( [
+						"brizy-post" => [
+							'compiled_html'      => '',
+							'compiled_html_body' => null,
+							'compiled_html_head' => null,
+							'editor_version'     => null,
+							'compiler_version'   => null,
+							'plugin_version'     => null,
+							'editor_data'        => 'eyJ0eXBlIjoiU2VjdGlvbiIsImJsb2NrSWQiOiJCbGFuazAwMExpZ2h0IiwidmFsdWUiOnsiX3N0eWxlcyI6WyJzZWN0aW9uIl0sIml0ZW1zIjpbeyJ0eXBlIjoiU2VjdGlvbkl0ZW0iLCJ2YWx1ZSI6eyJfc3R5bGVzIjpbInNlY3Rpb24taXRlbSJdLCJpdGVtcyI6W10sIl9pZCI6ImFsYWF5c3dlcnNxa3d0cmhxdGJxdmxjY2lqY3BzYXByaGxtcyJ9fV0sIl9pZCI6InljZ3dsd295d3l1bnRlb2NscWRkdGNyY3FxenVjeGpydWNnZSIsIl90aHVtYm5haWxTcmMiOiJxd2N2d2xzanRmdGR2cHh5Y2xkdXhqbnRkd25pcXR1aGZmaHkiLCJfdGh1bWJuYWlsV2lkdGgiOjYwMCwiX3RodW1ibmFpbEhlaWdodCI6NzAsIl90aHVtYm5haWxUaW1lIjoxNTU5ODkxMDY0OTQzfX0=',
+							'brizy-use-brizy'    => true,
+							'rules'              => []
+						],
+					]
+				),
+				'brizy-position'              => serialize( [ 'top' => 0, 'bottom' => 1, 'align' => "top" ] ),
+				'brizy_post_uid'              => $uid,
+				'brizy-meta'                  => '{"_thumbnailSrc": "","_thumbnailWidth": 0}',
+				'brizy-post-editor-version'   => '1.0.101',
+				'brizy-post-compiler-version' => '1.0.101',
+				'brizy-need-compile'          => 0,
+				'brizy-rules'                 => '{}'
+			],
+		] );
+
+
+		$newMeta = '{"_thumbnailSrc": "1","_thumbnailWidth": "1"}';
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-update-global-blocks', 'version'=>BRIZY_EDITOR_VERSION ] ), [
+			'uid'         => [ $uid ],
+			'data'        => [ $newBlockData ],
+			'meta'        => [ $newMeta ],
+			'position'    => [ json_encode( $newPosition ) ],
+			'is_autosave' => [ 1 ],
+			'dataVersion' => [ 1 ],
+			'status'      => [ 'publish' ],
+		] );
+
+		$I->seeResponseCodeIsSuccessful();
+		$blocks = json_decode( $I->grabResponse() );
+
+		$blocks = $blocks->data;
+
+		foreach ( $blocks as $block ) {
+			$I->assertEquals( $block->uid, $uid, 'Block should contain valid uid' );
+			$I->assertEquals( $block->status, 'draft', 'Block should contain property:  status' );
+			$I->assertNotEquals( $block->data, $newBlockData, 'Block should contain updated data' );
+			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
+			$I->assertNotEquals( $block->position->align, $newPosition['align'], 'Block position should contain updated align property' );
+			$I->assertNotEquals( $block->position->top, $newPosition['top'], 'Block position should contain updated top property' );
+			$I->assertNotEquals( $block->meta, $newMeta, 'Block should contain updated meta property' );
+			$I->assertFalse( isset( $block->media ), 'Block should not contain property:  media' );
+			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
+
+			$I->seePostInDatabase( [ 'post_type' => 'revision', 'post_parent' => $blockId ] );
+			$I->dontSeePostMetaInDatabase( [
+				'post_id'  => $blockId,
+				'meta_key' => 'brizy-media',
+			] );
+		}
+	}
+
 
 	/**
 	 * @param FunctionalTester $I

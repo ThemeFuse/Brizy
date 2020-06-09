@@ -14,7 +14,8 @@
     "codeception/codeception": "^3.1.2",
     "codeception/remote-debug": "^0.3",
     "lucatume/wp-browser": "^2.2",
-    "squizlabs/php_codesniffer": "^3.0@dev"
+    "squizlabs/php_codesniffer": "^3.0@dev",
+    "gumlet/php-image-resize": "^1.6"
   },
   "require": {
     "twig/twig": "1.42.5",
