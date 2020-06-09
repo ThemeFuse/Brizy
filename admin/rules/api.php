@@ -606,7 +606,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			) : null,
 		);
 
-		if ( $context !== 'template-rules' && $templateType === 'single' ) {
+		if ( ($context !== 'template-rules' && $templateType === 'single') || $context == 'popup-rules' ) {
 
 			$list[] = array(
 				'title'      => 'Brizy Templates',
