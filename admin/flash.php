@@ -34,6 +34,7 @@ class Brizy_Admin_Flash {
 
 		//add_action( 'wp_loaded', array( $this, '_action_render_notices' ) );
 		add_action( 'admin_notices', array( $this, '_action_render_notices' ),100 );
+		add_action( 'network_admin_notices', array( $this, '_action_render_notices' ),100 );
 		add_action( 'shutdown', array( $this, '_action_store_notices' ) );
 
 		$this->load_notices();
