@@ -556,8 +556,10 @@ class Brizy_Admin_Templates
         }
 
         $compiled_page = self::getTemplate()->get_compiled_page();
+		$templateHead  = $compiled_page->get_head();
 
-        $head = apply_filters('brizy_content', $compiled_page->get_head(), Brizy_Editor_Project::get(), $post, 'head');
+        $templateHead = apply_filters( 'brizy_add_page_assets', $templateHead, self::getTemplate(), 'styles' );
+		$head         = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
         ?>
         <!-- BRIZY HEAD -->
         <?php echo $head; ?>
@@ -588,9 +590,12 @@ class Brizy_Admin_Templates
 
         $compiled_page = self::getTemplate()->get_compiled_page();
 
-        $content = apply_filters(
+        $content = $compiled_page->get_body();
+
+		$content = apply_filters( 'brizy_add_page_assets', $content, self::getTemplate(), 'scripts' );
+		$content = apply_filters(
             'brizy_content',
-            $compiled_page->get_body(),
+            $content,
             Brizy_Editor_Project::get(),
             $post,
             'body'

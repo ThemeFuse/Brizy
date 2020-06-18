@@ -8,6 +8,7 @@ class Brizy_Public_Main {
 	 * @var Brizy_Public_Main[]
 	 */
 	static $instance = null;
+	static $the_content_fitler_addded = false;
 
 	/**
 	 * @var Brizy_Editor_Post
@@ -94,6 +95,30 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 12000 );
 			$this->plugin_live_composer_fixes();
 		}
+
+		add_filter( 'brizy_add_page_assets', array( $this, 'includeBrizyAssets' ), 10, 3 );
+
+		$this->addTheContentFilters();
+	}
+
+	function includeBrizyAssets( $content, $post, $assetsType = 'styles' ) {
+
+		if ( ! ( $post instanceof Brizy_Editor_Post ) ) {
+			return $content;
+		}
+
+		$assets = $assetsType == 'styles' ? $post->getCompiledStyles() : $post->getCompiledScripts();
+
+		$content .= "\n\n";
+
+		foreach ( $assets as $asset ) {
+			if ( $asset['type'] == 'pro' && ! defined( 'BRIZY_PRO_VERSION' ) ) {
+				continue;
+			}
+			$content .= $asset['content'];
+		}
+
+		return $content;
 	}
 
 	/**
@@ -391,7 +416,9 @@ class Brizy_Public_Main {
 			$params['content'] = $head;
 		}
 
+		$params['content'] = apply_filters( 'brizy_add_page_assets', $params['content'], $this->post, 'styles' );
 		$params['content'] = apply_filters( 'brizy_content', $params['content'], Brizy_Editor_Project::get(), $this->post->getWpPost(), 'head' );
+
 
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
 		                     ->render( 'head-partial.html.twig', $params );
@@ -423,6 +450,7 @@ class Brizy_Public_Main {
 			$content       = $compiled_page->get_body();
 		}
 
+		$content = apply_filters( 'brizy_add_page_assets', $content, $this->post, 'scripts' );
 		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' );
 
 		return $content;
@@ -484,5 +512,42 @@ class Brizy_Public_Main {
 		// Remove button "Edit Template" from single when it is builded with brizy.
 		remove_filter( 'wp_footer', array( 'DSLC_EditorInterface', 'show_lc_button_on_front' ) );
 	}
+
+	public function addTheContentFilters() {
+
+		if ( self::$the_content_fitler_addded ) {
+			return;
+		}
+
+		if ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
+			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
+			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
+		} elseif ( $this->is_view_page() ) {
+			if ( ! post_password_required( $this->post->getWpPost() ) ) {
+				add_filter( 'the_content', array( $this, 'insert_page_content' ) );
+			}
+		}
+
+		self::$the_content_fitler_addded = true;
+	}
+
+	public function removeTheContentFilters() {
+
+		if ( ! self::$the_content_fitler_addded ) {
+			return;
+		}
+
+		if ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
+			remove_filter( 'the_content', array( $this, '_filter_the_content' ) );
+			remove_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
+		} elseif ( $this->is_view_page() ) {
+			if ( ! post_password_required( $this->post->getWpPost() ) ) {
+				remove_filter( 'the_content', array( $this, 'insert_page_content' ) );
+			}
+		}
+
+		self::$the_content_fitler_addded = false;
+	}
+
 
 }
