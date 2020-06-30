@@ -32,6 +32,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_REMOVE_FEATURED_IMAGE = '_remove_featured_image';
 	const AJAX_TIMESTAMP = '_timestamp';
 	const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
+	const AJAX_GET_USERS = '_get_users';
 
 
 	/**
@@ -88,6 +89,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
 		add_action( $p . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
 		add_action( $p . 'nopriv_' . Brizy_Editor::prefix( self::AJAX_TIMESTAMP ), array( $this, 'timestamp' ) );
+        add_action( $p . self::AJAX_GET_USERS, array( $this, 'getUsers' ) );
 
 	}
 
@@ -257,6 +259,29 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
+	}
+
+	public function getUsers() {
+
+        $this->verifyNonce( self::nonce );
+
+        $args    = [];
+        $search  = $this->param( 'search' );
+        $include = $this->param( 'include' );
+
+        $args['include'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+
+        if ( ! empty( $search ) ) {
+            $args['search'] = $search;
+        }
+
+        if ( is_array( $include ) && ! empty( $include ) ) {
+            $args['include'] = $include;
+        }
+
+        $users = get_users( $args );
+
+        $this->success( $users );
 	}
 
 	/**
