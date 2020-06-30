@@ -269,7 +269,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
         $search  = $this->param( 'search' );
         $include = $this->param( 'include' );
 
-        $args['include'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+        $args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
 
         if ( ! empty( $search ) ) {
             $args['search'] = $search;
