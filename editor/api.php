@@ -273,6 +273,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
         if ( ! empty( $search ) ) {
             $args['search'] = $search;
+            $args['search_columns'] = [ 'display_name' ];
         }
 
         if ( is_array( $include ) && ! empty( $include ) ) {
