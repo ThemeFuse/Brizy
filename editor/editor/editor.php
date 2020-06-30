@@ -443,6 +443,7 @@ class Brizy_Editor_Editor_Editor {
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
 				'attrTitle'     => $item->post_excerpt,
+				'current'        => $item->object_id == get_queried_object_id(),
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
 				'classes'       => get_post_meta( $item->ID, '_menu_item_classes', true ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
