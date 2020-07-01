@@ -566,7 +566,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 
-			foreach ( get_object_vars( $dataObject ) as $uid => $position ) {
+			foreach ( get_object_vars( $dataObject ) as $uid => $block ) {
+
+				if ( ! ( isset( $block->position ) && isset( $block->dataVersion ) ) ) {
+					throw  new Exception();
+				}
+
+				$position    = $block->position;
+				$dataVersion = $block->dataVersion;
 
 				if ( ! ( isset( $position->top ) && isset( $position->bottom ) && isset( $position->align ) ) ) {
 					throw  new Exception();
@@ -578,6 +585,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 				$block = $bockManager->getEntity( $uid );
+				$block->setDataVersion( $dataVersion );
 
 				if ( ! $block ) {
 					throw  new Exception();
@@ -588,7 +596,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				if ( $this->param( 'is_autosave' ) == 1 ) {
 					$block->save( 1 );
 				} else {
-					$block->saveStorage();
+					$block->save();
 				}
 
 				do_action( 'brizy_global_block_updated', $block );

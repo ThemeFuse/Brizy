@@ -589,23 +589,25 @@ class BlockApiCest {
 	public function updateGlobalBlockPositionsTest( FunctionalTester $I ) {
 
 		$blocks = [
-			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 0, 'bottom' => 1, 'align' => "top" ],
-			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]
+			'gffbf00297b0b4e9ee27af32a7b79c3330' => ['dataVersion'=>1, 'position'=>[ 'top' => 0, 'bottom' => 1, 'align' => "top" ]],
+			'gffbf00297b0b4e9ee27af32a7b79c3331' => ['dataVersion'=>1, 'position'=>[ 'top' => 0, 'bottom' => 1, 'align' => "bottom" ]]
 		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'      => 'brizy-update-block-positions',
 				'version'     => BRIZY_EDITOR_VERSION,
-				'is_autosave' => 0
+				'is_autosave' => 0,
+				'hash'=> wp_create_nonce(Brizy_Admin_Blocks_Api::nonce)
 			] ),
 			json_encode( (object) $blocks )
 		);
 		$I->seeResponseCodeIsSuccessful();
 
-		$I->dontSeePostInDatabase( [ 'post_type' => 'revision' ] );
+		$I->seePostInDatabase( [ 'post_type' => 'revision' ] );
 
 		$I->sendAjaxGetRequest( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy-get-global-blocks',
 				'version' => BRIZY_EDITOR_VERSION,
+				'hash'=> wp_create_nonce(Brizy_Admin_Blocks_Api::nonce)
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -617,9 +619,9 @@ class BlockApiCest {
 			$I->assertNotNull( $block->status, 'Block should contain property:  status' );
 			$I->assertNotNull( $block->data, 'Block should contain property:  data' );
 			$I->assertIsObject( $block->position, 'Block should contain property:  position and must be object' );
-			$I->assertEquals( $block->position->align, $blocks[ $block->uid ]['align'], 'Block position should contain updated align property' );
-			$I->assertEquals( $block->position->top, $blocks[ $block->uid ]['top'], 'Block position should contain updated top property' );
-			$I->assertEquals( $block->position->bottom, $blocks[ $block->uid ]['bottom'], 'Block position should contain updated bottom property' );
+			$I->assertEquals( $block->position->align, $blocks[ $block->uid ]['position']['align'], 'Block position should contain updated align property' );
+			$I->assertEquals( $block->position->top, $blocks[ $block->uid ]['position']['top'], 'Block position should contain updated top property' );
+			$I->assertEquals( $block->position->bottom, $blocks[ $block->uid ]['position']['bottom'], 'Block position should contain updated bottom property' );
 			$I->assertIsArray( $block->rules, 'Block should contain property:  rules and must be array' );
 		}
 	}
@@ -629,8 +631,8 @@ class BlockApiCest {
 
 		$oldPosition = [ 'top' => 0, 'bottom' => 1, 'align' => "top" ];
 		$blocks      = [
-			'gffbf00297b0b4e9ee27af32a7b79c3330' => [ 'top' => 10, 'bottom' => 20, 'align' => "left" ],
-			'gffbf00297b0b4e9ee27af32a7b79c3331' => [ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]
+			'gffbf00297b0b4e9ee27af32a7b79c3330' => ['dataVersion'=>1, 'position'=>[ 'top' => 10, 'bottom' => 20, 'align' => "left" ]],
+			'gffbf00297b0b4e9ee27af32a7b79c3331' => ['dataVersion'=>1, 'position'=>[ 'top' => 10, 'bottom' => 20, 'align' => "bottom" ]]
 		];
 		$I->sendPOST( '/wp-admin/admin-ajax.php?' . build_query( [
 				'action'      => 'brizy-update-block-positions',
