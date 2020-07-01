@@ -443,9 +443,12 @@ class Brizy_Editor_Editor_Editor {
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
 				'attrTitle'     => $item->post_excerpt,
-				'current'       => count( array_intersect( [ 'current-menu-parent','current-menu-item' ], $item->classes ) ) > 0,
+				'current'       => count( array_intersect( [
+						'current-menu-parent',
+						'current-menu-item'
+					], $item->classes ) ) > 0,
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
-				'classes'       => array_filter( $item->classes ),
+				'classes'       => array_values( array_filter( $item->classes ) ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
 
