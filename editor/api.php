@@ -81,6 +81,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+		add_action( $p . self::AJAX_GET_USERS, array( $this, 'get_users' ) );
 		add_action( $p . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 		add_action( $p . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 		add_action( $p . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
@@ -89,7 +90,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
 		add_action( $p . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
 		add_action( $p . 'nopriv_' . Brizy_Editor::prefix( self::AJAX_TIMESTAMP ), array( $this, 'timestamp' ) );
-        add_action( $p . self::AJAX_GET_USERS, array( $this, 'getUsers' ) );
 
 	}
 
@@ -259,30 +259,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
 		}
-	}
-
-	public function getUsers() {
-
-        $this->verifyNonce( self::nonce );
-
-        $args    = [];
-        $search  = $this->param( 'search' );
-        $include = $this->param( 'include' );
-
-        $args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
-
-        if ( ! empty( $search ) ) {
-	        $args['search'] = '*' . $search . '*';
-            $args['search_columns'] = [ 'display_name' ];
-        }
-
-        if ( is_array( $include ) && ! empty( $include ) ) {
-            $args['include'] = $include;
-        }
-
-        $users = get_users( $args );
-
-        $this->success( $users );
 	}
 
 	/**
@@ -664,23 +640,61 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	/**
-	 * Used in woocomerce producs shortcode in editor
+	 * Used in woocomerce producs, block conditions, posts shortcode
 	 */
 	public function get_terms() {
 
-		try {
-			$this->verifyNonce( self::nonce );
+		$this->verifyNonce( self::nonce );
 
-			$taxonomy = $this->param( 'taxonomy' );
+		$args = [];
 
-			$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
-
-			$this->success( array_values( $terms ) );
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
-			$this->error( 500, $e->getMessage() );
+		foreach ( [ 'taxonomy', 'search', 'include' ] as $field ) {
+			$value = $this->param( $field );
+			if ( ! empty( $value ) ) {
+				$args[ $field ] = $value;
+			}
 		}
+
+		$terms = get_terms( $args );
+
+		if ( is_wp_error( $terms ) ) {
+			$this->error( 200, $terms );
+		}
+
+		$out = [];
+		foreach ( $terms as $term ) {
+			$out[] = [
+				'ID'       => $term->term_id,
+				'name'     => $term->name,
+				'taxonomy' => $term->taxonomy,
+			];
+		}
+
+		$this->success( $out );
+	}
+
+	public function get_users() {
+
+		$this->verifyNonce( self::nonce );
+
+		$args    = [];
+		$search  = $this->param( 'search' );
+		$include = $this->param( 'include' );
+
+		$args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+
+		if ( ! empty( $search ) ) {
+			$args['search'] = '*' . $search . '*';
+			$args['search_columns'] = [ 'display_name' ];
+		}
+
+		if ( is_array( $include ) && ! empty( $include ) ) {
+			$args['include'] = $include;
+		}
+
+		$users = get_users( $args );
+
+		$this->success( $users );
 	}
 
 	public function download_media() {
