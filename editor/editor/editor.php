@@ -87,7 +87,7 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
 		$change_template_url = set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template' ) );
-		$mode = $this->getMode( $parent_post_type );
+		$mode                = $this->getMode( $parent_post_type );
 
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
@@ -397,7 +397,7 @@ class Brizy_Editor_Editor_Editor {
 			$amenu = (object) array_merge( $amenu, get_object_vars( is_object( $custom_menu_data ) ? $custom_menu_data : (object) array() ) );
 
 			$menu_items = wp_get_nav_menu_items( $menu->term_id );
-
+			_wp_menu_item_classes_by_context( $menu_items );
 			$menu_items = $this->get_menu_tree( $menu_items );
 
 			if ( count( $menu_items ) > 0 ) {
@@ -410,6 +410,7 @@ class Brizy_Editor_Editor_Editor {
 		return $menu_data;
 	}
 
+
 	/**
 	 * @param $items
 	 * @param int $parent
@@ -418,7 +419,6 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private function get_menu_tree( $items, $parent = 0 ) {
 		$result_items = array();
-
 		foreach ( $items as $item ) {
 			if ( (int) $item->menu_item_parent !== $parent ) {
 				continue;
@@ -443,9 +443,9 @@ class Brizy_Editor_Editor_Editor {
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
 				'attrTitle'     => $item->post_excerpt,
-				'current'        => $item->object_id == get_queried_object_id(),
+				'current'       => count( array_intersect( [ 'current-menu-parent','current-menu-item' ], $item->classes ) ) > 0,
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
-				'classes'       => get_post_meta( $item->ID, '_menu_item_classes', true ),
+				'classes'       => array_filter( $item->classes ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
 
