@@ -16,14 +16,10 @@ class TextareaOptionType extends React.Component {
   };
 
   onChangeDebounced = _.debounce(value => {
-    console.log("textarea debounce");
-
     this.props.onChange(value);
   }, 1000);
 
   handleChance = e => {
-    console.log("textarea handleChange");
-
     this.onChangeDebounced(e.target.value);
   };
 

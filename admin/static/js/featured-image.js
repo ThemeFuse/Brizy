@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
 	                        }, [
                             el('img', {
                                 id: 'featured-image-el',
-                                src: origianalProps.media.guid.raw,
+                                src: origianalProps.media.source_url,
                                 width: "100%",
                                 onClick: clickAndMouseMoveHandler,
                                 onMouseMove: clickAndMouseMoveHandler,

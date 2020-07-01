@@ -12,8 +12,7 @@ const apiKeys = [
              <p class="brz-p"><span class="brz-span">me@email.com,</span> <span class="brz-span">hi@email.com</span></p>`
   },
   { name: "subject", title: t("Subject") },
-  { name: "fromName", title: t("From Name") },
-  { name: "replyTo", title: t("Reply-To") }
+  { name: "fromName", title: t("From Name") }
 ];
 
 type Props = {

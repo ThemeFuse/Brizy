@@ -429,7 +429,7 @@ class Brizy_Editor_Editor_Editor
             );
 
             $menu_items = wp_get_nav_menu_items($menu->term_id);
-
+			_wp_menu_item_classes_by_context( $menu_items );
             $menu_items = $this->get_menu_tree($menu_items);
 
             if (count($menu_items) > 0) {
@@ -476,8 +476,12 @@ class Brizy_Editor_Editor_Editor
                 'description'   => $item->post_content,
                 'position'      => $item->menu_order,
                 'attrTitle'     => $item->post_excerpt,
-                'target'        => get_post_meta($item->ID, '_menu_item_target', true),
-                'classes'       => get_post_meta($item->ID, '_menu_item_classes', true),
+                'current'       => count( array_intersect( [
+						'current-menu-parent',
+						'current-menu-item'
+					], $item->classes ) ) > 0,
+				'target'        => get_post_meta($item->ID, '_menu_item_target', true),
+                'classes'       => array_values( array_filter($item->classes)),
                 'xfn'           => get_post_meta($item->ID, '_menu_item_xfn', true),
             );
 

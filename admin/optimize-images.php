@@ -64,9 +64,9 @@ class Brizy_Admin_OptimizeImages {
 			case 'general':
 				echo $this->get_general_tab( $context );
 				break;
-			case 'settings':
-				echo $this->get_settings_tab( $context );
-				break;
+//			case 'settings':
+//				echo $this->get_settings_tab( $context );
+//				break;
 
 		}
 	}
@@ -206,17 +206,17 @@ class Brizy_Admin_OptimizeImages {
 		}
 	}
 
-	private function get_settings_tab( $context ) {
-		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-		$context['submit_label'] = __( 'Save' );
-		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
-		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
-			'API_KEY' => '',
-			"lossy"   => 1
-		);
-
-		return $this->twig->render( 'optimizer-settings.html.twig', $context );
-	}
+//	private function get_settings_tab( $context ) {
+//		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+//		$context['submit_label'] = __( 'Save' );
+//		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
+//		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
+//			'API_KEY' => '',
+//			"lossy"   => 1
+//		);
+//
+//		return $this->twig->render( 'optimizer-settings.html.twig', $context );
+//	}
 
 	/**
 	 * @param $content
@@ -244,9 +244,10 @@ class Brizy_Admin_OptimizeImages {
 		$time           = time();
 		$t              = null;
 		$attachmentUids = array();
-		foreach ( $matches[0] as $i => $url ) {
+		$uniqueUrls = array_unique($matches[0]);
+		foreach ( $uniqueUrls as $i => $url ) {
 
-			$parsed_url = parse_url( html_entity_decode( $matches[0][ $i ] ) );
+			$parsed_url = parse_url( html_entity_decode( $url ) );
 
 			if ( ! isset( $parsed_url['query'] ) ) {
 				continue;
@@ -264,6 +265,7 @@ class Brizy_Admin_OptimizeImages {
 			$attachmentUids[] = array(
 				'url'        => $url,
 				'parsed_url' => $parsed_url,
+				'parsed_query' => $params,
 				'uid'        => $mediaUid,
 				'uidQuery'   => "'{$mediaUid}'"
 			);
@@ -291,12 +293,13 @@ class Brizy_Admin_OptimizeImages {
 
 		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
 			foreach ( $attachmentIds as $row ) {
-				if ( $row->UID === $o['uid'] ) {
-					$o['ID'] = $row->ID;
+				if ( $row->UID == $o['uid'] ) {
+					$o['attachmentID'] = $row->ID;
+					return $o;
 				}
-
-				return $o;
 			}
+
+			return $o;
 		}, $attachmentUids );
 
 
@@ -304,17 +307,14 @@ class Brizy_Admin_OptimizeImages {
 
 			$parsed_url = $uidRes['parsed_url'];
 
-			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['ID'] ) ) {
+			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['attachmentID'] ) ) {
 				continue;
 			}
 
-			parse_str( $parsed_url['query'], $params );
+			$params = $uidRes['parsed_query'];
 
-			if ( ! isset( $params[ $endpoint ] ) ) {
-				continue;
-			}
 
-			$media_url   = get_attached_file( $uidRes['ID'] );
+			$media_url   = get_attached_file( $uidRes['attachmentID'] );
 			$brizy_media = basename( $media_url );
 
 			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params[ Brizy_Editor::prefix( '_post' ) ], $params[ Brizy_Editor::prefix( '_crop' ) ], $brizy_media );
@@ -358,12 +358,12 @@ class Brizy_Admin_OptimizeImages {
 				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
 				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
 			),
-			array(
-				'id'          => 'settings',
-				'label'       => __( 'Settings', 'brizy' ),
-				'is_selected' => $selected_tab == 'settings',
-				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
-			),
+//			array(
+//				'id'          => 'settings',
+//				'label'       => __( 'Settings', 'brizy' ),
+//				'is_selected' => $selected_tab == 'settings',
+//				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
+//			),
 		);
 
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );

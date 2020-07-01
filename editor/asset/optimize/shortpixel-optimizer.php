@@ -32,6 +32,12 @@ class  Brizy_Editor_Asset_Optimize_ShortpixelOptimizer implements Brizy_Editor_A
 
 	public function validateConfig() {
 
+		return false;
+
+		if ( $this->apiKey == '' || is_null( $this->apiKey ) ) {
+			return false;
+		}
+
 		$logo_path = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/" );
 		$source    = $logo_path . "brizy.png";
 
@@ -52,6 +58,11 @@ class  Brizy_Editor_Asset_Optimize_ShortpixelOptimizer implements Brizy_Editor_A
 	 * @return mixed
 	 */
 	public function optimize( $sourcePath, $targetPath ) {
+
+		if ( $this->apiKey == '' || is_null( $this->apiKey ) ) {
+			return false;
+		}
+
 		ShortPixel\setKey( $this->apiKey );
 		$result = ShortPixel\fromFile( $sourcePath )->optimize( $this->lossy )->wait( 100 )->toFiles( dirname( $targetPath ) );
 

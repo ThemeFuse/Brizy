@@ -27,18 +27,20 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
-		//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
-		//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
-		add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
-		add_action( 'admin_init', [ $this, 'export_leads' ] );
+		if ( is_admin() && Brizy_Editor::is_administrator() ) {
+			add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
+			//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
+			//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
+			add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
+			add_action( 'admin_init', [ $this, 'export_leads' ] );
 
-		add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
-		add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
-		add_action( 'manage_' . self::CP_FORM_ENTRY . '_posts_custom_column', array(
-			$this,
-			'manageCustomColumns'
-		), 10, 2 );
+			add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
+			add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
+			add_action( 'manage_' . self::CP_FORM_ENTRY . '_posts_custom_column', array(
+				$this,
+				'manageCustomColumns'
+			), 10, 2 );
+		}
 
 		$this->enableLog = get_option( self::OPTION_SUBMIT_LOG, true );
 
@@ -71,12 +73,12 @@ class Brizy_Admin_FormEntries {
 
 			// We use html_entity_decode the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters like this ud83dude00.
-            if ( isset( $data->formData ) ) {
-	            foreach ( $data->formData as $i => $field ) {
-		            $data->formData[ $i ]->name = html_entity_decode( $field->name );
-		            $data->formData[ $i ]->value = html_entity_decode( $field->value );
-	            }
-            }
+			if ( isset( $data->formData ) ) {
+				foreach ( $data->formData as $i => $field ) {
+					$data->formData[ $i ]->name  = html_entity_decode( $field->name );
+					$data->formData[ $i ]->value = html_entity_decode( $field->value );
+				}
+			}
 
 			echo Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/views" ) )
 			                     ->render( 'form-data.html.twig', array( 'data' => $data ) );
@@ -179,7 +181,9 @@ class Brizy_Admin_FormEntries {
 
 		if ( self::CP_FORM_ENTRY == $screen->post_type ) {
 
-            $disable = get_posts( [ 'post_type' => self::CP_FORM_ENTRY, 'posts_per_page' => 1 ] ) ? '' : ' brz-leads-export-disable';
+			$disable = get_posts( [ 'post_type'      => self::CP_FORM_ENTRY,
+			                        'posts_per_page' => 1
+			] ) ? '' : ' brz-leads-export-disable';
 			?>
             <style>
                 .subsubsub {
@@ -187,12 +191,13 @@ class Brizy_Admin_FormEntries {
                 }
             </style>
             <script type="text/javascript">
-				jQuery( document ).ready( function ( $ ) {
-					$( $( ".wrap h1" )[0] ).append( $( '#brz-leads-export-tpl-buttons' ).html() );
-				} );
+                jQuery(document).ready(function ($) {
+                    $($(".wrap h1")[0]).append($('#brz-leads-export-tpl-buttons').html());
+                });
             </script>
             <template id="brz-leads-export-tpl-buttons">
-                <a class="brz-leads-export add-new-h2<?php echo $disable; ?>" href="<?php echo admin_url( 'edit.php?post_type=' . self::CP_FORM_ENTRY . '&brizy-export-leads=' . wp_create_nonce( 'brizy-admin-export-leads' )  ); ?>">
+                <a class="brz-leads-export add-new-h2<?php echo $disable; ?>"
+                   href="<?php echo admin_url( 'edit.php?post_type=' . self::CP_FORM_ENTRY . '&brizy-export-leads=' . wp_create_nonce( 'brizy-admin-export-leads' ) ); ?>">
 					<?php esc_html_e( 'Export to .csv', 'brizy' ); ?>
                 </a>
             </template>
@@ -207,7 +212,7 @@ class Brizy_Admin_FormEntries {
 			return;
 		}
 
-		$leads = get_posts( [ 'post_type' => self::CP_FORM_ENTRY, 'posts_per_page' => -1 ] );
+		$leads = get_posts( [ 'post_type' => self::CP_FORM_ENTRY, 'posts_per_page' => - 1 ] );
 
 		if ( ! $leads ) {
 			return;
@@ -240,7 +245,7 @@ class Brizy_Admin_FormEntries {
 		header( 'Pragma: no-cache' );
 		header( 'Expires: 0' );
 
-		$fp   = fopen( 'php://output', 'wb' );
+		$fp = fopen( 'php://output', 'wb' );
 		fputcsv( $fp, $cols );
 
 		$cols  = array_flip( $cols );
@@ -248,7 +253,7 @@ class Brizy_Admin_FormEntries {
 
 		foreach ( $data as $lines ) {
 
-			$val = array_fill( 0, $range, '');
+			$val = array_fill( 0, $range, '' );
 
 			foreach ( $lines as $line ) {
 				$val[ $cols[ $line['label'] ] ] = $line['value'];
@@ -272,28 +277,29 @@ class Brizy_Admin_FormEntries {
 
 		$title = '';
 
-		foreach ( $fields as $i=>$field ) {
+		foreach ( $fields as $i => $field ) {
 			if ( strtolower( $field->type ) == 'email' ) {
 				$title = $field->value;
 			}
 
-			if($field->name=='g-recaptcha-response')
-            {
-                unset($fields[$i]);
-	            $fields = array_values($fields);
-            }
+			if ( $field->name == 'g-recaptcha-response' ) {
+				unset( $fields[ $i ] );
+				$fields = array_values( $fields );
+			}
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters.
-			$fields[$i]->name = htmlentities( $field->name );
-			$fields[$i]->value = htmlentities( $field->value );
+			$fields[ $i ]->name  = htmlentities( $field->name );
+			$fields[ $i ]->value = htmlentities( $field->value );
 		}
 
 		$params = array(
 			'post_title'   => $title,
 			'post_type'    => self::CP_FORM_ENTRY,
 			'post_status'  => 'publish',
-			'post_content' => json_encode( array( 'formId' => $form->getId(), 'formData' => $fields ), JSON_UNESCAPED_UNICODE  )
+			'post_content' => json_encode( array( 'formId'   => $form->getId(),
+			                                      'formData' => $fields
+			), JSON_UNESCAPED_UNICODE )
 		);
 
 		wp_insert_post( $params );

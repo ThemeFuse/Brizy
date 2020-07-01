@@ -92,7 +92,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getRequestNonce() {
-		return self::nonce;
+        return $this->param( 'hash' );
 	}
 
 	public function lock_project() {
@@ -432,6 +432,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			if ( ! $placeholders ) {
 				throw new Exception( 'Placeholder string not provided.', 400 );
 			}
+
+			global $post;
 
 			$post = $this->getPostSample( $postId );
 

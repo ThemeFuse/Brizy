@@ -41,7 +41,6 @@ class Brizy_Admin_Popups_Main {
 
 	static public function registerCustomPosts() {
 
-
 		$labels = array(
 			'name'               => _x( 'Popups', 'post type general name' ),
 			'singular_name'      => _x( 'Popup', 'post type singular name' ),

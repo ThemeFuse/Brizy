@@ -1,9 +1,10 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarElementEmbedCode } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { printf } from "visual/utils/string";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device });
@@ -12,6 +13,31 @@ export function getItems({ v, device }) {
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
+
+  const { isGuest, isApproved } = Config.get("user");
+  const { accountCreate, accountApprove } = Config.get("urls");
+  let accountApprovalHTML = "";
+
+  if (TARGET !== "WP" && !isApproved) {
+    const linkHref = isGuest ? accountCreate : accountApprove;
+    const linkText = isGuest
+      ? t("create & validate your account")
+      : t("validate your account");
+    const paragraphText = printf(
+      t("To use this element you must %s"),
+      `<a class="brz-a" href="${linkHref}" target="_blank">
+        ${linkText}
+      </a>`
+    );
+
+    accountApprovalHTML = `
+      <div style="color: white; text-align: center;">
+        <p class="brz-p">
+          ${paragraphText}
+        </p>
+      </div>
+    `;
+  }
 
   return [
     {
@@ -23,13 +49,35 @@ export function getItems({ v, device }) {
       roles: ["admin"],
       devices: "desktop",
       position: 90,
+      disabled: TARGET === "WP" ? false : !isApproved,
       options: [
-        toolbarElementEmbedCode({
-          v,
-          device,
+        {
+          id: "code",
+          type: "textarea",
           devices: "desktop",
-          state: "normal"
-        })
+          placeholder: t("Paste your code here..."),
+          value: v.code
+        }
+      ]
+    },
+    {
+      id: "popoverCode2",
+      type: "popover",
+      icon: "nc-iframe",
+      title: t("Embed"),
+      roles: ["admin"],
+      devices: "desktop",
+      position: 90,
+      disabled: TARGET === "WP" ? true : isApproved,
+      options: [
+        {
+          id: "approveAccount",
+          type: "alert-dev",
+          devices: "desktop",
+          config: {
+            html: accountApprovalHTML
+          }
+        }
       ]
     },
     {
