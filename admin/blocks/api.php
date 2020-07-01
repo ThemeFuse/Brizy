@@ -284,7 +284,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionUpdateGlobalBlocks() {
-		$this->verifyNonce( self::nonce );
+		//$this->verifyNonce( self::nonce );
 		try {
 
 			foreach ( $this->param( 'uid' ) as $i => $uid ) {
@@ -293,9 +293,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$this->error( '400', 'Invalid uid' );
 				}
 
-				if ( ! $this->param( 'data' )[ $i ] ) {
-					$this->error( '400', 'Invalid data' );
-				}
+//				if ( ! $this->param( 'data' )[ $i ] ) {
+//					$this->error( '400', 'Invalid data' );
+//				}
 
 				if ( ! $this->param( 'meta' )[ $i ] ) {
 					$this->error( 400, 'Invalid meta data' );
@@ -328,7 +328,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				 * @var Brizy_Editor_Block $block ;
 				 */
 				$block->setMeta( stripslashes( $this->param( 'meta' )[ $i ] ) );
-				$block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
+
+				if(isset($this->param( 'data' )[ $i ]))
+				{
+					$block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
+				}
 
 				if ( (int) $this->param( 'is_autosave' )[ $i ] ) {
 					$block->save( 1 );

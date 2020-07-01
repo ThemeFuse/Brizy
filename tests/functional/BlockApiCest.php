@@ -453,7 +453,7 @@ class BlockApiCest {
 		$newMeta = '{"_thumbnailSrc": "1","_thumbnailWidth": "1"}';
 		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [ 'action' => 'brizy-update-global-blocks', 'version'=>BRIZY_EDITOR_VERSION ] ), [
 			'uid'         => [ $uid ],
-			'data'        => [ $newBlockData ],
+			//'data'        => [ $newBlockData ],
 			'meta'        => [ $newMeta ],
 			'position'    => [ json_encode( $newPosition ) ],
 			'is_autosave' => [ 1 ],
