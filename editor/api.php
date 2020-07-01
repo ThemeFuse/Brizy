@@ -33,6 +33,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_TIMESTAMP = '_timestamp';
 	const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
 	const AJAX_GET_USERS = '_get_users';
+	const AJAX_GET_TERMS_BY = '_get_terms_by';
 
 
 	/**
@@ -82,6 +83,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
 		add_action( $p . self::AJAX_GET_USERS, array( $this, 'get_users' ) );
+		add_action( $p . self::AJAX_GET_TERMS_BY, array( $this, 'get_terms_by' ) );
 		add_action( $p . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 		add_action( $p . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 		add_action( $p . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
@@ -640,9 +642,29 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	/**
-	 * Used in woocomerce producs, block conditions, posts shortcode
+	 * Used in woocomerce producs, block conditions
 	 */
 	public function get_terms() {
+
+		try {
+			$this->verifyNonce( self::nonce );
+
+			$taxonomy = $this->param( 'taxonomy' );
+
+			$terms = (array) get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+
+			$this->success( array_values( $terms ) );
+
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+			$this->error( 500, $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Used in posts filter element
+	 */
+	public function get_terms_by() {
 
 		$this->verifyNonce( self::nonce );
 
@@ -664,13 +686,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$out = [];
 		foreach ( $terms as $term ) {
 			$out[] = [
-				'ID'       => $term->term_id,
+				'term_id'  => $term->term_id,
 				'name'     => $term->name,
 				'taxonomy' => $term->taxonomy,
 			];
 		}
 
-		$this->success( $out );
+		$this->success( $terms );
 	}
 
 	public function get_users() {
