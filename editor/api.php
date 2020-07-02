@@ -692,7 +692,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			];
 		}
 
-		$this->success( $terms );
+		$this->success( $out );
 	}
 
 	public function get_users() {
