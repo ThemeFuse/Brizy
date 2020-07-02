@@ -329,7 +329,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				 */
 				$block->setMeta( stripslashes( $this->param( 'meta' )[ $i ] ) );
 
-				if(isset($this->param( 'data' )[ $i ]))
+				if(isset($this->param( 'data' )[ $i ]) && !empty($this->param( 'data' )[ $i ]))
 				{
 					$block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
 				}
