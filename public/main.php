@@ -166,6 +166,9 @@ class Brizy_Public_Main {
 			'pluginVersion' => BRIZY_VERSION,
 		) );
 
+		if (BRIZY_DEVELOPMENT === true) {
+			wp_add_inline_script( 'brizy-editor', "window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;", 'before' );
+		}
 	}
 
 
