@@ -36,7 +36,7 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	/**
 	 * @var string
 	 */
-	protected $encryption = true;
+	protected $encryption = 'ssl';
 
 	/**
 	 * Brizy_Editor_Forms_WordpressIntegration constructor.
@@ -118,9 +118,8 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 				$instance->setPassword( trim( $json_obj->password ) );
 			}
 			if ( isset( $json_obj->encryption ) ) {
+
 				$instance->setEncryption( $json_obj->encryption );
-			} else {
-				$instance->setEncryption( true );
 			}
 		}
 
@@ -151,10 +150,7 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 		}
 		if ( isset( $data['encryption'] ) ) {
 			$instance->setEncryption( $data['encryption'] );
-		} else {
-			$instance->setEncryption( true );
 		}
-
 
 		if ( isset( $data['authentication'] ) ) {
 			$instance->setAuthentication( $data['authentication'] );
@@ -268,7 +264,13 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	 * @return Brizy_Editor_Forms_SmtpIntegration
 	 */
 	public function setEncryption( $encryption ) {
-		$this->encryption = $encryption;
+
+		//this is a hack because we had bool values on this property
+		if ( is_bool( $encryption ) ) {
+			$this->encryption = $encryption ? 'ssl' : 'tls';
+		} else {
+			$this->encryption = $encryption;
+		}
 
 		return $this;
 	}
