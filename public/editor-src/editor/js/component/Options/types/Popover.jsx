@@ -52,7 +52,9 @@ class PopoverOptionType extends React.Component {
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal
-            ".media-modal-backdrop"
+            ".media-modal-backdrop",
+            ".ui-widget",
+            ".ui-widget-overlay"
           ]
         : [])
     ];

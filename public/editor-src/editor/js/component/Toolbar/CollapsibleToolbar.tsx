@@ -50,7 +50,9 @@ export default class CollapsibleToolbar
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal
-            ".media-modal-backdrop"
+            ".media-modal-backdrop",
+            ".ui-widget",
+            ".ui-widget-overlay"
           ]
         : [])
     ];

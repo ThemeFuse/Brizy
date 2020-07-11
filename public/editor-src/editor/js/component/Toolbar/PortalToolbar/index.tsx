@@ -218,7 +218,9 @@ export default class PortalToolbar
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal
-            ".media-modal-backdrop"
+            ".media-modal-backdrop",
+            ".ui-widget",
+            ".ui-widget-overlay"
           ]
         : []),
       this.clickOutsideException // makes the toolbar not rerender when clicking repeatedly on the same node
