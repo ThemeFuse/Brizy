@@ -44,9 +44,10 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 		$project  = $context->getProject();
+		$endpoint = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
 
-		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;
@@ -62,7 +63,6 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 			parse_str( $parsed_url['query'], $params );
 
-
 			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
 				continue;
 			}
@@ -75,7 +75,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
 
 			if ( ! $media_path ) {
-				return $content;
+				continue;
 			}
 
 			try {
