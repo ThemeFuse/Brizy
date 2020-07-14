@@ -210,7 +210,7 @@ class Brizy_Editor_Forms_SmtpIntegration extends Brizy_Editor_Forms_WordpressInt
 	 * @return Brizy_Editor_Forms_SmtpIntegration
 	 */
 	public function setAuthentication( $authentication ) {
-		$this->authentication = $authentication;
+		$this->authentication = (bool)$authentication;
 
 		return $this;
 	}

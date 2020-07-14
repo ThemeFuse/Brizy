@@ -45,8 +45,8 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 		$project  = $context->getProject();
 
-		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Editor::prefix(Brizy_Public_CropProxy::ENDPOINT) . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Editor::prefix(Brizy_Public_CropProxy::ENDPOINT) . '=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;
