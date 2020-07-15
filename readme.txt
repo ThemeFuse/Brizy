@@ -2,7 +2,7 @@
 Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Requires PHP: 5.6
 Stable tag: 1.0.125
 License: GPLv3
@@ -212,7 +212,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Removed local Lato font
 * Fixed: Removed Europa Font
 * Fixed: Removed IowanOldStyleBT-Bold Font
-* Fixed: Use jQuery from WordPress 
+* Fixed: Use jQuery from WordPress
 * Fixed: Removed all possible screenshot extensions al leaved only jpeg
 * Fixed: Force jQuery enqueue.
 * Fixed: Removed some unused code added Select2 as a dependency
