@@ -123,14 +123,16 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
+		// /var/www/html/wp/wp-content/uploads/brizy/2199/assets/images/iW=1322&iH=881&oX=76&oY=0&cW=1170&cH=881/skyline-1983321_1920.jpg
 		$resized_image_path      = $this->getResizedMediaPath( $original_asset_path, $media_filter );
 
 		$optimized_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'optimized';
+		// /var/www/html/wp/wp-content/uploads/brizy/2199/assets/images/iW=834&iH=556&oX=48&oY=0&cW=738&cH=556/optimized/skyline-1983321_1920.jpg
 		$optimized_image_full_path = $optimized_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
 
 		$hq_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
+		// /var/www/html/wp/wp-content/uploads/brizy/2199/assets/images/iW=1322&iH=881&oX=76&oY=0&cW=1170&cH=881/hq/skyline-1983321_1920.jpg
 		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
-
 
 		if ( file_exists( $optimized_image_full_path ) ) {
 			return $optimized_image_full_path;
@@ -158,6 +160,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		// resize image for optimization
 		$hq_wp_file_exists = file_exists( $hq_image_full_path );
 		$closure           = null;
+
 		if ( $force_optimize && ! $hq_wp_file_exists ) {
 			$closure = function ( $t ) {
 				return 100;

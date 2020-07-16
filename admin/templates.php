@@ -450,7 +450,6 @@ class Brizy_Admin_Templates {
 		$urlBuilder = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get() );
 		$assets_url = $urlBuilder->editor_build_url();
 
-
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
 		wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
 		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array(

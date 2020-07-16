@@ -51,12 +51,21 @@ class  Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer implements Brizy_Editor_Ass
 		remove_action( 'http_api_curl', $file_upload_request );
 		remove_action( 'requests-fsockopen.before_send', $file_upload_request );
 
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+			return false;
+		}
+
 		$body = wp_remote_retrieve_body( $response );
 
 		$jsonFile = json_decode( $body );
 
 		if ( $jsonFile && $jsonFile->data ) {
 			$file_get_contents = file_get_contents( $jsonFile->data->url );
+
+			if ( empty( $file_get_contents ) ) {
+				return false;
+			}
+
 			file_put_contents( $targetPath, $file_get_contents );
 
 			$http = new WP_Http();
