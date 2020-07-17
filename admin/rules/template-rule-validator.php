@@ -10,7 +10,6 @@ class Brizy_Admin_Rules_TemplateRuleValidator extends Brizy_Admin_Rules_Abstract
 	 * @throws Brizy_Admin_Rules_ValidationException
 	 */
 	public function validateRuleForPostId( Brizy_Admin_Rule $rule, $postId ) {
-		// TODO: Implement validateRuleForPostId() method.
 
 		$ruleSets = $this->getRulesSetByWPQuery( [ 'post_type' => get_post_type( $postId ) ] );
 
@@ -25,9 +24,11 @@ class Brizy_Admin_Rules_TemplateRuleValidator extends Brizy_Admin_Rules_Abstract
 	 * @throws Brizy_Admin_Rules_ValidationException
 	 */
 	public function validateRulesForPostId( $rules, $postId ) {
-		// TODO: Implement validateRulesForPostId() method.
 
-		$ruleSets = $this->getRulesSetByWPQuery( [ 'post_type' => get_post_type( $postId ) ] );
+		$ruleSets = $this->getRulesSetByWPQuery( [
+			'post_type' => get_post_type( $postId ),
+			'exclude'   => [ $postId ]
+		] );
 
 		return $this->validateRules( $rules, $ruleSets );
 	}

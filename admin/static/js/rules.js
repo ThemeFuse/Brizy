@@ -514,7 +514,7 @@ var RuleApplyGroupField = function (params) {
 
         var elements = [
             h("span", {class: "brizy-rule-select brizy-rule-select2"},
-                h("select", attributes,  groups)
+                h("select", attributes, groups)
             )
         ];
 
@@ -647,25 +647,26 @@ var TemplateTypeSelect = function (params) {
                 }),
                 h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.archive),
             ]),
-            h('label', {}, [
-                h('input', {
-                    type: 'radio',
-                    name: 'brizy-template-type',
-                    onchange: params.onChange,
-                    value: 'single_product',
-                    checked: 'single_product' === params.value
-                }),
-                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.single_product),
-            ]), h('label', {}, [
-                h('input', {
-                    type: 'radio',
-                    name: 'brizy-template-type',
-                    onchange: params.onChange,
-                    value: 'product_archive',
-                    checked: 'product_archive' === params.value
-                }),
-                h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.product_archive),
-            ]),
+            ...(Brizy_Admin_Rules.labels.single_product ?
+            [h('label', {}, [
+                    h('input', {
+                        type: 'radio',
+                        name: 'brizy-template-type',
+                        onchange: params.onChange,
+                        value: 'single_product',
+                        checked: 'single_product' === params.value
+                    }),
+                    h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.single_product),
+                ]), h('label', {}, [
+                    h('input', {
+                        type: 'radio',
+                        name: 'brizy-template-type',
+                        onchange: params.onChange,
+                        value: 'product_archive',
+                        checked: 'product_archive' === params.value
+                    }),
+                    h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.product_archive),
+                ])] : []),
         ]
     );
 };

@@ -115,6 +115,18 @@ class Brizy_Admin_Templates {
 			BRIZY_VERSION,
 			true
 		);
+
+		$templateGroups = [
+			'single'  => __( 'Single', 'brizy' ),
+			'archive' => __( 'Archive', 'brizy' ),
+
+		];
+
+		if ( class_exists( 'WooCommerce' ) ) {
+			$templateGroups['single_product']  = __( 'Product', 'brizy' );
+			$templateGroups['product_archive'] = __( 'Product Archive', 'brizy' );
+		}
+
 		wp_localize_script(
 			Brizy_Editor::get_slug() . '-rules',
 			'Brizy_Admin_Rules',
@@ -124,12 +136,7 @@ class Brizy_Admin_Templates {
 				'hash'         => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'           => get_the_ID(),
 				'templateType' => Brizy_Admin_Templates::getTemplateType( get_the_ID() ),
-				'labels'       => [
-					'single'          => __( 'Single', 'brizy' ),
-					'archive'         => __( 'Archive', 'brizy' ),
-					'single_product'  => __( 'Product', 'brizy' ),
-					'product_archive' => __( 'Product Archive', 'brizy' ),
-				],
+				'labels'       => $templateGroups,
 			)
 		);
 	}
@@ -665,14 +672,14 @@ class Brizy_Admin_Templates {
 
 					$array = get_posts( [
 						'post_status' => 'publish',
-						'tax_query' => array(
+						'tax_query'   => array(
 							array(
 								'taxonomy' => $term->taxonomy,
-								'field' => 'term_id',
-								'terms' => $term->term_id,
+								'field'    => 'term_id',
+								'terms'    => $term->term_id,
 							)
 						)
-                    ] );
+					] );
 
 					return array_pop( $array );
 					break;
