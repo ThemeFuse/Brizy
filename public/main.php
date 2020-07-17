@@ -145,16 +145,20 @@ class Brizy_Public_Main {
 
 		$config_object = $this->getConfigObject();
 		$assets_url    = $config_object->urls->assets;
-		$config_json   = json_encode( $config_object );
+		$editor_js_deps = array_merge(
+			array(
+				'brizy-editor-polyfill',
+				'brizy-editor-vendor'
+			),
+			apply_filters( 'brizy_editor_js_deps', array() )
+		);
+		$editor_js_config   = json_encode( $config_object );
 
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), null );
 		wp_register_script( 'brizy-editor-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
 		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), null, true );
-		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", array(
-			'brizy-editor-polyfill',
-			'brizy-editor-vendor'
-		), null, true );
-		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${config_json};", 'before' );
+		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", $editor_js_deps, null, true );
+		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = JSON.parse('${editor_js_config}');", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
 
