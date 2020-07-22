@@ -5,6 +5,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 
 	use Brizy_Editor_Asset_AttachmentAware;
 
+	const TRANSIENT_KEY = 'brizy_cloud_editor_versions';
+
 	/**
 	 * @var Brizy_Editor_Project
 	 */
@@ -20,6 +22,24 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @var integer
 	 */
 	private $library;
+
+	/**
+	 * Brizy_Admin_Cloud_Client constructor.
+	 *
+	 * @param Brizy_Editor_Project $project
+	 * @param WP_Http $http
+	 */
+	public function __construct( Brizy_Editor_Project $project, WP_Http $http ) {
+		$this->brizyProject = $project;
+		$this->http         = $http;
+
+		add_action( 'brizy-updated', [ 'Brizy_Admin_Cloud_Client', 'clearVersionCache' ] );
+		do_action( 'brizy-activated', [ 'Brizy_Admin_Cloud_Client', 'clearVersionCache' ] );
+	}
+
+	public static function clearVersionCache() {
+		delete_transient( self::TRANSIENT_KEY );
+	}
 
 	/**
 	 * @return Brizy_Editor_Project
@@ -55,17 +75,6 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 		$this->http = $http;
 
 		return $this;
-	}
-
-	/**
-	 * Brizy_Admin_Cloud_Client constructor.
-	 *
-	 * @param Brizy_Editor_Project $project
-	 * @param WP_Http $http
-	 */
-	public function __construct( Brizy_Editor_Project $project, WP_Http $http ) {
-		$this->brizyProject = $project;
-		$this->http         = $http;
 	}
 
 	/**

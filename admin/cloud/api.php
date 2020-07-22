@@ -122,6 +122,9 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
+		// clear version in case something gets wonrg.
+		Brizy_Admin_Cloud_Client::clearVersionCache();
+
 		$this->project->setCloudToken( null );
 		$this->project->saveStorage();
 
@@ -186,6 +189,6 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	 * @return null
 	 */
 	protected function getRequestNonce() {
-		return self::nonce;
+		return $this->param( 'hash' );
 	}
 }

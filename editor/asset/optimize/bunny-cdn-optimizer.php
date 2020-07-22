@@ -57,6 +57,7 @@ class  Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer implements Brizy_Editor_Ass
 
 		if ( $jsonFile && $jsonFile->data ) {
 			$file_get_contents = file_get_contents( $jsonFile->data->url );
+
 			file_put_contents( $targetPath, $file_get_contents );
 
 			$http = new WP_Http();
