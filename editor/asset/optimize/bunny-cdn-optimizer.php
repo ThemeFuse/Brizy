@@ -60,13 +60,28 @@ class  Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer implements Brizy_Editor_Ass
 		$jsonFile = json_decode( $body );
 
 		if ( $jsonFile && $jsonFile->data ) {
-			$file_get_contents = file_get_contents( $jsonFile->data->url );
 
-			if ( empty( $file_get_contents ) ) {
+			$request = wp_remote_get( $jsonFile->data->url, [
+				'headers' => [
+					'Accept' => 'image/webp'
+				]
+			] );
+
+			if (
+				wp_remote_retrieve_header( $request, 'content-type' ) !== 'image/webp'
+				||
+				wp_remote_retrieve_response_code( $request ) !== 200
+				||
+				! ( $img = wp_remote_retrieve_body( $request ) )
+			)  {
 				return false;
 			}
 
-			file_put_contents( $targetPath, $file_get_contents );
+			$nr_of_bytes = file_put_contents( $targetPath, $img );
+
+			if ( false === $nr_of_bytes ) {
+				return false;
+			}
 
 			$http = new WP_Http();
 
@@ -81,8 +96,8 @@ class  Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer implements Brizy_Editor_Ass
 				return true;
 			}
 		}
-		return false;
 
+		return false;
 	}
 
 	/**

@@ -77,15 +77,38 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 				throw new Exception( 'Media not found' );
 			}
 
-			$media_url = get_attached_file( $attachment->ID );
+			$media_path = get_attached_file( $attachment->ID );
 
-			$project         = Brizy_Editor_Project::get();
-			$optimizer       = $project->getImageOptimizerSettings();
-			$optimezer_id    = Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer::ID;
-			$optimize       = ( isset( $optimizer[ $optimezer_id ]['optimize'] ) && $optimizer[ $optimezer_id ]['optimize'] );
-			$media_cache     = new Brizy_Editor_CropCacheMedia( $project, $post_id );
+			if ( ! file_exists( $media_path ) ) {
+				throw new Exception( "Image {$media_path} doesn't exists" );
+			}
 
-			$crop_media_path = $media_cache->crop_media( $media_url, $filter, true, $optimize );
+			$media_cache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id, $media_path, $filter );
+
+			if ( $media_cache->have_optimizer() && $media_cache->support_webp() && ! $media_cache->is_localhost() ) {
+				try {
+
+					try {
+						$crop_media_path = $media_cache->optimize();
+					} catch (\Exception $e) {
+						$crop_media_path = $media_cache->crop_local();
+					}
+				} catch (\Exception $e) {
+					$crop_media_path = $media_path;
+				}
+			} else {
+
+				try {
+					$crop_media_path = $media_cache->crop_local();
+
+				} catch (\Exception $e) {
+					$crop_media_path = $media_path;
+				}
+			}
+
+			if ( ! file_exists( $crop_media_path ) ) {
+				$crop_media_path = $media_path;
+			}
 
 			$this->send_file( $crop_media_path );
 
