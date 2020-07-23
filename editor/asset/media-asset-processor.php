@@ -78,7 +78,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 			try {
 
-				if ( $media_cache->have_optimizer() && $media_cache->support_webp() && ! $media_cache->is_localhost() ) {
+				if ( $media_cache->have_optimizer() && $media_cache->support_webp() ) {
 					$crop_media_path = $media_cache->get_optimized_img_full_path();
 				} else {
 					$crop_media_path = $media_cache->getResizedMediaPath();

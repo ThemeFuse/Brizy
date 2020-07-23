@@ -162,7 +162,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 			throw new Exception( 'Unable to crop media. Target directory is not writable.' );
 		}
 
-
 		try {
 			wp_raise_memory_limit( 'image' );
 			$filterOptions = $this->getFilterOptions( $source, $filter );
@@ -175,7 +174,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 			return false;
 		}
 	}
-
 
 	/**
 	 * @param $source
@@ -229,6 +227,7 @@ class Brizy_Editor_Asset_Crop_Cropper {
 		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
 		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
 		$cropType      = null;
+
 		if ( preg_match( $regExBasic, $filter ) ) {
 			$cropType = self::BASIC_CROP_TYPE;
 		} elseif ( preg_match( $regExAdvanced, $filter ) ) {

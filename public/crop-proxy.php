@@ -85,7 +85,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 			$media_cache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id, $media_path, $filter );
 
-			if ( $media_cache->have_optimizer() && $media_cache->support_webp() && ! $media_cache->is_localhost() ) {
+			if ( $media_cache->have_optimizer() && $media_cache->support_webp() ) {
 				try {
 
 					try {

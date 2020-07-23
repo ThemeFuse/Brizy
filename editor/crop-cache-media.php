@@ -206,7 +206,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$optimizer                 = new Brizy_Editor_Asset_Optimize_Optimizer();
 		$optimized_image_path_dir  = dirname( $optimized_image_full_path );
 
-		if ( ! file_exists( $optimized_image_path_dir ) && ! @mkdir( $optimized_image_path_dir, 0755, true ) && ! is_dir( $optimized_image_path_dir ) ) {
+		if ( ! file_exists( $optimized_image_path_dir ) && ! wp_mkdir_p( $optimized_image_path_dir ) && ! is_dir( $optimized_image_path_dir ) ) {
 			throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $optimized_image_path_dir ) );
 		}
 
@@ -232,14 +232,5 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 	public function support_webp() {
 		return strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false;
-	}
-
-	public function is_localhost() {
-		$whitelist = [
-			'127.0.0.1',
-			'::1'
-		];
-
-		return in_array( $_SERVER['REMOTE_ADDR'], $whitelist );
 	}
 }
