@@ -22,27 +22,26 @@ class Brizy_MaintenanceMode {
 	private function __construct() {
 		$args = self::get_settings();
 
+		if ( empty( $args['mode'] ) || empty( $args['page'] ) || $this->is_requested_a_file() ) {
+			return;
+		}
+
 		if ( 'maintenance' === $args['mode'] ) {
-
-		    if ( $this->is_requested_a_file() ) {
-		        return;
-            }
-
 			add_action( 'template_redirect', [ $this, '_action_template_redirect' ], 11 );
 		}
 
-		if ( ( 'maintenance' === $args['mode'] || 'coming_soon' === $args['mode'] ) && ! empty( $args['page'] ) ) {
+		if ( is_user_logged_in() ) {
 			add_action( 'admin_bar_menu', [ $this, 'action_add_menu_in_admin_bar' ], 301 );
 			add_action( 'admin_head', [ $this, 'print_style' ] );
 			add_action( 'wp_head', [ $this, 'print_style' ] );
-		}
+        }
 
 		$this->set_query( $args );
 	}
 
 	private function set_query( $args ) {
 
-		if ( empty( $args['mode'] ) || current_user_can( 'manage_options' ) || $this->is_login() ) {
+		if ( current_user_can( 'manage_options' ) || $this->is_login() ) {
 			return;
 		}
 
@@ -67,10 +66,6 @@ class Brizy_MaintenanceMode {
 		if ( is_user_logged_in() && ( is_admin() || ! empty( $_GET ) ) ) {
 			wp_redirect( home_url() );
 			exit;
-		}
-
-		if ( empty( $args['page'] ) ) {
-			return;
 		}
 
 		$this->send_headers = true;
@@ -186,6 +181,22 @@ class Brizy_MaintenanceMode {
 	}
 
 	private function is_requested_a_file() {
-		return isset( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST ) ] );
+	    $out = false;
+
+	    if (
+	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ] )
+                &&
+	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER ) ] )
+                &&
+	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST ) ] )
+        ) {
+		    $out = true;
+        }
+
+	    if ( ! empty( $_GET[ Brizy_Admin_Fonts_Main::CP_FONT ] ) ) {
+	        $out = true;
+        }
+
+		return $out;
 	}
 }
