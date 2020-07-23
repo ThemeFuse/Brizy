@@ -189,13 +189,13 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 		$body = apply_filters( 'brizy_compiler_params', array(
-			'page_id'            => 1,
+			'page_id'            => (int)$config['wp']['page'],
 			'free_version'       => BRIZY_EDITOR_VERSION,
 			'download_url'       => 'https://static.brizy.io/builds',
 			'config_json'        => json_encode( $config ),
 			'pages_json'         => json_encode( array(
 				array(
-					'id'       => 1,
+					'id'       => (int)$config['wp']['page'],
 					'data'     => $page_data,
 					'is_index' => true
 				)
