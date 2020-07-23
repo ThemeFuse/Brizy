@@ -681,9 +681,17 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	}
 
 	/**
-	 * @return mixed
+	 * @param null $optimizer_id
+	 * @param null $key
+	 *
+	 * @return array|null
 	 */
-	public function getImageOptimizerSettings() {
+	public function getImageOptimizerSettings( $optimizer_id = null, $key = null ) {
+
+		if ( $optimizer_id && $key ) {
+			return isset( $this->image_optimizer_settings[ $optimizer_id ][ $key ] ) ? $this->image_optimizer_settings[ $optimizer_id ][ $key ] : null;
+		}
+
 		return $this->image_optimizer_settings;
 	}
 

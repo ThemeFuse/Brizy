@@ -1,7 +1,5 @@
 <?php
 
-use Gaufrette\Filesystem;
-
 class Brizy_Admin_OptimizeImages {
 
 	const PAGE_KEY = 'brizy-optimize-images';
@@ -61,12 +59,9 @@ class Brizy_Admin_OptimizeImages {
 		$tab     = $this->get_selected_tab();
 		switch ( $tab ) {
 			default:
-			case 'general':
-				echo $this->get_general_tab( $context );
+			case 'settings':
+				echo $this->get_settings_tab( $context );
 				break;
-//			case 'settings':
-//				echo $this->get_settings_tab( $context );
-//				break;
 
 		}
 	}
@@ -96,235 +91,35 @@ class Brizy_Admin_OptimizeImages {
 		exit;
 	}
 
-
-	private function get_general_tab( $context ) {
-		$brizy_editor_project = Brizy_Editor_Project::get();
-		$settings             = $brizy_editor_project->getImageOptimizerSettings();
-		$urlBuilder           = new Brizy_Editor_UrlBuilder( $brizy_editor_project );
-		$brizy_upload_path    = $urlBuilder->brizy_upload_path();
-		$adapter              = new Brizy_Admin_Guafrette_LocalAdapter( $brizy_upload_path );
-		$filesystem           = new Filesystem( $adapter );
-
-		$brizy_ids = Brizy_Editor_Post::get_all_brizy_post_ids();
-		$urls      = array();
-		foreach ( $brizy_ids as $id ) {
-			try {
-				$urls = $this->extractUrlFromPage( $urls, $id, $filesystem, $brizy_editor_project );
-			} catch ( Exception $e ) {
-				continue;
-			}
-		}
-
-		$urls = array_unique( $urls );
-
-		$context['urls']         = $urls;
-		$context['count']        = count( $urls );
-		$context['svgObject']    = file_get_contents( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
-		$context['svg']          = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
-		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
-		$context['submit_label'] = __( 'Optimize', 'brizy' );
-
-		return $this->twig->render( 'optimizer-general.html.twig', $context );
-	}
-
-	private function extractUrlFromPage( $urls, $postId, $filesystem, $project ) {
-		$storage = Brizy_Editor_Storage_Post::instance( $postId );
-		$data    = $storage->get( Brizy_Editor_Post::BRIZY_POST, false );
-
-		if ( ! isset( $data['compiled_html'] ) ) {
-			return $urls;
-		}
-
-		$content = base64_decode( $data['compiled_html'] );
-
-		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
-
-		$closure = function ( $processors ) {
-			foreach ( $processors as $i => $processor ) {
-				if ( $processor instanceof Brizy_Editor_Asset_MediaAssetProcessor ) {
-					unset( $processors[ $i ] );
-
-					return $processors;
-				}
-			}
-
-			return $processors;
-		};
-
-		add_filter( 'brizy_content_processors', $closure );
-
-		$content = apply_filters( 'brizy_content', $content, $project, get_post( $postId ) );
-
-		remove_filter( 'brizy_content_processors', $closure );
-
-		return $this->extract_media_urls( $urls, $content, $filesystem );
-	}
-
 	public function settings_submit() {
 
 		switch ( $_POST['tab'] ) {
 			case 'settings':
-				switch ( $_POST['optimizer'] ) {
-					case Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::ID:
-						$this->shortpixel_settings_submit();
-						break;
-				}
+				$this->optimizer_settings_submit();
 				break;
 		}
 	}
 
-	private function shortpixel_settings_submit() {
-		$settings = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+	private function optimizer_settings_submit() {
 
-		$shortpixelSettings = $settings[ Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::getId() ] = array(
-			'API_KEY' => $_POST['api_key'],
-			'lossy'   => $_POST['lossy']
-		);
+		$settings     = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+		$optimezer_id = Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer::ID;
 
-		try {
-			$shortpixelOptimizer = new Brizy_Editor_Asset_Optimize_ShortpixelOptimizer( $shortpixelSettings );
+		$settings[ $optimezer_id ]['optimize'] = ! empty( $_POST[ $optimezer_id ]['optimize'] );
 
-			if ( ! $shortpixelSettings['API_KEY'] ) {
-				Brizy_Admin_Flash::instance()->add_warning( 'You have disabled Shortpixel.' );
-				Brizy_Editor_Project::get()->setImageOptimizerSettings( $settings );
-				Brizy_Editor_Project::get()->saveStorage();
-
-				return;
-			}
-
-			if ( $shortpixelOptimizer->validateConfig() ) {
-				Brizy_Editor_Project::get()->setImageOptimizerSettings( $settings );
-				Brizy_Editor_Project::get()->saveStorage();
-
-				Brizy_Admin_Flash::instance()->add_success( 'Settings saved.' );
-			} else {
-				Brizy_Admin_Flash::instance()->add_error( 'Invalid Shortpixel license provided.' );
-
-			}
-		} catch ( Exception $e ) {
-			Brizy_Admin_Flash::instance()->add_error( $e->getMessage() );
-		}
+		Brizy_Editor_Project::get()->setImageOptimizerSettings( $settings );
+		Brizy_Editor_Project::get()->saveStorage();
+		Brizy_Admin_Flash::instance()->add_success( 'Settings are saved successfully.' );
 	}
 
-//	private function get_settings_tab( $context ) {
-//		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-//		$context['submit_label'] = __( 'Save' );
-//		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
-//		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
-//			'API_KEY' => '',
-//			"lossy"   => 1
-//		);
-//
-//		return $this->twig->render( 'optimizer-settings.html.twig', $context );
-//	}
+	private function get_settings_tab( $context ) {
+		$settings     = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+		$optimezer_id = Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer::ID;
 
-	/**
-	 * @param $content
-	 * @param Filesystem $filesystem
-	 *
-	 * @return array
-	 */
-	private function extract_media_urls( $urls, $content, $filesystem ) {
+		$context['optimizer_id'] = $optimezer_id;
+		$context['optimize'] = ! empty( $settings[ $optimezer_id ]['optimize'] );
 
-		global $wpdb;
-
-		$pt = $wpdb->posts;
-		$mt = $wpdb->postmeta;
-
-		$site_url = str_replace( array( 'http://', 'https://', '/', '.' ), array( '', '', '\/', '\.' ), home_url() );
-
-		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		$endpoint = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
-
-		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
-			return $urls;
-		}
-
-		$time           = time();
-		$t              = null;
-		$attachmentUids = array();
-		$uniqueUrls = array_unique($matches[0]);
-		foreach ( $uniqueUrls as $i => $url ) {
-
-			$parsed_url = parse_url( html_entity_decode( $url ) );
-
-			if ( ! isset( $parsed_url['query'] ) ) {
-				continue;
-			}
-
-			parse_str( $parsed_url['query'], $params );
-
-			if ( ! isset( $params[ $endpoint ] ) ) {
-				continue;
-			}
-
-			$mediaUid = $params[ $endpoint ];
-
-			//if ( strpos( $mediaUid, 'wp-' ) !== false ) {
-			$attachmentUids[] = array(
-				'url'        => $url,
-				'parsed_url' => $parsed_url,
-				'parsed_query' => $params,
-				'uid'        => $mediaUid,
-				'uidQuery'   => "'{$mediaUid}'"
-			);
-			//}
-		}
-
-		if ( count( $attachmentUids ) === 0 ) {
-			return $urls;
-		}
-
-		$uids_subquery = implode( ',', array_unique( array_map( function ( $o ) {
-			return $o['uidQuery'];
-		}, $attachmentUids ) ) );
-
-		$query = "SELECT 
-						{$pt}.ID,
-						{$mt}.meta_value AS UID
-					FROM {$pt}
-						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id AND {$mt}.meta_key = 'brizy_attachment_uid' ) AND {$mt}.meta_value IN (" . $uids_subquery . ")
-					WHERE 
-						 {$pt}.post_type = 'attachment'
-					ORDER BY {$pt}.post_date DESC";
-
-		$attachmentIds = $wpdb->get_results( $query );
-
-		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
-			foreach ( $attachmentIds as $row ) {
-				if ( $row->UID == $o['uid'] ) {
-					$o['attachmentID'] = $row->ID;
-					return $o;
-				}
-			}
-
-			return $o;
-		}, $attachmentUids );
-
-
-		foreach ( $attachmentUids as $uidRes ) {
-
-			$parsed_url = $uidRes['parsed_url'];
-
-			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['attachmentID'] ) ) {
-				continue;
-			}
-
-			$params = $uidRes['parsed_query'];
-
-
-			$media_url   = get_attached_file( $uidRes['attachmentID'] );
-			$brizy_media = basename( $media_url );
-
-			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params[ Brizy_Editor::prefix( '_post' ) ], $params[ Brizy_Editor::prefix( '_crop' ) ], $brizy_media );
-
-			if ( ! $filesystem->has( $wp_imageFullName ) ) {
-				$urls[] = $uidRes['url'] . "&brizy_optimize=1&t=" . $time;
-			}
-		}
-
-		return $urls;
+		return $this->twig->render( 'optimizer-settings.html.twig', $context );
 	}
 
 	/**
@@ -343,7 +138,7 @@ class Brizy_Admin_OptimizeImages {
 	 * @return string|void
 	 */
 	private function get_selected_tab() {
-		return ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : 'general';
+		return ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : 'settings';
 	}
 
 	/**
@@ -353,17 +148,11 @@ class Brizy_Admin_OptimizeImages {
 		$selected_tab = $this->get_selected_tab();
 		$tabs         = array(
 			array(
-				'id'          => 'general',
-				'label'       => __( 'Optimize', 'brizy' ),
-				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
-				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=general"
+				'id'          => 'settings',
+				'label'       => __( 'Settings', 'brizy' ),
+				'is_selected' => is_null( $selected_tab ) || $selected_tab == 'settings',
+				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
 			),
-//			array(
-//				'id'          => 'settings',
-//				'label'       => __( 'Settings', 'brizy' ),
-//				'is_selected' => $selected_tab == 'settings',
-//				'href'        => menu_page_url( self::menu_slug(), false ) . "&tab=settings"
-//			),
 		);
 
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );

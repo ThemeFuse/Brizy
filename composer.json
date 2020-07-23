@@ -19,7 +19,6 @@
   },
   "require": {
     "twig/twig": "1.42.5",
-    "shortpixel/shortpixel-php": "^1.5",
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4.2",
     "enshrined/svg-sanitize": "^0.13",
