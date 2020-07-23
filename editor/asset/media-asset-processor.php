@@ -75,7 +75,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 			$new_url = null;
 
-			$media_path = $this->get_attachment_file_by_uid( $params[ Brizy_Public_CropProxy::ENDPOINT ] );
+			$media_path = $this->get_attachment_file_by_uid( $params[ $endpoint ] );
 
 			if ( ! $media_path ) {
 				continue;
