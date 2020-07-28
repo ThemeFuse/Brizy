@@ -530,7 +530,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @throws Exception
 	 */
 	public function isMediaUploaded( $uid ) {
-		$cloud_entity_by_container = $this->getCloudEntityByContainer( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA, [ 'name' => $uid ] );
+		$cloud_entity_by_container = $this->getCloudEntity( Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA, [ 'name' => $uid ] );
 
 		return is_array( $cloud_entity_by_container ) && count( $cloud_entity_by_container ) > 0;
 	}
