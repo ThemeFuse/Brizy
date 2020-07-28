@@ -169,7 +169,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 			'body'    => array(
 				'email'    => $email,
 				'password' => $password
-			)
+			),
+			'timeout'=>30
 		) );
 
 		$code = wp_remote_retrieve_response_code( $response );
