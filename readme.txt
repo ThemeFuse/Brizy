@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 1.0.127
+Stable tag: 1.0.128
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,18 +139,24 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.128 - 2020-07-30 =
+* Fixed: Layout sync.
+
 = 1.0.127 - 2020-07-30 =
 * New: Introduced working in Draft
 * New: Links to Support and Docs in left sidebar
-* New: Brizy Sync functionality for blocks and layouts 
+* New: Brizy Sync functionality for blocks and layouts
 * New: You can Clear or Save an entire layout
 * New: Absolute and Fixed positions for elements
 * Improved: Increased the size limit of Image population to 5000px
 * Improved: Enabled shape option on responsive for all Sections
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
-* Improved: Re-written == Changelog == extended the Image element (added fixed px size) 
-* Improved: Plugin loading 
+* Improved: Re-written == Changelog ==
+
+= 1.0.128 - 2020-07-30 =
+* Fixed: Layout sync. extended the Image element (added fixed px size)
+* Improved: Plugin loading
 * Improved: Sent post directly in the get_the_content post content element
 * Improved: Increased the size limit of Image population to 5000px
 * Improved: Enabled shape option on responsive for all Sections
@@ -168,6 +174,9 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Compatibility with TranslatePress (Language by GET parameter)
 * Fixed: Compatibility with LiteSpeed plugin
 * Fixed: Missing translation ready strings
+
+= 1.0.126 - 2020-06-03 =
+* Fixed: Security fixes
 
 = 1.0.125 - 2020-06-02 =
 * Fixed: Security fixes
