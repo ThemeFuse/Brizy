@@ -5,9 +5,17 @@
     "media": "image",
     "tagName": "footer",
 
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
+    "fullHeight": "off",
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgImageSrc": "",
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
@@ -28,7 +36,6 @@
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
-    "hoverBgImageSrc": null,
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
@@ -59,7 +66,6 @@
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
-    "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
@@ -82,7 +88,6 @@
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
-    "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
@@ -114,6 +119,7 @@
     "cssClassPopulation": "",
 
     "customAttributes": "",
+    "customAttributesPopulation": null,
 
     "borderStyle": "",
 
@@ -240,9 +246,11 @@
     "tempHoverBorderColorPalette": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "containerType": "boxed",
     "containerSize": 100,
+    "containerSizeSuffix": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",
@@ -374,6 +382,7 @@
 
     "tabletContainerType": null,
     "tabletContainerSize": null,
+    "tabletContainerSizeSuffix": null,
 
     "tabletBorderStyle": null,
 
@@ -485,8 +494,7 @@
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
 
-    "tabletShapeTopType": null,
-    "tabletShapeBottomType": null,
+    "tabletShape": null,
 
     "tabletShapeTopColorHex": null,
     "tabletShapeTopColorOpacity": null,
@@ -502,14 +510,20 @@
     "tempTabletShapeBottomColorOpacity": null,
     "tempTabletShapeBottomColorPalette": null,
 
-    "tabletShape": null,
     "tabletShapeTopHeight": null,
     "tabletShapeTopHeightSuffix": null,
     "tabletShapeBottomHeight": null,
     "tabletShapeBottomHeightSuffix": null,
+    "tabletShapeTopType": null,
+    "tabletShapeBottomType": null,
+    "tabletShapeTopIndex": null,
+    "tabletShapeBottomIndex": null,
+    "tabletShapeTopHorizontal": null,
+    "tabletShapeBottomHorizontal": null,
 
     "mobileContainerType": null,
     "mobileContainerSize": null,
+    "mobileContainerSizeSuffix": null,
 
     "mobileBgColorType": null,
 
@@ -621,8 +635,7 @@
     "tempMobilePaddingBottomSuffix": "px",
     "tempMobilePaddingLeftSuffix": "px",
 
-    "mobileShapeTopType": null,
-    "mobileShapeBottomType": null,
+    "mobileShape": null,
 
     "mobileShapeTopColorHex": null,
     "mobileShapeTopColorOpacity": null,
@@ -638,10 +651,35 @@
     "tempMobileShapeBottomColorOpacity": null,
     "tempMobileShapeBottomColorPalette": null,
 
-    "mobileShape": null,
     "mobileShapeTopHeight": null,
     "mobileShapeTopHeightSuffix": null,
     "mobileShapeBottomHeight": null,
-    "mobileShapeBottomHeightSuffix": null
+    "mobileShapeBottomHeightSuffix": null,
+    "mobileShapeTopType": null,
+    "mobileShapeBottomType": null,
+    "mobileShapeTopIndex": null,
+    "mobileShapeBottomIndex": null,
+    "mobileShapeTopHorizontal": null,
+    "mobileShapeBottomHorizontal": null
+  },
+
+  "animation": {
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+
+    "tempMobileAnimationName": null
   }
 }

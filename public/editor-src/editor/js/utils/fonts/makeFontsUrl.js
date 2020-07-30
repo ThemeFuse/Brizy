@@ -9,7 +9,7 @@ export const makeSubsetGoogleFontsUrl = fonts => {
     return acc === "" ? `${family}:${weights}` : `${acc}|${family}:${weights}`;
   }, "");
 
-  return `https://fonts.googleapis.com/css?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese`;
+  return `https://fonts.googleapis.com/css?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap`;
 };
 
 // {site}/fonts/css?uid=fontId:400|fontId:400,700

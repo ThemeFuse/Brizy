@@ -3,17 +3,12 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 
-const classNameByType = {
-  gray: "brz-ed-btn-width-3 brz-ed-btn-gray",
-  tail: "brz-ed-btn-width-1 brz-ed-btn-teal",
-  default: "brz-ed-btn-width-1 brz-ed-btn-default",
-  red: "brz-ed-btn-width-1 brz-ed-btn-red"
-};
-
 class Button extends Component {
   static defaultProps = {
     className: "",
-    type: "", // gray | tail | red | default
+    type: "",
+    color: "gray", // gray | tail | red | default
+    size: 1, // 1, 2, 3
     rightIcon: "",
     leftIcon: "",
     loading: false,
@@ -24,7 +19,8 @@ class Button extends Component {
   render() {
     const {
       className: _className,
-      type,
+      size,
+      color,
       rightIcon,
       leftIcon,
       loading,
@@ -37,10 +33,11 @@ class Button extends Component {
       "brz-ed-btn-sm brz-ed-btn-rounded",
       _className,
       loading ? "brz-ed-btn--loading" : "brz-ed-btn-icon",
+      `brz-ed-btn-width-${size}`,
+      `brz-ed-btn-${color}`,
       { "brz-ed-btn-icon--left": leftIcon },
       { "brz-ed-btn-icon--right": rightIcon },
-      { "brz-ed-btn--disabled": disabled },
-      classNameByType[type]
+      { "brz-ed-btn--disabled": disabled }
     );
 
     return (

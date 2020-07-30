@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems() {
   return [
     {
       id: "horizontalAlign",
@@ -11,16 +8,19 @@ export function getItems({ device }) {
       disabled: true
     },
     {
-      id: dvk("toolbarGallery"),
-      type: "popover",
-      icon: "nc-gallery",
-      title: t("Gallery"),
+      id: "toolbarGallery",
+      type: "popover-dev",
+      config: {
+        icon: "nc-gallery",
+        title: t("Gallery")
+      },
       position: 80,
       options: [
         {
           id: "enableTags",
-          label: t("Enable tags"),
-          type: "switch-dev"
+          label: t("Enable Tags"),
+          type: "switch-dev",
+          devices: "desktop"
         },
         {
           id: "gridColumn",

@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent"]
+      standart: ["cssStyleSizeWidth"]
     },
     ".brz &&:hover .brz-countdown2__item": {
       standart: [
@@ -36,12 +36,18 @@ export function styleItems(v, vs, vd) {
         "cssStyleBorder",
         "cssStyleBoxShadow",
         "cssStyleBorderRadius",
-        "cssStyleSizeHeightPx"
+        "cssStyleSizeHeightPxOnly"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementCountDown2HoverTransitionProperty"
       ]
+    },
+    ".brz &&:hover:after": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
+    },
+    ".brz &&:hover:before": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
     }
   };
 

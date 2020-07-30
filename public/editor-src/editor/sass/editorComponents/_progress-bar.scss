@@ -13,6 +13,16 @@
     width: 100%;
     text-align: right;
   }
+  &-style1::after,
+  &-style2 .brz-progress-bar-overlay::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
   &-style1,
   &-style2 .brz-progress-bar-overlay {
     position: relative;

@@ -6,9 +6,15 @@
 
     "media": "image",
 
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgImageSrc": "",
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
@@ -23,7 +29,6 @@
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
-    "hoverBgImageSrc": null,
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
@@ -38,7 +43,6 @@
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
-    "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
@@ -53,7 +57,6 @@
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
-    "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
@@ -66,7 +69,7 @@
   },
 
   "toolbar": {
-    "tabsState": "",	
+    "tabsState": "",
     "tabsColor": "",
 
     "tabletTabsState": null,
@@ -78,6 +81,9 @@
 
   "style": {
     "className": "",
+
+    "customAttributes": "",
+    "customAttributesPopulation": null,
 
     "closePosition": "outside",
 
@@ -142,6 +148,48 @@
     "showCloseButtonAfter": 0,
 
     "hoverShowCloseButton": null,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
 
     "bgColorType": "solid",
     "tempBgColorType": "solid",

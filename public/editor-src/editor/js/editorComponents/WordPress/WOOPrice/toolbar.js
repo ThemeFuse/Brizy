@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { toolbarElementWOOPriceSpacing } from "visual/utils/toolbar";
 
 export default params => ({ getItems: getItems(params) });
 
@@ -18,10 +17,12 @@ export const getItems = hasDiscount => ({ v, device }) => {
   return [
     {
       id: "toolbarWOOPrice",
-      type: "popover",
+      type: "popover-dev",
+      config: {
+        title: t("WOOPrice"),
+        icon: "nc-woo-2"
+      },
       devices: "desktop",
-      title: t("WOOPrice"),
-      icon: "nc-woo-2",
       position: 60,
       disabled: !hasDiscount,
       options: [
@@ -31,26 +32,31 @@ export const getItems = hasDiscount => ({ v, device }) => {
           type: "switch-dev",
           devices: "desktop"
         },
-        toolbarElementWOOPriceSpacing({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        })
+        {
+          id: "spacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 20,
+            units: [{ title: "px", value: "px" }]
+          }
+        }
       ]
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
-          id: dvk("tabsToolbarTypography"),
-          type: "tabs",
+          id: "tabsToolbarTypography",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("tabSale"),
@@ -84,22 +90,23 @@ export const getItems = hasDiscount => ({ v, device }) => {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
-          id: dvk("tabsToolbarColor"),
-          type: "tabs",
+          id: "tabsToolbarColor",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("saleColor"),

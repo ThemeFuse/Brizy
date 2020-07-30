@@ -17,11 +17,7 @@ export function styleSection(v, vs, vd) {
 export function styleBg(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleSectionHeightStyle",
-        "cssStyleFlexVerticalAlign",
-        "cssStyleDisplayFlex"
-      ],
+      standart: ["cssStyleSectionHeightStyle"],
       interval: ["cssStyleVisibleMode|||editor"]
     },
     ".brz &&:hover > .brz-bg-media": {
@@ -57,10 +53,19 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
-      standart: ["cssStylePaddingTopForEditorResizer"]
+      standart: [
+        "cssStylePaddingTopForEditorResizer",
+        "cssStyleSectionPaddingsForEditorResize"
+      ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--bottom": {
-      standart: ["cssStylePaddingBottomForEditorResizer"]
+      standart: [
+        "cssStylePaddingBottomForEditorResizer",
+        "cssStyleSectionPaddingsForEditorResize"
+      ]
+    },
+    ".brz && .brz-container__wrap": {
+      standart: ["cssStyleFlexVerticalAlign"]
     }
   };
 
@@ -82,6 +87,20 @@ export function styleContainerWrap(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: ["cssStyleSectionContainerType"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleAnimation(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleAnimation",
+        "cssStyleAnimationDuration",
+        "cssStyleAnimationDelay"
+      ]
     }
   };
 

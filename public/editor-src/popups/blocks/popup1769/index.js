@@ -5,7 +5,7 @@ module.exports = {
   title: "popup1769",
   
   keywords: "",
-  cat: [1754],
+  cat: [1579],
   type: 0,
   pro: true,
   resolve: {
@@ -872,7 +872,7 @@ module.exports = {
         "bgColorHex": "#e96d63",
         "bgColorOpacity": 0.97,
         "tempBgColorOpacity": 0.97,
-        "popupId": "bftmiqpyjgrpnzzivrdvjulfsbnstbdknrvf",
+        "popupId": "pjjrerasrttiypvoyssughyumgatyefosbtb",
         "width": 850,
         "widthSuffix": "px",
         "closeSize": "medium",

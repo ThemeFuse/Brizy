@@ -56,3 +56,17 @@ export function styleBg(v, vs, vd) {
 
   return renderStyles({ v, vs, vd, styles });
 }
+
+export function styleAnimation(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleAnimation",
+        "cssStyleAnimationDuration",
+        "cssStyleAnimationDelay"
+      ]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
+}

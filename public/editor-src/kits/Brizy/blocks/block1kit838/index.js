@@ -103,8 +103,7 @@ module.exports = {
                                                                 }
                                                             }
                                                         ],
-                                                        "showOnMobile": "off",
-                                                        "showOnTablet": "off"
+                                                        "showOnMobile": "off"
                                                     }
                                                 },
                                                 {
@@ -167,12 +166,7 @@ module.exports = {
                                                                     ],
                                                                     "paddingLeft": 0,
                                                                     "paddingRight": 40,
-                                                                    "width": 50,
-                                                                    "tabletPaddingLeft": 0,
-                                                                    "tabletPaddingLeftSuffix": "px",
-                                                                    "tempTabletPaddingLeftSuffix": "px",
-                                                                    "tabletPaddingSuffix": "px",
-                                                                    "tempTabletPaddingSuffix": "px"
+                                                                    "width": 50
                                                                 }
                                                             },
                                                             {
@@ -217,7 +211,7 @@ module.exports = {
                                                                                             "_styles": [
                                                                                                 "richText"
                                                                                             ],
-                                                                                            "text": "<p class=\"brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.&nbsp;</span></p>"
+                                                                                            "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it.&nbsp;</span></span></p>"
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -226,12 +220,7 @@ module.exports = {
                                                                     ],
                                                                     "paddingLeft": 20,
                                                                     "paddingRight": 40,
-                                                                    "width": 50,
-                                                                    "tabletPaddingLeft": 0,
-                                                                    "tabletPaddingLeftSuffix": "px",
-                                                                    "tempTabletPaddingLeftSuffix": "px",
-                                                                    "tabletPaddingSuffix": "px",
-                                                                    "tempTabletPaddingSuffix": "px"
+                                                                    "width": 50
                                                                 }
                                                             }
                                                         ]
@@ -256,8 +245,7 @@ module.exports = {
                                                                 }
                                                             }
                                                         ],
-                                                        "showOnMobile": "off",
-                                                        "showOnTablet": "off"
+                                                        "showOnMobile": "off"
                                                     }
                                                 },
                                                 {
@@ -319,12 +307,7 @@ module.exports = {
                                                                         }
                                                                     ],
                                                                     "paddingLeft": 0,
-                                                                    "paddingRight": 40,
-                                                                    "tabletPaddingLeft": 0,
-                                                                    "tabletPaddingLeftSuffix": "px",
-                                                                    "tempTabletPaddingLeftSuffix": "px",
-                                                                    "tabletPaddingSuffix": "px",
-                                                                    "tempTabletPaddingSuffix": "px"
+                                                                    "paddingRight": 40
                                                                 }
                                                             },
                                                             {
@@ -377,12 +360,7 @@ module.exports = {
                                                                         }
                                                                     ],
                                                                     "paddingLeft": 20,
-                                                                    "paddingRight": 40,
-                                                                    "tabletPaddingLeft": 0,
-                                                                    "tabletPaddingLeftSuffix": "px",
-                                                                    "tempTabletPaddingLeftSuffix": "px",
-                                                                    "tabletPaddingSuffix": "px",
-                                                                    "tempTabletPaddingSuffix": "px"
+                                                                    "paddingRight": 40
                                                                 }
                                                             }
                                                         ]
@@ -391,7 +369,18 @@ module.exports = {
                                             ],
                                             "paddingRight": 50,
                                             "paddingLeft": 315,
-                                            "verticalAlign": "center"
+                                            "verticalAlign": "center",
+                                            "tabletWidth": 71,
+                                            "tabletPaddingLeftSuffix": "px",
+                                            "tempTabletPaddingLeftSuffix": "px",
+                                            "tabletPaddingSuffix": "px",
+                                            "tempTabletPaddingSuffix": "px",
+                                            "tabletPaddingLeft": 25,
+                                            "tempTabletPaddingLeft": 25,
+                                            "tabletPaddingRightSuffix": "px",
+                                            "tempTabletPaddingRightSuffix": "px",
+                                            "tabletPaddingRight": 25,
+                                            "tempTabletPaddingRight": 25
                                         }
                                     },
                                     {
@@ -419,7 +408,8 @@ module.exports = {
                                                                     "imageSrc": "39cf32235b89303163db04c979920fb0d2786e72.png",
                                                                     "imageWidth": 846,
                                                                     "imageHeight": 756,
-                                                                    "mobileResize": 92
+                                                                    "tabletResize": 100,
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ]
@@ -427,7 +417,8 @@ module.exports = {
                                                 }
                                             ],
                                             "paddingRight": 0,
-                                            "paddingLeft": 0
+                                            "paddingLeft": 0,
+                                            "tabletWidth": 29
                                         }
                                     }
                                 ]

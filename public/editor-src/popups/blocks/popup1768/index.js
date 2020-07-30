@@ -5,7 +5,7 @@ module.exports = {
   title: "popup1768",
   
   keywords: "",
-  cat: [1754],
+  cat: [1493],
   type: 0,
   pro: true,
   resolve: {
@@ -646,7 +646,7 @@ module.exports = {
         "tabletBgColorPalette": "",
         "mobileBgColorHex": "#101614",
         "mobileBgColorPalette": "",
-        "popupId": "ejwrjojmignhjfnpuffnbmjsdsrufthzgtsr",
+        "popupId": "yjmifzjopoflgwmutrxdfrrxxnxbwcsgwwqd",
         "width": 500,
         "widthSuffix": "px",
         "closeSize": "medium",

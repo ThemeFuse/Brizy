@@ -1,15 +1,11 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarElementSectionHeaderType,
   toolbarElementSectionGlobal,
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     toolbarShowOnResponsive({
       v,
@@ -18,32 +14,46 @@ export function getItems({ v, device, component }) {
       closeTooltip: true
     }),
     {
-      id: dvk("toolbarSticky"),
-      type: "popover",
-      icon: "nc-sticky-menu",
-      title: t("Menu"),
+      id: "toolbarSticky",
+      type: "popover-dev",
+      config: {
+        icon: "nc-sticky-menu",
+        title: t("Menu")
+      },
       devices: "desktop",
       position: 10,
       options: [
-        toolbarElementSectionHeaderType({
-          v,
-          device,
+        {
+          id: "type",
+          label: t("Header"),
+          type: "select-dev",
           devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementSectionGlobal({
-          device,
-          component,
-          state: "normal",
-          devices: "desktop"
-        })
+          choices: [
+            { title: t("Static"), value: "static" },
+            { title: t("Fixed"), value: "fixed" },
+            { title: t("Sticky"), value: "animated" }
+          ]
+        },
+        {
+          id: "groupSettings",
+          type: "group-dev",
+          options: [
+            toolbarElementSectionGlobal({
+              device,
+              component,
+              state: "normal",
+              devices: "desktop"
+            })
+          ]
+        }
       ]
     },
     toolbarElementSectionSaved({
       device,
-      state: "normal",
       component,
-      devices: "desktop"
+      state: "normal",
+      devices: "desktop",
+      blockType: "normal"
     })
   ];
 }

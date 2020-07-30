@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import _ from "underscore";
 import Config from "visual/global/Config";
 import Fixed from "visual/component/Prompts/Fixed";
 import Select from "visual/component/Controls/Select";
@@ -24,18 +25,27 @@ const typeIdsToNames = TYPES.reduce((acc, { id, name }) => {
 }, {});
 
 export default class PromptIcon extends Component {
+  static defaultProps = {
+    name: "nc-star",
+    type: "outline",
+    onChange: _.noop
+  };
+
   state = {
-    typeId: (TYPES.find(t => t.name === this.props.value.type) ?? TYPES[0]).id,
+    typeId: (TYPES.find(t => t.name === this.props.type) ?? TYPES[0]).id,
     categoryId: "*",
     search: ""
   };
 
   containerRef = React.createRef();
 
-  componentDidMount() {
-    const { templateFonts } = Config.get("urls");
+  componentDidUpdate() {
+    const node = this.containerRef.current;
 
-    loadFonts(this.containerRef.current, templateFonts);
+    if (node) {
+      const { templateFonts } = Config.get("urls");
+      loadFonts(this.containerRef.current, templateFonts);
+    }
   }
 
   onIconClick = icon => {
@@ -136,8 +146,10 @@ export default class PromptIcon extends Component {
   }
 
   render() {
+    const { name, type, opened, onClose } = this.props;
+
     return (
-      <Fixed onClose={this.props.onClose}>
+      <Fixed opened={opened} onClose={onClose}>
         <div ref={this.containerRef} className="brz-ed-popup-wrapper">
           {this.renderTabs()}
           <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
@@ -154,7 +166,7 @@ export default class PromptIcon extends Component {
                     return (
                       <IconGrid
                         icons={filteredIcons}
-                        value={this.props.value}
+                        value={{ name, type }}
                         onChange={this.onIconClick}
                       />
                     );

@@ -11,12 +11,18 @@ import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import HotKeys from "visual/component/HotKeys";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import Quill from "./Quill";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
+import BoxResizer from "visual/component/BoxResizer";
+import { css } from "visual/utils/cssStyle";
+import { style } from "./styles";
+
+const resizerPoints = ["centerLeft", "centerRight"];
 
 class RichText extends EditorComponent {
   static get componentId() {
@@ -24,6 +30,8 @@ class RichText extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  handleResizerChange = patch => this.patchValue(patch);
 
   state = {
     formats: {},
@@ -132,8 +140,12 @@ class RichText extends EditorComponent {
   handleKeyDown = () => {};
   handleKeyUp = () => {};
 
-  getClassName(v) {
-    return classNames("brz-rich-text", v.className);
+  getClassName(v, vs, vd) {
+    return classNames(
+      "brz-rich-text",
+      v.className,
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+    );
   }
 
   renderPopulationHelper() {
@@ -179,9 +191,9 @@ class RichText extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value.globalBlockId
-          ].data;
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
           isGlobal = true;
         }
 
@@ -204,7 +216,7 @@ class RichText extends EditorComponent {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const { formats, prepopulation, population, isToolbarOpened } = this.state;
     const { meta = {} } = this.props;
     const { popups } = v;
@@ -220,6 +232,41 @@ class RichText extends EditorComponent {
     );
     const showPopulationHelper =
       !getCurrentTooltip() && (prepopulation !== null || population);
+
+    const restrictions = {
+      width: {
+        px: {
+          min: 50,
+          max: 1000
+        },
+        "%": {
+          min: 20,
+          max: 100
+        }
+      },
+      // Tablet
+      tabletWidth: {
+        px: {
+          min: 50,
+          max: 1000
+        },
+        "%": {
+          min: 20,
+          max: 100
+        }
+      },
+      // Mobile
+      mobileWidth: {
+        px: {
+          min: 50,
+          max: 1000
+        },
+        "%": {
+          min: 20,
+          max: 100
+        }
+      }
+    };
 
     return (
       <React.Fragment>
@@ -241,16 +288,46 @@ class RichText extends EditorComponent {
               onClose={this.handleToolbarClose}
               repositionOnUpdates={true}
             >
-              <div className={this.getClassName(v)}>
-                <Quill
-                  ref={this.quillRef}
-                  value={v.text}
-                  forceUpdate={!isToolbarOpened}
-                  onSelectionChange={this.handleSelectionChange}
-                  onTextChange={this.handleTextChange}
-                  initDelay={inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0}
-                />
-              </div>
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: this.getClassName(v, vs, vd)
+                })}
+              >
+                {IS_STORY ? (
+                  <BoxResizer
+                    points={resizerPoints}
+                    meta={{
+                      ...meta,
+                      horizontalAlign: "left"
+                    }}
+                    value={v}
+                    onChange={this.handleResizerChange}
+                    restrictions={restrictions}
+                  >
+                    <Quill
+                      ref={this.quillRef}
+                      value={v.text}
+                      forceUpdate={!isToolbarOpened}
+                      onSelectionChange={this.handleSelectionChange}
+                      onTextChange={this.handleTextChange}
+                      initDelay={
+                        inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0
+                      }
+                    />
+                  </BoxResizer>
+                ) : (
+                  <Quill
+                    ref={this.quillRef}
+                    value={v.text}
+                    forceUpdate={!isToolbarOpened}
+                    onSelectionChange={this.handleSelectionChange}
+                    onTextChange={this.handleTextChange}
+                    initDelay={
+                      inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0
+                    }
+                  />
+                )}
+              </Wrapper>
             </Toolbar>
           </CustomCSS>
         </HotKeys>
@@ -260,15 +337,19 @@ class RichText extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
     const { popups } = v;
 
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div
-            className={this.getClassName(v)}
-            dangerouslySetInnerHTML={{ __html: v.text }}
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: this.getClassName(v, vs, vd),
+              attributes: {
+                dangerouslySetInnerHTML: { __html: v.text }
+              }
+            })}
           />
         </CustomCSS>
         {popups.length > 0 && this.renderPopups()}

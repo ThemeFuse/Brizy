@@ -7,8 +7,11 @@
     "className": "",
 
     "width": 100,
+    "widthSuffix": null,
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
     "mobileWidth": null,
+    "mobileWidthSuffix": null,
 
     "customCSS": ""
   }

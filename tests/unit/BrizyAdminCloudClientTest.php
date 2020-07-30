@@ -464,7 +464,7 @@ class BrizyAdminCloudClientTest extends \Codeception\TestCase\WPTestCase {
 
 		$client = new Brizy_Admin_Cloud_Client( $projectObserver->reveal(), $httpObserver->reveal() );
 
-		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA . '?name=MEDIA_UID&container=container';
+		$apiEndpointUrl = Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_MEDIA . '?name=MEDIA_UID';
 
 		$httpObserver->get( Argument::exact( $apiEndpointUrl ), Argument::exact( [
 			'headers' => [

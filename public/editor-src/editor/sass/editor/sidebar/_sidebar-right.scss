@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // Sidebar Right
 .brz-ed-sidebar__right {
   width: auto;
@@ -99,13 +101,13 @@
   &__empty-icon {
     font-size: 18px;
     margin-bottom: 25px;
-    color: #818A91;
+    color: #818a91;
   }
   &__empty-text {
     font-size: 13px;
     font-weight: 600;
     line-height: 20px;
-    color: #7F8994;
+    color: #7f8994;
   }
 
   // Tabs
@@ -113,11 +115,30 @@
     padding: 0 30px 30px;
   }
 
+  .brz-ed-popover__tooltip--icon-custom {
+    width: 23px;
+    height: 23px;
+    border: 1px solid #555b64;
+  }
+
+  .brz-ed-tooltip--opened .brz-ed-popover__tooltip--icon-custom {
+    border-width: 2px;
+    border-color: $brand-primary;
+  }
+
   // Options
+  .brz-ed-option,
   &__option {
     padding: 15px 0;
 
-    .brz-ed-option__label {
+    .brz-ed-option-type__colorPicker {
+      &,
+      &-dev {
+        padding: 15px;
+      }
+    }
+
+    .brz-ed-option__block .brz-ed-option__label {
       margin-bottom: 7px;
     }
 
@@ -140,11 +161,6 @@
             &:hover {
               border: 2px solid $brand-primary;
             }
-          }
-        }
-        &.brz-ed-tooltip--opened {
-          .brz-ed-tooltip__content .brz-ed-popover__tooltip--icon-custom {
-            border: 2px solid $brand-primary;
           }
         }
       }

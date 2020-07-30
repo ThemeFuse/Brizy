@@ -11,6 +11,12 @@ const setIdsCb = (key, value, obj, options) => {
       return;
     }
 
+    // we removed globalBlockId property and GlobalBlock is linked by _id
+    // this way we return undefined
+    if (obj.type === "GlobalBlock") {
+      return;
+    }
+
     obj.value._id = uuid();
   }
 };

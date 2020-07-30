@@ -24,6 +24,7 @@
     "iconPosition": "left",
 
     "iconSpacing": 20,
+    "iconSpacingSuffix": null,
 
     "customCSS": ""
   }

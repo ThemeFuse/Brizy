@@ -1,7 +1,7 @@
 module.exports = {
   id: "popup1715",
   thumbnailWidth: 600,
-  thumbnailHeight: 380,
+  thumbnailHeight: 369,
   title: "popup1715",
   
   keywords: "",
@@ -45,7 +45,7 @@ module.exports = {
                                                         ],
                                                         "tabsCurrentElement": "tabCurrentElement",
                                                         "videoPopulation": "",
-                                                        "video": "https://www.youtube.com/watch?v=PtxdhFEx4G8",
+                                                        "video": "https://www.youtube.com/watch?v=2TyBTYZl4yE",
                                                         "tabsState": "tabNormal",
                                                         "tabsColor": "tabOverlay",
                                                         "borderRadius": 0,
@@ -266,7 +266,7 @@ module.exports = {
         "bgColorHex": "#ffffff",
         "bgColorOpacity": 0.96,
         "tempBgColorOpacity": 0.96,
-        "popupId": "cjyljemkxhmdrwcsmftiawlsjibxshnooiux",
+        "popupId": "uobdrndioiolxuwckquycppxplgzfbdewsgl",
         "tempBgColorPalette": "color8",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

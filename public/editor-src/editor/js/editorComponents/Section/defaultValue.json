@@ -15,6 +15,7 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
+    "zIndexSuffix": null,
 
     "hoverZIndex": null,
 
@@ -26,6 +27,7 @@
     "showOnTablet": "on",
 
     "tabletZIndex": null,
+    "tabletZIndexSuffix": null,
 
     "mobileAnchorName": null,
     "mobileFullHeight": null,
@@ -34,19 +36,41 @@
 
     "showOnMobile": "on",
 
-    "mobileZIndex": null
+    "mobileZIndex": null,
+    "mobileZIndexSuffix": null
   },
 
   "animation": {
     "sliderAnimation": "none",
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
+    "sliderAutoPlaySpeedSuffix": null,
 
     "tabletSliderAutoPlay": null,
     "tabletSliderAutoPlaySpeed": null,
+    "tabletSliderAutoPlaySpeedSuffix": null,
 
     "mobileSliderAutoPlay": null,
-    "mobileSliderAutoPlaySpeed": null
+    "mobileSliderAutoPlaySpeed": null,
+    "mobileSliderAutoPlaySpeedSuffix": null,
+
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+
+    "tempMobileAnimationName": null
   },
 
   "toolbar": {
@@ -55,12 +79,14 @@
 
   "style": {
     "className": "",
+    "elementPosition": "relative",
 
     "customClassName": "",
 
     "cssClassPopulation": "",
 
     "customAttributes": "",
+    "customAttributesPopulation": null,
 
     "sliderDots": "circle",
 

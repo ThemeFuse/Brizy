@@ -168,7 +168,7 @@ class Brizy_Admin_Cloud {
 				     ( $localBlock = $manager->getEntity( $block['uid'] ) ) &&
 				     $localBlock->isSynchronized( $this->cloudClient->getBrizyProject()->getCloudAccountId() ) ) {
 					// delete this block as this block does not exist anymore in cloud
-					$manager->deleteEntity( $localBlock );
+					$manager->trashEntity( $localBlock );
 
 					unset( $blocks[ $i ] );
 				}

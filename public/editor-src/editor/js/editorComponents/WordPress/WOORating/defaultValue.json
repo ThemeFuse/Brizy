@@ -1,0 +1,84 @@
+{
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": "",
+
+    "tabletTabsState": null,
+    "tabletTabsColor": "",
+
+    "mobileTabsState": null,
+    "mobileTabsColor": ""
+  },
+  "style": {
+    "customCSS": "",
+
+    "ratingSize": 15,
+
+    "spacing": 0,
+
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.3,
+    "typographyLetterSpacing": 0,
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "",
+
+    "textColorHex": "#000000",
+    "textColorOpacity": 1,
+    "textColorPalette": "",
+
+    "tempTextColorOpacity": 1,
+    "tempTextColorPalette": "",
+
+    "hoverTransition": 50,
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "hoverTextColorHex": null,
+    "hoverTextColorOpacity": null,
+    "hoverTextColorPalette": null,
+
+    "tempHoverTextColorOpacity": null,
+    "tempHoverTextColorPalette": null,
+
+    "tabletRatingSize": null,
+
+    "tabletSpacing": null,
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFontSize": 15,
+    "tabletTypographyFontWeight": 400,
+    "tabletTypographyLineHeight": 1.3,
+    "tabletTypographyLetterSpacing": 0,
+
+    "mobileRatingSize": null,
+
+    "mobileSpacing": null,
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFontSize": 15,
+    "mobileTypographyFontWeight": 400,
+    "mobileTypographyLineHeight": 1.3,
+    "mobileTypographyLetterSpacing": 0
+  }
+}

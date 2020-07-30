@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
@@ -7,13 +8,13 @@ import Background from "visual/component/Background";
 import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
-import { getStore } from "visual/redux/store";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
@@ -39,53 +40,17 @@ class SectionItem extends EditorComponent {
     this.mounted = true;
   }
 
-  shouldMetaUpdate(nextProps) {
-    const {
-      meta: {
-        section: {
-          isSlider,
-          verticalAlign,
-          marginType,
-          showOnDesktop,
-          showOnMobile,
-          showOnTablet,
-          fullHeight
-        }
-      }
-    } = this.props;
-    const {
-      meta: {
-        section: {
-          marginType: newMarginType,
-          showOnDesktop: newShowOnDesktop,
-          showOnMobile: newShowOnMobile,
-          showOnTablet: newShowOnTablet,
-          verticalAlign: newVerticalAlign,
-          fullHeight: newFullHeight
-        }
-      }
-    } = nextProps;
-    const { deviceMode } = getStore().getState().ui;
-    const deviceUpdate =
-      (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
-      (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
-      (deviceMode === "tablet" && showOnTablet !== newShowOnTablet);
-
-    const verticalAlignChanged = verticalAlign !== newVerticalAlign;
-    const marginUpdate = marginType !== newMarginType;
-    const heightStyleUpdate = fullHeight !== newFullHeight;
-
+  shouldUpdateBecauseOfParent(nextProps) {
     return (
-      isSlider ||
-      verticalAlignChanged ||
-      deviceUpdate ||
-      marginUpdate ||
-      heightStyleUpdate
+      this.props.meta.section.isSlider ||
+      !_.isEqual(this.props.rerender, nextProps.rerender)
     );
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.shouldMetaUpdate(nextProps) || this.optionalSCU(nextProps);
+    return (
+      this.optionalSCU(nextProps) || this.shouldUpdateBecauseOfParent(nextProps)
+    );
   }
 
   componentWillUnmount() {
@@ -147,7 +112,15 @@ class SectionItem extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={Boolean(globalBlockId)}
+        badge={
+          globalBlockId
+            ? child => (
+                <ConditionsComponent value={globalBlockId}>
+                  {child}
+                </ConditionsComponent>
+              )
+            : null
+        }
       />
     );
   }

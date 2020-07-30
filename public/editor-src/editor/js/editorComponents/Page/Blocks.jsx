@@ -6,12 +6,14 @@ import {
   MiddleBlockAdder,
   LastBlockAdder
 } from "visual/component/BlockAdders";
+import Prompts from "visual/component/Prompts";
 import HotKeys from "visual/component/HotKeys";
-import UIState from "visual/global/UIState";
-import BlockErrorBoundary from "./BlockErrorBoundary";
 import { hideToolbar } from "visual/component/Toolbar";
-import { addBlock, importTemplate } from "visual/redux/actions";
+import { addBlock, importTemplate } from "visual/redux/actions2";
+import { addGlobalBlock, removeBlock } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
+
+import { stripSystemKeys, setIds } from "visual/utils/models";
 
 class Blocks extends EditorArrayComponent {
   static get componentId() {
@@ -20,55 +22,48 @@ class Blocks extends EditorArrayComponent {
 
   blockAdderRef = React.createRef();
 
-  handleTemplateAdd = data => {
-    const meta = { insertIndex: this.getValue().length };
-    this.props.dispatch(importTemplate(data, meta));
+  handleAddTemplate = (data, insertIndex) => {
+    const meta = { insertIndex };
+    const { blocks, ...rest } = data;
+    const blocksStripped = stripSystemKeys(blocks);
+    const blocksWithIds = setIds(blocksStripped);
+
+    this.props.dispatch(
+      importTemplate({ blocks: blocksWithIds, ...rest }, meta)
+    );
   };
 
-  handleBlockAdd = data => {
-    const meta = { insertIndex: this.getValue().length };
-    this.props.dispatch(addBlock(data, meta));
+  handleAddBlock = (data, insertIndex) => {
+    const { dispatch } = this.props;
+    const meta = { insertIndex };
+    const { block, ...rest } = data;
+
+    if (block.type === "GlobalBlock") {
+      dispatch(addGlobalBlock(data, meta));
+
+      return;
+    }
+
+    const blockStripped = stripSystemKeys(block);
+    const blockWithIds = setIds(blockStripped);
+
+    dispatch(addBlock({ block: blockWithIds, ...rest }, meta));
   };
 
   handleKeyDown = () => {
-    /**
-     * this will replace all below code once we update react-redux
-     * (version 5.x does not support ref forwarding)
-     */
-    // this.blockAdderRef.current.open();
+    const insertIndex = this.getValue().length;
+    const changeBlockCb = data => this.handleAddBlock(data, insertIndex);
+    const changeTemplateCb = data => this.handleAddTemplate(data, insertIndex);
 
-    UIState.set("prompt", {
+    Prompts.open({
       prompt: "blocks",
-      tabProps: {
-        blocks: {
-          categoriesFilter: categories => {
-            return categories.filter(({ slug }) => slug !== "popup");
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        saved: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              (_, { data: blockData }) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        global: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              (_, { data: blockData }) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        templates: {
-          onAddBlocks: this.handleTemplateAdd
-        }
+      mode: "single",
+      props: {
+        type: "normal",
+        onChangeBlocks: changeBlockCb,
+        onChangeGlobal: changeBlockCb,
+        onChangeSaved: changeTemplateCb,
+        onChangeTemplate: changeTemplateCb
       }
     });
   };
@@ -83,6 +78,7 @@ class Blocks extends EditorArrayComponent {
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
+          disabled: itemData.type === "GlobalBlock",
           onChange: () => {
             this.cloneItem(itemIndex);
           }
@@ -94,8 +90,9 @@ class Blocks extends EditorArrayComponent {
           title: t("Delete"),
           position: 250,
           onChange: () => {
+            const { dispatch } = this.props;
             hideToolbar();
-            this.removeItem(itemIndex);
+            dispatch(removeBlock({ index: itemIndex, id: itemData.value._id }));
           }
         }
       ],
@@ -122,10 +119,13 @@ class Blocks extends EditorArrayComponent {
 
     return (
       <div key={itemKey} className="brz-ed-wrap-block-item">
-        <BlockErrorBoundary onRemove={() => this.removeItem(itemIndex)}>
-          {item}
-        </BlockErrorBoundary>
-        {showMiddleAdder && <MiddleBlockAdder insertIndex={nextItemIndex} />}
+        {item}
+        {showMiddleAdder && (
+          <MiddleBlockAdder
+            onAddBlock={data => this.handleAddBlock(data, nextItemIndex)}
+            onAddTemplate={data => this.handleAddTemplate(data, nextItemIndex)}
+          />
+        )}
       </div>
     );
   }
@@ -141,8 +141,12 @@ class Blocks extends EditorArrayComponent {
 
     if (items.length === 0 || allItemsAreUnlisted) {
       return (
-        <React.Fragment>
-          <FirstBlockAdder ref={this.blockAdderRef} insertIndex={0} />
+        <>
+          <FirstBlockAdder
+            ref={this.blockAdderRef}
+            onAddBlock={data => this.handleAddBlock(data, 0)}
+            onAddTemplate={data => this.handleAddTemplate(data, 0)}
+          />
           <HotKeys
             keyNames={[
               "ctrl+shift+A",
@@ -155,14 +159,18 @@ class Blocks extends EditorArrayComponent {
             id="key-helper-blocks"
             onKeyDown={this.handleKeyDown}
           />
-        </React.Fragment>
+        </>
       );
     }
 
     return (
       <div className="brz-ed-wrap-block-wrap">
-        {items}
-        <LastBlockAdder ref={this.blockAdderRef} insertIndex={items.length} />
+        <div id="brz-ed-page__blocks">{items}</div>
+        <LastBlockAdder
+          ref={this.blockAdderRef}
+          onAddBlock={data => this.handleAddBlock(data, items.length)}
+          onAddTemplate={data => this.handleAddTemplate(data, items.length)}
+        />
         <HotKeys
           keyNames={[
             "ctrl+shift+A",

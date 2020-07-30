@@ -6,6 +6,7 @@ export function toolbarBgVideoUrl({
   device,
   devices = "all",
   state,
+  states,
   disabled = false
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -19,6 +20,7 @@ export function toolbarBgVideoUrl({
     placeholder: t("YouTube or Vimeo"),
     disabled,
     devices,
+    states,
     value: {
       value: dvv("bgVideo")
     },
@@ -34,53 +36,6 @@ export function toolbarBgVideoUrl({
         bgVideo !== "" && dvv("bgColorOpacity") === 1
           ? 0.8
           : dvv("tempBgColorOpacity")
-    })
-  };
-}
-
-export function toolbarBgVideoLoop({
-  v,
-  device,
-  devices = "all",
-  state,
-  disabled = false
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("bgVideoLoop"),
-    label: t("Loop"),
-    type: "switch",
-    devices,
-    disabled,
-    value: dvv("bgVideoLoop")
-  };
-}
-
-export function toolbarBgVideoStart({
-  v,
-  device,
-  devices = "all",
-  state,
-  disabled = false
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("bgVideoStart"),
-    devices,
-    label: t("Start"),
-    type: "input",
-    inputType: "number",
-    placeholder: "seconds",
-    disabled,
-    value: {
-      value: dvv("bgVideoStart")
-    },
-    onChange: ({ value }) => ({
-      [defaultValueKey({ key: "bgVideoStart", device, state })]: Number(value)
     })
   };
 }

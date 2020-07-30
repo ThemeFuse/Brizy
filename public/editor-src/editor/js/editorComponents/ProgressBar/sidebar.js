@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarBorderRadius,
-  toolbarHoverTransition
-} from "visual/utils/toolbar";
+import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 export const title = t("Progress");
 
@@ -13,14 +10,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
+      type: "tabs-dev",
+      cofig: {
+        align: "start"
+      },
       devices: "desktop",
-      align: "start",
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarBorderRadius({
               v,
@@ -35,15 +34,20 @@ export function getItems({ v, device }) {
         {
           id: dvk("moreSettingsAdvanced"),
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
               devices: "desktop",
-              position: 100
-            })
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

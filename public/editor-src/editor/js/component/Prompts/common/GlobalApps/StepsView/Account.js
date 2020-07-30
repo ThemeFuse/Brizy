@@ -125,7 +125,7 @@ class Account extends Component {
           </div>
           <div className="brz-ed-popup-integrations-step__buttons">
             <Button
-              type="gray"
+              size={3}
               leftIcon="nc-arrow-left"
               loading={prevLoading}
               onClick={onPrev}
@@ -133,7 +133,7 @@ class Account extends Component {
               {t("Back")}
             </Button>
             <Button
-              type="tail"
+              color="teal"
               rightIcon="nc-arrow-right"
               loading={nextLoading}
               onClick={onNext}

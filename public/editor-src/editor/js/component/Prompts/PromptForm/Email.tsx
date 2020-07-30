@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import classnames from "classnames";
 import _ from "underscore";
 import produce from "immer";
@@ -8,6 +8,7 @@ import AppList from "../common/GlobalApps/StepsView/AppsList";
 import Tooltip from "visual/component/Controls/Tooltip";
 import Switch from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
+import { CodeMirror } from "visual/component/Controls/CodeMirror";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import * as AppsComponent from "./Apps";
@@ -21,12 +22,19 @@ import {
 import { copyTextToClipboard } from "../common/utils";
 import {
   AppData,
+  BaseIntegrationContext,
   BaseIntegrationProps,
-  BaseIntegrationState
+  BaseIntegrationState,
+  FormField
 } from "../common/GlobalApps/type";
 
 const IS_PRO = Config.get("pro");
 const IS_WP = Config.get("wp");
+
+type Props = BaseIntegrationProps & {
+  formId: string;
+  formFields: FormField[];
+};
 
 type State = BaseIntegrationState & {
   emailTemplate: string;
@@ -34,7 +42,12 @@ type State = BaseIntegrationState & {
   textCopied?: string;
 };
 
-class Email extends BaseIntegration<BaseIntegrationProps, State> {
+type Context = BaseIntegrationContext & {
+  formId: string;
+  formFields: FormField[];
+};
+
+class Email extends BaseIntegration<Props, State, Context> {
   state: State = {
     loading: true,
     showProgress: true,
@@ -70,11 +83,7 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
   }
 
   async getData(): Promise<void> {
-    const {
-      value: { formId },
-      onLoading
-    } = this.props;
-
+    const { formId, onLoading } = this.props;
     const { status, data } = await getForm({ formId });
 
     if (status !== 200) {
@@ -108,9 +117,20 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
     onLoading(false);
   }
 
+  getContextValue(): Context {
+    const { formId, formFields } = this.props;
+    const parentContext = super.getContextValue();
+
+    return {
+      ...parentContext,
+      formId,
+      formFields
+    };
+  }
+
   updateForm = _.debounce(() => {
     updateForm({
-      formId: this.props.value.formId,
+      formId: this.props.formId,
       hasEmailTemplate: this.state.hasEmailTemplate,
       emailTemplate: this.state.emailTemplate
     });
@@ -118,7 +138,7 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
 
   handleConnectApp = async (appData: AppData): Promise<void> => {
     const connectedApp = appData.id;
-    const { formId } = this.props.value;
+    const { formId } = this.props;
     const { stages = [] } =
       this.appsData.find(app => app.id === connectedApp) || {};
 
@@ -167,8 +187,8 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
     );
   };
 
-  handleHtmlChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    this.setState({ emailTemplate: e.target.value }, this.updateForm);
+  handleHtmlChange = (v: string): void => {
+    this.setState({ emailTemplate: v }, this.updateForm);
   };
 
   handleEnableHtml = (value: boolean): void => {
@@ -192,7 +212,7 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
   renderFormInfo(): ReactElement {
     return (
       <div className="brz-ed-popup-integration-email__info">
-        {this.props.value.formFields.map((field, index) => (
+        {this.props.formFields.map((field, index) => (
           <p
             key={index}
             title="Click to copy"
@@ -239,10 +259,12 @@ class Email extends BaseIntegration<BaseIntegrationProps, State> {
               />
             </div>
             <div className="brz-ed-popup-integration-email__template-body">
-              <textarea
-                className="brz-textarea"
+              <CodeMirror
+                className="brz-ed-popup-integration-email__codemirror"
                 value={emailTemplate}
                 onChange={this.handleHtmlChange}
+                language="xml"
+                theme="idea"
               />
               <div className="brz-d-xs-flex brz-align-items-xs-center">
                 <p className="brz-p">

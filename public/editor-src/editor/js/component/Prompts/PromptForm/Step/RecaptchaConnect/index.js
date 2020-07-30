@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import ViewFields from "./ViewFields";
 import { Context } from "../../../common/GlobalApps/Context";
 import { deleteAccount } from "../../../common/GlobalApps/api";
-import { fakeRequest } from "../../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 import { validation } from "./validation";
 
 const apiKeys = [
@@ -67,7 +67,7 @@ class RecaptchaConnect extends Component {
 
     if (keysValue.some(key => !key)) {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: "Fields are empty",
@@ -105,7 +105,7 @@ class RecaptchaConnect extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
     this.context.onChangePrev();
   };
 

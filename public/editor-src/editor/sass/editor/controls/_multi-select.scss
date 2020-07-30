@@ -17,8 +17,9 @@
       width: $control-lg-width;
     }
 
-    &-full {
-      width: 100%;
+    &-auto {
+      flex: 1 1 auto;
+      max-width: 100%;
     }
   }
 

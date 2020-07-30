@@ -23,7 +23,7 @@ class ViewDone extends Component {
             {t("You have successfully connect the form with")} {title}
           </p>
         </div>
-        <Button type="tail" onClick={onNext}>
+        <Button color="teal" onClick={onNext}>
           {t("Done")}
         </Button>
       </div>

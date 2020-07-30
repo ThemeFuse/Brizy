@@ -1,13 +1,14 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Toolbar from "visual/component/Toolbar";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import ItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import ThemeIcon from "visual/component/ThemeIcon";
 import classnames from "classnames";
+import Animation from "visual/component/Animation";
 
 class AccordionItem extends EditorComponent {
   static get componentId() {
@@ -71,7 +72,8 @@ class AccordionItem extends EditorComponent {
       navIcon,
       collapsible,
       visibleTag,
-      tag
+      tag,
+      animationClassName
     } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -101,9 +103,13 @@ class AccordionItem extends EditorComponent {
               {navIcon !== "none" && this.getIcon(this.state.isActive, navIcon)}
             </div>
           </Toolbar>
-          <div className="brz-accordion__content">
+          <Animation
+            component={"div"}
+            componentProps={{ className: "brz-accordion__content" }}
+            animationClass={animationClassName}
+          >
             <ItemItems {...itemsProps} />
-          </div>
+          </Animation>
         </div>
       );
     }
@@ -120,9 +126,13 @@ class AccordionItem extends EditorComponent {
             {navIcon !== "none" && this.getIcon(activeAccordionItem, navIcon)}
           </div>
         </Toolbar>
-        <div className="brz-accordion__content">
+        <Animation
+          component={"div"}
+          componentProps={{ className: "brz-accordion__content" }}
+          animationClass={animationClassName}
+        >
           <ItemItems {...itemsProps} />
-        </div>
+        </Animation>
       </div>
     );
   }

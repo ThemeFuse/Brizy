@@ -1,6 +1,8 @@
 {
   "content": {
     "twitterUsername": "",
+    "twitterUsernamePopulation": null,
+
     "twitter": "embed",
     "twitterType": "embed",
     "twitterTheme": "light",
@@ -11,14 +13,21 @@
   },
   "style": {
     "width": 100,
+    "widthSuffix": null,
+
     "height": 400,
+    "heightSuffix": null,
 
     "customCSS": "",
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
     "mobileWidth": null,
-    "mobileHeight": null
+    "mobileWidthSuffix": null,
+    "mobileHeight": null,
+    "mobileHeightSuffix": null
   }
 }

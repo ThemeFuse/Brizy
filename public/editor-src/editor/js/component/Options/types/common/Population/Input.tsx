@@ -11,7 +11,7 @@ export type Props = {
 export const PopulationInput: FC<Props> = ({ value, onChange }) => {
   return (
     <div className="brz-ed-control__population__input">
-      <span>{value}</span>
+      <span className="brz-span">{value}</span>
       <EditorIcon
         icon="nc-circle-remove"
         onClick={(): void => onChange(empty)}

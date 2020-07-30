@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1572",
   thumbnailWidth: 600,
-  thumbnailHeight: 375,
+  thumbnailHeight: 369,
   title: "block1kit1572",
   
   keywords: "button,call to action,cover,header,image background,promo,slider",
@@ -37,7 +37,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-left brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-ls-lg-m_1_5 brz-ls-xs--1 brz-ff-montserrat brz-fs-lg-80 brz-fw-300\"><strong class=\"brz-cp-color2\">Creating</strong><span class=\"brz-cp-color2\"> Websites Fast Only&nbsp;</span><strong class=\"brz-cp-color2\">With Brizy</strong></p>"
+                                            "text": "<p class=\"brz-text-lg-left brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-ls-lg-m_1_5 brz-ff-montserrat brz-fs-lg-80\"><strong class=\"brz-cp-color8\">Creating</strong><span class=\"brz-cp-color8\"><span> Websites Fast Only&nbsp;</span></span><strong class=\"brz-cp-color8\"><span>With Our Builder</span></strong></p>"
                                         }
                                     }
                                 ],
@@ -133,12 +133,13 @@ module.exports = {
                                             "borderRadius": 4,
                                             "tempBorderRadius": 4,
                                             "mobileBorderRadius": 4,
-                                            "hoverBgColorPalette": "color2",
+                                            "hoverBgColorPalette": "color8",
                                             "hoverBorderColorPalette": "",
                                             "tempHoverBorderColorPalette": "",
                                             "hoverBgColorHex": "#142850",
                                             "hoverBgColorOpacity": 1,
-                                            "hoverBorderColorHex": "#142850"
+                                            "hoverBorderColorHex": "#142850",
+                                            "hoverColorPalette": "color1"
                                         }
                                     }
                                 ],
@@ -147,20 +148,20 @@ module.exports = {
                             }
                         }
                     ],
-                    "bgColorHex": "#ffffff",
-                    "bgColorOpacity": 0.9,
-                    "mobileBgColorHex": "#ffffff",
-                    "mobileBgColorOpacity": 0.9,
-                    "tempBgColorOpacity": 0.9,
                     "padding": 250,
                     "paddingTop": 250,
                     "paddingBottom": 250,
+                    "bgColorHex": "#142850",
+                    "mobileBgColorHex": "#142850",
+                    "bgColorOpacity": 0.9,
+                    "mobileBgColorOpacity": 0.9,
+                    "tempBgColorOpacity": 0.9,
                     "bgImageWidth": 1920,
                     "bgImageHeight": 1280,
-                    "bgImageSrc": "ad09ef4d07c08374f0e13ede6f0d3c05cd9bba47.jpeg",
+                    "bgImageSrc": "f1d5392472573e76bb8282e59b96e37427f7fec0.jpeg",
                     "mobileBgImageWidth": 1920,
                     "mobileBgImageHeight": 1280,
-                    "mobileBgImageSrc": "ad09ef4d07c08374f0e13ede6f0d3c05cd9bba47.jpeg",
+                    "mobileBgImageSrc": "f1d5392472573e76bb8282e59b96e37427f7fec0.jpeg",
                     "tabletPaddingRightSuffix": "px",
                     "tempTabletPaddingRightSuffix": "px",
                     "tabletPaddingSuffix": "px",
@@ -208,7 +209,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-ls-lg-m_1_5 brz-ff-montserrat brz-fs-lg-80\"><span class=\"brz-cp-color2\">Tools That&nbsp;</span><strong class=\"brz-cp-color2\">Help You</strong><span class=\"brz-cp-color2\"> Build&nbsp;</span><strong class=\"brz-cp-color2\">Modern Websites</strong></p>"
+                                            "text": "<p class=\"brz-fs-lg-80 brz-ff-montserrat brz-ls-lg-m_1_5 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-center\"><span class=\"brz-cp-color8\">Tools That&nbsp;</span><strong class=\"brz-cp-color8\">Help You</strong><span class=\"brz-cp-color8\"> Build&nbsp;</span><strong class=\"brz-cp-color8\">Modern Websites</strong></p>"
                                         }
                                     }
                                 ],
@@ -252,7 +253,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color7\">Just click &amp; drag to create beautiful pagesad in a matter of minutes.&nbsp;</em></p>"
+                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color7\">Just click &amp; drag to create beautiful page in a matter of minutes.&nbsp;</em></p>"
                                         }
                                     }
                                 ]
@@ -303,32 +304,33 @@ module.exports = {
                                             "borderRadius": 4,
                                             "tempBorderRadius": 4,
                                             "mobileBorderRadius": 4,
-                                            "hoverBgColorPalette": "color2",
+                                            "hoverBgColorPalette": "color8",
                                             "hoverBorderColorPalette": "",
                                             "tempHoverBorderColorPalette": "",
                                             "hoverBgColorHex": "#142850",
                                             "hoverBgColorOpacity": 1,
-                                            "hoverBorderColorHex": "#142850"
+                                            "hoverBorderColorHex": "#142850",
+                                            "hoverColorPalette": "color1"
                                         }
                                     }
                                 ]
                             }
                         }
                     ],
-                    "bgColorHex": "#ffffff",
-                    "bgColorOpacity": 0.9,
-                    "mobileBgColorHex": "#ffffff",
-                    "mobileBgColorOpacity": 0.9,
-                    "tempBgColorOpacity": 0.9,
                     "padding": 250,
                     "paddingTop": 250,
                     "paddingBottom": 250,
+                    "bgColorHex": "#142850",
+                    "mobileBgColorHex": "#142850",
+                    "bgColorOpacity": 0.9,
+                    "mobileBgColorOpacity": 0.9,
+                    "tempBgColorOpacity": 0.9,
                     "bgImageWidth": 1996,
                     "bgImageHeight": 1331,
-                    "bgImageSrc": "3715ae7da78bcde1fe3d0fe9f129cfd86edb0d76.jpeg",
+                    "bgImageSrc": "4f02c5a57a8027cd6b815dfb911da569ee964f9c.jpeg",
                     "mobileBgImageWidth": 1996,
                     "mobileBgImageHeight": 1331,
-                    "mobileBgImageSrc": "3715ae7da78bcde1fe3d0fe9f129cfd86edb0d76.jpeg",
+                    "mobileBgImageSrc": "4f02c5a57a8027cd6b815dfb911da569ee964f9c.jpeg",
                     "tabletPaddingRightSuffix": "px",
                     "tempTabletPaddingRightSuffix": "px",
                     "tabletPaddingSuffix": "px",
@@ -376,7 +378,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-fs-lg-80 brz-ff-montserrat brz-ls-lg-m_1_5 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-right\"><span class=\"brz-cp-color2\">Be&nbsp;</span><strong class=\"brz-cp-color2\">The Webdesigner!</strong><span class=\"brz-cp-color2\"> Brizy</span></p><p class=\"brz-fs-lg-80 brz-ff-montserrat brz-ls-lg-m_1_5 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-right\"><span class=\"brz-cp-color2\"> Gives You The Power</span></p>"
+                                            "text": "<p class=\"brz-fs-lg-80 brz-ff-montserrat brz-ls-lg-m_1_5 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-right\"><span class=\"brz-cp-color8\"><span>Be&nbsp;</span></span><strong class=\"brz-cp-color8\"><span>The Webdesigner!</span></strong><span class=\"brz-cp-color8\"><span> It</span></span></p><p class=\"brz-fs-lg-80 brz-ff-montserrat brz-ls-lg-m_1_5 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-right\"><span class=\"brz-cp-color8\"><span>Gives You The Power</span></span></p>"
                                         }
                                     }
                                 ],
@@ -471,12 +473,13 @@ module.exports = {
                                             "borderRadius": 4,
                                             "tempBorderRadius": 4,
                                             "mobileBorderRadius": 4,
-                                            "hoverBgColorPalette": "color2",
+                                            "hoverBgColorPalette": "color8",
                                             "hoverBorderColorPalette": "",
                                             "tempHoverBorderColorPalette": "",
                                             "hoverBgColorHex": "#142850",
                                             "hoverBgColorOpacity": 1,
-                                            "hoverBorderColorHex": "#142850"
+                                            "hoverBorderColorHex": "#142850",
+                                            "hoverColorPalette": "color1"
                                         }
                                     }
                                 ],
@@ -485,20 +488,20 @@ module.exports = {
                             }
                         }
                     ],
-                    "bgColorHex": "#ffffff",
-                    "bgColorOpacity": 0.9,
-                    "mobileBgColorHex": "#ffffff",
-                    "mobileBgColorOpacity": 0.9,
-                    "tempBgColorOpacity": 0.9,
                     "padding": 250,
                     "paddingTop": 250,
                     "paddingBottom": 250,
+                    "bgColorHex": "#142850",
+                    "mobileBgColorHex": "#142850",
+                    "bgColorOpacity": 0.9,
+                    "mobileBgColorOpacity": 0.9,
+                    "tempBgColorOpacity": 0.9,
                     "bgImageWidth": 1920,
                     "bgImageHeight": 881,
-                    "bgImageSrc": "7c627a8c2eece4831ff43399b8edad32eab7e561.jpeg",
+                    "bgImageSrc": "238c36aa6d2908d86bfced58ad9f51c5ade13130.jpeg",
                     "mobileBgImageWidth": 1920,
                     "mobileBgImageHeight": 881,
-                    "mobileBgImageSrc": "7c627a8c2eece4831ff43399b8edad32eab7e561.jpeg",
+                    "mobileBgImageSrc": "238c36aa6d2908d86bfced58ad9f51c5ade13130.jpeg",
                     "tabletPaddingRightSuffix": "px",
                     "tempTabletPaddingRightSuffix": "px",
                     "tabletPaddingSuffix": "px",
@@ -527,8 +530,8 @@ module.exports = {
             }
         ],
         "slider": "on",
-        "sliderDotsColorPalette": "color1",
-        "sliderArrowsColorPalette": "color1"
+        "sliderDotsColorPalette": "color8",
+        "sliderArrowsColorPalette": "color8"
     }
 }
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 
 class FormAppsOptionType extends React.Component {
   static defaultProps = {
@@ -15,9 +15,10 @@ class FormAppsOptionType extends React.Component {
     event.preventDefault();
     const { value } = this.props;
 
-    UIState.set("prompt", {
-      prompt: "form-integrations",
-      value: {
+    Prompts.open({
+      prompt: "form",
+      mode: "single",
+      props: {
         formId: value.id,
         formFields: value.fields
       }

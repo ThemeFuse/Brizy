@@ -357,6 +357,433 @@ module.exports = {
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--spacer"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Spacer",
+                                        "value": {
+                                            "_styles": [
+                                                "spacer"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "showOnMobile": "off"
+                            }
+                        },
+                        {
+                            "type": "Row",
+                            "value": {
+                                "_styles": [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--spacer"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Spacer",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "spacer"
+                                                                    ],
+                                                                    "height": 40
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color1\">\u201cNever doubt that a small group of thoughtful, committed, citizens can change the world. Indeed, it is the only thing that ever has.\u201d</em></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<ul><li class=\"brz-bcp-color7 brz-text-lg-center brz-tp-subtitle\">Margaret Mead</li></ul>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--spacer"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Spacer",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "spacer"
+                                                                    ],
+                                                                    "height": 40
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 100,
+                                            "tabsState": "",
+                                            "tabsColor": "",
+                                            "borderWidth": 1,
+                                            "borderTopWidth": 1,
+                                            "borderRightWidth": 1,
+                                            "borderBottomWidth": 1,
+                                            "borderLeftWidth": 1,
+                                            "tempBorderWidth": 1,
+                                            "tempBorderTopWidth": 1,
+                                            "tempBorderRightWidth": 1,
+                                            "tempBorderBottomWidth": 1,
+                                            "tempBorderLeftWidth": 1,
+                                            "borderStyle": "solid",
+                                            "borderRadius": 0,
+                                            "borderTopLeftRadius": 0,
+                                            "borderTopRightRadius": 0,
+                                            "borderBottomLeftRadius": 0,
+                                            "borderBottomRightRadius": 0,
+                                            "tempBorderTopLeftRadius": 0,
+                                            "tempBorderTopRightRadius": 0,
+                                            "tempBorderBottomLeftRadius": 0,
+                                            "tempBorderBottomRightRadius": 0,
+                                            "borderColorOpacity": 0.2,
+                                            "borderColorPalette": "color1",
+                                            "tempBorderColorPalette": "color1",
+                                            "tabletPaddingRight": 15,
+                                            "tabletPaddingLeft": 15,
+                                            "mobilePaddingRight": 0,
+                                            "mobilePaddingLeft": 0,
+                                            "borderColorHex": "#191b21",
+                                            "tempBorderColorOpacity": 0.2,
+                                            "bgColorPalette": "color5",
+                                            "tempBgColorPalette": "color5",
+                                            "bgColorOpacity": 0.5,
+                                            "bgColorHex": "#bde1f4",
+                                            "tempBgColorOpacity": 0.5,
+                                            "marginType": "ungrouped",
+                                            "marginRightSuffix": "px",
+                                            "marginRight": -30,
+                                            "margin": 0,
+                                            "marginSuffix": "px",
+                                            "marginLeftSuffix": "px",
+                                            "marginLeft": -30,
+                                            "paddingRight": 100,
+                                            "paddingRightSuffix": "px",
+                                            "tempPaddingRightSuffix": "px",
+                                            "paddingSuffix": "px",
+                                            "tempPaddingSuffix": "px",
+                                            "tempPaddingRight": 100,
+                                            "paddingLeft": 100,
+                                            "paddingLeftSuffix": "px",
+                                            "tempPaddingLeftSuffix": "px",
+                                            "tempPaddingLeft": 100
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--spacer"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Spacer",
+                                        "value": {
+                                            "_styles": [
+                                                "spacer"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "showOnMobile": "off"
+                            }
+                        },
+                        {
+                            "type": "Row",
+                            "value": {
+                                "_styles": [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--image"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Image",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "image"
+                                                                    ],
+                                                                    "imageWidth": 600,
+                                                                    "imageHeight": 900,
+                                                                    "imageSrc": "6f6e4a6bd03e524ade808017b7096c3b.jpg",
+                                                                    "height": 100,
+                                                                    "positionX": 50,
+                                                                    "positionY": 50,
+                                                                    "imagePopulation": "",
+                                                                    "mobileResize": 78
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 33.3,
+                                            "mobileWidth": 100
+                                        }
+                                    },
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--image"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Image",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "image"
+                                                                    ],
+                                                                    "imageWidth": 600,
+                                                                    "imageHeight": 900,
+                                                                    "imageSrc": "52506642c8976181c44e586a9e614134.jpg",
+                                                                    "height": 100,
+                                                                    "positionX": 50,
+                                                                    "positionY": 50,
+                                                                    "imagePopulation": "",
+                                                                    "mobileResize": 78
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 33.3
+                                        }
+                                    },
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--image"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Image",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "image"
+                                                                    ],
+                                                                    "imageWidth": 600,
+                                                                    "imageHeight": 800,
+                                                                    "imageSrc": "4dcf9d12fc42907b6470f77b03d921f8.jpg",
+                                                                    "height": 112,
+                                                                    "positionX": 50,
+                                                                    "positionY": 50,
+                                                                    "imagePopulation": "",
+                                                                    "mobileResize": 78
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 33.4
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Row",
+                            "value": {
+                                "_styles": [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--spacer"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Spacer",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "spacer"
+                                                                    ],
+                                                                    "height": 30
+                                                                }
+                                                            }
+                                                        ],
+                                                        "showOnMobile": "off"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-heading4\"><span class=\"brz-cp-color2\">Night Photography isn't for everyone</span></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur scipitur est foretiubus ipsum dolor sit amet, dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</span></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco </span><strong class=\"brz-cp-color1\">laboris nisi ut aliquip ex ea commodo consequat.</strong></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 100
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ],
                     "paddingType": "ungrouped",

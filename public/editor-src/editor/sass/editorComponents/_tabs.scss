@@ -190,3 +190,23 @@
     }
   }
 }
+.brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--button:before {
+  content: "";
+}
+.brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--button {
+  border: none !important;
+  box-shadow: none !important;
+}
+.brz-tabs__content--style-3 {
+  margin-top: 1px;
+}
+.brz-tabs__content--style-3 .brz-tabs__items {
+  border: none !important;
+  box-shadow: none !important;
+}
+.brz-tabs__nav--style-3 .brz-tabs__nav--item:before {
+  content: "";
+}
+.brz-tabs__nav--style-3 .brz-tabs__nav--item:after {
+  content: "";
+}

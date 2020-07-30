@@ -1,18 +1,35 @@
 import React from "react";
 import _ from "underscore";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
+import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { percentageToPixels } from "visual/utils/meta";
 import Items from "./items";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
-import classnames from "classnames";
-import { styleContainer, styleItem, styleWrap, style } from "./styles";
+import {
+  defaultValueKey,
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
+import * as State from "visual/utils/stateMode";
+import * as Position from "visual/utils/position/element";
+import {
+  styleContainer,
+  styleItem,
+  styleWrap,
+  style,
+  styleAnimation
+} from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 
-class Cloneable extends EditorComponent {
+export default class Cloneable extends EditorComponent {
   static get componentId() {
     return "Cloneable";
   }
@@ -26,6 +43,8 @@ class Cloneable extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   containerBorder = React.createRef();
 
   handleValueChange(value, meta) {
@@ -35,6 +54,20 @@ class Cloneable extends EditorComponent {
       super.handleValueChange(value, meta);
     }
   }
+
+  handleDraggable = ({ x, y }) => {
+    const v = this.getValue();
+    const state = State.mRead(v.tabsState);
+    const device = deviceModeSelector(getStore().getState());
+
+    const dvk = (key, value) => ({
+      [defaultValueKey({ key, device, state })]: value
+    });
+
+    this.patchValue(
+      Position.setHOffset(dvk, x, Position.setVOffset(dvk, y, {}))
+    );
+  };
 
   handleSortableStart = () => {
     if (this.containerBorder.current) {
@@ -69,6 +102,9 @@ class Cloneable extends EditorComponent {
       paddingRight,
       paddingRightSuffix,
 
+      // Align
+      horizontalAlign,
+
       // Tablet Padding
       tabletPadding,
       tabletPaddingType,
@@ -87,6 +123,9 @@ class Cloneable extends EditorComponent {
       tabletMarginRight,
       tabletMarginRightSuffix,
 
+      // Tablet align
+      tabletHorizontalAlign,
+
       // Mobile Padding
       mobilePadding,
       mobilePaddingType,
@@ -103,7 +142,10 @@ class Cloneable extends EditorComponent {
       mobileMarginLeft,
       mobileMarginLeftSuffix,
       mobileMarginRight,
-      mobileMarginRightSuffix
+      mobileMarginRightSuffix,
+
+      // Mobile align
+      mobileHorizontalAlign
     } = v;
 
     const marginW =
@@ -195,6 +237,9 @@ class Cloneable extends EditorComponent {
       mobileW,
       tabletW,
       desktopW,
+      horizontalAlign,
+      tabletHorizontalAlign,
+      mobileHorizontalAlign,
       inCloneable: true
     });
   }
@@ -258,14 +303,21 @@ class Cloneable extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
     const {
-      animationName,
-      animationDuration,
-      animationDelay,
       customClassName,
       customID,
       cssIDPopulation,
-      cssClassPopulation
+      cssClassPopulation,
+      customAttributes
     } = v;
+
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
 
     const className = classnames(
       "brz-wrapper-clone",
@@ -278,41 +330,76 @@ class Cloneable extends EditorComponent {
       propsClassName
     );
 
+    const dvv = key => {
+      const state = State.mRead(v.tabsState);
+      const device = deviceModeSelector(getStore().getState());
+
+      return defaultValueValue({ v, key, device, state });
+    };
+    const isRelative = Position.getPosition(dvv) === "relative";
+
     return (
-      <Animation
-        className={className}
-        customID={cssIDPopulation === "" ? customID : cssIDPopulation}
-        name={animationName !== "none" && animationName}
-        duration={animationDuration}
-        delay={animationDelay}
+      <Draggable
+        active={!isRelative}
+        onChange={this.handleDraggable}
+        hAlign={Position.getHAlign(dvv) ?? "left"}
+        vAlign={Position.getVAlign(dvv) ?? "top"}
+        xSuffix={Position.getHUnit(dvv) ?? "px"}
+        ySuffix={Position.getVUnit(dvv) ?? "px"}
+        getValue={() => ({
+          x: Position.getHOffset(dvv) ?? 0,
+          y: Position.getVOffset(dvv) ?? 0
+        })}
       >
-        {showBorder ? (
-          <ContainerBorder
-            ref={this.containerBorder}
-            color="grey"
-            borderStyle="dotted"
-          >
-            {this.renderContent(v, vs, vd)}
-          </ContainerBorder>
-        ) : (
-          this.renderContent(v, vs, vd)
-        )}
-      </Animation>
+        {(ref, draggableClassName) => {
+          return (
+            <Animation
+              ref={ref}
+              component={"div"}
+              componentProps={{
+                ...parseCustomAttributes(customAttributes),
+                id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                className: classnames(className, draggableClassName)
+              }}
+              animationClass={animationClassName}
+            >
+              {showBorder ? (
+                <ContainerBorder
+                  ref={this.containerBorder}
+                  color="grey"
+                  borderStyle="dotted"
+                >
+                  {this.renderContent(v, vs, vd)}
+                </ContainerBorder>
+              ) : (
+                this.renderContent(v, vs, vd)
+              )}
+            </Animation>
+          );
+        }}
+      </Draggable>
     );
   }
 
   renderForView(v, vs, vd) {
     const {
-      animationName,
-      animationDuration,
-      animationDelay,
       customClassName,
       customID,
       cssIDPopulation,
-      cssClassPopulation
+      cssClassPopulation,
+      customAttributes
     } = v;
 
     const { propsClassName } = this.props;
+
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
 
     const className = classnames(
       "brz-wrapper-clone",
@@ -325,18 +412,20 @@ class Cloneable extends EditorComponent {
       propsClassName
     );
 
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      className
+    };
+
     return (
       <Animation
-        className={className}
-        customID={cssIDPopulation === "" ? customID : cssIDPopulation}
-        name={animationName !== "none" && animationName}
-        duration={animationDuration}
-        delay={animationDelay}
+        component={"div"}
+        componentProps={props}
+        animationClass={animationClassName}
       >
         {this.renderContent(v, vs, vd)}
       </Animation>
     );
   }
 }
-
-export default Cloneable;

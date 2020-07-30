@@ -19,6 +19,7 @@
 @at-root {
   html {
     box-sizing: border-box; // 1
+    scroll-behavior: auto;
   }
   *,
   *:before,

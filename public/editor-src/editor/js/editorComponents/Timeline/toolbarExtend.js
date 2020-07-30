@@ -1,55 +1,62 @@
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
-import {
-  toolbarElementTimelineOrientation,
-  toolbarElementTimelineStyle
-} from "visual/utils/toolbar/toolbarElementTimeline";
 
 export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+
+  const vertical = dvv("verticalMode") === "off";
+
   const maxBorderRadius = Math.round(
     (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
-  );
-
-  // Color
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device }),
-    defaultValueValue({ v, key: "bgColorPalette", device })
-  );
-  const { hex: colorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "colorHex", device }),
-    defaultValueValue({ v, key: "colorPalette", device })
   );
 
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-timeline",
-      title: t("Timeline"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-timeline",
+        title: t("Timeline")
+      },
       position: 70,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "currentShortcodeTimeline",
               label: t("Timeline"),
               position: 40,
               options: [
-                toolbarElementTimelineOrientation({
-                  v,
-                  device,
-                  state: "normal"
-                }),
-                toolbarElementTimelineStyle({
-                  v,
-                  device,
-                  state: "normal"
-                }),
+                {
+                  id: "verticalMode",
+                  label: t("Orientation"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "on", icon: "nc-vertical-items" },
+                    { value: "off", icon: "nc-horizontal-items" }
+                  ]
+                },
+                {
+                  id: "timelineStyle",
+                  label: t("Style"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    ...(vertical
+                      ? [
+                          { value: "style-1", icon: "nc-timeline-style-2" },
+                          { value: "style-2", icon: "nc-timeline-style-1" },
+                          { value: "style-3", icon: "nc-timeline-style-3" }
+                        ]
+                      : [
+                          { value: "style-1", icon: "nc-timeline-style-4" },
+                          { value: "style-2", icon: "nc-timeline-style-5" },
+                          { value: "style-3", icon: "nc-timeline-style-6" }
+                        ])
+                  ]
+                },
                 {
                   id: "enableText",
                   label: t("Titles"),
@@ -97,104 +104,82 @@ export function getItems({ v, device }) {
                   })
                 },
                 {
-                  type: "multiPicker",
-                  roles: ["admin"],
-                  picker: {
-                    id: "size",
-                    label: t("Size"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "small",
-                        icon: "nc-32"
-                      },
-                      {
-                        value: "medium",
-                        icon: "nc-48"
-                      },
-                      {
-                        value: "large",
-                        icon: "nc-64"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  id: "groupSize",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "size",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-32" },
+                        { value: "medium", icon: "nc-48" },
+                        { value: "large", icon: "nc-64" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.size,
+                      onChange: size => {
+                        const borderRadius = Math.round(
+                          (v.borderRadius /
+                            Math.round(
+                              v[`${v.size}Size`] +
+                                v.padding * 2 +
+                                v.iconBorderWidth * 2
+                            )) *
+                            Math.round(
+                              v[`${size}Size`] +
+                                v.padding * 2 +
+                                v.iconBorderWidth * 2
+                            )
+                        );
+
+                        return {
+                          size,
+                          customSize:
+                            size !== "custom" ? v[`${size}Size`] : v.customSize,
+                          borderRadius:
+                            size !== "custom" ? borderRadius : v.borderRadius
+                        };
                       }
-                    ],
-                    value: v.size,
-                    onChange: size => {
-                      const borderRadius = Math.round(
-                        (v.borderRadius /
-                          Math.round(
-                            v[`${v.size}Size`] +
-                              v.padding * 2 +
-                              v.iconBorderWidth * 2
-                          )) *
-                          Math.round(
-                            v[`${size}Size`] +
-                              v.padding * 2 +
-                              v.iconBorderWidth * 2
-                          )
-                      );
+                    },
+                    {
+                      id: "customSize",
+                      type: "slider",
+                      disabled: v.size !== "custom",
+                      slider: {
+                        min: 14,
+                        max: 180
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.customSize
+                      },
+                      onChange: ({ value: customSize }) => {
+                        const borderRadius = Math.round(
+                          (v.borderRadius /
+                            Math.round(
+                              v.customSize +
+                                v.padding * 2 +
+                                v.iconBorderWidth * 2
+                            )) *
+                            Math.round(
+                              customSize + v.padding * 2 + v.iconBorderWidth * 2
+                            )
+                        );
 
-                      return {
-                        size,
-
-                        customSize:
-                          size !== "custom" ? v[`${size}Size`] : v.customSize,
-
-                        borderRadius:
-                          size !== "custom" ? borderRadius : v.borderRadius
-                      };
+                        return {
+                          customSize,
+                          borderRadius
+                        };
+                      }
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "customSize",
-                        type: "slider",
-                        slider: {
-                          min: 14,
-                          max: 180
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.customSize
-                        },
-                        onChange: ({ value: customSize }) => {
-                          const borderRadius = Math.round(
-                            (v.borderRadius /
-                              Math.round(
-                                v.customSize +
-                                  v.padding * 2 +
-                                  v.iconBorderWidth * 2
-                              )) *
-                              Math.round(
-                                customSize +
-                                  v.padding * 2 +
-                                  v.iconBorderWidth * 2
-                              )
-                          );
-
-                          return {
-                            customSize,
-                            borderRadius
-                          };
-                        }
-                      }
-                    ]
-                  }
+                  ]
                 }
               ]
             },
@@ -202,90 +187,71 @@ export function getItems({ v, device }) {
               id: "iconBackground",
               label: t("Background"),
               position: 80,
-              roles: ["admin"],
               options: [
                 {
-                  type: "multiPicker",
-                  picker: {
-                    id: "borderRadiusType",
-                    label: t("Corner"),
-                    type: "radioGroup",
-                    devices: "desktop",
-                    choices: [
-                      {
-                        value: "square",
-                        icon: "nc-corners-square"
-                      },
-                      {
-                        value: "rounded",
-                        icon: "nc-corners-round"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  id: "groupBorderRadius",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "borderRadiusType",
+                      label: t("Corner"),
+                      type: "radioGroup",
+                      devices: "desktop",
+                      choices: [
+                        { value: "square", icon: "nc-corners-square" },
+                        { value: "rounded", icon: "nc-corners-round" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.borderRadiusType,
+                      onChange: borderRadiusType => {
+                        return {
+                          borderRadiusType,
+
+                          tempBorderRadiusType:
+                            borderRadiusType !== ""
+                              ? borderRadiusType
+                              : v.tempBorderRadiusType,
+
+                          borderRadius:
+                            borderRadiusType === "square"
+                              ? v.tempBorderRadius
+                              : borderRadiusType === "rounded"
+                              ? maxBorderRadius
+                              : v.borderRadius,
+
+                          iconBorderWidth:
+                            borderRadiusType !== ""
+                              ? v.tempBorderWidth
+                              : v.iconBorderWidth,
+
+                          padding:
+                            borderRadiusType !== "" ? v.tempPadding : v.padding
+                        };
                       }
-                    ],
-                    value: v.borderRadiusType,
-                    onChange: borderRadiusType => {
-                      return {
-                        borderRadiusType,
-
-                        tempBorderRadiusType:
-                          borderRadiusType !== ""
-                            ? borderRadiusType
-                            : v.tempBorderRadiusType,
-
-                        fillType:
-                          borderRadiusType !== "" ? v.tempFillType : v.fillType,
-
-                        borderRadius:
-                          borderRadiusType === "square"
-                            ? v.tempBorderRadius
-                            : borderRadiusType === "rounded"
-                            ? maxBorderRadius
-                            : v.borderRadius,
-
-                        iconBorderWidth:
-                          borderRadiusType !== ""
-                            ? v.tempBorderWidth
-                            : v.iconBorderWidth,
-
-                        padding:
-                          borderRadiusType !== "" ? v.tempPadding : v.padding
-                      };
+                    },
+                    {
+                      id: "borderRadius",
+                      type: "slider",
+                      devices: "desktop",
+                      disabled: v.borderRadiusType !== "custom",
+                      slider: {
+                        min: 0,
+                        max: maxBorderRadius
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: { value: v.borderRadius },
+                      onChange: ({ value: borderRadius }) => ({
+                        borderRadius,
+                        tempBorderRadius: borderRadius
+                      })
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "borderRadius",
-                        type: "slider",
-                        slider: {
-                          min: 0,
-                          max: maxBorderRadius
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.borderRadius
-                        },
-                        onChange: ({ value: borderRadius }) => ({
-                          borderRadius,
-                          tempBorderRadius: borderRadius
-                        })
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   id: "padding",
@@ -332,8 +298,6 @@ export function getItems({ v, device }) {
                           ? v.tempBorderRadiusType
                           : v.borderRadiusType,
 
-                      fillType: iconPadding > 0 ? v.tempFillType : v.fillType,
-
                       borderColorOpacity:
                         iconPadding > 0
                           ? v.tempBorderColorOpacity
@@ -342,17 +306,7 @@ export function getItems({ v, device }) {
                       borderColorPalette:
                         iconPadding > 0
                           ? v.tempBorderColorPalette
-                          : v.borderColorPalette,
-
-                      bgColorOpacity:
-                        iconPadding > 0 && v.tempFillType === "filled"
-                          ? v.tempBgColorOpacity
-                          : v.bgColorOpacity,
-
-                      bgColorPalette:
-                        iconPadding > 0 && v.tempFillType === "filled"
-                          ? v.tempBgColorPalette
-                          : v.bgColorPalette
+                          : v.borderColorPalette
                     };
                   }
                 }
@@ -364,24 +318,17 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors")
+      },
       devices: "desktop",
       position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
-        }
-      },
       options: [
         {
           id: "color",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "lineBorder",
@@ -399,9 +346,10 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

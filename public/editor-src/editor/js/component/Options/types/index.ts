@@ -4,7 +4,8 @@ import { GetModel, OptionType } from "visual/component/Options/Type";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import Button from "./Button";
-import ButtonTooltip from "./ButtonTooltip";
+import SavedBlock from "./SavedBlock";
+import GlobalBlock from "./GlobalBlock";
 import CodeMirror from "./CodeMirror";
 import ColorFields from "./ColorFields";
 import ColorPalette from "./ColorPalette";
@@ -27,6 +28,7 @@ import Input from "./Input";
 import Textarea from "./Textarea";
 import Popover from "./Popover";
 import PopupConditions from "./PopupConditions";
+import GBConditions from "./GBConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
@@ -46,8 +48,10 @@ import StateMode from "./common/StateMode";
 
 // Option types that are in development
 import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
+import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
 import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
 import { Border } from "visual/component/Options/types/dev/Border";
+import { Group } from "visual/component/Options/types/dev/Group";
 import { Typography } from "visual/component/Options/types/dev/Typography";
 import { ImageUpload } from "visual/component/Options/types/dev/ImageUpload";
 import { Population } from "visual/component/Options/types/common/Population/Population";
@@ -61,14 +65,19 @@ import { Popover as PopoverDev } from "./dev/Popover";
 import { Tabs as TabsDev } from "./dev/Tabs";
 import { Textarea as TextareaDev } from "./dev/Textarea";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
+import { Number } from "./dev/Number";
+import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
 import { Alert } from "./dev/Alert";
 
 export const types = {
   advancedSettings: AdvancedSettings,
   "alert-dev": Alert,
+  "backgroundColor-dev": BackgroundColor,
   blockThumbnail: BlockThumbnail,
   button: Button,
-  buttonTooltip: ButtonTooltip,
+  savedBlock: SavedBlock,
+  globalBlock: GlobalBlock,
   codeMirror: CodeMirror,
   "codeMirror-dev": CodeMirrorDev,
   colorFields: ColorFields,
@@ -85,21 +94,26 @@ export const types = {
   fontStyleEditor: FontStyleEditor,
   formApps: FormApps,
   grid: Grid,
+  "group-dev": Group,
+  iconSetter: IconSetter,
   imageSetter: ImageSetter,
   "imageUpload-dev": ImageUpload,
-  iconSetter: IconSetter,
+  input: Input,
+  "inputText-dev": InputText,
+  "internalLink-dev": InternalLink,
   multiInput: MultiInput,
   multiInputPicker: MultiInputPickerOptionType,
   multiPicker: MultiPicker,
   "multiSelect-dev": MultiSelect,
-  input: Input,
-  "inputText-dev": InputText,
+  "number-dev": Number,
   textarea: Textarea,
   "textarea-dev": TextareaDev,
+  "radioGroup-dev": RadioGroupDev,
   popover: Popover,
   "popover-dev": PopoverDev,
   "population-dev": Population,
   popupConditions: PopupConditions,
+  gbConditions: GBConditions,
   promptAddPopup: PromptAddPopup,
   promptIcon: PromptIcon,
   radioGroup: RadioGroup,

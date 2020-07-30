@@ -1,16 +1,14 @@
 import produce from "immer";
 import { assetUrl } from "visual/utils/asset";
+import { pendingRequest } from "visual/utils/api/editor";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";
 import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
-import { fakeRequest } from "../common/utils";
 import * as AppsComponent from "./Apps";
 
 type Props = BaseIntegrationProps & {
-  value: {
-    group: string;
-    service: string;
-  };
+  group: string;
+  service: string;
 };
 
 class Apps extends BaseIntegration<Props> {
@@ -28,7 +26,7 @@ class Apps extends BaseIntegration<Props> {
   }
 
   async getData(): Promise<void> {
-    const { group, service } = this.props.value;
+    const { group, service } = this.props;
     const { status, data } = await getAccounts({ group, services: service });
 
     if (data && data.length > 0 && status === 200) {
@@ -55,7 +53,7 @@ class Apps extends BaseIntegration<Props> {
     const appId = appData.id;
     const { stages } = this.appsData[0];
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState(
       produce(draft => {

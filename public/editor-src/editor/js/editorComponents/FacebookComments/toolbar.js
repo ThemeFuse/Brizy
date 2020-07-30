@@ -2,14 +2,13 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 const wordpress = Boolean(Config.get("wp"));
 
 export function getItems({ v, device, state }) {
-  const dvkn = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -19,36 +18,23 @@ export function getItems({ v, device, state }) {
 
   const choicesType = wordpress
     ? [
-        {
-          title: t("Facebook"),
-          value: "facebook"
-        },
-        {
-          title: t("Disqus"),
-          value: "disqus"
-        },
-        {
-          title: t("WordPress"),
-          value: "WPComments"
-        }
+        { title: t("Facebook"), value: "facebook" },
+        { title: t("Disqus"), value: "disqus" },
+        { title: t("WordPress"), value: "WPComments" }
       ]
     : [
-        {
-          title: t("Facebook"),
-          value: "facebook"
-        },
-        {
-          title: t("Disqus"),
-          value: "disqus"
-        }
+        { title: t("Facebook"), value: "facebook" },
+        { title: t("Disqus"), value: "disqus" }
       ];
 
   return [
     {
-      id: dvkn("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-comments",
-      title: t("Comments"),
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-comments",
+        title: t("Comments")
+      },
       devices: "desktop",
       position: 70,
       options: [
@@ -66,22 +52,10 @@ export function getItems({ v, device, state }) {
           disabled: v.type !== "WPComments",
           devices: "desktop",
           choices: [
-            {
-              title: t("Skin 1"),
-              value: "skin1"
-            },
-            {
-              title: t("Skin 2"),
-              value: "skin2"
-            },
-            {
-              title: t("Skin 3"),
-              value: "skin3"
-            },
-            {
-              title: t("Skin 4"),
-              value: "skin4"
-            }
+            { title: t("Skin 1"), value: "skin1" },
+            { title: t("Skin 2"), value: "skin2" },
+            { title: t("Skin 3"), value: "skin3" },
+            { title: t("Skin 4"), value: "skin4" }
           ]
         },
         {
@@ -96,12 +70,11 @@ export function getItems({ v, device, state }) {
             debounceUpdate: true
           }
         },
-        /*{
-          id: "darkScheme",
-          type: "switch",
-          label: t("Dark Scheme"),
-          value: v.darkScheme
-        }*/
+        // {
+        //   id: "darkScheme",
+        //   type: "switch-dev",
+        //   label: t("Dark Scheme")
+        // },
         {
           id: "disqusShortname",
           type: "inputText-dev",
@@ -124,20 +97,22 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          id: dvkn("tabsTypography"),
-          type: "tabs",
+          id: "tabsTypography",
+          type: "tabs-dev",
           tabs: [
             {
-              id: dvkn("tabTypographyName"),
+              id: "tabTypographyName",
               label: t("Name"),
               options: [
                 {
@@ -151,7 +126,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: dvkn("tabTypographyComment"),
+              id: "tabTypographyComment",
               label: t("Comment"),
               options: [
                 {
@@ -165,7 +140,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: dvkn("tabTypographyDate"),
+              id: "tabTypographyDate",
               label: t("Date"),
               options: [
                 {
@@ -179,7 +154,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: dvkn("tabTypographyReply"),
+              id: "tabTypographyReply",
               label: t("Reply"),
               options: [
                 {
@@ -193,7 +168,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: dvkn("tabTypographyPostButton"),
+              id: "tabTypographyPostButton",
               label: t("Button"),
               options: [
                 {
@@ -211,23 +186,26 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          hideHandlesWhenOne: false,
+          type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabNameColor",
@@ -282,11 +260,13 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("toolbarLink"),
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      size: "medium",
+      id: "toolbarLink",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
       position: 90,
       options: [
         {

@@ -4,11 +4,8 @@ import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { SelectFields } from "../../common/GlobalApps/StepsView";
-import {
-  getFields,
-  checkRequiredFields,
-  fakeRequest
-} from "../../common/utils";
+import { getFields, checkRequiredFields } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class Fields extends Component {
   static contextType = Context;
@@ -47,7 +44,7 @@ class Fields extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangePrev();
   };
@@ -68,7 +65,7 @@ class Fields extends Component {
 
     if (!checkRequiredFields(appData.fields, formFields, "select")) {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: t("All fields marked with an asterisk ( * ) must be mapped."),

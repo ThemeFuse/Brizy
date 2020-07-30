@@ -60,3 +60,13 @@
     text-overflow: ellipsis;
   }
 }
+
+.brz-ed-sidebar .brz-ed-control__group {
+  & > .brz-ed-option {
+    margin-bottom: 15px;
+
+    &:first-child {
+      margin-bottom: 20px;
+    }
+  }
+}

@@ -1,7 +1,10 @@
+@import "../../variables";
+
 // --- Fonts
 $scroll-pane-margin: 6px;
-$toolbar-fonts-height: 217px; //235px;
+$toolbar-fonts-height: 200px; //235px;
 $toolbar-fonts-item-active: #3ebfe8;
+$font-item-offset: 10px;
 
 // --
 .brz-ed-toolbar__fonts {
@@ -32,7 +35,7 @@ $toolbar-fonts-item-active: #3ebfe8;
     display: flex;
     align-items: center;
     bottom: 14px;
-    left: 27px;
+    left: $font-item-offset;
     color: #818a91;
     font-weight: 600;
     font-size: 14px;
@@ -56,7 +59,7 @@ $toolbar-fonts-item-active: #3ebfe8;
   &__name {
     transition: color 0.2s linear;
     padding-bottom: 15px;
-    padding-left: 27px;
+    padding-left: $font-item-offset;
     line-height: 1;
     color: #fff;
     cursor: pointer;
@@ -65,9 +68,6 @@ $toolbar-fonts-item-active: #3ebfe8;
     &:hover {
       transition: color 0.2s linear;
       color: $toolbar-fonts-item-active;
-    }
-    &:first-child {
-      padding-top: 15px;
     }
   }
 

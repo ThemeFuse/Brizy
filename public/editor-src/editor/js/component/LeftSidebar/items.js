@@ -1,5 +1,5 @@
 import Config from "visual/global/Config";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
@@ -29,14 +29,23 @@ export default {
         },
         {
           type: "link",
+          icon: "nc-help-docs",
+          label: t("Support & Docs"),
+          link: urls.support,
+          linkTarget: "_blank",
+          roles: ["admin"]
+        },
+        {
+          type: "link",
           icon: "nc-alert-circle-que",
           label: t("Shortcuts"),
           link: "#",
           onClick: e => {
             e.preventDefault();
 
-            UIState.set("prompt", {
-              prompt: "key-helper"
+            Prompts.open({
+              mode: "stack",
+              prompt: "keyHelper"
             });
           }
         },

@@ -2,18 +2,19 @@ import React from "react";
 import UIState from "visual/global/UIState";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { FirstBlockAdder } from "visual/component/BlockAdders";
+import { FirstPopupBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
 import UIEvents from "visual/global/UIEvents";
 import { getStore } from "visual/redux/store";
 import { triggersAmountSelector } from "visual/redux/selectors";
 import { updateTriggers } from "visual/redux/actions";
-import { addFonts } from "visual/redux/actions2";
+import { addBlock, addGlobalBlock } from "visual/redux/actions2";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import defaultValue from "./defaultValue.json";
 import { uuid } from "visual/utils/uuid";
 import { stripSystemKeys, setIds } from "visual/utils/models";
+import { t } from "visual/utils/i18n";
 
 class PagePopup extends EditorComponent {
   static get componentId() {
@@ -51,15 +52,6 @@ class PagePopup extends EditorComponent {
     UIEvents.off("dnd.sort", this.handleDNDSort);
   }
 
-  blocksFilter(blocks) {
-    /* eslint-disable no-unused-vars */
-    return blocks.filter(
-      ([_, { data: blockData }]) =>
-        blockData.type === "SectionPopup" || blockData.type === "SectionPopup2"
-    );
-    /* eslint-enabled no-unused-vars */
-  }
-
   getPromptData() {
     return {
       prompt: "blocks",
@@ -68,21 +60,22 @@ class PagePopup extends EditorComponent {
       },
       tabProps: {
         blocks: {
-          showSidebar: false,
-          showCategories: false,
+          title: t("Popups"),
           showType: false,
-          showSearch: false,
-          type: "popups",
+          type: "popup",
           onAddBlocks: this.handleBlocksAdd
         },
-
         saved: {
+          title: t("Saved Popups"),
           showSearch: false,
+          type: "popup",
           blocksFilter: this.blocksFilter,
           onAddBlocks: this.handleBlocksAdd
         },
         global: {
+          title: t("Global Popups"),
           showSearch: false,
+          type: "popup",
           blocksFilter: this.blocksFilter,
           onAddBlocks: this.handleBlocksAdd
         }
@@ -104,18 +97,19 @@ class PagePopup extends EditorComponent {
     this.props.onChange(newValue);
   };
 
-  handleBlocksAdd = ({ fonts, block }) => {
+  handleBlocksAdd = data => {
     const { dispatch } = getStore();
+    const meta = { insertIndex: 0 };
+    const { block, ...rest } = data;
 
-    if (fonts) {
-      dispatch(addFonts(fonts));
+    if (block.type === "GlobalBlock") {
+      dispatch(addGlobalBlock(data, meta));
+    } else {
+      const blockStripped = stripSystemKeys(block);
+      const blockWithIds = setIds(blockStripped);
+
+      dispatch(addBlock({ block: blockWithIds, ...rest }, meta));
     }
-
-    const itemDataStripped = stripSystemKeys(block);
-    const itemDataWithIds = setIds(itemDataStripped);
-    this.patchValue({
-      items: [itemDataWithIds]
-    });
   };
 
   handlePromptOpen = () => {
@@ -143,10 +137,10 @@ class PagePopup extends EditorComponent {
     if (IS_EDITOR && v.items.length === 0) {
       return (
         <React.Fragment>
-          <FirstBlockAdder
+          <FirstPopupBlockAdder
             insertIndex={0}
             promptData={this.getPromptData()}
-            onAddBlocks={this.handleBlocksAdd}
+            onAddBlock={this.handleBlocksAdd}
           />
           <HotKeys
             keyNames={[

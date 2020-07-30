@@ -19,6 +19,9 @@
 
 // Section uses for full-height
 .brz-section__content {
+  > .brz-ed-border {
+    width: 100%;
+  }
   > .brz-ed-border,
   > .brz-ed-border > .brz-bg,
   > .brz-ed-border > .brz-bg > .brz-bg-content {
@@ -29,9 +32,6 @@
     flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: column;
-  }
-  .brz-container__wrap {
-    flex: 1;
   }
 }
 

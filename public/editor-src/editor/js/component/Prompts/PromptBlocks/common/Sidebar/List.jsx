@@ -3,12 +3,14 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
+const validate = v => v !== null && v !== undefined;
+
 export function List(props) {
   const { lists = [], counters = {}, value = "", onChange = () => {} } = props;
 
   return lists.map(
     ({ id, title, icon }) =>
-      counters[id] > 0 && (
+      validate(counters[id]) && (
         <div
           key={id}
           // usually t is called with a string literal.

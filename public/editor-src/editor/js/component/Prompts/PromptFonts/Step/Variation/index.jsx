@@ -3,10 +3,10 @@ import _ from "underscore";
 import { connect } from "react-redux";
 import { addFonts } from "visual/redux/actions2";
 import { uuid } from "visual/utils/uuid";
+import { pendingRequest } from "visual/utils/api/editor";
 import { weightTypes } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
-import { fakeRequest } from "visual/component/Prompts/common/utils";
 import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import ViewAdd from "./ViewAdd";
 import ViewEdit from "./ViewEdit";
@@ -107,7 +107,7 @@ class Variation extends Component {
       addLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState({
       mode: "add",
@@ -137,7 +137,7 @@ class Variation extends Component {
       error: null
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     if (!Object.values(files).some(file => Boolean(file))) {
       this.setState({
@@ -211,7 +211,7 @@ class Variation extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
     this.context.onChangePrev();
   };
 

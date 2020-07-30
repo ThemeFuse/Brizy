@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { InputFields } from "visual/component/Prompts/common/GlobalApps/StepsView";
-import { fakeRequest } from "visual/component/Prompts/common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 import { t } from "visual/utils/i18n";
 
 class Upload extends Component {
@@ -38,7 +38,7 @@ class Upload extends Component {
       nextLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     if (!fontName.trim()) {
       this.setState({
@@ -56,7 +56,7 @@ class Upload extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
     this.context.onChangePrev();
   };
 

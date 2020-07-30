@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Input as Control } from "visual/component/Controls/Input";
 import { String } from "visual/utils/string/specs";
 import { GetModel } from "visual/component/Options/Type";
@@ -13,23 +13,40 @@ export const InputText: Component = ({
   placeholder
 }) => {
   const [_value, setValue] = useState(value);
+  const lastUpdate = useRef(_value);
+
+  useEffect(() => {
+    if (lastUpdate.current !== value) {
+      lastUpdate.current = value;
+      setValue(value);
+    }
+  }, [value]);
 
   debouncedEffect(
     () => {
-      if (value !== _value) {
+      if (lastUpdate.current !== _value) {
+        lastUpdate.current = _value;
         onChange({ value: _value });
       }
     },
     1000,
-    [_value]
+    [onChange, _value]
   );
+
+  const handleBlur = useCallback(() => {
+    if (lastUpdate.current !== _value) {
+      lastUpdate.current = _value;
+      onChange({ value: _value });
+    }
+  }, [onChange, _value]);
 
   return (
     <Control
       className={className}
       onChange={setValue}
+      onBlur={handleBlur}
       value={_value}
-      size={config.size ?? "large"}
+      size={config.size ?? "auto"}
       placeholder={placeholder}
     />
   );

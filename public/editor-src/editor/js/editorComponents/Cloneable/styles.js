@@ -6,7 +6,10 @@ export function style(v, vs, vd) {
       interval: [
         "cssStyleDisplayBlock",
         "cssStyleVisibleMode|||preview",
-        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor",
+        "cssStyleCustomPosition",
+        "cssStyleCustomWidth",
+        "cssStyleOffset"
       ]
     }
   };
@@ -42,5 +45,19 @@ export function styleItem(v, vs, vd) {
       standart: ["cssStyleItemPadding"]
     }
   };
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleAnimation(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleAnimation",
+        "cssStyleAnimationDuration",
+        "cssStyleAnimationDelay"
+      ]
+    }
+  };
+
   return renderStyles({ v, vs, vd, styles });
 }

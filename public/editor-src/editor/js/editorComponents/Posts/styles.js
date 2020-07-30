@@ -1,129 +1,108 @@
-import classnames from "classnames";
-import { css } from "glamor";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-import { styleColor } from "visual/utils/style";
+import { renderStyles } from "visual/utils/cssStyle";
 
-export function styleClassName(v) {
-  const { className, gridColumn } = v;
-  let glamorObj;
+export function style(v, vs, vd) {
+  const styles = {
+    ".brz && .brz-posts__wrapper > .brz-posts__item": {
+      standart: ["cssStyleElementPostsItemWidth"]
+    },
 
-  if (IS_EDITOR) {
-    glamorObj = {
-      ".brz & ul.page-numbers": {
-        color: "var(--color)"
-      },
-      ".brz-ed--desktop &": {
-        gridTemplateColumns: "var(--gridTemplateColumn)",
-        gridGap: "var(--gridGap)",
+    // filter
+    ".brz && .brz-posts__filter-wrapper": {
+      standart: [
+        "cssStyleElementPostsFilterDisplay",
+        "cssStyleElementPostsFilterHorizontalAlign",
+        "cssStyleElementPostsFilterAfterSpacing"
+      ]
+    },
+    ".brz && .brz-posts__filter__item": {
+      standart: [
+        "cssStyleElementPostsFilterSpacing",
+        "cssStyleElementPostsFilterFontFamily",
+        "cssStyleElementPostsFilterFontSize",
+        "cssStyleElementPostsFilterLineHeight",
+        "cssStyleElementPostsFilterFontWeight",
+        "cssStyleElementPostsFilterLetterSpacing"
+      ]
+    },
+    ".brz && .brz-posts__filter__item:hover": {
+      standart: ["cssStyleElementPostsFilterColor"]
+    },
+    ".brz && .brz-posts__filter__item--style-1:hover": {
+      standart: [
+        "cssStyleElementPostsFilterPaddingFourFields",
+        "cssStyleElementPostsFilterBgColor",
+        "cssStyleElementPostsFilterBorder",
+        "cssStyleElementPostsFilterBorderRadius",
+        "cssStyleElementPostsFilterShadow"
+      ]
+    },
+    ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active": {
+      standart: [
+        "cssStyleElementPostsFilterActiveColor",
+        "cssStyleElementPostsFilterActiveBgColor",
+        "cssStyleElementPostsFilterActiveBorder",
+        "cssStyleElementPostsFilterActiveShadow"
+      ]
+    },
+    ".brz && .brz-posts__filter__item--style-1:first-child": {
+      standart: [
+        ...(IS_EDITOR
+          ? [
+              "cssStyleElementPostsFilterActiveColor",
+              "cssStyleElementPostsFilterActiveBgColor",
+              "cssStyleElementPostsFilterActiveBorder",
+              "cssStyleElementPostsFilterActiveShadow"
+            ]
+          : [])
+      ]
+    },
+    ".brz && .brz-posts__filter--style-2:hover": {
+      standart: [
+        "cssStyleElementPostsFilterPaddingFourFields",
+        "cssStyleElementPostsFilterBgColor",
+        "cssStyleElementPostsFilterBorder",
+        "cssStyleElementPostsFilterBorderRadius",
+        "cssStyleElementPostsFilterShadow",
+        "cssStyleDisplayInlineFlex"
+      ]
+    },
+    ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active": {
+      standart: ["cssStyleElementPostsFilterActiveColor"]
+    },
+    ".brz && .brz-posts__filter__item--style-2:first-child": {
+      standart: [
+        ...(IS_EDITOR ? ["cssStyleElementPostsFilterActiveColor"] : [])
+      ]
+    },
 
-        "& ul.page-numbers": {
-          marginTop: "var(--marginTop)"
-        }
-      },
-      ".brz-ed--tablet &": {
-        gridTemplateColumns: "var(--tabletGridTemplateColumn)",
-        gridGap: "var(--tabletGridGap)",
-
-        "& ul.page-numbers": {
-          marginTop: "var(--tabletMarginTop)"
-        }
-      },
-      ".brz-ed--mobile &": {
-        gridGap: "var(--mobileGridGap)",
-
-        "& ul.page-numbers": {
-          marginTop: "var(--mobileMarginTop)"
-        }
-      }
-    };
-  } else {
-    const { padding, paginationSpacing, tabletGridColumn } = v;
-
-    const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
-
-    const tabletColumnWidth =
-      tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
-    const tabletPadding = tabletSyncOnChange(v, "padding");
-    const tabletPaginationSpacing = tabletSyncOnChange(v, "paginationSpacing");
-
-    const mobilePadding = mobileSyncOnChange(v, "padding");
-    const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
-
-    glamorObj = {
-      ".brz &": {
-        gridTemplateColumns: `repeat(${gridColumn}, minmax(0, ${columnWidth}))`,
-        gridGap: `${padding}px`
-      },
-      ".brz & ul.page-numbers": {
-        color: styleColor({
-          v,
-          device: "desktop",
-          state: "normal",
-          prefix: "paginationColor"
-        }),
-        marginTop: `${paginationSpacing}px`
-      },
-      "@media (max-width: 991px)": {
-        ".brz &": {
-          gridTemplateColumns: `repeat(${tabletGridColumn}, minmax(0, ${tabletColumnWidth}))`,
-          gridGap: `${tabletPadding}px`
-        },
-        ".brz & ul.page-numbers": {
-          marginTop: `${tabletPaginationSpacing}px`
-        }
-      },
-      "@media (max-width: 767px)": {
-        ".brz &": {
-          gridTemplateRows: "repeat(1, 1fr)",
-          gridTemplateColumns: "repeat(1, 100%)",
-          gridGap: `${mobilePadding}px 0`
-        },
-        ".brz & ul.page-numbers": {
-          marginTop: `${mobilePaginationSpacing}px`
-        }
-      }
-    };
-  }
-
-  const glamorClassName = String(css(glamorObj));
-
-  return classnames(
-    "brz-posts",
-    { [`brz-posts__col-${gridColumn}`]: IS_EDITOR },
-    glamorClassName,
-    className
-  );
-}
-
-export function styleCSSVars(v) {
-  if (IS_PREVIEW) return;
-
-  const { gridColumn, padding, paginationSpacing, tabletGridColumn } = v;
-
-  const columnWidth = gridColumn === 1 ? "100%" : `${100 / gridColumn}%`;
-
-  const tabletColumnWidth =
-    tabletGridColumn === 1 ? "100%" : `${100 / tabletGridColumn}%`;
-  const tabletPadding = tabletSyncOnChange(v, "padding");
-  const tabletPaginationSpacing = tabletSyncOnChange(v, "paginationSpacing");
-
-  const mobilePadding = mobileSyncOnChange(v, "padding");
-  const mobilePaginationSpacing = mobileSyncOnChange(v, "paginationSpacing");
-
-  return {
-    "--gridTemplateColumn": `repeat(${gridColumn}, minmax(0, ${columnWidth}))`,
-    "--gridGap": `${padding}px`,
-    "--color": styleColor({
-      v,
-      device: "desktop",
-      state: "normal",
-      prefix: "paginationColor"
-    }),
-    "--marginTop": `${paginationSpacing}px`,
-    "--tabletGridTemplateColumn": `repeat(${tabletGridColumn}, minmax(0, ${tabletColumnWidth}))`,
-    "--tabletGridGap": `${tabletPadding}px`,
-    "--tabletMarginTop": `${tabletPaginationSpacing}px`,
-    "--mobileGridGap": `${mobilePadding}px 0`,
-    "--mobileMarginTop": `${mobilePaginationSpacing}px`
+    // pagination
+    ".brz && ul.page-numbers": {
+      standart: ["cssStyleElementPostsPaginationSpacing"]
+    },
+    ".brz && ul.page-numbers a.page-numbers:hover": {
+      standart: ["cssStyleElementPostsPaginationColor"]
+    },
+    ".brz && ul.page-numbers span.page-numbers:hover": {
+      standart: ["cssStyleElementPostsPaginationColor"]
+    },
+    ".brz && ul.page-numbers .page-numbers": {
+      standart: [
+        ...(IS_EDITOR ? ["cssStyleElementPostsPaginationLinksOff"] : []),
+        "cssStyleElementPostsPaginationFontFamily",
+        "cssStyleElementPostsPaginationFontSize",
+        "cssStyleElementPostsPaginationLineHeight",
+        "cssStyleElementPostsPaginationFontWeight",
+        "cssStyleElementPostsPaginationLetterSpacing"
+      ]
+    },
+    ".brz && ul.page-numbers .page-numbers.current:hover::before": {
+      standart: [
+        "cssStyleElementPostsPaginationBgColor",
+        "cssStyleElementPostsPaginationBorder",
+        "cssStyleElementPostsPaginationBorderRadius"
+      ]
+    }
   };
+
+  return renderStyles({ v, vs, vd, styles });
 }

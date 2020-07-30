@@ -1,4 +1,4 @@
-import { MValue, onUndefined, ToValue } from "visual/utils/value";
+import { isNullish, MValue, onUndefined, ToValue } from "visual/utils/value";
 import { toArray } from "visual/utils/array";
 import { toObject } from "visual/utils/object";
 
@@ -9,7 +9,7 @@ export type Setter<V, M> = (v: V, m: M) => M;
  * Return value from model under specific key
  *  - if model is not an object, return orElse
  *  - if model key is missing, return orElse
- *  - if model key is undefined, return orElse
+ *  - if model key is undefined or null, return orElse
  *
  * @param {string} key
  * @param {object} m
@@ -26,7 +26,7 @@ export function get<K extends keyof M, M>(
 
 /**
  * Set value under specific key in model
- *  - if value is undefined, return original model
+ *  - if value is undefined or null, return original model
  *
  * @param {string} key
  * @param {*} value
@@ -34,7 +34,7 @@ export function get<K extends keyof M, M>(
  * @return {object}
  */
 export function set<K extends keyof M, M>(key: K, value: M[K], m: M): M {
-  return value === undefined || value === get<K, M>(key, m)
+  return isNullish(value) || value === get<K, M>(key, m)
     ? m
     : { ...toObject(m), [key]: value };
 }

@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
-import SortableElement from "visual/component/Sortable/SortableElement";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";

@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
+import { validateKeyByProperty } from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import SortableElement from "visual/component/Sortable/SortableElement";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Background from "visual/component/Background";
@@ -11,7 +12,7 @@ import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { blocksDataSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarExtendConfig from "./toolbarExtend";
@@ -22,9 +23,10 @@ import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { styleRow, styleBg, styleContainer } from "./styles";
+import { styleRow, styleBg, styleContainer, styleAnimation } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { styleSizeSize } from "visual/utils/style2";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -36,6 +38,8 @@ class Row extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   mounted = false;
 
@@ -182,9 +186,9 @@ class Row extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value.globalBlockId
-          ].data;
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
           isGlobal = true;
         }
 
@@ -213,14 +217,12 @@ class Row extends EditorComponent {
       customID,
       customClassName,
       showToolbar,
-      animationName,
-      animationDuration,
-      animationDelay,
       linkType,
       linkPopup,
       popups,
       cssIDPopulation,
-      cssClassPopulation
+      cssClassPopulation,
+      customAttributes
     } = v;
 
     const classNameRowContainer = classnames(
@@ -234,17 +236,28 @@ class Row extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
     if (showToolbar === "off") {
       return (
         <SortableElement type="row" useHandle={true}>
-          <Animation
-            className={classNameRowContainer}
-            name={animationName !== "none" && animationName}
-            duration={animationDuration}
-            delay={animationDelay}
-          >
-            {this.renderContent(v, vs, vd)}
-          </Animation>
+          {sortableElementAtts => (
+            <Animation
+              component={"div"}
+              componentProps={sortableElementAtts}
+              className={classNameRowContainer}
+              animationClass={animationClassName}
+            >
+              {this.renderContent(v, vs, vd)}
+            </Animation>
+          )}
         </SortableElement>
       );
     }
@@ -252,36 +265,41 @@ class Row extends EditorComponent {
     return (
       <Fragment>
         <SortableElement type="row" useHandle={true}>
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Animation
-              className={classNameRowContainer}
-              customID={cssIDPopulation === "" ? customID : cssIDPopulation}
-              name={animationName !== "none" && animationName}
-              duration={animationDuration}
-              delay={animationDelay}
-            >
-              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                <Roles
-                  allow={["admin"]}
-                  fallbackRender={() => this.renderContent(v, vs, vd)}
-                >
-                  <ContainerBorder
-                    ref={this.containerBorderRef}
-                    color="grey"
-                    activeBorderStyle="dotted"
-                    activateOnContentClick={false}
-                    showButton={true}
-                    buttonPosition="topLeft"
-                    renderButtonWrapper={this.renderToolbar}
+          {sortableElementAtts => (
+            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+              <Animation
+                component={"div"}
+                componentProps={{
+                  ...parseCustomAttributes(customAttributes),
+                  ...sortableElementAtts,
+                  id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                  className: classNameRowContainer
+                }}
+                animationClass={animationClassName}
+              >
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                  <Roles
+                    allow={["admin"]}
+                    fallbackRender={() => this.renderContent(v, vs, vd)}
                   >
-                    <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                      {this.renderContent(v, vs, vd)}
-                    </ToolbarExtend>
-                  </ContainerBorder>
-                </Roles>
-              </ContextMenu>
-            </Animation>
-          </CustomCSS>
+                    <ContainerBorder
+                      ref={this.containerBorderRef}
+                      color="grey"
+                      activeBorderStyle="dotted"
+                      activateOnContentClick={false}
+                      showButton={true}
+                      buttonPosition="topLeft"
+                      renderButtonWrapper={this.renderToolbar}
+                    >
+                      <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                        {this.renderContent(v, vs, vd)}
+                      </ToolbarExtend>
+                    </ContainerBorder>
+                  </Roles>
+                </ContextMenu>
+              </Animation>
+            </CustomCSS>
+          )}
         </SortableElement>
         {popups.length > 0 &&
           linkType === "popup" &&
@@ -295,9 +313,6 @@ class Row extends EditorComponent {
     const {
       className,
       tagName,
-      animationName,
-      animationDuration,
-      animationDelay,
       linkExternalType,
       linkType,
       linkAnchor,
@@ -309,7 +324,8 @@ class Row extends EditorComponent {
       customClassName,
       customID,
       cssIDPopulation,
-      cssClassPopulation
+      cssClassPopulation,
+      customAttributes
     } = v;
 
     const linkHrefs = {
@@ -330,16 +346,28 @@ class Row extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      className: classNameRowContainer
+    };
+
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
-            tagName={tagName}
-            className={classNameRowContainer}
-            customID={cssIDPopulation === "" ? customID : cssIDPopulation}
-            name={animationName !== "none" && animationName}
-            duration={animationDuration}
-            delay={animationDelay}
+            component={tagName}
+            componentProps={props}
+            animationClass={animationClassName}
           >
             {this.renderContent(v, vs, vd)}
             {linkHrefs[linkType] !== "" && (

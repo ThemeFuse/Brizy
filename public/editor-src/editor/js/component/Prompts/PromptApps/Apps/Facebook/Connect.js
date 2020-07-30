@@ -3,8 +3,8 @@ import { t } from "visual/utils/i18n";
 import { Connect } from "../../../common/GlobalApps/StepsView";
 import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
 import { Context } from "../../../common/GlobalApps/Context";
-import { fakeRequest } from "../../../common/utils";
 import validation from "./validation";
+import { pendingRequest } from "visual/utils/api/editor";
 
 const apiKeys = [{ name: "appid", title: "App ID" }];
 
@@ -56,7 +56,7 @@ class FacebookConnect extends Component {
 
     if (keysValue.some(key => !key)) {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: "Fields are empty",
@@ -110,7 +110,7 @@ class FacebookConnect extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
     this.context.onChangePrev();
   };
 

@@ -10,11 +10,14 @@
   "style": {
     "className": "",
 
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "roboto"
-    },
     "fontSize": 42,
     "fontWeight": 700,
     "lineHeight": 1.3,
@@ -33,9 +36,6 @@
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": 30,
     "tabletFontWeight": 700,
     "tabletLineHeight": 1,
@@ -45,9 +45,6 @@
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": 30,
     "mobileFontWeight": 700,
     "mobileLineHeight": 1,

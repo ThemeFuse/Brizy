@@ -31,7 +31,13 @@ class AccordionItems extends EditorArrayComponent {
   }
 
   getItemProps(itemData, itemIndex, items) {
-    const { meta, activeAccordionItem, navIcon, collapsible } = this.props;
+    const {
+      meta,
+      activeAccordionItem,
+      navIcon,
+      collapsible,
+      animationClassName
+    } = this.props;
     const { visibleTag } = this.state;
 
     const { tags = "" } = itemData.value;
@@ -79,6 +85,7 @@ class AccordionItems extends EditorArrayComponent {
       activeAccordionItem: activeAccordionItem === itemIndex,
       navIcon,
       collapsible,
+      animationClassName,
       toolbarExtend,
       tag,
       visibleTag: this.state.visibleTag,
@@ -144,7 +151,14 @@ class AccordionItems extends EditorArrayComponent {
             return (
               <Toolbar {...toolbarExtendFilter} key={index}>
                 <li
-                  className={className}
+                  className={
+                    className +
+                    `${
+                      this.state.visibleTag === tag
+                        ? " brz-accordion__filter__item--active"
+                        : ""
+                    }`
+                  }
                   data-filter={tag === "All" ? "*" : tag}
                   onClick={() => {
                     this.handleFilterClick(tag);

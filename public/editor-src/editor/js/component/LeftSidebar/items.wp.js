@@ -1,14 +1,13 @@
 import Config from "visual/global/Config";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_TEMPLATE } from "visual/utils/models";
 
 const urls = Config.get("urls");
-const wp = Config.get("wp");
 const proEnabled = Boolean(Config.get("pro"));
 
 export default {
@@ -30,7 +29,7 @@ export default {
         {
           type: "wpFeatureImage",
           label: t("Featured Image"),
-          disabled: wp.isTemplate
+          disabled: IS_TEMPLATE
         }
       ]
     },
@@ -43,25 +42,25 @@ export default {
         {
           type: "link",
           icon: "nc-unlock",
-          linkTarget: "_blank",
           label: t("Upgrade to Pro"),
           link: urls.upgradeToPro,
+          linkTarget: "_blank",
           disabled: proEnabled
         },
         {
           type: "link",
-          icon: "nc-bug",
-          linkTarget: "_blank",
-          label: t("Submit an Issue"),
-          link: urls.support,
-          roles: ["admin"]
+          icon: "nc-info",
+          label: t("About Brizy"),
+          link: urls.about,
+          linkTarget: "_blank"
         },
         {
           type: "link",
-          icon: "nc-info",
+          icon: "nc-help-docs",
+          label: t("Support & Docs"),
+          link: urls.support,
           linkTarget: "_blank",
-          label: t("About Brizy"),
-          link: urls.about
+          roles: ["admin"]
         },
         {
           type: "link",
@@ -71,17 +70,18 @@ export default {
           onClick: e => {
             e.preventDefault();
 
-            UIState.set("prompt", {
-              prompt: "key-helper"
+            Prompts.open({
+              mode: "stack",
+              prompt: "keyHelper"
             });
           }
         },
         {
           type: "link",
           icon: "nc-cog",
-          linkTarget: "_blank",
           label: t("Plugin Settings"),
           link: urls.pluginSettings,
+          linkTarget: "_blank",
           roles: ["admin"]
         },
         {

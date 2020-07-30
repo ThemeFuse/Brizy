@@ -1,5 +1,5 @@
 // Simple Request
-export { makeUrl, parseJSON, fakeRequest } from "./Request";
+export { makeUrl, parseJSON } from "./Request";
 
 // Fields
 export { getEmptyField, getFields, isMaxFields, substrString } from "./Fields";

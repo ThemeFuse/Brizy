@@ -16,11 +16,12 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarTypographyLabel",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -34,26 +35,28 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColorLabel",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(labelBgColorHex, v.labelBgColorOpacity)
-              : hexToRgba(labelColorHex, v.labelColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(labelBgColorHex, v.labelBgColorOpacity)
+                : hexToRgba(labelColorHex, v.labelColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "color",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
+              id: "tabLabelColor",
               label: t("Color"),
               options: [
                 {

@@ -11,13 +11,15 @@ export function getItems({ v, device }) {
   return [
     {
       id: dvk("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-star",
+      type: "popover-dev",
+      config: {
+        icon: "nc-star"
+      },
       position: 70,
       options: [
         {
-          id: dvk("currentShortcodeTabs"),
-          type: "tabs",
+          id: "currentShortcodeTabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("currentShortcodeTab"),

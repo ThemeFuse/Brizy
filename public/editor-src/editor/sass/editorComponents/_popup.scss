@@ -5,7 +5,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  z-index: z("toolbar");
+  z-index: z("section-popup");
 
   &__close {
     position: absolute;
@@ -40,7 +40,7 @@
     0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) z-index;
 
   &.brz-popup--opened {
-    z-index: z("toolbar");
+    z-index: z("section-popup-opened");
     visibility: visible;
     transform: translate(0);
     opacity: 1;

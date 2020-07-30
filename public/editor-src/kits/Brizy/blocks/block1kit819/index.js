@@ -302,7 +302,7 @@ module.exports = {
                                                                                     "text",
                                                                                     "iconText--text"
                                                                                 ],
-                                                                                "text": "<h5 class=\"brz-mb-lg-10 brz-tp-heading5\"><span class=\"brz-cp-color2\">Release &amp; Marketing</span></h5><p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\">This will shorten the time needed to build your dream website. It\u2019s easy-brizy!</span></p>"
+                                                                                "text": "<h5 class=\"brz-tp-heading5 brz-mb-lg-10\"><span class=\"brz-cp-color2\"><span>Release &amp; Marketing</span></span></h5><p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>This will shorten the time needed to build your dream website. It\u2019s easy!</span></span></p>"
                                                                             }
                                                                         }
                                                                     ]

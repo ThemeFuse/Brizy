@@ -131,7 +131,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -185,7 +185,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control.</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>It is a front-end page builder where what you see is what you get. We designed it so you can be in complete control.</span></span></p>"
                                                                 }
                                                             }
                                                         ]

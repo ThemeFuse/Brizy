@@ -13,16 +13,34 @@ import defaultValue from "./defaultValue.json";
 const resizerPoints = ["bottomCenter"];
 const resizerRestrictions = {
   height: {
-    min: 10,
-    max: Infinity
+    px: {
+      min: 10,
+      max: Infinity
+    },
+    "%": {
+      min: 10,
+      max: Infinity
+    }
   },
   tabletHeight: {
-    min: 10,
-    max: Infinity
+    px: {
+      min: 10,
+      max: Infinity
+    },
+    "%": {
+      min: 10,
+      max: Infinity
+    }
   },
   mobileHeight: {
-    min: 10,
-    max: Infinity
+    px: {
+      min: 10,
+      max: Infinity
+    },
+    "%": {
+      min: 10,
+      max: Infinity
+    }
   }
 };
 

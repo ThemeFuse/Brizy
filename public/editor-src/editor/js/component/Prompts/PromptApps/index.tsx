@@ -1,4 +1,5 @@
 import React, { Component, ReactElement } from "react";
+import { noop } from "underscore";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import Integration from "./Integration";
@@ -12,16 +13,34 @@ const TABS = [
   }
 ];
 
-class PromptApps extends Component {
+type Props = {
+  service: string;
+  group: string;
+  opened: boolean;
+  onClose: () => void;
+}
+
+class PromptApps extends Component<Props> {
   static defaultProps = {
-    value: {
-      service: "facebook",
-      group: "social"
-    }
+    service: "facebook",
+    group: "social",
+    opened: false,
+    onClose: noop
   };
 
   render(): ReactElement {
-    return <Tabs {...this.props} tabs={TABS} currentTab="app" />;
+    const { service, group, opened, onClose } = this.props;
+
+    return (
+      <Tabs
+        currentTab="app"
+        service={service}
+        group={group}
+        opened={opened}
+        tabs={TABS}
+        onClose={onClose}
+      />
+    );
   }
 }
 

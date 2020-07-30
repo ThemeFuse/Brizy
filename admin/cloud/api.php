@@ -81,6 +81,9 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 		if ( $token = $this->getClient()->signIn( $data->email, $data->password ) ) {
 
+			// this is important when you delete block from cloud the local blocks
+			// will be deleted based on this valued
+			$this->project->setCloudAccountId( $token );
 			$this->project->setCloudToken( $token );
 
 			$containers = $this->getClient()->getContainers();
@@ -110,7 +113,20 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		if ( $token = $this->getClient()->signUp( $data->firstName, $data->lastName, $data->email, $data->password, $data->confirmPassword ) ) {
+
+			// this is important when you delete block from cloud the local blocks
+			// will be deleted based on this valued
+			$this->project->setCloudAccountId( $token );
 			$this->project->setCloudToken( $token );
+
+			$containers = $this->getClient()->getContainers();
+
+			if ( isset( $containers[0] ) ) {
+				$this->project->setCloudContainer( $containers[0]->id );
+			} else {
+				$this->error( 400, 'Unable to obtain the container.' );
+			}
+
 			$this->project->saveStorage();
 			$this->success( [] );
 		} else {
@@ -122,6 +138,12 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 		$this->verifyNonce( self::nonce );
 
+		// clear version in case something gets wonrg.
+		Brizy_Admin_Cloud_Client::clearVersionCache();
+
+		// this is important when you delete block from cloud the local blocks
+		// will be deleted based on this valued
+		$this->project->setCloudAccountId( null );
 		$this->project->setCloudToken( null );
 		$this->project->saveStorage();
 
@@ -186,6 +208,6 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	 * @return null
 	 */
 	protected function getRequestNonce() {
-		return self::nonce;
+		return $this->param( 'hash' );
 	}
 }

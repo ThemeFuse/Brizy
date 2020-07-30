@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import T from "prop-types";
+import Prompts from "visual/component/Prompts";
 import { Typography as Control } from "visual/component/Controls/Typography";
-import * as FontType from "../../../../../utils/fonts/familyType";
+import * as FontType from "visual/utils/fonts/familyType";
 import * as FontWeight from "visual/utils/fonts/weight";
 import { fromGlobal, getModel, patchFontFamily } from "./componentUtils";
 import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
@@ -12,7 +13,6 @@ import {
   getWeightChoices
 } from "visual/utils/fonts";
 import { currentUserRole } from "visual/component/Roles";
-import UIState from "visual/global/UIState";
 import { t } from "visual/utils/i18n";
 import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
@@ -20,8 +20,9 @@ import * as Model from "visual/component/Options/types/dev/Typography/model";
 import { getConfig } from "visual/component/Options/types/dev/BoxShadow/utils";
 
 const openFontsUploader = () => {
-  UIState.set("prompt", {
-    prompt: "fonts"
+  Prompts.open({
+    prompt: "fonts",
+    mode: "single"
   });
 };
 

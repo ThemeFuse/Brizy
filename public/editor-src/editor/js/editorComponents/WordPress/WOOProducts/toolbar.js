@@ -1,6 +1,5 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import { toolbarElementWOOProductsOrder } from "visual/utils/toolbar";
 
 export default taxonomies => {
   return {
@@ -8,20 +7,22 @@ export default taxonomies => {
   };
 };
 
-const getItems = taxonomies => ({ v, device }) => {
+const getItems = taxonomies => ({ device }) => {
   const dvk = key => defaultValueKey({ key, device });
 
   return [
     {
-      id: dvk("toolbarWOOProducts"),
-      type: "popover",
+      id: "toolbarWOOProducts",
+      type: "popover-dev",
+      config: {
+        icon: "nc-woo-2"
+      },
       devices: "desktop",
-      icon: "nc-woo-2",
       position: 10,
       options: [
         {
-          id: dvk("WOOProductsTabs"),
-          type: "tabs",
+          id: "WOOProductsTabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("layoutTab"),
@@ -84,12 +85,16 @@ const getItems = taxonomies => ({ v, device }) => {
                     { title: t("ID"), value: "id" }
                   ]
                 },
-                toolbarElementWOOProductsOrder({
-                  v,
-                  device,
+                {
+                  id: "order",
                   devices: "desktop",
-                  state: "normal"
-                })
+                  label: t("Order"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "ASC", icon: "nc-up" },
+                    { value: "DESC", icon: "nc-down" }
+                  ]
+                }
               ]
             }
           ]
@@ -97,10 +102,11 @@ const getItems = taxonomies => ({ v, device }) => {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      roles: ["admin"],
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog"
+      },
       position: 110,
       options: [
         {

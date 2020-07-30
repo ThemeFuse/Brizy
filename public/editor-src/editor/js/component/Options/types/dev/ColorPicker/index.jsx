@@ -6,16 +6,15 @@ import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
-import { toPalette } from "visual/utils/color/toPalette";
+import * as Palette from "visual/utils/color/toPalette";
 import { toOpacity } from "visual/utils/cssProps/opacity";
+import * as Hex from "visual/utils/color/isHex";
 import { setHex, setPalette, setOpacity as _setOpacity } from "./model";
 import * as Utils from "./utils";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import { paletteHex } from "./utils";
 
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
-
-export const paletteHex = (id, palettes) =>
-  (palettes.find(p => p.id === id) || {}).hex;
 
 export class ColorPicker extends React.Component {
   static propTypes = {
@@ -64,13 +63,16 @@ export class ColorPicker extends React.Component {
    */
   static getModel = get => {
     const defaults = ColorPicker.defaultProps.value;
-    const palette = toPalette(defaults.palette, get("palette"));
+    const palette = Palette.read(get("palette")) ?? defaults.palette;
     return {
-      hex: paletteHex(palette, paletteColors()) || get("hex") || defaults.hex,
+      hex:
+        paletteHex(palette, paletteColors()) ??
+        Hex.read(get("hex")) ??
+        defaults.hex,
       opacity: toOpacity(get("opacity"), defaults.opacity),
       palette: palette,
       tempOpacity: toOpacity(get("tempOpacity"), defaults.tempOpacity),
-      tempPalette: toPalette(defaults.tempPalette, get("tempPalette"))
+      tempPalette: Palette.read(get("tempPalette")) ?? defaults.tempPalette
     };
   };
 

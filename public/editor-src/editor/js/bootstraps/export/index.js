@@ -7,7 +7,7 @@ import { renderStatic } from "glamor/server";
 import cheerio from "cheerio";
 import deepMerge from "deepmerge";
 
-import Config from "visual/global/Config";
+import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 
 import {
   parsePage,
@@ -24,6 +24,7 @@ import {
   projectFontsData,
   getDefaultFont
 } from "visual/utils/fonts";
+import { getBlocksInPage } from "visual/utils/blocks";
 
 import { createStore } from "visual/redux/store";
 import { hydrate } from "visual/redux/actions";
@@ -39,7 +40,7 @@ import addCustomCSS from "./transforms/addCustomCSS";
 import changeRichText from "./transforms/changeRichText";
 import changeRichTextDCColor from "./transforms/changeRichTextDCColor";
 import extractPopups from "./transforms/extractPopups";
-import preventAbuse from "./transforms/preventAbuse";
+import dynamicContent from "./transforms/dynamicContent";
 
 import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
@@ -55,11 +56,11 @@ export default function main({
 }) {
   const page = pages
     .map(parsePage)
-    .find(page => (pageId ? page.id === pageId : page.is_index));
+    .find(page => (pageId ? page.id === Number(pageId) : page.is_index));
   const globalBlocks = globalBlocks_
     .map(parseGlobalBlock)
-    .reduce((acc, { uid, data, dataVersion }) => {
-      acc[uid] = { id: uid, data, dataVersion };
+    .reduce((acc, { uid, data, rules, position, status, dataVersion }) => {
+      acc[uid] = { id: uid, data, rules, position, status, dataVersion };
       return acc;
     }, {});
 
@@ -91,12 +92,14 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   const project = parseProject(_project);
   const { fonts, font: projectDefaultFont } = project.data;
 
+  const blocks = getBlocksInPage(page, globalBlocks);
+
   // NEW FONTS FOUND
   // some fonts are found in models
   // that are not present in project
   // we need to find them in google
   // and add them to the project
-  const parsedFonts = parseFonts(page, project, globalBlocks);
+  const parsedFonts = parseFonts(blocks, project);
   let blocksFonts = [];
 
   getBlocksStylesFonts(parsedFonts, fonts).forEach(({ type, family }) => {
@@ -121,7 +124,6 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
       project,
       fonts: _fonts,
       globalBlocks,
-      savedBlocks: {},
       projectStatus: {}
     })
   );
@@ -133,13 +135,14 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   css.isServer = true;
   // ===========
 
+  const dbValue = pageDataDraftBlocksSelector(reduxState);
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
         {IS_GLOBAL_POPUP ? (
-          <PagePopup dbValue={reduxState.page.data} reduxState={reduxState} />
+          <PagePopup dbValue={dbValue} reduxState={reduxState} />
         ) : (
-          <Page dbValue={reduxState.page.data} reduxState={reduxState} />
+          <Page dbValue={dbValue} reduxState={reduxState} />
         )}
       </Provider>
     )
@@ -214,16 +217,12 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   changeRichText($pageHTML);
   extractPopups($pageHTML);
 
-  if (TARGET !== "WP") {
-    const { isApproved } = Config.get("user");
-    if (!isApproved) {
-      preventAbuse($pageHTML);
-    }
-  }
+  const head = $pageHTML("head").html();
+  const body = dynamicContent($pageHTML("body").html());
 
   return {
-    head: $pageHTML("head").html(),
-    body: $pageHTML("body").html()
+    head,
+    body
   };
 }
 
@@ -231,15 +230,14 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
  * parseFonts() returns arrays of fonts
  * used in page and project [{ family: "lato", type: "google" }]
  */
-function parseFonts(page, project, globalBlocks) {
+function parseFonts(blocks, project) {
   if (parseFonts.cache) {
     return parseFonts.cache;
   }
 
   // get fonts from page
   const pageFonts = getUsedModelsFonts({
-    models: page.data,
-    globalBlocks
+    models: blocks
   });
 
   // get fonts from styles

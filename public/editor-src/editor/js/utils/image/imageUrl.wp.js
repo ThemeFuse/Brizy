@@ -1,13 +1,12 @@
 import Config from "visual/global/Config";
 import { downloadImageFromCloud } from "visual/utils/api/editor";
 import { objectToQueryString } from "visual/utils/url";
-import nonWPImageUrl, { getFilter } from "./imageUrl.js";
+import cloudImageUrl, { getFilter } from "./imageUrl.js";
+import { imageAttachments } from "./imageAttachments";
 
-const { pageAttachments } = Config.get("wp");
 const siteUrl = Config.get("urls").site;
-
-const pendingRequests = {};
 const imageUrlPrefix = siteUrl.includes("?") ? `${siteUrl}&` : `${siteUrl}/?`;
+const pendingRequests = {};
 
 export default function imageUrl(
   imageSrc,
@@ -23,13 +22,14 @@ export default function imageUrl(
   if (IS_EDITOR) {
     const filter = getFilter(options);
     const imageDownloaded =
-      pageAttachments.images[imageSrc] || imageSrc.indexOf("wp-") === 0;
+      imageAttachments.has(imageSrc) || imageSrc.indexOf("wp-") === 0;
 
     if (imageDownloaded) {
+      const prefix = Config.get("prefix") ?? "brizy";
       const queryString = objectToQueryString({
-        brizy_media: imageSrc,
-        brizy_crop: filter,
-        brizy_post: Config.get("wp").page
+        [`${prefix}_media`]: imageSrc,
+        [`${prefix}_crop`]: filter,
+        [`${prefix}_post`]: Config.get("wp").page
       });
 
       return imageUrlPrefix + queryString;
@@ -39,18 +39,19 @@ export default function imageUrl(
 
         downloadImageFromCloud(imageSrc).then(() => {
           pendingRequests[imageSrc] = false;
-          pageAttachments.images[imageSrc] = true;
+          imageAttachments.add(imageSrc);
         });
       }
 
-      return nonWPImageUrl(imageSrc, options);
+      return cloudImageUrl(imageSrc, options);
     }
   } else {
     const filter = getFilter(options);
+    const prefix = Config.get("prefix") ?? "brizy";
     const queryString = objectToQueryString({
-      brizy_media: imageSrc,
-      brizy_crop: filter,
-      brizy_post: Config.get("wp").page
+      [`${prefix}_media`]: imageSrc,
+      [`${prefix}_crop`]: filter,
+      [`${prefix}_post`]: Config.get("wp").page
     });
 
     return imageUrlPrefix + queryString;

@@ -130,8 +130,8 @@ module.exports = {
                         }
                     ],
                     "paddingType": "ungrouped",
-                    "paddingTop": 15,
-                    "paddingBottom": 35,
+                    "paddingTop": 90,
+                    "paddingBottom": 90,
                     "padding": 75,
                     "bgColorHex": "",
                     "bgColorOpacity": 0.9,
@@ -150,7 +150,15 @@ module.exports = {
                     "mobilePaddingBottomSuffix": "px",
                     "tempMobilePaddingBottomSuffix": "px",
                     "mobilePaddingBottom": 80,
-                    "tempMobilePaddingBottom": 80
+                    "tempMobilePaddingBottom": 80,
+                    "paddingTopSuffix": "px",
+                    "tempPaddingTopSuffix": "px",
+                    "paddingSuffix": "px",
+                    "tempPaddingSuffix": "px",
+                    "tempPaddingTop": 90,
+                    "paddingBottomSuffix": "px",
+                    "tempPaddingBottomSuffix": "px",
+                    "tempPaddingBottom": 90
                 }
             },
             {
@@ -197,8 +205,8 @@ module.exports = {
                         }
                     ],
                     "paddingType": "ungrouped",
-                    "paddingTop": 60,
-                    "paddingBottom": 60,
+                    "paddingTop": 90,
+                    "paddingBottom": 90,
                     "padding": 75,
                     "bgColorPalette": "color8",
                     "bgColorHex": "",
@@ -217,7 +225,15 @@ module.exports = {
                     "mobilePaddingBottomSuffix": "px",
                     "tempMobilePaddingBottomSuffix": "px",
                     "mobilePaddingBottom": 80,
-                    "tempMobilePaddingBottom": 80
+                    "tempMobilePaddingBottom": 80,
+                    "paddingTopSuffix": "px",
+                    "tempPaddingTopSuffix": "px",
+                    "paddingSuffix": "px",
+                    "tempPaddingSuffix": "px",
+                    "tempPaddingTop": 90,
+                    "paddingBottomSuffix": "px",
+                    "tempPaddingBottomSuffix": "px",
+                    "tempPaddingBottom": 90
                 }
             }
         ],

@@ -112,6 +112,9 @@
 .brz-ed-btn-width-3 {
   min-width: 102px;
 }
+.brz-ed-btn-width-4 {
+  min-width: 116px;
+}
 
 // Colors
 //
@@ -151,13 +154,13 @@
 
 // Teal
 .brz-ed-btn-teal {
-  border-color: $floating-button-tail !important;
+  border-color: transparent !important;
   background-color: $floating-button-tail !important;
   color: #fff !important;
 
   &:hover {
-    border-color: #35a9d6 !important;
-    background-color: #35a9d6 !important;
+    border-color: transparent !important;
+    background-color: rgba($floating-button-tail, 0.8) !important;
   }
 }
 .brz-ed-btn-teal-outline {
@@ -210,13 +213,13 @@
 // Gray
 .brz-ed-btn-gray {
   border-color: transparent;
-  background-color: rgba(#292e37, 0.5);
+  background-color: #818a91;
   color: #fff !important;
 
   &:hover,
   &:focus {
     border-color: transparent;
-    background-color: rgba(#292e37, 0.5);
+    background-color: rgba(129, 138, 145, 0.8);
   }
 }
 .brz-ed-btn-gray-outline {

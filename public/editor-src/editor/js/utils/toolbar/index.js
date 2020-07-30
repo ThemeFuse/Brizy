@@ -2,14 +2,7 @@
 export { toolbarBgImage } from "./toolbarBgImage";
 
 // BG Video
-export {
-  toolbarBgVideoUrl,
-  toolbarBgVideoLoop,
-  toolbarBgVideoStart
-} from "./toolbarBgVideo";
-
-// BG Map
-export { toolbarBgMapAddress, toolbarBgMapZoom } from "./toolbarBgMap";
+export { toolbarBgVideoUrl } from "./toolbarBgVideo";
 
 // Border Radius
 export {
@@ -54,21 +47,11 @@ export {
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkPopup,
-  toolbarLinkUpload,
-  toolbarActionClosePopup
+  toolbarLinkUpload
 } from "./toolbarLink";
 
-// Horizontal Align
-export { toolbarVerticalAlign } from "./toolbarAlign";
-
 // Size
-export {
-  toolbarSizeWidthWidthPercent,
-  toolbarSizeHeightHeightPx,
-  toolbarSizeSizeSizePercent,
-  toolbarSizeWidthSizePercent,
-  toolbarSizeContainerSize
-} from "./toolbarSize";
+export { toolbarSizeContainerSize } from "./toolbarSize";
 
 // Padding
 export {
@@ -81,14 +64,10 @@ export { toolbarMargin } from "./toolbarMargin";
 
 // Show on Devices
 export {
-  toolbarShowOnDesktop,
   toolbarShowOnTablet,
   toolbarShowOnMobile,
   toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
-
-// zIndex
-export { toolbarZIndex } from "./toolbarZIndex";
 
 // Custom CSS Class
 export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
@@ -96,17 +75,8 @@ export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
 // Custom CSS
 export { toolbarCustomCSS } from "./toolbarCustomCSS";
 
-//Custom Attributes
-export { toolbarAttributes } from "./toolbarAttributes";
-
 // Entrance Animation
 export { toolbarEntranceAnimation } from "./toolbarAnimation";
-
-// Hover Transition
-export { toolbarHoverTransition } from "./toolbarHoverTransition";
-
-// Tags
-export { toolbarTags } from "./toolbarTags";
 
 // Filter
 export {
@@ -122,11 +92,9 @@ export {
   toolbarDisabledAdvancedSettings,
   toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
-  toolbarDisabledShowOnDesktop,
   toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile,
-  toolbarDisabledZIndex,
   toolbarDisabledPadding,
   toolbarDisabledMargin,
   toolbarDisabledDuplicate,
@@ -134,61 +102,23 @@ export {
 } from "./toolbarDisabled";
 
 // Element Containers
-export {
-  toolbarElementContainerTypeAll,
-  toolbarElementContainerTypeImageMap,
-  toolbarElementContainerType,
-  toolbarElementContainerTypeResponsive
-} from "./toolbarElementContainer";
+export { toolbarElementContainerTypeImageMap } from "./toolbarElementContainer";
 
 // Element Section
 export {
   toolbarElementSectionBoxShadow,
   toolbarElementSectionSaved,
-  toolbarElementSectionSlider,
-  toolbarElementSectionSliderColor,
-  toolbarElementSectionGlobal,
-  toolbarElementSectionHeaderType,
-  toolbarElementSectionHeightStyle
+  toolbarElementSectionGlobal
 } from "./toolbarElementSection";
-
-// Element Row
-export { toolbarElementRowColumnsHeight } from "./toolbarElementRow";
 
 // Element Video
 export {
   toolbarElementVideoUpload,
-  toolbarElementVideoControls,
-  toolbarElementVideoStart,
-  toolbarElementVideoEnd,
   toolbarElementVideoPlaySize
 } from "./toolbarElementVideo";
 
-// Element Video Playlist
-export {
-  toolbarElementVideoPlaylistSizeWidthPixel,
-  toolbarElementVideoPlaylistItemImageSize,
-  toolbarElementVideoPlaylistItemGrid
-} from "./toolbarElementVideoPlaylist";
-
-// Element Countdown
-export {
-  toolbarElementCountdownDate,
-  toolbarElementCountdownHour,
-  toolbarElementCountdownMinute,
-  toolbarElementCountdownTimeZone,
-  toolbarElementCountdownLanguage,
-  toolbarElementCountdown2Style,
-  toolbarElementCountdown2Redirect,
-  toolbarElementCountdown2Actions
-} from "./toolbarElementCountdown";
-
 //Element Counter
-export {
-  toolbarElementCounterStart,
-  toolbarElementCounterEnd,
-  toolbarElementCounterStyles
-} from "./toolbarElementCounter";
+export { toolbarElementCounterStyles } from "./toolbarElementCounter";
 
 // Element SoundCloud
 export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
@@ -196,32 +126,13 @@ export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 // Element Cloneable
 export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 
-// Element Line
-export {
-  toolbarElementLineBorderStyle,
-  toolbarElementLineBorderWidth
-} from "./toolbarElementLine";
-
 // Element Image
 export {
   toolbarImageLinkExternal,
-  toolbarImageTags
+  toolbarImageTags,
+  toolbarImageSetter,
+  toolbarImageBorderRadius
 } from "./toolbarElementImage";
-
-// Element Popup2
-export {
-  toolbarContainerPopup2ContainerWidth,
-  toolbarContainerPopup2ContainerTypeAndHeight,
-  toolbarContainerPopup2CloseHorizontalPosition,
-  toolbarContainerPopup2CloseVerticalPosition,
-  toolbarContainerPopup2CloseFill,
-  toolbarContainerPopup2CloseBorderRadius,
-  toolbarContainerPopup2CloseCustomSize,
-  toolbarContainerPopup2CloseBgSize,
-  toolbarContainerPopup2ScrollPage,
-  toolbarContainerPopup2ClickOutsideToClose,
-  toolbarContainerPopup2ShowCloseButton
-} from "./toolbarContainerPopup2";
 
 // Typography
 export {
@@ -233,59 +144,32 @@ export {
   toolbarTypography2LetterSpacing
 } from "./toolbarTypography2";
 
-// Icon
-export { toolbarIconSize } from "./toolbarIcon";
-
-// Element Facebook Button
-export { toolbarElementFbButtonSize } from "./toolbarElementFbButton";
-
-// Elements WOO
-export {
-  toolbarElementWOOCategoriesOrder,
-  toolbarElementWOOProductsOrder
-} from "./toolbarElementsWOO";
-
 //Element WP Posts
 export { toolbarElementWPPostsNumber } from "./toolbarElementWPPosts";
 
-// WP Custom Shortcode
-export { toolbarElementWPCustomShortCode } from "./toolbarElementWPCustomShortCode";
-
 export {
   toolbarElementForm2SpacingPx,
-  toolbarElementForm2NumberOptions,
   toolbarElementForm2Apps,
   toolbarElementForm2Size,
   toolbarElementForm2BorderRadius
 } from "./toolbarElementForm2";
 
+// Element Login
+export { toolbarElementLoginSpacingPx } from "./toolbarElementLogin";
+
 // Element Icon Text
 export {
   toolbarElementIconTextListDisabled,
-  toolbarElementIconTextIconPosition,
   toolbarElementIconDisabledSettings
 } from "./toolbarElementIconText";
 
 // Shape
 export {
-  toolbarShape,
   toolbarShapeTopType,
-  toolbarShapeTopColor,
-  toolbarShapeTopHeight,
   toolbarShapeTopFlip,
-  toolbarShapeTopIndex,
   toolbarShapeBottomType,
-  toolbarShapeBottomColor,
-  toolbarShapeBottomHeight,
-  toolbarShapeBottomFlip,
-  toolbarShapeBottomIndex
+  toolbarShapeBottomFlip
 } from "./toolbarShape";
-
-// Anchor Name
-export { toolbarAnchorName } from "./toolbarAnchorName";
-
-//CSS ID
-export { toolbarCSSID } from "./toolbarCSSID";
 
 // Element Audio
 export {
@@ -293,35 +177,19 @@ export {
   toolbarElementAudioIconSize
 } from "./toolbarElementAudio";
 
-// Element WOOPrice
-export {
-  toolbarElementWOOPriceColumn,
-  toolbarElementWOOPriceSpacing
-} from "./toolbarElementWOOPrice";
-
 // Element WP Posts
 export {
   toolbarElementPostsTaxonomy,
-  toolbarElementPostsOrder,
-  toolbarElementPostsPagination
+  toolbarElementPostsColumns,
+  toolbarElementPostsRows
 } from "./toolbarElementPosts";
 
 // Element Carousel
 export {
-  toolbarElementCarouselAutoPlay,
-  toolbarElementCarouselNavigationArrow,
-  toolbarElementCarouselNavigationDots,
   toolbarElementCarouselTaxonomy,
-  toolbarElementCarouselOrderBy,
   toolbarElementCarouselOrder,
   toolbarElementCarouselPadding
 } from "./toolbarElementCarousel";
 
 // Twitter
 export { toolbarElementTwitter } from "./toolbarElementTwitter";
-
-// Element Accordion
-export { toolbarElementAccordionSpacing } from "./toolbarElementAccordion";
-
-// Element Search
-export { toolbarElementSearchStyle } from "./toolbarElementSearch";

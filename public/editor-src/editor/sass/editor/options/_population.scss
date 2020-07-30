@@ -3,6 +3,7 @@
     &,
     &-dev {
       .brz-ed-option-population:not(.brz-control__select-population) {
+        border: none;
         padding: 0;
         min-height: unset;
         flex: 1 1 auto;

@@ -17,6 +17,7 @@ import {
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = [
   "topLeft",
@@ -36,33 +37,71 @@ class Audio extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   handleResizerChange = patch => this.patchValue(patch);
 
   getResizerRestrictions(v) {
     return {
       height: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        }
       },
       width: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       tabletHeight: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        }
       },
       tabletWidth: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       mobileHeight: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        }
       },
       mobileWidth: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       }
     };
   }
@@ -223,7 +262,7 @@ class Audio extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={classNameContent}>
+          <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
             <BoxResizer
               points={resizerPoints}
               restrictions={this.getResizerRestrictions(v)}
@@ -235,7 +274,7 @@ class Audio extends EditorComponent {
                 ? this.renderCustom(v, vs, vd)
                 : this.renderSoundCloud(v, vs, vd)}
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

@@ -305,7 +305,7 @@ module.exports = {
         "bgColorHex": "#a170d9",
         "bgColorOpacity": 0,
         "tempBgColorOpacity": 0.9,
-        "popupId": "kpxtrnlwahxltgnapnzyozgiokduvcdfsrtc",
+        "popupId": "cwsdawdwrsjvvcbhokjzbawkviwwuwtuttvf",
         "width": 100,
         "widthSuffix": "%",
         "tempBgColorPalette": "",

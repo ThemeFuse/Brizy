@@ -43,47 +43,6 @@ export function toolbarElementForm2SpacingPx({
   };
 }
 
-export function toolbarElementForm2NumberOptions({
-  v,
-  device,
-  state,
-  devices = "all"
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  if (dvv("type") !== "Number") {
-    return [];
-  }
-
-  return [
-    {
-      devices,
-      id: dvk("min"),
-      type: "input",
-      label: t("Min"),
-      position: 20,
-      placeholder: t("Min"),
-      value: {
-        value: dvv("min")
-      },
-      onChange: ({ value }) => ({ [dvk("min")]: value })
-    },
-    {
-      devices,
-      id: dvk("max"),
-      type: "input",
-      label: t("Max"),
-      position: 30,
-      placeholder: t("Max"),
-      value: {
-        value: dvv("max")
-      },
-      onChange: ({ value }) => ({ [dvk("max")]: value })
-    }
-  ];
-}
-
 export function toolbarElementForm2Apps({ v, device, state, devices = "all" }) {
   const fields = _.pluck(v.items[0].value.items, "value");
   const dvk = key => defaultValueKey({ key, device, state });

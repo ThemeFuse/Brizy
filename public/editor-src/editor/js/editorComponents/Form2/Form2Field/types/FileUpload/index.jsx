@@ -19,6 +19,15 @@ export default class FileUpload extends TextField {
     );
   }
 
+  getAttributes() {
+    const { fileTypes, fileMaxSize } = this.props;
+
+    return {
+      accept: fileTypes,
+      "data-file-max-size": fileMaxSize
+    };
+  }
+
   renderForEdit(v) {
     const { labelType, attr } = v;
 

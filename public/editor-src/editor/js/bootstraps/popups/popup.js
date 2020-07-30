@@ -248,7 +248,7 @@
 
   function _parseGoogleFonts(url) {
     var parsedUrl = new URL(url);
-    var params = parsedUrl.search.replace("?family=", "");
+    var params = parsedUrl.search.replace("?family=", "").replace(/&.+$/g, "");
 
     return params.split("|");
   }

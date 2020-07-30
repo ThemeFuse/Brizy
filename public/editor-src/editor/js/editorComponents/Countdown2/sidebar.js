@@ -1,7 +1,4 @@
-import {
-  toolbarBorderRadius,
-  toolbarHoverTransition
-} from "visual/utils/toolbar";
+import { toolbarBorderRadius } from "visual/utils/toolbar";
 import { t } from "visual/utils/i18n";
 
 export const title = t("Countdown");
@@ -10,14 +7,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "settingsTabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
-      type: "tabs",
-      align: "start",
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarBorderRadius({
               v,
@@ -40,13 +39,18 @@ export function getItems({ v, device }) {
           label: t("Advanced"),
           tabIcon: "nc-cog",
           options: [
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
               devices: "desktop",
-              position: 100
-            })
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

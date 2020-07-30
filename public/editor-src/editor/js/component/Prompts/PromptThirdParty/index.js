@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import _ from "underscore";
-import Fixed from "../Fixed2";
+import Fixed from "../Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 
 export function PromptThirdParty({ iframeSrc, opened, onClose }) {

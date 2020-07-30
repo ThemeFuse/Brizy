@@ -9,9 +9,10 @@ import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors";
+import { pageSelector } from "visual/redux/selectors2";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
 
 export default class MenuSimple extends EditorComponent {
@@ -57,18 +58,23 @@ export default class MenuSimple extends EditorComponent {
     return errMsg && <div className="brz-menu__error">{errMsg}</div>;
   }
 
-  renderForEdit(_v) {
-    const errors = this.renderErrors(_v);
+  renderForEdit(v, vs, vd) {
+
+    const className = classnames(
+      "brz-menu-simple",
+      "brz-menu-simple--cloud",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+    const errors = this.renderErrors(v);
 
     if (errors) {
       return IS_EDITOR ? errors : null;
     }
 
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
     const { menuName, tabletToggleMenu, mobileToggleMenu } = v;
     const toolbarConfig = toolbarConfigFn(Config.get("menuData"));
 
@@ -76,7 +82,7 @@ export default class MenuSimple extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+        <div className={className}>
           <DynamicContent
             placeholder={`{{brizy_dc_simple_menu id='${menuName}'}}`}
           >

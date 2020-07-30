@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import EditorGlobal from "visual/global/Editor";
 import Config from "visual/global/Config";
 import { pageBlocksSelector } from "visual/redux/selectors";
-import { updateBlocks } from "visual/redux/actions";
+import { updateBlocks } from "visual/redux/actions2";
 
 class EditorPopup extends Component {
   componentDidMount() {
@@ -44,18 +44,16 @@ const mapDispatchToProps = dispatch => ({
   reduxDispatch: dispatch
 });
 const areStatesEqual = (state, prevState) =>
-  state.pageBlocks === prevState.pageBlocks &&
+  state.blocksOrder === prevState.blocksOrder &&
+  state.globalBlocks === prevState.globalBlocks &&
+  state.blocksData === prevState.blocksData &&
+  state.globalBlocks === prevState.globalBlocks &&
   state.currentStyleId === prevState.currentStyleId &&
   state.currentStyle === prevState.currentStyle &&
   state.extraFontStyles === prevState.extraFontStyles &&
   state.fonts === prevState.fonts &&
   state.copiedElement === prevState.copiedElement;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  null,
-  {
-    areStatesEqual
-  }
-)(EditorPopup);
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  areStatesEqual
+})(EditorPopup);

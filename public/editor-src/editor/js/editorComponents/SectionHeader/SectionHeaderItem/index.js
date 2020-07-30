@@ -1,11 +1,13 @@
 import React from "react";
 import classnames from "classnames";
+import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import SectionHeaderItemItems from "./items";
 import {
   wInBoxedPage,
@@ -14,7 +16,6 @@ import {
   wInFullPage
 } from "visual/config/columns";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import { getStore } from "visual/redux/store";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { styleBg, styleContainer, styleContainerWrap } from "./styles";
@@ -26,7 +27,7 @@ import {
 } from "visual/utils/style2";
 import { getContainerW } from "visual/utils/meta";
 
-class SectionHeaderItem extends EditorComponent {
+export default class SectionHeaderItem extends EditorComponent {
   static get componentId() {
     return "SectionHeaderItem";
   }
@@ -45,32 +46,14 @@ class SectionHeaderItem extends EditorComponent {
     this.mounted = true;
   }
 
-  shouldMetaUpdate(nextProps) {
-    const {
-      meta: {
-        section: { showOnDesktop, showOnMobile, showOnTablet }
-      }
-    } = this.props;
-    const {
-      meta: {
-        section: {
-          showOnDesktop: newShowOnDesktop,
-          showOnMobile: newShowOnMobile,
-          showOnTablet: newShowOnTablet
-        }
-      }
-    } = nextProps;
-    const { deviceMode } = getStore().getState().ui;
-
+  shouldComponentUpdate(nextProps) {
     return (
-      (deviceMode === "desktop" && showOnDesktop !== newShowOnDesktop) ||
-      (deviceMode === "mobile" && showOnMobile !== newShowOnMobile) ||
-      (deviceMode === "tablet" && showOnTablet !== newShowOnTablet)
+      this.optionalSCU(nextProps) || this.shouldUpdateBecauseOfParent(nextProps)
     );
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.shouldMetaUpdate(nextProps) || this.optionalSCU(nextProps);
+  shouldUpdateBecauseOfParent(nextProps) {
+    return !_.isEqual(this.props.rerender, nextProps.rerender);
   }
 
   componentWillUnmount() {
@@ -143,7 +126,15 @@ class SectionHeaderItem extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={Boolean(globalBlockId)}
+        badge={
+          globalBlockId
+            ? child => (
+                <ConditionsComponent value={globalBlockId}>
+                  {child}
+                </ConditionsComponent>
+              )
+            : null
+        }
         onClose={this.handleToolbarClose}
       />
     );
@@ -223,5 +214,3 @@ class SectionHeaderItem extends EditorComponent {
     );
   }
 }
-
-export default SectionHeaderItem;

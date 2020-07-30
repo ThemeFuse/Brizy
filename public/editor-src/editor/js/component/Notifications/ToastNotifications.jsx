@@ -2,6 +2,18 @@ import React from "react";
 import Notification from "cogo-toast";
 import EditorIcon from "visual/component/EditorIcon";
 
+const getToastContainer = container => {
+  let rootContainer = null;
+
+  if (container) {
+    rootContainer = document.createElement("div");
+    rootContainer.id = "ct-container";
+    container.append(rootContainer);
+  }
+
+  return rootContainer;
+};
+
 const ToastNotification = {
   error: (message, props = {}) => {
     Notification.error(message, {
@@ -13,7 +25,8 @@ const ToastNotification = {
         style: "solid",
         color: "currentColor"
       },
-      ...props
+      ...props,
+      toastContainer: getToastContainer(props.toastContainer)
     });
   },
   success: (message, props = {}) => {
@@ -26,7 +39,8 @@ const ToastNotification = {
         style: "solid",
         color: "currentColor"
       },
-      ...props
+      ...props,
+      toastContainer: getToastContainer(props.toastContainer)
     });
   },
   info: (message, props = {}) => {
@@ -39,7 +53,8 @@ const ToastNotification = {
         style: "solid",
         color: "currentColor"
       },
-      ...props
+      ...props,
+      toastContainer: getToastContainer(props.toastContainer)
     });
   },
   warn: (message, props = {}) => {
@@ -52,7 +67,8 @@ const ToastNotification = {
         style: "solid",
         color: "currentColor"
       },
-      ...props
+      ...props,
+      toastContainer: getToastContainer(props.toastContainer)
     });
   }
 };

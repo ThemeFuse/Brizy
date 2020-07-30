@@ -8,58 +8,35 @@ export function toolbarElementSoundCloudStyle({
   disabled = false,
   state
 }) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
   return {
-    type: "multiPicker",
-    roles: ["admin"],
+    id: dvk("style"),
+    label: t("Style"),
+    type: "radioGroup",
     devices,
     disabled,
-    picker: {
-      id: defaultValueKey({ key: "style", device, state }),
-      label: t("Style"),
-      type: "radioGroup",
-      devices,
-      choices: [
-        {
-          value: "basic",
-          icon: "nc-sndcloud-style-1"
-        },
-        {
-          value: "artwork",
-          icon: "nc-sndcloud-style-2"
-        }
-      ],
-      value: defaultValueValue({
-        v,
-        key: "style",
-        device,
-        state
-      }),
-      onChange: value => ({
-        [defaultValueKey({ v, key: "style", device, state })]: value,
-        [defaultValueKey({ v, key: "showArtwork", device, state })]:
-          value === "basic" ? "off" : "on",
-        [defaultValueKey({ v, key: "height", device, state })]:
-          value === "basic"
-            ? defaultValueValue({
-                v,
-                key: "mediumHeight",
-                device,
-                state
-              })
-            : value === "artwork"
-            ? defaultValueValue({
-                v,
-                key: "largeHeight",
-                device,
-                state
-              })
-            : defaultValueValue({
-                v,
-                key: "height",
-                device,
-                state
-              })
-      })
-    }
+    choices: [
+      {
+        value: "basic",
+        icon: "nc-sndcloud-style-1"
+      },
+      {
+        value: "artwork",
+        icon: "nc-sndcloud-style-2"
+      }
+    ],
+    value: dvv("style"),
+    onChange: value => ({
+      [dvk("style")]: value,
+      [dvk("showArtwork")]: value === "basic" ? "off" : "on",
+      [dvk("height")]:
+        value === "basic"
+          ? dvv("mediumHeight")
+          : value === "artwork"
+          ? dvv("largeHeight")
+          : dvv("height")
+    })
   };
 }

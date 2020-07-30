@@ -8,7 +8,7 @@ import {
 } from "visual/utils/options/attributes";
 import { OptionName, OptionTypes } from "visual/component/Options/types";
 import { ComponentProps } from "react";
-import { Device } from "visual/utils/devices/specs";
+import { Device } from "visual/utils/devices";
 import { Disabled } from "visual/utils/disabled";
 import { State } from "visual/utils/stateMode";
 

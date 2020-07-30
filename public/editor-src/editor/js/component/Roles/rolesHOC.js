@@ -2,11 +2,11 @@ import React from "react";
 import { currentUserRole } from "./utils";
 
 export const rolesHOC = ({
-  allow,
   component: Component,
-  render,
-  fallbackComponent: FallbackComponent,
-  fallbackRender
+  fallbackComponent: FallbackComponent = undefined,
+  allow = [],
+  render = undefined,
+  fallbackRender = undefined
 }) => {
   function rolesHOC(props, ref) {
     const roleTestPassed = allow.includes(currentUserRole());

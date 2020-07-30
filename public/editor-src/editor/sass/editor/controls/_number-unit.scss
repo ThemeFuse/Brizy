@@ -3,20 +3,20 @@
 
 .brz-ed-control__number-unit {
   margin-left: $space-between-controls;
-  flex: none;
-  width: 45px;
+  flex: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   &__input {
     position: relative;
-    flex: 1 0 auto;
-    min-width: 35%;
+    flex: 0;
 
     .brz-invisible {
-      line-height: 1.4em;
-      padding-right: 5px;
+      @include small-input;
+      word-break: keep-all;
+      white-space: nowrap;
+      line-height: unset;
     }
 
     input {
@@ -31,6 +31,7 @@
     flex: none;
     margin-left: 5px;
     color: $options-label-color;
+    cursor: pointer;
 
     &--active {
       color: $brand-primary;

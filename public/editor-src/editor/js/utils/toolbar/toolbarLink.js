@@ -2,7 +2,13 @@ import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
-export function toolbarLinkAnchor({ v, device, state, devices = "all" }) {
+export function toolbarLinkAnchor({
+  v,
+  device,
+  state,
+  devices = "all",
+  disabled = false
+}) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -11,6 +17,7 @@ export function toolbarLinkAnchor({ v, device, state, devices = "all" }) {
     label: t("Block"),
     type: "blockThumbnail",
     devices,
+    disabled,
     value: dvv("linkAnchor")
   };
 }
@@ -125,25 +132,5 @@ export function toolbarLinkPopup({
       [dvk("linkPopup")]: value,
       [dvk("popups")]: popups
     })
-  };
-}
-
-export function toolbarActionClosePopup({
-  v,
-  device,
-  state,
-  devices = "desktop",
-  disabled = true
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("actionClosePopup"),
-    label: t("Close Popup"),
-    type: "switch",
-    devices,
-    disabled,
-    value: dvv("actionClosePopup")
   };
 }

@@ -24,23 +24,31 @@
     "showMetaData": "on"
   },
   "link": {
-
     "targetUrl": "current",
+
     "href": "",
+    "hrefPopulation": null,
 
     "facebookEmbedPostHref": "https://www.facebook.com/brizy.io/posts/1382471355229091",
+    "facebookEmbedPostHrefPopulation": null,
+
     "facebookEmbedVideoHref": "https://www.facebook.com/brizy.io/videos/1941346902610185",
+    "facebookEmbedVideoHrefPopulation": null,
 
     "facebookPageHref": "https://facebook.com/brizy.io",
+    "facebookPageHrefPopulation": null,
 
-    "facebookGroupHref": "https://www.facebook.com/groups/brizy/"
+    "facebookGroupHref": "https://www.facebook.com/groups/brizy/",
+    "facebookGroupHrefPopulation": null
   },
   "style": {
     "width": 300,
+    "widthSuffix": null,
 
-   "height": 450,
+    "height": 450,
+    "heightSuffix": null,
 
-   "skin": "light",
+    "skin": "light",
 
     "className": "",
 
@@ -137,6 +145,7 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletBoxShadow": null,
 

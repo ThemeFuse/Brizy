@@ -7,14 +7,7 @@ import {
 import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 
-import {
-  toolbarElementCarouselAutoPlay,
-  toolbarElementCarouselNavigationArrow,
-  toolbarElementCarouselNavigationDots,
-  toolbarElementCarouselTaxonomy,
-  toolbarElementCarouselOrderBy,
-  toolbarElementCarouselOrder
-} from "visual/utils/toolbar";
+import { toolbarElementCarouselTaxonomy } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
@@ -25,32 +18,60 @@ export function getItems({ v, device }) {
     dvv("sliderArrowsColorPalette")
   );
 
+  const sliderArrowsChoices = [
+    { title: t("None"), icon: "nc-none", value: "none" },
+    { title: t("Thin"), icon: "nc-right-arrow-thin", value: "thin" },
+    { title: t("Heavy"), icon: "nc-right-arrow-heavy", value: "heavy" },
+    { title: t("Tail"), icon: "nc-right-arrow-tail", value: "tail" },
+    { title: t("Round"), icon: "nc-right-arrow-filled", value: "filled" },
+    { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
+  ];
+
   const wordpress = Boolean(Config.get("wp"));
 
   return [
     {
-      id: dvk("toolbarCarousel"),
-      type: "popover",
-      icon: "nc-carousel",
-      title: t("Carousel"),
+      id: "toolbarCarousel",
+      type: "popover-dev",
+      config: {
+        icon: "nc-carousel",
+        title: t("Carousel")
+      },
       roles: ["admin"],
       disabled: device !== "desktop" && v.sliderArrows === "none",
       position: 70,
       options: [
         {
-          id: dvk("toolbarCarouselTabs"),
-          type: "tabs",
+          id: "toolbarCarouselTabs",
+          type: "tabs-dev",
           tabs: [
             {
-              id: dvk("carousel"),
+              id: "carousel",
               label: t("Carousel"),
               options: [
-                toolbarElementCarouselAutoPlay({
-                  v,
-                  device,
+                {
+                  id: "groupSettings",
+                  type: "group-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  options: [
+                    {
+                      id: "sliderAutoPlay",
+                      label: t("Auto Play"),
+                      type: "switch-dev"
+                    },
+                    {
+                      id: "sliderAutoPlaySpeed",
+                      label: t("Speed"),
+                      type: "slider-dev",
+                      disabled: dvv("sliderAutoPlay") !== "on",
+                      config: {
+                        min: 1,
+                        max: 6,
+                        units: [{ value: "s", title: "s" }]
+                      }
+                    }
+                  ]
+                },
                 {
                   id: "slidesToShow",
                   label: t("Columns"),
@@ -85,21 +106,57 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("navigation"),
+              id: "navigation",
               label: t("Navigation"),
               options: [
-                toolbarElementCarouselNavigationArrow({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop"
-                }),
-                toolbarElementCarouselNavigationDots({
-                  v,
-                  device,
-                  state: "normal",
-                  devices: "desktop"
-                })
+                {
+                  id: "groupSettings",
+                  type: "group-dev",
+                  devices: "desktop",
+                  options: [
+                    {
+                      id: "sliderArrows",
+                      label: t("Arrows"),
+                      type: "select-dev",
+                      choices: sliderArrowsChoices
+                    },
+                    {
+                      id: "sliderArrowsSpacing",
+                      label: t("Spacing"),
+                      type: "slider-dev",
+                      disabled: dvv("sliderArrows") === "none",
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ value: "px", title: "px" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "sliderDots",
+                  label: t("Dots"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    { title: t("None"), icon: "nc-none", value: "none" },
+                    {
+                      title: t("Circle"),
+                      icon: "nc-circle-outline",
+                      value: "circle"
+                    },
+                    {
+                      title: t("Diamond"),
+                      icon: "nc-diamond-outline",
+                      value: "diamond"
+                    },
+                    {
+                      title: t("Square"),
+                      icon: "nc-square-outline",
+                      value: "square"
+                    }
+                  ]
+                }
               ]
             }
           ]
@@ -107,11 +164,12 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("dynamicToolbarCarousel"),
-      type: "popover",
-      icon: "nc-dynamic",
-      title: t("Dynamic Content"),
-      roles: ["admin"],
+      id: "dynamicToolbarCarousel",
+      type: "popover-dev",
+      config: {
+        icon: "nc-dynamic",
+        title: t("Dynamic Content")
+      },
       devices: "desktop",
       disabled: !wordpress,
       position: 80,
@@ -130,46 +188,60 @@ export function getItems({ v, device }) {
           disabled: dvv("dynamic") === "off",
           choices: getTaxonomies()
         }),
-        toolbarElementCarouselOrderBy({
-          v,
-          device,
-          state: "normal",
+        {
+          id: "orderBy",
+          label: t("Filter By"),
           devices: "desktop",
-          disabled: dvv("dynamic") === "off"
-        }),
-        toolbarElementCarouselOrder({
-          v,
-          device,
-          state: "normal",
+          disabled: dvv("dynamic") === "off",
+          type: "select-dev",
+          choices: [
+            { title: t("ID"), value: "ID" },
+            { title: t("Title"), value: "title" },
+            { title: t("Date"), value: "date" },
+            { title: t("Random"), value: "rand" },
+            { title: t("Comment Count"), value: "comment_count" }
+          ]
+        },
+        {
+          id: "order",
+          label: t("Order"),
+          type: "radioGroup-dev",
           devices: "desktop",
-          disabled: dvv("dynamic") === "off"
-        })
+          disabled: dvv("dynamic") === "off",
+          choices: [
+            { value: "ASC", icon: "nc-up" },
+            { value: "DESC", icon: "nc-down" }
+          ]
+        }
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      position: 90,
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            sliderArrowsColorHex,
-            dvv("sliderArrowsColorOpacity")
-          )
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              sliderArrowsColorHex,
+              dvv("sliderArrowsColorOpacity")
+            )
+          }
         }
       },
+      position: 90,
+      devices: "desktop",
       options: [
         {
-          id: dvk("colorTabs"),
-          type: "tabs",
-          hideHandlesWhenOne: false,
+          id: "colorTabs",
+          type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
-              id: dvk("arrows"),
+              id: "arrows",
               label: t("Arrows"),
               options: [
                 {
@@ -179,7 +251,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("dots"),
+              id: "dots",
               label: t("Dots"),
               options: [
                 {

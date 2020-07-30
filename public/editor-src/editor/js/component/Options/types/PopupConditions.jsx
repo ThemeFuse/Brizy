@@ -1,8 +1,8 @@
 import React from "react";
 import _ from "underscore";
 import classNames from "classnames";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { t } from "visual/utils/i18n";
-import UIState from "visual/global/UIState";
 import { getStore } from "visual/redux/store";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
@@ -32,33 +32,6 @@ class PopupConditionsOptionType extends React.Component {
     return rulesAmount + triggersLength;
   }
 
-  handleMouseDown = () => {
-    let options = [
-      {
-        id: "triggers",
-        type: "triggers",
-        icon: "nc-triggers",
-        label: t("Triggers"),
-        title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
-      }
-    ];
-
-    if (!IS_EXTERNAL_POPUP) {
-      options.push({
-        id: "rules",
-        type: "rules",
-        icon: "nc-eye-17",
-        label: t("Conditions"),
-        title: t("WHERE DO YOU WANT TO DISPLAY IT?")
-      });
-    }
-
-    UIState.set("prompt", {
-      prompt: "conditions",
-      options
-    });
-  };
-
   render() {
     const { className: _className, attr: _attr } = this.props;
 
@@ -70,12 +43,14 @@ class PopupConditionsOptionType extends React.Component {
     const attr = _.omit(_attr, "className");
 
     return (
-      <div className={className} onMouseDown={this.handleMouseDown} {...attr}>
-        <span className="brz-ed-option__popup_conditions-count">
-          {this.calConditionsAmount()}
-        </span>
-        {t(" Display Conditions")}
-      </div>
+      <ConditionsComponent type="popup">
+        <div className={className} {...attr}>
+          <span className="brz-ed-option__popup_conditions-count">
+            {this.calConditionsAmount()}
+          </span>
+          {t(" Display Conditions")}
+        </div>
+      </ConditionsComponent>
     );
   }
 }

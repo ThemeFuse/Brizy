@@ -2,20 +2,27 @@ import {
   PageWP,
   PageCloud,
   GlobalBlock,
-  SavedBlock,
   GoogleFont,
-  UploadedFont
+  UploadedFont,
+  Authorized,
+  DeviceMode,
+  Block,
+  SyncAllowed
 } from "visual/types";
+import { HistoryEnhancerState } from "./history/types";
 
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
+  project: {};
   page: PageWP | PageCloud;
   globalBlocks: {
     [key: string]: GlobalBlock;
   };
-  savedBlocks: {
-    [key: string]: SavedBlock;
+  changedGBIds: string[];
+  blocksOrder: string[];
+  blocksData: {
+    [key: string]: Block;
   };
   fonts: {
     config?: {
@@ -32,10 +39,10 @@ export type ReduxState = {
     };
   };
   ui: {
-    deviceMode: "desktop" | "tablet" | "mobile";
+    deviceMode: DeviceMode;
     leftSidebar: {
       isOpen: boolean;
-      drawerContentType: string; // TODO: converted to a union of actual drawer type later
+      drawerContentType: string | undefined; // TODO: converted to a union of actual drawer type later
     };
     rightSidebar: {
       isOpen: boolean;
@@ -44,4 +51,31 @@ export type ReduxState = {
     };
     showHiddenElements: boolean;
   };
+
+  // below any are temporary and needed for ReduxStateWithHistory
+  // they will be removed once we finish with ReduxState types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  pageBlocks: any;
+  currentStyleId: any;
+  currentStyle: any;
+  globalBlocksUpdates: any;
+  /* eslint-enable  @typescript-eslint/no-explicit-any */
+  extraFontStyles: Array<{ id: string }>;
+  authorized: Authorized;
+  syncAllowed: SyncAllowed;
+  copiedElement: {
+    path: [];
+    value: {};
+  };
 };
+
+// this is temporary and will be automatically infered after
+// we move all the reducers to ts and finish with all ReduxState types
+export type ReduxStateWithHistory = HistoryEnhancerState<
+  ReduxState,
+  | "pageBlocks"
+  | "currentStyleId"
+  | "currentStyle"
+  | "extraFontStyles"
+  | "globalBlocksUpdates"
+>;

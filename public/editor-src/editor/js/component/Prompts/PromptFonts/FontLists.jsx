@@ -7,7 +7,7 @@ import { fontTransform } from "visual/utils/fonts";
 import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
 import { deleteFont } from "visual/redux/actions";
 import { deleteFont as apiDeleteFont } from "./api";
-import { fakeRequest } from "visual/component/Prompts/common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 const compareFont = (a, b) => {
   const familyA = a.family.toUpperCase();
@@ -43,7 +43,7 @@ class FontLists extends Component {
     if (type === "upload") {
       await apiDeleteFont(font.id);
     } else {
-      await fakeRequest();
+      await pendingRequest();
     }
 
     this.setState({

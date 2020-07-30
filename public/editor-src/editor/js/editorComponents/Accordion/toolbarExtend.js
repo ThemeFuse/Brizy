@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ key, v, device });
@@ -20,14 +20,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-toggle",
-      title: t("Accordion"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-toggle",
+        title: t("Accordion")
+      },
       position: 60,
       options: [
         {
           id: "media",
-          type: "tabs",
+          type: "tabs-dev",
           position: 60,
           tabs: [
             {
@@ -37,12 +39,14 @@ export function getItems({ v, device }) {
                 {
                   id: "collapsible",
                   label: t("Collapsible"),
+                  devices: "desktop",
                   type: "switch-dev"
                 },
                 {
                   id: "navIcon",
                   label: t("Icon"),
                   type: "select-dev",
+                  devices: "desktop",
                   choices: [
                     {
                       value: "none",
@@ -101,11 +105,12 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -119,25 +124,25 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              defaultValueValue({ v, key: "bgColorOpacity", device }) > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          value: v.tabsColor,
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabText",
@@ -146,7 +151,7 @@ export function getItems({ v, device }) {
                 {
                   id: "color",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -157,7 +162,7 @@ export function getItems({ v, device }) {
                 {
                   id: "bgColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -168,7 +173,7 @@ export function getItems({ v, device }) {
                 {
                   id: "border",
                   type: "border-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -179,7 +184,7 @@ export function getItems({ v, device }) {
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }

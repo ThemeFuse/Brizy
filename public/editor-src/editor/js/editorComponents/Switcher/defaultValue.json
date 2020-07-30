@@ -3,8 +3,11 @@
     "items": [],
     "activeTab": 0,
     "spacing": 20,
+    "spacingSuffix": null,
     "navStyle2Size": 50,
+    "navStyle2SizeSuffix": null,
     "navStyle1Width": 200,
+    "navStyle1WidthSuffix": null,
     "switcherStyle": "style-1",
     "labelText1": "Tab 1",
     "labelText2": "Tab 2"
@@ -17,11 +20,14 @@
   "style": {
     "className": "",
 
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
-    "families": {
-      "typographyFontFamily": "noto_serif"
-    },
     "typographyFontSize": 16,
     "typographyFontWeight": 400,
     "typographyLineHeight": 1.5,
@@ -144,11 +150,11 @@
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
 
+    "tabletNavStyle1Width": null,
+    "tabletNavStyle1WidthSuffix": null,
+
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletTypographyFontFamily": null
-    },
     "tabletTypographyFontSize": null,
     "tabletTypographyLineHeight": null,
     "tabletTypographyLetterSpacing": null,
@@ -181,11 +187,24 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
+    "tabletBorderRadiusType": null,
+    "tabletBorderRadius": null,
+    "tabletBorderTopLeftRadius": null,
+    "tabletBorderTopRightRadius": null,
+    "tabletBorderBottomLeftRadius": null,
+    "tabletBorderBottomRightRadius": null,
+
+    "tempTabletBorderRadius": null,
+    "tempTabletBorderTopLeftRadius": null,
+    "tempTabletBorderTopRightRadius": null,
+    "tempTabletBorderBottomLeftRadius": null,
+    "tempTabletBorderBottomRightRadius": null,
+
+    "mobileNavStyle1Width": null,
+    "mobileNavStyle1WidthSuffix": null,
+
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileTypographyFontFamily": null
-    },
     "mobileTypographyFontSize": null,
     "mobileTypographyLineHeight": null,
     "mobileTypographyLetterSpacing": null,
@@ -216,6 +235,36 @@
     "tempMobilePaddingTopSuffix": "px",
     "tempMobilePaddingRightSuffix": "px",
     "tempMobilePaddingBottomSuffix": "px",
-    "tempMobilePaddingLeftSuffix": "px"
+    "tempMobilePaddingLeftSuffix": "px",
+
+    "mobileBorderRadiusType": null,
+    "mobileBorderRadius": null,
+    "mobileBorderTopLeftRadius": null,
+    "mobileBorderTopRightRadius": null,
+    "mobileBorderBottomLeftRadius": null,
+    "mobileBorderBottomRightRadius": null,
+
+    "tempMobileBorderRadius": null,
+    "tempMobileBorderTopLeftRadius": null,
+    "tempMobileBorderTopRightRadius": null,
+    "tempMobileBorderBottomLeftRadius": null,
+    "tempMobileBorderBottomRightRadius": null
+  },
+
+  "animation": {
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+    "tempMobileAnimationName": null
   }
 }

@@ -1,0 +1,25 @@
+@import "../../variables";
+
+.brz-ed-control__popover--content {
+  .brz-ed-option {
+    padding: 10px $options-item-padding;
+    user-select: none;
+    font-family: $font-family-1;
+    font-size: $options-item-font-size;
+    line-height: normal;
+    min-height: $options-item-height;
+    border-bottom: 1px solid $brand-options-border;
+    margin-bottom: -1px;
+    flex: 1 1 auto;
+
+    &:first-child {
+      padding-top: 15px;
+      border-top-color: transparent;
+    }
+    &:last-child {
+      padding-bottom: 15px;
+      min-height: 56px;
+      border-bottom-color: transparent;
+    }
+  }
+}

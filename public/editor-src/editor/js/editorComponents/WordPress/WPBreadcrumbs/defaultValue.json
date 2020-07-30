@@ -14,12 +14,16 @@
     "customCSS": "",
 
     "textSpacing": 5,
+    "textSpacingSuffix": null,
+
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
 
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "lato"
-    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.3,
@@ -68,26 +72,23 @@
     "tempHoverArrowsColorPalette": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletTextSpacing": null,
+    "tabletTextSpacingSuffix": null,
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": 15,
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
     "mobileTextSpacing": null,
+    "mobileTextSpacingSuffix": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": 15,
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,

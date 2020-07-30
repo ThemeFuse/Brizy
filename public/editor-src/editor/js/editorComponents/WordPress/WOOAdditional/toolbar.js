@@ -25,9 +25,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-woo-2",
-      title: t("Additionals"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-woo-2",
+        title: t("Additionals")
+      },
       position: 60,
       options: [
         {
@@ -43,17 +45,18 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
-          id: dvk("tabsTypography"),
-          type: "tabs",
+          id: "tabsTypography",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("tabTypographyTitle"),
@@ -87,22 +90,22 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.titleColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.titleColorOpacity)
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          value: v.tabsColor,
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabTitle",
@@ -183,10 +186,7 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsColor: !isOpen ? "" : v.tabsColor
-      })
+      ]
     },
     {
       id: "advancedSettings",

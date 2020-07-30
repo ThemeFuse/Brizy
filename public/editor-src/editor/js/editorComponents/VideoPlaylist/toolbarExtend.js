@@ -1,32 +1,37 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
-  toolbarElementVideoPlaylistItemImageSize,
   toolbarFilterHue,
   toolbarFilterSaturation,
   toolbarFilterBrightness,
   toolbarFilterContrast,
-  toolbarElementVideoPlaySize,
-  toolbarVerticalAlign
+  toolbarElementVideoPlaySize
 } from "visual/utils/toolbar";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { NORMAL, HOVER, ACTIVE } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    dvv("colorHex"),
+    dvv("colorPalette")
+  );
   return [
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-play",
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-play",
+        title: t("Video")
+      },
       devices: "desktop",
-      title: t("Video"),
       position: 80,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElementCover",
@@ -86,17 +91,19 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("popoverTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "popoverTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 80,
       options: [
         {
           id: "tabsTypography",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabTitle",
@@ -129,22 +136,25 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          }
+        }
+      },
       devices: "desktop",
       roles: ["admin"],
       position: 90,
-      icon: {
-        style: {
-          color: hexToRgba(v.bgColorHex)
-        }
-      },
+
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabPlay",
@@ -177,7 +187,7 @@ export function getItems({ v, device }) {
                 {
                   id: "color",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -188,7 +198,7 @@ export function getItems({ v, device }) {
                 {
                   id: "subTitleColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -199,7 +209,7 @@ export function getItems({ v, device }) {
                 {
                   id: "bgColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -210,7 +220,7 @@ export function getItems({ v, device }) {
                 {
                   id: "itemBorder",
                   type: "border-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }
@@ -219,25 +229,39 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarElementVideoPlaylistItemImageSize({
-          v,
-          device,
-          state: "normal"
-        }),
-        toolbarVerticalAlign({
-          v,
-          device,
+        {
+          id: "widthImage",
+          label: t("Size"),
+          type: "slider-dev",
           position: 10,
-          state: "normal",
-          disabled: v.positionItem === "vertical"
-        })
+          config: {
+            min: 0,
+            max: 500,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "verticalAlign",
+          label: t("Content"),
+          type: "radioGroup-dev",
+          devices: "desktop",
+          disabled: v.positionItem === "vertical",
+          position: 10,
+          choices: [
+            { value: "top", icon: "nc-align-top" },
+            { value: "center", icon: "nc-align-middle" },
+            { value: "bottom", icon: "nc-align-bottom" }
+          ]
+        }
       ]
     }
   ];

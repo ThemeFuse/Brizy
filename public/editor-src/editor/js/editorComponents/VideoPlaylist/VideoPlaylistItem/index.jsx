@@ -3,7 +3,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import Placeholder from "visual/component/Placeholder";
 import {
   videoData as getVideoData,
@@ -48,12 +48,13 @@ class VideoPlaylistItem extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { video, title, subTitle, coverImageSrc, customCSS } = v;
-    const { onActiveItem } = this.props;
+    const { onActiveItem, active } = this.props;
     const videoSrc = this.getVideoSrc(v);
     const coverUrl = imageUrl(coverImageSrc);
     const classNameContent = classnames(
       "brz-video-playlist-video-item",
       { "brz-video-playlist-video-item__cover": v.coverImageSrc },
+      { "brz-video-playlist-video-item--active": active },
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,

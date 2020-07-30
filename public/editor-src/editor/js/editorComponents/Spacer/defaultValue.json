@@ -3,9 +3,12 @@
     "className": "",
 
     "height": 50,
+    "heightSuffix": null,
 
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
-    "mobileHeight": null
+    "mobileHeight": null,
+    "mobileHeightSuffix": null
   }
 }

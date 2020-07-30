@@ -14,7 +14,9 @@
     letter-spacing: 0;
     background: $control-background-color none;
     color: #fff;
-    flex: 1 1 auto;
+    flex: 1 1 136px;
+    min-width: 136px;
+    max-width: 136px;
     height: $control-height;
     text-indent: 5px;
     padding: 0 5px;
@@ -25,21 +27,23 @@
 
     .brz-ed-icon-svg {
       cursor: pointer;
+      min-width: 13px;
+      margin-left: auto;
+    }
+    .brz-span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
   .brz-control__select-population {
     display: flex;
-    align-items: center;
-    margin-left: 10px;
     flex: 0;
+    margin-left: 10px;
 
     &--only-icon {
       margin-left: 0;
-    }
-
-    .brz-control__select-options {
-      top: 100%;
     }
   }
 }

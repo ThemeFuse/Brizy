@@ -1,5 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { toolbarPaddingFourFields } from "visual/utils/toolbar";
+import {
+  toolbarEntranceAnimation,
+  toolbarPaddingFourFields
+} from "visual/utils/toolbar";
+import { getAnimationsTabs } from "visual/utils/options/getAnimations";
 
 export const title = t("Tabs Items");
 
@@ -11,6 +15,11 @@ export function getItems({ v, device }) {
       state: "normal",
       onChangeGrouped: ["onChangePaddingGrouped"],
       onChangeUngrouped: ["onChangePaddingUngrouped"]
+    }),
+    toolbarEntranceAnimation({
+      v,
+      device,
+      choices: getAnimationsTabs()
     })
   ];
 }

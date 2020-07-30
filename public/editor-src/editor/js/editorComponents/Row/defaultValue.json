@@ -3,9 +3,15 @@
     "media": "image",
     "tagName": "div",
 
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgImageSrc": "",
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
@@ -21,12 +27,12 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
+    "bgMapZoomSuffix": null,
 
     "hoverMedia": "image",
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
-    "hoverBgImageSrc": null,
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
@@ -42,12 +48,14 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
+    "zIndexSuffix": null,
 
     "hoverZIndex": null,
 
     "tabletPopups": null,
 
     "tabletSize": null,
+    "tabletSizeSuffix": null,
 
     "tabletReverseColumns": "off",
 
@@ -57,7 +65,6 @@
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
-    "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
@@ -74,18 +81,19 @@
     "tabletBgMapZoom": null,
 
     "tabletZIndex": null,
+    "tabletZIndexSuffix": null,
 
     "showOnMobile": "on",
 
     "mobilePopups": null,
 
     "mobileSize": null,
+    "mobileSizeSuffix": null,
 
     "mobileMedia": "image",
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
-    "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
@@ -102,8 +110,10 @@
     "mobileBgMapZoom": null,
 
     "mobileZIndex": null,
+    "mobileZIndexSuffix": null,
 
     "size": 100,
+    "sizeSuffix": null,
 
     "items": [],
 
@@ -144,13 +154,30 @@
 
   "animation": {
     "animationName": "none",
-    "tempAnimationName": "none",
     "animationDuration": 1000,
-    "animationDelay": 1000
+    "animationDelay": 1000,
+
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+
+    "tempMobileAnimationName": null
   },
 
   "style": {
     "className": "",
+    "elementPosition": "relative",
+
+    "customAttributes": "",
+    "customAttributesPopulation": null,
 
     "borderStyle": "solid",
 
@@ -319,6 +346,7 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "columnsHeightStyle": "auto",
     "columnsHeight": 400,

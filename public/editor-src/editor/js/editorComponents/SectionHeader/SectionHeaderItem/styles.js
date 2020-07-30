@@ -35,10 +35,16 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
-      standart: ["cssStylePaddingTopForEditorResizer"]
+      standart: [
+        "cssStylePaddingTopForEditorResizer",
+        "cssStyleSectionPaddingsForEditorResize"
+      ]
     },
     ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--bottom": {
-      standart: ["cssStylePaddingBottomForEditorResizer"]
+      standart: [
+        "cssStylePaddingBottomForEditorResizer",
+        "cssStyleSectionPaddingsForEditorResize"
+      ]
     }
   };
 

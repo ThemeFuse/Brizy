@@ -55,7 +55,8 @@ export function style(v, vs, vd) {
         "cssStyleContainerPopup2CloseFontSize",
         "cssStyleContainerPopup2CloseBgSize",
         "cssStyleContainerPopup2CloseBgColor",
-        "cssStyleContainerPopup2CloseBorderRadius"
+        "cssStyleContainerPopup2CloseBorderRadius",
+        "cssStyleBoxShadow"
       ]
     },
 

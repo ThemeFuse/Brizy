@@ -14,13 +14,12 @@ import {
 import {
   toolbarLinkAnchor,
   toolbarImageLinkExternal,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
   toolbarBoxShadowFields2,
   toolbarImageTags
 } from "visual/utils/toolbar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 export const getMinSize = () => 5;
 export const getMaxSize = () => 100;
@@ -63,7 +62,12 @@ export default ({
   )
 });
 
-export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
+export const getItemsForDesktop = (wrapperSizes, cW, gallery) => (
+  v,
+  component
+) => {
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const device = "desktop";
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
@@ -78,14 +82,16 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
   return [
     {
       id: "toolbarImage",
-      type: "popover",
-      icon: "nc-img",
-      title: t("Image"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-img",
+        title: t("Image")
+      },
       position: 80,
       options: [
         {
           id: "media",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "image",
@@ -158,33 +164,14 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
                 {
                   id: "zoom",
                   label: t("Zoom"),
-                  type: "slider",
+                  type: "slider-dev",
                   disabled:
                     Boolean(v.imagePopulation) || isSVG(v.imageExtension),
-                  slider: {
+                  config: {
                     min: 100,
-                    max: 200
-                  },
-                  input: {
-                    show: true,
-                    min: 100,
-                    max: 200
-                  },
-                  suffix: {
-                    show: true,
-                    choices: [
-                      {
-                        title: "%",
-                        value: "%"
-                      }
-                    ]
-                  },
-                  value: {
-                    value: v.zoom
-                  },
-                  onChange: ({ value: zoom }) => ({
-                    zoom
-                  })
+                    max: 200,
+                    units: [{ value: "%", title: "%" }]
+                  }
                 },
                 {
                   id: "linkLightBox",
@@ -206,22 +193,26 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(boxShadowColorHex, v.boxShadowColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              boxShadowColorHex,
+              v.boxShadowColorOpacity
+            )
+          }
         }
       },
+      roles: ["admin"],
+      position: 80,
       options: [
         {
           id: "tabsState",
           tabsPosition: "left",
           type: "tabs",
-          value: v.tabsState,
           tabs: [
             {
               id: "tabNormal",
@@ -230,9 +221,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
               options: [
                 {
                   id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  hideHandlesWhenOne: false,
+                  type: "tabs-dev",
+                  config: {
+                    showSingle: true
+                  },
                   tabs: [
                     {
                       id: "tabBoxShadow",
@@ -305,9 +297,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
               options: [
                 {
                   id: "tabsColor",
-                  type: "tabs",
-                  value: v.tabsColor,
-                  hideHandlesWhenOne: false,
+                  type: "tabs-dev",
+                  config: {
+                    showSingle: true
+                  },
                   tabs: [
                     {
                       id: "tabBoxShadow",
@@ -378,24 +371,25 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "tabNormal" : v.tabsState
-      })
+      ]
     },
     {
       id: "toolbarLink",
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      size: "medium",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
       position: 90,
       disabled: inGallery && v.linkLightBox === "on",
       options: [
         {
           id: "linkType",
-          type: "tabs",
-          value: v.linkType,
+          type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "external",
@@ -405,14 +399,43 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
                   v,
                   inGallery
                 }),
-                toolbarLinkExternalBlank({ v }),
-                toolbarLinkExternalRel({ v })
+                {
+                  id: "linkExternalBlank",
+                  type: "switch-dev",
+                  label: t("Open In New Tab")
+                },
+                {
+                  id: "linkExternalRel",
+                  type: "switch-dev",
+                  label: t("Make it Nofollow")
+                }
               ]
             },
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v })]
+              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+            },
+            {
+              id: "popup",
+              label: t("Popup"),
+              options: [
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  label: t("Popup"),
+                  popupKey: `${component.getId()}_${v.linkPopup}`,
+                  value: {
+                    value: v.linkPopup,
+                    popups: v.popups
+                  },
+                  onChange: ({ value, popups }) => ({
+                    linkPopup: value,
+                    popups
+                  })
+                }
+              ]
             }
           ]
         }
@@ -420,9 +443,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       disabled: inGallery,
@@ -430,122 +454,73 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
         {
           id: "resize",
           label: t("Size"),
-          type: "slider",
-          slider: {
+          type: "slider-dev",
+          config: {
             min: getMinSize(),
-            max: getMaxSize()
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.resize
-          },
-          onChange: ({ value: resize }) => ({
-            resize
-          })
+            max: getMaxSize(),
+            units: [{ value: "%", title: "%" }]
+          }
         },
         {
           id: "height",
           label: t("Height"),
-          type: "slider",
+          type: "slider-dev",
           disabled: isSVG(v.imageExtension),
-          slider: {
+          config: {
             min: getMinHeight(),
-            max: getMaxHeight(cW, v)
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.height
-          },
-          onChange: ({ value: height }) => ({
-            height
-          })
+            max: getMaxHeight(cW, v),
+            units: [{ value: "%", title: "%" }]
+          }
         },
         {
-          type: "multiPicker",
-          picker: {
-            id: "borderRadiusType",
-            label: t("Corner"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "square",
-                icon: "nc-corners-square"
+          id: "borderRadiusTypeGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "borderRadiusType",
+              label: t("Corner"),
+              type: "radioGroup",
+              choices: [
+                { value: "square", icon: "nc-corners-square" },
+                { value: "rounded", icon: "nc-corners-round" },
+                { value: "custom", icon: "nc-more" }
+              ],
+              value: v.borderRadiusType,
+              onChange: borderRadiusType => ({
+                borderRadiusType,
+                borderRadius:
+                  borderRadiusType === "square"
+                    ? v.tempBorderRadius
+                    : borderRadiusType === "rounded"
+                    ? maxBorderRadius
+                    : v.borderRadius
+              })
+            },
+            {
+              id: "borderRadius",
+              type: "slider",
+              disabled: v.borderRadiusType !== "custom",
+              slider: {
+                min: 0,
+                max: maxBorderRadius
               },
-              {
-                value: "rounded",
-                icon: "nc-corners-round"
+              input: {
+                show: true,
+                max: maxBorderRadius
               },
-              {
-                value: "custom",
-                icon: "nc-more"
-              }
-            ],
-            value: v.borderRadiusType,
-            onChange: borderRadiusType => ({
-              borderRadiusType,
-
-              borderRadius:
-                borderRadiusType === "square"
-                  ? v.tempBorderRadius
-                  : borderRadiusType === "rounded"
-                  ? maxBorderRadius
-                  : v.borderRadius
-            })
-          },
-          choices: {
-            custom: [
-              {
-                id: "borderRadius",
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: maxBorderRadius
-                },
-                input: {
-                  show: true,
-                  max: maxBorderRadius
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: Math.min(v.borderRadius, maxBorderRadius)
-                },
-                onChange: ({ value: borderRadius }) => ({
-                  borderRadius,
-                  tempBorderRadius: borderRadius
-                })
-              }
-            ]
-          }
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: Math.min(v.borderRadius, maxBorderRadius)
+              },
+              onChange: ({ value: borderRadius }) => ({
+                borderRadius,
+                tempBorderRadius: borderRadius
+              })
+            }
+          ]
         },
         {
           id: "advancedSettings",
@@ -558,15 +533,20 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => v => {
   ];
 };
 
-export const getItemsForTablet = (wrapperSizes, cW, gallery) => v => {
+export const getItemsForTablet = (wrapperSizes, cW, gallery) => (
+  v,
+  component
+) => {
   const { inGallery = false } = gallery || {};
 
   return [
     {
       id: "toolbarImage",
-      type: "popover",
-      icon: "nc-img",
-      title: t("Image"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-img",
+        title: t("Image")
+      },
       position: 80,
       options: [
         {
@@ -621,101 +601,98 @@ export const getItemsForTablet = (wrapperSizes, cW, gallery) => v => {
           }
         },
         {
-          id: "tabletZoom",
+          id: "zoom",
           label: t("Zoom"),
-          type: "slider",
+          type: "slider-dev",
           disabled: Boolean(v.imagePopulation),
-          slider: {
+          config: {
             min: 100,
-            max: 200
-          },
-          value: {
-            value: tabletSyncOnChange(v, "zoom")
-          },
-          onChange: ({ value: tabletZoom }) => ({ tabletZoom })
+            max: 200,
+            units: [{ value: "%", title: "%" }]
+          }
         }
       ]
     },
     {
       id: "tabletToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       position: 90,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     },
     {
       id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       disabled: inGallery,
       options: [
         {
-          id: "tabletResize",
+          id: "resize",
           label: t("Size"),
-          type: "slider",
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "resize")
-          },
-          onChange: ({ value: tabletResize }) => ({ tabletResize })
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
         },
         {
-          id: "tabletHeight",
+          id: "height",
           label: t("Height"),
-          type: "slider",
-          slider: {
-            max: getMaxHeight(cW, v)
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "height")
-          },
-          onChange: ({ value: tabletHeight }) => ({ tabletHeight })
+          type: "slider-dev",
+          config: {
+            max: getMaxHeight(cW, v),
+            units: [{ value: "%", title: "%" }]
+          }
         }
       ]
     }
   ];
 };
 
-export const getItemsForMobile = (wrapperSizes, cW, gallery) => v => {
+export const getItemsForMobile = (wrapperSizes, cW, gallery) => (
+  v,
+  component
+) => {
   const { inGallery = false } = gallery || {};
 
   return [
     {
       id: "toolbarImage",
-      type: "popover",
-      icon: "nc-img",
-      title: t("Image"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-img",
+        title: t("Image")
+      },
       position: 80,
       options: [
         {
           id: "media",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "image",
@@ -781,18 +758,15 @@ export const getItemsForMobile = (wrapperSizes, cW, gallery) => v => {
                   }
                 },
                 {
-                  id: "mobileZoom",
+                  id: "zoom",
                   label: t("Zoom"),
-                  type: "slider",
+                  type: "slider-dev",
                   disabled: Boolean(v.imagePopulation),
-                  slider: {
+                  config: {
                     min: 100,
-                    max: 200
-                  },
-                  value: {
-                    value: mobileSyncOnChange(v, "zoom")
-                  },
-                  onChange: ({ value: mobileZoom }) => ({ mobileZoom })
+                    max: 200,
+                    units: [{ value: "%", title: "%" }]
+                  }
                 }
               ]
             }
@@ -802,64 +776,59 @@ export const getItemsForMobile = (wrapperSizes, cW, gallery) => v => {
     },
     {
       id: "mobileToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       position: 90,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     },
     {
       id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       disabled: inGallery,
       options: [
         {
-          id: "mobileResize",
+          id: "resize",
           label: t("Size"),
-          type: "slider",
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "resize")
-          },
-          onChange: ({ value: mobileResize }) => ({ mobileResize })
+          type: "slider-dev",
+          config: {
+            min: 5,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
         },
         {
-          id: "mobileHeight",
+          id: "height",
           label: t("Height"),
-          type: "slider",
-          slider: {
-            max: getMaxHeight(cW, v)
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "height")
-          },
-          onChange: ({ value: mobileHeight }) => ({ mobileHeight })
+          type: "slider-dev",
+          config: {
+            max: getMaxHeight(cW, v),
+            units: [{ value: "%", title: "%" }]
+          }
         }
       ]
     }

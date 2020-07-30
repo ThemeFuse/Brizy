@@ -1,12 +1,27 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement, useCallback } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
-import { apply } from "visual/component/Options/types/dev/MultiSelect/utils";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { Props } from "./types";
-import { GetModel, OptionType } from "visual/component/Options/Type";
-import { ItemInstance } from "visual/component/Controls/MultiSelect/types/Item";
-import { Literal, read } from "visual/utils/types/Literal";
+import {
+  Item,
+  Props as ItemProps
+} from "visual/component/Controls/MultiSelect/Item";
 import EditorIcon from "visual/component/EditorIcon";
+import {
+  GetModel,
+  OnChange,
+  OptionType,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { Literal, read } from "visual/utils/types/Literal";
+import { mCompose } from "visual/utils/value";
+import { Props as P } from "visual/component/Options/types/dev/MultiSelect/types";
+
+const wrap = (value: Literal): SimpleValue<Literal> => ({ value });
+
+type ItemInstance = ReactElement<ItemProps<Literal>>;
+export type Props = Exclude<P, "value" | "onChange"> & {
+  value: Literal;
+  onChange: OnChange<SimpleValue<Literal>>;
+};
 
 export const Select: FC<Props> & OptionType<Literal> = ({
   onChange,
@@ -15,27 +30,27 @@ export const Select: FC<Props> & OptionType<Literal> = ({
   placeholder,
   choices
 }) => {
+  const _onChange = useCallback(mCompose(onChange, wrap), [onChange, choices]);
   return (
-    <Select2
-      onChange={(v): void => onChange({ value: v })}
+    <Select2<Literal>
+      onChange={_onChange}
       placeholder={placeholder}
       size={config?.size}
       value={value}
       editable={config?.search ?? false}
+      search={(s: string, v: Literal): boolean =>
+        !!choices
+          .filter(({ value }) => value == v)
+          .filter(({ title }) => title.includes(s)).length
+      }
     >
-      {apply(
-        items =>
-          items.map(
-            ({ value, title, icon }, i): ItemInstance => (
-              <Item key={i} value={value}>
-                {icon && (
-                  <EditorIcon icon={icon} className={"brz--space-right"} />
-                )}
-                {title}
-              </Item>
-            )
-          ),
-        choices
+      {choices.map(
+        ({ title, icon, value }, i): ItemInstance => (
+          <Item key={i} value={value}>
+            {icon && <EditorIcon icon={icon} className={"brz--space-right"} />}
+            {title}
+          </Item>
+        )
       )}
     </Select2>
   );

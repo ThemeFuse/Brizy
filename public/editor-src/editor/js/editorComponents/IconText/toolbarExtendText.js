@@ -2,7 +2,6 @@ import {
   toolbarElementIconTextListDisabled,
   toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
-import { defaultValueKey } from "visual/utils/onChange";
 
 export function getItems({ v, device, state }) {
   return [
@@ -13,8 +12,8 @@ export function getItems({ v, device, state }) {
       state: "normal"
     }),
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
-      type: "popover",
+      id: "toolbarSettings",
+      type: "popover-dev",
       options: [toolbarDisabledAdvancedSettings({ device, state })]
     }
   ];

@@ -5,8 +5,6 @@ import {
   toolbarPaddingFourFields,
   toolbarMargin,
   toolbarBorderRadius,
-  toolbarHoverTransition,
-  toolbarZIndex,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
 
@@ -14,7 +12,7 @@ export const title = t("Column");
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device });
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
+
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
     { title: t("Header"), value: "header" },
@@ -25,18 +23,21 @@ export function getItems({ v, device }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
+  const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
     {
-      id: dvk("settingsTabs"),
-      type: "tabs",
-      align: "start",
+      id: "settingsTabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
       tabs: [
         {
           id: dvk("settingsStyling"),
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarPaddingFourFields({
               v,
@@ -71,7 +72,7 @@ export function getItems({ v, device }) {
         {
           id: dvk("moreSettingsAdvanced"),
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
             {
               id: "showOnDesktop",
@@ -81,12 +82,17 @@ export function getItems({ v, device }) {
               closeTooltip: true,
               position: 10
             },
-            toolbarZIndex({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop"
-            }),
+            {
+              id: "zIndex",
+              type: "slider-dev",
+              position: 20,
+              label: t("Z-index"),
+              devices: "desktop",
+              config: {
+                min: 0,
+                max: 100
+              }
+            },
             {
               id: "cssID",
               label: t("CSS ID"),
@@ -98,7 +104,7 @@ export function getItems({ v, device }) {
                 content: "Add your custom ID without the #pound, example: my-id"
               },
               config: {
-                choices: cssIDDynamicContentChoices
+                choices: richTextDC
               },
               options: [
                 {
@@ -119,7 +125,7 @@ export function getItems({ v, device }) {
                   "Add your custom class without the .dot, example: my-class"
               },
               config: {
-                choices: cssIDDynamicContentChoices
+                choices: richTextDC
               },
               options: [
                 {
@@ -128,22 +134,40 @@ export function getItems({ v, device }) {
                 }
               ]
             },
+            {
+              id: "customAttributes",
+              label: t("Custom Attributes"),
+              type: "codeMirror-dev",
+              position: 45,
+              placeholder: "key1:value1\nkey2:value2",
+              display: "block",
+              devices: "desktop",
+              helper: {
+                content:
+                  "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+              },
+              population: richTextDC
+            },
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              devices: "desktop",
+              position: 60,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            },
             toolbarEntranceAnimation({
               v,
               device,
-              state: "normal",
-              devices: "desktop"
-            }),
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
-              position: 60,
-              devices: "desktop"
+              state: "normal"
             }),
             {
               id: "tagName",
-              label: t("Html Tag"),
+              label: t("HTML Tag"),
               type: "select-dev",
               choices: toolbarTagsChoices
             }
@@ -178,6 +202,12 @@ export function getItems({ v, device }) {
         "onChangeBorderRadiusUngrouped",
         "onChangeBorderRadiusUngroupedDependencies"
       ]
+    }),
+    toolbarEntranceAnimation({
+      v,
+      device,
+      devices: "responsive",
+      state: "normal"
     })
   ];
 }

@@ -14,6 +14,15 @@ export default function($node) {
     $this.addClass("brz-initialized");
   });
 
+  const formatNumber = function(number) {
+    var splitNum;
+    number = Math.abs(number);
+    number = number.toFixed(0);
+    splitNum = number.split(".");
+    splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return splitNum.join("-");
+  };
+
   var isScrolledIntoView = function(el) {
     var rect = el.getBoundingClientRect();
     var elemTop = rect.top;
@@ -30,7 +39,7 @@ export default function($node) {
     var $chart = $(value.elem).find(".brz-counter-pie-chart");
 
     var step = function(countNum) {
-      $figures.text(parseInt(countNum));
+      $figures.text(formatNumber(countNum));
       $chart &&
         $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
     };

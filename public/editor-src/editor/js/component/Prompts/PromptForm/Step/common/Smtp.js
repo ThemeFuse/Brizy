@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
 import { updateSmtpIntegration } from "../../api";
-import { fakeRequest } from "../../../common/utils";
 import { InputFields } from "../../../common/GlobalApps/StepsView";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class Smtp extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class Smtp extends Component {
 
     if (apiKeys.find(({ required, name }) => required && !apiKeyValue[name])) {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: t("All fields marked with an asterisk ( * ) must be completed."),
@@ -85,7 +85,7 @@ class Smtp extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.props.onChangePrev();
   };

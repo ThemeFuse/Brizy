@@ -41,7 +41,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h2 class=\"brz-text-lg-center brz-tp-heading2\"><span style=\"background-color: transparent;\" class=\"brz-cp-color8\">Easy Brizy Pricing</span></h2>"
+                                            "text": "<h2 class=\"brz-tp-heading2 brz-text-lg-center\"><span class=\"brz-cp-color8\" style=\"background-color: transparent;\"><span>Our Pricing List</span></span></h2>"
                                         }
                                     }
                                 ]

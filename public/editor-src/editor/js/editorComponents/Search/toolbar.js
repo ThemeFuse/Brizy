@@ -2,10 +2,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementSearchStyle,
-  toolbarSizeWidthWidthPercent
-} from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
@@ -18,26 +14,34 @@ export function getItems({ v, device }) {
   );
   return [
     {
-      id: dvkn("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-search",
-      title: t("Additionals"),
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
+      config: {
+        icon: "nc-search",
+        title: t("Additionals")
+      },
       position: 60,
       options: [
-        toolbarElementSearchStyle({
-          v,
-          device,
+        {
+          id: "searchStyle",
+          label: t("Style"),
+          type: "select-dev",
           devices: "desktop",
-          state: "normal"
-        })
+          choices: [
+            { title: t("Classic"), value: "classic" },
+            { title: t("Minimal"), value: "minimal" }
+          ]
+        }
       ]
     },
     {
-      id: dvkn("popoverTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "popoverTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -51,22 +55,24 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvkn("popoverColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      id: "popoverColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+          }
+        }
+      },
       roles: ["admin"],
       devices: "desktop",
       position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.colorOpacity)
-        }
-      },
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabText",
@@ -80,7 +86,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvkn("tabBg"),
+              id: "tabBg",
               label: t("Bg"),
               options: [
                 {
@@ -91,7 +97,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvkn("tabBorder"),
+              id: "tabBorder",
               label: t("Border"),
               options: [
                 {
@@ -102,7 +108,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvkn("tabBoxShadow"),
+              id: "tabBoxShadow",
               label: t("Shadow"),
               options: [
                 {
@@ -117,14 +123,28 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvkn("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({ v, device, state: "normal" }),
+        {
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: dvv("widthSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
+          }
+        },
         {
           id: "height",
           label: t("Height"),
@@ -135,7 +155,10 @@ export function getItems({ v, device }) {
             max: 200,
             inputMin: 0,
             inputMax: 1000,
-            units: [{ value: "px", title: "px" }]
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {

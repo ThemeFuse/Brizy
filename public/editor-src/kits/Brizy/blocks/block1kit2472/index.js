@@ -63,7 +63,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color7\">Brizy headquarters in just a couple of pictures</em></p>"
+                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color7\">Our headquarters in just a couple of pictures</em></p>"
                                         }
                                     }
                                 ]
@@ -198,7 +198,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with Brizy, the easiest builder for WordPress!</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with this, the easiest builder for WordPress!</span></span></p>"
                                                                 }
                                                             }
                                                         ],

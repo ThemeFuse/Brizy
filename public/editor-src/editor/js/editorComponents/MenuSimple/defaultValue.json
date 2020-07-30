@@ -8,11 +8,12 @@
     "width": 100,
     "itemPadding": 15,
 
+    "families": {
+      "fontFamily": "lato"
+    },
+
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "roboto"
-    },
     "fontSize": 14,
     "fontWeight": 600,
     "lineHeight": 1.3,
@@ -24,6 +25,20 @@
 
     "tempColorOpacity": 1,
     "tempColorPalette": "",
+
+    "activeColorHex": null,
+    "activeColorOpacity": null,
+    "activeColorPalette": null,
+
+    "tempActiveColorOpacity": null,
+    "tempActiveColorPalette": null,
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
 
     "tabletWidth": null,
     "tabletItemPadding": null,

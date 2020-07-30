@@ -1,16 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import Options from "visual/component/Options";
-import {
-  updateCurrentStyleId,
-  updateCurrentStyle,
-  updateExtraFontStyles
-} from "visual/redux/actions";
-import {
-  currentStyleSelector,
-  stylesSelector,
-  extraFontStylesSelector
-} from "visual/redux/selectors";
+import { updateCurrentStyleId, updateCurrentStyle } from "visual/redux/actions";
+import { updateExtraFontStyles } from "visual/redux/actions2";
+import { currentStyleSelector, stylesSelector } from "visual/redux/selectors";
+import { extraFontStylesSelector } from "visual/redux/selectors2";
 import { t } from "visual/utils/i18n";
 import { branding } from "visual/utils/branding";
 
@@ -119,8 +113,5 @@ export const Styling = {
   id: "styling",
   icon: "nc-brush",
   drawerTitle: t("Styling"),
-  drawerComponent: connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(DrawerComponent)
+  drawerComponent: connect(mapStateToProps, mapDispatchToProps)(DrawerComponent)
 };

@@ -1,30 +1,30 @@
-import FuzzySearch from "fuzzy-search";
-import React, { FC, useEffect, useState } from "react";
-import { uniq, initial } from "underscore";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { uniq, initial, sortBy } from "underscore";
+import { WithClassName, WithSize } from "visual/utils/options/attributes";
 import { OnChange } from "visual/component/Options/Type";
-import { Item } from "./Item";
 import { Tag } from "./Tag";
-import { apply, arrowFn, getValue, orderBy } from "./utils";
+import { apply, arrowFn } from "./utils";
 import { Component } from "./Component";
-import { ItemInstance, ItemProps } from "./types/Item";
+import { SelectItem } from "./SelectItem";
+import { Props as ItemProps } from "./Item";
+import { Literal } from "visual/utils/types/Literal";
 
-type Items = Array<ItemInstance>;
-type ItemValue = ItemProps["value"];
-type ItemsPromise = (v?: ItemProps["value"]) => Promise<ItemInstance[]>;
+type ItemType<T> = ReactElement<ItemProps<T>>;
 
-export type Props = WithClassName & {
-  placeholder?: string;
-  children: ItemInstance[] | ItemsPromise;
-  value: ItemValue[];
-  onChange: OnChange<Array<ItemProps["value"]>>;
-  editable?: boolean;
-  size?: "short" | "medium" | "large" | "full" | "auto";
-  scroll?: number;
-  hideSelected?: boolean;
-};
+export type Props<T extends Literal> = WithClassName &
+  WithSize & {
+    placeholder?: string;
+    children: ItemType<T>[];
+    value: T[];
+    onChange: OnChange<T[]>;
+    editable?: boolean;
+    scroll?: number;
+    hideSelected?: boolean;
+    search: (s: string, t: T) => boolean;
+    onOpen?: () => void;
+  };
 
-export const MultiSelect: FC<Props> = ({
+export function MultiSelect<T extends Literal>({
   className,
   value,
   children,
@@ -33,34 +33,36 @@ export const MultiSelect: FC<Props> = ({
   editable = true,
   size = "medium",
   placeholder = "",
-  hideSelected = true
-}) => {
-  const [items, setItems] = useState<ItemInstance[]>([]);
-  const [filtered, setFiltered] = useState<ItemInstance[]>([]);
-  const [active, setActive] = useState<ItemValue | undefined>();
+  hideSelected = true,
+  search,
+  onOpen
+}: Props<T>): ReactElement {
+  const [filtered, setFiltered] = useState<ItemType<T>[]>([]);
+  const [active, setActive] = useState<T | undefined>();
   const [inputValue, setInputValue] = useState("");
-  const isActive = (i: ItemValue): boolean => active === i || value.includes(i);
+  const isActive = (i: T): boolean => active === i || value.includes(i);
 
-  const filterByInput = (items: ItemInstance[]): void => {
-    const searcher = new FuzzySearch(items as Items, ["props.children"]);
+  const filterByInput = (items: ItemType<T>[]): void => {
     setFiltered(
-      searcher
-        .search(inputValue)
-        .filter(i => !(hideSelected && value.includes(getValue(i))))
+      items
+        .filter(({ props: { value } }) => search(inputValue, value))
+        .filter(({ props }) => !(hideSelected && value.includes(props.value)))
     );
   };
 
   useEffect(() => setActive(undefined), [filtered]);
-  useEffect(() => apply(setItems, children), [children]);
-  useEffect(() => apply(filterByInput, children, inputValue), [
+  useEffect(() => apply(filterByInput, children), [
     children,
     inputValue,
     value
   ]);
 
-  const onSelect = (i: ItemInstance): void => {
-    onChange(uniq([...value, getValue(i)]));
-  };
+  const onSelect = useCallback(
+    (i): void => {
+      onChange(uniq([...value, i]));
+    },
+    [value]
+  );
   const onKeyDown: OnChange<string> = key => {
     switch (key) {
       case "Backspace":
@@ -69,7 +71,7 @@ export const MultiSelect: FC<Props> = ({
         }
         break;
       case "Enter":
-        if (active) {
+        if (active !== undefined) {
           onChange(uniq([...value, active]));
           setInputValue("");
         }
@@ -78,23 +80,30 @@ export const MultiSelect: FC<Props> = ({
       case "ArrowUp":
         if (filtered.length) {
           const fn = arrowFn(key);
-          const v = active
-            ? fn<ItemValue>(active, filtered.map(getValue))
-            : getValue(filtered[0]);
+          const v =
+            active !== undefined
+              ? fn(
+                  active,
+                  filtered.map(({ props: { value } }) => value)
+                )
+              : filtered[0].props.value;
           setActive(v);
         }
         break;
     }
   };
-  const onRemove: OnChange<ItemValue> = v => {
+  const onRemove: OnChange<T> = v => {
     onChange(value.filter(i => i !== v));
   };
 
   // Filter values by children and not vice-versa,
   // in order to show items by the order they were selected
-  const tags = orderBy(value, items).map(
+  const tags = sortBy(
+    children.filter(c => value.includes(c.props.value)),
+    ({ props }) => value.findIndex(v => v === props.value)
+  ).map(
     (item, i) => (
-      <Tag key={i} onRemove={(): void => onRemove(getValue(item))}>
+      <Tag key={i} onRemove={(): void => onRemove(item.props.value)}>
         {item.props.children}
       </Tag>
     ),
@@ -113,10 +122,11 @@ export const MultiSelect: FC<Props> = ({
       onKeyDown={onKeyDown}
       onType={setInputValue}
       scroll={scroll}
+      onOpen={onOpen}
     >
-      {filtered.map(({ props }) => (
-        <Item {...props} key={props.value} active={isActive(props.value)} />
+      {filtered.map(({ props }, i) => (
+        <SelectItem {...props} key={i} active={isActive(props.value)} />
       ))}
     </Component>
   );
-};
+}

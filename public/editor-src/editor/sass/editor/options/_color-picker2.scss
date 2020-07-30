@@ -4,6 +4,10 @@
   padding-top: 0;
   border-bottom: 0;
 
+  &.brz-ed-option {
+    border: none;
+  }
+
   // Select
   .brz-control__select {
     position: absolute;

@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { toolbarDisabledPadding } from "visual/utils/toolbar";
 
 export default (level, isMMenu) => {
   return {
@@ -9,7 +10,7 @@ export default (level, isMMenu) => {
 
 export const title = t("Menu Items");
 
-export const getItemsSimple = level => () => {
+export const getItemsSimple = level => ({ device, state }) => {
   return [
     ...(level < 1
       ? [
@@ -25,22 +26,24 @@ export const getItemsSimple = level => () => {
       ? [
           {
             id: "settingsTabs",
-            type: "tabs",
+            type: "tabs-dev",
             disabled: true
-          }
+          },
+          toolbarDisabledPadding({ device, state, prefix: "menu" })
         ]
       : [])
   ];
 };
 
 // eslint-disable-next-line no-unused-vars
-export const getItemsMMenu = _ => () => {
+export const getItemsMMenu = _ => ({ device, state }) => {
   return [
     {
       id: "borderRadiusPicker",
       type: "multiPicker",
       devices: "desktop",
       disabled: true
-    }
+    },
+    toolbarDisabledPadding({ device, state, prefix: "menu" })
   ];
 };

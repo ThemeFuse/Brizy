@@ -16,10 +16,12 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-wp-shortcode",
-      title: t("Breadcrumbs"),
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-shortcode",
+        title: t("Breadcrumbs")
+      },
       position: 60,
       options: [
         {
@@ -35,11 +37,13 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -53,20 +57,23 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+      id: "toolbarColor",
+      type: "popover-dev",
+      devices: "desktop",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          }
         }
       },
+      position: 90,
       options: [
         {
-          id: dvk("tabsColor"),
-          type: "tabs",
+          id: "tabsColor",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("tabLinks"),

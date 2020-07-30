@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import Link from "./Options/types/Link";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors";
+import { pageSelector } from "visual/redux/selectors2";
 import { t } from "visual/utils/i18n";
 import { IS_EXTERNAL_POPUP, IS_INTERNAL_POPUP } from "visual/utils/models";
 

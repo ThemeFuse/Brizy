@@ -8,21 +8,36 @@ export const makeUrl = (baseUrl, params = {}) => {
   return url;
 };
 
-export const parseJSON = response => {
-  return response
+export const parseJSON = res => {
+  return res
     .json()
     .then(json => ({
       ...json,
-      status: response.status,
-      ok: response.ok,
+      status: res.status,
+      ok: res.ok,
       data: json.data || null
     }))
+    .then(reqStatus)
     .catch(() => {
       throw {
         status: 500,
         data: "Server Error"
       };
     });
+};
+
+// For wp if success === false
+// need see in data.code the status code
+const reqStatus = res => {
+  if (res.success) {
+    return res;
+  } else {
+    const { data } = res;
+    return {
+      ...res,
+      status: data.code || res.status
+    };
+  }
 };
 
 export const fakeRequest = () =>

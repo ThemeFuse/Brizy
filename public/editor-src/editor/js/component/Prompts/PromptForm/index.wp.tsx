@@ -2,6 +2,7 @@ import React, { Component, ReactElement } from "react";
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
+import { FormField } from "../common/GlobalApps/type";
 
 import Service from "./Service";
 import Email from "./Email";
@@ -28,13 +29,34 @@ const TABS = [
   }
 ];
 
-class PromptWPForm extends Component {
+type Props = {
+  formId: string;
+  formFields: FormField[];
+  opened: boolean;
+  onClose: () => void;
+}
+
+class PromptWPForm extends Component<Props> {
   static defaultProps = {
+    formId: "",
+    formFields: [],
+    opened: false,
     onClose: _.noop
   };
 
   render(): ReactElement {
-    return <Tabs {...this.props} tabs={TABS} currentTab="email" />;
+    const { formId, formFields, opened, onClose } = this.props;
+
+    return (
+      <Tabs
+        currentTab="email"
+        formId={formId}
+        formFields={formFields}
+        opened={opened}
+        tabs={TABS}
+        onClose={onClose}
+      />
+    );
   }
 }
 

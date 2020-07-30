@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import * as Option from "visual/component/Options/Type";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
@@ -31,6 +31,7 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
   config = {}
 }) => {
   const onEdit = config.debounceUpdate ?? false;
+  const ref = useRef<Value>();
   const [_value, setValue] = useState<Value>(value);
   const [editing, setEdit] = useState<boolean>(false);
   const _onChange = useCallback(
@@ -45,11 +46,18 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
     () => {
       if (!eq(value, _value) && (!onEdit || !editing)) {
         onChange(fromValue(_value));
+        ref.current = _value;
       }
     },
     Math.max(0, config?.updateRate ?? 16),
-    [_value]
+    [_value.number, _value.unit, onEdit, editing]
   );
+
+  useEffect(() => {
+    if (!ref.current || !eq(value, ref.current)) {
+      setValue(value);
+    }
+  }, [value.number, value.unit]);
 
   return (
     <NumberSlider

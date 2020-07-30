@@ -11,13 +11,18 @@
     "customCSS": "",
 
     "height": 55,
+    "heightSuffix": "px",
     "width": 100,
+    "widthSuffix": "%",
+
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
 
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
-    "typographyFamilies": {
-      "typographyFontFamily": "roboto"
-    },
     "typographyFontSize": 21,
     "typographyFontWeight": 700,
     "typographyLineHeight": 1,
@@ -172,22 +177,27 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
+
+    "tabletHeight": null,
+    "tabletHeightSuffix": null,
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
-    "tabletTypographyFamilies": {
-      "tabletTypographyFontFamily": null
-    },
     "tabletTypographyFontSize": 13,
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1,
     "tabletTypographyLetterSpacing": 1,
 
+    "mobileHeight": null,
+    "mobileHeightSuffix": null,
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
-    "mobileTypographyFamilies": {
-      "mobileTypographyFontFamily": null
-    },
     "mobileTypographyFontSize": 13,
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1,

@@ -45,7 +45,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-ls-lg-m_3 brz-fw-400 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span style=\"opacity: 1;\" class=\"brz-cp-color3\">Websites&nbsp;Fast &amp; Easy</span></h1><p class=\"brz-ls-lg-m_3 brz-fw-400 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span style=\"opacity: 1;\" class=\"brz-cp-color8\">Only&nbsp;With Brizy</span></p>"
+                                            "text": "<h1 class=\"brz-text-xs-center brz-fs-lg-80 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-center brz-ff-montserrat brz-ls-lg-m_3\"><span class=\"brz-cp-color3\" style=\"opacity: 1;\"><span>Websites&nbsp;Fast &amp; Easy</span></span></h1><p class=\"brz-text-xs-center brz-fs-lg-80 brz-fs-xs-34 brz-lh-xs-1_3 brz-lh-lg-1_3 brz-text-lg-center brz-ff-montserrat brz-ls-lg-m_3\"><span class=\"brz-cp-color8\" style=\"opacity: 1;\"><span>Only&nbsp;With Our Builder</span></span></p>"
                                         }
                                     }
                                 ],

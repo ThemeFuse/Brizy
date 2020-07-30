@@ -20,7 +20,18 @@
   .brz-ed-box__resizer {
     height: auto;
   }
+
+  .brz-counter-figures {
+    text-align: center;
+    display: flex;
+
+    span {
+      word-break: normal;
+      white-space: pre;
+    }
+  }
 }
+
 .brz-counter-chart {
   text-align: center;
   margin: 0 auto;
@@ -58,8 +69,5 @@
     .brz-counter-pie-chart {
       stroke-width: 32;
     }
-  }
-  .brz-counter-figures {
-    text-align: center;
   }
 }

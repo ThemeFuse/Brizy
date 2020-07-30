@@ -1,22 +1,19 @@
 import { mergeDeep } from "timm";
-import { fontSelector } from "./selectors";
-import { updateUI } from "./actions2";
+import { fontSelector } from "./selectors2";
 
 export const HYDRATE = "HYDRATE";
 export const EDITOR_RENDERED = "EDITOR_RENDERED";
-export const UPDATE_PAGE = "UPDATE_PAGE";
 export const UPDATE_BLOCKS = "UPDATE_BLOCKS";
-export const ADD_BLOCK = "ADD_BLOCK";
 export const REMOVE_BLOCK = "REMOVE_BLOCK";
+export const REMOVE_BLOCKS = "REMOVE_BLOCKS";
 export const REORDER_BLOCKS = "REORDER_BLOCKS";
-export const CREATE_GLOBAL_BLOCK = "CREATE_GLOBAL_BLOCK";
+export const MAKE_NORMAL_TO_GLOBAL_BLOCK = "MAKE_NORMAL_TO_GLOBAL_BLOCK";
+export const MAKE_POPUP_TO_GLOBAL_BLOCK = "MAKE_POPUP_TO_GLOBAL_BLOCK";
+export const MAKE_GLOBAL_BLOCK_TO_POPUP = "MAKE_GLOBAL_BLOCK_TO_POPUP";
 export const UPDATE_GLOBAL_BLOCK = "UPDATE_GLOBAL_BLOCK";
 export const DELETE_GLOBAL_BLOCK = "DELETE_GLOBAL_BLOCK";
-export const CREATE_SAVED_BLOCK = "CREATE_SAVED_BLOCK";
-export const UPDATE_SAVED_BLOCK = "UPDATE_SAVED_BLOCK";
-export const DELETE_SAVED_BLOCK = "DELETE_SAVED_BLOCK";
 export const CREATE_RULES = "CREATE_RULES";
-export const UPDATE_RULES = "UPDATE_RULES";
+export const UPDATE_POPUP_RULES = "UPDATE_POPUP_RULES";
 export const UPDATE_UI = "UPDATE_UI";
 export const COPY_ELEMENT = "COPY_ELEMENT";
 export const IMPORT_TEMPLATE = "IMPORT_TEMPLATE";
@@ -24,14 +21,17 @@ export const IMPORT_KIT = "IMPORT_KIT";
 export const UPDATE_CURRENT_KIT_ID = "UPDATE_CURRENT_KIT_ID";
 export const UPDATE_CURRENT_STYLE_ID = "UPDATE_CURRENT_STYLE_ID";
 export const UPDATE_CURRENT_STYLE = "UPDATE_CURRENT_STYLE";
-export const UPDATE_EXTRA_FONT_STYLES = "UPDATE_EXTRA_FONT_STYLES";
-export const PUBLISH = "PUBLISH";
 export const ADD_FONTS = "ADD_FONTS";
 export const DELETE_FONTS = "DELETE_FONTS";
 export const UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT";
 export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
+export const UPDATE_GB_RULES = "UPDATE_GB_RULES";
 export const UPDATE_TRIGGERS = "UPDATE_TRIGGERS";
+export const ADD_GLOBAL_BLOCK = "ADD_GLOBAL_BLOCK";
+export const MAKE_GLOBAL_TO_NORMAL_BLOCK = "MAKE_GLOBAL_TO_NORMAL_BLOCK";
+export const ADD_BLOCK = "ADD_BLOCK";
 export const UPDATE_ERROR = "UPDATE_ERROR";
+export const UPDATE_AUTHORIZATION = "UPDATE_AUTHORIZATION";
 
 export function hydrate({
   project,
@@ -39,8 +39,9 @@ export function hydrate({
   fonts,
   page,
   globalBlocks,
-  savedBlocks,
-  blocksThumbnailSizes
+  blocksThumbnailSizes,
+  authorized,
+  syncAllowed
 }) {
   return {
     type: HYDRATE,
@@ -50,8 +51,9 @@ export function hydrate({
       fonts,
       page,
       globalBlocks,
-      savedBlocks,
-      blocksThumbnailSizes
+      blocksThumbnailSizes,
+      authorized,
+      syncAllowed
     }
   };
 }
@@ -78,31 +80,10 @@ export function updateCurrentStyle(currentStyle) {
   };
 }
 
-export function updateExtraFontStyles(extraFontStyles) {
-  return {
-    type: UPDATE_EXTRA_FONT_STYLES,
-    payload: extraFontStyles
-  };
-}
-
 export function updateCurrentKitId(id) {
   return {
     type: UPDATE_CURRENT_KIT_ID,
     payload: id
-  };
-}
-
-export function publish() {
-  return dispatch => {
-    return new Promise((res, rej) => {
-      dispatch({
-        type: PUBLISH,
-        meta: {
-          onSuccess: res,
-          onError: rej
-        }
-      });
-    });
   };
 }
 
@@ -127,9 +108,9 @@ export function deleteFont({ type, fonts: removedFonts }) {
   };
 }
 
-export function updateRules({ data, meta }) {
+export function updatePopupRules({ data, meta }) {
   return {
-    type: UPDATE_RULES,
+    type: UPDATE_POPUP_RULES,
     payload: data,
     meta
   };
@@ -137,128 +118,7 @@ export function updateRules({ data, meta }) {
 
 // pages
 
-export function updatePage({ data, status, meta }) {
-  return {
-    type: UPDATE_PAGE,
-    payload: {
-      data,
-      ...(status ? { status } : {})
-    },
-    meta: {
-      is_autosave: 1,
-      ...meta
-    }
-  };
-}
-
-export function updateBlocks({ blocks, meta }) {
-  return {
-    type: UPDATE_BLOCKS,
-    payload: {
-      blocks
-    },
-    meta: {
-      is_autosave: 1,
-      ...meta
-    }
-  };
-}
-
-export function addBlock(block, meta = {}) {
-  return {
-    type: ADD_BLOCK,
-    payload: block,
-    meta
-  };
-}
-
-export function removeBlock({ index }) {
-  return {
-    type: REMOVE_BLOCK,
-    payload: {
-      index
-    }
-  };
-}
-
-export function reorderBlocks({ oldIndex, newIndex }) {
-  return {
-    type: REORDER_BLOCKS,
-    payload: {
-      oldIndex,
-      newIndex
-    }
-  };
-}
-
 // globalBlocks
-
-export function createGlobalBlock({ id, data, meta }) {
-  return {
-    type: CREATE_GLOBAL_BLOCK,
-    payload: {
-      id,
-      data
-    },
-    meta
-  };
-}
-
-export function deleteGlobalBlock({ id }) {
-  return {
-    type: DELETE_GLOBAL_BLOCK,
-    payload: {
-      id
-    }
-  };
-}
-
-// saved blocks
-
-export function createSavedBlock({ id, data, meta }) {
-  return {
-    type: CREATE_SAVED_BLOCK,
-    payload: {
-      id,
-      data
-    },
-    meta
-  };
-}
-
-export function updateSavedBlock({ id, data, meta }) {
-  return {
-    type: UPDATE_SAVED_BLOCK,
-    payload: {
-      id,
-      data
-    },
-    meta: {
-      is_autosave: 0,
-      ...meta
-    }
-  };
-}
-
-export function deleteSavedBlock({ id, meta }) {
-  return {
-    type: DELETE_SAVED_BLOCK,
-    payload: {
-      id
-    },
-    meta
-  };
-}
-
-// templates
-
-export function importTemplate(template, meta = {}) {
-  return {
-    type: IMPORT_TEMPLATE,
-    payload: template,
-    meta
-  };
-}
 
 // kits
 
@@ -267,12 +127,6 @@ export function importKit(kit) {
     type: IMPORT_KIT,
     payload: kit
   };
-}
-
-// ui
-
-export function setDeviceMode(mode) {
-  return updateUI("deviceMode", mode);
 }
 
 // copy

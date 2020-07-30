@@ -118,7 +118,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-button\"><span style=\"opacity: 0.52;\" class=\"brz-cp-color6\">UX DESIGNER &amp; AUTHOR</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-button\"><span style=\"opacity: 0.52;\" class=\"brz-cp-color6\">UX DESIGNER &amp;amp; AUTHOR</span></p>"
                                                                 }
                                                             }
                                                         ],

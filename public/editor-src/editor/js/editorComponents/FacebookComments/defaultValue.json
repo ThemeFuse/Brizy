@@ -3,6 +3,7 @@
     "type": "facebook",
 
     "numPosts": 10,
+    "numPostsSuffix": null,
     "darkScheme": "off",
 
     "disqusShortname": "brizy-disqus",
@@ -27,8 +28,10 @@
     "customCSS": "",
 
     "width": 100,
+    "widthSuffix": null,
 
     "logoSize": 67,
+    "logoSizeSuffix": null,
 
     "borderStyle": "solid",
 
@@ -172,11 +175,26 @@
     "tempHoverPostButtonBgColorOpacity": null,
     "tempHoverPostButtonBgColorPalette": null,
 
+    "families": {
+      "nameFontFamily": "lato",
+      "tabletNameFontFamily": null,
+      "mobileNameFontFamily": null,
+      "commentFontFamily": "lato",
+      "tabletCommentFontFamily": null,
+      "mobileCommentFontFamily": null,
+      "dateFontFamily": "lato",
+      "tabletDateFontFamily": null,
+      "mobileDateFontFamily": null,
+      "replyFontFamily": "lato",
+      "tabletReplyFontFamily": null,
+      "mobileReplyFontFamily": null,
+      "postButtonFontFamily": "lato",
+      "tabletPostButtonFontFamily": null,
+      "mobilePostButtonFontFamily": null
+    },
+
     "nameFontStyle": "",
     "nameFontFamilyType": "google",
-    "nameFamilies": {
-      "nameFontFamily": "lato"
-    },
     "nameFontFamily": "",
     "nameFontSize": 20,
     "nameFontWeight": 600,
@@ -185,9 +203,6 @@
 
     "commentFontStyle": "",
     "commentFontFamilyType": "google",
-    "commentFamilies": {
-      "commentFontFamily": "lato"
-    },
     "commentFontFamily": "",
     "commentFontSize": 15,
     "commentFontWeight": 400,
@@ -196,9 +211,6 @@
 
     "dateFontStyle": "",
     "dateFontFamilyType": "google",
-    "dateFamilies": {
-      "dateFontFamily": "lato"
-    },
     "dateFontFamily": "",
     "dateFontSize": 15,
     "dateFontWeight": 500,
@@ -207,9 +219,6 @@
 
     "replyFontStyle": "",
     "replyFontFamilyType": "google",
-    "replyFamilies": {
-      "replyFontFamily": "lato"
-    },
     "replyFontFamily": "",
     "replyFontSize": 15,
     "replyFontWeight": 600,
@@ -218,9 +227,6 @@
 
     "postButtonFontStyle": "",
     "postButtonFontFamilyType": "google",
-    "postButtonFamilies": {
-      "postButtonFontFamily": "lato"
-    },
     "postButtonFontFamily": "",
     "postButtonFontSize": 16,
     "postButtonFontWeight": 600,
@@ -228,10 +234,13 @@
     "postButtonLetterSpacing": -0.1,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
     "tabletLogoSize": null,
+    "tabletLogoSizeSuffix": null,
 
     "tabletDateSpacing": null,
 
@@ -256,9 +265,6 @@
 
     "tabletNameFontStyle": "",
     "tabletNameFontFamilyType": null,
-    "tabletNameFamilies": {
-      "tabletNameFontFamily": null
-    },
     "tabletNameFontSize": 20,
     "tabletNameFontWeight": 600,
     "tabletNameLineHeight": 1.3,
@@ -266,9 +272,6 @@
 
     "tabletCommentFontStyle": "",
     "tabletCommentFontFamilyType": null,
-    "tabletCommentFamilies": {
-      "tabletCommentFontFamily": null
-    },
     "tabletCommentFontSize": 15,
     "tabletCommentFontWeight": 400,
     "tabletCommentLineHeight": 1.9,
@@ -276,9 +279,6 @@
 
     "tabletDateFontStyle": "",
     "tabletDateFontFamilyType": null,
-    "tabletDateFamilies": {
-      "tabletDateFontFamily": null
-    },
     "tabletDateFontSize": 15,
     "tabletDateFontWeight": 500,
     "tabletDateLineHeight": 1.3,
@@ -286,9 +286,6 @@
 
     "tabletReplyFontStyle": "",
     "tabletReplyFontFamilyType": null,
-    "tabletReplyFamilies": {
-      "tabletReplyFontFamily": null
-    },
     "tabletReplyFontSize": 15,
     "tabletReplyFontWeight": 600,
     "tabletReplyLineHeight": 1.3,
@@ -296,17 +293,16 @@
 
     "tabletPostButtonFontStyle": "",
     "tabletPostButtonFontFamilyType": null,
-    "tabletPostButtonFamilies": {
-      "tabletPostButtonFontFamily": null
-    },
     "tabletPostButtonFontSize": 15,
     "tabletPostButtonFontWeight": 600,
     "tabletPostButtonLineHeight": 1.3,
     "tabletPostButtonLetterSpacing": 0,
 
     "mobileWidth": null,
+    "mobileWidthSuffix": null,
 
     "mobileLogoSize": null,
+    "mobileLogoSizeSuffix": null,
 
     "mobileDateSpacing": null,
 
@@ -331,9 +327,6 @@
 
     "mobileNameFontStyle": "",
     "mobileNameFontFamilyType": null,
-    "mobileNameFamilies": {
-      "mobileNameFontFamily": null
-    },
     "mobileNameFontSize": 20,
     "mobileNameFontWeight": 600,
     "mobileNameLineHeight": 1.3,
@@ -341,9 +334,6 @@
 
     "mobileCommentFontStyle": "",
     "mobileCommentFontFamilyType": null,
-    "mobileCommentFamilies": {
-      "mobileCommentFontFamily": null
-    },
     "mobileCommentFontSize": 15,
     "mobileCommentFontWeight": 400,
     "mobileCommentLineHeight": 1.9,
@@ -351,9 +341,6 @@
 
     "mobileDateFontStyle": "",
     "mobileDateFontFamilyType": null,
-    "mobileDateFamilies": {
-      "mobileDateFontFamily": null
-    },
     "mobileDateFontSize": 15,
     "mobileDateFontWeight": 500,
     "mobileDateLineHeight": 1.3,
@@ -361,9 +348,6 @@
 
     "mobileReplyFontStyle": "",
     "mobileReplyFontFamilyType": null,
-    "mobileReplyFamilies": {
-      "mobileReplyFontFamily": null
-    },
     "mobileReplyFontSize": 15,
     "mobileReplyFontWeight": 600,
     "mobileReplyLineHeight": 1.3,
@@ -371,9 +355,6 @@
 
     "mobilePostButtonFontStyle": "",
     "mobilePostButtonFontFamilyType": null,
-    "mobilePostButtonFamilies": {
-      "mobilePostButtonFontFamily": null
-    },
     "mobilePostButtonFontSize": 15,
     "mobilePostButtonFontWeight": 600,
     "mobilePostButtonLineHeight": 1.3,

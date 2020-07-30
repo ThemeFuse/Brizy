@@ -49,6 +49,14 @@ export function styleForFilter(v, vs, vd) {
         "cssStyleElementImageGalleryBorderRadius"
       ]
     },
+    ".brz && .brz-image__gallery-filter__item--style-1.brz-image__gallery-filter__item--active": {
+      standart: [
+        "cssStyleElementImageGalleryFilterActiveColor",
+        "cssStyleElementImageGalleryFilterActiveBgColor",
+        "cssStyleElementImageGalleryFilterActiveBorder",
+        "cssStyleElementImageGalleryFilterActiveShadow"
+      ]
+    },
     ".brz &&.brz-image__gallery-filter--style-2:hover": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
@@ -58,6 +66,9 @@ export function styleForFilter(v, vs, vd) {
         "cssStyleDisplayInlineFlex",
         "cssStyleElementImageGalleryBorderRadius"
       ]
+    },
+    ".brz && .brz-image__gallery-filter__item--style-2.brz-image__gallery-filter__item--active": {
+      standart: ["cssStyleElementImageGalleryFilterActiveColor"]
     }
   };
 

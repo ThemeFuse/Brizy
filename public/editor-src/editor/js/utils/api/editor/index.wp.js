@@ -7,10 +7,9 @@ import {
   parseProject,
   stringifyProject,
   parseGlobalBlock,
-  stringifyGlobalBlock,
-  parseSavedBlock,
-  stringifySavedBlock
+  stringifyGlobalBlock
 } from "./adapter";
+import { makeBlockMeta } from "./adapter-new";
 
 const apiUrl = Config.get("wp").api.url;
 
@@ -34,13 +33,16 @@ export function persistentRequest(ajaxSettings) {
 
   return new Promise((resolve, reject) => {
     jQuery.ajax({
-      ...otherSettings,
       url,
-      data: {
-        ...data,
-        hash,
-        version
-      },
+      ...otherSettings,
+      data:
+        typeof data === "object" && data !== null
+          ? {
+              ...data,
+              hash,
+              version
+            }
+          : data,
       onbeforeunload() {
         return "You have unsaved data.";
       },
@@ -76,6 +78,16 @@ export function request2(url, config = {}) {
   return fetch(url, config);
 }
 
+// pending request
+
+export function pendingRequest(time = 650) {
+  return new Promise(res => {
+    setTimeout(() => {
+      res(true);
+    }, time);
+  });
+}
+
 // project
 
 export function getProject() {
@@ -108,15 +120,15 @@ export function updateProject(project, meta = {}) {
 }
 
 export function addProjectLockedBeacon() {
-  const { hash, lockProject } = Config.get("wp").api;
+  const { url, hash, lockProject } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
-  return request2(apiUrl, {
+  return request2(url, {
     method: "POST",
     body: new URLSearchParams({
       version,
-      action: lockProject,
-      hash
+      hash,
+      action: lockProject
     })
   })
     .then(r => r.json())
@@ -170,7 +182,7 @@ export function updatePage(page, meta = {}) {
 
 // rules changes
 
-export function updateRules(data) {
+export function updatePopupRules(data) {
   const {
     api: { updateRules, hash, url },
     page
@@ -200,12 +212,11 @@ export function getRulesList() {
 
   return request2(url, {
     method: "POST",
-    credentials: "same-origin",
     body: new URLSearchParams({
       action: getRuleList,
-      hash,
       post: page,
-      version
+      version,
+      hash
     })
   })
     .then(r => r.json())
@@ -224,109 +235,137 @@ export function getGlobalBlocks() {
   }).then(({ data }) => {
     return data
       .map(parseGlobalBlock)
-      .reduce((acc, { uid, data, dataVersion }) => {
-        acc[uid] = { id: uid, data, dataVersion };
+      .reduce(
+        (acc, { uid, data, status, dataVersion, rules, position, meta }) => {
+          if (status === "draft") return acc;
 
-        return acc;
-      }, {});
+          acc[uid] = {
+            data,
+            status,
+            dataVersion,
+            meta,
+            rules,
+            position,
+            id: uid
+          };
+
+          return acc;
+        },
+        {}
+      );
   });
 }
 
 export function createGlobalBlock(globalBlock) {
   const { createGlobalBlock } = Config.get("wp").api;
-  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
+  const uid = globalBlock.data.value._id;
+  const { data, rules, dataVersion, meta } = stringifyGlobalBlock(globalBlock);
+  const media = makeBlockMeta(globalBlock);
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
-      action: createGlobalBlock,
       uid,
+      status: "draft",
       data,
-      dataVersion
+      dataVersion,
+      rules,
+      meta,
+      media,
+      action: createGlobalBlock
     }
   });
 }
 
-export function updateGlobalBlock(globalBlock, meta = {}) {
+export function updateGlobalBlock(uid, globalBlock, extraMeta = {}) {
   const { updateGlobalBlock } = Config.get("wp").api;
-  const { is_autosave = 1 } = meta;
-  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
+  const { is_autosave = 1 } = extraMeta;
+  // const uid = globalBlock.data.value._id;
+  const { data, rules, dataVersion, meta, status } = stringifyGlobalBlock(
+    globalBlock
+  );
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
-      action: updateGlobalBlock,
       uid,
+      status,
       data,
       dataVersion,
-      is_autosave
+      rules,
+      is_autosave,
+      meta,
+      action: updateGlobalBlock
     }
   });
 }
 
-// saved blocks
+export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
+  const { updateGlobalBlocks } = Config.get("wp").api;
+  const { is_autosave = 1 } = extraMeta;
 
-export function getSavedBlocks() {
-  const { getSavedBlockList } = Config.get("wp").api;
+  const data = Object.entries(globalBlocks).reduce(
+    (acc, [uid, globalBlock]) => {
+      const {
+        data,
+        position,
+        rules,
+        dataVersion,
+        meta,
+        status
+      } = stringifyGlobalBlock(globalBlock);
 
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    data: { action: getSavedBlockList }
-  }).then(({ data }) => {
-    return data
-      .map(parseSavedBlock)
-      .reduce((acc, { uid, data, dataVersion }) => {
-        acc[uid] = { uid, data, dataVersion };
+      acc.uid.push(uid);
+      acc.status.push(status);
+      acc.data.push(data);
+      acc.position.push(JSON.stringify(position));
+      acc.dataVersion.push(dataVersion);
+      acc.rules.push(rules);
+      acc.meta.push(meta);
 
-        return acc;
-      }, {});
-  });
-}
-
-export function createSavedBlock(savedBlock) {
-  const { createSavedBlock } = Config.get("wp").api;
-  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
+      return acc;
+    },
+    {
+      uid: [],
+      status: [],
+      data: [],
+      position: [],
+      dataVersion: [],
+      rules: [],
+      meta: []
+    }
+  );
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
-      action: createSavedBlock,
-      uid,
-      data,
-      dataVersion
+      uid: data.uid,
+      status: data.status,
+      data: data.data,
+      position: data.position,
+      dataVersion: data.dataVersion,
+      rules: data.rules,
+      is_autosave,
+      meta: data.meta,
+      action: updateGlobalBlocks
     }
   });
 }
 
-export function updateSavedBlock(savedBlock, meta = {}) {
-  const { updateSavedBlock } = Config.get("wp").api;
-  const { is_autosave = 0 } = meta;
-  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
+export function updateGlobalBlocksPositions(data, extraMeta = {}) {
+  const { updateBlockPositions, hash, url } = Config.get("wp").api;
+  const version = Config.get("editorVersion");
+  const { is_autosave = 1 } = extraMeta;
 
   return persistentRequest({
     type: "POST",
+    url: `${url}?action=${updateBlockPositions}&hash=${hash}&is_autosave=${is_autosave}&version=${version}`,
     dataType: "json",
-    data: {
-      action: updateSavedBlock,
-      uid,
-      data,
-      dataVersion,
-      is_autosave
-    }
-  });
-}
-
-export function deleteSavedBlock({ id }) {
-  const { deleteSavedBlock } = Config.get("wp").api;
-
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    data: { action: deleteSavedBlock, uid: id }
+    contentType: "application/json",
+    data: JSON.stringify(data)
   });
 }
 
@@ -422,105 +461,6 @@ export function getAttachmentById(id) {
   return request(apiConfig.getAttachmentUid, data).then(({ data }) => data);
 }
 
-// screenshots
-
-export function createBlockScreenshot({ base64, blockType }) {
-  const {
-    page,
-    api: { hash, createBlockScreenshot }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request2(apiUrl, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: createBlockScreenshot,
-      post: page,
-      block_type: blockType,
-      ibsf: attachment,
-      version,
-      hash
-    })
-  })
-    .then(r => r.json())
-    .then(rj => {
-      if (rj.success) {
-        return rj.data;
-      }
-
-      throw rj;
-    });
-}
-
-export function updateBlockScreenshot({ id, base64, blockType }) {
-  const {
-    page,
-    api: { hash, updateBlockScreenshot }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request2(apiUrl, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: updateBlockScreenshot,
-      post: page,
-      block_type: blockType,
-      id,
-      ibsf: attachment,
-      version,
-      hash
-    })
-  })
-    .then(r => r.json())
-    .then(rj => {
-      if (rj.success) {
-        return rj.data;
-      }
-
-      throw rj;
-    });
-}
-
-// dynamic content
-
-export function getDynamicContent({ placeholder, signal }) {
-  const {
-    page,
-    api: { hash, placeholderContent }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-
-  return request2(apiUrl, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: placeholderContent,
-      version,
-      post_id: page,
-      placeholder,
-      hash
-    }),
-    signal
-  })
-    .then(r => {
-      if (!r.ok) {
-        // TODO: add proper error handling
-        throw new Error("fetch dynamic content error");
-      }
-
-      return r.json();
-    })
-    .then(rj => {
-      if (rj.success) {
-        return rj.data.placeholder;
-      } else {
-        // TODO: add proper error handling
-        throw new Error("fetch dynamic content error");
-      }
-    });
-}
-
 export function getPostObjects(postType) {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.getPostObjects, { postType }).then(
@@ -537,14 +477,14 @@ export function getConditions() {
 
 // heartBeat
 export function sendHeartBeat() {
-  const { hash, heartBeat } = Config.get("wp").api;
+  const { url, hash, heartBeat } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
-  return request2(apiUrl, {
+  return request2(url, {
     method: "POST",
     body: new URLSearchParams({
-      version,
       action: heartBeat,
+      version,
       hash
     })
   })
@@ -560,14 +500,14 @@ export function sendHeartBeat() {
 
 // take over
 export function sendHearBeatTakeOver() {
-  const { hash, takeOver } = Config.get("wp").api;
+  const { url, hash, takeOver } = Config.get("wp").api;
   const version = Config.get("editorVersion");
 
-  return request2(apiUrl, {
+  return request2(url, {
     method: "POST",
     body: new URLSearchParams({
-      version,
       action: takeOver,
+      version,
       hash
     })
   })

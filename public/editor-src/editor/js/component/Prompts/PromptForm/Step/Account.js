@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
-import { fakeRequest } from "../../common/utils";
 import { Context } from "../../common/GlobalApps/Context";
 import {
   Account as ViewAccount,
   Disconnect as ViewDisconnect
 } from "../../common/GlobalApps/StepsView";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class Account extends Component {
   static contextType = Context;
@@ -40,7 +40,7 @@ class Account extends Component {
     this.setState({ connectLoading: true });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     onChangeProgress({ showProgress: false });
     onChangePrev("connect");
@@ -90,7 +90,7 @@ class Account extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangeProgress({ showProgress: true });
 
@@ -107,7 +107,7 @@ class Account extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangeProgress({ showProgress: false });
 
@@ -150,7 +150,7 @@ class Account extends Component {
       }
     } else {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
       onChangeNext();
     }
   };
@@ -163,7 +163,7 @@ class Account extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     onChangePrev("appList");
   };

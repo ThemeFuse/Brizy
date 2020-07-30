@@ -4,15 +4,17 @@ export function getItems({ v }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-tabs",
-      title: t("Tabs"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-tabs",
+        title: t("Tabs")
+      },
       position: 70,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "currentShortcodeIcon",
@@ -34,6 +36,21 @@ export function getItems({ v }) {
                       iconType: type
                     };
                   }
+                },
+                v.iconName === "" && {
+                  id: "iconPosition",
+                  type: "radioGroup-dev",
+                  disabled: true
+                },
+                v.iconName === "" && {
+                  id: "groupIconSizesPicker",
+                  type: "group-dev",
+                  disabled: true
+                },
+                v.iconName === "" && {
+                  id: "iconSpacing",
+                  type: "slider-dev",
+                  disabled: true
                 }
               ]
             }

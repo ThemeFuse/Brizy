@@ -4,14 +4,16 @@ export function getItems() {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-toggle",
-      title: t("Accordion"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-toggle",
+        title: t("Accordion")
+      },
       position: 60,
       options: [
         {
           id: "media",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "accordion",

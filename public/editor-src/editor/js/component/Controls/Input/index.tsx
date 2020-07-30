@@ -5,6 +5,7 @@ export interface Props {
   className?: string;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
   size?: "short" | "medium" | "large" | "auto";
   placeholder?: string;
 }
@@ -13,6 +14,7 @@ export const Input: FC<Props> = ({
   className = "",
   value,
   onChange,
+  onBlur,
   size = "auto",
   placeholder = ""
 }) => {
@@ -26,6 +28,7 @@ export const Input: FC<Props> = ({
         value={value}
         placeholder={placeholder}
         onChange={({ target: { value } }): void => onChange(value)}
+        onBlur={onBlur}
       />
     </div>
   );

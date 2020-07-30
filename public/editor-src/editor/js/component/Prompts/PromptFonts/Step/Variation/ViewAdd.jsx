@@ -153,7 +153,7 @@ class ViewAdd extends Component {
           <div className="brz-ed-popup-integrations-step__buttons">
             {prevLoading !== null && (
               <Button
-                type="gray"
+                size={3}
                 leftIcon="nc-arrow-left"
                 loading={prevLoading}
                 onClick={onPrev}
@@ -162,7 +162,7 @@ class ViewAdd extends Component {
               </Button>
             )}
             {nextLoading !== null && (
-              <Button type="tail" loading={nextLoading} onClick={onNext}>
+              <Button color="teal" loading={nextLoading} onClick={onNext}>
                 {t("Add Font")}
               </Button>
             )}

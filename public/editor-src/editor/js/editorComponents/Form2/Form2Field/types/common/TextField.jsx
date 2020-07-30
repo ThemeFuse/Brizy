@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import { uuid } from "visual/utils/uuid";
 
 export default class TextField extends Component {
   static get componentTitle() {
@@ -75,6 +76,10 @@ export default class TextField extends Component {
     return showPlaceholder ? label : "";
   }
 
+  getAttributes() {
+    return {};
+  }
+
   handleChange = value => {
     this.props.onChange(value);
   };
@@ -132,14 +137,8 @@ export default class TextField extends Component {
       showPlaceholder,
       required,
       type,
-      min,
-      max,
-      nativeHtml,
       columns,
       options,
-      multipleSelection,
-      fileTypes,
-      fileMaxSize,
       tabletColumns,
       mobileColumns
     } = this.props;
@@ -173,20 +172,16 @@ export default class TextField extends Component {
         mobileColumns,
         attr: {
           type: type.toLocaleLowerCase(),
-          id: _id,
+          id: uuid(),
           name: _id,
           placeholder: this.getPlaceholder(),
           required: required === "on",
-          multiple: multipleSelection === "on",
-          accept: fileTypes,
-          pattern: this.constructor.pattern,
+          pattern:
+            this.constructor.pattern && encodeURI(this.constructor.pattern),
           "data-type": type,
           "data-label": label,
-          "data-min": min,
-          "data-max": max,
-          "data-native": nativeHtml === "on",
           "data-placeholder": this.getPlaceholder(),
-          "data-file-max-size": fileMaxSize
+          ...this.getAttributes()
         }
       };
 

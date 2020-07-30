@@ -1,9 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
-  toolbarElementFbButtonSize,
   toolbarDisabledAdvancedSettings,
   toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
@@ -18,12 +20,11 @@ export function getItems({ v, device, state }) {
     defaultValueValue({ v, key: "borderColorHex", device, state }),
     defaultValueValue({ v, key: "borderColorPalette", device, state })
   );
-
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "boxShadowColorHex", device, state }),
     defaultValueValue({ v, key: "boxShadowColorPalette", device, state })
   );
-
+  const linkDC = getDynamicContentChoices("link", true);
   const labelTab = {
     button: t("Button"),
     embed: t("Embed"),
@@ -33,16 +34,18 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvk("popoverCurrentElement"),
-      type: "popover",
-      icon: "nc-facebook",
-      title: t("Facebook"),
+      id: "popoverCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-facebook",
+        title: t("Facebook")
+      },
       devices: "desktop",
       position: 70,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -129,7 +132,9 @@ export function getItems({ v, device, state }) {
                   type: "inputText-dev",
                   devices: "desktop",
                   disabled:
-                    v.facebookType !== "embed" || v.facebookEmbedType !== "post"
+                    v.facebookType !== "embed" ||
+                    v.facebookEmbedType !== "post",
+                  population: linkDC
                 },
                 {
                   id: "facebookEmbedVideoHref",
@@ -138,14 +143,16 @@ export function getItems({ v, device, state }) {
                   disabled:
                     v.facebookType !== "embed" ||
                     v.facebookEmbedType !== "video",
-                  devices: "desktop"
+                  devices: "desktop",
+                  population: linkDC
                 },
                 {
                   id: "facebookPageHref",
                   label: t("Link"),
                   type: "inputText-dev",
                   disabled: v.facebookType !== "page",
-                  devices: "desktop"
+                  devices: "desktop",
+                  population: linkDC
                 },
                 {
                   id: "pageTabs",
@@ -173,7 +180,8 @@ export function getItems({ v, device, state }) {
                   label: t("Link"),
                   type: "inputText-dev",
                   disabled: v.facebookType !== "group",
-                  devices: "desktop"
+                  devices: "desktop",
+                  population: linkDC
                 },
                 {
                   id: "skin",
@@ -198,13 +206,17 @@ export function getItems({ v, device, state }) {
               id: "tabAdvanced",
               label: t("Advanced"),
               options: [
-                toolbarElementFbButtonSize({
-                  v,
-                  device,
+                {
+                  id: "size",
+                  label: t("Size"),
                   disabled: v.facebookType !== "button",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { icon: "nc-small", value: "small" },
+                    { icon: "nc-large", value: "large" }
+                  ]
+                },
                 {
                   id: "share",
                   disabled: v.facebookType !== "button",
@@ -302,25 +314,26 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor:
-            v.facebookType === "button"
-              ? hexToRgba(boxShadowColorHex, v.boxShadowColorOpacity)
-              : hexToRgba(borderColorHex, v.borderColorOpacity)
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.facebookType === "button"
+                ? hexToRgba(boxShadowColorHex, v.boxShadowColorOpacity)
+                : hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           hideHandlesWhenOne: false,
           tabs: [
             {
@@ -351,11 +364,13 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvk("toolbarLink"),
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      size: "medium",
+      id: "toolbarLink",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
       position: 90,
       options: [
         {
@@ -381,17 +396,19 @@ export function getItems({ v, device, state }) {
           label: t("Link"),
           disabled: v.facebookType !== "button" || v.targetUrl === "current",
           devices: "desktop",
-          placeholder: "http://"
+          placeholder: "http://",
+          population: linkDC
         }
       ]
     },
     v.facebookType === "group" || v.facebookType === "page"
       ? {
-          id: dvkn("toolbarSettings"),
-          type: "popover",
-          icon: "nc-cog",
-          title: t("Settings"),
-          roles: ["admin"],
+          id: "toolbarSettings",
+          type: "popover-dev",
+          config: {
+            icon: "nc-cog",
+            title: t("Settings")
+          },
           position: 110,
           options: [
             {

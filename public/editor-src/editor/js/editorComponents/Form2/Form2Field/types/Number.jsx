@@ -11,4 +11,13 @@ export default class Number extends TextField {
   }
 
   static pattern = "^-?[0-9]\\d*(\\.\\d+)?$";
+
+  getAttributes() {
+    const { min, max } = this.props;
+
+    return {
+      "data-min": min,
+      "data-max": max
+    };
+  }
 }

@@ -6,6 +6,10 @@
   // uses backwards because have problems with zIndex
   animation-fill-mode: backwards;
 
+  &:not(.brz-animate) {
+    animation-name: none;
+  }
+
   // When .animate
   &.brz-animate {
     opacity: 1;

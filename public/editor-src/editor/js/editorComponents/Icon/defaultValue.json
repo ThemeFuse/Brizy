@@ -151,6 +151,7 @@
     "borderStyle": "solid",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "boxShadow": "",
 
@@ -193,8 +194,6 @@
     "tempHoverBoxShadowSpread": null,
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
-
-    "hoverTransition": 50,
 
     "strokeWidth": 1,
 

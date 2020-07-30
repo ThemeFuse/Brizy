@@ -1,15 +1,18 @@
+// Editor Shortcode Menu
 .brz-menu__editor {
-  .brz-menu__item--opened > {
-    .brz-menu__sub-menu,
-    .brz-mega-menu {
-      visibility: visible;
-      opacity: 1;
-      z-index: z("mega-menu");
-      transition: 0.2s visibility linear, 0.2s opacity linear,
-        0.2s transform linear;
-    }
-    .brz-menu__sub-menu {
-      transform: translateX(0);
+  .brz-menu__item--opened > .brz-menu__sub-menu {
+    visibility: visible;
+    opacity: 1;
+    z-index: z("mega-menu");
+    transition: 0.2s visibility linear, 0.2s opacity linear;
+  }
+
+  // Custom Navbar title in Editor Mode
+  .brz-mm-panel_has-navbar {
+    padding-top: 0;
+
+    & > .brz-mm-navbar {
+      display: none;
     }
   }
 }
@@ -31,7 +34,13 @@
     z-index: 2;
   }
 }
+.brz-mm-menu__item-empty .brz-mm-btn,
+.brz-mm-menu__item-mega-menu .brz-mm-menu__sub-menu,
+.brz-mm-menu__item-dropdown .brz-mega-menu__mmenu {
+  display: none;
+}
 
+// Fixed by devices
 &.brz-ed--desktop {
   .brz-mm-menu--desktop {
     position: fixed;

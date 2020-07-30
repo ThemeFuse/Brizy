@@ -1,7 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getFontStyle } from "visual/utils/fonts";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   defaultValueValue,
   tabletSyncOnChange,
@@ -24,12 +28,14 @@ import {
   toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
 
-export function getItemsForDesktop(v) {
+export function getItemsForDesktop(v, component) {
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, lineHeight } =
-    fontStyle === "" ? v : getFontStyle(fontStyle);
+    fontStyle === "" ? v : getFontStyle(fontStyle) || v;
 
   // Border Radius
   let contentHeight =
@@ -42,7 +48,6 @@ export function getItemsForDesktop(v) {
   );
 
   // Colors
-
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "bgColorHex", device }),
     defaultValueValue({ v, key: "bgColorPalette", device })
@@ -52,246 +57,229 @@ export function getItemsForDesktop(v) {
     defaultValueValue({ v, key: "colorPalette", device })
   );
 
+  const richTextDC = getDynamicContentChoices("richText", true);
+
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-button",
-      title: t("Button"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
       position: 60,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
-              id: "currentShortcodeTab",
+              id: "currentShortcodeButtonTab",
               label: t("Button"),
               roles: ["admin"],
               options: [
                 {
-                  type: "multiPicker",
+                  id: "sizeGroup",
+                  type: "group-dev",
                   position: 10,
-                  picker: {
-                    id: "size",
-                    label: t("Size"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "small",
-                        icon: "nc-small"
-                      },
-                      {
-                        value: "medium",
-                        icon: "nc-medium"
-                      },
-                      {
-                        value: "large",
-                        icon: "nc-large"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  options: [
+                    {
+                      id: "size",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-small" },
+                        { value: "medium", icon: "nc-medium" },
+                        { value: "large", icon: "nc-large" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.size,
+                      onChange: size => {
+                        return {
+                          size,
+
+                          fontSize:
+                            size !== "custom" ? v[`${size}FontSize`] : fontSize,
+
+                          paddingTB:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingTB,
+
+                          paddingTop:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingTop,
+
+                          paddingBottom:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingBottom,
+
+                          tempPaddingTB:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingTB,
+
+                          tempPaddingTop:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingTop,
+
+                          tempPaddingBottom:
+                            size !== "custom"
+                              ? v[`${size}PaddingY`]
+                              : v.paddingBottom,
+
+                          paddingRL:
+                            size !== "custom" && v.fillType === "default"
+                              ? 0
+                              : size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.paddingRL,
+
+                          paddingRight:
+                            size !== "custom" && v.fillType === "default"
+                              ? 0
+                              : size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.paddingRight,
+
+                          paddingLeft:
+                            size !== "custom" && v.fillType === "default"
+                              ? 0
+                              : size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.paddingLeft,
+
+                          tempPaddingRL:
+                            size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.tempPaddingRL,
+
+                          tempPaddingRight:
+                            size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.tempPaddingRight,
+
+                          tempPaddingLeft:
+                            size !== "custom" && v.fillType !== "default"
+                              ? v[`${size}PaddingX`]
+                              : v.tempPaddingLeft,
+
+                          borderRadius:
+                            v.borderRadiusType === "rounded" &&
+                            size !== "custom" &&
+                            v[`${size}FontSize`] * lineHeight >=
+                              v.iconCustomSize
+                              ? Math.round(
+                                  (v[`${size}FontSize`] * lineHeight +
+                                    v[`${size}PaddingY`] * 2 +
+                                    v.borderWidth * 2) /
+                                    2
+                                )
+                              : v.borderRadiusType === "rounded" &&
+                                size !== "custom" &&
+                                v[`${size}FontSize`] * lineHeight <
+                                  v.iconCustomSize
+                              ? Math.round(
+                                  (v.iconCustomSize +
+                                    v[`${size}PaddingY`] * 2 +
+                                    v.borderWidth * 2) /
+                                    2
+                                )
+                              : v.borderRadius,
+
+                          borderWidth:
+                            size !== "custom" && v.fillType === "default"
+                              ? 0
+                              : size !== "custom" && v.fillType !== "default"
+                              ? v.tempBorderWidth
+                              : v.borderWidth
+                        };
                       }
-                    ],
-                    value: v.size,
-                    onChange: size => {
-                      return {
-                        size,
+                    },
+                    {
+                      id: "paddingRL",
+                      label: t("Width"),
+                      type: "slider",
+                      disabled: v.type === "submit" || v.size !== "custom",
+                      slider: {
+                        min: 0,
+                        max: 100
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.paddingRL
+                      },
+                      onChange: ({ value: paddingRL }) => {
+                        return {
+                          paddingRL,
+                          paddingRight: paddingRL,
+                          paddingLeft: paddingRL,
+                          tempPaddingRL: paddingRL,
+                          tempPaddingRight: paddingRL,
+                          tempPaddingLeft: paddingRL
+                        };
+                      }
+                    },
+                    {
+                      id: "paddingTB",
+                      label: t("Height"),
+                      type: "slider",
+                      disabled: v.size !== "custom",
+                      slider: {
+                        min: 0,
+                        max: 100
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.paddingTB
+                      },
+                      onChange: ({ value: paddingTB }) => {
+                        return {
+                          paddingTB,
+                          paddingTop: paddingTB,
+                          paddingBottom: paddingTB,
+                          tempPaddingTB: paddingTB,
+                          tempPaddingTop: paddingTB,
+                          tempPaddingBottom: paddingTB,
 
-                        fontSize:
-                          size !== "custom" ? v[`${size}FontSize`] : fontSize,
-
-                        paddingTB:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingTB,
-
-                        paddingTop:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingTop,
-
-                        paddingBottom:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingBottom,
-
-                        tempPaddingTB:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingTB,
-
-                        tempPaddingTop:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingTop,
-
-                        tempPaddingBottom:
-                          size !== "custom"
-                            ? v[`${size}PaddingY`]
-                            : v.paddingBottom,
-
-                        paddingRL:
-                          size !== "custom" && v.fillType === "default"
-                            ? 0
-                            : size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.paddingRL,
-
-                        paddingRight:
-                          size !== "custom" && v.fillType === "default"
-                            ? 0
-                            : size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.paddingRight,
-
-                        paddingLeft:
-                          size !== "custom" && v.fillType === "default"
-                            ? 0
-                            : size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.paddingLeft,
-
-                        tempPaddingRL:
-                          size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.tempPaddingRL,
-
-                        tempPaddingRight:
-                          size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.tempPaddingRight,
-
-                        tempPaddingLeft:
-                          size !== "custom" && v.fillType !== "default"
-                            ? v[`${size}PaddingX`]
-                            : v.tempPaddingLeft,
-
-                        borderRadius:
-                          v.borderRadiusType === "rounded" &&
-                          size !== "custom" &&
-                          v[`${size}FontSize`] * lineHeight >= v.iconCustomSize
-                            ? Math.round(
-                                (v[`${size}FontSize`] * lineHeight +
-                                  v[`${size}PaddingY`] * 2 +
-                                  v.borderWidth * 2) /
-                                  2
-                              )
-                            : v.borderRadiusType === "rounded" &&
-                              size !== "custom" &&
-                              v[`${size}FontSize`] * lineHeight <
-                                v.iconCustomSize
-                            ? Math.round(
-                                (v.iconCustomSize +
-                                  v[`${size}PaddingY`] * 2 +
-                                  v.borderWidth * 2) /
-                                  2
-                              )
-                            : v.borderRadius,
-
-                        borderWidth:
-                          size !== "custom" && v.fillType === "default"
-                            ? 0
-                            : size !== "custom" && v.fillType !== "default"
-                            ? v.tempBorderWidth
-                            : v.borderWidth
-                      };
+                          borderRadius:
+                            v.borderRadiusType === "rounded" &&
+                            fontSize * lineHeight >= v.iconCustomSize
+                              ? Math.round(
+                                  (fontSize * lineHeight +
+                                    paddingTB * 2 +
+                                    v.borderWidth * 2) /
+                                    2
+                                )
+                              : v.borderRadiusType === "rounded" &&
+                                fontSize * lineHeight < v.iconCustomSize
+                              ? Math.round(
+                                  (v.iconCustomSize +
+                                    paddingTB * 2 +
+                                    v.borderWidth * 2) /
+                                    2
+                                )
+                              : v.borderRadius
+                        };
+                      }
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "paddingRL",
-                        label: t("Width"),
-                        type: "slider",
-                        disabled: v.type === "submit",
-                        slider: {
-                          min: 0,
-                          max: 100
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.paddingRL
-                        },
-                        onChange: ({ value: paddingRL }) => {
-                          return {
-                            paddingRL,
-                            paddingRight: paddingRL,
-                            paddingLeft: paddingRL,
-                            tempPaddingRL: paddingRL,
-                            tempPaddingRight: paddingRL,
-                            tempPaddingLeft: paddingRL
-                          };
-                        }
-                      },
-                      {
-                        id: "paddingTB",
-                        label: t("Height"),
-                        type: "slider",
-                        slider: {
-                          min: 0,
-                          max: 100
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.paddingTB
-                        },
-                        onChange: ({ value: paddingTB }) => {
-                          return {
-                            paddingTB,
-                            paddingTop: paddingTB,
-                            paddingBottom: paddingTB,
-                            tempPaddingTB: paddingTB,
-                            tempPaddingTop: paddingTB,
-                            tempPaddingBottom: paddingTB,
-
-                            borderRadius:
-                              v.borderRadiusType === "rounded" &&
-                              fontSize * lineHeight >= v.iconCustomSize
-                                ? Math.round(
-                                    (fontSize * lineHeight +
-                                      paddingTB * 2 +
-                                      v.borderWidth * 2) /
-                                      2
-                                  )
-                                : v.borderRadiusType === "rounded" &&
-                                  fontSize * lineHeight < v.iconCustomSize
-                                ? Math.round(
-                                    (v.iconCustomSize +
-                                      paddingTB * 2 +
-                                      v.borderWidth * 2) /
-                                      2
-                                  )
-                                : v.borderRadius
-                          };
-                        }
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   id: "fillType",
@@ -299,18 +287,9 @@ export function getItemsForDesktop(v) {
                   type: "radioGroup",
                   position: 20,
                   choices: [
-                    {
-                      value: "filled",
-                      icon: "nc-circle"
-                    },
-                    {
-                      value: "outline",
-                      icon: "nc-outline"
-                    },
-                    {
-                      value: "default",
-                      icon: "nc-close"
-                    }
+                    { value: "filled", icon: "nc-circle" },
+                    { value: "outline", icon: "nc-outline" },
+                    { value: "default", icon: "nc-close" }
                   ],
                   value: v.fillType,
                   onChange: fillType => {
@@ -443,125 +422,119 @@ export function getItemsForDesktop(v) {
                   }
                 },
                 {
-                  type: "multiPicker",
+                  id: "borderRadiusTypeGroup",
+                  type: "group-dev",
+                  disabled: v.type === "search",
                   position: 30,
-                  picker: {
-                    id: "borderRadiusType",
-                    label: t("Corner"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "square",
-                        icon: "nc-corners-square"
-                      },
-                      {
-                        value: "rounded",
-                        icon: "nc-corners-round"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  options: [
+                    {
+                      id: "borderRadiusType",
+                      label: t("Corner"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "square", icon: "nc-corners-square" },
+                        { value: "rounded", icon: "nc-corners-round" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.borderRadiusType,
+                      onChange: borderRadiusType => {
+                        return {
+                          borderRadiusType,
+
+                          tempBorderRadiusType:
+                            borderRadiusType !== ""
+                              ? borderRadiusType
+                              : v.tempBorderRadiusType,
+
+                          paddingRight:
+                            borderRadiusType !== ""
+                              ? v.tempPaddingRight
+                              : v.paddingRight,
+
+                          paddingLeft:
+                            borderRadiusType !== ""
+                              ? v.tempPaddingLeft
+                              : v.paddingRight,
+
+                          fillType:
+                            borderRadiusType !== ""
+                              ? v.tempFillType
+                              : v.fillType,
+
+                          borderRadius:
+                            borderRadiusType === "square"
+                              ? v.tempBorderRadius
+                              : borderRadiusType === "rounded"
+                              ? maxBorderRadius
+                              : v.borderRadius,
+
+                          borderWidth:
+                            borderRadiusType !== ""
+                              ? v.tempBorderWidth
+                              : v.borderWidth,
+
+                          borderColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempBorderColorOpacity
+                              : v.borderColorOpacity,
+
+                          borderColorPalette:
+                            borderRadiusType !== ""
+                              ? v.tempBorderColorPalette
+                              : v.borderColorPalette,
+
+                          bgColorOpacity:
+                            borderRadiusType !== "" && v.fillType === "filled"
+                              ? v.tempBgColorOpacity
+                              : v.bgColorOpacity,
+
+                          bgColorPalette:
+                            borderRadiusType !== ""
+                              ? v.tempBgColorPalette
+                              : v.bgColorPalette,
+
+                          // Hover
+                          hoverBgColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempHoverBgColorOpacity
+                              : v.hoverBgColorOpacity,
+
+                          hoverBorderColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempHoverBorderColorOpacity
+                              : v.hoverBorderColorOpacity
+                        };
                       }
-                    ],
-                    value: v.borderRadiusType,
-                    onChange: borderRadiusType => {
-                      return {
-                        borderRadiusType,
-
-                        tempBorderRadiusType:
-                          borderRadiusType !== ""
-                            ? borderRadiusType
-                            : v.tempBorderRadiusType,
-
-                        paddingRight:
-                          borderRadiusType !== ""
-                            ? v.tempPaddingRight
-                            : v.paddingRight,
-
-                        paddingLeft:
-                          borderRadiusType !== ""
-                            ? v.tempPaddingLeft
-                            : v.paddingRight,
-
-                        fillType:
-                          borderRadiusType !== "" ? v.tempFillType : v.fillType,
-
-                        borderRadius:
-                          borderRadiusType === "square"
-                            ? v.tempBorderRadius
-                            : borderRadiusType === "rounded"
-                            ? maxBorderRadius
-                            : v.borderRadius,
-
-                        borderWidth:
-                          borderRadiusType !== ""
-                            ? v.tempBorderWidth
-                            : v.borderWidth,
-
-                        borderColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempBorderColorOpacity
-                            : v.borderColorOpacity,
-
-                        borderColorPalette:
-                          borderRadiusType !== ""
-                            ? v.tempBorderColorPalette
-                            : v.borderColorPalette,
-
-                        bgColorOpacity:
-                          borderRadiusType !== "" && v.fillType === "filled"
-                            ? v.tempBgColorOpacity
-                            : v.bgColorOpacity,
-
-                        bgColorPalette:
-                          borderRadiusType !== ""
-                            ? v.tempBgColorPalette
-                            : v.bgColorPalette,
-
-                        // Hover
-                        hoverBgColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempHoverBgColorOpacity
-                            : v.hoverBgColorOpacity,
-
-                        hoverBorderColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempHoverBorderColorOpacity
-                            : v.hoverBorderColorOpacity
-                      };
+                    },
+                    {
+                      id: "borderRadius",
+                      type: "slider",
+                      disabled: v.borderRadiusType !== "custom",
+                      slider: {
+                        min: 0,
+                        max: maxBorderRadius
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [
+                          {
+                            title: "px",
+                            value: "px"
+                          }
+                        ]
+                      },
+                      value: {
+                        value: v.borderRadius
+                      },
+                      onChange: ({ value: borderRadius }) => ({
+                        borderRadius,
+                        tempBorderRadius: borderRadius
+                      })
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "borderRadius",
-                        type: "slider",
-                        slider: {
-                          min: 0,
-                          max: maxBorderRadius
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.borderRadius
-                        },
-                        onChange: ({ value: borderRadius }) => ({
-                          borderRadius,
-                          tempBorderRadius: borderRadius
-                        })
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   id: "borderWidth",
@@ -662,6 +635,7 @@ export function getItemsForDesktop(v) {
               ]
             },
             {
+              id: "currentShortcodeIconTab",
               label: t("Icon"),
               options: [
                 {
@@ -681,131 +655,105 @@ export function getItemsForDesktop(v) {
                 {
                   id: "iconPosition",
                   label: t("Position"),
-                  type: "radioGroup",
-                  roles: ["admin"],
+                  type: "radioGroup-dev",
                   choices: [
-                    {
-                      value: "left",
-                      icon: "nc-align-left"
-                    },
-                    {
-                      value: "right",
-                      icon: "nc-align-right"
-                    }
-                  ],
-                  value: v.iconPosition
+                    { value: "left", icon: "nc-align-left" },
+                    { value: "right", icon: "nc-align-right" }
+                  ]
                 },
                 {
-                  type: "multiPicker",
-                  roles: ["admin"],
-                  picker: {
-                    id: "iconSize",
-                    label: t("Size"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "small",
-                        icon: "nc-16"
-                      },
-                      {
-                        value: "medium",
-                        icon: "nc-24"
-                      },
-                      {
-                        value: "large",
-                        icon: "nc-32"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  id: "iconSizeGroup",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "iconSize",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-16" },
+                        { value: "medium", icon: "nc-24" },
+                        { value: "large", icon: "nc-32" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.iconSize,
+                      onChange: iconSize => {
+                        let contentHeight =
+                          iconSize === "custom" &&
+                          fontSize * lineHeight >= v.iconCustomSize
+                            ? fontSize * lineHeight
+                            : iconSize === "custom" &&
+                              fontSize * lineHeight < v.iconCustomSize
+                            ? v.iconCustomSize
+                            : iconSize !== "custom" &&
+                              fontSize * lineHeight >= v[`${iconSize}IconSize`]
+                            ? fontSize * lineHeight
+                            : v[`${iconSize}IconSize`];
+                        let maxBorderRadius = Math.round(
+                          (contentHeight +
+                            v.paddingTop * 2 +
+                            v.tempBorderWidth * 2) /
+                            2
+                        );
+
+                        return {
+                          iconSize,
+
+                          iconCustomSize:
+                            iconSize === "small"
+                              ? v.smallIconSize
+                              : iconSize === "medium"
+                              ? v.mediumIconSize
+                              : iconSize === "large"
+                              ? v.largeIconSize
+                              : v.iconCustomSize,
+
+                          borderRadius:
+                            v.borderRadiusType === "rounded"
+                              ? maxBorderRadius
+                              : v.borderRadius
+                        };
                       }
-                    ],
-                    value: v.iconSize,
-                    onChange: iconSize => {
-                      let contentHeight =
-                        iconSize === "custom" &&
-                        fontSize * lineHeight >= v.iconCustomSize
-                          ? fontSize * lineHeight
-                          : iconSize === "custom" &&
-                            fontSize * lineHeight < v.iconCustomSize
-                          ? v.iconCustomSize
-                          : iconSize !== "custom" &&
-                            fontSize * lineHeight >= v[`${iconSize}IconSize`]
-                          ? fontSize * lineHeight
-                          : v[`${iconSize}IconSize`];
-                      let maxBorderRadius = Math.round(
-                        (contentHeight +
-                          v.paddingTop * 2 +
-                          v.tempBorderWidth * 2) /
-                          2
-                      );
+                    },
+                    {
+                      id: "iconCustomSize",
+                      type: "slider",
+                      disabled: v.iconSize !== "custom",
+                      slider: {
+                        min: 1,
+                        max: 100
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.iconCustomSize
+                      },
+                      onChange: ({ value: iconCustomSize }) => {
+                        let contentHeight =
+                          fontSize * lineHeight >= iconCustomSize
+                            ? fontSize * lineHeight
+                            : iconCustomSize;
+                        let maxBorderRadius = Math.round(
+                          (contentHeight +
+                            v.paddingTop * 2 +
+                            v.tempBorderWidth * 2) /
+                            2
+                        );
 
-                      return {
-                        iconSize,
-
-                        iconCustomSize:
-                          iconSize === "small"
-                            ? v.smallIconSize
-                            : iconSize === "medium"
-                            ? v.mediumIconSize
-                            : iconSize === "large"
-                            ? v.largeIconSize
-                            : v.iconCustomSize,
-
-                        borderRadius:
-                          v.borderRadiusType === "rounded"
-                            ? maxBorderRadius
-                            : v.borderRadius
-                      };
+                        return {
+                          iconCustomSize,
+                          borderRadius:
+                            v.borderRadiusType === "rounded"
+                              ? maxBorderRadius
+                              : v.borderRadius
+                        };
+                      }
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "iconCustomSize",
-                        type: "slider",
-                        slider: {
-                          min: 1,
-                          max: 100
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.iconCustomSize
-                        },
-                        onChange: ({ value: iconCustomSize }) => {
-                          let contentHeight =
-                            fontSize * lineHeight >= iconCustomSize
-                              ? fontSize * lineHeight
-                              : iconCustomSize;
-                          let maxBorderRadius = Math.round(
-                            (contentHeight +
-                              v.paddingTop * 2 +
-                              v.tempBorderWidth * 2) /
-                              2
-                          );
-
-                          return {
-                            iconCustomSize,
-                            borderRadius:
-                              v.borderRadiusType === "rounded"
-                                ? maxBorderRadius
-                                : v.borderRadius
-                          };
-                        }
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   id: "iconSpacing",
@@ -821,12 +769,7 @@ export function getItemsForDesktop(v) {
                   },
                   suffix: {
                     show: true,
-                    choices: [
-                      {
-                        title: "px",
-                        value: "px"
-                      }
-                    ]
+                    choices: [{ title: "px", value: "px" }]
                   },
                   value: {
                     value: v.iconSpacing
@@ -845,40 +788,68 @@ export function getItemsForDesktop(v) {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: "large",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: "large",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          id: "",
-          type: "typography-dev"
+          type: "grid",
+          columns: [
+            {
+              width: 95,
+              vAlign: "center",
+              options: [
+                {
+                  id: "",
+                  type: "typography-dev"
+                }
+              ]
+            },
+            {
+              width: 5,
+              vAlign: "center",
+              options: [
+                {
+                  id: "text",
+                  type: "population-dev",
+                  config: {
+                    iconOnly: true,
+                    choices: richTextDC
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      roles: ["admin"],
+      position: 80,
       options: [
         {
           id: "tabsState",
           tabsPosition: "left",
           type: "tabs",
-          value: v.tabsState,
           tabs: [
             {
               id: "tabNormal",
@@ -888,8 +859,7 @@ export function getItemsForDesktop(v) {
                 {
                   id: "tabsColor",
                   className: "",
-                  type: "tabs",
-                  value: v.tabsColor,
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: "tabBg",
@@ -1139,8 +1109,7 @@ export function getItemsForDesktop(v) {
                 {
                   id: "tabsColor",
                   className: "",
-                  type: "tabs",
-                  value: v.tabsColor,
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: "tabBg",
@@ -1394,25 +1363,25 @@ export function getItemsForDesktop(v) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState,
-        tabsColor: !isOpen ? "" : v.tabsColor
-      })
+      ]
     },
     {
       id: "toolbarLink",
-      type: "popover",
-      icon: "nc-link",
-      disabled: v.type === "submit",
-      size: "medium",
-      title: t("Link"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        size: "medium",
+        title: t("Link")
+      },
+      disabled: v.type === "submit" || v.type === "search",
       position: 90,
       options: [
         {
           id: "linkType",
-          type: "tabs",
-          value: v.linkType,
+          type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "external",
@@ -1434,7 +1403,28 @@ export function getItemsForDesktop(v) {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v })]
+              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+            },
+            {
+              id: "popup",
+              label: t("Popup"),
+              options: [
+                {
+                  id: "linkPopup",
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  type: "promptAddPopup",
+                  label: t("Popup"),
+                  popupKey: `${component.getId()}_${v.linkPopup}`,
+                  value: {
+                    value: v.linkPopup,
+                    popups: v.popups
+                  },
+                  onChange: ({ value, popups }) => ({
+                    linkPopup: value,
+                    popups
+                  })
+                }
+              ]
             }
           ]
         }
@@ -1443,7 +1433,7 @@ export function getItemsForDesktop(v) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      disabled: v.type === "submit",
+      disabled: v.type === "submit" || v.type === "search",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
@@ -1452,7 +1442,7 @@ export function getItemsForDesktop(v) {
   ];
 }
 
-export function getItemsForTablet(v) {
+export function getItemsForTablet(v, component) {
   // Typography
 
   const tabletFontStyle = v.tabletFontStyle;
@@ -1462,235 +1452,218 @@ export function getItemsForTablet(v) {
   return [
     {
       id: "tabletToolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-button",
-      title: t("Button"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
       roles: ["admin"],
       position: 60,
       options: [
         {
-          type: "multiPicker",
-          picker: {
-            id: "size",
-            label: t("Size"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "small",
-                icon: "nc-small"
-              },
-              {
-                value: "medium",
-                icon: "nc-medium"
-              },
-              {
-                value: "large",
-                icon: "nc-large"
-              },
-              {
-                value: "custom",
-                icon: "nc-more"
+          id: "sizeGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "size",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-small" },
+                { value: "medium", icon: "nc-medium" },
+                { value: "large", icon: "nc-large" },
+                { value: "custom", icon: "nc-more" }
+              ],
+              value: v.tabletSize,
+              onChange: tabletSize => {
+                return {
+                  tabletSize,
+
+                  tabletFontSize:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}FontSize`]
+                      : v.tabletFontSize,
+
+                  tabletPaddingTB:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tabletPaddingTB,
+
+                  tabletPaddingTop:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tabletPaddingTop,
+
+                  tabletPaddingBottom:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tabletPaddingBottom,
+
+                  tempTabletPaddingTB:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tempTabletPaddingTB,
+
+                  tempTabletPaddingTop:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tempTabletPaddingTop,
+
+                  tempTabletPaddingBottom:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}PaddingY`]
+                      : v.tempTabletPaddingBottom,
+
+                  tabletPaddingRL:
+                    tabletSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingRL,
+
+                  tabletPaddingRight:
+                    tabletSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingRight,
+
+                  tabletPaddingLeft:
+                    tabletSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tabletPaddingLeft,
+
+                  tempTabletPaddingRL:
+                    tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tempTabletPaddingRL,
+
+                  tempTabletPaddingRight:
+                    tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tempTabletPaddingRight,
+
+                  tempTabletPaddingLeft:
+                    tabletSize !== "custom" && v.fillType !== "default"
+                      ? v[`${tabletSize}PaddingX`]
+                      : v.tempTabletPaddingLeft,
+
+                  tabletBorderRadius:
+                    v.borderRadiusType === "rounded" &&
+                    tabletSize !== "custom" &&
+                    v[`${tabletSize}FontSize`] * v.tabletLineHeight >=
+                      v.iconCustomSize
+                      ? Math.round(
+                          (v[`${tabletSize}FontSize`] * v.tabletLineHeight +
+                            v[`${tabletSize}PaddingY`] * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : v.borderRadiusType === "rounded" &&
+                        tabletSize !== "custom" &&
+                        v[`${tabletSize}FontSize`] * v.tabletLineHeight <
+                          v.iconCustomSize
+                      ? Math.round(
+                          (v.iconCustomSize +
+                            v[`${tabletSize}PaddingY`] * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : tabletSyncOnChange(v, "borderRadius")
+                };
               }
-            ],
-            value: v.tabletSize,
-            onChange: tabletSize => {
-              return {
-                tabletSize,
+            },
+            {
+              id: "tabletPaddingRL",
+              label: t("Width"),
+              type: "slider",
+              disabled: v.tabletSize !== "custom",
+              slider: {
+                min: 0,
+                max: 100
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: v.tabletPaddingRL
+              },
+              onChange: ({ value: tabletPaddingRL }) => {
+                return {
+                  tabletPaddingRL,
+                  tabletPaddingRight: tabletPaddingRL,
+                  tabletPaddingLeft: tabletPaddingRL,
+                  tempTabletPaddingRight: tabletPaddingRL,
+                  tempTabletPaddingLeft: tabletPaddingRL
+                };
+              }
+            },
+            {
+              id: "tabletPaddingTB",
+              label: t("Height"),
+              type: "slider",
+              disabled: v.tabletSize !== "custom",
+              slider: {
+                min: 0,
+                max: 100
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: v.tabletPaddingTB
+              },
+              onChange: ({ value: tabletPaddingTB }) => {
+                return {
+                  tabletPaddingTB,
+                  tabletPaddingTop: tabletPaddingTB,
+                  tabletPaddingBottom: tabletPaddingTB,
+                  tempTabletPaddingTop: tabletPaddingTB,
+                  tempTabletPaddingBottom: tabletPaddingTB,
 
-                tabletFontSize:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}FontSize`]
-                    : v.tabletFontSize,
-
-                tabletPaddingTB:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tabletPaddingTB,
-
-                tabletPaddingTop:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tabletPaddingTop,
-
-                tabletPaddingBottom:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tabletPaddingBottom,
-
-                tempTabletPaddingTB:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tempTabletPaddingTB,
-
-                tempTabletPaddingTop:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tempTabletPaddingTop,
-
-                tempTabletPaddingBottom:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}PaddingY`]
-                    : v.tempTabletPaddingBottom,
-
-                tabletPaddingRL:
-                  tabletSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tabletPaddingRL,
-
-                tabletPaddingRight:
-                  tabletSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tabletPaddingRight,
-
-                tabletPaddingLeft:
-                  tabletSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tabletPaddingLeft,
-
-                tempTabletPaddingRL:
-                  tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tempTabletPaddingRL,
-
-                tempTabletPaddingRight:
-                  tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tempTabletPaddingRight,
-
-                tempTabletPaddingLeft:
-                  tabletSize !== "custom" && v.fillType !== "default"
-                    ? v[`${tabletSize}PaddingX`]
-                    : v.tempTabletPaddingLeft,
-
-                tabletBorderRadius:
-                  v.borderRadiusType === "rounded" &&
-                  tabletSize !== "custom" &&
-                  v[`${tabletSize}FontSize`] * v.tabletLineHeight >=
-                    v.iconCustomSize
-                    ? Math.round(
-                        (v[`${tabletSize}FontSize`] * v.tabletLineHeight +
-                          v[`${tabletSize}PaddingY`] * 2 +
-                          v.borderWidth * 2) /
-                          2
-                      )
-                    : v.borderRadiusType === "rounded" &&
-                      tabletSize !== "custom" &&
-                      v[`${tabletSize}FontSize`] * v.tabletLineHeight <
-                        v.iconCustomSize
-                    ? Math.round(
-                        (v.iconCustomSize +
-                          v[`${tabletSize}PaddingY`] * 2 +
-                          v.borderWidth * 2) /
-                          2
-                      )
-                    : tabletSyncOnChange(v, "borderRadius")
-              };
+                  tabletBorderRadius:
+                    v.borderRadiusType === "rounded" &&
+                    tabletFontSize * tabletLineHeight >= v.iconCustomSize
+                      ? Math.round(
+                          (tabletFontSize * tabletLineHeight +
+                            tabletPaddingTB * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : v.borderRadiusType === "rounded" &&
+                        tabletFontSize * tabletLineHeight < v.iconCustomSize
+                      ? Math.round(
+                          (v.iconCustomSize +
+                            tabletPaddingTB * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : tabletSyncOnChange(v, "borderRadius")
+                };
+              }
             }
-          },
-          choices: {
-            custom: [
-              {
-                id: "tabletPaddingRL",
-                label: t("Width"),
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.tabletPaddingRL
-                },
-                onChange: ({ value: tabletPaddingRL }) => {
-                  return {
-                    tabletPaddingRL,
-                    tabletPaddingRight: tabletPaddingRL,
-                    tabletPaddingLeft: tabletPaddingRL,
-                    tempTabletPaddingRight: tabletPaddingRL,
-                    tempTabletPaddingLeft: tabletPaddingRL
-                  };
-                }
-              },
-              {
-                id: "tabletPaddingTB",
-                label: t("Height"),
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.tabletPaddingTB
-                },
-                onChange: ({ value: tabletPaddingTB }) => {
-                  return {
-                    tabletPaddingTB,
-                    tabletPaddingTop: tabletPaddingTB,
-                    tabletPaddingBottom: tabletPaddingTB,
-                    tempTabletPaddingTop: tabletPaddingTB,
-                    tempTabletPaddingBottom: tabletPaddingTB,
-
-                    tabletBorderRadius:
-                      v.borderRadiusType === "rounded" &&
-                      tabletFontSize * tabletLineHeight >= v.iconCustomSize
-                        ? Math.round(
-                            (tabletFontSize * tabletLineHeight +
-                              tabletPaddingTB * 2 +
-                              v.borderWidth * 2) /
-                              2
-                          )
-                        : v.borderRadiusType === "rounded" &&
-                          tabletFontSize * tabletLineHeight < v.iconCustomSize
-                        ? Math.round(
-                            (v.iconCustomSize +
-                              tabletPaddingTB * 2 +
-                              v.borderWidth * 2) /
-                              2
-                          )
-                        : tabletSyncOnChange(v, "borderRadius")
-                  };
-                }
-              }
-            ]
-          }
+          ]
         }
       ]
     },
     {
       id: "tabletToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -1705,15 +1678,34 @@ export function getItemsForTablet(v) {
     },
     {
       id: "tabletToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       position: 90,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     }
   ];
 }
 
-export function getItemsForMobile(v) {
+export function getItemsForMobile(v, component) {
   // Typography
 
   const mobileFontStyle = v.mobileFontStyle;
@@ -1723,235 +1715,218 @@ export function getItemsForMobile(v) {
   return [
     {
       id: "mobileToolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-button",
-      title: t("Button"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
       roles: ["admin"],
       position: 60,
       options: [
         {
-          type: "multiPicker",
-          picker: {
-            id: "size",
-            label: t("Size"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "small",
-                icon: "nc-small"
-              },
-              {
-                value: "medium",
-                icon: "nc-medium"
-              },
-              {
-                value: "large",
-                icon: "nc-large"
-              },
-              {
-                value: "custom",
-                icon: "nc-more"
+          id: "size",
+          type: "group-dev",
+          options: [
+            {
+              id: "size",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-small" },
+                { value: "medium", icon: "nc-medium" },
+                { value: "large", icon: "nc-large" },
+                { value: "custom", icon: "nc-more" }
+              ],
+              value: v.mobileSize,
+              onChange: mobileSize => {
+                return {
+                  mobileSize,
+
+                  mobileFontSize:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}FontSize`]
+                      : v.mobileFontSize,
+
+                  mobilePaddingTB:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.mobilePaddingTB,
+
+                  mobilePaddingTop:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.mobilePaddingTop,
+
+                  mobilePaddingBottom:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.mobilePaddingBottom,
+
+                  tempMobilePaddingTB:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.tempMobilePaddingTB,
+
+                  tempMobilePaddingTop:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.tempMobilePaddingTop,
+
+                  tempMobilePaddingBottom:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}PaddingY`]
+                      : v.tempMobilePaddingBottom,
+
+                  mobilePaddingRL:
+                    mobileSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.mobilePaddingRL,
+
+                  mobilePaddingRight:
+                    mobileSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.mobilePaddingRight,
+
+                  mobilePaddingLeft:
+                    mobileSize !== "custom" && v.fillType === "default"
+                      ? 0
+                      : mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.mobilePaddingLeft,
+
+                  tempMobilePaddingRL:
+                    mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.tempMobilePaddingRL,
+
+                  tempMobilePaddingRight:
+                    mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.tempMobilePaddingRight,
+
+                  tempMobilePaddingLeft:
+                    mobileSize !== "custom" && v.fillType !== "default"
+                      ? v[`${mobileSize}PaddingX`]
+                      : v.tempMobilePaddingLeft,
+
+                  mobileBorderRadius:
+                    v.borderRadiusType === "rounded" &&
+                    mobileSize !== "custom" &&
+                    v[`${mobileSize}FontSize`] * v.mobileLineHeight >=
+                      v.iconCustomSize
+                      ? Math.round(
+                          (v[`${mobileSize}FontSize`] * v.mobileLineHeight +
+                            v[`${mobileSize}PaddingY`] * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : v.borderRadiusType === "rounded" &&
+                        mobileSize !== "custom" &&
+                        v[`${mobileSize}FontSize`] * v.mobileLineHeight <
+                          v.iconCustomSize
+                      ? Math.round(
+                          (v.iconCustomSize +
+                            v[`${mobileSize}PaddingY`] * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : mobileSyncOnChange(v, "borderRadius")
+                };
               }
-            ],
-            value: v.mobileSize,
-            onChange: mobileSize => {
-              return {
-                mobileSize,
+            },
+            {
+              id: "mobilePaddingRL",
+              label: t("Width"),
+              type: "slider",
+              disabled: v.mobileSize !== "custom",
+              slider: {
+                min: 0,
+                max: 100
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: v.mobilePaddingRL
+              },
+              onChange: ({ value: mobilePaddingRL }) => {
+                return {
+                  mobilePaddingRL,
+                  mobilePaddingRight: mobilePaddingRL,
+                  mobilePaddingLeft: mobilePaddingRL,
+                  tempMobilePaddingRight: mobilePaddingRL,
+                  tempMobilePaddingLeft: mobilePaddingRL
+                };
+              }
+            },
+            {
+              id: "mobilePaddingTB",
+              label: t("Height"),
+              type: "slider",
+              disabled: v.mobileSize !== "custom",
+              slider: {
+                min: 0,
+                max: 100
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: v.mobilePaddingTB
+              },
+              onChange: ({ value: mobilePaddingTB }) => {
+                return {
+                  mobilePaddingTB,
+                  mobilePaddingTop: mobilePaddingTB,
+                  mobilePaddingBottom: mobilePaddingTB,
+                  tempMobilePaddingTop: mobilePaddingTB,
+                  tempMobilePaddingBottom: mobilePaddingTB,
 
-                mobileFontSize:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}FontSize`]
-                    : v.mobileFontSize,
-
-                mobilePaddingTB:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.mobilePaddingTB,
-
-                mobilePaddingTop:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.mobilePaddingTop,
-
-                mobilePaddingBottom:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.mobilePaddingBottom,
-
-                tempMobilePaddingTB:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.tempMobilePaddingTB,
-
-                tempMobilePaddingTop:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.tempMobilePaddingTop,
-
-                tempMobilePaddingBottom:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}PaddingY`]
-                    : v.tempMobilePaddingBottom,
-
-                mobilePaddingRL:
-                  mobileSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.mobilePaddingRL,
-
-                mobilePaddingRight:
-                  mobileSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.mobilePaddingRight,
-
-                mobilePaddingLeft:
-                  mobileSize !== "custom" && v.fillType === "default"
-                    ? 0
-                    : mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.mobilePaddingLeft,
-
-                tempMobilePaddingRL:
-                  mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.tempMobilePaddingRL,
-
-                tempMobilePaddingRight:
-                  mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.tempMobilePaddingRight,
-
-                tempMobilePaddingLeft:
-                  mobileSize !== "custom" && v.fillType !== "default"
-                    ? v[`${mobileSize}PaddingX`]
-                    : v.tempMobilePaddingLeft,
-
-                mobileBorderRadius:
-                  v.borderRadiusType === "rounded" &&
-                  mobileSize !== "custom" &&
-                  v[`${mobileSize}FontSize`] * v.mobileLineHeight >=
-                    v.iconCustomSize
-                    ? Math.round(
-                        (v[`${mobileSize}FontSize`] * v.mobileLineHeight +
-                          v[`${mobileSize}PaddingY`] * 2 +
-                          v.borderWidth * 2) /
-                          2
-                      )
-                    : v.borderRadiusType === "rounded" &&
-                      mobileSize !== "custom" &&
-                      v[`${mobileSize}FontSize`] * v.mobileLineHeight <
-                        v.iconCustomSize
-                    ? Math.round(
-                        (v.iconCustomSize +
-                          v[`${mobileSize}PaddingY`] * 2 +
-                          v.borderWidth * 2) /
-                          2
-                      )
-                    : mobileSyncOnChange(v, "borderRadius")
-              };
+                  mobileBorderRadius:
+                    v.borderRadiusType === "rounded" &&
+                    mobileFontSize * mobileLineHeight >= v.iconCustomSize
+                      ? Math.round(
+                          (mobileFontSize * mobileLineHeight +
+                            mobilePaddingTB * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : v.borderRadiusType === "rounded" &&
+                        mobileFontSize * mobileLineHeight < v.iconCustomSize
+                      ? Math.round(
+                          (v.iconCustomSize +
+                            mobilePaddingTB * 2 +
+                            v.borderWidth * 2) /
+                            2
+                        )
+                      : mobileSyncOnChange(v, "borderRadius")
+                };
+              }
             }
-          },
-          choices: {
-            custom: [
-              {
-                id: "mobilePaddingRL",
-                label: t("Width"),
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.mobilePaddingRL
-                },
-                onChange: ({ value: mobilePaddingRL }) => {
-                  return {
-                    mobilePaddingRL,
-                    mobilePaddingRight: mobilePaddingRL,
-                    mobilePaddingLeft: mobilePaddingRL,
-                    tempMobilePaddingRight: mobilePaddingRL,
-                    tempMobilePaddingLeft: mobilePaddingRL
-                  };
-                }
-              },
-              {
-                id: "mobilePaddingTB",
-                label: t("Height"),
-                type: "slider",
-                slider: {
-                  min: 0,
-                  max: 100
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: v.mobilePaddingTB
-                },
-                onChange: ({ value: mobilePaddingTB }) => {
-                  return {
-                    mobilePaddingTB,
-                    mobilePaddingTop: mobilePaddingTB,
-                    mobilePaddingBottom: mobilePaddingTB,
-                    tempMobilePaddingTop: mobilePaddingTB,
-                    tempMobilePaddingBottom: mobilePaddingTB,
-
-                    mobileBorderRadius:
-                      v.borderRadiusType === "rounded" &&
-                      mobileFontSize * mobileLineHeight >= v.iconCustomSize
-                        ? Math.round(
-                            (mobileFontSize * mobileLineHeight +
-                              mobilePaddingTB * 2 +
-                              v.borderWidth * 2) /
-                              2
-                          )
-                        : v.borderRadiusType === "rounded" &&
-                          mobileFontSize * mobileLineHeight < v.iconCustomSize
-                        ? Math.round(
-                            (v.iconCustomSize +
-                              mobilePaddingTB * 2 +
-                              v.borderWidth * 2) /
-                              2
-                          )
-                        : mobileSyncOnChange(v, "borderRadius")
-                  };
-                }
-              }
-            ]
-          }
+          ]
         }
       ]
     },
     {
       id: "mobileToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -1966,10 +1941,29 @@ export function getItemsForMobile(v) {
     },
     {
       id: "mobileToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       position: 80,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     }
   ];
 }

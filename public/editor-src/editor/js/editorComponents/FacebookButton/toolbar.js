@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import { toolbarElementFbButtonSize } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -17,16 +16,18 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvkn("popoverCurrentElement"),
-      type: "popover",
-      icon: "nc-facebook",
-      title: t("Button"),
+      id: "popoverCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-facebook",
+        title: t("Button")
+      },
       devices: "desktop",
       position: 70,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -88,12 +89,16 @@ export function getItems({ v, device, state }) {
                     }
                   ]
                 },
-                toolbarElementFbButtonSize({
-                  v,
-                  device,
+                {
+                  id: "size",
+                  label: t("Size"),
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { icon: "nc-small", value: "small" },
+                    { icon: "nc-large", value: "large" }
+                  ]
+                },
                 {
                   id: "share",
                   label: t("Include Share Button"),
@@ -133,22 +138,26 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("popoverColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(boxShadowColorHex, v.boxShadowColorOpacity)
+      id: "popoverColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              boxShadowColorHex,
+              v.boxShadowColorOpacity
+            )
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           hideHandlesWhenOne: false,
           tabs: [
             {

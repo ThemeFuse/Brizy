@@ -331,7 +331,7 @@ module.exports = {
                     "margin": 0,
                     "marginSuffix": "px",
                     "marginLeftSuffix": "px",
-                    "marginLeft": -30,
+                    "marginLeft": 0,
                     "tabsMedia": "",
                     "marginBottomSuffix": "px",
                     "marginBottom": 40
@@ -343,7 +343,7 @@ module.exports = {
         "bgColorHex": "#ffffff",
         "bgColorOpacity": 0,
         "tempBgColorOpacity": 1,
-        "popupId": "bihzghvtpdeyqexkoeoqcupgroxselutnccf",
+        "popupId": "qvzudcmrinhdvoyppyaxavyuegubjwiulfoc",
         "tempBgColorPalette": "color8",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

@@ -100,6 +100,14 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	}
 
 	/**
+	 * @param Brizy_Editor_Entity $entity
+	 */
+	public function trashEntity( Brizy_Editor_Entity $entity ) {
+		do_action( 'brizy_before_entity_delete', $entity );
+		wp_trash_post( $entity->getWpPostId() );
+	}
+
+	/**
 	 * @param Brizy_Editor_Entity[] $entities
 	 * @param array $fields
 	 *

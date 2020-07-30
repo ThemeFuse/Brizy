@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
 import ThemeIcon from "visual/component/ThemeIcon";
 import defaultValue from "./defaultValue.json";
@@ -35,9 +35,7 @@ export default class TimelineTab extends EditorComponent {
     } = this.props;
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      itemProps: {
-        meta
-      }
+      itemProps: { meta }
     });
     const className = classnames(
       "brz-timeline__tab",

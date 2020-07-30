@@ -47,7 +47,6 @@ import {
   toolbarCustomCSS,
   toolbarLinkPopup,
   toolbarLinkUpload,
-  toolbarActionClosePopup,
   toolbarElementAudioUpload,
   toolbarElementAudioIconSize
 } from "visual/utils/toolbar";
@@ -110,7 +109,6 @@ global.Brizy = {
     toolbarCustomCSS,
     toolbarLinkPopup,
     toolbarLinkUpload,
-    toolbarActionClosePopup,
     toolbarElementAudioUpload,
     toolbarElementAudioIconSize
   }

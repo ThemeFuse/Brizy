@@ -215,6 +215,11 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 			$this->cloudId = $storage_post['cloudId'];
 		}
 
+		if ( isset( $storage_post['cloudAccountId'] ) ) {
+			$this->setCloudAccountId( $storage_post['cloudAccountId'] );
+		}
+
+
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
 		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, true );
 	}

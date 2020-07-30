@@ -9,11 +9,11 @@ import Config from "visual/global/Config";
 import {
   getProject,
   getGlobalBlocks,
-  getSavedBlocks,
   removeProjectLockedSendBeacon,
   addProjectLockedBeacon
 } from "visual/utils/api/editor";
 import { assetUrl } from "visual/utils/asset";
+import { getBlocksInPage } from "visual/utils/blocks";
 
 import {
   getUsedModelsFonts,
@@ -47,7 +47,7 @@ const pageCurtain = window.parent.document.querySelector(
     }
 
     const projectStatus = Config.get("project").status || {};
-
+    const { isSyncAllowed = false } = Config.get("cloud") || {};
     if (projectStatus && !projectStatus.locked) {
       await addProjectLockedBeacon();
     }
@@ -56,13 +56,11 @@ const pageCurtain = window.parent.document.querySelector(
       project,
       currentPage,
       globalBlocks,
-      savedBlocks,
       blocksThumbnailSizes
     ] = await Promise.all([
       getProject(),
       getCurrentPage(),
       getGlobalBlocks(),
-      getSavedBlocks(),
       fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then(r => r.json())
     ]);
 
@@ -71,7 +69,6 @@ const pageCurtain = window.parent.document.querySelector(
       console.log("Project loaded", project);
       console.log("currentPage loaded", currentPage);
       console.log("Global blocks loaded", globalBlocks);
-      console.log("Saved blocks loaded", savedBlocks);
     }
     /* eslint-enabled no-console */
 
@@ -81,8 +78,11 @@ const pageCurtain = window.parent.document.querySelector(
     // we need to find them in google
     // and add them to the project
     const { styles, extraFontStyles = [], fonts } = project.data;
+
+    const blocks = getBlocksInPage(currentPage, globalBlocks);
+
     const pageFonts = getUsedModelsFonts({
-      models: currentPage.data,
+      models: blocks,
       globalBlocks
     });
     const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
@@ -104,8 +104,11 @@ const pageCurtain = window.parent.document.querySelector(
         project,
         projectStatus,
         globalBlocks,
-        savedBlocks,
         blocksThumbnailSizes,
+        authorized: Config.get("user").isAuthorized
+          ? "connected"
+          : "disconnected",
+        syncAllowed: isSyncAllowed,
         fonts: deepMerge(fonts, newFonts),
         page: currentPage
       })

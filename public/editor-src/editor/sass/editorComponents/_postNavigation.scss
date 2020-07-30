@@ -1,0 +1,61 @@
+//// post navigation
+.brz-single-post-navigation {
+  position: relative;
+  width: 100%;
+
+  .brz-span {
+    display: block;
+  }
+
+  a:focus {
+    outline: none;
+  }
+}
+
+.brz-navigation-title,
+.brz-navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.brz-navigation__prev:nth-child(2n) {
+  text-align: end;
+  text-decoration: none;
+}
+
+.brz-single-post-navigation::before {
+  content: "";
+  position: absolute;
+  background: #a5aeb4;
+  margin: auto;
+  width: 1px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.brz-navigation__next {
+  text-decoration: none;
+}
+
+.brz-navigation-title__next,
+.brz-navigation__next {
+  margin-left: auto;
+  text-align: right;
+}
+.brz-navigation-title__prev,
+.brz-navigation__prev {
+  padding-right: 50px;
+}
+.brz-navigation-title__next,
+.brz-navigation__next {
+  padding-left: 50px;
+}
+.brz-navigation-title__next,
+.brz-navigation__next,
+.brz-navigation-title__prev,
+.brz-navigation__prev {
+  max-width: 50%;
+}

@@ -4,6 +4,10 @@
   flex: 1 1 auto;
   min-width: 0;
 
+  .brz-ed-box__resizer {
+    max-width: 100%;
+  }
+
   @include word-wrap;
 
   > * {
@@ -140,6 +144,12 @@
 
   .brz-tp__dc-block {
     @include clearfix;
+  }
+  .brz-tp__dc-block iframe,
+  .brz-tp__dc-block object,
+  .brz-tp__dc-block video,
+  .brz-tp__dc-block img {
+    max-width: 100%;
   }
 }
 

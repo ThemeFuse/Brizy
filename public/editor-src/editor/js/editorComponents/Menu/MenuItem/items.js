@@ -3,8 +3,6 @@ import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import MenuDropDown from "visual/component/MenuDropDown";
 
-const MAX_LEVEL_RENDER = 2;
-
 const renderSubMenu = (items, mMenu, level) => {
   const mMenuClassName = classnames("brz-mm-menu__sub-menu", {
     "brz-menu__ul--has-dropdown": level === 0
@@ -26,16 +24,29 @@ class MenuItemItems extends EditorArrayComponent {
     megaMenu: false,
     mMenu: false,
     toolbarExtend: null,
-    level: 0
+    level: 0,
+    getParent: () => {},
+    meta: {},
+    placement: null
   };
 
   getItemProps() {
-    let { level, toolbarExtend, mMenu } = this.props;
+    let {
+      level,
+      toolbarExtend,
+      mMenu,
+      meta,
+      placement,
+      getParent
+    } = this.props;
 
     return {
-      level: ++level,
       mMenu,
-      toolbarExtend
+      toolbarExtend,
+      meta,
+      placement,
+      getParent,
+      level: ++level
     };
   }
 
@@ -59,7 +70,7 @@ class MenuItemItems extends EditorArrayComponent {
     const { level, megaMenu, mMenu } = this.props;
     const items = _items.filter(el => el);
 
-    if (items.length === 0 || level >= MAX_LEVEL_RENDER) {
+    if (items.length === 0) {
       return null;
     }
 

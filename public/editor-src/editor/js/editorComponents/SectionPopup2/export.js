@@ -31,6 +31,7 @@ $.fn.popup = function() {
         $("html").removeClass("brz-ow-hidden");
       }
 
+      $this.addClass("brz-popup2--was-shown");
       $(document).trigger("brz.popup.show", [$this.get(0)]);
     },
     close() {
@@ -127,6 +128,15 @@ function _parsePopupData($popup) {
   var referrer = _parseData($popup.attr("data-referrer"));
   var devices = _parseData($popup.attr("data-devices"));
 
+  var currentUrl = _parseData($popup.attr("data-current_url"));
+  var currentDate = _parseData($popup.attr("data-current_date"));
+  var lastVisitDate = _parseData($popup.attr("data-last_visit_date"));
+  var timeFrom = _parseData($popup.attr("data-time_from"));
+  var cookie = _parseData($popup.attr("data-cookie"));
+  var os = _parseData($popup.attr("data-os"));
+  var otherPopups = _parseData($popup.attr("data-other_popups"));
+  var specificPopup = _parseData($popup.attr("data-specific_popup"));
+
   return {
     pageLoad: pageLoad,
     click: click,
@@ -137,6 +147,15 @@ function _parsePopupData($popup) {
     loggedIn: loggedIn,
     referrer: referrer,
     devices: devices,
+
+    currentUrl: currentUrl,
+    currentDate: currentDate,
+    lastVisitDate: lastVisitDate,
+    timeFrom: timeFrom,
+    cookie: cookie,
+    os: os,
+    otherPopups: otherPopups,
+    specificPopup: specificPopup,
 
     triggerOnce: triggerOnce === "true",
     popupId: popupId

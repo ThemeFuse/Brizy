@@ -1,3 +1,4 @@
+import AwesomeDebouncePromise from "awesome-debounce-promise";
 import _ from "underscore";
 import {
   updateProject as apiUpdateProject,
@@ -6,10 +7,11 @@ import {
   updateExternalPopup as apiUpdateExternalPopup,
   createGlobalBlock as apiCreateGlobalBlock,
   updateGlobalBlock as apiUpdateGlobalBlock,
+  updateGlobalBlocks as apiUpdateGlobalBlocks,
+  updateGlobalBlocksPositions as apiUpdateGlobalBlocksPositions,
   createSavedBlock as apiCreateSavedBlock,
-  updateSavedBlock as apiUpdateSavedBlock,
   deleteSavedBlock as apiDeleteSavedBlock,
-  updateRules as apiUpdateRules,
+  updatePopupRules as apiUpdatePopupRules,
   sendHeartBeat as apiSendHeartBeat
 } from "visual/utils/api/editor";
 import Config from "visual/global/Config";
@@ -27,14 +29,48 @@ export {
   updateFn as apiUpdatePage,
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
+  apiUpdateGlobalBlocks,
+  apiUpdateGlobalBlocksPositions,
   apiCreateSavedBlock,
-  apiUpdateSavedBlock,
   apiDeleteSavedBlock,
-  apiUpdateRules,
+  apiUpdatePopupRules,
   apiSendHeartBeat
 };
 
 const DEBOUNCE_WAIT = 2000;
+
+class debounceById {
+  constructor(fn, wait) {
+    this.fn = fn;
+    this.wait = wait;
+    this.cancelId = null;
+
+    this._debounce = AwesomeDebouncePromise(
+      (id, ...rest) => {
+        if (id !== this.cancelId) {
+          this.cancelId = null;
+          return this.fn(...rest);
+        }
+
+        return Promise.resolve();
+      },
+      this.wait,
+      {
+        key: id => id
+      }
+    );
+  }
+
+  cancel = id => {
+    this.cancelId = id;
+  };
+
+  async set(id, ...rest) {
+    const promise = await this._debounce(id, ...rest);
+
+    return promise;
+  }
+}
 
 export const debouncedApiUpdateProject = _.debounce(
   apiUpdateProject,
@@ -43,25 +79,13 @@ export const debouncedApiUpdateProject = _.debounce(
 
 export const debouncedApiUpdatePage = _.debounce(updateFn, DEBOUNCE_WAIT);
 
-export const debouncedApiCreateGlobalBlock = debounceById(
-  apiCreateGlobalBlock,
-  DEBOUNCE_WAIT
-);
-export const debouncedApiUpdateGlobalBlock = debounceById(
-  apiUpdateGlobalBlock,
+export const debouncedApiUpdateGlobalBlocksPositions = _.debounce(
+  apiUpdateGlobalBlocksPositions,
   DEBOUNCE_WAIT
 );
 
-export const debouncedApiCreateSavedBlock = debounceById(
-  apiCreateSavedBlock,
-  DEBOUNCE_WAIT
-);
-export const debouncedApiDUpdateSavedBlock = debounceById(
-  apiUpdateSavedBlock,
-  DEBOUNCE_WAIT
-);
-export const debouncedApiDeleteSavedBlock = debounceById(
-  apiDeleteSavedBlock,
+export const debouncedApiUpdateGlobalBlock = new debounceById(
+  apiUpdateGlobalBlock,
   DEBOUNCE_WAIT
 );
 
@@ -69,23 +93,23 @@ export const debouncedApiDeleteSavedBlock = debounceById(
  * a customize debounce function that, being provided with an id,
  * allows to fire multiple instances of the same debounced function
  */
-function debounceById(fn, wait, maxCacheItems = 5) {
-  const MAX_CACHE_ITEMS = maxCacheItems;
-  const cache = new Array(MAX_CACHE_ITEMS);
-  let nextCacheIndex = 0;
-  const idToCacheIndex = new Map();
+// function debounceById(fn, wait, maxCacheItems = 5) {
+//   const MAX_CACHE_ITEMS = maxCacheItems;
+//   const cache = new Array(MAX_CACHE_ITEMS);
+//   let nextCacheIndex = 0;
+//   const idToCacheIndex = new Map();
 
-  return function(id) {
-    if (idToCacheIndex.get(id) === undefined) {
-      idToCacheIndex.set(id, nextCacheIndex);
-      cache[nextCacheIndex] = _.debounce(fn, wait);
+//   return function(id) {
+//     if (idToCacheIndex.get(id) === undefined) {
+//       idToCacheIndex.set(id, nextCacheIndex);
+//       cache[nextCacheIndex] = _.debounce(fn, wait);
 
-      nextCacheIndex = (nextCacheIndex + 1) % MAX_CACHE_ITEMS;
-    }
+//       nextCacheIndex = (nextCacheIndex + 1) % MAX_CACHE_ITEMS;
+//     }
 
-    return cache[idToCacheIndex.get(id)];
-  };
-}
+//     return cache[idToCacheIndex.get(id)];
+//   };
+// }
 
 // Polling
 export function pollingSendHeartBeat(heartBeat) {

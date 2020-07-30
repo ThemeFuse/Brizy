@@ -124,6 +124,7 @@ export default function historyEnhancer(reducer, config) {
       }
       case ActionTypes.REDO: {
         const redoSnapshot = redoHistory();
+
         return {
           ...state,
           ...redoSnapshot,
@@ -134,10 +135,29 @@ export default function historyEnhancer(reducer, config) {
         state && delete state.historyTravelling;
         const newState = reducer(state, action);
 
+        const {
+          changeHistoryBeforeUpdate = () => {},
+          changeHistoryAfterUpdate = () => {}
+        } = config;
+
         if (action.type !== "@@redux/INIT") {
+          changeHistoryBeforeUpdate(
+            newState,
+            history,
+            currentHistoryIndex,
+            action
+          );
+
           updateHistory(newState, config, {
             replacePresent: action.meta && action.meta.historyReplacePresent
           });
+
+          changeHistoryAfterUpdate(
+            newState,
+            history,
+            currentHistoryIndex,
+            action
+          );
         }
 
         return newState;

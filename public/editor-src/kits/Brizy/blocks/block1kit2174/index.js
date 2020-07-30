@@ -99,7 +99,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;No more buffering - create, style and enjoy. Our user interface was built on React - the most efficient JavaScript library. We guarantee you will love the difference in performance.</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>It is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;No more buffering - create, style and enjoy. Our user interface was built on React - the most efficient JavaScript library. We guarantee you will love the difference in performance.</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -353,55 +353,7 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "hoverTransition": 50
                                                                 }
                                                             }
                                                         ],
@@ -429,28 +381,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginTop": 10,
@@ -466,7 +396,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -500,7 +429,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -586,7 +514,6 @@ module.exports = {
                                                                     "imageHeight": 1280,
                                                                     "height": 90,
                                                                     "zoom": 100,
-                                                                    
                                                                     "tabletResize": 80,
                                                                     "customCSS": "",
                                                                     "imageBrightness": 100,
@@ -614,56 +541,9 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "mobileResize": 80,
-                                                                    
-                                                                    "mobileHeight": 60,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileHeight": 60
                                                                 }
                                                             }
                                                         ],
@@ -691,28 +571,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginTop": 10,
@@ -728,7 +586,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -762,7 +619,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -848,7 +704,6 @@ module.exports = {
                                                                     "imageHeight": 1280,
                                                                     "height": 90,
                                                                     "zoom": 100,
-                                                                    
                                                                     "mobileHeight": 60,
                                                                     "tabletResize": 80,
                                                                     "customCSS": "",
@@ -877,55 +732,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 80,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 80
                                                                 }
                                                             }
                                                         ],
@@ -953,28 +761,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginTop": 10,
@@ -990,7 +776,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -1024,7 +809,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,

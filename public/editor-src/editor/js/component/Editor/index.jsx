@@ -1,5 +1,4 @@
 import React from "react";
-import UIState from "visual/global/UIState";
 import EditorPage from "./EditorPage";
 import LeftSidebar from "visual/component/LeftSidebar";
 import BottomPanel from "visual/component/BottomPanel";
@@ -19,8 +18,9 @@ class Editor extends React.Component {
   }
 
   handleKeyDown() {
-    UIState.set("prompt", {
-      prompt: "key-helper"
+    Prompts.open({
+      mode: "stack",
+      prompt: "keyHelper"
     });
   }
 

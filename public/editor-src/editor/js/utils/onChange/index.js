@@ -92,9 +92,7 @@ export {
 } from "./onChangeMargin";
 
 // Element Section
-export {
-  onChangeElementSectionBoxShadowHexAndOpacityDependencies
-} from "./onChangeElementSection";
+export { onChangeElementSectionBoxShadowHexAndOpacityDependencies } from "./onChangeElementSection";
 
 // Element Progress Bar
 export {
@@ -146,6 +144,12 @@ export {
   onChangeMenuHoverColorHex2,
   onChangeMenuHoverColorPalette2,
   onChangeMenuHoverColorFields2,
+  onChangeActiveColorHexSubMenu2,
+  onChangeActiveColorPaletteSubMenu2,
+  onChangeActiveColorFieldsSubMenu2,
+  onChangeBgActiveColorHexSubMenu2,
+  onChangeBgActiveColorPaletteSubMenu2,
+  onChangeBgActiveColorFieldsSubMenu2,
   onChangeColorHexMMenu2,
   onChangeColorPaletteMMenu2,
   onChangeColorFieldsMMenu2,
@@ -167,6 +171,9 @@ export {
   onChangeMobileColorHexIconMMenu2,
   onChangeMobileColorPaletteIconMMenu2,
   onChangeMobileColorFieldsIconMMenu2,
+  onChangeActiveColorHexMMenu2,
+  onChangeActiveColorPaletteMMenu2,
+  onChangeActiveColorFieldsMMenu2,
   //BG
   onChangeBgColorHexMMenu2,
   onChangeBgColorPaletteMMenu2,
@@ -197,7 +204,8 @@ export {
 export {
   tabletSyncOnChange,
   mobileSyncOnChange,
-  keySyncOnChange
+  keySyncOnChange,
+  validateKeyByProperty
 } from "./device";
 
 // Typography

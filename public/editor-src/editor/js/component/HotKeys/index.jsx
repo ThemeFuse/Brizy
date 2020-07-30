@@ -1,13 +1,18 @@
 import React from "react";
 import { getIn } from "timm";
+import { produce } from "immer";
+import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { rolesHOC } from "visual/component/Roles";
-import { getClosestParent } from "visual/utils/models";
+import { getClosestParent, mapModels } from "visual/utils/models";
 import {
   pageDataNoRefsSelector,
   copiedElementNoRefsSelector
 } from "visual/redux/selectors";
 import HotKeysPlugin from "./HotKeysPlugin";
+import { symbolsToItems } from "visual/editorComponents/Menu";
+
+const menusConfig = Config.get("menuData");
 
 const keyNamesShortKeys = {
   duplicate: ["ctrl+D", "cmd+D", "right_cmd+D"],
@@ -91,12 +96,14 @@ class HotKeys extends React.Component {
     const copiedElement = copiedElementNoRefsSelector(state);
     const copiedPath = [...activeElementPath];
 
+    const _data = attachMenu(data);
+
     // this condition for this cases:
     // wrapper -> cloneable
     if (keyNamesShortKeys.paste.includes(items[0].keyName)) {
       const { value: currentActiveContainerValue } = getClosestParent(
         activeElementPath,
-        data,
+        _data,
         ({ type }) => type === "Wrapper" || type === "Cloneable"
       );
 
@@ -128,7 +135,7 @@ class HotKeys extends React.Component {
 
     let newPath = [];
     for (let i = 0; i <= activeElementPath.length; i++) {
-      const newValue = getIn(data, copiedPath);
+      const newValue = getIn(_data, copiedPath);
 
       if (newValue) {
         const item = items.find(({ id }) => id === newValue._id);
@@ -220,3 +227,22 @@ export default rolesHOC({
   component: HotKeys,
   fallbackComponent: ({ children }) => children || null
 });
+
+function attachMenu(value) {
+  return mapModels(block => {
+    const { type, value } = block;
+
+    if (type === "Menu") {
+      const { menuSelected: dbMenuSelected, symbols = {} } = value;
+      const menuSelected = dbMenuSelected || menusConfig[0].id;
+      const menuConfig =
+        menusConfig.find(menu => menu.id === menuSelected) || {};
+
+      return produce(block, draft => {
+        draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
+      });
+    }
+
+    return block;
+  }, value);
+}

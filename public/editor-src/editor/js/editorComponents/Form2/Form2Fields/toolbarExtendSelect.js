@@ -21,25 +21,26 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvk("toolbarColorSelect"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            selectBgColorHex,
-            dvv("selectBgColorOpacity")
-          )
+      id: "toolbarColorSelect",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              selectBgColorHex,
+              dvv("selectBgColorOpacity")
+            )
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
-          id: dvk("tabsSelectColor"),
-          type: "tabs",
+          id: "tabsSelectColor",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabSelectText",

@@ -60,7 +60,7 @@ class SectionItems extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex) {
     const { showSlider } = this.state;
-    const { meta } = this.props;
+    const { meta, itemProps } = this.props;
     const desktopItems = showSlider
       ? [
           {
@@ -97,6 +97,7 @@ class SectionItems extends EditorArrayComponent {
     );
 
     return {
+      ...itemProps,
       meta: {
         ...meta,
         section: {
@@ -213,7 +214,7 @@ class SectionItems extends EditorArrayComponent {
   renderForEdit(v) {
     const { showSlider, showSpinner } = this.state;
     const spinner = showSpinner && (
-      <div className="brz-ed-slider__spinner">
+      <div className="brz-ed-portal__loading">
         <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
       </div>
     );

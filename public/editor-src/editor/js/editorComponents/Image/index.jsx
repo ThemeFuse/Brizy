@@ -12,7 +12,7 @@ import Toolbar from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { imageUrl, imagePopulationUrl, svgUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { blocksDataSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import toolbarConfigFn, {
@@ -308,9 +308,9 @@ class Image extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value.globalBlockId
-          ].data;
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
           isGlobal = true;
         }
 
@@ -530,7 +530,9 @@ class Image extends EditorComponent {
           className={imageStylesClassName(v, wrapperSizes, this.props)}
           style={imageStylesCSSVars(v)}
         >
-          <Toolbar {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}>
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+          >
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
               <div
                 className={contentStyleClassName(v)}

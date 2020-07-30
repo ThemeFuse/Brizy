@@ -157,6 +157,13 @@ $slider-handle-icon: 7px; // 7
   }
 }
 
+// Make old slider look like the new one (from dev)
+.brz-ed-option__slider--skin-dev {
+  .brz-ed-option__text-box {
+    width: 24px;
+  }
+}
+
 // React Slider
 .rc-slider {
   position: relative;

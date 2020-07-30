@@ -4,34 +4,30 @@ import { findDeep } from "visual/utils/object";
 import {
   createBlockScreenshot as apiCreateBlockScreenshot,
   updateBlockScreenshot as apiUpdateBlockScreenshot
-} from "visual/utils/api/editor";
+} from "visual/utils/api/editor/index-new";
 import {
   EDITOR_RENDERED,
   UPDATE_UI,
   UPDATE_BLOCKS,
-  CREATE_GLOBAL_BLOCK,
   UPDATE_GLOBAL_BLOCK,
-  CREATE_SAVED_BLOCK,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  UPDATE_EXTRA_FONT_STYLES,
   IMPORT_TEMPLATE,
-  ADD_BLOCK
+  ADD_BLOCK,
+  ADD_GLOBAL_BLOCK
 } from "visual/redux/actions";
-import { ActionTypes as HistoryActionTypes } from "visual/redux/reducers/historyEnhancer";
+import { UPDATE_EXTRA_FONT_STYLES } from "visual/redux/actions2";
+import { UNDO, REDO } from "visual/redux/history/types";
 import { updateScreenshot } from "visual/redux/actions";
 import {
   pageBlocksSelector as getPageBlocks,
-  savedBlocksSelector as getSavedBlocks,
   globalBlocksSelector as getGlobalBlocks,
-  globalBlocksUpdatesSelector as getGlobalBlocksUpdates,
+  blocksDataSelector as getBlocksData,
   screenshotsSelector,
   deviceModeSelector
 } from "visual/redux/selectors";
 import { makeNodeScreenshot } from "visual/utils/screenshots";
 import { makeTaskQueue, debounceAdvanced } from "./utils";
-
-const { UNDO, REDO } = HistoryActionTypes;
 
 const TASK_QUEUE_INTERVAL = 2000;
 const DEBOUNCE_INTERVAL = 2000;
@@ -46,6 +42,7 @@ const getBlocksMap = blocks =>
   }, {});
 const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
+
 const isDesktopMode = store =>
   deviceModeSelector(store.getState()) === "desktop";
 
@@ -78,6 +75,7 @@ export default store => next => action => {
   if (
     action.type === UPDATE_BLOCKS ||
     action.type === ADD_BLOCK ||
+    action.type === ADD_GLOBAL_BLOCK ||
     action.type === UPDATE_GLOBAL_BLOCK ||
     action.type === UNDO ||
     action.type === REDO
@@ -93,36 +91,11 @@ export default store => next => action => {
 
     changedBlocksDebounced(prevState, store, next, options);
   }
-
-  if (
-    action.type === CREATE_SAVED_BLOCK ||
-    action.type === CREATE_GLOBAL_BLOCK
-  ) {
-    const options = {
-      taskIdSuffix: "_create",
-      sourceBlockId: action.meta.sourceBlockId,
-      isAutosave: 0,
-
-      // there are currently problems if we would make
-      // global blocks also of IMMEDIATE priority because
-      // by the time the block will be screenshoted it is be
-      // highly likely that it would be incomplete because
-      // of the unmounting that happens when transforming
-      // a normal block to a global one
-      taskPriority:
-        action === CREATE_SAVED_BLOCK
-          ? taskQueue.taskPriorities.IMMEDIATE
-          : taskQueue.taskPriorities.HIGH
-    };
-
-    changedBlocks(prevState, store, next, options);
-  }
 };
 
 function allBlocks(store, next) {
   const changedBlocks = {
     page: new Set(),
-    saved: new Set(),
     global: new Set()
   };
 
@@ -138,7 +111,7 @@ function allBlocks(store, next) {
       }
 
       if (block.type === "GlobalBlock") {
-        changedBlocks.global.add(block.value.globalBlockId);
+        changedBlocks.global.add(block.value._id);
       } else {
         changedBlocks.page.add(block);
       }
@@ -153,7 +126,6 @@ const allBlocksDebounced = _.debounce(allBlocks, DEBOUNCE_INTERVAL);
 function changedBlocks(prevState, store, next, options) {
   const changedBlocks = {
     page: new Set(),
-    saved: new Set(),
     global: new Set()
   };
 
@@ -163,10 +135,9 @@ function changedBlocks(prevState, store, next, options) {
   {
     const prevBlocksMap = getBlocksMap(getPageBlocks(prevState));
     const currBlocksMap = getBlocksMap(getPageBlocks(currState));
-    const prevGlobalBlocks = getGlobalBlocks(prevState);
-    const prevGlobalBlocksUpdates = getGlobalBlocksUpdates(prevState);
-    const currGlobalBlocks = getGlobalBlocks(currState);
-    const currGlobalBlocksUpdates = getGlobalBlocksUpdates(currState);
+
+    const prevBlocksData = getBlocksData(prevState);
+    const currBlocksData = getBlocksData(currState);
 
     for (const [blockId, block] of Object.entries(currBlocksMap)) {
       if (block.type !== "GlobalBlock") {
@@ -174,42 +145,24 @@ function changedBlocks(prevState, store, next, options) {
           changedBlocks.page.add(block);
         }
       } else {
-        const gbid = block.value.globalBlockId;
+        const gbid = block.value._id;
 
-        if (
-          currGlobalBlocks[gbid] !== prevGlobalBlocks[gbid] ||
-          currGlobalBlocksUpdates[gbid] !== prevGlobalBlocksUpdates[gbid]
-        ) {
+        if (currBlocksData[gbid] !== prevBlocksData[gbid]) {
           changedBlocks.global.add(gbid);
         }
       }
     }
   }
 
-  // collect changed saved blocks
-  {
-    const prevSavedBlocks = getSavedBlocks(prevState);
-    const currSavedBlocks = getSavedBlocks(currState);
-
-    for (const blockId of Object.keys(currSavedBlocks)) {
-      if (currSavedBlocks[blockId] !== prevSavedBlocks[blockId]) {
-        changedBlocks.saved.add(blockId);
-      }
-    }
-  }
-
   // collect changed global blocks
   {
-    const prevGlobalBlocks = getGlobalBlocks(prevState);
-    const prevGlobalBlocksUpdates = getGlobalBlocksUpdates(prevState);
     const currGlobalBlocks = getGlobalBlocks(currState);
-    const currGlobalBlocksUpdates = getGlobalBlocksUpdates(currState);
+
+    const prevBlocksData = getBlocksData(prevState);
+    const currBlocksData = getBlocksData(currState);
 
     for (const gbid of Object.keys(currGlobalBlocks)) {
-      if (
-        currGlobalBlocks[gbid] !== prevGlobalBlocks[gbid] ||
-        currGlobalBlocksUpdates[gbid] !== prevGlobalBlocksUpdates[gbid]
-      ) {
+      if (currBlocksData[gbid] !== prevBlocksData[gbid]) {
         changedBlocks.global.add(gbid);
       }
     }
@@ -244,34 +197,19 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
       cbArgs: [store, next, options, block]
     };
   });
-  const savedBlockTasks = Array.from(changedBlocks.saved).map(savedBlockId => {
+  const globalBlockTasks = Array.from(changedBlocks.global).map(_id => {
     return {
-      id: savedBlockId + (options.taskIdSuffix || ""),
+      id: _id + (options.taskIdSuffix || ""),
       priority:
         options.taskPriority !== undefined
           ? options.taskPriority
           : taskQueue.taskPriorities.NORMAL,
-      cb: savedBlockTaskCb,
-      cbArgs: [store, next, options, savedBlockId]
+      cb: options.popup ? popupBlockInsideGlobalBlockTaskCb : globalBlockTaskCb,
+      // cb: globalBlockTaskCb,
+      cbArgs: [store, next, options, _id]
     };
   });
-  const globalBlockTasks = Array.from(changedBlocks.global).map(
-    globalBlockId => {
-      return {
-        id: globalBlockId + (options.taskIdSuffix || ""),
-        priority:
-          options.taskPriority !== undefined
-            ? options.taskPriority
-            : taskQueue.taskPriorities.NORMAL,
-        cb: options.popup
-          ? popupBlockInsideGlobalBlockTaskCb
-          : globalBlockTaskCb,
-        // cb: globalBlockTaskCb,
-        cbArgs: [store, next, options, globalBlockId]
-      };
-    }
-  );
-  const allTasks = [...pageBlockTasks, ...savedBlockTasks, ...globalBlockTasks];
+  const allTasks = [...pageBlockTasks, ...globalBlockTasks];
 
   if (allTasks.length > 0) {
     taskQueue.enqueue(allTasks);
@@ -284,12 +222,13 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
 
   // make screenshot
   {
-    if (!blockIsInThePage(blockId, store)) {
+    const node = document.querySelector(`#${blockId}`);
+
+    if (!blockIsInThePage(blockId, store) || !node) {
       return;
     }
 
     try {
-      const node = document.querySelector(`#${blockId}`);
       screenshot = await makeNodeScreenshot(node);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
@@ -353,88 +292,7 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     );
   }
 }
-async function savedBlockTaskCb(
-  store,
-  next,
-  options,
-  savedBlockId,
-  enqueueAgain
-) {
-  let screenshotId;
-  let screenshot;
-
-  // make screenshot
-  {
-    const node = document.querySelector(`#${options.sourceBlockId}`);
-    if (!node) {
-      return;
-    }
-
-    try {
-      screenshot = await makeNodeScreenshot(node);
-    } catch (e) {
-      if (process.env.NODE_ENV === "development") {
-        /* eslint-disable no-console */
-        console.warn(e);
-        /* eslint-enabled no-console */
-      }
-      return;
-    }
-  }
-
-  // upload screenshot
-  {
-    const block = getSavedBlocks(store.getState())[savedBlockId];
-    if (!block) {
-      return;
-    }
-
-    if (!isDesktopMode(store)) {
-      enqueueAgain();
-      return;
-    }
-
-    const r = await apiCreateBlockScreenshot({
-      base64: screenshot.src,
-
-      // ATTENTION: this is used only for WP and is
-      // deliberately set to global because in the WP plugin
-      // we store global, saved and popup block screenshots in the "global" folder.
-      blockType: "global"
-    });
-    screenshotId = r.id;
-  }
-
-  // update store (saved blocks)
-  {
-    const block = getSavedBlocks(store.getState())[savedBlockId];
-    if (!block) {
-      return;
-    }
-
-    next(
-      updateScreenshot({
-        blockId: savedBlockId,
-        data: {
-          _thumbnailSrc: screenshotId,
-          _thumbnailWidth: screenshot.width,
-          _thumbnailHeight: screenshot.height,
-          _thumbnailTime: Date.now()
-        },
-        meta: {
-          blockType: "saved"
-        }
-      })
-    );
-  }
-}
-async function globalBlockTaskCb(
-  store,
-  next,
-  options,
-  globalBlockId,
-  enqueueAgain
-) {
+async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
   let screenshotId;
   let screenshot;
 
@@ -447,7 +305,7 @@ async function globalBlockTaskCb(
       const pageBlocks = getPageBlocks(store.getState());
       const { obj: sourceBlock } = findDeep(
         pageBlocks,
-        obj => obj.value && obj.value.globalBlockId === globalBlockId
+        obj => obj.value && obj.value._id === _id
       );
 
       if (!sourceBlock) {
@@ -476,7 +334,7 @@ async function globalBlockTaskCb(
 
   // upload screenshot
   {
-    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const globalBlock = getGlobalBlocks(store.getState())[_id];
     if (!globalBlock) {
       return;
     }
@@ -488,17 +346,15 @@ async function globalBlockTaskCb(
 
     const screenshots = screenshotsSelector(store.getState());
     const publishedScreenshot =
-      screenshots._published[globalBlockId] &&
-      screenshots._published[globalBlockId]._thumbnailSrc;
-    const latestScreenshot =
-      screenshots[globalBlockId] && screenshots[globalBlockId]._thumbnailSrc;
+      screenshots._published[_id] && screenshots._published[_id]._thumbnailSrc;
+    const latestScreenshot = screenshots[_id] && screenshots[_id]._thumbnailSrc;
     if (!publishedScreenshot || publishedScreenshot === latestScreenshot) {
       const r = await apiCreateBlockScreenshot({
         base64: screenshot.src,
 
         // ATTENTION: this is used only for WP and is
         // deliberately set to global because in the WP plugin
-        // we store global, saved and popup block screenshots in the "global" folder.
+        // we store global, popup block screenshots in the "global" folder.
         blockType: "global"
       });
 
@@ -512,7 +368,7 @@ async function globalBlockTaskCb(
 
         // ATTENTION: this is used only for WP and is
         // deliberately set to global because in the WP plugin
-        // we store global, saved and popup block screenshots in the "global" folder.
+        // we store global, popup block screenshots in the "global" folder.
         blockType: "global"
       });
     }
@@ -520,14 +376,14 @@ async function globalBlockTaskCb(
 
   // update store (globalBlocks)
   {
-    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const globalBlock = getGlobalBlocks(store.getState())[_id];
     if (!globalBlock) {
       return;
     }
 
     next(
       updateScreenshot({
-        blockId: globalBlockId,
+        blockId: _id,
         data: {
           _thumbnailSrc: screenshotId,
           _thumbnailWidth: screenshot.width,
@@ -596,7 +452,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 
         // ATTENTION: this is used only for WP and is
         // deliberately set to global because in the WP plugin
-        // we store global, saved and popup block screenshots in the "global" folder.
+        // we store global, popup block screenshots in the "global" folder.
         blockType: "global"
       });
 
@@ -610,7 +466,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 
         // ATTENTION: this is used only for WP and is
         // deliberately set to global because in the WP plugin
-        // we store global, saved and popup block screenshots in the "global" folder.
+        // we store global, popup block screenshots in the "global" folder.
         blockType: "global"
       });
     }

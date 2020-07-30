@@ -6,7 +6,7 @@ export default function($node) {
   });
 
   // RECAPTCHA
-  var $recaptcha = $node.find(".brz-g-recaptcha");
+  const $recaptcha = $node.find(".brz-g-recaptcha");
 
   if ($recaptcha.length) {
     // Load Script recaptcha
@@ -15,12 +15,12 @@ export default function($node) {
     // Render Recaptcha
     global.brzOnloadRecaptchaCallback = function() {
       $recaptcha.each(function(_, el) {
-        var $this = $(this);
-        var $form = $this.closest(".brz-form");
-        var data = $this.data();
-        var sitekey = data.sitekey;
-        var size = data.size;
-        var recaptchaId = global.grecaptcha.render(el, {
+        const $this = $(this);
+        const $form = $this.closest(".brz-form");
+        const data = $this.data();
+        const sitekey = data.sitekey;
+        const size = data.size;
+        const recaptchaId = global.grecaptcha.render(el, {
           sitekey,
           size
         });
@@ -135,44 +135,34 @@ function initForm($component) {
 }
 
 function validate() {
-  var $this = $(this);
-  var $parentElem = $this.closest(".brz-forms__item");
-  var value = $this.val();
-  var data = $this.data();
-  var type = data.type;
-  var result = true;
-  var isRequired = $this.prop("required");
-  var pattern = $this.attr("pattern");
+  const $this = $(this);
+  const $parentElem = $this.closest(".brz-forms__item");
+  const value = $this.val();
+  const isRequired = $this.prop("required");
+  const pattern = $this.attr("pattern");
+  const patternTest = new RegExp(pattern).test(value);
+  let result = true;
 
   $parentElem.removeClass(
     "brz-forms__item--error brz-forms__item--error-pattern brz-forms__item--error-required"
   );
 
-  if (type === "Number") {
-    if (isRequired && !new RegExp(pattern).test(value)) {
-      $parentElem.addClass(
-        "brz-form__item--error brz-form__item--error-pattern"
-      );
-      result = false;
-    }
-  } else if (!new RegExp(pattern).test(value)) {
-    $parentElem.addClass(
-      "brz-forms__item--error brz-forms__item--error-pattern"
-    );
-    result = false;
-  }
-
-  if (isRequired && !value.length) {
+  if (isRequired && (!value || !patternTest)) {
     $parentElem.addClass(
       "brz-forms__item--error brz-forms__item--error-required"
     );
     result = false;
   }
 
+  if (value.length && !patternTest) {
+    $parentElem.addClass("brz-form__item--error brz-form__item--error-pattern");
+    result = false;
+  }
+
   return result;
 }
 function getFormMessage(status, text) {
-  var defaultTexts = {
+  const defaultTexts = {
     success: "Your email was sent successfully",
     error: "Your email was not sent",
     empty: "Please check your entry and try again"
@@ -215,13 +205,13 @@ function resetFormValues($form) {
 
 // Recaptcha
 function loadReCAPTCHA() {
-  var scriptId = "brz-recaptcha__script";
+  const scriptId = "brz-recaptcha__script";
 
   if (document.getElementById(scriptId)) {
     return;
   }
 
-  var scriptElement = document.createElement("script");
+  const scriptElement = document.createElement("script");
 
   scriptElement.setAttribute(
     "src",

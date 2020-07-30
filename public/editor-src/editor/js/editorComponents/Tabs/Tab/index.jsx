@@ -4,10 +4,11 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import Background from "visual/component/Background";
 import Toolbar from "visual/component/Toolbar";
 import ThemeIcon from "visual/component/ThemeIcon";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import Items from "./Items";
 import * as toolbarConfig from "./toolbar";
 import defaultValue from "./defaultValue.json";
+import Animation from "visual/component/Animation";
 
 class Tab extends EditorComponent {
   static get componentId() {
@@ -51,7 +52,7 @@ class Tab extends EditorComponent {
 
   renderContent(v) {
     const { labelText, customClassName, iconName, iconType } = v;
-    const { active, meta, onChangeNav } = this.props;
+    const { active, meta, onChangeNav, animationClassName } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       meta,
       bindWithKey: "items",
@@ -78,7 +79,13 @@ class Tab extends EditorComponent {
         </div>
         <div className="brz-tabs__item--content">
           <Background key="content" className={customClassName} value={v}>
-            <Items {...itemsProps} />
+            <Animation
+              component={"div"}
+              componentProps={{}}
+              animationClass={animationClassName}
+            >
+              <Items {...itemsProps} />
+            </Animation>
           </Background>
         </div>
       </div>

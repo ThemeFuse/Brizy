@@ -1,14 +1,22 @@
+import { identity } from "underscore";
 import {
   drop,
+  filter,
+  findIndex,
+  findIndexes,
   indexOf,
+  map,
   nextIndex,
   onEmpty,
+  pick,
   pred,
   prevIndex,
+  read,
   readIndex,
   succ,
-  toArray
-} from "visual/utils/array/index";
+  toArray,
+  orderByKeys
+} from "./index";
 
 describe("Testing 'toArray' function", () => {
   test("Always return same value if it is an valid array", () => {
@@ -174,5 +182,127 @@ describe("Testing 'succ' function", function() {
     ])("Successor of '%s' is '%s'", (a, b) => {
       expect(succ(a, ["a", "b", "c", "d"])).toBe(b);
     });
+  });
+});
+
+describe("Testing 'read' function", function() {
+  test("If value is not an array, return undefined", () => {
+    const reader = (i: unknown): unknown => i;
+    [undefined, null, 1, "1", {}, () => ({})].map(v =>
+      expect(read(reader, v)).toBe(undefined)
+    );
+  });
+
+  test("If the value is an empty array, return empty array, regardless of reader", () => {
+    const reader = (i: unknown): undefined => undefined;
+    expect(read(reader, [])).toEqual([]);
+  });
+
+  test("If at least one value does not pass the reader, return undefined", () => {
+    const reader = (i: unknown): number | undefined => Number(i) || undefined;
+    expect(read(reader, [1, 2, "test", 4])).toBe(undefined);
+  });
+});
+
+describe("Testing 'findIndex' function", function() {
+  test("Return first index witch value satisfies the predicate", () => {
+    expect(findIndex(i => i > 4, [1, 2, 5, 3, 6])).toBe(2);
+  });
+
+  test("Return undefined if no items satisfies the predicate", () => {
+    expect(findIndex(i => i < 0, [1, 2, 5, 3, 6])).toBe(undefined);
+  });
+});
+
+describe("Testing 'findIndexes' function", function() {
+  test("Return all indexes witch value satisfies the predicate", () => {
+    expect(findIndexes(i => i > 4, [1, 2, 5, 3, 6])).toEqual([2, 4]);
+  });
+
+  test("Return empty array if no items satisfies the predicate", () => {
+    expect(findIndexes(i => i < 0, [1, 2, 5, 3, 6])).toEqual([]);
+  });
+});
+
+describe("Testing 'pick' function", function() {
+  test("Return a list that contain exactly only the specified indexes", () => {
+    expect(pick([1, 3, 5], [1, 2, 3, 4, 5, 6])).toEqual([2, 4, 6]);
+  });
+
+  test("Return an empty list if the target has not provided indexes", () => {
+    expect(pick([4, 5, 6], [1, 2, 3])).toEqual([]);
+  });
+
+  test("Ignore values that are undefined", () => {
+    expect(pick([1, 3, 5], [1, 2, 3, undefined, 5, 6])).toEqual([2, 6]);
+  });
+
+  test("Pick only indexes that are contained in list", () => {
+    expect(pick([9, 1, 3, 5, 8], [1, 2, 3, 4, 5, 6])).toEqual([2, 4, 6]);
+  });
+
+  test("Pick values in the order provided by the indexes list", () => {
+    expect(pick([5, 3, 1, 2], [1, 2, 3, 4, 5, 6])).toEqual([6, 4, 2, 3]);
+  });
+
+  test("Allow indexes to repeat", () => {
+    expect(pick([5, 5, 3, 1, 2, 3], [1, 2, 3, 4, 5, 6])).toEqual([
+      6,
+      6,
+      4,
+      2,
+      3,
+      4
+    ]);
+  });
+});
+
+describe("Testing 'map' function", function() {
+  test("Identity law. map(id) == id", () => {
+    expect(map(identity, [1, 2, 3, 4, 5])).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  test("Composition law. map(f.g) == (map f) . (map g)", () => {
+    const fn1 = (i: number): number => i + 3;
+    const fn2 = (i: number): number => i * 3;
+    const values = [1, 2, 3, 4, 5];
+
+    expect(map(v => fn2(fn1(v)), values)).toEqual(map(fn2, map(fn1, values)));
+  });
+
+  test("Alias to Array.map, should behavior exactly the same", () => {
+    const fns = [identity, (i: number): number => i + 1];
+    const values = [1, 2, 3, 4, 5, 6];
+
+    fns.map(fn => {
+      expect(values.map(fn)).toEqual(map(fn, values));
+    });
+  });
+});
+
+describe("Testing 'filter' function", function() {
+  test("Alias to Array.filter, should behavior exactly the same", () => {
+    const fns = [
+      (i: number): boolean => isNaN(i),
+      (i: number): boolean => i % 1 === 0
+    ];
+    const values = [1, 2, 3, 4, 5, 6];
+
+    fns.map(fn => {
+      expect(values.filter(fn)).toEqual(filter(fn, values));
+    });
+  });
+});
+
+describe("Testing 'orderByKey' function", function() {
+  const values = [0, 4, 1, 3, 2];
+  const items = ["a", "b", "c", "d", "e"];
+
+  test("Arrange list by provided keys", () => {
+    expect(orderByKeys(values, items)).toEqual(["a", "e", "b", "d", "c"]);
+  });
+
+  test("If the values of the ordering and target do not match exactly. Return intersection", () => {
+    expect(orderByKeys([4, 10, 6, 3], items)).toEqual(["e", "d"]);
   });
 });

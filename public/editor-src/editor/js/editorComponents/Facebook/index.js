@@ -10,6 +10,7 @@ import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { Wrapper } from "../tools/Wrapper";
 
 class Facebook extends EditorComponent {
   static get componentId() {
@@ -17,6 +18,8 @@ class Facebook extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   getAppData() {
     return {
@@ -146,13 +149,13 @@ class Facebook extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <FacebookPlugin
               appId={appData.appId}
               type={typeData[facebookType]}
               data={data[facebookType]}
             />
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

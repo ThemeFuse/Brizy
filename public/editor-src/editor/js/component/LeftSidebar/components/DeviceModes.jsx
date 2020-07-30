@@ -3,7 +3,7 @@ import classnames from "classnames";
 import UIEvents from "visual/global/UIEvents";
 import HotKeys from "visual/component/HotKeys";
 import { getStore } from "visual/redux/store";
-import { setDeviceMode } from "visual/redux/actions";
+import { setDeviceMode } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 
 const getCurrentDeviceMode = () => getStore().getState().ui.deviceMode;

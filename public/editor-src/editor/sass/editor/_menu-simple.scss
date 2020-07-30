@@ -1,7 +1,6 @@
 // Wordpress Menu
 &.brz-ed--mobile {
   .brz-menu-simple {
-    width: auto;
     text-align: center;
 
     &__toggle--mobile {
@@ -49,7 +48,6 @@
 }
 &.brz-ed--tablet {
   .brz-menu-simple {
-    width: auto;
     text-align: center;
 
     &__toggle--tablet {
@@ -96,25 +94,22 @@
   }
 }
 
-.brz-menu {
+// Error
+.brz-menu__error {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 20px;
+  border-radius: 3px;
+  background-color: #ececec;
+  font-family: $font-family-1;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 
-  // Error
-  &__error {
-    height: 50px;
-    line-height: 50px;
-    padding: 0 20px;
-    border-radius: 3px;
-    background-color: #ececec;
-    font-family: $font-family-1;
-    font-size: 15px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-
-    .brz-a {
-      font-weight: 700;
-      margin-right: 5px;
-      cursor: pointer;
-    }
+  .brz-a {
+    font-weight: 700;
+    margin-right: 5px;
+    cursor: pointer;
   }
 }

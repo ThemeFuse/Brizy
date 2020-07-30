@@ -3,6 +3,9 @@ import classNames from "classnames";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import { Props } from "./types";
 
+const inputWidth = (v: number): number =>
+  Math.min(1, Math.max(1, String(v).length - 4)) * 24;
+
 export const NumberUnit: FC<Props> = ({
   value: { number, unit },
   onChange,
@@ -26,7 +29,9 @@ export const NumberUnit: FC<Props> = ({
   return (
     <div className={classNames("brz-ed-control__number-unit", className)}>
       <div className="brz-ed-control__number-unit__input">
-        <div className="brz-invisible">{number}</div>
+        <div className="brz-invisible" style={{ width: inputWidth(number) }}>
+          {number}
+        </div>
         <Number
           className="brz-input"
           value={number}

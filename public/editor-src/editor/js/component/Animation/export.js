@@ -8,8 +8,7 @@ export default function($node) {
       entries.map(function(entry) {
         if (entry.intersectionRatio > 0) {
           let target = entry.target;
-          const animateClassName = target.dataset.animateName;
-          target.classList.add("brz-animate", animateClassName);
+          target.classList.add("brz-animate");
           observer.unobserve(target);
         }
       });
@@ -28,24 +27,8 @@ export default function($node) {
 
     $animated.each(function() {
       const $this = $(this);
-      const delay = $this.data("animate-delay");
-      const duration = $this.data("animate-duration");
 
       $this.addClass("brz-initialized");
-
-      if (delay) {
-        $this.css({
-          "-webkit-animation-delay": delay + "ms",
-          "animation-delay": delay + "ms"
-        });
-      }
-
-      if (duration) {
-        $this.css({
-          "-webkit-animation-duration": duration + "ms",
-          "animation-duration": duration + "ms"
-        });
-      }
 
       observer.observe(this);
     });

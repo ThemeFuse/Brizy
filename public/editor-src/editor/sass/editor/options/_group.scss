@@ -1,0 +1,19 @@
+.brz-ed-option-type__group {
+  &,
+  &-dev {
+    .brz-ed-control__group {
+      flex: 1 1 auto;
+
+      & > .brz-ed-option {
+        padding: 0;
+        border: none;
+        min-height: unset;
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

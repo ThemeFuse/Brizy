@@ -18,7 +18,7 @@ export default function extractPopups($) {
        * popupId contains only {some_hash} and that's why we
        * search with *= instead of = (to match both normal and global popups)
        */
-      $popup = $parent.find(`[data-brz-popup*='${popupId}']`);
+      $popup = $parent.children(`[data-brz-popup*='${popupId}']`);
 
       if ($popup.length > 0) {
         break;

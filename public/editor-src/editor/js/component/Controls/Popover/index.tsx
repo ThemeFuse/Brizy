@@ -11,6 +11,7 @@ export type Props = WithClassName &
     onClose?: () => void;
     title?: string;
     size: "small" | "medium" | "large" | "auto";
+    clickOutsideExceptions?: string[];
     placement:
       | "top-left"
       | "top-center"
@@ -32,17 +33,20 @@ export const Popover: FC<Props> = ({
   onClose,
   children,
   trigger,
-  toolbar
+  toolbar,
+  clickOutsideExceptions = []
 }) => {
-  const _className = classNames("brz-ed-popover", className);
+  const _className = classNames("brz-ed-control__popover", className);
   const content = (
-    <div className="brz-d-xs-flex brz-flex-xs-wrap">{children}</div>
+    <div className="brz-d-xs-flex brz-flex-xs-wrap brz-ed-control__popover--content">
+      {children}
+    </div>
   );
 
   return (
     <div className={_className}>
       <Tooltip
-        className="brz-ed-popover__tooltip"
+        className="brz-ed-control__popover--tooltip"
         placement={placement}
         overlay={content}
         title={title}
@@ -51,6 +55,7 @@ export const Popover: FC<Props> = ({
         onClose={onClose}
         openOnClick={true}
         toolbar={toolbar}
+        clickOutsideExceptions={clickOutsideExceptions}
       >
         {trigger}
       </Tooltip>

@@ -3,13 +3,13 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
-import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const URL = "https://www.google.com/maps/embed/v1/place";
 const KEY = "AIzaSyCcywKcxXeMZiMwLDcLgyEnNglcLOyB_qw";
@@ -24,39 +24,25 @@ const resizerPoints = [
   "bottomCenter",
   "bottomRight"
 ];
-const resizerRestrictions = {
-  height: {
-    min: 25,
-    max: Infinity
-  },
-  width: {
-    min: 5,
-    max: 100
-  },
-  tabletHeight: {
-    min: 25,
-    max: Infinity
-  },
-  tabletWidth: {
-    min: 5,
-    max: 100
-  },
-  mobileHeight: {
-    min: 25,
-    max: Infinity
-  },
-  mobileWidth: {
-    min: 5,
-    max: 100
-  }
-};
+
 const resizerTransformValue = v => {
-  const { size, tabletSize, mobileSize, ...rest } = v;
+  const {
+    size,
+    tabletSize,
+    mobileSize,
+    sizeSuffix,
+    tabletSizeSuffix,
+    mobileSizeSuffix,
+    ...rest
+  } = v;
 
   return {
     width: size,
     tabletWidth: tabletSize,
     mobileWidth: mobileSize,
+    widthSuffix: sizeSuffix,
+    tabletWidthSuffix: tabletSizeSuffix,
+    mobileWidthSuffix: mobileSizeSuffix,
     ...rest
   };
 };
@@ -86,14 +72,13 @@ class Map extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   handleResizerChange = patch => this.patchValue(resizerTransformPatch(patch));
 
   renderForEdit(v, vs, vd) {
-    const { address, addressPopulation, zoom } = v;
-    const addressSrc = addressPopulation === "" ? address : addressPopulation;
-    const src = `${URL}?key=${KEY}&q=${addressSrc}&zoom=${zoom}`;
-
-    const className = classnames(
+    const { address, zoom } = v;
+    const wrapperClassName = classnames(
       "brz-map",
       css(
         `${this.constructor.componentId}`,
@@ -101,25 +86,79 @@ class Map extends EditorComponent {
         style(v, vs, vd)
       )
     );
-
-    const content =
-      !address && !addressPopulation ? (
-        <Placeholder icon="pin" />
-      ) : (
-        <div className="brz-map-content">
-          <iframe
-            className={classnames("brz-iframe", { "brz-blocked": IS_EDITOR })}
-            src={src}
-          />
-        </div>
-      );
+    const iframeClassName = classnames("brz-iframe", {
+      "brz-blocked": IS_EDITOR
+    });
+    const iframeSrc = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
+    const resizerRestrictions = {
+      height: {
+        px: {
+          min: 25,
+          max: Infinity
+        },
+        "%": {
+          min: 5,
+          max: Infinity
+        }
+      },
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      tabletHeight: {
+        px: {
+          min: 25,
+          max: Infinity
+        },
+        "%": {
+          min: 5,
+          max: Infinity
+        }
+      },
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      mobileHeight: {
+        px: {
+          min: 25,
+          max: Infinity
+        },
+        "%": {
+          min: 5,
+          max: Infinity
+        }
+      },
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
 
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className: wrapperClassName })}>
             <BoxResizer
               points={resizerPoints}
               restrictions={resizerRestrictions}
@@ -127,9 +166,11 @@ class Map extends EditorComponent {
               value={resizerTransformValue(v)}
               onChange={this.handleResizerChange}
             >
-              {content}
+              <div className="brz-map-content">
+                <iframe className={iframeClassName} src={iframeSrc} />
+              </div>
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

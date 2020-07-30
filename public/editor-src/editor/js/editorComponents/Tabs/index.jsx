@@ -13,7 +13,8 @@ import * as sidebarExtendParent from "./sidebarExtendParent";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
-import { styleTabs } from "./styles";
+import { styleTabs, styleAnimation } from "./styles";
+import { validateKeyByProperty } from "visual/utils/onChange";
 
 export default class Tabs extends EditorComponent {
   static get componentId() {
@@ -97,10 +98,21 @@ export default class Tabs extends EditorComponent {
         }
       )
     });
+
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
     const itemContentProps = this.makeSubcomponentProps({
       activeTab,
       iconName,
       iconType,
+      animationClassName,
       meta,
       bindWithKey: "items",
       renderType: "content",

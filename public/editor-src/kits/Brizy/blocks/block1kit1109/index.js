@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1109",
   thumbnailWidth: 600,
-  thumbnailHeight: 310,
+  thumbnailHeight: 306,
   title: "block1kit1109",
   
   keywords: "button,features,four columns,icon box,icons,news,services",
@@ -116,7 +116,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h3 class=\"brz-tp-heading3\"><span class=\"brz-cp-color8\">Tell us about your experience with Brizy</span></h3>"
+                                                                    "text": "<h3 class=\"brz-tp-heading3\"><span class=\"brz-cp-color8\"><span>Tell us about your experience</span></span></h3>"
                                                                 }
                                                             }
                                                         ],

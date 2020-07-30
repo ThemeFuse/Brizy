@@ -14,10 +14,12 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-wp-shortcode",
-      title: t("Post info"),
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-shortcode",
+        title: t("Post info")
+      },
       position: 60,
       options: [
         {
@@ -29,43 +31,21 @@ export function getItems({ v, device }) {
             size: "medium"
           },
           choices: [
-            {
-              value: "author",
-              title: t("Author")
-            },
-            {
-              value: "date",
-              title: t("Date")
-            },
-            {
-              value: "time",
-              title: t("Time")
-            },
-            {
-              value: "comments",
-              title: t("Comments")
-            }
+            { value: "author", title: t("Author") },
+            { value: "date", title: t("Date") },
+            { value: "time", title: t("Time") },
+            { value: "comments", title: t("Comments") }
           ]
         },
         {
-          type: "multiPicker",
+          id: "large",
+          label: t("Orientation"),
+          type: "radioGroup-dev",
           devices: "desktop",
-          picker: {
-            id: "large",
-            label: t("Large"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "inline",
-                icon: "nc-more"
-              },
-              {
-                value: "column",
-                icon: "nc-text-align-left"
-              }
-            ],
-            value: v.large
-          }
+          choices: [
+            { value: "inline", icon: "nc-horizontal-items" },
+            { value: "column", icon: "nc-vertical-items" }
+          ]
         },
         {
           id: "textSpacing",
@@ -80,11 +60,13 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -98,21 +80,22 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(iconsColorHex, dvv("iconsColorOpacity"))
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(iconsColorHex, dvv("iconsColorOpacity"))
+          }
         }
       },
+      position: 90,
       options: [
         {
-          id: dvk("tabsColor"),
-          type: "tabs",
-          value: dvv("tabsColor"),
+          id: "tabsColor",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("tabText"),

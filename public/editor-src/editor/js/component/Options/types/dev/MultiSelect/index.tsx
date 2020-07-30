@@ -4,7 +4,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { MultiSelect as Control } from "visual/component/Controls/MultiSelect";
 import { OptionType } from "visual/component/Options/Type";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { apply, getModel } from "./utils";
+import { getModel, toElement } from "./utils";
 import { Props } from "./types";
 import { Value } from "./Value";
 
@@ -15,29 +15,25 @@ export const MultiSelect: FC<Props> & OptionType<Value[]> = ({
   onChange,
   config
 }) => {
+  const items = choices ?? [];
   return (
-    <Control
+    <Control<Value>
       placeholder={placeholder}
       size={config?.size ?? "medium"}
       value={value}
       editable={config?.search ?? true}
       onChange={(v): void => {
         const n = config?.items || 999;
-        onChange({ value: JSON.stringify(take(v, n)) });
+        onChange(toElement(take(v, n)));
       }}
+      search={(s, v): boolean => String(v).includes(s)}
     >
-      {apply(
-        items =>
-          items.map(({ value, title, icon }, i) => (
-            <Item key={i} value={value}>
-              {icon && (
-                <EditorIcon icon={icon} className={"brz--space-right"} />
-              )}
-              {title}
-            </Item>
-          )),
-        choices ?? []
-      )}
+      {items.map(({ title, icon, value }, i) => (
+        <Item<Value> value={value} key={i}>
+          {icon && <EditorIcon icon={icon} className={"brz--space-right"} />}
+          {title}
+        </Item>
+      ))}
     </Control>
   );
 };

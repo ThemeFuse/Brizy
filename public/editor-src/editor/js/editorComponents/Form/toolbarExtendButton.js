@@ -17,7 +17,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "formLink",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "message",

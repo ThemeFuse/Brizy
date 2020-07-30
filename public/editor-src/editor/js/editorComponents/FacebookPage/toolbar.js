@@ -15,16 +15,18 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-facebook",
+        title: t("Page")
+      },
       devices: "desktop",
-      icon: "nc-facebook",
-      title: t("Page"),
       position: 70,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -74,7 +76,7 @@ export function getItems({ v, device, state }) {
             {
               id: "tabAdvanced",
               label: t("Advanced"),
-              type: "tabs",
+              type: "tabs-dev",
               options: [
                 {
                   id: "smallHeader",
@@ -101,23 +103,26 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          hideHandlesWhenOne: false,
+          type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabBorder",

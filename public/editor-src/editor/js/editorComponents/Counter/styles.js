@@ -13,7 +13,7 @@ export function styleChart(v, vs, vd) {
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent"]
+      standart: ["cssStyleSizeWidth"]
     },
     ".brz &&:hover .brz-counter-figures": {
       standart: ["cssStyleColor"],

@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
 export default (level, isMMenu) => {
   return {
@@ -7,15 +6,33 @@ export default (level, isMMenu) => {
   };
 };
 
-const getItemsSimple = level => ({ v, device }) => {
-  const dvk = key => defaultValueKey({ key, device });
-
+const getItemsSimple = level => ({ v }) => {
   return [
     {
+      id: "toolbarMenuSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-menu-3",
+        title: t("Menu")
+      },
+      position: 10,
+      disabled: level >= 1,
+      options: [
+        {
+          id: "megaMenu",
+          type: "switch-dev",
+          devices: "desktop",
+          label: t("Mega Menu")
+        }
+      ]
+    },
+    {
       id: "toolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       disabled: level >= 1,
       options: [
@@ -38,13 +55,13 @@ const getItemsSimple = level => ({ v, device }) => {
         ...(v.iconName === ""
           ? [
               {
-                id: dvk("iconSize"),
-                type: "slider",
+                id: "iconSize",
+                type: "slider-dev",
                 disabled: true
               },
               {
                 id: "iconSpacing",
-                type: "slider",
+                type: "slider-dev",
                 disabled: true
               }
             ]
@@ -53,9 +70,11 @@ const getItemsSimple = level => ({ v, device }) => {
     },
     {
       id: "subMenuToolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       disabled: level < 1,
       options: [
@@ -79,7 +98,7 @@ const getItemsSimple = level => ({ v, device }) => {
           ? [
               {
                 id: "subMenuIconSize",
-                type: "slider",
+                type: "slider-dev",
                 disabled: true
               },
               {
@@ -95,13 +114,13 @@ const getItemsSimple = level => ({ v, device }) => {
       ? [
           {
             id: "subMenuToolbarTypography",
-            type: "popover",
+            type: "popover-dev",
             disabled: true,
             options: []
           },
           {
             id: "subMenuToolbarColor",
-            type: "popover",
+            type: "popover-dev",
             disabled: true,
             options: []
           }
@@ -116,13 +135,13 @@ const getItemsSimple = level => ({ v, device }) => {
           },
           {
             id: "toolbarTypography",
-            type: "popover",
+            type: "popover-dev",
             disabled: true,
             options: []
           },
           {
             id: "toolbarColor",
-            type: "popover",
+            type: "popover-dev",
             disabled: true,
             options: []
           }
@@ -133,14 +152,14 @@ const getItemsSimple = level => ({ v, device }) => {
 
 // eslint-disable-next-line no-unused-vars
 const getItemsMMenu = level => ({ v, device }) => {
-  const dvk = key => defaultValueKey({ key, device });
-
   return [
     {
       id: "mMenuToolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       options: [
         {
@@ -162,13 +181,13 @@ const getItemsMMenu = level => ({ v, device }) => {
         ...(v.iconName === ""
           ? [
               {
-                id: dvk("mMenuIconSize"),
-                type: "slider",
+                id: "mMenuIconSize",
+                type: "slider-dev",
                 disabled: true
               },
               {
-                id: dvk("mMenuIconSpacing"),
-                type: "slider",
+                id: "mMenuIconSpacing",
+                type: "slider-dev",
                 disabled: true
               }
             ]

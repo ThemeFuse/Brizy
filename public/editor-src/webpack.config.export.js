@@ -36,6 +36,11 @@ module.exports = options => {
           test: /[\\/]lib[\\/]/,
           include: [path.resolve(__dirname, "editor")],
           loader: "null-loader"
+        },
+        {
+          test: /[\\/]Options[\\/]/,
+          include: [path.resolve(__dirname, "editor")],
+          loader: "null-loader"
         }
       ]
     },

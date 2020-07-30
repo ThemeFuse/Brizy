@@ -1,12 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import classnames from "classnames";
 import { Popper } from "react-popper";
-import { getPosition } from "visual/component/Toolbar/PortalToolbar/state";
+import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
+import { clamp } from "visual/utils/math";
 
-const SIDEBAR_WIDTH = 48;
-const TOOLTIP_SPACE = 14;
-const TOOLBAR_PADDING = 12;
+const TOOLBAR_MARGIN = 14;
+
+// used to prevent situations where the toolbar has
+// enough space to be opened above it's target node
+// but the tooltip is too large and opens below,
+// thus overlapping the target node and creating a bad UX
+// when the node isn't seen when it's being edited
+const TOOLBAR_HEIGHT_MAGIC = 300;
 
 export default class TooltipContent extends React.Component {
   static defaultProps = {
@@ -44,92 +49,132 @@ export default class TooltipContent extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    if (this.isRepositioning) {
-      return;
-    }
+  /*
+   * commented because reposition causes react perf problems (cascading updates)
+   * and it seems unnecessary because when commented nothing seems changes visually.
+   * Will leave here for a number of releases and potentially remove in the future
+   */
+  // componentDidUpdate() {
+  //   if (this.isRepositioning) {
+  //     return;
+  //   }
 
-    const { toolbar } = this.props;
+  //   const { toolbar } = this.props;
 
-    if (toolbar) {
-      this.repositionByToolbar(toolbar);
-    }
-  }
+  //   if (toolbar) {
+  //     this.repositionByToolbar(toolbar);
+  //   }
+  // }
 
   repositionByToolbar(toolbar) {
-    let { placement, arrowPlacementStyle } = this.props;
+    const viewportWidth = document.documentElement.clientWidth;
+    const viewportHeight = document.documentElement.clientHeight;
+    const pageScroll = document.documentElement.scrollTop;
+    // const pageHeight = document.documentElement.scrollHeight;
+    const pageHasOverflowHidden = document.documentElement.classList.contains(
+      "brz-ow-hidden"
+    );
 
-    // eslint-disable-next-line react/no-find-dom-node
-    const toolbarNode = ReactDOM.findDOMNode(toolbar);
-    const {
-      top: toolbarTop,
-      right: toolbarRight,
-      left: toolbarLeft,
-      width: toolbarWidth,
-      height: toolbarHeight
-    } = toolbarNode.getBoundingClientRect();
-    const {
-      toolbarItemIndex,
-      toolbarItemsLength,
-      toolbarCSSPosition
-    } = toolbar;
+    const { toolbarRef, toolbarCSSPosition, toolbarItemIndex } = toolbar;
+    const toolbarPosition = getToolbarPosition();
 
-    const {
-      width: contentWidth,
-      height: contentHeight
-    } = this.contentRef.current.getBoundingClientRect();
+    const toolbarNode = toolbarRef.current;
+    const toolbarRect = toolbarNode.getBoundingClientRect();
 
-    const windowTop = toolbarCSSPosition === "fixed" ? 0 : window.scrollY;
+    const toolbarItemNode = toolbarNode.querySelector(
+      `.brz-ed-toolbar__items > .brz-ed-toolbar__item:nth-child(${toolbarItemIndex})`
+    );
+    const toolbarItemRect = toolbarItemNode.getBoundingClientRect();
 
-    const toolbarItemWidth =
-      (toolbarWidth - TOOLBAR_PADDING) / toolbarItemsLength;
+    const tooltipNode = this.contentRef.current;
+    const tooltipRect = tooltipNode.getBoundingClientRect();
 
-    const toolbarItemWidthCenter =
-      toolbarItemWidth * toolbarItemIndex -
-      toolbarItemWidth / 2 +
-      TOOLBAR_PADDING / 2;
+    // Toolbar
 
-    const toolbarItemCenter =
-      Math.round((toolbarItemWidthCenter - contentWidth / 2) * 10) / 10;
+    const canAlignBelow =
+      (pageHasOverflowHidden ? 0 : pageScroll) +
+        toolbarRect.bottom +
+        TOOLBAR_MARGIN +
+        Math.max(tooltipRect.height, TOOLBAR_HEIGHT_MAGIC) <=
+      (pageHasOverflowHidden
+        ? viewportHeight
+        : Math.max(viewportHeight, document.body.clientHeight));
+    const canAlignAbove =
+      (pageHasOverflowHidden ? 0 : pageScroll) +
+        toolbarRect.top -
+        TOOLBAR_MARGIN -
+        tooltipRect.height >=
+      0;
+    const offsetTop = toolbarCSSPosition === "fixed" ? 0 : pageScroll;
+    let placementStyle;
 
-    const contentTop = windowTop + toolbarTop - TOOLTIP_SPACE - contentHeight;
-    const contentLeft = toolbarLeft + toolbarItemCenter;
-    const contentMinLeft = SIDEBAR_WIDTH;
-    const contentMaxLeft = document.documentElement.clientWidth - contentWidth;
+    const alignAbove = () => {
+      const tooltipTop = "unset";
+      const tooltipBottom = `calc(100% - ${offsetTop}px - ${toolbarRect.top}px + ${TOOLBAR_MARGIN}px)`;
 
-    let placementStyle = {
-      top: contentTop,
-      left: contentLeft,
-      position: toolbarCSSPosition
+      placementStyle = {
+        position: toolbarCSSPosition,
+        top: tooltipTop,
+        bottom: tooltipBottom,
+        left: getLeft()
+      };
+    };
+    const alignBelow = () => {
+      const tooltipTop =
+        offsetTop + toolbarRect.top + toolbarRect.height + TOOLBAR_MARGIN;
+
+      placementStyle = {
+        position: toolbarCSSPosition,
+        top: tooltipTop,
+        left: getLeft()
+      };
+    };
+    const getLeft = () => {
+      const padding = 2;
+      const minX = padding;
+      const maxX = viewportWidth - tooltipRect.width - padding;
+      const x =
+        toolbarItemRect.left +
+        toolbarItemRect.width / 2 -
+        tooltipRect.width / 2;
+
+      return clamp(x, minX, maxX);
     };
 
-    // try to open in the same way (above, below) as the toolbar did
-    if (getPosition() === "below" || contentTop <= windowTop) {
-      placementStyle.top =
-        windowTop + toolbarTop + toolbarHeight + TOOLTIP_SPACE;
-      placement = `bottom-${placement.split("-")[1]}`;
+    let tooltipAlignment;
+    if (toolbarPosition === "above") {
+      if (canAlignAbove) {
+        tooltipAlignment = "above";
+        alignAbove();
+      } else {
+        tooltipAlignment = "below";
+        alignBelow();
+      }
     }
-    if (contentLeft >= contentMaxLeft) {
-      const arrowPosition =
-        toolbarItemWidth * (toolbarItemsLength - toolbarItemIndex + 1) -
-        toolbarItemWidth / 2 +
-        TOOLBAR_PADDING / 2;
-      placement = `${placement.split("-")[0]}-right`;
-      placementStyle.left = toolbarRight - contentWidth;
-      arrowPlacementStyle = { left: contentWidth - arrowPosition };
+
+    if (toolbarPosition === "below") {
+      if (canAlignBelow) {
+        tooltipAlignment = "below";
+        alignBelow();
+      } else {
+        tooltipAlignment = "above";
+        alignAbove();
+      }
     }
-    if (contentLeft <= contentMinLeft) {
-      placement = `${placement.split("-")[0]}-left`;
-      placementStyle.left = toolbarLeft;
-      arrowPlacementStyle = { left: toolbarItemWidthCenter };
-    }
+
+    // Arrow
+
+    const arrowPlacement = tooltipAlignment === "above" ? "top" : "bottom";
+    let arrowPlacementStyle = {
+      left:
+        toolbarItemRect.left + toolbarItemRect.width / 2 - placementStyle.left
+    };
 
     this.isRepositioning = true;
     this.setState(
       {
-        placement,
         placementStyle,
-        arrowPlacement: placement,
+        arrowPlacement,
         arrowPlacementStyle
       },
       () => (this.isRepositioning = false)
@@ -138,15 +183,11 @@ export default class TooltipContent extends React.Component {
 
   renderInToolbar() {
     const { className: _className, isOpen, size, arrow, children } = this.props;
-    const {
-      placement,
-      placementStyle,
-      arrowPlacement,
-      arrowPlacementStyle
-    } = this.state;
+    const { placementStyle, arrowPlacement, arrowPlacementStyle } = this.state;
+
     const className = classnames(
       "brz-ed-animated brz-ed-animated--fadeInUp",
-      `brz-ed-tooltip__overlay brz-ed-tooltip--${placement}`,
+      "brz-ed-tooltip__overlay",
       { [`brz-ed-tooltip--${size}`]: size },
       { "brz-invisible": !isOpen },
       _className

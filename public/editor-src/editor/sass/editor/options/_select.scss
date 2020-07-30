@@ -124,3 +124,11 @@
     margin-right: 7px;
   }
 }
+
+.brz-ed-option-type__select {
+  &-dev {
+    .brz-ed-control__multiSelect--tag--value .brz-icon-svg {
+      font-size: 10px;
+    }
+  }
+}

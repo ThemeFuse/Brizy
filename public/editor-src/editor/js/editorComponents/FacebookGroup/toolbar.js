@@ -16,10 +16,12 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-facebook",
-      title: t("Page"),
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-facebook",
+        title: t("Page")
+      },
       devices: "desktop",
       position: 70,
       options: [
@@ -61,24 +63,27 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvk("popoverColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+      id: "popoverColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           state,
-          hideHandlesWhenOne: false,
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabBorder",
@@ -108,10 +113,11 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

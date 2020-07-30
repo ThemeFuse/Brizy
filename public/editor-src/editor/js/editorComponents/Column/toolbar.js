@@ -18,10 +18,13 @@ import {
   toolbarShowOnResponsive,
   toolbarImageLinkExternal,
   toolbarLinkAnchor,
-  toolbarVerticalAlign
+  toolbarLinkPopup
 } from "visual/utils/toolbar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, component }) {
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
@@ -34,17 +37,18 @@ export function getItems({ v, device }) {
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-background",
-      title: t("Background"),
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-background",
+        title: t("Background")
+      },
       position: 80,
       options: [
         {
           id: dvk("tabsState"),
           tabsPosition: "left",
           type: "tabs",
-          value: dvv("tabsState"),
           tabs: [
             {
               id: dvk("tabNormal"),
@@ -52,9 +56,8 @@ export function getItems({ v, device }) {
               title: t("Normal"),
               options: [
                 {
-                  id: dvk("tabsCurrentElement"),
-                  type: "tabs",
-                  value: dvv("tabsCurrentElement"),
+                  id: "tabsCurrentElement",
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: dvk("tabCurrentElement"),
@@ -83,9 +86,8 @@ export function getItems({ v, device }) {
               title: t("Hover"),
               options: [
                 {
-                  id: dvk("tabsCurrentElement"),
-                  type: "tabs",
-                  value: dvv("tabsCurrentElement"),
+                  id: "tabsCurrentElement",
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: dvk("tabCurrentElement"),
@@ -111,28 +113,26 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState")
-      })
+      ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+          }
         }
       },
+      position: 90,
       options: [
         {
           id: dvk("tabsState"),
           tabsPosition: "left",
           type: "tabs",
-          value: dvv("tabsState"),
           tabs: [
             {
               id: dvk("tabNormal"),
@@ -140,9 +140,8 @@ export function getItems({ v, device }) {
               title: t("Normal"),
               options: [
                 {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
-                  value: dvv("tabsColor"),
+                  id: "tabsColor",
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: dvk("tabOverlay"),
@@ -383,10 +382,9 @@ export function getItems({ v, device }) {
               title: t("Hover"),
               options: [
                 {
-                  id: dvk("tabsColor"),
-                  type: "tabs",
+                  id: "tabsColor",
+                  type: "tabs-dev",
                   devices: "desktop",
-                  value: dvv("tabsColor"),
                   tabs: [
                     {
                       id: dvk("tabOverlay"),
@@ -629,18 +627,16 @@ export function getItems({ v, device }) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        [dvk("tabsState")]: !isOpen ? "" : dvv("tabsState"),
-        [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
-      })
+      ]
     },
     {
-      id: dvk("toolbarLink"),
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      size: "medium",
+      id: "toolbarLink",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
       position: 100,
       disabled:
         device === "desktop"
@@ -648,9 +644,11 @@ export function getItems({ v, device }) {
           : dvv("linkType") !== "popup" || v.linkPopup === "",
       options: [
         {
-          id: dvk("linkType"),
-          type: "tabs",
-          value: dvv("linkType"),
+          id: "linkType",
+          type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: dvk("external"),
@@ -684,7 +682,25 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   state: "normal",
-                  devices: "desktop"
+                  devices: "desktop",
+                  disabled: IS_GLOBAL_POPUP
+                })
+              ]
+            },
+            {
+              id: dvk("popup"),
+              label: t("Popup"),
+              options: [
+                toolbarLinkPopup({
+                  v,
+                  component,
+                  state: "normal",
+                  device: "desktop",
+                  canDelete: device === "desktop",
+                  disabled:
+                    device === "desktop"
+                      ? inPopup || inPopup2 || IS_GLOBAL_POPUP
+                      : dvv("linkType") !== "popup" || dvv("linkPopup") === ""
                 })
               ]
             }
@@ -693,19 +709,27 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       devices: "desktop",
       options: [
-        toolbarVerticalAlign({
-          v,
-          device,
-          state: "normal",
-          devices: "desktop"
-        }),
+        {
+          id: "verticalAlign",
+          label: t("Content"),
+          type: "radioGroup-dev",
+          devices: "desktop",
+          position: 110,
+          choices: [
+            { value: "top", icon: "nc-align-top" },
+            { value: "center", icon: "nc-align-middle" },
+            { value: "bottom", icon: "nc-align-bottom" }
+          ]
+        },
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",

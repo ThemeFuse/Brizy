@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -10,24 +11,33 @@ import { styles } from "./styles";
 import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import defaultValue from "./defaultValue.json";
+import BoxResizer from "visual/component/BoxResizer";
 
-class Search extends EditorComponent {
+const resizerPoints = ["centerLeft", "centerRight"];
+
+export default class Search extends EditorComponent {
   static get componentId() {
     return "Search";
   }
   static defaultValue = defaultValue;
 
-  input = React.createRef();
+  inputRef = React.createRef();
 
-  handleClick = e => {
+  handleResizerChange = patch => this.patchValue(patch);
+
+  handleInputChange = e =>
+    this.patchValue({
+      label: e.target.value
+    });
+
+  handleInputClick = e => {
     e.preventDefault();
-    const node = this.input.current;
-    node && node.classList.add("brz-ed-dd-cancel");
+
+    this.inputRef.current?.classList.add("brz-ed-dd-cancel");
   };
 
-  handleBlur = () => {
-    const node = this.input.current;
-    node && node.classList.remove("brz-ed-dd-cancel");
+  handleInputBlur = () => {
+    this.inputRef.current?.classList.remove("brz-ed-dd-cancel");
   };
 
   renderButton() {
@@ -42,14 +52,14 @@ class Search extends EditorComponent {
   }
 
   renderIcon() {
-    return <EditorIcon icon="nc-search" />;
+    return <EditorIcon className="brz-search-icon__style1" icon="nc-search" />;
   }
 
   renderForEdit(v, vs, vd) {
     const { searchStyle, customCSS, label, className: _className } = v;
     const className = classnames(
       "brz-search-container",
-      `brz-search-container__${searchStyle}`,
+      `brz-search-container--${searchStyle}`,
       _className,
       css(
         `${this.constructor.componentId}`,
@@ -57,30 +67,65 @@ class Search extends EditorComponent {
         styles(v, vs, vd)
       )
     );
+    const resizerRestrictions = {
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <div className={className}>
-            <form className="brz-form brz-search-form" noValidate>
-              {searchStyle !== "classic" && this.renderIcon()}
-              <input
-                name="s"
-                ref={this.input}
-                className="brz-input brz-search"
-                autoComplete="off"
-                onClick={this.handleClick}
-                onBlur={this.handleBlur}
-                value={label}
-                onChange={e => {
-                  this.patchValue({
-                    label: e.target.value,
-                    placeholder: e.target.value
-                  });
-                }}
-              />
-              {searchStyle === "classic" && this.renderButton()}
-            </form>
+            <BoxResizer
+              points={resizerPoints}
+              restrictions={resizerRestrictions}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              <form className="brz-form brz-search-form" noValidate>
+                {searchStyle !== "classic" && this.renderIcon()}
+                <input
+                  name="s"
+                  ref={this.inputRef}
+                  className="brz-input brz-search"
+                  autoComplete="off"
+                  value={label}
+                  onChange={this.handleInputChange}
+                  onClick={this.handleInputClick}
+                  onBlur={this.handleInputBlur}
+                />
+                {searchStyle === "classic" && this.renderButton()}
+              </form>
+            </BoxResizer>
           </div>
         </CustomCSS>
       </Toolbar>
@@ -91,7 +136,7 @@ class Search extends EditorComponent {
     const { searchStyle, customCSS, label, className: _className } = v;
     const className = classnames(
       "brz-search-container",
-      `brz-search-container__${
+      `brz-search-container--${
         searchStyle === "fullScreen" ? "minimal" : searchStyle
       }`,
       _className,
@@ -101,11 +146,16 @@ class Search extends EditorComponent {
         styles(v, vs, vd)
       )
     );
+    const formAction = Config.get("urls").site;
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
-          <form className="brz-form brz-search-form" action="/" method="get">
+          <form
+            className="brz-form brz-search-form"
+            action={formAction}
+            method="get"
+          >
             {searchStyle !== "classic" && this.renderIcon()}
             <input
               name="s"
@@ -119,5 +169,3 @@ class Search extends EditorComponent {
     );
   }
 }
-
-export default Search;

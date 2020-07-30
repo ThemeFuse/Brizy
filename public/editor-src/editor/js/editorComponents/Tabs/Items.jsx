@@ -16,7 +16,14 @@ export default class TabsItems extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
-    const { renderType, meta, activeTab, onChangeNav, action } = this.props;
+    const {
+      renderType,
+      meta,
+      activeTab,
+      onChangeNav,
+      action,
+      animationClassName
+    } = this.props;
     const cloneRemoveConfig = {
       getItems: () => [
         {
@@ -54,6 +61,7 @@ export default class TabsItems extends EditorArrayComponent {
       meta,
       renderType,
       action,
+      animationClassName,
       active: itemIndex === activeTab,
       onChangeNav() {
         onChangeNav(itemIndex);
