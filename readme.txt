@@ -140,7 +140,7 @@ The progress you're making while building your page is always backed up in the c
 == Changelog ==
 
 = 1.0.125 - 2020-06-02 =
-* Fix: Security fixes
+* Fixed: Security fixes
 
 = 1.0.124 - 2020-04-25 =
 * New: Switched Nucleo icons for Font Awesome
@@ -164,7 +164,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Added backward compatibility with old PRO plugins
 
 = 1.0.120 - 2020-03-26 =
-* FIxed: Failed to enqueue script Select2
+* Fixed: Failed to enqueue script Select2
 
 = 1.0.119 - 2020-03-25 =
 * Fixed: Tooltip position
