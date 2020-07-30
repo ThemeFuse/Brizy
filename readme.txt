@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 1.0.125
+Stable tag: 1.0.127
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,36 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 1.0.127 - 2020-07-30 =
+* New: Introduced working in Draft
+* New: Links to Support and Docs in left sidebar
+* New: Brizy Sync functionality for blocks and layouts 
+* New: You can Clear or Save an entire layout
+* New: Absolute and Fixed positions for elements
+* Improved: Increased the size limit of Image population to 5000px
+* Improved: Enabled shape option on responsive for all Sections
+* Improved: Updated Google Fonts list
+* Improved: Added Animation options on all elements
+* Improved: Re-written == Changelog == extended the Image element (added fixed px size) 
+* Improved: Plugin loading 
+* Improved: Sent post directly in the get_the_content post content element
+* Improved: Increased the size limit of Image population to 5000px
+* Improved: Enabled shape option on responsive for all Sections
+* Fixed: Section tag name
+* Fixed: Global block toolbar icon
+* Fixed: Removed content editable attribute on texts at preview
+* Fixed: Toolbar positioning inside popups
+* Fixed: TextEditor at undo / redo
+* Fixed: Background video loop
+* Fixed: Form select responsive width at preview
+* Fixed: Section padding resize width
+* Fixed: Ignore empty data values when updating global blocks
+* Fixed: Changed the update global blocks to allow to update blocks without sending the data
+* Fixed: Revision for compile page on preview
+* Fixed: Compatibility with TranslatePress (Language by GET parameter)
+* Fixed: Compatibility with LiteSpeed plugin
+* Fixed: Missing translation ready strings
 
 = 1.0.125 - 2020-06-02 =
 * Fixed: Security fixes
