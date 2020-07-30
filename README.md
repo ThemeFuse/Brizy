@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.4.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 1.0.128<br>
+Stable tag: 2.0<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,10 +118,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
-### 1.0.128 - 2020-07-30 ###
-* Fixed: Layout sync.
-
-### 1.0.127 - 2020-07-30 ###
+### 2.0 - 2020-07-30 ###
 * New: Introduced working in Draft
 * New: Links to Support and Docs in left sidebar
 * New: Brizy Sync functionality for blocks and layouts 
@@ -131,10 +128,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Enabled shape option on responsive for all Sections
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
-* Improved: Re-written ## Changelog
-
-### 1.0.128 - 2020-07-30 ###
-* Fixed: Layout sync. extended the Image element (added fixed px size) 
+* Improved: Re-written ## Changelog extended the Image element (added fixed px size) 
 * Improved: Plugin loading 
 * Improved: Sent post directly in the get_the_content post content element
 * Improved: Increased the size limit of Image population to 5000px
