@@ -59,6 +59,7 @@ export default function($node) {
     let initialized = false;
 
     $select.select2({
+      width: "100%",
       minimumResultsForSearch: Infinity,
       dropdownParent: $this,
       templateSelection: data => {
@@ -258,31 +259,33 @@ function validate() {
   const data = $this.data();
   const type = data.type;
   const isRequired = $this.prop("required");
-  const pattern = $this.attr("pattern");
+  const pattern = $this.attr("pattern") && decodeURI($this.attr("pattern"));
+  const patternTest = new RegExp(pattern).test(value);
   let result = true;
 
   $parentElem.removeClass(
     "brz-forms2__item--error brz-forms2__item--error-pattern brz-forms2__item--error-required"
   );
 
-  if (isRequired && !value) {
+  if (isRequired && (!value || !patternTest)) {
     $parentElem.addClass(
       "brz-forms2__item--error brz-forms2__item--error-required"
     );
     result = false;
   }
 
+  if (value.length && !patternTest) {
+    $parentElem.addClass(
+      "brz-forms2__item--error brz-forms2__item--error-pattern"
+    );
+    result = false;
+  }
+
   if (type === "Number") {
     const { min, max } = data;
+    const toNum = Number(value);
 
-    if (isRequired && !new RegExp(pattern).test(value)) {
-      $parentElem.addClass(
-        "brz-forms2__item--error brz-forms2__item--error-pattern"
-      );
-      result = false;
-    }
-
-    if (Boolean(min) && Boolean(value) && value < min) {
+    if (Boolean(value) && toNum < min && min !== "") {
       const messages = getFormMessage(
         "error",
         `Selected quantity is more than stock status, min: ${min}`
@@ -294,7 +297,7 @@ function validate() {
       );
       result = false;
     }
-    if (Boolean(max) && Boolean(value) && value > max) {
+    if (Boolean(value) && toNum > max && max !== "") {
       const messages = getFormMessage(
         "error",
         `Selected quantity is more than stock status max: ${max}`
@@ -306,11 +309,6 @@ function validate() {
       );
       result = false;
     }
-  } else if (!new RegExp(pattern).test(value)) {
-    $parentElem.addClass(
-      "brz-forms2__item--error brz-forms2__item--error-pattern"
-    );
-    result = false;
   }
 
   if (type === "FileUpload") {

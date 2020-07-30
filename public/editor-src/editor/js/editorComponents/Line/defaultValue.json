@@ -29,13 +29,16 @@
     "customCSS": "",
 
     "width": 75,
+    "widthSuffix": "%",
 
     "tabletBorderWidth": null,
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
     "mobileBorderWidth": null,
 
-    "mobileWidth": null
+    "mobileWidth": null,
+    "mobileWidthSuffix": null
   }
 }

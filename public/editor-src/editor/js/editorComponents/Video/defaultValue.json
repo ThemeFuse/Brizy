@@ -14,7 +14,9 @@
     "start": 0,
     "end": 0,
 
-    "coverImageSrc": "",
+    "images": {
+      "coverImageSrc": ""
+    },
 
     "coverImageWidth": 0,
     "coverImageHeight": 0,
@@ -25,6 +27,7 @@
     "coverPositionX": 50,
 
     "coverZoom": 100,
+    "coverZoomSuffix": null,
 
     "tabletCoverPositionY": null,
     "tabletCoverPositionX": null,
@@ -33,8 +36,10 @@
     "mobileCoverPositionX": null,
 
     "tabletCoverZoom": null,
+    "tabletCoverZoomSuffix": null,
 
-    "mobileCoverZoom": null
+    "mobileCoverZoom": null,
+    "mobileCoverZoomSuffix": null
   },
 
   "toolbar": {
@@ -51,17 +56,21 @@
     "iconSizeHeight": 80,
 
     "controlsIconCustomSize": 16,
+    "controlsIconCustomSizeSuffix": null,
 
     "brightness": 100,
     "hue": 0,
     "saturation": 100,
     "contrast": 100,
 
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
-    "typographyFamilies": {
-      "typographyFontFamily": "lato"
-    },
     "typographyFontSize": 16,
     "typographyFontWeight": 400,
     "typographyLineHeight": 1.1,
@@ -270,19 +279,18 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "size": 100,
+    "sizeSuffix": "%",
 
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletCoverImageWidth": null,
     "tabletCoverImageHeight": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
-    "tabletTypographyFamilies": {
-      "tabletTypographyFontFamily": null
-    },
     "tabletTypographyFontSize": 16,
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1.1,
@@ -345,15 +353,13 @@
     "tempTabletBoxShadowHorizontal": null,
 
     "tabletSize": null,
+    "tabletSizeSuffix": null,
 
     "mobileCoverImageWidth": null,
     "mobileCoverImageHeight": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
-    "mobileTypographyFamilies": {
-      "mobileTypographyFontFamily": null
-    },
     "mobileTypographyFontSize": 16,
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1.1,
@@ -415,6 +421,7 @@
     "tempMobileBoxShadowVertical": null,
     "tempMobileBoxShadowHorizontal": null,
 
-    "mobileSize": null
+    "mobileSize": null,
+    "mobileSizeSuffix": null
   }
 }

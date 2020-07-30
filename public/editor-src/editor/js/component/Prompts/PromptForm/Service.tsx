@@ -3,13 +3,29 @@ import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { AppData } from "../common/GlobalApps/type";
+import {
+  AppData,
+  BaseIntegrationContext,
+  BaseIntegrationProps,
+  BaseIntegrationState,
+  FormField
+} from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 import { getForm, createForm, getIntegration, createIntegration } from "./api";
 
 const IS_PRO = Config.get("pro");
 
-class Service extends BaseIntegration {
+type Props = BaseIntegrationProps & {
+  formId: string;
+  formFields: FormField[];
+};
+
+type Context = BaseIntegrationContext & {
+  formId: string;
+  formFields: FormField[];
+};
+
+class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
   appsData = [];
   appsComponent = AppsComponent;
   proExceptions = !IS_PRO;
@@ -24,9 +40,7 @@ class Service extends BaseIntegration {
   }
 
   async getData(): Promise<void> {
-    const {
-      value: { formId }
-    } = this.props;
+    const { formId } = this.props;
     const { status, data } = await getForm({ formId });
 
     if (status !== 200) {
@@ -55,9 +69,20 @@ class Service extends BaseIntegration {
     }
   }
 
+  getContextValue(): Context {
+    const { formId, formFields } = this.props;
+    const parentContext = super.getContextValue();
+
+    return {
+      ...parentContext,
+      formId,
+      formFields
+    };
+  }
+
   handleConnectApp = async (appData: AppData): Promise<void> => {
     const { id, stages } = appData;
-    const { formId } = this.props.value;
+    const { formId } = this.props;
 
     let { status, data } = await getIntegration({ formId, id });
 

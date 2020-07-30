@@ -65,7 +65,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color7\">Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options. Simple, fast &amp; stylish. No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it. It's easy with Brizy.</em></p>"
+                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color7\">Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options. Simple, fast &amp; stylish. No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it.</em></p>"
                                         }
                                     }
                                 ],

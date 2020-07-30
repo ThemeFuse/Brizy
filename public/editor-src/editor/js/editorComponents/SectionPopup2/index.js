@@ -15,9 +15,8 @@ import Toolbar, {
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
 import HotKeys from "visual/component/HotKeys";
-import { uuid } from "visual/utils/uuid";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
-  stripIds,
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
   IS_GLOBAL_POPUP
@@ -28,8 +27,6 @@ import {
   wInFullPage
 } from "visual/config/columns";
 import { getStore } from "visual/redux/store";
-import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { triggersSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -47,6 +44,7 @@ import {
 } from "visual/utils/style2";
 import { getContainerW } from "visual/utils/meta";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 
 /**
  * @deprecated use import {SectionPopup2Instances} from "visual/editorComponents/SectionPopup2/instances"
@@ -66,6 +64,8 @@ class SectionPopup2 extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   // this is a used as a hack to reopen the
   // popup after it is unmounted when switching
@@ -197,7 +197,15 @@ class SectionPopup2 extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={Boolean(globalBlockId)}
+        badge={
+          IS_GLOBAL_POPUP && globalBlockId
+            ? child => (
+                <ConditionsComponent type="popup">{child}</ConditionsComponent>
+              )
+            : globalBlockId
+            ? child => child
+            : null
+        }
       />
     );
   }
@@ -270,7 +278,7 @@ class SectionPopup2 extends EditorComponent {
       return null;
     }
 
-    const { className, customClassName } = v;
+    const { className, customClassName, customAttributes } = v;
     const id = this.getId();
 
     const classNamePopup = classnames(
@@ -287,6 +295,7 @@ class SectionPopup2 extends EditorComponent {
           id={id}
           className={classNamePopup}
           data-block-id={this.props.blockId}
+          {...parseCustomAttributes(customAttributes)}
         >
           {!IS_GLOBAL_POPUP && (
             <button
@@ -331,7 +340,7 @@ class SectionPopup2 extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const { className, customClassName, customAttributes } = v;
 
     const triggers = triggersSelector(getStore().getState());
 
@@ -342,7 +351,15 @@ class SectionPopup2 extends EditorComponent {
         "showing",
         "devices",
         "referrer",
-        "loggedIn"
+        "loggedIn",
+        "currentUrl",
+        "currentDate",
+        "lastVisitDate",
+        "timeFrom",
+        "cookie",
+        "os",
+        "otherPopups",
+        "specificPopup"
       ];
       const encodeData = data => encodeURIComponent(JSON.stringify(data));
       const decodeData = data => JSON.parse(decodeURIComponent(data));
@@ -392,8 +409,10 @@ class SectionPopup2 extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div
           className={classNamePopup}
+          id={this.instanceKey}
           data-brz-popup={this.instanceKey}
           {...attr}
+          {...parseCustomAttributes(customAttributes)}
         >
           {this.renderItems(v, vs, vd)}
         </div>
@@ -414,87 +433,6 @@ class SectionPopup2 extends EditorComponent {
     this.props.onClose();
     this.setState({
       isOpened: false
-    });
-  }
-
-  // api
-  becomeSaved() {
-    const { blockId } = this.props;
-    const dbValue = this.getDBValue();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createSavedBlock({
-        id: uuid(),
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-  }
-
-  becomeGlobal() {
-    SectionPopup2.tmpGlobal = this.getId();
-
-    const { blockId, onChange } = this.props;
-    const dbValue = this.getDBValue();
-    const globalBlockId = uuid();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createGlobalBlock({
-        id: globalBlockId,
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-
-    onChange(
-      {
-        type: "GlobalBlock",
-        blockId,
-        value: {
-          _id: this.getId(),
-          globalBlockId
-        }
-      },
-      {
-        intent: "replace_all",
-        idOptions: {
-          keepExistingIds: true
-        }
-      }
-    );
-  }
-
-  becomeNormal() {
-    SectionPopup2.tmpGlobal = this.getId();
-
-    const {
-      meta: { globalBlockId },
-      onChange
-    } = this.props;
-    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
-
-    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
-    globalsData.value._id = this.getId();
-
-    onChange(globalsData, {
-      intent: "replace_all",
-      idOptions: {
-        keepExistingIds: true
-      }
     });
   }
 }

@@ -1,0 +1,14 @@
+// table
+.brz-table {
+  display: table;
+  table-layout: fixed;
+  margin: 0;
+
+  &__th--btn {
+    display: flex;
+    justify-content: center;
+  }
+}
+.brz-table__th .brz-span {
+  margin: auto 0;
+}

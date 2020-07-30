@@ -18,7 +18,8 @@ import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Audio from "./Audio";
 import Icon from "./Icon";
-import Image from "./Image";
+import Image from "./Image2";
+// import Image2 from "./Image2";
 import Line from "./Line";
 import Spacer from "./Spacer";
 import EmbedCode from "./EmbedCode";
@@ -36,6 +37,12 @@ import Timeline from "./Timeline";
 import TimelineTab from "./Timeline/TimelineTab";
 import Switcher from "./Switcher";
 import SwitcherTab from "./Switcher/SwitcherTab";
+import Table from "./Table";
+import TableBody from "./Table/TableBody";
+import TableHead from "./Table/TableHead";
+import TableAside from "./Table/TableAside";
+import TableRow from "./Table/TableRow";
+import TableCol from "./Table/TableCol";
 import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/AccordionItem";
 import SectionFooter from "./SectionFooter";
@@ -49,10 +56,13 @@ import SectionPopup2 from "./SectionPopup2";
 import Carousel from "./Carousel";
 import StarRating from "./StarRating";
 import MenuSimple from "./MenuSimple";
+import Login from "./Login";
+import LoginField from "./Login/LoginField";
+import RegisterField from "./Login/RegisterField";
+import ForgotPasswordField from "./Login/ForgotPasswordField";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
-
-// import SectionMegaMenu from "./Menu/SectionMegaMenu";
+import SectionMegaMenu from "./Menu/SectionMegaMenu";
 import Facebook from "./Facebook";
 import FacebookButton from "./FacebookButton";
 import FacebookComments from "./FacebookComments";
@@ -60,6 +70,7 @@ import FacebookEmbed from "./FacebookEmbed";
 import FacebookPage from "./FacebookPage";
 import FacebookGroup from "./FacebookGroup";
 import Twitter from "./Twitter";
+import Lottie from "./Lottie";
 
 export default {
   Page,
@@ -87,6 +98,7 @@ export default {
   VideoPlaylistItem,
   Icon,
   Image,
+  // Image2,
   Line,
   Spacer,
   EmbedCode,
@@ -104,6 +116,12 @@ export default {
   TimelineTab,
   Switcher,
   SwitcherTab,
+  Table,
+  TableBody,
+  TableHead,
+  TableAside,
+  TableRow,
+  TableCol,
   Accordion,
   AccordionItem,
   GlobalBlock,
@@ -113,16 +131,21 @@ export default {
   Carousel,
   StarRating,
   MenuSimple,
+  Login,
+  LoginField,
+  RegisterField,
+  ForgotPasswordField,
   Menu,
   MenuItem,
-  // SectionMegaMenu
+  SectionMegaMenu,
   Facebook,
   FacebookButton,
   FacebookComments,
   FacebookEmbed,
   FacebookPage,
   FacebookGroup,
-  Twitter
+  Twitter,
+  Lottie
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

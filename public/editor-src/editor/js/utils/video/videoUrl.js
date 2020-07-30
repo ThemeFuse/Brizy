@@ -33,7 +33,10 @@ const getYouTubeOptions = (
   };
 };
 
-const getVimeoOptions = (key, { intro = 1, autoplay, loop, start = 0 }) => {
+const getVimeoOptions = (
+  key,
+  { intro = 1, autoplay, loop, start = 0, controls = true }
+) => {
   return {
     url: `https://player.vimeo.com/video/${key}`,
     options: {
@@ -44,6 +47,7 @@ const getVimeoOptions = (key, { intro = 1, autoplay, loop, start = 0 }) => {
       badge: false,
       autopause: false,
       portrait: intro,
+      controls,
       loop: Number(loop)
     },
     anchor: `#t=${Number(start)}s`

@@ -6,7 +6,7 @@ export function styles(v, vs, vd) {
       standart: [
         "cssStyleBgColor",
         "cssStyleBgGradient",
-        "cssStyleSizeWidthPercent",
+        "cssStyleSizeWidth",
         "cssStyleBorderRadius",
         "cssStyleBorder",
         "cssStyleBoxShadow"
@@ -16,8 +16,11 @@ export function styles(v, vs, vd) {
         "cssStyleElementSearchPropertyHoverTransition"
       ]
     },
-    ".brz &&.brz-search-container__minimal": {
-      standart: ["cssStyleSizeMinHeightPx"]
+    ".brz &&.brz-search-container--minimal": {
+      standart: ["cssStyleSizeHeightPxOnly"]
+    },
+    ".brz &&.brz-search-container--minimal:after": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
     },
     ".brz &&:hover .brz-btn, &&:hover .brz-search-form": {
       standart: ["cssStyleBorderRadius"]
@@ -36,7 +39,7 @@ export function styles(v, vs, vd) {
         "cssStyleElementSearchPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover > .brz-search-form > .brz-icon-svg": {
+    ".brz &&:hover .brz-search-form .brz-search-icon__style1": {
       standart: ["cssStyleColor", "cssStyleTypography3FontSize"],
       interval: [
         "cssStyleHoverTransition",

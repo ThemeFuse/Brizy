@@ -1,7 +1,9 @@
 import {
   toolbarBorderRadius,
+  toolbarEntranceAnimation,
   toolbarPaddingFourFields
 } from "visual/utils/toolbar";
+import { getAnimationsTabs } from "visual/utils/options/getAnimations";
 
 export function getItems({ v, device }) {
   return [
@@ -14,7 +16,6 @@ export function getItems({ v, device }) {
       v,
       device,
       state: "normal",
-      devices: "desktop",
       onChangeGrouped: [
         "onChangeBorderRadiusGrouped",
         "onChangeBorderRadiusGroupedDependencies"
@@ -23,6 +24,11 @@ export function getItems({ v, device }) {
         "onChangeBorderRadiusUngrouped",
         "onChangeBorderRadiusUngroupedDependencies"
       ]
+    }),
+    toolbarEntranceAnimation({
+      v,
+      device,
+      choices: getAnimationsTabs()
     })
   ];
 }

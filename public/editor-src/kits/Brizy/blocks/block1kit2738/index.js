@@ -102,7 +102,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\">Brizy allows you to build and publish web pages that work and feel like they are part of your website. The integration is seamless and works just like you would expect.&nbsp;It makes your marketing more effective by providing features&nbsp;that turn clicks into conversions.</span></p>"
+                                            "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\"><span>This allows you to build and publish web pages that work and feel like they are part of your website. The integration is seamless and works just like you would expect.&nbsp;It makes your marketing more effective by providing features&nbsp;that turn clicks into conversions.</span></span></p>"
                                         }
                                     }
                                 ],

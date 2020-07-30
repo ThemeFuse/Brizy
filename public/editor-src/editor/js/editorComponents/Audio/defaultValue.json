@@ -8,6 +8,8 @@
     "showProgressBarVolume": "on",
 
     "url": "https://soundcloud.com/englicious/lord-of-the-flies-audiobook-slightly-sped-up",
+    "urlPopulation": null,
+
     "autoPlay": "off",
 
     "showArtwork": "off",
@@ -29,10 +31,13 @@
     "mobileCoverPositionX": null,
 
     "coverZoom": 100,
+    "coverZoomSuffix": null,
 
     "tabletCoverZoom": null,
+    "tabletCoverZoomSuffix": null,
 
-    "mobileCoverZoom": null
+    "mobileCoverZoom": null,
+    "mobileCoverZoomSuffix": null
   },
 
   "toolbar": {
@@ -51,6 +56,7 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
+    "iconCustomSizeSuffix": null,
     "iconPosition": "right",
     "iconSpacing": 10,
     "iconStrokeWidth": 1,
@@ -58,11 +64,12 @@
     "mediumIconSize": 24,
     "largeIconSize": 32,
 
-    "fontStyle": "",
-    "fontFamilyType": "google",
     "families": {
       "fontFamily": "lato"
     },
+
+    "fontStyle": "",
+    "fontFamilyType": "google",
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.1,
@@ -235,17 +242,30 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
+    "widthSuffix": "%",
     "height": 175,
+    "heightSuffix": "px",
     "customHeight": 175,
 
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
-    "tabletHeight": null,
+    "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
+
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
+    "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
     "mobileHeight": null,
-    "mobileWidth": null
+    "mobileHeightSuffix": null,
+
+    "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null
   }
 }

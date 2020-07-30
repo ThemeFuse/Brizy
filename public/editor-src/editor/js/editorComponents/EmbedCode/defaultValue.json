@@ -129,12 +129,14 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
+    "widthSuffix": "%",
 
     "height": 250,
 
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletBorderStyle": null,
 
@@ -193,6 +195,7 @@
     "tempTabletBoxShadowHorizontal": null,
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
     "tabletHeight": null,
 
@@ -234,6 +237,7 @@
     "tempMobileBorderColorPalette": null,
 
     "mobileWidth": null,
+    "mobileWidthSuffix": null,
 
     "mobileHeight": null,
 

@@ -1,13 +1,13 @@
 import React from "react";
 import Items from "./items.js";
+import { stringifyAttributes } from "visual/editorComponents/Posts/utils";
 
-class ItemsWp extends Items {
+export default class ItemsWP extends Items {
   renderForView(v) {
     const {
       className,
       style,
       dynamic,
-      columns,
       taxonomy,
       taxonomyId,
       order,
@@ -17,16 +17,24 @@ class ItemsWp extends Items {
     let content = items.map(this.renderItem);
 
     if (dynamic === "on") {
+      const loopAttributes = stringifyAttributes({
+        query: {
+          tax_query: {
+            0: {
+              taxonomy,
+              field: "id",
+              terms: taxonomyId
+            }
+          },
+          posts_per_page: -1,
+          orderby: orderBy,
+          order
+        }
+      });
+
       content = (
         <>
-          {`{{
-            brizy_dc_post_loop
-            count='${columns}'
-            taxonomy='${taxonomy}'
-            value='${taxonomyId}'
-            order='${order}'
-            orderby='${orderBy}'
-          }}`}
+          {`{{ brizy_dc_post_loop ${loopAttributes} }}`}
           {content}
           {"{{end_brizy_dc_post_loop}}"}
         </>
@@ -40,5 +48,3 @@ class ItemsWp extends Items {
     );
   }
 }
-
-export default ItemsWp;

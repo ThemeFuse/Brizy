@@ -443,7 +443,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-text-lg-center brz-tp-heading1\"><span class=\"brz-cp-color2\">Be The Webdesigner! Brizy Gives You T&nbsp;he Power</span></h1>"
+                                            "text": "<h1 class=\"brz-tp-heading1 brz-text-lg-center\"><span class=\"brz-cp-color2\"><span>Be The Webdesigner! It Gives You T&nbsp;he Power</span></span></h1>"
                                         }
                                     }
                                 ]

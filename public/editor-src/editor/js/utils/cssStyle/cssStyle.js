@@ -268,7 +268,16 @@ function legacyByOut({ legacy, out, styleKey, state, currentStyle }) {
 }
 
 // ====== tujur ======
-
+/**
+ *
+ * @param {string} defaultID
+ * @param {string} elementID
+ * @param {object} defaultStyle
+ * @param {object} rulesStyle
+ * @param {object} elementStyle
+ *
+ * @return {string}
+ */
 export function css(
   defaultID,
   elementID,

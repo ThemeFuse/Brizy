@@ -27,6 +27,14 @@ export default function($node) {
 
     $(".brz-image__gallery--filter-wrapper", _this).on("click", e => {
       const node = e.target;
+      const activeClass = "brz-image__gallery-filter__item--active";
+
+      if (!$(node).hasClass(activeClass)) {
+        $(node).addClass(activeClass);
+        $(node)
+          .siblings()
+          .removeClass(activeClass);
+      }
 
       if (node.className.includes("brz-image__gallery-filter__item")) {
         const { filter = "*" } = node.dataset;
@@ -35,6 +43,21 @@ export default function($node) {
           filter: filter === "*" ? "*" : `.${filter}`
         });
       }
+    });
+
+    // Need rearrange when changed some of elements [tabs, accordion, ... ]
+    const elements = [
+      "elements.tabs.changed",
+      "elements.accordion.changed",
+      "elements.switcher.changed"
+    ];
+
+    elements.forEach(id => {
+      window.Brizy.on(id, element => {
+        if (iso && element && element.contains(_this)) {
+          iso.arrange();
+        }
+      });
     });
   });
 

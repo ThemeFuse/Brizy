@@ -1,12 +1,15 @@
 import { setIn, getIn, removeAt, insert } from "timm";
 import produce from "immer";
 import _ from "underscore";
+import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import { globalBlocksAssembledSelector } from "visual/redux/selectors";
 import { updateGlobalBlock } from "visual/redux/actions2";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
-import { setIds } from "visual/utils/models";
+import { mapModels, setIds } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
+import { itemsToSymbols, symbolsToItems } from "visual/editorComponents/Menu";
+const menusConfig = Config.get("menuData");
 
 // timm helpers
 const addIn = (object, [...path], value) => {
@@ -26,19 +29,59 @@ const removeIn = (object, [...path]) => {
   return setIn(object, path, newObj);
 };
 
+function attachMenu(value) {
+  return mapModels(block => {
+    const { type, value } = block;
+
+    if (type === "Menu") {
+      const { menuSelected: dbMenuSelected, symbols = {} } = value;
+      const menuSelected = dbMenuSelected || menusConfig[0]?.id;
+      const menuConfig =
+        menusConfig.find(menu => menu.id === menuSelected) || {};
+
+      return produce(block, draft => {
+        draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
+      });
+    }
+
+    return block;
+  }, value);
+}
+
+function detachMenu(value) {
+  return mapModels(block => {
+    const { type, value } = block;
+
+    if (type === "Menu" && value.items) {
+      return produce(block, draft => {
+        Object.assign(
+          draft.value.symbols || {},
+          itemsToSymbols(draft.value.items)
+        );
+        delete draft.value.items;
+      });
+    }
+
+    return block;
+  }, value);
+}
+
 function attachGlobalBlocks(value, source) {
-  const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
+  const globalBlocks = globalBlocksAssembledSelector(getStore().getState());
   const { itemPath = [] } = source;
-  const transformed = produce(value, draft => {
+
+  return produce(value, draft => {
     let cursor = draft;
     let i = 0;
 
     do {
-      if (cursor.type && cursor.type === "GlobalBlock" && cursor.value) {
-        const { globalBlockId } = cursor.value;
+      if (!cursor) {
+        break;
+      } else if (cursor.type && cursor.type === "GlobalBlock" && cursor.value) {
+        const { _id } = cursor.value;
 
-        if (globalBlocks[globalBlockId]) {
-          Object.assign(cursor, globalBlocks[globalBlockId].data, {
+        if (globalBlocks[_id]) {
+          Object.assign(cursor, globalBlocks[_id].data, {
             __tmp_global_original__: JSON.stringify(cursor)
           });
         }
@@ -47,8 +90,6 @@ function attachGlobalBlocks(value, source) {
       cursor = cursor[itemPath[i++]];
     } while (i < itemPath.length);
   });
-
-  return transformed;
 }
 
 function detachGlobalBlocks(value) {
@@ -61,7 +102,7 @@ function detachGlobalBlocks(value) {
         delete obj.__tmp_global_original__;
 
         // mark up global block for later update
-        globalBlockUpdates.push([tmp.value.globalBlockId, JSON.stringify(obj)]);
+        globalBlockUpdates.push([tmp.value._id, JSON.stringify(obj)]);
 
         // restore replaced global block (2)
         Object.assign(obj, tmp);
@@ -70,10 +111,10 @@ function detachGlobalBlocks(value) {
   });
 
   if (globalBlockUpdates.length) {
-    for (const [globalBlockId, dataStringified] of globalBlockUpdates) {
+    for (const [_id, dataStringified] of globalBlockUpdates) {
       getStore().dispatch(
         updateGlobalBlock({
-          id: globalBlockId,
+          id: _id,
           data: JSON.parse(dataStringified)
         })
       );
@@ -87,10 +128,12 @@ export default function changeValueAfterDND(oldValue, { from, to }) {
   let value = attachGlobalBlocks(oldValue, from);
   value = attachGlobalBlocks(value, to);
 
+  value = attachMenu(value);
+
   value = getValue(value, { from, to });
 
-  value = detachGlobalBlocks(value, from);
-  value = detachGlobalBlocks(value, to);
+  value = detachMenu(value);
+  value = detachGlobalBlocks(value);
 
   return value;
 }

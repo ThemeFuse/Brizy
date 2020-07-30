@@ -49,6 +49,37 @@ class Brizy_Editor_UrlBuilder {
 	}
 
 	/**
+	 * @param string $path
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public function plugin_url( $path = '' ) {
+
+		if ( $path ) {
+			$path = '/' . ltrim( $path, '/' );
+		}
+
+		return BRIZY_PLUGIN_URL . $path;
+	}
+
+	/**
+	 * @param string $path
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public function plugin_path( $path = '' ) {
+
+		if ( $path ) {
+			$path = '/' . ltrim( $path, '/' );
+		}
+
+		return BRIZY_PLUGIN_PATH . $path;
+	}
+
+
+	/**
 	 * @param $post
 	 */
 	public function set_post_id( $post_id ) {
@@ -65,11 +96,11 @@ class Brizy_Editor_UrlBuilder {
 		$params = array();
 
 		if ( $this->post_id ) {
-			$params['brizy_post'] = ( (int) $this->post_id );
+			$params[ Brizy_Editor::prefix( '_post' ) ] = ( (int) $this->post_id );
 		}
 
 		// do not move this line
-		$params['brizy'] = $end_point;
+		$params[ Brizy_Editor::prefix() ] = $end_point;
 
 		return add_query_arg( $params, home_url( '/' ) );
 	}

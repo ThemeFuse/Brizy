@@ -80,8 +80,8 @@ $option-color: #626b70;
     }
   }
   &__app {
-    max-width: 114px;
-    flex: 1 1 114px;
+    max-width: 112px;
+    flex: 1 1 112px;
     margin: 18px 12px;
     text-align: center;
     cursor: pointer;
@@ -208,14 +208,18 @@ $option-color: #626b70;
 
     &-head {
       .brz-img {
-        max-width: 114px;
+        max-width: 112px;
         margin-bottom: 34px;
       }
       .brz-p {
         line-height: 21px;
         max-width: 220px;
-        margin: 0 auto 34px;
+        margin-left: auto;
+        margin-right: auto;
       }
+    }
+    &-info {
+      margin-bottom: 34px;
     }
     &-body {
       .brz-p {
@@ -255,26 +259,6 @@ $option-color: #626b70;
     .brz-ed-btn {
       display: block;
       margin: 0 auto 9px;
-    }
-  }
-  &__connect-label {
-    position: relative;
-    display: block;
-    width: 283px;
-    margin: 0 auto 14px;
-
-    &:last-of-type {
-      margin-bottom: 37px;
-    }
-    .brz-p {
-      position: absolute;
-      top: 50%;
-      left: 20px;
-      cursor: text;
-      transform: translateY(-50%);
-      margin: 0;
-      opacity: 0;
-      transition: 0.2s linear opacity;
     }
   }
 
@@ -596,6 +580,7 @@ $option-color: #626b70;
       margin-left: 14px;
     }
   }
+
   // Done
   &-step__done {
     display: flex;
@@ -636,6 +621,20 @@ $option-color: #626b70;
   // Email
   &-email {
     position: relative;
+
+    &__codemirror {
+      width: 100%;
+      height: 230px;
+      max-height: 230px;
+      min-height: 40px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    &__codemirror .CodeMirror,
+    &__codemirror .CodeMirror:focus-within {
+      height: 100%;
+      max-height: 100%;
+    }
   }
   &-email__template {
     padding: 0 36px;
@@ -658,22 +657,6 @@ $option-color: #626b70;
       margin-bottom: 23px;
       color: #626b70;
 
-      .brz-textarea {
-        display: block;
-        width: 100%;
-        height: 230px;
-        max-height: 230px;
-        min-height: 40px;
-        font-size: 13px;
-        border-radius: 5px;
-        resize: vertical;
-        padding: 10px;
-        background-color: #fff;
-        border-color: transparent;
-        color: #383e48;
-        margin-bottom: 16px;
-        outline: none;
-      }
       .brz-p {
         font-size: 13px;
         font-weight: 500;
@@ -733,6 +716,12 @@ $option-color: #626b70;
       color: $brand-primary;
       transition: 0.2s linear color;
     }
+  }
+
+  // SignIn | SignUp
+  &-signIn .brz-ed-popup-integrations__connect-head .brz-p,
+  &-signUp .brz-ed-popup-integrations__connect-head .brz-p {
+    margin-bottom: 34px;
   }
 }
 

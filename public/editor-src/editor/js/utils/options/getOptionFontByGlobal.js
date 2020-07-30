@@ -2,9 +2,11 @@ import { getFontStyle } from "visual/utils/fonts";
 
 export function getOptionFontByGlobal(key, value, style) {
   if (style) {
-    const { [key]: newValue } = getFontStyle(style);
+    const fontStyle = getFontStyle(style);
 
-    value = newValue;
+    if (fontStyle) {
+      return fontStyle[key];
+    }
   }
 
   return value;

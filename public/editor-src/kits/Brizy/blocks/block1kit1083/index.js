@@ -62,7 +62,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color3\">Brizy support is always there for you!</em></p>"
+                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color3\">Support service is always there for you!</em></p>"
                                         }
                                     }
                                 ]
@@ -202,7 +202,7 @@ module.exports = {
                                                                                             "_styles": [
                                                                                                 "richText"
                                                                                             ],
-                                                                                            "text": "<p class=\"brz-text-xs-center brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.</span></p>"
+                                                                                            "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>It is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.</span></span></p>"
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -578,7 +578,7 @@ module.exports = {
                                                                                             "_styles": [
                                                                                                 "richText"
                                                                                             ],
-                                                                                            "text": "<p class=\"brz-tp-button brz-mb-lg-10 brz-text-lg-center\"><span class=\"brz-cp-color8\">BRIZY SUPPORT</span></p>"
+                                                                                            "text": "<p class=\"brz-text-lg-center brz-mb-lg-10 brz-tp-button\"><span class=\"brz-cp-color8\"><span>SUPPORT</span></span></p>"
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -599,7 +599,7 @@ module.exports = {
                                                                                             "_styles": [
                                                                                                 "richText"
                                                                                             ],
-                                                                                            "text": "<p class=\"brz-text-lg-center brz-tp-paragraph brz-mb-lg-20\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get.</span></p>"
+                                                                                            "text": "<p class=\"brz-mb-lg-20 brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>This is a front-end page builder where what you see is what you get.</span></span></p>"
                                                                                         }
                                                                                     }
                                                                                 ],

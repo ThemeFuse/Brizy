@@ -23,7 +23,8 @@ class Saved extends Component {
     showSearch: true,
     blocksFilter: savedBlock => savedBlock,
     onAddBlocks: _.noop,
-    onClose: _.noop
+    onClose: _.noop,
+    type: "kits" // kits | popups
   };
 
   state = {
@@ -78,7 +79,14 @@ class Saved extends Component {
   }
 
   renderEmpty() {
-    const { HeaderSlotLeft, showSearch } = this.props;
+    const { HeaderSlotLeft, showSearch, type } = this.props;
+    let gifImg = "editor/img/save_toolbar.gif";
+    let message = t("Nothing here yet, save a block first.");
+
+    if (type === "popups") {
+      gifImg = "editor/img/save_popups_toolbar.gif";
+      message = t("Nothing here yet, save a popup first.");
+    }
 
     return (
       <Fragment>
@@ -100,12 +108,10 @@ class Saved extends Component {
             ) : (
               <Fragment>
                 <p className="brz-ed-popup-two-blocks__grid-clear-text">
-                  {t("Nothing here yet, save a block first.")}
+                  {message}
                 </p>
                 <img
-                  src={`${assetUrl(
-                    "editor/img/save_toolbar.gif"
-                  )}?${Math.random()}`}
+                  src={`${assetUrl(gifImg)}?${Math.random()}`}
                   className="brz-ed-popup-two-blocks__grid-clear-image-saved"
                   alt="Saved"
                 />

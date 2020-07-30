@@ -27,6 +27,38 @@ export function cssStyleElementAccordionFilterColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "filterColor" });
 }
 
+export function cssStyleElementAccordionFilterActiveColor({
+  v,
+  device,
+  state
+}) {
+  return cssStyleColor({ v, device, state, prefix: "activeFilterColor" });
+}
+
+export function cssStyleElementAccordionFilterActiveBgColor({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBgColor({ v, device, state, prefix: "activeFilterBg" });
+}
+
+export function cssStyleElementAccordionFilterActiveBorder({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBorder({ v, device, state, prefix: "activeFilter" });
+}
+
+export function cssStyleElementAccordionFilterActiveShadow({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBoxShadow({ v, device, state, prefix: "activeFilter" });
+}
+
 export function cssStyleElementAccordionFilterBgColor({ v, device, state }) {
   return cssStyleBgColor({ v, device, state, prefix: "filterBg" });
 }
@@ -154,4 +186,20 @@ export function cssStyleElementAccordion3FontWeight({ v, device }) {
 
 export function cssStyleElementAccordion3LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "filter" });
+}
+
+export function cssStyleElementAccordionActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, prefix: "activeColor" });
+}
+
+export function cssStyleElementAccordionActiveBgColor({ v, device }) {
+  return cssStyleBgColor({ v, device, prefix: "activeBg" });
+}
+
+export function cssStyleElementAccordionActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, prefix: "active" });
+}
+
+export function cssStyleElementAccordionActiveShadow({ v, device }) {
+  return cssStyleBoxShadow({ v, device, prefix: "active" });
 }

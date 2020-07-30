@@ -1,7 +1,8 @@
+@import "../../variables";
 @import "../../mixins/input";
 
 .brz-ed-control__colorPickerSelect {
-  .brz-ed-control__multiSelect {
+  &--select {
     @include small-select;
 
     position: absolute;
@@ -9,5 +10,16 @@
     margin-top: 6px;
     margin-left: 4px;
     width: auto;
+
+    .brz-ed-control__multiSelect {
+      &--value-container {
+        background-color: $control-background-color;
+      }
+
+      &__option,
+      &--tag {
+        font-size: $options-handle-font-size-small;
+      }
+    }
   }
 }

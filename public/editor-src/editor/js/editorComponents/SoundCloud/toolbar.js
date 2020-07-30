@@ -17,10 +17,12 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-sound-cloud",
+      type: "popover-dev",
+      config: {
+        icon: "nc-sound-cloud",
+        title: t("SoundCloud")
+      },
       devices: "desktop",
-      title: t("SoundCloud"),
       position: 90,
       options: [
         {
@@ -46,20 +48,22 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 90,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      position: 90,
+      devices: "desktop",
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBorder",
@@ -89,10 +93,11 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

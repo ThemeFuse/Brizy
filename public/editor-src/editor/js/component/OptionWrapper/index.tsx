@@ -7,6 +7,7 @@ import { HelperPlacement } from "visual/utils/options/attributes";
 export type Props = {
   className?: string;
   label?: string;
+  icon?: string;
   helper?: string;
   display?: "inline" | "block";
   helperPlacement?: HelperPlacement;
@@ -16,6 +17,7 @@ export const OptionWrapper: React.FC<Props> = ({
   children,
   className,
   label,
+  icon,
   helper,
   helperPlacement = "top",
   display = "inline"
@@ -28,9 +30,17 @@ export const OptionWrapper: React.FC<Props> = ({
 
   return (
     <div className={_className}>
-      {label || helper ? (
+      {label || icon || helper ? (
         <div className="brz-ed-option__label brz-ed-option__focal-point__label">
-          {label}
+          {icon ? (
+            <EditorIcon className={"brz-ed-option__label__icon"} icon={icon} />
+          ) : null}
+          {label ? (
+            <span className="brz-ed-option__label__text">
+              {/*Prevent CSS from braking words on hyphen character*/}
+              {label?.replace("-", "\u2011")}
+            </span>
+          ) : null}
           {helper && (
             <div className="brz-ed-option__helper">
               <Tooltip

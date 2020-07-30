@@ -14,14 +14,13 @@ export type Props = WithClassName &
   WithValue<string> &
   WithOnChange<string> &
   WithPlaceholder & {
-    language: string;
+    language: "htmlmixed" | "css" | "javascript" | "markdown" | "xml";
+    theme?: "default" | "idea";
   };
 
 export class CodeMirror extends Component<Props, SimpleValue<string>> {
   constructor(props: Props) {
     super(props);
-
-    this.state = { value: props.value };
 
     if (IS_EDITOR) {
       require("codemirror/addon/display/placeholder");
@@ -29,9 +28,7 @@ export class CodeMirror extends Component<Props, SimpleValue<string>> {
     }
   }
 
-  onChange = (value: string): void => this.setState({ value }, this.update);
-
-  update = (): void => this.props.onChange(this.state.value);
+  onChange = (value: string): void => this.props.onChange(value);
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
     const lg = this.props.language;
@@ -42,19 +39,25 @@ export class CodeMirror extends Component<Props, SimpleValue<string>> {
   }
 
   render(): React.ReactElement {
+    const {
+      className,
+      value,
+      placeholder,
+      language,
+      theme = "default"
+    } = this.props;
+
     return (
       Code && (
         <Code
-          className={classNames(
-            "brz-ed-control__codeMirror",
-            this.props.className
-          )}
-          value={this.state.value}
+          className={classNames("brz-ed-control__codeMirror", className)}
+          value={value}
           onChange={this.onChange}
           options={{
+            placeholder,
+            theme,
             tabSize: 2,
-            placeholder: this.props.placeholder,
-            mode: this.props.language
+            mode: language
           }}
         />
       )

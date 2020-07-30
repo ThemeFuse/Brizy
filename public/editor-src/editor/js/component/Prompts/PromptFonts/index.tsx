@@ -1,4 +1,5 @@
 import React, { Component, ReactElement } from "react";
+import { noop } from "underscore";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import FontLists from "./FontLists";
@@ -19,18 +20,26 @@ const TABS = [
   }
 ];
 
-class PromptFonts extends Component {
+type Props = {
+  opened: boolean;
+  onClose: () => void;
+}
+
+class PromptFonts extends Component<Props> {
   static defaultProps = {
-    value: {}
+    opened: false,
+    onClose: noop
   };
 
   render(): ReactElement {
+    const { opened, onClose } = this.props;
     return (
       <Tabs
-        {...this.props}
+        opened={opened}
         tabs={TABS}
         currentTab="upload"
         blockTabsWhenLoading={false}
+        onClose={onClose}
       />
     );
   }

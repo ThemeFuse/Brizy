@@ -82,7 +82,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-paragraph brz-mb-xs-15 brz-mb-lg-15\"><span class=\"brz-cp-color7\">With Brizy, you can create beautiful WordPress pages in minutes by adding pre-made design elements.</span></p>"
+                                                                    "text": "<p class=\"brz-mb-lg-15 brz-mb-xs-15 brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\"><span>With this, you can create beautiful WordPress pages in minutes by adding pre-made design elements.</span></span></p>"
                                                                 }
                                                             }
                                                         ]

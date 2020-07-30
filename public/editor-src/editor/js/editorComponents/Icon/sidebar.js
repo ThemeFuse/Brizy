@@ -1,27 +1,33 @@
 import { t } from "visual/utils/i18n";
-import { toolbarHoverTransition } from "visual/utils/toolbar";
 
 export const title = t("Icon");
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
-      align: "start",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
       tabs: [
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
-              position: 100
-            })
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

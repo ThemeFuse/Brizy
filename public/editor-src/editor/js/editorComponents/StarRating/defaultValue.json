@@ -12,33 +12,47 @@
 
   "content": {
     "iconName": "shape-star",
-    "iconType": "outline"
+    "iconType": "glyph"
   },
 
   "style": {
     "className": "",
 
     "label": "on",
+    "ratingStyle": "style1",
 
     "text": "Rating",
+    "textPopulation": null,
 
     "rating": 2.5,
+    "ratingSuffix": null,
+    "ratingPopulation": null,
+
     "spacing": 15,
+    "spacingSuffix": null,
 
     "iconSize": "small",
     "iconCustomSize": 16,
+    "iconCustomSizeSuffix": null,
 
     "iconSmallSize": 16,
     "iconMediumSize": 24,
     "iconLargeSize": 32,
 
     "iconSpacing": 3,
+    "iconSpacingSuffix": null,
+
+    "borderRadius": 12,
+    "borderRadiusSuffix": null,
+
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
 
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "lato"
-    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.3,
@@ -86,47 +100,64 @@
     "tempHoverRatingBackgroundColorOpacity": null,
     "tempHoverRatingBackgroundColorPalette": null,
 
+    "bgColorHex": "#4ecbff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
 
     "tabletIconSize": null,
     "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
 
     "tabletIconSmallSize": null,
     "tabletIconMediumSize": null,
     "tabletIconLargeSize": null,
 
     "tabletIconSpacing": null,
+    "tabletBorderRadius": null,
+    "tabletBorderRadiusSuffix": null,
 
     "tabletFontStyle": null,
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": null,
     "tabletFontWeight": null,
     "tabletLineHeight": null,
     "tabletLetterSpacing": null,
 
     "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
 
     "mobileIconSize": null,
     "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null,
 
     "mobileIconSmallSize": null,
     "mobileIconMediumSize": null,
     "mobileIconLargeSize": null,
 
     "mobileIconSpacing": null,
+    "mobileBorderRadius": null,
+    "mobileBorderRadiusSuffix": null,
 
     "mobileFontStyle": null,
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": null,
     "mobileFontWeight": null,
     "mobileLineHeight": null,

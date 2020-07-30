@@ -1,30 +1,31 @@
-import React, { Fragment } from "react";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
+import { Text } from "visual/component/ContentOptions/types";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { blocksDataSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { style, styleIcon } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
-class Button extends EditorComponent {
+export default class Button extends EditorComponent {
   static get componentId() {
     return "Button";
   }
 
   static defaultValue = defaultValue;
 
-  handleTextChange = text => {
-    this.patchValue({ text });
-  };
+  static experimentalDynamicContent = true;
+
+  handleTextChange = patch => this.patchValue(patch);
 
   renderIcon(v, vs, vd) {
     const iconClassName = classnames(
@@ -51,10 +52,16 @@ class Button extends EditorComponent {
       )
     );
 
-    return IS_EDITOR ? (
-      <a className={className}>{content}</a>
-    ) : (
-      <button className={className}>{content}</button>
+    const componentType = IS_EDITOR ? "a" : "button";
+
+    return (
+      <Wrapper
+        {...this.makeWrapperProps({ className })}
+        component={componentType}
+        attributes={this.props.attributes}
+      >
+        {content}
+      </Wrapper>
     );
   }
 
@@ -106,7 +113,14 @@ class Button extends EditorComponent {
       props.draggable = "false";
     }
 
-    return <Link {...props}>{content}</Link>;
+    return (
+      <Wrapper
+        {...this.makeWrapperProps({ attributes: props })}
+        component={Link}
+      >
+        {content}
+      </Wrapper>
+    );
   }
 
   renderPopups() {
@@ -117,9 +131,9 @@ class Button extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value.globalBlockId
-          ].data;
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
           isGlobal = true;
         }
 
@@ -159,17 +173,17 @@ class Button extends EditorComponent {
       _vd.mobileFontStyle && `${_vd.mobileFontStyle}__fsMobile`
     ]);
 
-    const { text, type, iconName, iconType, linkType, linkPopup, popups } = v;
+    const { type, iconName, iconType, linkType, linkPopup, popups } = v;
     const renderIcon = iconName && iconType;
     const content = (
-      <Fragment>
+      <>
         {renderIcon && this.renderIcon(v, vs, vd)}
-        <TextEditor value={text} onChange={this.handleTextChange} />
-      </Fragment>
+        <Text id="text" v={v} onChange={this.handleTextChange} />
+      </>
     );
 
     return (
-      <Fragment>
+      <>
         <Toolbar
           {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
         >
@@ -183,9 +197,7 @@ class Button extends EditorComponent {
           linkType === "popup" &&
           linkPopup !== "" &&
           this.renderPopups()}
-      </Fragment>
+      </>
     );
   }
 }
-
-export default Button;

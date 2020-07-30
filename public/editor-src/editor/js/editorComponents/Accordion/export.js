@@ -2,8 +2,9 @@ import $ from "jquery";
 
 export default function($node) {
   $node.find(".brz-accordion").each(function() {
-    const $accordionNavItems = $(this).find(".brz-accordion__nav");
-    const $accordionFilter = $(this).find(".brz-accordion__filter-wrapper");
+    const _this = this;
+    const $accordionNavItems = $(_this).find(".brz-accordion__nav");
+    const $accordionFilter = $(_this).find(".brz-accordion__filter-wrapper");
     const $collapsible = $accordionNavItems.attr("data-collapsible");
 
     $accordionNavItems.on("click", function() {
@@ -18,20 +19,22 @@ export default function($node) {
           : $item.addClass(activeClassName);
       }
 
-      // Need Update Isotope
-      $item.find(".brz-image__gallery").each(function() {
-        var iso = $(this).data("isotope");
-
-        if (iso) {
-          iso.layout();
-        }
-      });
+      // Emit Accordion Changed
+      window.Brizy.emit("elements.accordion.changed", _this);
     });
 
     $accordionFilter.on("click", function({ target }) {
       const $this = $(this);
       const hiddenClassName = "brz-accordion__hidden";
       const $filterItem = $(target).closest(".brz-accordion__filter__item");
+
+      // Active Tag
+      if (!$(target).hasClass("brz-accordion__filter__item--active")) {
+        $(target).addClass("brz-accordion__filter__item--active");
+        $(target)
+          .siblings()
+          .removeClass("brz-accordion__filter__item--active");
+      }
 
       if ($filterItem.length) {
         const { filter } = $filterItem.data();

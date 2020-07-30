@@ -1,0 +1,283 @@
+{
+  "style": {
+    "className": "",
+
+    "subtotal": "on",
+
+    "spacing": 5,
+    "iconCustomSize": 16,
+
+    "purchases": "off",
+    "purchasesType": "plain",
+
+    "buttonDirection": "inline",
+
+    "buttonSpacing": 5,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "buttonBgColorType": "solid",
+
+    "buttonBgColorHex": "#000000",
+    "buttonBgColorOpacity": 1,
+    "buttonBgColorPalette": "color1",
+
+    "tempButtonBgColorOpacity": 1,
+    "tempButtonBgColorPalette": "color1",
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "color1",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color1",
+
+    "iconColorHex": "#000000",
+    "iconColorOpacity": 1,
+    "iconColorPalette": "color1",
+
+    "tempIconColorOpacity": 1,
+    "tempIconColorPalette": "color1",
+
+    "purchasesColorHex": "#AAAAAA",
+    "purchasesColorOpacity": 1,
+    "purchasesColorPalette": "",
+
+    "tempPurchasesColorOpacity": 1,
+    "tempPurchasesColorPalette": "",
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "",
+
+    "tempTitleColorOpacity": 1,
+    "tempTitleColorPalette": "",
+
+    "costColorHex": "#000000",
+    "costColorOpacity": 1,
+    "costColorPalette": "",
+
+    "tempCostColorOpacity": 1,
+    "tempCostColorPalette": "",
+
+    "subtotalColorHex": "#000000",
+    "subtotalColorOpacity": 1,
+    "subtotalColorPalette": "",
+
+    "tempSubtotalColorOpacity": 1,
+    "tempSubtotalColorPalette": "",
+
+    "buttonColorHex": "#FFFFFF",
+    "buttonColorOpacity": 1,
+    "buttonColorPalette": "",
+
+    "tempButtonColorOpacity": 1,
+    "tempButtonColorPalette": "",
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null,
+      "purchasesFontFamily": "lato",
+      "tabletPurchasesFontFamily": null,
+      "mobilePurchasesFontFamily": null,
+      "titleFontFamily": "lato",
+      "tabletTitleFontFamily": null,
+      "mobileTitleFontFamily": null,
+      "costFontFamily": "lato",
+      "tabletCostFontFamily": null,
+      "mobileCostFontFamily": null,
+      "subtotalFontFamily": "lato",
+      "tabletSubtotalFontFamily": null,
+      "mobileSubtotalFontFamily": null,
+      "buttonFontFamily": "lato",
+      "tabletButtonFontFamily": null,
+      "mobileButtonFontFamily": null
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 16,
+    "typographyFontWeight": 700,
+    "typographyLineHeight": 1.3,
+    "typographyLetterSpacing": 0,
+
+    "purchasesFontStyle": "",
+    "purchasesFontFamilyType": "google",
+    "purchasesFontSize": 16,
+    "purchasesFontWeight": 700,
+    "purchasesLineHeight": 1.3,
+    "purchasesLetterSpacing": 0,
+
+    "titleFontStyle": "",
+    "titleFontFamilyType": "google",
+    "titleFontSize": 16,
+    "titleFontWeight": 700,
+    "titleLineHeight": 1.3,
+    "titleLetterSpacing": 0,
+
+    "costFontStyle": "",
+    "costFontFamilyType": "google",
+    "costFontSize": 16,
+    "costFontWeight": 700,
+    "costLineHeight": 1.3,
+    "costLetterSpacing": 0,
+
+    "subtotalFontStyle": "",
+    "subtotalFontFamilyType": "google",
+    "subtotalFontSize": 16,
+    "subtotalFontWeight": 700,
+    "subtotalLineHeight": 1.3,
+    "subtotalLetterSpacing": 0,
+
+    "buttonFontStyle": "",
+    "buttonFontFamilyType": "google",
+    "buttonFontSize": 16,
+    "buttonFontWeight": 700,
+    "buttonLineHeight": 1.3,
+    "buttonLetterSpacing": 0,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "buttonBorderRadiusType": "grouped",
+    "buttonBorderRadius": 0,
+    "buttonBorderTopLeftRadius": 0,
+    "buttonBorderTopRightRadius": 0,
+    "buttonBorderBottomRightRadius": 0,
+    "buttonBorderBottomLeftRadius": 0,
+
+    "buttonTempBorderRadius": 0,
+    "buttonTempBorderTopLeftRadius": 0,
+    "buttonTempBorderTopRightRadius": 0,
+    "buttonTempBorderBottomRightRadius": 0,
+    "buttonTempBorderBottomLeftRadius": 0,
+
+    "hoverTransition": 50,
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFontSize": 15,
+    "tabletTypographyFontWeight": 400,
+    "tabletTypographyLineHeight": 1.3,
+    "tabletTypographyLetterSpacing": 0,
+
+    "tabletPurchasesFontStyle": "",
+    "tabletPurchasesFontFamilyType": null,
+    "tabletPurchasesFontSize": 15,
+    "tabletPurchasesFontWeight": 400,
+    "tabletPurchasesLineHeight": 1.3,
+    "tabletPurchasesLetterSpacing": 0,
+
+    "tabletTitleFontStyle": "",
+    "tabletTitleFontFamilyType": null,
+    "tabletTitleFontSize": 15,
+    "tabletTitleFontWeight": 400,
+    "tabletTitleLineHeight": 1.3,
+    "tabletTitleLetterSpacing": 0,
+
+    "tabletCostFontStyle": "",
+    "tabletCostFontFamilyType": null,
+    "tabletCostFontSize": 15,
+    "tabletCostFontWeight": 400,
+    "tabletCostLineHeight": 1.3,
+    "tabletCostLetterSpacing": 0,
+
+    "tabletSubtotalFontStyle": "",
+    "tabletSubtotalFontFamilyType": null,
+    "tabletSubtotalFontSize": 15,
+    "tabletSubtotalFontWeight": 400,
+    "tabletSubtotalLineHeight": 1.3,
+    "tabletSubtotalLetterSpacing": 0,
+
+    "tabletButtonFontStyle": "",
+    "tabletButtonFontFamilyType": null,
+    "tabletButtonFontSize": 15,
+    "tabletButtonFontWeight": 400,
+    "tabletButtonLineHeight": 1.3,
+    "tabletButtonLetterSpacing": 0,
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFontSize": 15,
+    "mobileTypographyFontWeight": 400,
+    "mobileTypographyLineHeight": 1.3,
+    "mobileTypographyLetterSpacing": 0,
+
+    "mobilePurchasesFontStyle": "",
+    "mobilePurchasesFontFamilyType": null,
+    "mobilePurchasesFontSize": 15,
+    "mobilePurchasesFontWeight": 400,
+    "mobilePurchasesLineHeight": 1.3,
+    "mobilePurchasesLetterSpacing": 0,
+
+    "mobileTitleFontStyle": "",
+    "mobileTitleFontFamilyType": null,
+    "mobileTitleFontSize": 15,
+    "mobileTitleFontWeight": 400,
+    "mobileTitleLineHeight": 1.3,
+    "mobileTitleLetterSpacing": 0,
+
+    "mobileCostFontStyle": "",
+    "mobileCostFontFamilyType": null,
+    "mobileCostFontSize": 15,
+    "mobileCostFontWeight": 400,
+    "mobileCostLineHeight": 1.3,
+    "mobileCostLetterSpacing": 0,
+
+    "mobileSubtotalFontStyle": "",
+    "mobileSubtotalFontFamilyType": null,
+    "mobileSubtotalFontSize": 15,
+    "mobileSubtotalFontWeight": 400,
+    "mobileSubtotalLineHeight": 1.3,
+    "mobileSubtotalLetterSpacing": 0,
+
+    "mobileButtonFontStyle": "",
+    "mobileButtonFontFamilyType": null,
+    "mobileButtonFontSize": 15,
+    "mobileButtonFontWeight": 400,
+    "mobileButtonLineHeight": 1.3,
+    "mobileButtonLetterSpacing": 0
+  }
+}

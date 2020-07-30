@@ -4,11 +4,8 @@ import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { InputFields } from "../../common/GlobalApps/StepsView";
-import {
-  getFields,
-  checkRequiredFields,
-  fakeRequest
-} from "../../common/utils";
+import { getFields, checkRequiredFields } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class CustomFields extends Component {
   static contextType = Context;
@@ -54,7 +51,7 @@ class CustomFields extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangePrev();
   };
@@ -75,7 +72,7 @@ class CustomFields extends Component {
 
     if (!checkRequiredFields(appData.fields, formFields, "input")) {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: t("All fields cannot be empty"),

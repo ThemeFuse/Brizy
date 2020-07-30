@@ -38,7 +38,10 @@ onmessage = async e => {
     new XMLSerializer().serializeToString(node),
     options
   );
-  const blob = new Blob([svgDataUri], {
+  // temp hack made when images inside lottie svg were not working
+  const svgDataUri2 = svgDataUri.replace(/xmlns%3Axlink%3D%22%22/g, "");
+
+  const blob = new Blob([svgDataUri2], {
     type: "text/plain"
   });
   const url = URL.createObjectURL(blob);
@@ -67,7 +70,9 @@ function removeUnwantedNodes(node) {
     { type: "className", value: "brz-ed-wrapper__toolbar" },
     { type: "className", value: "brz-form__select-list" },
     { type: "className", value: "brz-popup2__button-go-to-editor" },
-    { type: "className", value: "brz-ed-icon-svg" }
+    { type: "className", value: "brz-ed-icon-svg" },
+    { type: "className", value: "brz-ed-slider__spinner" },
+    { type: "className", value: "brz-ed-portal__loading" }
   ];
 
   /* eslint-disable no-unused-vars */
@@ -243,13 +248,11 @@ async function inlineImages(node, config) {
       return;
     }
 
-    /* eslint-disable no-useless-escape */
-    const urlRegex = /(url\("?'?([^\"')]+)"?'?\))/;
-    /* eslint-enabled no-useless-escape */
+    const urlRegex = /url\(["']?([^#"')]+)["']?\)/;
     const urlMatch = urlRegex.exec(style);
-    const [, url, src] = urlMatch || [];
+    const [, src] = urlMatch || [];
 
-    if (url && src && !isBase64(src)) {
+    if (src && !isBase64(src)) {
       promises.push(
         fetchResource(getResourceDownloadUrl(src, config)).then(base64 => {
           node.setAttribute(
@@ -285,7 +288,7 @@ function deactivateBackgroundParallax(node) {
 function makeSvgDataUri(nodeString, options) {
   const { width, height } = options;
   const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${foreignObject}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}">${foreignObject}</svg>`;
 
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }

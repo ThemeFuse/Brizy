@@ -11,22 +11,9 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
-const resizerRestrictions = {
-  width: {
-    min: 5,
-    max: 100
-  },
-  tabletWidth: {
-    min: 5,
-    max: 100
-  },
-  mobileWidth: {
-    min: 5,
-    max: 100
-  }
-};
 
 export default class EmbedCode extends EditorComponent {
   static get componentId() {
@@ -60,12 +47,45 @@ export default class EmbedCode extends EditorComponent {
         <Placeholder icon="iframe" />
       );
 
+    const resizerRestrictions = {
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <BoxResizer
               points={resizerPoints}
               restrictions={resizerRestrictions}
@@ -75,7 +95,7 @@ export default class EmbedCode extends EditorComponent {
             >
               <div className="brz-embed-content">{content}</div>
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

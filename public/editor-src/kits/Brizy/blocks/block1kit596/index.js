@@ -85,7 +85,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control.&nbsp;</em></p>"
+                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color7\">Parties and family gatherings are popular this time of year. Whether you\u2019re celebrating an anniversary, a birthday, graduation.</em></p>"
                                         }
                                     }
                                 ],
@@ -299,7 +299,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\">Every text, image, icon or button can be edited simply by selecting and&nbsp;edit it.</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>Without a doubt there is something very relaxing and pleasurable about cooking.</span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -444,57 +444,10 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "strokeWidth": 1,
                                                                     "customCSS": "",
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "tempMobilePadding": 20,
-                                                                    "tempMobileBorderRadius": 4,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "tempMobileBorderRadius": 4
                                                                 }
                                                             }
                                                         ],
@@ -536,7 +489,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">Bring vibrance to your site by setting colour &amp; transparent with our colour overlays.</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>Increasing prosperity in our lives can be accomplished by having the right frame of mind.</span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -681,57 +634,10 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "strokeWidth": 1,
                                                                     "customCSS": "",
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "tempMobilePadding": 20,
-                                                                    "tempMobileBorderRadius": 4,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "tempMobileBorderRadius": 4
                                                                 }
                                                             }
                                                         ],
@@ -773,7 +679,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"opacity: 1;\">Learn in realtime what version works best by tracking revenue, clicks, signups.</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>The truth is, our thoughts are very powerful. They are capable of influencing.</span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -918,57 +824,10 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "strokeWidth": 1,
                                                                     "customCSS": "",
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "tempMobilePadding": 20,
-                                                                    "tempMobileBorderRadius": 4,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "tempMobileBorderRadius": 4
                                                                 }
                                                             }
                                                         ],
@@ -1010,7 +869,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\">Choose from hundreds of pre-built design elements, called items, by pressing the Plus</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>There are not many cities that have experienced such social and political extremes.</span></span></p>"
                                                                 }
                                                             }
                                                         ],

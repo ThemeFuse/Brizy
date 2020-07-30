@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1966",
   thumbnailWidth: 600,
-  thumbnailHeight: 220,
+  thumbnailHeight: 223,
   title: "block1kit1966",
   
   keywords: "button,call to action,image background,testimonial,text",
@@ -71,7 +71,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h2 class=\"brz-tp-heading2 brz-text-lg-center\"><span class=\"brz-cp-color8\">About Brizy</span></h2>"
+                                            "text": "<h2 class=\"brz-text-lg-center brz-tp-heading2\"><span class=\"brz-cp-color8\"><span>About Us</span></span></h2>"
                                         }
                                     }
                                 ],
@@ -114,7 +114,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;Every editing option is extremely well-thought to make it easy for you to find and work with. This will shorten the time needed to build your dream website. It\u2019s easy-brizy!</span></p>"
+                                            "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>This is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;Every editing option is extremely well-thought to make it easy for you to find and work with. This will shorten the time needed to build your dream website.</span></span></p>"
                                         }
                                     }
                                 ],

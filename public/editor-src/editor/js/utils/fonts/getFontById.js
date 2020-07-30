@@ -1,10 +1,10 @@
 import _ from "underscore";
 import { getStore } from "visual/redux/store";
 import {
-  fontSelector,
   projectSelector,
   unDeletedFontSelector
 } from "visual/redux/selectors";
+import { fontSelector } from "visual/redux/selectors2";
 import { findFonts, fontTransform, projectFontsData } from "visual/utils/fonts";
 
 export const getFontById = ({ type, family }) => {

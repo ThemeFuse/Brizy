@@ -1,1060 +1,286 @@
-import classnames from "classnames";
-import { css } from "glamor";
-import { hexToRgba } from "visual/utils/color";
-import { getFontById } from "visual/utils/fonts";
-import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
-import { styleColor, styleBoxShadow } from "visual/utils/style";
+import { renderStyles } from "visual/utils/cssStyle";
 
-const aligns = {
-  left: "flex-start",
-  center: "center",
-  right: "flex-end"
-};
-
-export function styleClassName(v) {
-  let glamorObj;
-
-  if (IS_EDITOR) {
-    glamorObj = {
-      ".brz-ed--desktop &": {
-        "& .brz-mm-menu__icon": {
-          display: "var(--showIcon)",
-          fontSize: "var(--mMenuSize)",
-          color: "var(--color)"
-        },
-        "& .brz-menu": {
-          display: "var(--showMenu)"
-        }
-      },
-      ".brz-ed--tablet &": {
-        "& .brz-mm-menu__icon": {
-          display: "var(--showTabletIcon)",
-          fontSize: "var(--tabletMMenuSize)",
-          color: "var(--tabletColor)"
-        },
-        "& .brz-menu": {
-          display: "var(--showTabletMenu)"
-        }
-      },
-      ".brz-ed--mobile &": {
-        "& .brz-mm-menu__icon": {
-          display: "var(--showMobileIcon)",
-          fontSize: "var(--mobileMMenuSize)",
-          color: "var(--mobileColor)"
-        },
-        "& .brz-menu": {
-          display: "var(--showMobileMenu)"
-        }
-      }
-    };
-  } else {
-    const {
-      mMenuIconColorHex,
-      mMenuIconColorOpacity,
-      mMenu,
-      mMenuSize,
-      tabletMMenu,
-      mobileMMenu
-    } = v;
-
-    glamorObj = {
-      ".brz &": {
-        "& .brz-menu": {
-          display: mMenu === "on" ? "none" : "block"
-        },
-        "& .brz-mm-menu__icon": {
-          color: hexToRgba(mMenuIconColorHex, mMenuIconColorOpacity),
-          display: mMenu === "on" ? "flex" : "none",
-          fontSize: `${mMenuSize}px`
-        }
-      },
-      "@media (max-width: 991px)": {
-        ".brz &": {
-          "& .brz-mm-menu__icon": {
-            color: hexToRgba(
-              tabletSyncOnChange(v, "mMenuIconColorHex"),
-              tabletSyncOnChange(v, "mMenuIconColorOpacity")
-            ),
-            fontSize: `${tabletSyncOnChange(v, "mMenuSize")}px`
-          }
-        }
-      },
-      "@media (max-width: 991px) and (min-width: 768px)": {
-        ".brz & .brz-menu": {
-          display: tabletMMenu === "on" ? "none" : "block"
-        },
-        ".brz & .brz-mm-menu__icon": {
-          display: tabletMMenu === "on" ? "flex" : "none"
-        }
-      },
-      "@media (max-width: 767px)": {
-        ".brz &": {
-          "& .brz-menu": {
-            display: mobileMMenu === "on" ? "none" : "block"
-          },
-          "& .brz-mm-menu__icon": {
-            color: hexToRgba(
-              mobileSyncOnChange(v, "mMenuIconColorHex"),
-              mobileSyncOnChange(v, "mMenuIconColorOpacity")
-            ),
-            display: mobileMMenu === "on" ? "flex" : "none",
-            fontSize: `${mobileSyncOnChange(v, "mMenuSize")}px`
-          }
-        }
-      }
-    };
-  }
-
-  const glamorClassName = String(css(glamorObj));
-
-  return classnames("brz-menu__container", glamorClassName);
-}
-
-export function styleCSSVars(v) {
-  if (IS_PREVIEW) {
-    return;
-  }
-
-  const {
-    mMenuIconColorHex,
-    mMenuIconColorOpacity,
-    mMenu,
-    mMenuSize,
-    tabletMMenu,
-    mobileMMenu
-  } = v;
-
-  return {
-    "--color": hexToRgba(mMenuIconColorHex, mMenuIconColorOpacity),
-    "--tabletColor": hexToRgba(
-      tabletSyncOnChange(v, "mMenuIconColorHex"),
-      tabletSyncOnChange(v, "mMenuIconColorOpacity")
-    ),
-    "--mobileColor": hexToRgba(
-      mobileSyncOnChange(v, "mMenuIconColorHex"),
-      mobileSyncOnChange(v, "mMenuIconColorOpacity")
-    ),
-    "--mMenuSize": `${mMenuSize}px`,
-    "--tabletMMenuSize": `${tabletSyncOnChange(v, "mMenuSize")}px`,
-    "--mobileMMenuSize": `${mobileSyncOnChange(v, "mMenuSize")}px`,
-    "--showIcon": mMenu === "on" ? "flex" : "none",
-    "--showTabletIcon": tabletMMenu === "on" ? "flex" : "none",
-    "--showMobileIcon": mobileMMenu === "on" ? "flex" : "none",
-    "--showMenu": mMenu === "on" ? "none" : "block",
-    "--showTabletMenu": tabletMMenu === "on" ? "none" : "block",
-    "--showMobileMenu": mobileMMenu === "on" ? "none" : "block"
-  };
-}
-
-export function styleMenuClassName(v, hasMMenu) {
-  const { className, items } = v;
-  let glamorObj;
-
-  if (IS_EDITOR) {
-    glamorObj = {
-      ".brz &": {
-        fontFamily: "var(--fontFamily)",
-        color: "var(--color)",
-
-        "& .brz-mm-menu__item": {
-          fontFamily: "var(--mMenuFontFamily)",
-          color: "var(--mMenuColor)",
-          borderColor: "var(--mMenuBorderColor)",
-
-          "&:hover > .brz-mm-listitem__text, .brz-mm-btn_next:hover, &.brz-mm-listitem_opened": {
-            color: "var(--mMenuHoverColor)"
-          }
-        },
-        "& .brz-menu__sub-menu": {
-          fontFamily: "var(--subMenuFontFamily)",
-          color: "var(--subMenuColor)",
-          borderTopLeftRadius: "var(--borderTopLeftRadius)",
-          borderTopRightRadius: "var(--borderTopRightRadius)",
-          borderBottomLeftRadius: "var(--borderBottomLeftRadius)",
-          borderBottomRightRadius: "var(--borderBottomRightRadius)",
-          boxShadow: "var(--subMenuBoxShadow)",
-
-          "&:hover": {
-            boxShadow: "var(--subMenuHoverBoxShadow)"
-          },
-
-          "& .brz-a:hover": {
-            color: "var(--subMenuHoverColor)"
-          }
-        },
-        "& .brz-mm-navbar": {
-          color: "var(--mMenuColor)"
-        },
-        "& .brz-menu__ul > .brz-menu__item": {
-          "& > .brz-a:hover": {
-            color: "var(--hoverColor)"
-          }
-        },
-        "& .brz-menu__item__icon": {
-          marginRight: "var(--iconSpacing)"
-        },
-        "& .brz-menu__sub-item__icon": {
-          marginRight: "var(--subMenuIconSpacing)",
-          fontSize: "var(--subMenuIconSize)"
-        },
-
-        // Background Color for Dropdown
-        "&:not(.brz-mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
-          backgroundColor: "var(--subMenuBgColor)",
-
-          "&:hover": {
-            backgroundColor: "var(--subMenuHoverBgColor)"
-          }
-        },
-
-        // Color for dropdown arrow
-        "&:not(.brz-mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
-          "&:after": {
-            borderColor: "var(--subMenuColor)"
-          },
-          "&:hover:after": {
-            borderColor: "var(--subMenuHoverColor)"
-          }
-        },
-
-        // Dropdown Menu Items
-        "& .brz-menu__dropdown > .brz-menu__item": {
-          borderBottomWidth: "var(--subMenuBorderWidth)",
-          borderBottomStyle: "var(--subMenuBorderStyle)",
-          borderBottomColor: "var(--subMenuBorderColor)"
-        },
-
-        // MMenu Style
-        "&.brz-mm-menu.brz-mm-menu_theme-dark": {
-          "& .brz-mm-panels, & .brz-mm-panels > .brz-mm-panel": {
-            backgroundColor: "var(--mMenuBgColor)"
-          },
-          "& .brz-mm-navbar.brz-mm-listitem, & .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
-            borderColor: "var(--mMenuBorderColor)"
-          }
-        }
-      },
-      ".brz-ed--desktop &": {
-        fontSize: "var(--fontSize)",
-        fontWeight: "var(--fontWeight)",
-        lineHeight: "var(--lineHeight)",
-        letterSpacing: "var(--letterSpacing)",
-
-        "& .brz-menu__sub-menu": {
-          fontSize: "var(--subMenuFontSize)",
-          fontWeight: "var(--subMenuFontWeight)",
-          lineHeight: "var(--subMenuLineHeight)",
-          letterSpacing: "var(--subMenuLetterSpacing)"
-        },
-        "& .brz-mm-menu__item": {
-          fontSize: "var(--mMenuFontSize)",
-          fontWeight: "var(--mMenuFontWeight)",
-          lineHeight: "var(--mMenuLineHeight)",
-          letterSpacing: "var(--mMenuLetterSpacing)",
-
-          "& .brz-a": {
-            justifyContent: "var(--mMenuItemHorizontalAlign)"
-          }
-        },
-        "& .brz-mm-navbar": {
-          fontFamily: "var(--mMenuFontFamily)",
-          fontSize: "var(--mMenuFontSize)",
-          fontWeight: "var(--mMenuFontWeight)",
-          lineHeight: "var(--mMenuLineHeight)",
-          letterSpacing: "var(--mMenuLetterSpacing)"
-        },
-        "& .brz-menu__item__icon": {
-          fontSize: "var(--iconSize)"
-        },
-        "& .brz-mm-menu__item__icon": {
-          marginRight: "var(--mMenuIconSpacing)",
-          fontSize: "var(--mMenuIconSize)"
-        },
-        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-          height: "calc(var(--mMenuLineHeight) * var(--mMenuFontSize) + 19px)"
-        },
-
-        // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.brz-mm-listview)": {
-          marginTop: "var(--itemMarginTop)",
-          marginRight: "var(--itemMarginRight)",
-          marginBottom: "var(--itemMarginBottom)",
-          marginLeft: "var(--itemMarginLeft)"
-        },
-        "& .brz-menu__ul > .brz-menu__item": {
-          paddingTop: "var(--itemPaddingTop)",
-          marginRight: "var(--itemPaddingRight)",
-          paddingBottom: "var(--itemPaddingBottom)",
-          marginLeft: "var(--itemPaddingLeft)"
-        }
-      },
-      ".brz-ed--tablet &": {
-        fontSize: "var(--tabletFontSize)",
-        fontWeight: "var(--tabletFontWeight)",
-        lineHeight: "var(--tabletLineHeight)",
-        letterSpacing: "var(--tabletLetterSpacing)",
-
-        "& .brz-menu__sub-menu": {
-          fontSize: "var(--tabletSubMenuFontSize)",
-          fontWeight: "var(--tabletSubMenuFontWeight)",
-          lineHeight: "var(--tabletSubMenuLineHeight)",
-          letterSpacing: "var(--tabletSubMenuLetterSpacing)"
-        },
-        "& .brz-mm-menu__item": {
-          fontSize: "var(--tabletMMenuFontSize)",
-          fontWeight: "var(--tabletMMenuFontWeight)",
-          lineHeight: "var(--tabletMMenuLineHeight)",
-          letterSpacing: "var(--tabletMMenuLetterSpacing)",
-
-          "& .brz-a": {
-            justifyContent: "var(--tabletMMenuItemHorizontalAlign)"
-          }
-        },
-        "& .brz-mm-navbar": {
-          fontFamily: "var(--mMenuFontFamily)",
-          fontSize: "var(--tabletMMenuFontSize)",
-          fontWeight: "var(--tabletMMenuFontWeight)",
-          lineHeight: "var(--tabletMMenuLineHeight)",
-          letterSpacing: "var(--tabletMMenuLetterSpacing)"
-        },
-        "& .brz-menu__item__icon": {
-          fontSize: "var(--tabletIconSize)"
-        },
-        "& .brz-mm-menu__item__icon": {
-          marginRight: "var(--tabletMMenuIconSpacing)",
-          fontSize: "var(--tabletMMenuIconSize)"
-        },
-        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-          height:
-            "calc(var(--tabletMMenuLineHeight) * var(--tabletMMenuFontSize) + 19px)"
-        },
-
-        // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.brz-mm-listview)": {
-          marginTop: "var(--tabletItemMarginTop)",
-          marginRight: "var(--tabletItemMarginRight)",
-          marginBottom: "var(--tabletItemMarginBottom)",
-          marginLeft: "var(--tabletItemMarginLeft)"
-        },
-        "& .brz-menu__ul > .brz-menu__item": {
-          paddingTop: "var(--tabletItemPaddingTop)",
-          marginRight: "var(--tabletItemPaddingRight)",
-          paddingBottom: "var(--tabletItemPaddingBottom)",
-          marginLeft: "var(--tabletItemPaddingLeft)"
-        }
-      },
-      ".brz-ed--mobile &": {
-        fontSize: "var(--mobileFontSize)",
-        fontWeight: "var(--mobileFontWeight)",
-        lineHeight: "var(--mobileLineHeight)",
-        letterSpacing: "var(--mobileLetterSpacing)",
-
-        "& .brz-menu__sub-menu": {
-          fontSize: "var(--mobileSubMenuFontSize)",
-          fontWeight: "var(--mobileSubMenuFontWeight)",
-          lineHeight: "var(--mobileSubMenuLineHeight)",
-          letterSpacing: "var(--mobileSubMenuLetterSpacing)"
-        },
-        "& .brz-mm-menu__item": {
-          fontSize: "var(--mobileMMenuFontSize)",
-          fontWeight: "var(--mobileMMenuFontWeight)",
-          lineHeight: "var(--mobileMMenuLineHeight)",
-          letterSpacing: "var(--mobileMMenuLetterSpacing)",
-
-          "& .brz-a": {
-            justifyContent: "var(--mobileMMenuItemHorizontalAlign)"
-          }
-        },
-        "& .brz-mm-navbar": {
-          fontFamily: "var(--mMenuFontFamily)",
-          fontSize: "var(--mobileMMenuFontSize)",
-          fontWeight: "var(--mobileMMenuFontWeight)",
-          lineHeight: "var(--mobileMMenuLineHeight)",
-          letterSpacing: "var(--mobileMMenuLetterSpacing)"
-        },
-        "& .brz-menu__item__icon": {
-          fontSize: "var(--mobileIconSize)"
-        },
-        "& .brz-mm-menu__item__icon": {
-          marginRight: "var(--mobileMMenuIconSpacing)",
-          fontSize: "var(--mobileMMenuIconSize)"
-        },
-        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-          height:
-            "calc(var(--mobileMMenuLineHeight) * var(--mobileMMenuFontSize) + 19px)"
-        },
-
-        // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.brz-mm-listview)": {
-          marginTop: "var(--mobileItemMarginTop)",
-          marginRight: "var(--mobileItemMarginRight)",
-          marginBottom: "var(--mobileItemMarginBottom)",
-          marginLeft: "var(--mobileItemMarginLeft)"
-        },
-        "& .brz-menu__ul > .brz-menu__item": {
-          paddingTop: "var(--mobileItemPaddingTop)",
-          marginRight: "var(--mobileItemPaddingRight)",
-          paddingBottom: "var(--mobileItemPaddingBottom)",
-          marginLeft: "var(--mobileItemPaddingLeft)"
-        }
-      }
-    };
-  } else {
-    const {
-      fontFamily,
-      fontFamilyType,
-      fontWeight,
-      fontSize,
-      lineHeight,
-      letterSpacing,
-      tabletFontSize,
-      tabletFontWeight,
-      tabletLineHeight,
-      tabletLetterSpacing,
-      mobileFontSize,
-      mobileFontWeight,
-      mobileLineHeight,
-      mobileLetterSpacing,
-      iconSize,
-      iconSpacing,
-      itemPaddingTop,
-      itemPaddingRight,
-      itemPaddingBottom,
-      itemPaddingLeft,
-      tabletIconSize,
-      mobileIconSize,
-      subMenuIconSize,
-      subMenuIconSpacing,
-      subMenuHoverColorHex,
-      subMenuHoverColorOpacity,
-      subMenuBgColorHex,
-      subMenuBgColorOpacity,
-      subMenuHoverBgColorHex,
-      subMenuHoverBgColorOpacity,
-      subMenuBorderColorHex,
-      subMenuBorderColorOpacity,
-      subMenuBorderWidth,
-      subMenuBorderStyle,
-      subMenuFontFamily,
-      subMenuFontFamilyType,
-      subMenuFontWeight,
-      subMenuFontSize,
-      subMenuLineHeight,
-      subMenuLetterSpacing,
-      borderRadiusType,
-      borderRadius,
-      borderTopLeftRadius,
-      borderTopRightRadius,
-      borderBottomLeftRadius,
-      borderBottomRightRadius,
-      tabletSubMenuFontSize,
-      tabletSubMenuFontWeight,
-      tabletSubMenuLineHeight,
-      tabletSubMenuLetterSpacing,
-      mobileSubMenuFontSize,
-      mobileSubMenuFontWeight,
-      mobileSubMenuLineHeight,
-      mobileSubMenuLetterSpacing,
-      mMenuIconSize,
-      mMenuIconSpacing,
-      mMenuColorHex,
-      mMenuColorOpacity,
-      mMenuHoverColorHex,
-      mMenuHoverColorOpacity,
-      mMenuBgColorHex,
-      mMenuBgColorOpacity,
-      mMenuBorderColorHex,
-      mMenuBorderColorOpacity,
-      mMenuFontFamily,
-      mMenuFontFamilyType,
-      mMenuFontWeight,
-      mMenuFontSize,
-      mMenuLineHeight,
-      mMenuLetterSpacing,
-      mMenuItemHorizontalAlign,
-      tabletMMenuFontSize,
-      tabletMMenuFontWeight,
-      tabletMMenuLineHeight,
-      tabletMMenuLetterSpacing,
-      tabletMMenuIconSize,
-      tabletMMenuIconSpacing,
-      tabletItemPaddingTop,
-      tabletItemPaddingRight,
-      tabletItemPaddingBottom,
-      tabletItemPaddingLeft,
-      mobileMMenuFontSize,
-      mobileMMenuFontWeight,
-      mobileMMenuLineHeight,
-      mobileMMenuLetterSpacing,
-      mobileMMenuIconSize,
-      mobileMMenuIconSpacing,
-      mobileItemPaddingTop,
-      mobileItemPaddingRight,
-      mobileItemPaddingBottom,
-      mobileItemPaddingLeft
-    } = v;
-
-    glamorObj = {
-      ".brz &": {
-        color: styleColor({ v, device: "desktop", state: "normal" }),
-        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
-          .family,
-        fontWeight: fontWeight,
-        fontSize: `${fontSize}px`,
-        lineHeight: lineHeight,
-        letterSpacing: `${letterSpacing}px`,
-
-        "& .brz-menu__sub-menu": {
-          color: styleColor({
-            v,
-            device: "desktop",
-            state: "normal",
-            prefix: "subMenuColor"
-          }),
-          fontFamily: getFontById({
-            family: subMenuFontFamily,
-            type: subMenuFontFamilyType
-          }).family,
-          fontWeight: subMenuFontWeight,
-          fontSize: `${subMenuFontSize}px`,
-          lineHeight: subMenuLineHeight,
-          letterSpacing: `${subMenuLetterSpacing}px`,
-          borderTopLeftRadius:
-            borderRadiusType === "grouped"
-              ? `${borderRadius}px`
-              : `${borderTopLeftRadius}px`,
-          borderTopRightRadius:
-            borderRadiusType === "grouped"
-              ? `${borderRadius}px`
-              : `${borderTopRightRadius}px`,
-          borderBottomLeftRadius:
-            borderRadiusType === "grouped"
-              ? `${borderRadius}px`
-              : `${borderBottomLeftRadius}px`,
-          borderBottomRightRadius:
-            borderRadiusType === "grouped"
-              ? `${borderRadius}px`
-              : `${borderBottomRightRadius}px`,
-          boxShadow: styleBoxShadow({ v, device: "desktop", state: "normal" }),
-
-          "&:hover": {
-            boxShadow: styleBoxShadow({ v, device: "desktop", state: "hover" })
-          },
-
-          "& .brz-a:hover": {
-            color: hexToRgba(subMenuHoverColorHex, subMenuHoverColorOpacity)
-          }
-        },
-        "& .brz-mm-menu__item": {
-          color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
-          fontFamily: getFontById({
-            family: mMenuFontFamily,
-            type: mMenuFontFamilyType
-          }).family,
-          fontSize: `${mMenuFontSize}`,
-          fontWeight: mMenuFontWeight,
-          lineHeight: mMenuLineHeight,
-          letterSpacing: `${mMenuLetterSpacing}`,
-          borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity),
-
-          "&:hover > .brz-mm-listitem__text, .brz-mm-btn_next:hover, &.brz-mm-listitem_opened": {
-            color: hexToRgba(mMenuHoverColorHex, mMenuHoverColorOpacity)
-          },
-          "& .brz-mm-listitem__text": {
-            justifyContent: aligns[mMenuItemHorizontalAlign]
-          }
-        },
-        "& .brz-mm-navbar": {
-          color: hexToRgba(mMenuColorHex, mMenuColorOpacity),
-          fontFamily: getFontById({
-            family: mMenuFontFamily,
-            type: mMenuFontFamilyType
-          }).family,
-          fontSize: `${mMenuFontSize}`,
-          fontWeight: mMenuFontWeight,
-          lineHeight: mMenuLineHeight,
-          letterSpacing: `${mMenuLetterSpacing}`,
-          borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
-        },
-        // Spacing for 0 level menu item
-        "& .brz-menu__ul:not(.brz-mm-listview)": {
-          marginTop: `${itemPaddingTop}px`,
-          marginRight: `${parseFloat(-itemPaddingRight / 2)}px`,
-          marginBottom: `${itemPaddingBottom}px`,
-          marginLeft: `${parseFloat(-itemPaddingLeft / 2)}px`
-        },
-        "& .brz-menu__ul > .brz-menu__item": {
-          paddingTop: `${itemPaddingTop}px`,
-          marginRight: `${parseFloat(itemPaddingRight / 2)}px`,
-          paddingBottom: `${itemPaddingBottom}px`,
-          marginLeft: `${parseFloat(itemPaddingLeft / 2)}px`,
-
-          "& > .brz-a:hover": {
-            color: styleColor({ v, device: "desktop", state: "hover" })
-          }
-        },
-        "& .brz-menu__item__icon": {
-          marginRight: `${iconSpacing}px`,
-          fontSize: `${iconSize}px`
-        },
-        "& .brz-menu__sub-item__icon": {
-          marginRight: `${subMenuIconSpacing}px`,
-          fontSize: `${subMenuIconSize}px`
-        },
-        "& .brz-mm-menu__item__icon": {
-          marginRight: `${mMenuIconSpacing}px`,
-          fontSize: `${mMenuIconSize}px`
-        },
-
-        // Background Color for Dropdown
-        "&:not(.brz-mm-menu) .brz-menu__item-dropdown .brz-menu__item": {
-          backgroundColor: hexToRgba(subMenuBgColorHex, subMenuBgColorOpacity),
-
-          "&:hover": {
-            backgroundColor: hexToRgba(
-              subMenuHoverBgColorHex,
-              subMenuHoverBgColorOpacity
-            )
-          }
-        },
-
-        // Color for dropdown arrow
-        "&:not(.brz-mm-menu) .brz-menu__dropdown .brz-menu__item-dropdown": {
-          "&:after": {
-            borderColor: styleColor({
-              v,
-              device: "desktop",
-              state: "normal",
-              prefix: "subMenuColor"
-            })
-          },
-          "&:hover:after": {
-            borderColor: hexToRgba(
-              subMenuHoverColorHex,
-              subMenuHoverColorOpacity
-            )
-          }
-        },
-
-        // Dropdown Menu Items
-        "& .brz-menu__dropdown > .brz-menu__item": {
-          borderBottomWidth: `${subMenuBorderWidth}px`,
-          borderBottomStyle: subMenuBorderStyle,
-          borderBottomColor: hexToRgba(
-            subMenuBorderColorHex,
-            subMenuBorderColorOpacity
-          )
-        },
-
-        // MMenu Style
-        "&.brz-mm-menu.brz-mm-menu_theme-dark": {
-          "& .brz-mm-panels, & .brz-mm-panels > .brz-mm-panel": {
-            backgroundColor: hexToRgba(mMenuBgColorHex, mMenuBgColorOpacity)
-          },
-          "& .brz-mm-navbar.brz-mm-listitem, & .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
-            borderColor: hexToRgba(mMenuBorderColorHex, mMenuBorderColorOpacity)
-          }
-        },
-        "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-          height: `${mMenuLineHeight * mMenuFontSize + 19}px`
-        }
-      },
-      "@media (max-width: 991px)": {
-        ".brz &": {
-          fontSize: `${tabletFontSize}px`,
-          fontWeight: tabletFontWeight,
-          lineHeight: tabletLineHeight,
-          letterSpacing: `${tabletLetterSpacing}px`,
-
-          "& .brz-menu__sub-menu": {
-            fontSize: `${tabletSubMenuFontSize}px`,
-            fontWeight: tabletSubMenuFontWeight,
-            lineHeight: tabletSubMenuLineHeight,
-            letterSpacing: `${tabletSubMenuLetterSpacing}px`
-          },
-          "& .brz-mm-menu__item": {
-            fontSize: `${tabletMMenuFontSize}`,
-            fontWeight: tabletMMenuFontWeight,
-            lineHeight: tabletMMenuLineHeight,
-            letterSpacing: `${tabletMMenuLetterSpacing}`,
-
-            "& .brz-a": {
-              justifyContent:
-                aligns[tabletSyncOnChange(v, "mMenuItemHorizontalAlign")]
-            }
-          },
-          "& .brz-mm-navbar": {
-            fontSize: `${tabletMMenuFontSize}`,
-            fontWeight: tabletMMenuFontWeight,
-            lineHeight: tabletMMenuLineHeight,
-            letterSpacing: `${tabletMMenuLetterSpacing}`
-          },
-          "& .brz-menu__item__icon": {
-            fontSize: `${tabletIconSize}px`
-          },
-          "& .brz-mm-menu__item__icon": {
-            marginRight: `${tabletMMenuIconSpacing}px`,
-            fontSize: `${tabletMMenuIconSize}px`
-          },
-          "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-            height: `${tabletMMenuLineHeight * tabletMMenuFontSize + 19}px`
-          },
-
-          // Spacing for 0 level menu item
-          "& .brz-menu__ul:not(.brz-mm-listview)": {
-            marginTop: `${tabletItemPaddingTop}px`,
-            marginRight: `${parseFloat(-tabletItemPaddingRight / 2)}px`,
-            marginBottom: `${tabletItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(-tabletItemPaddingLeft / 2)}px`
-          },
-          "& .brz-menu__ul > .brz-menu__item": {
-            paddingTop: `${tabletItemPaddingTop}px`,
-            marginRight: `${parseFloat(tabletItemPaddingRight / 2)}px`,
-            paddingBottom: `${tabletItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(tabletItemPaddingLeft / 2)}px`
-          }
-        }
-      },
-      "@media (max-width: 767px)": {
-        ".brz &": {
-          fontSize: `${mobileFontSize}px`,
-          fontWeight: mobileFontWeight,
-          lineHeight: mobileLineHeight,
-          letterSpacing: `${mobileLetterSpacing}px`,
-
-          "& .brz-menu__sub-menu": {
-            fontSize: `${mobileSubMenuFontSize}px`,
-            fontWeight: mobileSubMenuFontWeight,
-            lineHeight: mobileSubMenuLineHeight,
-            letterSpacing: `${mobileSubMenuLetterSpacing}px`
-          },
-          "& .brz-mm-menu__item": {
-            fontSize: `${mobileMMenuFontSize}`,
-            fontWeight: mobileMMenuFontWeight,
-            lineHeight: mobileMMenuLineHeight,
-            letterSpacing: `${mobileMMenuLetterSpacing}`,
-
-            "& .brz-a": {
-              justifyContent:
-                aligns[mobileSyncOnChange(v, "mMenuItemHorizontalAlign")]
-            }
-          },
-          "& .brz-mm-navbar": {
-            fontSize: `${mobileMMenuFontSize}`,
-            fontWeight: mobileMMenuFontWeight,
-            lineHeight: mobileMMenuLineHeight,
-            letterSpacing: `${mobileMMenuLetterSpacing}`
-          },
-          "& .brz-menu__item__icon": {
-            fontSize: `${mobileIconSize}px`
-          },
-          "& .brz-mm-menu__item__icon": {
-            marginRight: `${mobileMMenuIconSpacing}px`,
-            fontSize: `${mobileMMenuIconSize}px`
-          },
-          "&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
-            height: `${mobileMMenuLineHeight * mobileMMenuFontSize + 19}px`
-          },
-
-          // Spacing for 0 level menu item
-          "& .brz-menu__ul:not(.brz-mm-listview)": {
-            marginTop: `${mobileItemPaddingTop}px`,
-            marginRight: `${parseFloat(-mobileItemPaddingRight / 2)}px`,
-            marginBottom: `${mobileItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(-mobileItemPaddingLeft / 2)}px`
-          },
-          "& .brz-menu__ul > .brz-menu__item": {
-            paddingTop: `${mobileItemPaddingTop}px`,
-            marginRight: `${parseFloat(mobileItemPaddingRight / 2)}px`,
-            paddingBottom: `${mobileItemPaddingBottom}px`,
-            marginLeft: `${parseFloat(mobileItemPaddingLeft / 2)}px`
-          }
-        }
-      }
-    };
-  }
-
-  const glamorClassName = String(css(glamorObj));
-
-  return classnames(
-    "brz-menu",
-    {
-      "brz-menu__mmenu": hasMMenu,
-      "brz-menu--has-dropdown":
-        hasMMenu && items.some(({ value: { items } }) => items.length)
+export function styleMenuContainer(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover .brz-mm-menu__icon": {
+      interval: [
+        "cssStyleElementMenuShowIcon",
+        "cssStyleElementMMenuSize",
+        "cssStyleElementMMenuIconColor"
+      ]
     },
-    IS_PREVIEW ? "brz-menu__preview" : "brz-menu__editor",
-    glamorClassName,
-    className
-  );
+    ".brz &&:hover .brz-menu": {
+      interval: ["cssStyleElementMenuShow"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
 }
 
-export function styleMenuCSSVars(v) {
-  if (IS_PREVIEW) {
-    return;
-  }
+export function styleMenu(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      interval: [
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2LetterSpacing"
+      ],
+      standart: ["cssStyleTypography2FontFamily", "cssStyleColor"]
+    },
+    ".brz && .brz-menu__ul:not(.brz-mm-listview)": {
+      standart: [
+        "cssStyleElementMenuMode",
+        "cssStyleElementMenuSize",
+        "cssStyleElementMMenuListViewMargin"
+      ]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleElementMenuLinkBgColor",
+        "cssStyleElementMenuPadding"
+      ]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a:hover": {
+      standart: [
+        "cssStyleElementMenuActiveColor",
+        "cssStyleElementMenuActiveLinkBgColor"
+      ]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened:hover": {
+      standart: [
+        "cssStyleElementMenuActiveColor",
+        "cssStyleElementMenuActiveBgColor",
+        "cssStyleElementMenuActiveBorder"
+      ]
+    },
 
-  const {
-    fontFamily,
-    fontFamilyType,
-    fontWeight,
-    fontSize,
-    lineHeight,
-    letterSpacing,
-    tabletFontSize,
-    tabletFontWeight,
-    tabletLineHeight,
-    tabletLetterSpacing,
-    mobileFontSize,
-    mobileFontWeight,
-    mobileLineHeight,
-    mobileLetterSpacing,
-    iconSize,
-    iconSpacing,
-    itemPaddingTop,
-    itemPaddingRight,
-    itemPaddingBottom,
-    itemPaddingLeft,
-    tabletIconSize,
-    mobileIconSize,
-    subMenuIconSize,
-    subMenuIconSpacing,
-    subMenuHoverColorHex,
-    subMenuHoverColorOpacity,
-    subMenuBgColorHex,
-    subMenuBgColorOpacity,
-    subMenuHoverBgColorHex,
-    subMenuHoverBgColorOpacity,
-    subMenuBorderColorHex,
-    subMenuBorderColorOpacity,
-    subMenuBorderWidth,
-    subMenuBorderStyle,
-    subMenuFontFamily,
-    subMenuFontFamilyType,
-    subMenuFontWeight,
-    subMenuFontSize,
-    subMenuLineHeight,
-    subMenuLetterSpacing,
-    borderRadiusType,
-    borderRadius,
-    borderTopLeftRadius,
-    borderTopRightRadius,
-    borderBottomLeftRadius,
-    borderBottomRightRadius,
-    tabletSubMenuFontSize,
-    tabletSubMenuFontWeight,
-    tabletSubMenuLineHeight,
-    tabletSubMenuLetterSpacing,
-    mobileSubMenuFontSize,
-    mobileSubMenuFontWeight,
-    mobileSubMenuLineHeight,
-    mobileSubMenuLetterSpacing,
-    mMenuIconSize,
-    mMenuIconSpacing,
-    mMenuColorHex,
-    mMenuColorOpacity,
-    mMenuHoverColorHex,
-    mMenuHoverColorOpacity,
-    mMenuBgColorHex,
-    mMenuBgColorOpacity,
-    mMenuBorderColorHex,
-    mMenuBorderColorOpacity,
-    mMenuFontFamily,
-    mMenuFontFamilyType,
-    mMenuFontWeight,
-    mMenuFontSize,
-    mMenuLineHeight,
-    mMenuLetterSpacing,
-    mMenuItemHorizontalAlign,
-    tabletMMenuFontSize,
-    tabletMMenuFontWeight,
-    tabletMMenuLineHeight,
-    tabletMMenuLetterSpacing,
-    tabletMMenuIconSize,
-    tabletMMenuIconSpacing,
-    tabletItemPaddingTop,
-    tabletItemPaddingRight,
-    tabletItemPaddingBottom,
-    tabletItemPaddingLeft,
-    mobileMMenuFontSize,
-    mobileMMenuFontWeight,
-    mobileMMenuLineHeight,
-    mobileMMenuLetterSpacing,
-    mobileMMenuIconSize,
-    mobileMMenuIconSpacing,
-    mobileItemPaddingTop,
-    mobileItemPaddingRight,
-    mobileItemPaddingBottom,
-    mobileItemPaddingLeft
-  } = v;
-  return {
-    "--color": styleColor({ v, device: "desktop", state: "normal" }),
-    "--hoverColor": styleColor({ v, device: "desktop", state: "hover" }),
-    "--fontFamily": getFontById({ family: fontFamily, type: fontFamilyType })
-      .family,
-    "--fontWeight": fontWeight,
-    "--fontSize": `${fontSize}px`,
-    "--lineHeight": lineHeight,
-    "--letterSpacing": `${letterSpacing}px`,
+    // Current
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:hover": {
+      standart: [
+        "cssStyleElementMenuCurrentColor",
+        "cssStyleElementMenuCurrentBgColor",
+        "cssStyleElementMenuCurrentBorder"
+      ]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:hover": {
+      standart: [
+        "cssStyleElementMenuCurrentColor",
+        "cssStyleElementMenuCurrentLinkBgColor"
+      ]
+    },
 
-    // Tablet
-    "--tabletFontSize": `${tabletFontSize}px`,
-    "--tabletFontWeight": tabletFontWeight,
-    "--tabletLineHeight": tabletLineHeight,
-    "--tabletLetterSpacing": `${tabletLetterSpacing}px`,
+    ".brz &&:hover > .brz-ed-border": {
+      interval: ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
+    },
+    ".brz &&:hover .brz-menu__item__icon": {
+      interval: ["cssStyleElementMenuIconSize"],
+      standart: ["cssStyleElementMenuIconSpacing"]
+    },
 
-    // Mobile
-    "--mobileFontSize": `${mobileFontSize}px`,
-    "--mobileFontWeight": mobileFontWeight,
-    "--mobileLineHeight": mobileLineHeight,
-    "--mobileLetterSpacing": `${mobileLetterSpacing}px`,
+    ".brz && .brz-menu__ul > .brz-menu__item:hover": {
+      standart: ["cssStyleElementMenuBgColor", "cssStyleElementMenuBorder"],
+      interval: ["cssStyleElementMMenuItemPadding"]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item:first-child": {
+      interval: ["cssStyleElementMMenuItemPaddingTopZero"]
+    },
+    ".brz && .brz-menu__ul > .brz-menu__item:last-child": {
+      interval: ["cssStyleElementMMenuItemPaddingBottomZero"]
+    },
 
-    "--iconSize": `${iconSize}px`,
-    "--iconSpacing": `${iconSpacing}px`,
+    // MMenu
+    ".brz && .brz-mm-menu__item": {
+      interval: [
+        "cssStyleElementMMenuFontSize",
+        "cssStyleElementMMenuFontWeight",
+        "cssStyleElementMMenuLineHeight",
+        "cssStyleElementMMenuLetterSpacing"
+      ],
+      standart: [
+        "cssStyleElementMMenuFontFamily",
+        "cssStyleElementMMenuColor",
+        "cssStyleElementMMenuBorderColor"
+      ]
+    },
+    ".brz &&.brz-mm-menu .brz-mm-menu__item .brz-mm-listitem__text": {
+      standart: ["cssStyleElementMMenuPadding"]
+    },
+    ".brz &&:hover .brz-mm-menu__item:hover > .brz-mm-listitem__text": {
+      standart: ["cssStyleElementMMenuHoverColor"]
+    },
+    ".brz &&:hover .brz-mm-menu__item .brz-a": {
+      interval: ["cssStyleElementMMenuItemHorizontalAlign"]
+    },
+    ".brz &&:hover .brz-mm-menu__item__icon": {
+      interval: [
+        "cssStyleElementMMenuIconSpacing",
+        "cssStyleElementMMenuIconSize"
+      ]
+    },
+    ".brz && .brz-mm-navbar": {
+      interval: [
+        "cssStyleElementMMenuFontFamily",
+        "cssStyleElementMMenuFontSize",
+        "cssStyleElementMMenuFontWeight",
+        "cssStyleElementMMenuLineHeight",
+        "cssStyleElementMMenuLetterSpacing",
+        "cssStyleElementMMenuBorderColor"
+      ],
+      standart: ["cssStyleElementMMenuColor"]
+    },
+    ".brz &&:hover .brz-mm-menu__item.brz-mm-listitem_opened": {
+      standart: ["cssStyleElementMMenuColor"]
+    },
+    ".brz &&:hover.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
+      interval: ["cssStyleElementMMenuBtnNext"]
+    },
+    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz &&:hover .brz-mm-panels > .brz-mm-panel": {
+      standart: ["cssStyleElementMMenuBackgroundColor"]
+    },
+    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-navbar.brz-mm-listitem .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
+      standart: ["cssStyleElementMMenuBorderColor"]
+    },
+    ".brz &&:hover .brz-mm-listitem": {
+      standart: ["cssStyleElementMMenuBorderColor"]
+    },
 
-    "--tabletIconSize": `${tabletIconSize}px`,
-    "--mobileIconSize": `${mobileIconSize}px`,
+    // Current
+    ".brz && .brz-mm-menu__item.brz-mm-menu__item--current": {
+      standart: ["cssStyleElementMMenuActiveColor"]
+    },
+    ".brz:hover && .brz-mm-menu__item.brz-mm-menu__item--current:hover > .brz-mm-listitem__text": {
+      standart: ["cssStyleElementMMenuActiveColor"]
+    },
 
-    "--itemPaddingTop": `${itemPaddingTop}px`,
-    "--itemPaddingRight": `${parseFloat(itemPaddingRight / 2)}px`,
-    "--itemPaddingBottom": `${itemPaddingBottom}px`,
-    "--itemPaddingLeft": `${parseFloat(itemPaddingLeft / 2)}px`,
+    // SubMenu
+    ".brz &&:hover .brz-menu__sub-menu": {
+      interval: [
+        "cssStyleElementMenuSubMenuFontSize",
+        "cssStyleElementMenuSubMenuFontWeight",
+        "cssStyleElementMenuSubMenuLineHeight",
+        "cssStyleElementMenuSubMenuLetterSpacing"
+      ],
+      standart: [
+        "cssStyleElementMenuSubMenuFontFamily",
+        "cssStyleElementMenuSubMenuColor",
+        "cssStyleBoxShadow",
+        "cssStyleBorderRadius"
+      ]
+    },
+    ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
+      standart: ["cssStyleElementMenuSubMenuHoverColor"]
+    },
+    ".brz &&:hover .brz-menu__sub-item__icon": {
+      standart: [
+        "cssStyleElementMenuSubMenuIconSpacing",
+        "cssStyleElementMenuSubMenuIconSize"
+      ]
+    },
 
-    "--itemMarginTop": `${-itemPaddingTop}px`,
-    "--itemMarginRight": `${parseFloat(-itemPaddingRight / 2)}px`,
-    "--itemMarginBottom": `${-itemPaddingBottom}px`,
-    "--itemMarginLeft": `${parseFloat(-itemPaddingLeft / 2)}px`,
+    // Current SubMenu
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current .brz-a": {
+      standart: ["cssStyleElementMenuSubMenuCurrentColor"]
+    },
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current": {
+      standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
+    },
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current:hover": {
+      standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
+    },
+    ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {
+      standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
+    },
 
-    "--subMenuIconSize": `${subMenuIconSize}px`,
-    "--subMenuIconSpacing": `${subMenuIconSpacing}px`,
-    "--subMenuColor": styleColor({
-      v,
-      device: "desktop",
-      state: "normal",
-      prefix: "subMenuColor"
-    }),
-    "--subMenuHoverColor": hexToRgba(
-      subMenuHoverColorHex,
-      subMenuHoverColorOpacity
-    ),
-    "--subMenuBgColor": hexToRgba(subMenuBgColorHex, subMenuBgColorOpacity),
-    "--subMenuHoverBgColor": hexToRgba(
-      subMenuHoverBgColorHex,
-      subMenuHoverBgColorOpacity
-    ),
-    "--subMenuBorderColor": hexToRgba(
-      subMenuBorderColorHex,
-      subMenuBorderColorOpacity
-    ),
-    "--subMenuBorderWidth": `${subMenuBorderWidth}px`,
-    "--subMenuBorderStyle": subMenuBorderStyle,
+    // Background Color for Dropdown
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item": {
+      standart: ["cssStyleElementMenuSubMenuBgColor"]
+    },
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item:hover": {
+      standart: ["cssStyleElementMenuSubMenuHoverBgColor"]
+    },
 
-    "--subMenuFontFamily": getFontById({
-      family: subMenuFontFamily,
-      type: subMenuFontFamilyType
-    }).family,
-    "--subMenuFontWeight": subMenuFontWeight,
-    "--subMenuFontSize": `${subMenuFontSize}px`,
-    "--subMenuLineHeight": subMenuLineHeight,
-    "--subMenuLetterSpacing": `${subMenuLetterSpacing}px`,
-    "--subMenuBoxShadow": styleBoxShadow({
-      v,
-      device: "desktop",
-      state: "normal"
-    }),
+    // Color for dropdown arrow
+    ".brz &&:hover .brz-menu__dropdown .brz-menu__item-dropdown .brz-a:after": {
+      standart: ["cssStyleElementMenuSubMenuBorderColor"]
+    },
 
-    "--subMenuHoverBoxShadow": styleBoxShadow({
-      v,
-      device: "desktop",
-      state: "hover"
-    }),
+    // Dropdown Menu Items
+    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item": {
+      standart: ["cssStyleElementMenuSubMenuBorderBottom"]
+    },
 
-    "--borderTopLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopLeftRadius}px`,
-    "--borderTopRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderTopRightRadius}px`,
-    "--borderBottomLeftRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomLeftRadius}px`,
-    "--borderBottomRightRadius":
-      borderRadiusType === "grouped"
-        ? `${borderRadius}px`
-        : `${borderBottomRightRadius}px`,
+    // Position Dropdown
+    ".brz && .brz-menu__dropdown": {
+      interval: ["cssStyleMenuDropdownPosition"]
+    },
+    ".brz && .brz-menu__dropdown-left": {
+      interval: ["cssStyleMenuDropdownPositionLeft"]
+    },
+    ".brz && .brz-menu__dropdown-right": {
+      interval: ["cssStyleMenuDropdownPositionRight"]
+    },
+    ".brz && .brz-menu__dropdown-left:before": {
+      interval: ["cssStyleMenuDropdownBeforePositionLeft"]
+    },
+    ".brz && .brz-menu__dropdown-right:before": {
+      interval: ["cssStyleMenuDropdownBeforePositionRight"]
+    },
 
-    // Tablet
-    "--tabletSubMenuFontSize": `${tabletSubMenuFontSize}px`,
-    "--tabletSubMenuFontWeight": tabletSubMenuFontWeight,
-    "--tabletSubMenuLineHeight": tabletSubMenuLineHeight,
-    "--tabletSubMenuLetterSpacing": `${tabletSubMenuLetterSpacing}px`,
+    // First Level of Dropdown
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown": {
+      interval: ["cssStyleMenuFirstDropdownPosition"]
+    },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-left": {
+      interval: ["cssStyleMenuFirstDropdownPositionLeft"]
+    },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-right": {
+      interval: ["cssStyleMenuFirstDropdownPositionRight"]
+    },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-left:before": {
+      interval: ["cssStyleMenuFirstDropdownBeforePositionLeft"]
+    },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-right:before": {
+      interval: ["cssStyleMenuFirstDropdownBeforePositionRight"]
+    },
 
-    // Mobile
-    "--mobileSubMenuFontSize": `${mobileSubMenuFontSize}px`,
-    "--mobileSubMenuFontWeight": mobileSubMenuFontWeight,
-    "--mobileSubMenuLineHeight": mobileSubMenuLineHeight,
-    "--mobileSubMenuLetterSpacing": `${mobileSubMenuLetterSpacing}px`,
+    // Dropdown responsive open / close
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__dropdown": {
+      interval: ["cssStyleElementMenuDropdown"]
+    },
+    ".brz &&:hover .brz-menu__item.brz-menu__item--opened > .brz-menu__dropdown": {
+      interval: ["cssStyleElementMenuDropdownOpened"]
+    },
+    ".brz &&.brz-menu__preview:hover .brz-menu__item:hover > .brz-menu__sub-menu": {
+      interval: ["cssStyleElementMenuDropdownOpened"]
+    },
+    ".brz &&:hover .brz-menu__dropdown .brz-menu__item-dropdown > .brz-a:after": {
+      interval: ["cssStyleElementMenuDropdownArrow"]
+    },
 
-    "--mMenuIconSize": `${mMenuIconSize}px`,
-    "--mMenuIconSpacing": `${mMenuIconSpacing}px`,
-    "--mMenuColor": hexToRgba(mMenuColorHex, mMenuColorOpacity),
-    "--mMenuHoverColor": hexToRgba(mMenuHoverColorHex, mMenuHoverColorOpacity),
-    "--mMenuBgColor": hexToRgba(mMenuBgColorHex, mMenuBgColorOpacity),
-    "--mMenuBorderColor": hexToRgba(
-      mMenuBorderColorHex,
-      mMenuBorderColorOpacity
-    ),
-    "--mMenuFontFamily": getFontById({
-      family: mMenuFontFamily,
-      type: mMenuFontFamilyType
-    }).family,
-    "--mMenuFontWeight": mMenuFontWeight,
-    "--mMenuFontSize": `${mMenuFontSize}px`,
-    "--mMenuLineHeight": mMenuLineHeight,
-    "--mMenuLetterSpacing": `${mMenuLetterSpacing}px`,
-    "--mMenuItemHorizontalAlign": aligns[mMenuItemHorizontalAlign],
+    // Inner dropdown responsive open / close
+    ".brz &&:hover .brz-menu__dropdown .brz-menu__item-dropdown .brz-menu__dropdown": {
+      interval: ["cssStyleElementMenuInnerDropdown"]
+    },
+    ".brz &&:hover .brz-menu__dropdown .brz-menu__item--opened > .brz-menu__dropdown": {
+      interval: ["cssStyleElementMenuDropdownInnerOpened"]
+    },
+    ".brz &&.brz-menu__preview:hover .brz-menu__dropdown .brz-menu__item:hover > .brz-menu__sub-menu": {
+      interval: ["cssStyleElementMenuDropdownInnerOpened"]
+    },
 
-    // Tablet
-    "--tabletMMenuIconSize": `${tabletMMenuIconSize}px`,
-    "--tabletMMenuIconSpacing": `${tabletMMenuIconSpacing}px`,
-    "--tabletMMenuFontSize": `${tabletMMenuFontSize}px`,
-    "--tabletMMenuFontWeight": tabletMMenuFontWeight,
-    "--tabletMMenuLineHeight": tabletMMenuLineHeight,
-    "--tabletMMenuLetterSpacing": `${tabletMMenuLetterSpacing}px`,
-    "--tabletMMenuItemHorizontalAlign":
-      aligns[tabletSyncOnChange(v, "mMenuItemHorizontalAlign")],
-
-    "--tabletItemPaddingTop": `${tabletItemPaddingTop}px`,
-    "--tabletItemPaddingRight": `${parseFloat(tabletItemPaddingRight / 2)}px`,
-    "--tabletItemPaddingBottom": `${tabletItemPaddingBottom}px`,
-    "--tabletItemPaddingLeft": `${parseFloat(tabletItemPaddingLeft / 2)}px`,
-
-    "--tabletItemMarginTop": `${-tabletItemPaddingTop}px`,
-    "--tabletItemMarginRight": `${parseFloat(-tabletItemPaddingRight / 2)}px`,
-    "--tabletItemMarginBottom": `${-tabletItemPaddingBottom}px`,
-    "--tabletItemMarginLeft": `${parseFloat(-tabletItemPaddingLeft / 2)}px`,
-
-    // Mobile
-    "--mobileMMenuIconSize": `${mobileMMenuIconSize}px`,
-    "--mobileMMenuIconSpacing": `${mobileMMenuIconSpacing}px`,
-    "--mobileMMenuFontSize": `${mobileMMenuFontSize}px`,
-    "--mobileMMenuFontWeight": mobileMMenuFontWeight,
-    "--mobileMMenuLineHeight": mobileMMenuLineHeight,
-    "--mobileMMenuLetterSpacing": `${mobileMMenuLetterSpacing}px`,
-    "--mobileMMenuItemHorizontalAlign":
-      aligns[mobileSyncOnChange(v, "mMenuItemHorizontalAlign")],
-
-    "--mobileItemPaddingTop": `${mobileItemPaddingTop}px`,
-    "--mobileItemPaddingRight": `${parseFloat(mobileItemPaddingRight / 2)}px`,
-    "--mobileItemPaddingBottom": `${mobileItemPaddingBottom}px`,
-    "--mobileItemPaddingLeft": `${parseFloat(mobileItemPaddingLeft / 2)}px`,
-
-    "--mobileItemMarginTop": `${-mobileItemPaddingTop}px`,
-    "--mobileItemMarginRight": `${parseFloat(-mobileItemPaddingRight / 2)}px`,
-    "--mobileItemMarginBottom": `${-mobileItemPaddingBottom}px`,
-    "--mobileItemMarginLeft": `${parseFloat(-mobileItemPaddingLeft / 2)}px`
+    // MegaMenu responsive open / close
+    ".brz && .brz-mega-menu__dropdown": {
+      interval: ["cssStyleElementMegaMenuOpened"]
+    },
+    ".brz &&.brz-menu__preview:hover .brz-menu__item:hover > .brz-mega-menu__portal": {
+      interval: ["cssStyleElementMenuDropdownOpened"]
+    },
+    ".brz &&:hover .brz-menu__item-mega-menu .brz-mega-menu__portal": {
+      interval: ["cssStyleElementMenuDropdown"]
+    }
   };
+
+  return renderStyles({ v, vs, vd, styles });
 }

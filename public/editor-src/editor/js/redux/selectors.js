@@ -2,24 +2,33 @@ import { createSelector } from "reselect";
 import produce from "immer";
 import configRules from "visual/config/rules";
 import { objectTraverse2, objectFromEntries } from "visual/utils/object";
+import { mapModels } from "visual/utils/models";
+import { canUseConditionInPage } from "visual/utils/blocks";
+
+import {
+  getPositions,
+  getSurroundedGBIds
+} from "visual/utils/blocks/blocksConditions";
+import {
+  pageSelector,
+  fontSelector,
+  extraFontStylesSelector
+} from "./selectors2";
 
 // === 0 DEPENDENCIES ===
-
-export const pageSelector = state => state.page;
-
-export const pageBlocksSelector = state => state.pageBlocks;
-
-export const projectSelector = state => state.project || {};
+export const screenshotsSelector = state => state.screenshots || {};
 
 export const globalBlocksSelector = state => state.globalBlocks || {};
 
-export const globalBlocksUpdatesSelector = state => state.globalBlocksUpdates;
+export const changedGBIdsSelector = state => state.changedGBIds || {};
 
-export const savedBlocksSelector = state => state.savedBlocks || {};
+export const blocksDataSelector = state => state.blocksData || {};
+
+export const blocksOrderSelector = state => state.blocksOrder || [];
+
+export const projectSelector = state => state.project || {};
 
 export const stylesSelector = state => state.styles || [];
-
-export const fontSelector = state => state.fonts || {};
 
 export const uiSelector = state => state.ui || {};
 
@@ -29,31 +38,24 @@ export const currentStyleIdSelector = state => state.currentStyleId;
 
 export const currentStyleSelector = state => state.currentStyle;
 
-export const extraFontStylesSelector = state => state.extraFontStyles;
-
-export const screenshotsSelector = state => state.screenshots || {};
-
 export const errorSelector = state => state.error;
 
 // === END 0 DEPENDENCIES ===
 
 // === 1 DEPENDENCY ===
 
-export const unDeletedFontSelector = createSelector(
-  fontSelector,
-  fonts => {
-    return Object.entries(fonts).reduce((acc, curr) => {
-      const [type, { data = [] }] = curr;
+export const unDeletedFontSelector = createSelector(fontSelector, fonts => {
+  return Object.entries(fonts).reduce((acc, curr) => {
+    const [type, { data = [] }] = curr;
 
-      return {
-        ...acc,
-        [`${type}`]: {
-          data: data.filter(i => i.deleted !== true)
-        }
-      };
-    }, {});
-  }
-);
+    return {
+      ...acc,
+      [`${type}`]: {
+        data: data.filter(i => i.deleted !== true)
+      }
+    };
+  }, {});
+});
 
 export const disabledElementsSelector = createSelector(
   projectSelector,
@@ -65,10 +67,7 @@ export const pageDataSelector = createSelector(
   page => page.data || {}
 );
 
-export const pageSlugSelector = createSelector(
-  pageSelector,
-  page => page.slug
-);
+export const pageSlugSelector = createSelector(pageSelector, page => page.slug);
 
 export const triggersSelector = createSelector(
   pageDataSelector,
@@ -80,10 +79,8 @@ export const triggersAmountSelector = createSelector(
   pageData => (pageData.triggers ? pageData.triggers.length : null)
 );
 
-export const rulesAmountSelector = createSelector(
-  pageDataSelector,
-  pageData =>
-    Number.isInteger(pageData.rulesAmount) ? pageData.rulesAmount : null
+export const rulesAmountSelector = createSelector(pageDataSelector, pageData =>
+  Number.isInteger(pageData.rulesAmount) ? pageData.rulesAmount : null
 );
 
 export const deviceModeSelector = createSelector(
@@ -100,99 +97,138 @@ export const showHiddenElementsSelector = createSelector(
 
 // === 2 DEPENDENCIES ===
 
-export const pageDataDraftBlocksSelector = createSelector(
-  pageDataSelector,
-  pageBlocksSelector,
-  (pageData, pageBlocks) =>
-    produce(pageData, draft => {
-      draft.items = pageBlocks;
-    })
+export const blocksOrderRawSelector = createSelector(
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (blocksOrder, globalBlocks) => {
+    const globalBlocksIds = Object.keys(globalBlocks);
+    const { top, bottom } = getSurroundedGBIds(blocksOrder, globalBlocksIds);
+
+    return blocksOrder.filter(id => !top.includes(id) && !bottom.includes(id));
+  }
 );
 
-export const savedBlocksAssembledSelector = createSelector(
-  savedBlocksSelector,
+export const globalBlocksWithoutPopupsSelector = createSelector(
+  globalBlocksSelector,
+  blocksDataSelector,
+  (globalBlocks, blocksData) => {
+    return Object.entries(globalBlocks).reduce((acc, [id, value]) => {
+      // it happens only when globalBlock was Added and than
+      // button UNDO was pressed
+      if (!blocksData[id]) {
+        return acc;
+      }
+      const isPopup =
+        blocksData[id].type === "SectionPopup" ||
+        blocksData[id].type === "SectionPopup2";
+
+      if (!isPopup) {
+        acc[id] = value;
+      }
+
+      return acc;
+    }, {});
+  }
+);
+
+export const globalBlocksPositionsSelector = createSelector(
+  pageSelector,
+  globalBlocksSelector,
+  blocksOrderSelector,
+  globalBlocksWithoutPopupsSelector,
+  (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups) => {
+    const pageId = Number(page.id);
+    const newBlocksOrder = blocksOrder.filter(_id => {
+      if (globalBlocks[_id]) {
+        return canUseConditionInPage(globalBlocks[_id], pageId);
+      }
+
+      return true;
+    });
+
+    return getPositions(newBlocksOrder, globalBlocksWithoutPopups);
+  }
+);
+
+// ! Add new selector for popups globalBlocks/
+
+export const globalBlocksAssembledSelector = createSelector(
+  globalBlocksSelector,
+  blocksDataSelector,
   screenshotsSelector,
-  (savedBlocks, screenshots) => {
-    const savedBlocksScreenshotsExist = Object.values(screenshots).find(
-      s => s.blockScreenshot === "saved"
-    );
-    if (savedBlocksScreenshotsExist) {
-      return savedBlocks;
-    }
-
+  (globalBlocks, blocksData, screenshots) => {
     return objectFromEntries(
-      Object.entries(savedBlocks).map(entry => {
+      Object.entries(globalBlocks).map(entry => {
         const [key, value] = entry;
-        const blockScreenshot = screenshots[key];
+        const update = blocksData[key];
+        const screenshot = screenshots[key];
 
-        if (!blockScreenshot) {
-          return entry;
-        }
+        const value_ = produce(value, draft => {
+          draft.data = { ...draft.data, ...update };
 
-        const newValue = {
-          ...value,
-          value: {
-            ...value.value,
-            ...blockScreenshot
+          if (screenshot) {
+            Object.assign(draft.data.value, screenshot);
           }
-        };
 
-        return [key, newValue];
+          objectTraverse2(draft.data.value, obj => {
+            if (
+              obj.type &&
+              obj.type !== "GlobalBlock" &&
+              obj.value &&
+              obj.value._id &&
+              screenshots[obj.value._id]
+            ) {
+              Object.assign(obj.value, screenshots[obj.value._id]);
+            }
+          });
+        });
+
+        return [key, value_];
       })
     );
   }
 );
 
-export const globalBlocksInPageSelector = createSelector(
-  globalBlocksSelector,
-  pageBlocksSelector,
-  (globalBlocks, pageBlocks) => {
-    const acc = {};
-
-    extractGlobalBlocks(pageBlocks);
-
-    return acc;
-
-    function extractGlobalBlocks(obj) {
-      // global blocks can be deep in the tree (like popups)
-      // that's why it's not sufficient to search only with a simple reduce
-      objectTraverse2(obj, obj => {
-        if (obj.type && obj.type === "GlobalBlock" && obj.value) {
-          const { globalBlockId } = obj.value;
-
-          if (!acc[globalBlockId]) {
-            acc[globalBlockId] = globalBlocks[globalBlockId];
-            extractGlobalBlocks(globalBlocks[globalBlockId]);
-          }
-        }
-      });
-    }
-  }
-);
-
 // published globalBlocks + their updates
 // this is used when rendering globalBlocks refs in the page
-// and purposefully omits screenshots, to prevent a rerender when screenshots change
+// and purposefully omits screenshots, to prevent a re-render when screenshots change
 export const globalBlocksAssembled2Selector = createSelector(
   globalBlocksSelector,
-  globalBlocksUpdatesSelector,
-  (globalBlocks, globalBlocksUpdates) => {
+  blocksDataSelector,
+  (globalBlocks, blocksData) => {
     return objectFromEntries(
       Object.entries(globalBlocks).map(entry => {
         const [key, value] = entry;
-        const update = globalBlocksUpdates[key];
+        const update = blocksData[key];
 
         if (!update) {
           return entry;
         }
 
         const value_ = produce(value, draft => {
-          draft.data.value = update;
+          draft.data = update;
         });
 
         return [key, value_];
       })
     );
+  }
+);
+
+export const globalBlocksInPageSelector = createSelector(
+  pageSelector,
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (page, blocksOrder, globalBlocks) => {
+    const pageId = Number(page.id);
+
+    return blocksOrder.reduce((acc, id) => {
+      if (globalBlocks[id] && canUseConditionInPage(globalBlocks[id], pageId)) {
+        acc[id] = globalBlocks[id];
+      }
+
+      return acc;
+    }, {});
   }
 );
 
@@ -407,31 +443,6 @@ export const rulesSelector = createSelector(
   }
 );
 
-// all global block refs are replaced with their data
-export const pageDataNoRefsSelector = createSelector(
-  pageDataDraftBlocksSelector,
-  globalBlocksAssembled2Selector,
-  (pageData, globalBlocks) => {
-    return transformData(pageData);
-
-    function transformData(data) {
-      return produce(data, draft => {
-        objectTraverse2(draft, obj => {
-          if (obj.type && obj.type === "GlobalBlock" && obj.value) {
-            const { globalBlockId } = obj.value;
-
-            if (globalBlocks[globalBlockId]) {
-              transformData(
-                Object.assign(obj, globalBlocks[globalBlockId].data)
-              );
-            }
-          }
-        });
-      });
-    }
-  }
-);
-
 export const copiedElementNoRefsSelector = createSelector(
   copiedElementSelector,
   globalBlocksAssembled2Selector,
@@ -439,10 +450,10 @@ export const copiedElementNoRefsSelector = createSelector(
     return produce(copiedElement, draft => {
       objectTraverse2(draft, obj => {
         if (obj.type && obj.type === "GlobalBlock" && obj.value) {
-          const { globalBlockId } = obj.value;
+          const { _id } = obj.value;
 
-          if (globalBlocks[globalBlockId]) {
-            Object.assign(obj, globalBlocks[globalBlockId].data);
+          if (globalBlocks[_id]) {
+            Object.assign(obj, globalBlocks[_id].data);
           }
         }
       });
@@ -454,71 +465,49 @@ export const copiedElementNoRefsSelector = createSelector(
 
 // === 3 DEPENDENCIES ===
 
-export const pageAssembledSelector = createSelector(
-  pageSelector,
-  pageBlocksSelector,
-  screenshotsSelector,
-  (page, blocks, screenshots) => {
-    return produce(page, draft => {
-      draft.data.items = blocks;
+export const pageBlocksSelector = createSelector(
+  blocksOrderSelector,
+  globalBlocksSelector,
+  blocksDataSelector,
+  (blocksOrder, globalBlocks, blocksData) => {
+    // ! is it a good solution?!
+    const globalBlocksIds = Object.keys(globalBlocks);
 
-      if (Object.keys(screenshots).length > 0) {
-        objectTraverse2(draft, obj => {
-          if (
-            obj.type &&
-            obj.type !== "GlobalBlock" &&
-            obj.value &&
-            obj.value._id &&
-            screenshots[obj.value._id]
-          ) {
-            Object.assign(obj.value, screenshots[obj.value._id]);
+    return blocksOrder.map(id => {
+      if (globalBlocksIds.includes(id)) {
+        return {
+          type: "GlobalBlock",
+          value: {
+            _id: id
           }
-        });
+        };
       }
+
+      return blocksData[id];
     });
   }
 );
 
-export const globalBlocksAssembledSelector = createSelector(
+export const pageBlocksRawSelector = createSelector(
+  blocksOrderRawSelector,
   globalBlocksSelector,
-  globalBlocksUpdatesSelector,
-  screenshotsSelector,
-  (globalBlocks, globalBlocksUpdates, screenshots) => {
-    return objectFromEntries(
-      Object.entries(globalBlocks).map(entry => {
-        const [key, value] = entry;
-        const update = globalBlocksUpdates[key];
-        const screenshot = screenshots[key];
+  blocksDataSelector,
+  (blocksRawOrder, globalBlocks, blocksData) => {
+    // ! is it a good solution?!
+    const globalBlocksIds = Object.keys(globalBlocks);
 
-        if (!update && !screenshot) {
-          return entry;
-        }
-
-        let value_ = produce(value, draft => {
-          if (update) {
-            draft.data.value = update;
+    return blocksRawOrder.map(id => {
+      if (globalBlocksIds.includes(id)) {
+        return {
+          type: "GlobalBlock",
+          value: {
+            _id: id
           }
+        };
+      }
 
-          if (screenshot) {
-            Object.assign(draft.data.value, screenshot);
-          }
-
-          objectTraverse2(draft.data.value, obj => {
-            if (
-              obj.type &&
-              obj.type !== "GlobalBlock" &&
-              obj.value &&
-              obj.value._id &&
-              screenshots[obj.value._id]
-            ) {
-              Object.assign(obj.value, screenshots[obj.value._id]);
-            }
-          });
-        });
-
-        return [key, value_];
-      })
-    );
+      return blocksData[id];
+    });
   }
 );
 
@@ -553,14 +542,160 @@ export const projectAssembled = createSelector(
 
 // === ANOMALIES ===
 
-export const pageDataAssembledSelector = createSelector(
-  pageAssembledSelector,
-  page => page.data || {}
+export const pageDataDraftBlocksSelector = createSelector(
+  pageDataSelector,
+  pageBlocksSelector,
+  (pageData, pageBlocks) =>
+    produce(pageData, draft => {
+      draft.items = pageBlocks;
+    })
+);
+
+// all global block refs are replaced with their data
+export const pageDataNoRefsSelector = createSelector(
+  pageDataDraftBlocksSelector,
+  globalBlocksAssembled2Selector,
+  (pageData, globalBlocks) => {
+    return transformData(pageData);
+
+    function transformData(data) {
+      return mapModels(model => {
+        if (model.type === "GlobalBlock") {
+          const { _id } = model.value;
+
+          return globalBlocks[_id]?.data;
+        }
+
+        return model;
+      }, data);
+    }
+  }
+);
+
+export const pageBlocksNoRefsSelector = createSelector(
+  pageDataNoRefsSelector,
+  pageData => pageData.items || []
+);
+
+export const popupBlocksInPageSelector = createSelector(
+  pageBlocksNoRefsSelector,
+  pageBlocksNoRefs => {
+    const popups = [];
+    objectTraverse2(pageBlocksNoRefs, obj => {
+      if (obj.popups) {
+        popups.push(...obj.popups);
+      }
+    });
+
+    return popups;
+  }
+);
+
+export const pageAssembledRawSelector = createSelector(
+  pageSelector,
+  pageBlocksRawSelector,
+  screenshotsSelector,
+  (page, blocks, screenshots) => {
+    return produce(page, draft => {
+      draft.data.items = blocks;
+
+      if (Object.keys(screenshots).length > 0) {
+        objectTraverse2(draft, obj => {
+          if (
+            obj.type &&
+            obj.type !== "GlobalBlock" &&
+            obj.value &&
+            obj.value._id &&
+            screenshots[obj.value._id]
+          ) {
+            Object.assign(obj.value, screenshots[obj.value._id]);
+          }
+        });
+      }
+    });
+  }
+);
+
+export const pageAssembledSelector = createSelector(
+  pageSelector,
+  pageBlocksSelector,
+  screenshotsSelector,
+  (page, blocks, screenshots) => {
+    return produce(page, draft => {
+      draft.data.items = blocks;
+
+      if (Object.keys(screenshots).length > 0) {
+        objectTraverse2(draft, obj => {
+          if (
+            obj.type &&
+            obj.type !== "GlobalBlock" &&
+            obj.value &&
+            obj.value._id &&
+            screenshots[obj.value._id]
+          ) {
+            Object.assign(obj.value, screenshots[obj.value._id]);
+          }
+        });
+      }
+    });
+  }
 );
 
 export const pageBlocksAssembledSelector = createSelector(
-  pageDataAssembledSelector,
-  pageData => pageData.items || []
+  pageBlocksSelector,
+  screenshotsSelector,
+  (blocks, screenshots) => {
+    return produce(blocks, draft => {
+      if (Object.keys(screenshots).length > 0) {
+        objectTraverse2(draft, obj => {
+          if (
+            obj.type &&
+            obj.type !== "GlobalBlock" &&
+            obj.value &&
+            obj.value._id &&
+            screenshots[obj.value._id]
+          ) {
+            Object.assign(obj.value, screenshots[obj.value._id]);
+          }
+        });
+      }
+    });
+  }
+);
+
+export const pageBlocksAssembledRawSelector = createSelector(
+  pageSelector,
+  pageBlocksSelector,
+  globalBlocksSelector,
+  screenshotsSelector,
+  (page, blocks, globalBlocks, screenshots) => {
+    const pageId = Number(page.id);
+    const newBlocks = blocks.filter(block => {
+      if (block.type === "GlobalBlock") {
+        const { _id } = block.value;
+
+        return canUseConditionInPage(globalBlocks[_id], pageId);
+      }
+
+      return true;
+    });
+
+    return produce(newBlocks, draft => {
+      if (Object.keys(screenshots).length > 0) {
+        objectTraverse2(draft, obj => {
+          if (
+            obj.type &&
+            obj.type !== "GlobalBlock" &&
+            obj.value &&
+            obj.value._id &&
+            screenshots[obj.value._id]
+          ) {
+            Object.assign(obj.value, screenshots[obj.value._id]);
+          }
+        });
+      }
+    });
+  }
 );
 
 // === END ANOMALIES ===

@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import { canUseConditionInPage } from "visual/utils/blocks";
+import {
+  blocksDataSelector,
+  globalBlocksSelector
+} from "visual/redux/selectors";
 import { updateGlobalBlock } from "visual/redux/actions2";
 
 class GlobalBlock extends EditorComponent {
@@ -17,13 +21,13 @@ class GlobalBlock extends EditorComponent {
   static defaultValue = {};
 
   shouldComponentUpdate(nextProps) {
-    const { globalBlockId } = this.getDBValue();
+    const _id = this.getId();
+    // const { globalBlockId } = this.getDBValue();
     // we check the reference equality on value and not on the
     // whole object because of the way globalBlocksAssembled2Selector works
     // in that the objects may be different even if the value did not change
     const globalBlockChanged =
-      nextProps.globalBlocks[globalBlockId].data.value !==
-      this.props.globalBlocks[globalBlockId].data.value;
+      nextProps.blocksData[_id].value !== this.props.blocksData[_id].value;
 
     return globalBlockChanged || this.optionalSCU(nextProps);
   }
@@ -32,9 +36,10 @@ class GlobalBlock extends EditorComponent {
     if (meta.intent === "replace_all") {
       this.props.onChange(value, meta);
     } else {
-      const { globalBlocks } = this.props;
-      const { globalBlockId } = this.getDBValue();
-      const globalBlock = globalBlocks[globalBlockId].data;
+      const { blocksData } = this.props;
+      // const { globalBlockId } = this.getDBValue();
+      const _id = this.getId();
+      const globalBlock = blocksData[_id];
       const updatedGlobalBlock = {
         ...globalBlock,
         value
@@ -42,7 +47,7 @@ class GlobalBlock extends EditorComponent {
 
       this.props.reduxDispatch(
         updateGlobalBlock({
-          id: globalBlockId,
+          id: _id,
           data: updatedGlobalBlock,
           meta: {
             ...meta,
@@ -53,14 +58,27 @@ class GlobalBlock extends EditorComponent {
     }
   };
 
-  renderForEdit(v) {
-    const { globalBlockId } = v;
-    const { globalBlocks } = this.props;
-    const { type, value, ...otherData } = globalBlocks[globalBlockId].data;
+  renderForEdit() {
+    const _id = this.getId();
+    const { blocksData, globalBlocks } = this.props;
+
+    // if all rules was removed in globalBlock - it still exists
+    // into pageJson, but shouldn't be shown
+    if (!canUseConditionInPage(globalBlocks[_id])) {
+      return null;
+    }
+
+    // const { globalBlockId } = v;
+    const { type, value, ...otherData } = blocksData[_id];
+
+    if (type === "GlobalBlock") {
+      throw new Error(`Global block not found ${_id}`);
+    }
+
     const Component = Editor.getComponent(type);
     const meta = {
       ...this.props.meta,
-      globalBlockId
+      globalBlockId: _id
     };
 
     if (Component) {
@@ -98,7 +116,8 @@ class GlobalBlock extends EditorComponent {
 }
 
 const mapStateToProps = state => ({
-  globalBlocks: globalBlocksAssembled2Selector(state)
+  blocksData: blocksDataSelector(state),
+  globalBlocks: globalBlocksSelector(state)
 });
 
 export default connect(mapStateToProps)(GlobalBlock);

@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { RadioFields } from "../../common/GlobalApps/StepsView";
-import { fakeRequest } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 /**
  * @info
@@ -69,7 +69,7 @@ class Client extends Component {
       }
     } else {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
       onChangeNext();
     }
   };
@@ -81,7 +81,7 @@ class Client extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     if (prev && typeof prev === "string") {
       this.context.onChangePrev(prev);

@@ -139,7 +139,23 @@ class Brizy_Admin_OptimizeImages {
 
 		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
 
+		$closure = function ( $processors ) {
+			foreach ( $processors as $i => $processor ) {
+				if ( $processor instanceof Brizy_Editor_Asset_MediaAssetProcessor ) {
+					unset( $processors[ $i ] );
+
+					return $processors;
+				}
+			}
+
+			return $processors;
+		};
+
+		add_filter( 'brizy_content_processors', $closure );
+
 		$content = apply_filters( 'brizy_content', $content, $project, get_post( $postId ) );
+
+		remove_filter( 'brizy_content_processors', $closure );
 
 		return $this->extract_media_urls( $urls, $content, $filesystem );
 	}
@@ -193,6 +209,7 @@ class Brizy_Admin_OptimizeImages {
 	private function get_settings_tab( $context ) {
 		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
 		$context['submit_label'] = __( 'Save' );
+		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
 		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
 			'API_KEY' => '',
 			"lossy"   => 1
@@ -217,7 +234,8 @@ class Brizy_Admin_OptimizeImages {
 		$site_url = str_replace( array( 'http://', 'https://', '/', '.' ), array( '', '', '\/', '\.' ), home_url() );
 
 		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
+		$endpoint = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $urls;
@@ -226,9 +244,10 @@ class Brizy_Admin_OptimizeImages {
 		$time           = time();
 		$t              = null;
 		$attachmentUids = array();
-		foreach ( $matches[0] as $i => $url ) {
+		$uniqueUrls = array_unique($matches[0]);
+		foreach ( $uniqueUrls as $i => $url ) {
 
-			$parsed_url = parse_url( html_entity_decode( $matches[0][ $i ] ) );
+			$parsed_url = parse_url( html_entity_decode( $url ) );
 
 			if ( ! isset( $parsed_url['query'] ) ) {
 				continue;
@@ -236,20 +255,21 @@ class Brizy_Admin_OptimizeImages {
 
 			parse_str( $parsed_url['query'], $params );
 
-			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
+			if ( ! isset( $params[ $endpoint ] ) ) {
 				continue;
 			}
 
-			$mediaUid = $params[ Brizy_Public_CropProxy::ENDPOINT ];
+			$mediaUid = $params[ $endpoint ];
 
-			if ( strpos( $mediaUid, 'wp-' ) !== false ) {
-				$attachmentUids[] = array(
-					'url'        => $url,
-					'parsed_url' => $parsed_url,
-					'uid'        => $mediaUid,
-					'uidQuery'   => "'{$mediaUid}'"
-				);
-			}
+			//if ( strpos( $mediaUid, 'wp-' ) !== false ) {
+			$attachmentUids[] = array(
+				'url'        => $url,
+				'parsed_url' => $parsed_url,
+				'parsed_query' => $params,
+				'uid'        => $mediaUid,
+				'uidQuery'   => "'{$mediaUid}'"
+			);
+			//}
 		}
 
 		if ( count( $attachmentUids ) === 0 ) {
@@ -273,12 +293,13 @@ class Brizy_Admin_OptimizeImages {
 
 		$attachmentUids = array_map( function ( $o ) use ( $attachmentIds ) {
 			foreach ( $attachmentIds as $row ) {
-				if ( $row->UID === $o['uid'] ) {
-					$o['ID'] = $row->ID;
+				if ( $row->UID == $o['uid'] ) {
+					$o['attachmentID'] = $row->ID;
+					return $o;
 				}
-
-				return $o;
 			}
+
+			return $o;
 		}, $attachmentUids );
 
 
@@ -286,20 +307,17 @@ class Brizy_Admin_OptimizeImages {
 
 			$parsed_url = $uidRes['parsed_url'];
 
-			if ( ! isset( $parsed_url['query'] ) || !isset($uidRes['ID']) ) {
+			if ( ! isset( $parsed_url['query'] ) || ! isset( $uidRes['attachmentID'] ) ) {
 				continue;
 			}
 
-			parse_str( $parsed_url['query'], $params );
+			$params = $uidRes['parsed_query'];
 
-			if ( ! isset( $params[ Brizy_Public_CropProxy::ENDPOINT ] ) ) {
-				continue;
-			}
 
-			$media_url   = get_attached_file( $uidRes['ID'] );
+			$media_url   = get_attached_file( $uidRes['attachmentID'] );
 			$brizy_media = basename( $media_url );
 
-			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params['brizy_post'], $params['brizy_crop'], $brizy_media );
+			$wp_imageFullName = sprintf( "%s/assets/images/%s/optimized/%s", $params[ Brizy_Editor::prefix( '_post' ) ], $params[ Brizy_Editor::prefix( '_crop' ) ], $brizy_media );
 
 			if ( ! $filesystem->has( $wp_imageFullName ) ) {
 				$urls[] = $uidRes['url'] . "&brizy_optimize=1&t=" . $time;
@@ -350,6 +368,5 @@ class Brizy_Admin_OptimizeImages {
 
 		return apply_filters( 'brizy_optimizer_tabs', $tabs );
 	}
-
 
 }

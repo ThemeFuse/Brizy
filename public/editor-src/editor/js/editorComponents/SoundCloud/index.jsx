@@ -34,28 +34,64 @@ class SoundCloud extends EditorComponent {
   getResizerRestrictions(v) {
     return {
       height: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       width: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       tabletHeight: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       tabletWidth: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       mobileHeight: {
-        min: 5,
-        max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        px: {
+          min: 5,
+          max: v.style === "basic" ? v.mediumHeight : v.largeHeight
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
       mobileWidth: {
-        min: 5,
-        max: 100
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       }
     };
   }
@@ -91,7 +127,9 @@ class SoundCloud extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <BoxResizer

@@ -15,7 +15,6 @@
       a span {
         display: block;
       }
-
       &:hover > .sub-menu {
         display: block;
       }
@@ -73,11 +72,9 @@
       }
     }
   }
-  &__toggle {
-    .menu {
-      display: flex;
-      flex-flow: row wrap;
-    }
+  &__toggle .menu {
+    display: flex;
+    flex-flow: row wrap;
   }
   &__icon {
     display: none;
@@ -119,35 +116,34 @@
       display: flex;
       max-height: 100%;
     }
-    &:checked
-      ~ .brz-menu-simple__icon
-      .brz-menu-simple__icon--bars {
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars {
       background: transparent;
     }
-    &:checked
-      ~ .brz-menu-simple__icon
-      .brz-menu-simple__icon--bars:before {
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars:before {
       transform: rotate(-45deg);
     }
-    &:checked
-      ~ .brz-menu-simple__icon
-      .brz-menu-simple__icon--bars:after {
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars:after {
       transform: rotate(45deg);
     }
-    &:checked
-      ~ .brz-menu-simple__icon:not(.steps)
-      .brz-menu-simple__icon--bars:before,
-    &:checked
-      ~ .brz-menu-simple__icon:not(.steps)
-      .brz-menu-simple__icon--bars:after {
+    &:checked ~ .brz-menu-simple__icon:not(.steps) .brz-menu-simple__icon--bars:before,
+    &:checked ~ .brz-menu-simple__icon:not(.steps) .brz-menu-simple__icon--bars:after {
       top: 0;
     }
   }
+  &--cloud a {
+    text-decoration: none;
+  }
+}
 
-  &--cloud {
-    a {
-      text-decoration: none;
-    }
+// Menu Pro
+// Style for Menu Pro when pro is disabled
+.brz-menu {
+  &__ul {
+    margin: 0;
+    padding: 0;
+  }
+  &__item {
+    list-style: none;
   }
 }
 

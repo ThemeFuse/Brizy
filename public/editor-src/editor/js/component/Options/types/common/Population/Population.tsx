@@ -7,7 +7,7 @@ import { String } from "visual/utils/string/specs";
 import { Value, empty, eq, read } from "./types/Value";
 import { PopulationMethod } from "./types/PopulationMethod";
 import { GetModel, OptionDefinition } from "visual/component/Options/Type";
-import Option from "visual/component/Options/Option";
+import Options from "visual/component/Options";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 
 interface Config {
@@ -36,14 +36,13 @@ export const Population: Type = ({
   const _onChange = (v: string): void => {
     onChange(read(v) || empty);
   };
-  const renderOptions = (): ReactElement[] =>
-    options.map((o, i) => (
-      <Option
-        key={i}
-        data={o}
-        className={classNames(o.className, "brz-ed-option-population")}
-      />
-    ));
+  const renderOptions = (): ReactElement => (
+    <Options
+      data={options}
+      wrapOptions={false}
+      optionClassName="brz-ed-option-population"
+    />
+  );
   const _className = classNames(className, "brz-ed-option-population", {
     "brz-control__select-population--only-icon": !!config?.iconOnly
   });

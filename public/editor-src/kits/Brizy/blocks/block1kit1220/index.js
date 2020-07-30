@@ -131,7 +131,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"opacity: 1;\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website.&nbsp;</span><span class=\"brz-cp-color7\">No more buffering - create, style and enjoy. Our user interface was built on React.</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>Parties and family gatherings are popular this time of year. Whether you\u2019re celebrating an anniversary, a birthday, graduation, a holiday or the start of your favorite sport. Without a doubt there is something very relaxing.</span></span></p>"
                                                                 }
                                                             }
                                                         ]

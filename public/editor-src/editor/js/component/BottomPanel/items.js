@@ -1,11 +1,13 @@
 import HiddenElementsToggle from "./components/HiddenElementsToggle";
-import HistoryButtons from "./components/HistoryButtons";
+import { UndoButton } from "./components/UndoButton";
+import { RedoButton } from "./components/RedoButton";
 import PreviewButton from "./components/PreviewButton";
 import PublishButton from "./components/PublishButton";
 
 export default [
   HiddenElementsToggle,
-  HistoryButtons,
+  UndoButton,
+  RedoButton,
   PreviewButton,
   PublishButton
 ];

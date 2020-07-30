@@ -101,7 +101,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left brz-text-xs-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">Every editing option is extremely well-thought to make it easy for you to find and work with. This will shorten the time needed to build your dream website. It\u2019s easy-brizy!</span></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>Every editing option is extremely well-thought to make it easy for you to find and work with. This will shorten the time needed to build your dream website. </span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -476,7 +476,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left brz-text-xs-center\"><span class=\"brz-cp-color7\">Our quest for supreme ease of use is backed by the most modern web technologies.&nbsp;Brizy is so intuitive, that learning your way around it requires no docs.</span></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>Our quest for supreme ease of use is backed by the most modern web technologies.&nbsp;This is so intuitive, that learning your way around it requires no docs.</span></span></p>"
                                                                 }
                                                             }
                                                         ],

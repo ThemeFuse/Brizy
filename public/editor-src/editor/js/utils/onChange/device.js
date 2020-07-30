@@ -44,9 +44,11 @@ export function keySyncOnChange(key, deviceKey) {
 
 /**
  *
- * @param {string} key
- * @param {string} device
- * @param {StateMode} state
+ * @param {{
+ *   key: string,
+ *   device: string,
+ *   state: StateMode,
+ * }} v
  * @return {string}
  */
 export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
@@ -130,6 +132,14 @@ export function deviceStateValueByKey(v, key) {
   return states().reduce((acc, state) => {
     return acc || defaultValueValue({ v, key, ...state });
   }, "");
+}
+
+export function validateKeyByProperty(v, key, property) {
+  return states().some(state => {
+    const value = defaultValueValue({ v, key, ...state });
+
+    return value && value !== property;
+  });
 }
 
 export function makeKeyByStateDevice(v, key) {

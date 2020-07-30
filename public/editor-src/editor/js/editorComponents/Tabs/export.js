@@ -26,14 +26,8 @@ function changeTab($tabs, target) {
     .addClass(mobileActiveClassName);
   $($tabsContent[navIndex]).addClass("brz-tabs__items--active");
 
-  // Need Update Isotope
-  $tabsContent.find(".brz-image__gallery").each(function() {
-    const iso = $(this).data("isotope");
-
-    if (iso) {
-      iso.layout();
-    }
-  });
+  // Emit Tabs Changed
+  window.Brizy.emit("elements.tabs.changed", $tabs.get(0));
 }
 
 export default function($node) {
@@ -74,14 +68,8 @@ export default function($node) {
         $("html, body").animate({ scrollTop: $navMobile.offset().top }, 200);
       }, 100);
 
-      // Need Update Isotope
-      $item.find(".brz-image__gallery").each(function() {
-        const iso = $(this).data("isotope");
-
-        if (iso) {
-          iso.layout();
-        }
-      });
+      // Emit Tabs Changed
+      window.Brizy.emit("elements.tabs.changed", $navMobile.get(0));
     });
   });
 }

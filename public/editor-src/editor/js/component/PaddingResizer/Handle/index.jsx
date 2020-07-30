@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import classnames from "classnames";
+import classNames from "classnames";
 import MouseEventsDelayed from "./MouseEventsDelayed";
-import Draggable from "visual/component/Draggable";
 import { rolesHOC } from "visual/component/Roles";
+import Draggable from "visual/component/Draggable";
+import { attachRef } from "visual/utils/react";
+import { isInsideRect } from "visual/component/Sortable/plugin/utils";
+
+let instances = 0;
+let docX;
+let docY;
 
 class PaddingResizerHandle extends Component {
   static defaultProps = {
@@ -17,19 +23,36 @@ class PaddingResizerHandle extends Component {
 
   isDragging = false;
 
-  isInElement = false;
-
-  hideAfterDrag = false;
-
   state = { active: false };
 
-  handleMouseEnter = () => {
-    this.cursorInsideElement = true;
-  };
+  containerRef = React.createRef();
 
-  handleMouseLeave = () => {
-    this.cursorInsideElement = false;
-  };
+  componentDidMount() {
+    instances++;
+
+    if (instances === 1) {
+      this.containerRef?.current.ownerDocument.addEventListener(
+        "mousemove",
+        this.handleDocMove
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    instances--;
+
+    if (instances === 0) {
+      this.containerRef?.current.ownerDocument.removeEventListener(
+        "mousemove",
+        this.handleDocMove
+      );
+    }
+  }
+
+  handleDocMove(e) {
+    docX = e.clientX;
+    docY = e.clientY;
+  }
 
   handleMouseEnterSuccess = () => {
     if (!global.BRZ_IS_DRAGGING) {
@@ -48,6 +71,8 @@ class PaddingResizerHandle extends Component {
   };
 
   handleDragStart = () => {
+    this.isDragging = true;
+
     if (!this.state.active) {
       this.setState({
         active: true
@@ -60,7 +85,6 @@ class PaddingResizerHandle extends Component {
       return;
     }
 
-    this.isDragging = true;
     this.props.onDrag(dragInfo);
   };
 
@@ -69,20 +93,37 @@ class PaddingResizerHandle extends Component {
       return;
     }
 
+    const node = this.containerRef.current;
+
     this.isDragging = false;
 
-    if (!this.cursorInsideElement) {
-      this.setState({
-        active: false
-      });
-    }
+    this.setState(
+      {
+        active: isInsideRect(docX, docY, node?.getBoundingClientRect())
+      },
+      () => {
+        // this is a hacky way that tries to catch cases
+        // when mouseleave isn't triggered (the cursor is moved too fast)
+        setTimeout(() => {
+          if (
+            node &&
+            this.state.active &&
+            !isInsideRect(docX, docY, node?.getBoundingClientRect())
+          ) {
+            this.setState({
+              active: false
+            });
+          }
+        }, 200);
+      }
+    );
 
     this.props.onDragEnd();
   };
 
   render() {
     const { position, value, tabletValue, mobileValue } = this.props;
-    const className = classnames("brz-ed-draggable__padding", {
+    const className = classNames("brz-ed-draggable__padding", {
       "brz-ed-draggable__padding--top": position === "top",
       "brz-ed-draggable__padding--bottom": position === "bottom",
       "brz-ed-draggable__padding--active": this.state.active
@@ -91,27 +132,36 @@ class PaddingResizerHandle extends Component {
     return (
       <MouseEventsDelayed
         delay={500}
-        onEnter={this.handleMouseEnter}
         onEnterSuccess={this.handleMouseEnterSuccess}
-        onLeave={this.handleMouseLeave}
-        onLeaveSuccess={this.handleMouseLeaveSuccess}
+        onLeave={this.handleMouseLeaveSuccess}
       >
         <Draggable
-          className={className}
           draggingCursor="ns-resize"
           onDragStart={this.handleDragStart}
           onDrag={this.handleDrag}
           onDragEnd={this.handleDragEnd}
         >
-          <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--desktop-value">
-            {value}
-          </span>
-          <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--tablet-value">
-            {tabletValue}
-          </span>
-          <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--mobile-value">
-            {mobileValue}
-          </span>
+          {(refRoot, dragClass) => {
+            return (
+              <div
+                ref={el => {
+                  attachRef(el, this.containerRef);
+                  attachRef(el, refRoot);
+                }}
+                className={classNames("brz-ed-draggable", dragClass, className)}
+              >
+                <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--desktop-value">
+                  {value}
+                </span>
+                <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--tablet-value">
+                  {tabletValue}
+                </span>
+                <span className="brz-ed-draggable__padding--value brz-ed-draggable__padding--mobile-value">
+                  {mobileValue}
+                </span>
+              </div>
+            );
+          }}
         </Draggable>
       </MouseEventsDelayed>
     );
@@ -122,7 +172,7 @@ export default rolesHOC({
   allow: ["admin"],
   component: PaddingResizerHandle,
   fallbackRender: ({ position }) => {
-    const className = classnames({
+    const className = classNames({
       "brz-ed-draggable__padding--top": position === "top",
       "brz-ed-draggable__padding--bottom": position === "bottom"
     });

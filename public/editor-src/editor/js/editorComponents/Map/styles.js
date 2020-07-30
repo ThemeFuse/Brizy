@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeSizePercent", "cssStyleSizeHeightPx"]
+      standart: ["cssStyleSizeSize", "cssStyleSizeHeightPxOnly"]
     },
 
     ".brz &&:hover:before": {
@@ -12,6 +12,10 @@ export function style(v, vs, vd) {
         "cssStyleHoverTransition",
         "cssStyleElementMapPropertyHoverTransition"
       ]
+    },
+
+    ".brz &&:hover:after": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
     },
 
     ".brz &&:hover .brz-map-content": {

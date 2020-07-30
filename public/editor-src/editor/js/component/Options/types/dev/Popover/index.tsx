@@ -45,13 +45,18 @@ export const Popover: FC<Props> &
       placement={config?.placement ?? "top-center"}
       size={config?.size ?? "medium"}
       toolbar={toolbar}
+      clickOutsideExceptions={[
+        ".brz-ed-fixed",
+        ...(TARGET === "WP"
+          ? [
+              ".media-modal", // class of the WP media modal
+              ".media-modal-backdrop"
+            ]
+          : []),
+        ...(toolbar ? [".brz-ed-sidebar__right"] : [])
+      ]}
     >
-      <Options
-        className="brz-ed-popover__options"
-        optionClassName="brz-ed-popover__option"
-        data={options}
-        toolbar={toolbar}
-      />
+      <Options wrapOptions={false} data={options} toolbar={toolbar} />
     </Control>
   );
 };

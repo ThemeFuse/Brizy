@@ -1,9 +1,9 @@
 import produce from "immer";
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
+import { pendingRequest } from "visual/utils/api/editor";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { AppData } from "../common/GlobalApps/type";
-import { fakeRequest } from "../common/utils";
 import * as AppsComponent from "./Apps";
 
 const IS_PRO = Config.get("pro");
@@ -30,7 +30,7 @@ class Integration extends BaseIntegration {
     const { stages = [] } =
       this.appsData.find(app => app.id === connectedApp) || {};
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState(
       produce(draft => {

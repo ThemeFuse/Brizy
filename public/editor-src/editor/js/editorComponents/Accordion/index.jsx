@@ -13,8 +13,9 @@ import * as toolbarFilterConfig from "./toolbarFilter";
 import * as sidebarFilterConfig from "./sidebarFilter";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
+import { style, styleAnimation } from "./styles";
 import classnames from "classnames";
+import { validateKeyByProperty } from "visual/utils/onChange";
 
 class Accordion extends EditorComponent {
   static get componentId() {
@@ -58,6 +59,16 @@ class Accordion extends EditorComponent {
       collapsible,
       enableTags
     } = v;
+
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
     const itemProps = this.makeSubcomponentProps({
       className,
       filterStyle,
@@ -65,6 +76,7 @@ class Accordion extends EditorComponent {
       navIcon,
       collapsible,
       enableTags,
+      animationClassName,
       bindWithKey: "items",
       handleNav: this.handleNav,
       meta: this.props.meta,

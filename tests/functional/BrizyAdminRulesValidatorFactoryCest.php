@@ -7,6 +7,8 @@ class BrizyAdminRulesValidatorFactoryCest{
 		wp_cache_flush();
 		global $wpdb;
 		$wpdb->db_connect();
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	public function testGetValidator(FunctionalTester $I) {

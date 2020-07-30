@@ -53,6 +53,47 @@ class RulesApiCest {
 	 *
 	 * @throws Exception
 	 */
+	public function validateRuleTest( FunctionalTester $I ) {
+
+		$ruleId = md5( time() );
+		$rule   = Brizy_Admin_Rule::createFromRequestData( [
+			"id"           => $ruleId,
+			"type"         => 1,
+			"appliedFor"   => 1,
+			"entityType"   => "post",
+			"entityValues" => []
+		] );
+
+		$postId = $I->havePostInDatabase( [
+			'post_type'   => Brizy_Admin_Templates::CP_TEMPLATE,
+			'post_status' => 'publish',
+			'meta_input'  => [
+				'brizy-rules' => serialize( [ $rule->convertToOptionValue() ] ),
+			]
+		] );
+
+		$I->haveHttpHeader( 'Content-Type', 'application/json' );
+		$newRule = Brizy_Admin_Rule::createFromRequestData( [
+			"type"         => 1,
+			"appliedFor"   => 1,
+			"entityType"   => "post",
+			"entityValues" => []
+		] );
+		$I->sendPOST( $I->ajaxUrl( 'brizy_validate_rule', [
+			'version' => BRIZY_EDITOR_VERSION,
+			'post'    => $postId
+		] ), $newRule->convertToOptionValue() );
+
+		$I->seeResponseCodeIs(400);
+
+	}
+
+
+	/**
+	 * @param FunctionalTester $I
+	 *
+	 * @throws Exception
+	 */
 	public function createRuleTest( FunctionalTester $I ) {
 
 		$ruleId = md5( time() );

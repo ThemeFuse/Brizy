@@ -7,16 +7,9 @@ class Brizy_Compatibilities_SeoPress {
 	}
 
 	/**
-	 * Yoast has a feature to add twitter share image.
-	 * If this image or featured image is not added then
-	 * it takes the first image from the post content.
-	 * These action is made in the hook wp_head and we
-	 * haven't replaced the urls yet. Here's why we see:
-	 * <meta name="twitter:image" content="http://@brizy_SITE_URL_PLACEHOLDER@/?
+	 * @param $rules
 	 *
-	 * @param $img_url
-	 *
-	 * @return string
+	 * @return array
 	 */
 	public function fixRewriteRules( $rules ) {
 

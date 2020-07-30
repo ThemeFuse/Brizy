@@ -1,26 +1,20 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarElementVideoControls,
-  toolbarElementVideoStart,
-  toolbarElementVideoEnd
-} from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
-
+export function getItems({ v }) {
   return [
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-play",
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-play",
+        title: t("Video")
+      },
       devices: "desktop",
-      title: t("Video"),
       position: 80,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -53,13 +47,13 @@ export function getItems({ v, device }) {
               id: "tabCurrentElementAdvanced",
               label: t("Advanced"),
               options: [
-                toolbarElementVideoControls({
-                  v,
-                  device,
+                {
+                  id: "controls",
+                  label: t("Controls"),
+                  type: "switch-dev",
                   devices: "desktop",
-                  state: "normal",
                   disabled: v.type === "vimeo"
-                }),
+                },
                 {
                   id: "branding",
                   label: t("Branding"),
@@ -80,19 +74,35 @@ export function getItems({ v, device }) {
                   type: "switch-dev",
                   devices: "desktop"
                 },
-                toolbarElementVideoStart({
-                  v,
-                  device,
+                {
+                  id: "start",
+                  type: "number-dev",
+                  label: t("Start"),
                   devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarElementVideoEnd({
-                  v,
-                  device,
+                  config: {
+                    size: "short",
+                    max: 99999,
+                    spinner: false
+                  },
+                  helper: {
+                    content: t("Specify a start time (in seconds)")
+                  }
+                },
+                {
+                  id: "end",
+                  type: "number-dev",
+                  label: t("End"),
                   devices: "desktop",
-                  state: "normal",
-                  disabled: v.type === "vimeo"
-                })
+                  disabled: v.type === "vimeo",
+                  config: {
+                    size: "short",
+                    max: 99999,
+                    spinner: false
+                  },
+                  helper: {
+                    content: t("Specify an end time (in seconds)")
+                  }
+                }
               ]
             },
             {
@@ -112,15 +122,16 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           position: 20,

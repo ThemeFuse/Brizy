@@ -3,7 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 
 export default class IconSetter extends React.Component {
   static defaultProps = {
@@ -16,10 +16,14 @@ export default class IconSetter extends React.Component {
   handleClick = () => {
     const { value, onChange } = this.props;
 
-    UIState.set("prompt", {
+    Prompts.open({
       prompt: "icon",
-      value,
-      onChange
+      mode: "single",
+      props: {
+        onChange,
+        name: value.name,
+        type: value.type
+      }
     });
   };
 

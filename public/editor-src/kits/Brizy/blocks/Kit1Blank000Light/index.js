@@ -18,10 +18,10 @@ module.exports = {
           type: "SectionItem",
           value: {
             _styles: ["section-item"],
-            items: []
-          }
-        }
-      ]
-    }
-  }
+            items: [],
+          },
+        },
+      ],
+    },
+  },
 };

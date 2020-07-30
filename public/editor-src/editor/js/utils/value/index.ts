@@ -3,6 +3,7 @@ import { foldr } from "underscore";
 export type MValue<A> = A | undefined;
 export type ToValue<A> = (v: unknown, orElse?: A) => MValue<A>;
 export type Nullish = undefined | null;
+export type MNullish<T> = T | Nullish;
 
 /**
  * Return orElse value in case v parameter is undefined
@@ -18,17 +19,16 @@ export function onUndefined<T>(v: MValue<T>, orElse: T): T {
 }
 
 /**
+ * Check if value is undefined, null or NaN
+ */
+export const isNullish = (v: unknown): v is Nullish =>
+  v === undefined || v === null || (typeof v === "number" && Number.isNaN(v));
+
+/**
  * Return orElse if value is null or undefined
- *
- * @template T
- *
- * @param {T} orElse
- * @param {Nullish|T} v
- *
- * @return {T}
  */
 export function onNullish<T>(orElse: T, v: T | Nullish): T {
-  return v === undefined || v === null ? orElse : v;
+  return isNullish(v) ? orElse : v;
 }
 
 /**
@@ -46,14 +46,17 @@ export function onNullish<T>(orElse: T, v: T | Nullish): T {
  * @return {MValue<T>}
  */
 export function onEmpty<T>(empty: T, v: MValue<T>, orElse?: T): MValue<T> {
-  return v !== undefined && v !== empty ? v : orElse;
+  return !isNullish(v) && v !== empty ? v : orElse;
 }
 
 /**
  * Apply function over value if it empty
  */
-export function mApply<T, R>(f: (v: T) => MValue<R>, v: MValue<T>): MValue<R> {
-  if (v === undefined) {
+export function mApply<T, R>(
+  f: (v: T) => MValue<R>,
+  v: MNullish<T>
+): MValue<R> {
+  if (isNullish(v)) {
     return undefined;
   }
 
@@ -61,7 +64,7 @@ export function mApply<T, R>(f: (v: T) => MValue<R>, v: MValue<T>): MValue<R> {
 }
 
 type MFn<T, R> = (v: T) => MValue<R>;
-type MR<T, R> = (v: MValue<T>) => MValue<R>;
+type MR<T, R> = (v: MNullish<T>) => MValue<R>;
 
 /**
  * Exact as function composition, but allowing function to return a maybe value instead of value
@@ -101,6 +104,10 @@ export function mCompose<T1, T2, T3, T4, T5, T6, T7>(
 export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (v: any): MValue<R> =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    foldr(fns, (r, fn: MFn<any, any>) => (r !== undefined ? fn(r) : r), v);
+    foldr(
+      fns,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (r, fn: MFn<any, any>) => (!isNullish(r) ? fn(r) : undefined),
+      v
+    );
 }

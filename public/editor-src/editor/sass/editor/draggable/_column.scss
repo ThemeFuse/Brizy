@@ -66,6 +66,10 @@ $resize-width: 20px;
       margin: 0 7px;
       color: #6e787f;
     }
+    * {
+      word-break: normal;
+      overflow-wrap: normal;
+    }
   }
 }
 

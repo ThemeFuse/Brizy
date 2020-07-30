@@ -1,29 +1,21 @@
 import produce from "immer";
-import { removeAt, insert } from "timm";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import {
   projectAssembled,
-  pageAssembledSelector,
-  globalBlocksAssembledSelector,
-  globalBlocksAssembled2Selector
+  blocksOrderSelector,
+  globalBlocksSelector
 } from "visual/redux/selectors";
-import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
 import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
-import historyEnhancer from "./historyEnhancer";
+import { historyReducerEnhancer } from "../history/reducers";
+
+import { page } from "./page";
+import { blocksOrder } from "./blocksOrder";
+import { blocksData } from "./blocksData";
+import { globalBlocks } from "./globalBlocks";
+import { changedGBIds } from "./changedGBIds";
 import {
   HYDRATE,
-  UPDATE_RULES,
-  UPDATE_BLOCKS,
-  REORDER_BLOCKS,
-  REMOVE_BLOCK,
-  CREATE_GLOBAL_BLOCK,
-  UPDATE_GLOBAL_BLOCK,
-  DELETE_GLOBAL_BLOCK,
-  CREATE_SAVED_BLOCK,
-  UPDATE_SAVED_BLOCK,
-  DELETE_SAVED_BLOCK,
-  UPDATE_UI,
+  UPDATE_GB_RULES,
   COPY_ELEMENT,
   IMPORT_TEMPLATE,
   IMPORT_KIT,
@@ -31,15 +23,21 @@ import {
   UPDATE_CURRENT_KIT_ID,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  UPDATE_EXTRA_FONT_STYLES,
   ADD_FONTS,
   DELETE_FONTS,
-  PUBLISH,
   UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
-  UPDATE_TRIGGERS,
-  UPDATE_ERROR
+  UPDATE_ERROR,
+  MAKE_NORMAL_TO_GLOBAL_BLOCK,
+  REMOVE_BLOCK,
+  REMOVE_BLOCKS,
+  ADD_GLOBAL_BLOCK
 } from "../actions";
+import { PUBLISH } from "../actions2";
+import { extraFontStyles } from "./extraFontStyles";
+import { ui } from "./ui";
+import { syncAllowed } from "./syncAllowed";
+import { authorized } from "./authorized";
 
 // project
 
@@ -109,7 +107,8 @@ export function fonts(state = {}, action) {
     }
     case IMPORT_TEMPLATE:
     case IMPORT_KIT:
-    case ADD_BLOCK: {
+    case ADD_BLOCK:
+    case ADD_GLOBAL_BLOCK: {
       const { fonts } = action.payload;
 
       if (!fonts || fonts.length === 0) {
@@ -202,288 +201,12 @@ export function currentStyle(state = {}, action, fullState) {
   }
 }
 
-export function extraFontStyles(state = [], action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { project } = action.payload;
-
-      return project.data.extraFontStyles;
-    }
-    case UPDATE_EXTRA_FONT_STYLES: {
-      return action.payload;
-    }
-    default:
-      return state;
-  }
-}
-
 // page
-
-export function page(state = {}, action, fullState) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { page } = action.payload;
-
-      return page;
-    }
-    case PUBLISH: {
-      return produce(pageAssembledSelector(fullState), draft => {
-        draft.status = "publish";
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case UPDATE_TRIGGERS: {
-      const { data: triggers } = action.payload;
-
-      return produce(state, draft => {
-        draft.data.triggers = triggers;
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case UPDATE_RULES: {
-      return produce(state, draft => {
-        draft.data.rulesAmount = action.payload.length;
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    default:
-      return state;
-  }
-}
-
-export function pageBlocks(state = [], action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { page } = action.payload;
-
-      return page.data.items || [];
-    }
-    case ADD_BLOCK: {
-      const { block } = action.payload;
-      const { insertIndex } = action.meta;
-      const newPageBlocks = EditorArrayComponent.insertItemsBatch(
-        state,
-        insertIndex,
-        [block]
-      );
-
-      return newPageBlocks;
-    }
-    case REMOVE_BLOCK: {
-      const { index } = action.payload;
-      const newBlocks = removeAt(state, index);
-
-      return newBlocks;
-    }
-    case REORDER_BLOCKS: {
-      const { oldIndex, newIndex } = action.payload;
-      const movedBlock = state[oldIndex];
-      const newBlocks = insert(removeAt(state, oldIndex), newIndex, movedBlock);
-
-      return newBlocks;
-    }
-    case UPDATE_BLOCKS: {
-      const { blocks } = action.payload;
-
-      return blocks;
-    }
-    case IMPORT_TEMPLATE: {
-      const { blocks: templateBlocks } = action.payload;
-      const { insertIndex } = action.meta;
-      const newPageBlocks = EditorArrayComponent.insertItemsBatch(
-        state,
-        insertIndex,
-        templateBlocks
-      );
-
-      return newPageBlocks;
-    }
-    default:
-      return state;
-  }
-}
 
 export function blocksThumbnailSizes(state = {}, action) {
   switch (action.type) {
     case HYDRATE:
       return action.payload.blocksThumbnailSizes;
-    default:
-      return state;
-  }
-}
-
-// global blocks
-
-export function globalBlocks(state = {}, action, fullState) {
-  switch (action.type) {
-    case HYDRATE: {
-      return action.payload.globalBlocks;
-    }
-    case CREATE_GLOBAL_BLOCK: {
-      const { id, data } = action.payload;
-
-      return produce(state, draft => {
-        draft[id] = { id, data, dataVersion: 1 };
-      });
-    }
-    case DELETE_GLOBAL_BLOCK: {
-      const { id } = action.payload;
-
-      return produce(state, draft => {
-        draft[id].data.deleted = true;
-        draft[id].dataVersion = draft[id].dataVersion + 1;
-      });
-    }
-    case PUBLISH: {
-      const blocks = globalBlocksAssembledSelector(fullState);
-
-      return Object.entries(blocks).reduce((acc, [key, block]) => {
-        acc[key] = produce(block, draft => {
-          draft.dataVersion = draft.dataVersion + 1;
-        });
-
-        return acc;
-      }, {});
-    }
-    case UPDATE_SCREENSHOT: {
-      const {
-        payload: { blockId, data: screenshots },
-        meta: { blockType, action: metaAction }
-      } = action;
-
-      if (blockType === "global" && metaAction === "create") {
-        return produce(state, draft => {
-          Object.assign(draft[blockId].data.value, screenshots);
-          draft[blockId].dataVersion = draft[blockId].dataVersion + 1;
-        });
-      }
-
-      return state;
-    }
-    default:
-      return state;
-  }
-}
-
-export function globalBlocksUpdates(state = {}, action) {
-  switch (action.type) {
-    case UPDATE_GLOBAL_BLOCK: {
-      const {
-        id,
-        data: { value }
-      } = action.payload;
-
-      return { ...state, [id]: value };
-    }
-    default:
-      return state;
-  }
-}
-
-// saved blocks
-
-export function savedBlocks(state = {}, action, fullState) {
-  switch (action.type) {
-    case HYDRATE: {
-      return action.payload.savedBlocks;
-    }
-    case CREATE_SAVED_BLOCK: {
-      const { id, data } = action.payload;
-      const globalBlock = globalBlocksAssembled2Selector(fullState);
-      const blockData = mapModels(model => {
-        if (model.type === "GlobalBlock") {
-          const { globalBlockId } = model.value;
-          return globalBlock[globalBlockId]?.data;
-        }
-
-        return model;
-      }, data);
-
-      return produce(state, draft => {
-        draft[id] = { id, data: blockData, dataVersion: 1 };
-      });
-    }
-    case UPDATE_SAVED_BLOCK: {
-      const { id, data } = action.payload;
-
-      return produce(state, draft => {
-        draft[id].data = data;
-        draft[id].dataVersion = draft[id].dataVersion + 1;
-      });
-    }
-    case DELETE_SAVED_BLOCK: {
-      const { id } = action.payload;
-
-      return produce(state, draft => {
-        delete draft[id];
-      });
-    }
-    case UPDATE_SCREENSHOT: {
-      const {
-        payload: { blockId, data: screenshots },
-        meta: { blockType }
-      } = action;
-
-      if (blockType === "saved") {
-        return produce(state, draft => {
-          Object.assign(draft[blockId].data.value, screenshots);
-          draft[blockId].dataVersion = draft[blockId].dataVersion + 1;
-        });
-      }
-
-      return state;
-    }
-    default:
-      return state;
-  }
-}
-
-// ui
-
-const uiDefault = {
-  deviceMode: "desktop",
-  leftSidebar: {
-    isOpen: false,
-    drawerContentType: null
-  },
-  rightSidebar: {
-    isOpen: false,
-    lock: undefined, // undefined | "manual" | "auto"
-    alignment: "right" // "left" | "right"
-  },
-  showHiddenElements: false,
-  error: null
-};
-export function ui(state = uiDefault, action) {
-  switch (action.type) {
-    case UPDATE_UI: {
-      const { key, value } = action;
-      const newState = {
-        ...state,
-        [key]: value
-      };
-
-      // deviceMode + rightSidebar
-      if (key === "deviceMode" && newState.rightSidebar.lock !== "manual") {
-        if (value !== "desktop") {
-          newState.rightSidebar = {
-            ...newState.rightSidebar,
-            isOpen: true,
-            lock: "auto"
-          };
-        } else {
-          if (newState.rightSidebar.isOpen) {
-            newState.rightSidebar = {
-              ...newState.rightSidebar,
-              isOpen: false,
-              lock: undefined
-            };
-          }
-        }
-      }
-
-      return newState;
-    }
     default:
       return state;
   }
@@ -509,11 +232,14 @@ export function copiedElement(state = copiedElementDefault, action) {
 
 // screenshots
 
+const validateScreenshots = obj =>
+  obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc;
+
 function parseScreenshots(data) {
   const acc = {};
 
   objectTraverse2(data, obj => {
-    if (obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc) {
+    if (validateScreenshots(obj)) {
       const v = obj.value;
 
       acc[obj.value._id] = {
@@ -544,12 +270,7 @@ export function screenshots(
         inConstructionState.globalBlocks
       )) {
         const objValue = obj.data;
-        if (
-          objValue.type &&
-          objValue.value &&
-          objValue.value._id &&
-          objValue.value._thumbnailSrc
-        ) {
+        if (validateScreenshots(objValue)) {
           const v = objValue.value;
 
           globalBlocksScreenshots[key] = {
@@ -577,23 +298,31 @@ export function screenshots(
     }
     case UPDATE_SCREENSHOT: {
       const {
-        payload: { blockId, data },
-        meta: { blockType, action: metaAction }
+        payload: { blockId, data }
       } = action;
 
-      const ret = {
-        ...state,
-        [blockId]: data
+      return produce(state, draft => {
+        draft[blockId] = data;
+      });
+    }
+    case MAKE_NORMAL_TO_GLOBAL_BLOCK: {
+      const {
+        data: {
+          value: { _id }
+        },
+        meta
+      } = action.payload;
+      const screenshot = {
+        _thumbnailSrc: meta._thumbnailSrc,
+        _thumbnailWidth: meta._thumbnailWidth,
+        _thumbnailHeight: meta._thumbnailHeight,
+        _thumbnailTime: meta._thumbnailTime
       };
 
-      if (blockType === "global" && metaAction === "create") {
-        ret._published = {
-          ...ret._published,
-          [blockId]: data
-        };
-      }
-
-      return ret;
+      return produce(state, draft => {
+        draft[_id] = screenshot;
+        draft._published[_id] = screenshot;
+      });
     }
     default:
       return state;
@@ -626,24 +355,26 @@ export function error(state = errorDefault, action) {
   }
 }
 
-export default historyEnhancer(
+export default historyReducerEnhancer(
   combineReducersCustom(
     {
-      project,
-      page,
+      authorized,
+      syncAllowed,
+      blocksData,
       blocksThumbnailSizes,
-      globalBlocks,
-      globalBlocksUpdates,
-      savedBlocks,
-      styles,
-      currentStyleId,
-      currentStyle,
-      extraFontStyles,
-      pageBlocks,
-      fonts,
-      ui,
       copiedElement,
-      error
+      currentStyle,
+      currentStyleId,
+      error,
+      extraFontStyles,
+      fonts,
+      globalBlocks,
+      changedGBIds,
+      page,
+      blocksOrder,
+      project,
+      styles,
+      ui
     },
     {
       screenshots
@@ -651,12 +382,44 @@ export default historyEnhancer(
   ),
   {
     keysToTrack: [
-      "pageBlocks",
+      "blocksOrder",
+      "blocksData",
       "currentStyleId",
       "currentStyle",
       "extraFontStyles",
       "globalBlocksUpdates"
-    ]
+    ],
+    onBeforeUpdate: (state, action, history) => {
+      if (
+        action.type === UPDATE_GB_RULES ||
+        action.type === REMOVE_BLOCK ||
+        action.type === REMOVE_BLOCKS
+      ) {
+        // const { id } = action.payload;
+        const blocksOrder = blocksOrderSelector(state);
+        const globalBlocks = globalBlocksSelector(state);
+        const ids =
+          action.type === REMOVE_BLOCKS ? blocksOrder : [action.payload.id];
+
+        ids.forEach(id => {
+          if (blocksOrder.includes(id) && globalBlocks[id]) {
+            const snapshots = history.getSnapshots();
+
+            history.replaceSnapshots(
+              snapshots.map(snapshot => {
+                if (snapshot?.blocksOrder) {
+                  snapshot.blocksOrder = snapshot.blocksOrder.filter(
+                    _id => _id !== id
+                  );
+                }
+
+                return snapshot;
+              })
+            );
+          }
+        });
+      }
+    }
   }
 );
 

@@ -4,6 +4,15 @@ import Showing from "../common/Showing";
 import Referrer from "../common/Referrer";
 import Devices from "../common/Devices";
 
+import CurrentUrl from "../common/CurrentUrl";
+import CurrentDate from "../common/CurrentDate";
+import LastVisitDate from "../common/LastVisitDate";
+import TimeFrom from "../common/TimeFrom";
+import Cookie from "../common/Cookie";
+import OS from "../common/OS";
+import OtherPopups from "../common/OtherPopups";
+import SpecificPopup from "../common/SpecificPopup";
+
 export default [
   {
     id: "pageLoad",
@@ -44,9 +53,10 @@ export default [
   },
   {
     id: "showing",
-    title: "Show After X",
+    title: "Number of",
     defaultValue: {
       value: "views",
+      type: "equals",
       views: 5,
       sessions: 3
     },
@@ -55,8 +65,9 @@ export default [
   },
   {
     id: "referrer",
-    title: "Arriving From",
+    title: "Arriving",
     defaultValue: {
+      type: "is",
       value: "show",
       url: "",
       source: "search_engines"
@@ -70,5 +81,88 @@ export default [
     defaultValue: "desktop",
     duplicatesAmount: 3,
     Component: Devices
+  },
+  {
+    id: "currentUrl",
+    title: "Current Page URL",
+    defaultValue: {
+      type: "matches",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: CurrentUrl
+  },
+  {
+    id: "currentDate",
+    title: "Current Date",
+    defaultValue: {
+      type: "matches",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: CurrentDate
+  },
+  {
+    id: "lastVisitDate",
+    title: "Last Visit Date",
+    defaultValue: {
+      type: "matches",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: LastVisitDate
+  },
+  {
+    id: "timeFrom",
+    title: "Time From",
+    defaultValue: {
+      type: "greater",
+      visit: "first",
+      time: "days",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: TimeFrom
+  },
+  {
+    id: "cookie",
+    title: "Cookie",
+    defaultValue: {
+      type: "matches",
+      param: "",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: Cookie
+  },
+  {
+    id: "os",
+    title: "Operating System",
+    defaultValue: {
+      type: "is",
+      value: "windows"
+    },
+    duplicatesAmount: Infinity,
+    Component: OS
+  },
+  {
+    id: "otherPopups",
+    title: "No other popup",
+    defaultValue: {
+      type: "was",
+      value: "page"
+    },
+    duplicatesAmount: 1,
+    Component: OtherPopups
+  },
+  {
+    id: "specificPopup",
+    title: "Other specific popup",
+    defaultValue: {
+      type: "was",
+      value: ""
+    },
+    duplicatesAmount: Infinity,
+    Component: SpecificPopup
   }
 ];

@@ -8,13 +8,9 @@ import * as BorderModel from "./model";
 import { fromElementModel, getStyleObject, toElementModel } from "./utils";
 import { Border as Control } from "visual/component/Controls/Border";
 import { openPaletteSidebar } from "visual/component/Options/types/dev/ColorPicker/store";
-import {
-  getColorPaletteColor,
-  getColorPaletteColors
-} from "visual/utils/color";
+import { getColorPaletteColors } from "visual/utils/color";
 import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
-import { get } from "visual/utils/model";
-import { getConfig } from "visual/component/Options/types/dev/BoxShadow/utils";
+import { mCompose } from "visual/utils/value";
 
 const _setOpacity = ColorUtils.setOpacity.bind(
   undefined,
@@ -22,63 +18,54 @@ const _setOpacity = ColorUtils.setOpacity.bind(
 );
 
 export const Border = ({ value, onChange, className, config }) => {
-  const styles = conf(config, "styles");
+  const styles = config.styles ?? BorderStyle.styles;
   const hasNone = styles.includes(BorderStyle.empty);
   const minWidth = hasNone ? id : v => Math.max(1, v);
-  const _onChange = (m, meta = {}) => {
-    let model = value;
-    const key = meta.isChanged;
-    const v = get(key, m);
+  const change = mCompose(onChange, toElementModel);
 
-    switch (key) {
-      case "select":
-        model = BorderModel.setStyle(v, value);
-        break;
-      case "opacity":
-        model = _setOpacity(v, value, !!meta.opacityDragEnd);
-        break;
-      case "hex":
-        model = BorderModel.setHex(v, value);
-        break;
-      case "palette":
-        {
-          const hex = get("hex", getColorPaletteColor(v));
-          model = BorderModel.setHex(hex, value);
-          model = BorderModel.setPalette(v, model);
-        }
-        break;
-      case "widthType":
-        model = BorderModel.setWidthType(v, value);
-        break;
-      case "width":
-        model = BorderModel.setWidth(minWidth(v), value);
-        break;
-      case "topWidth":
-        model = BorderModel.setTopWidth(minWidth(v), value);
-        break;
-      case "rightWidth":
-        model = BorderModel.setRightWidth(minWidth(v), value);
-        break;
-      case "bottomWidth":
-        model = BorderModel.setBottomWidth(minWidth(v), value);
-        break;
-      case "leftWidth":
-        model = BorderModel.setLeftWidth(minWidth(v), value);
-        break;
-    }
-
-    onChange(toElementModel(model), meta);
-  };
+  const changeStyle = v => change(BorderModel.setStyle(v, value));
+  const changeHex = v => change(BorderModel.setHex(v, value));
+  const changeOpacity = (v, f) => change(_setOpacity(v, value, f));
+  const changePalette = v => change(BorderModel.setPalette(v, value));
+  const changeWidthType = v => change(BorderModel.setWidthType(v, value));
+  const changeWidth = v => change(BorderModel.setWidth(minWidth(v), value));
+  const changeTopWidth = v =>
+    change(BorderModel.setTopWidth(minWidth(v), value));
+  const changeRightWidth = v =>
+    change(BorderModel.setRightWidth(minWidth(v), value));
+  const changeBottomWidth = v =>
+    change(BorderModel.setBottomWidth(minWidth(v), value));
+  const changeLeftWidth = v =>
+    change(BorderModel.setLeftWidth(minWidth(v), value));
 
   return (
     <Control
       className={className}
-      value={value}
-      onChange={_onChange}
-      palette={getColorPaletteColors()}
+      paletteList={getColorPaletteColors()}
       paletteOpenSettings={openPaletteSidebar}
-      opacity={conf(config, "opacity")}
+      enableOpacity={config?.opacity ?? true}
       styles={styles.map(getStyleObject).filter(Boolean)}
+      widthTypes={config?.width ?? ["grouped", "ungrouped"]}
+      style={value.style}
+      onChangeStyle={changeStyle}
+      hex={value.hex}
+      onChangeHex={changeHex}
+      opacity={value.opacity}
+      onChangeOpacity={changeOpacity}
+      palette={value.palette}
+      onChangePalette={changePalette}
+      widthType={value.widthType}
+      onChangeWidthType={changeWidthType}
+      width={value.width}
+      onChangeWidth={changeWidth}
+      topWidth={value.topWidth}
+      onChangeTopWidth={changeTopWidth}
+      rightWidth={value.rightWidth}
+      onChangeRightWidth={changeRightWidth}
+      bottomWidth={value.bottomWidth}
+      onChangeBottomWidth={changeBottomWidth}
+      leftWidth={value.leftWidth}
+      onChangeLeftWidth={changeLeftWidth}
     />
   );
 };
@@ -89,7 +76,8 @@ Border.propTypes = {
   className: T.string,
   config: T.shape({
     opacity: T.bool,
-    styles: T.arrayOf(T.oneOf(BorderStyle.styles))
+    styles: T.arrayOf(T.oneOf(BorderStyle.styles)),
+    width: T.arrayOf(T.oneOf(["grouped", "ungrouped"]))
   }),
   value: T.shape({
     style: T.oneOf(BorderStyle.styles),
@@ -116,15 +104,5 @@ Border.propTypes = {
 
 Border.defaultProps = {
   className: "",
-  config: {
-    opacity: true,
-    styles: BorderStyle.styles
-  }
+  config: {}
 };
-
-/**
- * @param {{opacity: boolean}} config
- * @param {string} key
- * @return {*}
- */
-const conf = (config, key) => getConfig(Border.defaultProps, config, key);

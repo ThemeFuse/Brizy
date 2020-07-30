@@ -1,6 +1,9 @@
 {
   "content": {
-    "imageSrc": "",
+    "images": {
+      "imageSrc": ""
+    },
+
     "imagePopulation": "",
     "imageWidth": 600,
     "imageHeight": 450,
@@ -48,9 +51,13 @@
     "imageOpacity": 100,
 
     "resize": 100,
+    "resizeSuffix": null,
     "zoom": 100,
+    "zoomSuffix": null,
     "width": 100,
+    "widthSuffix": null,
     "height": 100,
+    "heightSuffix": null,
     "borderRadiusType": "square",
     "borderRadius": 0,
     "tempBorderRadius": 0,
@@ -98,11 +105,16 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletResize": null,
+    "tabletResizeSuffix": null,
     "tabletZoom": null,
+    "tabletZoomSuffix": null,
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
     "tabletBoxShadow": null,
 
@@ -124,9 +136,13 @@
     "tempTabletBoxShadowHorizontal": null,
 
     "mobileResize": null,
+    "mobileResizeSuffix": null,
     "mobileZoom": null,
+    "mobileZoomSuffix": null,
     "mobileWidth": null,
+    "mobileWidthSuffix": null,
     "mobileHeight": null,
+    "mobileHeightSuffix": null,
 
     "mobileBoxShadow": null,
 

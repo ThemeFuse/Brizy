@@ -1,22 +1,26 @@
 import React from "react";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 
 class IntegrationsAppsOptionType extends React.Component {
   static defaultProps = {
     className: "",
     attr: {},
     icon: "nc-cog",
-    value: {}
+    value: {
+      service: "facebook",
+      group: "social"
+    }
   };
 
   handleMouseDown = event => {
     event.preventDefault();
 
-    UIState.set("prompt", {
-      prompt: "apps-integrations",
-      value: this.props.value
+    Prompts.open({
+      prompt: "apps",
+      mode: "single",
+      props: this.props.value
     });
   };
 

@@ -1,0 +1,852 @@
+{
+  "content": {
+    "type": "login",
+    "messageRedirect": "",
+    "logoutRedirect": "",
+    "showPlaceholder": "on",
+    "showLabel": "off",
+    "remember": "on",
+    "lostPassword": "Lost your password?",
+    "showLostPassword": "on",
+    "items": []
+  },
+
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
+  "style": {
+    "horizontalAlign": "left",
+
+    "autorizedHorizontalAlign": "center",
+
+    "submitWidth": 100,
+
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null,
+      "labelFontFamily": "lato",
+      "tabletLabelFontFamily": null,
+      "mobileLabelFontFamily": null,
+      "checkboxFontFamily": "lato",
+      "tabletCheckboxFontFamily": null,
+      "mobileCheckboxFontFamily": null,
+      "lostFontFamily": "lato",
+      "tabletLostFontFamily": null,
+      "mobileLostFontFamily": null,
+      "textFontFamily": "lato",
+      "tabletTextFontFamily": null,
+      "mobileTextFontFamily": null
+    },
+
+    "fontStyle": "",
+    "fontFamilyType": "google",
+    "fontSize": 16,
+    "fontWeight": 400,
+    "lineHeight": 1.1,
+    "letterSpacing": 0,
+
+    "textFontStyle": "",
+    "textFontFamilyType": "google",
+    "textFontSize": 16,
+    "textFontWeight": 400,
+    "textLineHeight": 1.1,
+    "textLetterSpacing": 0,
+
+    "size": "medium",
+    "sizeLargePadding": 20,
+    "sizeMediumPadding": 14,
+    "sizeSmallPadding": 10,
+
+    "colorHex": "#73777f",
+    "colorOpacity": 0.7,
+    "colorPalette": "",
+
+    "tempColorOpacity": 0.7,
+    "tempColorPalette": "",
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "textColorHex": "#000000",
+    "textColorOpacity": 0.7,
+    "textColorPalette": "",
+
+    "tempTextColorOpacity": 0.7,
+    "tempTextColorPalette": "",
+
+    "hoverTextColorHex": null,
+    "hoverTextColorOpacity": null,
+    "hoverTextColorPalette": null,
+
+    "tempHoverTextColorOpacity": null,
+    "tempHoverTextColorPalette": null,
+
+    "linkColorHex": "#0085ba",
+    "linkColorOpacity": 0.7,
+    "linkColorPalette": "",
+
+    "tempLinkColorOpacity": 0.7,
+    "tempLinkColorPalette": "",
+
+    "hoverLinkColorHex": null,
+    "hoverLinkColorOpacity": null,
+    "hoverLinkColorPalette": null,
+
+    "tempHoverLinkColorOpacity": null,
+    "tempHoverLinkColorPalette": null,
+
+    "lostColorHex": "#73777f",
+    "lostColorOpacity": 0.7,
+    "lostColorPalette": "",
+
+    "tempLostColorOpacity": 0.7,
+    "tempLostColorPalette": "",
+
+    "hoverLostColorHex": null,
+    "hoverLostColorOpacity": null,
+    "hoverLostColorPalette": null,
+
+    "tempHoverLostColorOpacity": null,
+    "tempHoverLostColorPalette": null,
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "hoverBorderRadiusType": null,
+    "hoverBorderRadius": null,
+    "hoverBorderTopLeftRadius": null,
+    "hoverBorderTopRightRadius": null,
+    "hoverBorderBottomRightRadius": null,
+    "hoverBorderBottomLeftRadius": null,
+
+    "tempHoverBorderRadius": null,
+    "tempHoverBorderTopLeftRadius": null,
+    "tempHoverBorderTopRightRadius": null,
+    "tempHoverBorderBottomRightRadius": null,
+    "tempHoverBorderBottomLeftRadius": null,
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "paddingType": "ungrouped",
+    "tempPaddingType": "ungrouped",
+
+    "padding": 14,
+    "paddingTop": 14,
+    "paddingRight": 24,
+    "paddingBottom": 14,
+    "paddingLeft": 24,
+
+    "tempPadding": 15,
+    "tempPaddingTop": 14,
+    "tempPaddingRight": 24,
+    "tempPaddingBottom": 14,
+    "tempPaddingLeft": 24,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "hoverPaddingType": null,
+    "tempHoverPaddingType": null,
+
+    "hoverPadding": null,
+    "hoverPaddingTop": null,
+    "hoverPaddingRight": null,
+    "hoverPaddingBottom": null,
+    "hoverPaddingLeft": null,
+
+    "tempHoverPadding": null,
+    "tempHoverPaddingTop": null,
+    "tempHoverPaddingRight": null,
+    "tempHoverPaddingBottom": null,
+    "tempHoverPaddingLeft": null,
+
+    "hoverPaddingSuffix": null,
+    "hoverPaddingTopSuffix": null,
+    "hoverPaddingRightSuffix": null,
+    "hoverPaddingBottomSuffix": null,
+    "hoverPaddingLeftSuffix": null,
+
+    "tempHoverPaddingSuffix": null,
+    "tempHoverPaddingTopSuffix": null,
+    "tempHoverPaddingRightSuffix": null,
+    "tempHoverPaddingBottomSuffix": null,
+    "tempHoverPaddingLeftSuffix": null,
+
+    "labelFontStyle": "",
+    "labelFontFamilyType": "google",
+    "labelFontSize": 16,
+    "labelFontWeight": 400,
+    "labelLineHeight": 1.5,
+    "labelLetterSpacing": 0,
+
+    "labelHorizontalAlign": "left",
+    "lostHorizontalAlign": "left",
+
+    "labelColorHex": "#73777f",
+    "labelColorOpacity": 0.7,
+    "labelColorPalette": "",
+
+    "tempLabelColorOpacity": 0.7,
+    "tempLabelColorPalette": "",
+
+    "labelPaddingType": "ungrouped",
+    "tempLabelPaddingType": "ungrouped",
+
+    "labelPadding": 5,
+    "labelPaddingTop": 0,
+    "labelPaddingRight": 0,
+    "labelPaddingBottom": 5,
+    "labelPaddingLeft": 0,
+
+    "tempLabelPadding": 5,
+    "tempLabelPaddingTop": 0,
+    "tempLabelPaddingRight": 0,
+    "tempLabelPaddingBottom": 5,
+    "tempLabelPaddingLeft": 0,
+
+    "labelPaddingSuffix": "px",
+    "labelPaddingTopSuffix": "px",
+    "labelPaddingRightSuffix": "px",
+    "labelPaddingBottomSuffix": "px",
+    "labelPaddingLeftSuffix": "px",
+
+    "tempLabelPaddingSuffix": "px",
+    "tempLabelPaddingTopSuffix": "px",
+    "tempLabelPaddingRightSuffix": "px",
+    "tempLabelPaddingBottomSuffix": "px",
+    "tempLabelPaddingLeftSuffix": "px",
+
+    "hoverLabelPaddingType": null,
+    "tempHoverLabelPaddingType": null,
+
+    "hoverLabelPadding": null,
+    "hoverLabelPaddingTop": null,
+    "hoverLabelPaddingRight": null,
+    "hoverLabelPaddingBottom": null,
+    "hoverLabelPaddingLeft": null,
+
+    "tempHoverLabelPadding": null,
+    "tempHoverLabelPaddingTop": null,
+    "tempHoverLabelPaddingRight": null,
+    "tempHoverLabelPaddingBottom": null,
+    "tempHoverLabelPaddingLeft": null,
+
+    "hoverLabelPaddingSuffix": null,
+    "hoverLabelPaddingTopSuffix": null,
+    "hoverLabelPaddingRightSuffix": null,
+    "hoverLabelPaddingBottomSuffix": null,
+    "hoverLabelPaddingLeftSuffix": null,
+
+    "tempHoverLabelPaddingSuffix": null,
+    "tempHoverLabelPaddingTopSuffix": null,
+    "tempHoverLabelPaddingRightSuffix": null,
+    "tempHoverLabelPaddingBottomSuffix": null,
+    "tempHoverLabelPaddingLeftSuffix": null,
+
+    "fieldPaddingType": "grouped",
+    "tempFieldPaddingType": "grouped",
+
+    "fieldPadding": 15,
+    "fieldPaddingTop": 0,
+    "fieldPaddingRight": 15,
+    "fieldPaddingBottom": 15,
+    "fieldPaddingLeft": 15,
+
+    "tempFieldPadding": 15,
+    "tempFieldPaddingTop": 0,
+    "tempFieldPaddingRight": 15,
+    "tempFieldPaddingBottom": 15,
+    "tempFieldPaddingLeft": 15,
+
+    "fieldPaddingSuffix": "px",
+    "fieldPaddingTopSuffix": "px",
+    "fieldPaddingRightSuffix": "px",
+    "fieldPaddingBottomSuffix": "px",
+    "fieldPaddingLeftSuffix": "px",
+
+    "tempFieldPaddingSuffix": "px",
+    "tempFieldPaddingTopSuffix": "px",
+    "tempFieldPaddingRightSuffix": "px",
+    "tempFieldPaddingBottomSuffix": "px",
+    "tempFieldPaddingLeftSuffix": "px",
+
+    "hoverFieldPaddingType": null,
+    "tempHoverFieldPaddingType": null,
+
+    "hoverFieldPadding": null,
+    "hoverFieldPaddingTop": null,
+    "hoverFieldPaddingRight": null,
+    "hoverFieldPaddingBottom": null,
+    "hoverFieldPaddingLeft": null,
+
+    "tempHoverFieldPadding": null,
+    "tempHoverFieldPaddingTop": null,
+    "tempHoverFieldPaddingRight": null,
+    "tempHoverFieldPaddingBottom": null,
+    "tempHoverFieldPaddingLeft": null,
+
+    "hoverFieldPaddingSuffix": null,
+    "hoverFieldPaddingTopSuffix": null,
+    "hoverFieldPaddingRightSuffix": null,
+    "hoverFieldPaddingBottomSuffix": null,
+    "hoverFieldPaddingLeftSuffix": null,
+
+    "tempHoverFieldPaddingSuffix": null,
+    "tempHoverFieldPaddingTopSuffix": null,
+    "tempHoverFieldPaddingRightSuffix": null,
+    "tempHoverFieldPaddingBottomSuffix": null,
+    "tempHoverFieldPaddingLeftSuffix": null,
+
+    "checkboxColorHex": "#73777f",
+    "checkboxColorOpacity": 0.7,
+    "checkboxColorPalette": "",
+
+    "tempCheckboxColorOpacity": 0.7,
+    "tempCheckboxColorPalette": "",
+
+    "checkboxFontStyle": "",
+    "checkboxFontFamilyType": "google",
+    "checkboxFontSize": 16,
+    "checkboxFontWeight": 400,
+    "checkboxLineHeight": 1.5,
+    "checkboxLetterSpacing": 0,
+
+    "lostFontStyle": "",
+    "lostFontFamilyType": "google",
+    "lostFontSize": 16,
+    "lostFontWeight": 400,
+    "lostLineHeight": 1.5,
+    "lostLetterSpacing": 0,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
+
+    "tabletHorizontalAlign": null,
+    "tabletSubmitWidth": null,
+
+    "tabletSize": "medium",
+
+    "tabletSizeLargePadding": 20,
+    "tabletSizeMediumPadding": 14,
+    "tabletSizeSmallPadding": 10,
+
+    "tabletLabelFontFamilyType": null,
+    "tabletLabelFontStyle": "",
+    "tabletLabelFontSize": 14,
+    "tabletLabelLineHeight": 1.5,
+    "tabletLabelFontWeight": 400,
+    "tabletLabelLetterSpacing": 0,
+
+    "tabletLabelHorizontalAlign": null,
+    "tabletLostHorizontalAlign": null,
+
+    "tabletFontFamilyType": null,
+    "tabletFontStyle": "",
+    "tabletFontSize": 14,
+    "tabletLineHeight": 1.5,
+    "tabletLetterSpacing": 0,
+    "tabletFontWeight": 400,
+
+    "tabletTextFontFamilyType": null,
+    "tabletTextFontStyle": "",
+    "tabletTextFontSize": 14,
+    "tabletTextLineHeight": 1.5,
+    "tabletTextLetterSpacing": 0,
+    "tabletTextFontWeight": 400,
+
+    "tabletCheckboxFontFamilyType": null,
+    "tabletCheckboxFontStyle": "",
+    "tabletCheckboxFontSize": 14,
+    "tabletCheckboxLineHeight": 1.5,
+    "tabletCheckboxFontWeight": 400,
+    "tabletCheckboxLetterSpacing": 0,
+
+    "tabletLostFontFamilyType": null,
+    "tabletLostFontStyle": "",
+    "tabletLostFontSize": 14,
+    "tabletLostLineHeight": 1.5,
+    "tabletLostFontWeight": 400,
+    "tabletLostLetterSpacing": 0,
+
+    "tabletPaddingType": "ungrouped",
+    "tempTabletPaddingType": "ungrouped",
+
+    "tabletPadding": 15,
+    "tabletPaddingTop": 0,
+    "tabletPaddingRight": 15,
+    "tabletPaddingBottom": 15,
+    "tabletPaddingLeft": 15,
+
+    "tempTabletPadding": 15,
+    "tempTabletPaddingTop": 0,
+    "tempTabletPaddingRight": 15,
+    "tempTabletPaddingBottom": 15,
+    "tempTabletPaddingLeft": 15,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
+
+    "tabletHoverPaddingType": null,
+    "tempTabletHoverPaddingType": null,
+
+    "tabletHoverPadding": null,
+    "tabletHoverPaddingTop": null,
+    "tabletHoverPaddingRight": null,
+    "tabletHoverPaddingBottom": null,
+    "tabletHoverPaddingLeft": null,
+
+    "tempTabletHoverPadding": null,
+    "tempTabletHoverPaddingTop": null,
+    "tempTabletHoverPaddingRight": null,
+    "tempTabletHoverPaddingBottom": null,
+    "tempTabletHoverPaddingLeft": null,
+
+    "tabletHoverPaddingSuffix": null,
+    "tabletHoverPaddingTopSuffix": null,
+    "tabletHoverPaddingRightSuffix": null,
+    "tabletHoverPaddingBottomSuffix": null,
+    "tabletHoverPaddingLeftSuffix": null,
+
+    "tempTabletHoverPaddingSuffix": null,
+    "tempTabletHoverPaddingTopSuffix": null,
+    "tempTabletHoverPaddingRightSuffix": null,
+    "tempTabletHoverPaddingBottomSuffix": null,
+    "tempTabletHoverPaddingLeftSuffix": null,
+
+    "tabletLabelPaddingType": "ungrouped",
+    "tempTabletLabelPaddingType": "ungrouped",
+
+    "tabletLabelPadding": 5,
+    "tabletLabelPaddingTop": 0,
+    "tabletLabelPaddingRight": 0,
+    "tabletLabelPaddingBottom": 5,
+    "tabletLabelPaddingLeft": 0,
+
+    "tempTabletLabelPadding": 5,
+    "tempTabletLabelPaddingTop": 0,
+    "tempTabletLabelPaddingRight": 0,
+    "tempTabletLabelPaddingBottom": 5,
+    "tempTabletLabelPaddingLeft": 0,
+
+    "tabletLabelPaddingSuffix": "px",
+    "tabletLabelPaddingTopSuffix": "px",
+    "tabletLabelPaddingRightSuffix": "px",
+    "tabletLabelPaddingBottomSuffix": "px",
+    "tabletLabelPaddingLeftSuffix": "px",
+
+    "tempTabletLabelPaddingSuffix": "px",
+    "tempTabletLabelPaddingTopSuffix": "px",
+    "tempTabletLabelPaddingRightSuffix": "px",
+    "tempTabletLabelPaddingBottomSuffix": "px",
+    "tempTabletLabelPaddingLeftSuffix": "px",
+
+    "tabletHoverLabelPaddingType": null,
+    "tempTabletHoverLabelPaddingType": null,
+
+    "tabletHoverLabelPadding": null,
+    "tabletHoverLabelPaddingTop": null,
+    "tabletHoverLabelPaddingRight": null,
+    "tabletHoverLabelPaddingBottom": null,
+    "tabletHoverLabelPaddingLeft": null,
+
+    "tempTabletHoverLabelPadding": null,
+    "tempTabletHoverLabelPaddingTop": null,
+    "tempTabletHoverLabelPaddingRight": null,
+    "tempTabletHoverLabelPaddingBottom": null,
+    "tempTabletHoverLabelPaddingLeft": null,
+
+    "tabletHoverLabelPaddingSuffix": null,
+    "tabletHoverLabelPaddingTopSuffix": null,
+    "tabletHoverLabelPaddingRightSuffix": null,
+    "tabletHoverLabelPaddingBottomSuffix": null,
+    "tabletHoverLabelPaddingLeftSuffix": null,
+
+    "tempTabletHoverLabelPaddingSuffix": null,
+    "tempTabletHoverLabelPaddingTopSuffix": null,
+    "tempTabletHoverLabelPaddingRightSuffix": null,
+    "tempTabletHoverLabelPaddingBottomSuffix": null,
+    "tempTabletHoverLabelPaddingLeftSuffix": null,
+
+    "tabletFieldPaddingType": "grouped",
+    "tempTabletFieldPaddingType": "grouped",
+
+    "tabletTabletFieldPadding": 15,
+    "tabletTabletFieldPaddingTop": 0,
+    "tabletTabletFieldPaddingRight": 15,
+    "tabletTabletFieldPaddingBottom": 15,
+    "tabletTabletFieldPaddingLeft": 15,
+
+    "tempTabletFieldPadding": 15,
+    "tempTabletFieldPaddingTop": 0,
+    "tempTabletFieldPaddingRight": 15,
+    "tempTabletFieldPaddingBottom": 15,
+    "tempTabletFieldPaddingLeft": 15,
+
+    "tabletTabletFieldPaddingSuffix": "px",
+    "tabletTabletFieldPaddingTopSuffix": "px",
+    "tabletTabletFieldPaddingRightSuffix": "px",
+    "tabletTabletFieldPaddingBottomSuffix": "px",
+    "tabletTabletFieldPaddingLeftSuffix": "px",
+
+    "tempTabletFieldPaddingSuffix": "px",
+    "tempTabletFieldPaddingTopSuffix": "px",
+    "tempTabletFieldPaddingRightSuffix": "px",
+    "tempTabletFieldPaddingBottomSuffix": "px",
+    "tempTabletFieldPaddingLeftSuffix": "px",
+
+    "hoverTabletFieldPaddingType": null,
+    "tempHoverTabletFieldPaddingType": null,
+
+    "hoverTabletFieldPadding": null,
+    "hoverTabletFieldPaddingTop": null,
+    "hoverTabletFieldPaddingRight": null,
+    "hoverTabletFieldPaddingBottom": null,
+    "hoverTabletFieldPaddingLeft": null,
+
+    "tempHoverTabletFieldPadding": null,
+    "tempHoverTabletFieldPaddingTop": null,
+    "tempHoverTabletFieldPaddingRight": null,
+    "tempHoverTabletFieldPaddingBottom": null,
+    "tempHoverTabletFieldPaddingLeft": null,
+
+    "hoverTabletFieldPaddingSuffix": null,
+    "hoverTabletFieldPaddingTopSuffix": null,
+    "hoverTabletFieldPaddingRightSuffix": null,
+    "hoverTabletFieldPaddingBottomSuffix": null,
+    "hoverTabletFieldPaddingLeftSuffix": null,
+
+    "tempHoverTabletFieldPaddingSuffix": null,
+    "tempHoverTabletFieldPaddingTopSuffix": null,
+    "tempHoverTabletFieldPaddingRightSuffix": null,
+    "tempHoverTabletFieldPaddingBottomSuffix": null,
+    "tempHoverTabletFieldPaddingLeftSuffix": null,
+
+    "mobileHorizontalAlign": null,
+    "mobileSubmitWidth": null,
+
+    "mobileSize": "small",
+    "mobileSizeLargePadding": 20,
+    "mobileSizeMediumPadding": 14,
+    "mobileSizeSmallPadding": 10,
+
+    "mobileLabelFontFamilyType": null,
+    "mobileLabelFontStyle": "",
+    "mobileLabelFontSize": 14,
+    "mobileLabelLineHeight": 1.5,
+    "mobileLabelFontWeight": 400,
+    "mobileLabelLetterSpacing": 0,
+
+    "mobileLabelHorizontalAlign": null,
+    "mobileLostHorizontalAlign": null,
+
+    "mobileFontFamilyType": null,
+    "mobileFontStyle": "",
+    "mobileFontSize": 14,
+    "mobileLineHeight": 1.5,
+    "mobileFontWeight": 400,
+    "mobileLetterSpacing": 0,
+
+    "mobileTextFontFamilyType": null,
+    "mobileTextFontStyle": "",
+    "mobileTextFontSize": 14,
+    "mobileTextLineHeight": 1.5,
+    "mobileTextFontWeight": 400,
+    "mobileTextLetterSpacing": 0,
+
+    "mobileCheckboxFontFamilyType": null,
+    "mobileCheckboxFontStyle": "",
+    "mobileCheckboxFontSize": 14,
+    "mobileCheckboxLineHeight": 1.5,
+    "mobileCheckboxFontWeight": 400,
+    "mobileCheckboxLetterSpacing": 0,
+
+    "mobileLostFontFamilyType": null,
+    "mobileLostFontStyle": "",
+    "mobileLostFontSize": 14,
+    "mobileLostLineHeight": 1.5,
+    "mobileLostFontWeight": 400,
+    "mobileLostLetterSpacing": 0,
+
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
+
+    "mobilePadding": 15,
+    "mobilePaddingTop": 0,
+    "mobilePaddingRight": 15,
+    "mobilePaddingBottom": 15,
+    "mobilePaddingLeft": 15,
+
+    "tempMobilePadding": 15,
+    "tempMobilePaddingTop": 0,
+    "tempMobilePaddingRight": 15,
+    "tempMobilePaddingBottom": 15,
+    "tempMobilePaddingLeft": 15,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px",
+
+    "mobileHoverPaddingType": null,
+    "tempMobileHoverPaddingType": null,
+
+    "mobileHoverPadding": null,
+    "mobileHoverPaddingTop": null,
+    "mobileHoverPaddingRight": null,
+    "mobileHoverPaddingBottom": null,
+    "mobileHoverPaddingLeft": null,
+
+    "tempMobileHoverPadding": null,
+    "tempMobileHoverPaddingTop": null,
+    "tempMobileHoverPaddingRight": null,
+    "tempMobileHoverPaddingBottom": null,
+    "tempMobileHoverPaddingLeft": null,
+
+    "mobileHoverPaddingSuffix": null,
+    "mobileHoverPaddingTopSuffix": null,
+    "mobileHoverPaddingRightSuffix": null,
+    "mobileHoverPaddingBottomSuffix": null,
+    "mobileHoverPaddingLeftSuffix": null,
+
+    "tempMobileHoverPaddingSuffix": null,
+    "tempMobileHoverPaddingTopSuffix": null,
+    "tempMobileHoverPaddingRightSuffix": null,
+    "tempMobileHoverPaddingBottomSuffix": null,
+    "tempMobileHoverPaddingLeftSuffix": null,
+
+    "mobileLabelPaddingType": "ungrouped",
+    "tempMobileLabelPaddingType": "ungrouped",
+
+    "mobileLabelPadding": 5,
+    "mobileLabelPaddingTop": 0,
+    "mobileLabelPaddingRight": 0,
+    "mobileLabelPaddingBottom": 5,
+    "mobileLabelPaddingLeft": 0,
+
+    "tempMobileLabelPadding": 5,
+    "tempMobileLabelPaddingTop": 0,
+    "tempMobileLabelPaddingRight": 0,
+    "tempMobileLabelPaddingBottom": 5,
+    "tempMobileLabelPaddingLeft": 0,
+
+    "mobileLabelPaddingSuffix": "px",
+    "mobileLabelPaddingTopSuffix": "px",
+    "mobileLabelPaddingRightSuffix": "px",
+    "mobileLabelPaddingBottomSuffix": "px",
+    "mobileLabelPaddingLeftSuffix": "px",
+
+    "tempMobileLabelPaddingSuffix": "px",
+    "tempMobileLabelPaddingTopSuffix": "px",
+    "tempMobileLabelPaddingRightSuffix": "px",
+    "tempMobileLabelPaddingBottomSuffix": "px",
+    "tempMobileLabelPaddingLeftSuffix": "px",
+
+    "mobileHoverLabelPaddingType": null,
+    "tempMobileHoverLabelPaddingType": null,
+
+    "mobileHoverLabelPadding": null,
+    "mobileHoverLabelPaddingTop": null,
+    "mobileHoverLabelPaddingRight": null,
+    "mobileHoverLabelPaddingBottom": null,
+    "mobileHoverLabelPaddingLeft": null,
+
+    "tempMobileHoverLabelPadding": null,
+    "tempMobileHoverLabelPaddingTop": null,
+    "tempMobileHoverLabelPaddingRight": null,
+    "tempMobileHoverLabelPaddingBottom": null,
+    "tempMobileHoverLabelPaddingLeft": null,
+
+    "mobileHoverLabelPaddingSuffix": null,
+    "mobileHoverLabelPaddingTopSuffix": null,
+    "mobileHoverLabelPaddingRightSuffix": null,
+    "mobileHoverLabelPaddingBottomSuffix": null,
+    "mobileHoverLabelPaddingLeftSuffix": null,
+
+    "tempMobileHoverLabelPaddingSuffix": null,
+    "tempMobileHoverLabelPaddingTopSuffix": null,
+    "tempMobileHoverLabelPaddingRightSuffix": null,
+    "tempMobileHoverLabelPaddingBottomSuffix": null,
+    "tempMobileHoverLabelPaddingLeftSuffix": null,
+
+    "mobileFieldPaddingType": "grouped",
+    "tempMobileFieldPaddingType": "grouped",
+
+    "mobileMobileFieldPadding": 15,
+    "mobileMobileFieldPaddingTop": 0,
+    "mobileMobileFieldPaddingRight": 15,
+    "mobileMobileFieldPaddingBottom": 15,
+    "mobileMobileFieldPaddingLeft": 15,
+
+    "tempMobileFieldPadding": 15,
+    "tempMobileFieldPaddingTop": 0,
+    "tempMobileFieldPaddingRight": 15,
+    "tempMobileFieldPaddingBottom": 15,
+    "tempMobileFieldPaddingLeft": 15,
+
+    "mobileMobileFieldPaddingSuffix": "px",
+    "mobileMobileFieldPaddingTopSuffix": "px",
+    "mobileMobileFieldPaddingRightSuffix": "px",
+    "mobileMobileFieldPaddingBottomSuffix": "px",
+    "mobileMobileFieldPaddingLeftSuffix": "px",
+
+    "tempMobileFieldPaddingSuffix": "px",
+    "tempMobileFieldPaddingTopSuffix": "px",
+    "tempMobileFieldPaddingRightSuffix": "px",
+    "tempMobileFieldPaddingBottomSuffix": "px",
+    "tempMobileFieldPaddingLeftSuffix": "px",
+
+    "hoverMobileFieldPaddingType": null,
+    "tempHoverMobileFieldPaddingType": null,
+
+    "hoverMobileFieldPadding": null,
+    "hoverMobileFieldPaddingTop": null,
+    "hoverMobileFieldPaddingRight": null,
+    "hoverMobileFieldPaddingBottom": null,
+    "hoverMobileFieldPaddingLeft": null,
+
+    "tempHoverMobileFieldPadding": null,
+    "tempHoverMobileFieldPaddingTop": null,
+    "tempHoverMobileFieldPaddingRight": null,
+    "tempHoverMobileFieldPaddingBottom": null,
+    "tempHoverMobileFieldPaddingLeft": null,
+
+    "hoverMobileFieldPaddingSuffix": null,
+    "hoverMobileFieldPaddingTopSuffix": null,
+    "hoverMobileFieldPaddingRightSuffix": null,
+    "hoverMobileFieldPaddingBottomSuffix": null,
+    "hoverMobileFieldPaddingLeftSuffix": null,
+
+    "tempHoverMobileFieldPaddingSuffix": null,
+    "tempHoverMobileFieldPaddingTopSuffix": null,
+    "tempHoverMobileFieldPaddingRightSuffix": null,
+    "tempHoverMobileFieldPaddingBottomSuffix": null,
+    "tempHoverMobileFieldPaddingLeftSuffix": null
+  }
+}

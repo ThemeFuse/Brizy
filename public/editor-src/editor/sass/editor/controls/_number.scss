@@ -1,0 +1,73 @@
+@import "../../variables";
+@import "../../mixins/input";
+
+// --- Number Control
+.brz-ed-control__number {
+  @include input;
+  @include size;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+
+  .brz-input {
+    @include input;
+    background: none;
+    border: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &--arrows {
+    position: relative;
+    width: 35%;
+    flex-basis: 35%;
+    height: $control-height;
+    margin-left: 5px;
+  }
+
+  &--up,
+  &--down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: $control-height / 2;
+    line-height: $control-height / 2;
+    font-size: 8px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    color: $control-color;
+    -webkit-transition: color 0.2s linear;
+    transition: color 0.2s linear;
+
+    .brz-icon-svg {
+      position: absolute;
+      right: 10px;
+      top: auto;
+    }
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+
+  &--up {
+    top: 0;
+
+    .brz-icon-svg {
+      bottom: 1px;
+    }
+  }
+  &--down {
+    bottom: 0;
+
+    .brz-icon-svg {
+      top: 1px;
+    }
+  }
+}

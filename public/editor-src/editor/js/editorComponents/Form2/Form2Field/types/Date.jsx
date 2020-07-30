@@ -9,4 +9,14 @@ export default class Date extends TextField {
   static get componentType() {
     return "Date";
   }
+
+  getAttributes() {
+    const { min, max, nativeHtml } = this.props;
+
+    return {
+      "data-min": min,
+      "data-max": max,
+      "data-native": nativeHtml === "on"
+    };
+  }
 }

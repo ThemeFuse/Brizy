@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 1.0.126
+ * Version: 1.0.127
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -17,10 +17,12 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 	$_SERVER['HTTPS'] = 'on';
 }
 
+
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '1.0.126' );
-define( 'BRIZY_EDITOR_VERSION', '144-wp' );
+define( 'BRIZY_VERSION', '1.0.127' );
+define( 'BRIZY_EDITOR_VERSION', '149-wp' );
+define( 'BRIZY_SYNC_VERSION', '149' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -44,16 +46,26 @@ function brizy_load() {
 		return;
 	}
 
+	if (!session_id())
+		session_start();
+
 	$instance = Brizy_Editor::get();
+
+	do_action( 'brizy_plugin_included' );
 }
 
 function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
         <p>
-			<?php echo __bt( 'brizy', 'Brizy' ) ?> requires PHP version 5.6+, you currently running
-            PHP <?php echo PHP_VERSION ?>.
-            <b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> IS NOT RUNNING. </b>
+            <?php
+                printf(
+                    __( '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>', 'brizy' ),
+                    __bt( 'brizy', 'Brizy' ),
+                    PHP_VERSION,
+                    strtoupper( __bt( 'brizy', 'Brizy' ) )
+                );
+            ?>
         </p>
     </div>
 	<?php
@@ -63,7 +75,8 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
-				add_option('brizy-regenerate-permalinks',1 );
+				add_option( 'brizy-regenerate-permalinks', 1 );
+				do_action('brizy-updated');
 			}
 		}
 	}
@@ -71,12 +84,15 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 
 function brizy_install() {
 	Brizy_Logger::install();
-	add_option('brizy-regenerate-permalinks',1 );
+	add_option( 'brizy-regenerate-permalinks', 1 );
+	do_action('brizy-activated');
 }
 
 function brizy_clean() {
 	Brizy_Logger::clean();
-	add_option('brizy-regenerate-permalinks',1 );
+	add_option( 'brizy-regenerate-permalinks', 1 );
+	do_action('brizy-deactivated');
 }
 
 new Brizy_Compatibilities_Init();
+

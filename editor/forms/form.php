@@ -108,7 +108,6 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 	}
 
 
-
 	/**
 	 * @return Brizy_Editor_Forms_Form
 	 * @throws Exception
@@ -131,11 +130,13 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 			$formInstance->addIntegration( $an_integration );
 
-			foreach ( (array) $json_obj->integrations as $integration ) {
-				if ( is_object( $integration ) ) {
-					$formInstance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
-				}
-			}
+            if ( ! empty( $json_obj->integrations ) ) {
+                foreach ( (array) $json_obj->integrations as $integration ) {
+                    if ( is_object( $integration ) ) {
+                        $formInstance->addIntegration( Brizy_Editor_Forms_AbstractIntegration::createInstanceFromJson( $integration ) );
+                    }
+                }
+            }
 		}
 
 		return $formInstance;

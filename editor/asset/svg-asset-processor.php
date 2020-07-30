@@ -31,7 +31,8 @@ class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_Proce
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 
 		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?brizy_attachment=(.[^"\',\s)]*))/im', $content, $matches );
+		$brizy_attachment = Brizy_Editor::prefix('_attachment');
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?'.$brizy_attachment.'=(.[^"\',\s)]*))/im', $content, $matches );
 
 		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
 			return $content;
@@ -47,11 +48,11 @@ class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_Proce
 
 			parse_str( $parsed_url['query'], $params );
 
-			if ( ! isset( $params['brizy_attachment'] ) ) {
+			if ( ! isset( $params[$brizy_attachment] ) ) {
 				continue;
 			}
 
-			$media_path = $this->get_attachment_file_by_uid( $params['brizy_attachment'] );
+			$media_path = $this->get_attachment_file_by_uid( $params[$brizy_attachment] );
 
 			if ( ! $media_path ) {
 				return $content;

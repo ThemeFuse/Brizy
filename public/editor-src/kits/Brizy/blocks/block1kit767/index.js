@@ -271,7 +271,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\">No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it. It's easy with Brizy.</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\"><span>No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it. It's easy with our builder.</span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -487,7 +487,7 @@ module.exports = {
                                             "_styles": [
                                                 "button"
                                             ],
-                                            "text": "TRY BRIZY | FREE",
+                                            "text": "TRY IT TODAY | FREE",
                                             "iconName": "",
                                             "iconType": "",
                                             "borderRadiusType": "custom",

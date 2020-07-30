@@ -45,7 +45,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-ls-lg-m_3 brz-fw-400 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span class=\"brz-cp-color1\" style=\"opacity: 1;\">Websites&nbsp;Fast &amp; Easy</span></h1><p class=\"brz-ls-lg-m_3 brz-fw-400 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span style=\"opacity: 1;\" class=\"brz-cp-color8\">Only&nbsp;With Brizy</span></p>"
+                                            "text": "<h1 class=\"brz-ls-lg-m_3 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span style=\"opacity: 1;\" class=\"brz-cp-color3\">Websites&nbsp;Fast &amp; Easy</span></h1><p class=\"brz-ls-lg-m_3 brz-ff-montserrat brz-text-lg-center brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-fs-lg-80 brz-text-xs-center\"><span style=\"opacity: 1;\" class=\"brz-cp-color8\">Only&nbsp;With Our Builder</span></p>"
                                         }
                                     }
                                 ],
@@ -101,11 +101,11 @@ module.exports = {
                                             "tempHoverBorderColorPalette": "",
                                             "hoverBorderColorHex": "#ffffff",
                                             "bgColorHex": "#000000",
-                                            "bgColorPalette": "color1",
-                                            "tempBgColorPalette": "color1",
+                                            "bgColorPalette": "color3",
+                                            "tempBgColorPalette": "color3",
                                             "borderColorHex": "#000000",
-                                            "borderColorPalette": "color1",
-                                            "tempBorderColorPalette": "color1",
+                                            "borderColorPalette": "color3",
+                                            "tempBorderColorPalette": "color3",
                                             "hoverColorPalette": "color1",
                                             "hoverBgColorPalette": "color8",
                                             "hoverBgColorHex": "#945e5e",
@@ -128,7 +128,11 @@ module.exports = {
                                             "tempPaddingRight": 44,
                                             "tempPaddingLeft": 44,
                                             "borderColorOpacity": 1,
-                                            "tempHoverBgColorPalette": ""
+                                            "tempHoverBgColorPalette": "",
+                                            "tabsState": "",
+                                            "tabsColor": "",
+                                            "bgColorOpacity": 1,
+                                            "fillType": "filled"
                                         }
                                     }
                                 ]
@@ -216,7 +220,19 @@ module.exports = {
                     "bgImageSrc": "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg",
                     "mobileBgImageWidth": 1920,
                     "mobileBgImageHeight": 881,
-                    "mobileBgImageSrc": "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg"
+                    "mobileBgImageSrc": "80758f3e7b25ff6f2f196e559d0258545e1cfb74.jpeg",
+                    "tabsColor": "",
+                    "bgColorPalette": "color2",
+                    "tempBgColorPalette": "color2",
+                    "borderRadius": 0,
+                    "borderTopLeftRadius": 0,
+                    "borderTopRightRadius": 0,
+                    "borderBottomLeftRadius": 0,
+                    "borderBottomRightRadius": 0,
+                    "tempBorderTopLeftRadius": 0,
+                    "tempBorderTopRightRadius": 0,
+                    "tempBorderBottomLeftRadius": 0,
+                    "tempBorderBottomRightRadius": 0
                 }
             }
         ]

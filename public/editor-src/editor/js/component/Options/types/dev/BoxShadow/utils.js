@@ -121,7 +121,7 @@ export const getTypesItems = () =>
  */
 export const getSetter = id => {
   switch (id) {
-    case "select":
+    case "type":
       return setType;
     case "palette":
       return setPalette;

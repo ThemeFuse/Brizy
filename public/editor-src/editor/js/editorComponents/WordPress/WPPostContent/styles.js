@@ -65,13 +65,25 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H6LetterSpacing"
       ]
     },
-    ".brz &&:hover *": {
+    ".brz &&:hover *:not(strong):not(b)": {
       standart: [
         "cssStyleElementWPPostContentParagraphColor",
         "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
         "cssStyleElementWPPostContentTypography2ParagraphFontSize",
         "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
         "cssStyleElementWPPostContentTypography2ParagraphFontWeight",
+        "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing"
+      ]
+    },
+    ".brz &&:hover strong *:not(strong):not(b), .brz &&:hover b *:not(strong):not(b)": {
+      standart: ["cssStyleElementWPPostContentFontWeightInherit"]
+    },
+    ".brz &&:hover strong, .brz &&:hover b": {
+      standart: [
+        "cssStyleElementWPPostContentParagraphColor",
+        "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
+        "cssStyleElementWPPostContentTypography2ParagraphFontSize",
+        "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
         "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing"
       ]
     }

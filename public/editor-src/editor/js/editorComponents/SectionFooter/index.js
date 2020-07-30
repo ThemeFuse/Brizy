@@ -1,24 +1,20 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import CustomTag from "visual/component/CustomTag";
 import classnames from "classnames";
+import { validateKeyByProperty } from "visual/utils/onChange";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
-import { uuid } from "visual/utils/uuid";
-import { stripIds } from "visual/utils/models";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   wInBoxedPage,
   wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { getStore } from "visual/redux/store";
-import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -26,7 +22,8 @@ import {
   styleSection,
   styleBg,
   styleContainer,
-  styleContainerWrap
+  styleContainerWrap,
+  styleAnimation
 } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
@@ -35,6 +32,8 @@ import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import Animation from "visual/component/Animation";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -46,6 +45,8 @@ class SectionFooter extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   mounted = false;
 
@@ -114,25 +115,6 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  getAttributes = customAttributes => {
-    let myAttributes = customAttributes
-      .split(" ")
-      .join("")
-      .split(":")
-      .join(" ")
-      .split("\n")
-      .join(" ");
-
-    let atributesToObj = [];
-    let atributesToMas = myAttributes.split(" ");
-
-    for (let i = 0; i < atributesToMas.length; i += 2) {
-      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
-    }
-
-    return Object.assign({}, atributesToObj);
-  };
-
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
 
@@ -142,7 +124,15 @@ class SectionFooter extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={Boolean(globalBlockId)}
+        badge={
+          globalBlockId
+            ? child => (
+                <ConditionsComponent value={globalBlockId}>
+                  {child}
+                </ConditionsComponent>
+              )
+            : null
+        }
         onClose={this.handleToolbarClose}
       />
     );
@@ -151,6 +141,7 @@ class SectionFooter extends EditorComponent {
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
     const classNameBg = classnames(
+      "brz-footer__bg",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -209,13 +200,29 @@ class SectionFooter extends EditorComponent {
         styleSection(v, vs, vd)
       )
     );
+
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      "data-block-id": this.props.blockId,
+      id: this.getId(),
+      className: classNameSection
+    };
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <footer
-          id={this.getId()}
-          className={classNameSection}
-          data-block-id={this.props.blockId}
-          {...this.getAttributes(customAttributes)}
+        <Animation
+          component="footer"
+          componentProps={props}
+          animationClass={animationClassName}
         >
           <Roles
             allow={["admin"]}
@@ -228,7 +235,7 @@ class SectionFooter extends EditorComponent {
               </ToolbarExtend>
             </ContainerBorder>
           </Roles>
-        </footer>
+        </Animation>
       </CustomCSS>
     );
   }
@@ -236,11 +243,11 @@ class SectionFooter extends EditorComponent {
   renderForView(v, vs, vd) {
     const {
       className,
-      tagName,
       customClassName,
       cssIDPopulation,
       cssClassPopulation,
-      customAttributes
+      customAttributes,
+      tagName
     } = v;
 
     const classNameSection = classnames(
@@ -254,100 +261,34 @@ class SectionFooter extends EditorComponent {
       )
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      "data-uid": this.getId(),
+      id:
+        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
+      className: classNameSection
+    };
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <CustomTag
-          tagName={tagName}
-          id={
-            cssIDPopulation === ""
-              ? v.anchorName || this.getId()
-              : cssIDPopulation
-          }
-          className={classNameSection}
-          data-uid={this.getId()}
-          {...this.getAttributes(customAttributes)}
+        <Animation
+          component={tagName}
+          componentProps={props}
+          animationClass={animationClassName}
         >
           {this.renderItems(v, vs, vd)}
-        </CustomTag>
+        </Animation>
       </CustomCSS>
     );
-  }
-
-  // api
-  becomeSaved() {
-    const { blockId } = this.props;
-    const dbValue = this.getDBValue();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createSavedBlock({
-        id: uuid(),
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-  }
-
-  becomeGlobal() {
-    const { blockId, onChange } = this.props;
-    const dbValue = this.getDBValue();
-    const globalBlockId = uuid();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createGlobalBlock({
-        id: globalBlockId,
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-
-    onChange(
-      {
-        type: "GlobalBlock",
-        blockId,
-        value: {
-          _id: this.getId(),
-          globalBlockId
-        }
-      },
-      {
-        intent: "replace_all",
-        idOptions: {
-          keepExistingIds: true
-        }
-      }
-    );
-  }
-
-  becomeNormal() {
-    const {
-      meta: { globalBlockId },
-      onChange
-    } = this.props;
-    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
-
-    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
-    globalsData.value._id = this.getId();
-
-    onChange(globalsData, {
-      intent: "replace_all",
-      idOptions: {
-        keepExistingIds: true
-      }
-    });
   }
 }
 

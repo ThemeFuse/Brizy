@@ -2,6 +2,7 @@ import nonWP from "./index.js";
 // import WPPosts from "./WordPress/WPPosts";
 import WPSidebar from "./WordPress/WPSidebar";
 import WPCustomShortcode from "./WordPress/WPCustomShortcode";
+import WPPostNavigation from "./WordPress/WPPostNavigation";
 import WOOProducts from "./WordPress/WOOProducts";
 import WOOProductPage from "./WordPress/WOOProductPage";
 import WOOCategories from "./WordPress/WOOCategories";
@@ -17,6 +18,10 @@ import WPPostInfo from "./WordPress/WPPostInfo";
 // import WOOStock from "./WordPress/WOOStock";
 // import WOOPrice from "./WordPress/WOOPrice";
 // import WOOAdditional from "./WordPress/WOOAdditional";
+// import WOOProductMeta from "./WordPress/WOOProductMeta";
+// import WOORating from "./WordPress/WOORating";
+// import WOOCart from "./WordPress/WOOCart";
+
 import Search from "./Search";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
@@ -26,6 +31,7 @@ export default {
   Posts,
   ...(hasSidebars() ? { WPSidebar } : {}),
   WPCustomShortcode,
+  WPPostNavigation,
   WPBreadcrumbs,
   WPPostsTitle,
   WPPostExcerpt,
@@ -38,10 +44,13 @@ export default {
         WOOProductPage,
         WOOCategories,
         WOOPages
+        // WOOCart
         // WOOSku,
-        // WOOStock,
+        // WOOStock
         // WOOPrice,
-        // WOOAdditional
+        // WOOAdditional,
+        // WOOProductMeta
+        // WOORating
       }
     : {})
 };

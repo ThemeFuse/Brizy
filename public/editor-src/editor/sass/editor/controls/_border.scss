@@ -1,5 +1,47 @@
-.brz-ed-control__border
-  .brz-ed-control__colorPickerSelect
-  .brz-ed-control__multiSelect__option {
-  padding-right: 30px;
+@import "../../variables";
+@import "../../mixins/input";
+
+.brz-ed-control__border {
+  .brz-ed-control__colorPickerSelect .brz-ed-control__multiSelect__option {
+    padding-right: 30px;
+  }
+
+  &__width {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+
+    .brz-label {
+      word-break: keep-all;
+      color: $options-label-color;
+      margin-right: 5px;
+    }
+
+    input {
+      @include small-input;
+      width: 17px;
+      margin: 0 4px;
+    }
+  }
+
+  &__widthType {
+    background-color: transparent;
+    line-height: 0.7;
+    border: none;
+
+    &,
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    .brz-icon {
+      font-size: 10px;
+      color: $options-label-color;
+    }
+
+    &--active .brz-icon {
+      color: #33beea;
+    }
+  }
 }

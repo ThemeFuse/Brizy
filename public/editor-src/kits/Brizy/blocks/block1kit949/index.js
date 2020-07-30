@@ -293,7 +293,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h4 class=\"brz-text-xs-center brz-tp-heading4 brz-text-lg-center\"><span style=\"background-color: transparent;\" class=\"brz-cp-color2\">Easy Brizy</span></h4>"
+                                                                    "text": "<h4 class=\"brz-text-lg-center brz-tp-heading4 brz-text-xs-center\"><span class=\"brz-cp-color2\" style=\"background-color: transparent;\"><span>Easy Interface</span></span></h4>"
                                                                 }
                                                             }
                                                         ]

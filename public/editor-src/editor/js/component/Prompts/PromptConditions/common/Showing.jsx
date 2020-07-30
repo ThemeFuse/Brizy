@@ -14,10 +14,26 @@ export default function Showing(props) {
         onChange={value => onChange({ ...triggerValue, value })}
       >
         <SelectItem key="views" value="views">
-          Page Views
+          viewed pages
         </SelectItem>
         <SelectItem key="sessions" value="sessions">
           Sessions
+        </SelectItem>
+      </Select>
+      <Select
+        className="brz-control__select--light"
+        itemHeight={30}
+        defaultValue={triggerValue.type}
+        onChange={type => onChange({ ...triggerValue, type })}
+      >
+        <SelectItem key="is fewer" value="is fewer">
+          is fewer than
+        </SelectItem>
+        <SelectItem key="equals" value="equals">
+          equals
+        </SelectItem>
+        <SelectItem key="is more" value="is more">
+          is more than
         </SelectItem>
       </Select>
       <div className="brz-control__select">

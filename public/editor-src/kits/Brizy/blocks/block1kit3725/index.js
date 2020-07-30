@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit3725",
   thumbnailWidth: 600,
-  thumbnailHeight: 328,
+  thumbnailHeight: 329,
   title: "block1kit3725",
   
   keywords: "article,Blog,news",
@@ -187,7 +187,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-heading2 brz-text-lg-left\"><span class=\"brz-cp-color8\">No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-heading2\"><span class=\"brz-cp-color8\"><span>No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it.</span></span></p>"
                                                                 }
                                                             }
                                                         ],

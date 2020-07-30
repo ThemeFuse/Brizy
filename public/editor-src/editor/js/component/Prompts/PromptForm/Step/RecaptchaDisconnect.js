@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
-import { fakeRequest } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class RecaptchaDisconnect extends Component {
   static contextType = Context;
@@ -44,7 +44,7 @@ class RecaptchaDisconnect extends Component {
       error: null
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangePrev("appList");
   };

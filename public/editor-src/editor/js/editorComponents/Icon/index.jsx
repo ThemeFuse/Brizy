@@ -7,11 +7,60 @@ import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import {
+  blocksDataSelector,
+  deviceModeSelector
+} from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
+import BoxResizer from "visual/component/BoxResizer";
+import { defaultValueKey } from "visual/utils/onChange";
+
+const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
+
+const resizerTransformValue = v => {
+  const {
+    customSize,
+    tabletCustomSize,
+    mobileCustomSize,
+    customSizeSuffix,
+    tabletCustomSizeSuffix,
+    mobileCustomSizeSuffix,
+    ...rest
+  } = v;
+
+  return {
+    ...rest,
+    size: customSize,
+    tabletSize: tabletCustomSize,
+    mobileSize: mobileCustomSize,
+    sizeSuffix: customSizeSuffix,
+    tabletSizeSuffix: tabletCustomSizeSuffix,
+    mobileSizeSuffix: mobileCustomSizeSuffix
+  };
+};
+
+const resizerTransformPatch = patch => {
+  if (patch.size) {
+    patch.customSize = patch.size;
+    delete patch.size;
+  }
+
+  if (patch.tabletSize) {
+    patch.tabletCustomSize = patch.tabletSize;
+    delete patch.tabletSize;
+  }
+
+  if (patch.mobileSize) {
+    patch.mobileCustomSize = patch.mobileSize;
+    delete patch.mobileSize;
+  }
+
+  return patch;
+};
 
 class Icon extends EditorComponent {
   static get componentId() {
@@ -19,6 +68,16 @@ class Icon extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  handleResizerChange = patch => {
+    const device = deviceModeSelector(getStore().getState());
+    const sizeKey = defaultValueKey({ key: "size", device, state: "normal" });
+
+    this.patchValue({
+      ...resizerTransformPatch(patch),
+      [sizeKey]: "custom"
+    });
+  };
 
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
@@ -28,9 +87,9 @@ class Icon extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value.globalBlockId
-          ].data;
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
           isGlobal = true;
         }
 
@@ -104,15 +163,28 @@ class Icon extends EditorComponent {
 
     return (
       <Fragment>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className="brz-icon__container" style={style}>
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+        >
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <Wrapper
+              {...this.makeWrapperProps({
+                className: "brz-icon__container",
+                attributes: { style }
+              })}
             >
-              {content}
-            </Toolbar>
-          </div>
-        </CustomCSS>
+              <BoxResizer
+                keepAspectRatio
+                points={resizerPoints}
+                meta={this.props.meta}
+                value={resizerTransformValue(v)}
+                onChange={this.handleResizerChange}
+              >
+                {content}
+              </BoxResizer>
+            </Wrapper>
+          </CustomCSS>
+        </Toolbar>
         {popups.length > 0 &&
           linkType === "popup" &&
           linkPopup !== "" &&

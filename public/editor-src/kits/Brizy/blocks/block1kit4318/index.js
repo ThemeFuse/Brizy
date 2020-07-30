@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 198,
   title: "block1kit4318",
   
-  keywords: "address,contact,email,five columns,footer,icons,links,phone,social,text",
+  keywords: "address,contact,email,five columns,footer,icons,links,phone,pro,social,text",
   cat: [4547],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionFooter",
@@ -452,7 +452,10 @@ module.exports = {
         "paddingType": "ungrouped",
         "paddingTop": 55,
         "paddingBottom": 55,
-        "padding": 55
+        "padding": 55,
+        "tabsState": "tabNormal",
+        "tabsCurrentElement": "tabCurrentElement",
+        "tabsColor": "tabOverlay"
     }
 }
 };

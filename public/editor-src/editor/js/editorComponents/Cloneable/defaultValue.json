@@ -8,22 +8,61 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
+    "zIndexSuffix": null,
 
     "hoverZIndex": null,
+    "hoverZIndexSuffix": null,
 
     "showOnTablet": "on",
 
     "tabletZIndex": null,
+    "tabletZIndexSuffix": null,
 
     "showOnMobile": "on",
 
     "mobileZIndex": null,
+    "mobileZIndexSuffix": null,
 
     "items": []
   },
 
   "style": {
     "className": "",
+
+    "width": 30,
+    "widthSuffix": "%",
+    "offsetX": 0,
+    "offsetXSuffix": "px",
+    "offsetXAlignment": "left",
+    "offsetY": 0,
+    "offsetYSuffix": "px",
+    "offsetYAlignment": "top",
+    "elementPosition": "relative",
+
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
+    "tabletElementWidthType": null,
+    "tabletOffsetX": null,
+    "tabletOffsetXSuffix": null,
+    "tabletOffsetXAlignment": null,
+    "tabletOffsetY": null,
+    "tabletOffsetYSuffix": null,
+    "tabletOffsetYAlignment": null,
+    "tabletElementPosition": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+    "mobileElementWidthType": null,
+    "mobileOffsetX": null,
+    "mobileOffsetXSuffix": null,
+    "mobileOffsetXAlignment": null,
+    "mobileOffsetY": null,
+    "mobileOffsetYSuffix": null,
+    "mobileOffsetYAlignment": null,
+    "mobileElementPosition": null,
+
+    "customAttributes": "",
+    "customAttributesPopulation": null,
 
     "itemClassName": "",
     "itemPadding": 10,
@@ -211,6 +250,19 @@
     "animationDuration": 1000,
     "animationDelay": 1000,
 
-    "tempAnimationName": "none"
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+
+    "tempMobileAnimationName": null
+
   }
 }

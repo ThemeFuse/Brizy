@@ -133,6 +133,9 @@
 /**
  * Style Brizy Templates
  */
+.brizy-template-rules .error {
+    color: red;
+}
 
 .brizy-template-rules input[type="text"],
 .brizy-template-rules select {
@@ -158,6 +161,22 @@
     margin-top: 10px;
 }
 
+.brizy-template-rules .rule {
+    position: relative;
+}
+
+.brizy-template-rules .rule .rule-fields {
+    position: relative;
+}
+
+.brizy-template-rules .rule .overlay {
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: 0px;
+    right: 0px;
+}
+
 .brizy-delete-rule {
     border: 0;
     padding: 0;
@@ -179,8 +198,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 1;
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Safari and Chrome */
     appearance: none;
 }
 
@@ -211,13 +228,22 @@
     vertical-align: middle;
 }
 
+.brizy-template-rules .brizy-template-type label {
+    margin-right: 20px;
+}
+
 .brizy-template-rules .select2-selection__arrow b {
-   display: none;
+    display: none;
 }
 
 .brizy-rule-new-condition .brizy-rule-select2::after {
     content: none;
 }
+
+.brizy-rule-list-item {
+
+}
+
 
 .brizy-featured-image {
 
@@ -312,7 +338,7 @@
 }
 
 .brizy-dashboard-widget-footer__go-pro {
-    display:inline-flex;
+    display: inline-flex;
     fill: #0073aa;
 }
 
@@ -329,41 +355,51 @@
     max-width: 1024px;
     /*text-align: left;*/
 }
+
 .brz-maintenance-table-access-links th,
 .brz-maintenance-table-access-links td {
     border: 1px solid #ccd0d4;
 }
+
 .brz-maintenance-table-access-links th:first-child,
 .brz-maintenance-table-access-links td:first-child {
     width: 35px;
     text-align: center;
 }
+
 .brz-maintenance-table-access-links th:not(:first-child) {
     padding-left: 10px;
 }
+
 .brz-maintenance-delete-links {
     padding-left: 10px !important;
 }
+
 .brz-maintenance-add-link {
     margin-top: 15px !important;
 }
+
 /* Admin notice give us a rating */
 .brz-review-notice-container {
     display: flex;
     align-items: center;
     padding-top: 10px;
 }
+
 .brz-review-notice-container .dashicons {
     font-size: 1.4em;
     padding-left: 10px;
 }
+
 .brz-review-notice-container a {
     padding-left: 5px;
     text-decoration: none;
 }
+
 .brz-review-notice-container .dashicons:first-child {
     padding-left: 0;
 }
+
 .brz-notice-image {
     max-width: 100px;
 }
@@ -371,9 +407,11 @@
 .brz-notice-content .brz-notice-heading {
     padding-bottom: 5px;
 }
+
 .brz-notice-content {
     margin-left: 15px;
 }
+
 .brz-notice-container {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -384,27 +422,33 @@
 
 /* Admin deactivate plugin modal */
 .brz-deactivate-modal {
-    border-radius:3px;
+    border-radius: 3px;
     animation: brz-feedback-modal-fadein .5s linear;
 }
+
 .brz-deactivate-overlay {
     animation: brz-feedback-overlay-fadein .5s linear;
 }
+
 .brz-deactivate-feedback-dialog-logo {
     width: 40px;
     vertical-align: middle;
 }
+
 .brz-deactivate-modal .ui-dialog-titlebar {
     display: none;
 }
+
 .brz-deactivate-modal .ui-dialog-content {
     padding: 0;
 }
+
 .brz-deactivate-feedback-dialog-header {
     padding: 18px 15px;
-    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .1);
     text-align: left;
 }
+
 .brz-deactivate-feedback-dialog-header-title {
     font-size: 15px;
     text-transform: uppercase;
@@ -412,10 +456,12 @@
     padding-left: 5px;
     color: #495157;
 }
+
 .brz-deactivate-feedback-dialog-form {
     padding: 30px;
     text-align: left;
 }
+
 .brz-deactivate-feedback-dialog-form-caption {
     font-weight: 700;
     font-size: 15px;
@@ -423,59 +469,70 @@
     line-height: 1.4;
     margin-bottom: 30px;
 }
+
 .brz-deactivate-feedback-dialog-input {
     float: left;
     margin: 0 15px 0 0;
     box-shadow: none;
 }
+
 .brz-deactivate-feedback-dialog-label {
     display: block;
     font-size: 13px;
     color: #6d7882;
 }
+
 #brz-deactivate-feedback-dialog .brz-deactivate-feedback-dialog-input {
     float: left;
     margin: 0 15px 0 0;
     box-shadow: none;
 }
+
 .brz-deactivate-feedback-dialog-input-wrapper {
     line-height: 1.3;
     overflow: hidden;
     margin-bottom: 15px;
 }
+
 .brz-deactivate-modal .ui-dialog-buttonpane {
     border: none;
     padding-bottom: 30px;
-    border-radius:3px;
+    border-radius: 3px;
 }
+
 .brz-deactivate-modal .ui-dialog-buttonset {
-    float:none;
+    float: none;
 }
+
 .brz-feedback-submit {
     background-color: #05b3e6;
     color: #fff;
     width: 180px;
     height: 38px;
-    border:none;
+    border: none;
 }
+
 .brz-feedback-submit:hover,
 .brz-feedback-submit:focus {
     opacity: 0.9;
     background-color: #05b3e6;
     color: #fff !important;
 }
+
 .brz-feedback-submit:disabled:hover {
     color: #a4afb7 !important;
 }
+
 .brz-feedback-skip {
     font-size: 12px;
     color: #a4afb7;
     background: none;
     float: right;
     width: auto;
-    border:none;
+    border: none;
     box-shadow: none;
 }
+
 .brz-feedback-skip:hover,
 .brz-feedback-skip:active,
 .brz-feedback-skip:focus {
@@ -484,6 +541,7 @@
     background: none;
     box-shadow: none;
 }
+
 .brz-feedback-text {
     margin: 10px 0 0 30px;
     padding: 5px;
@@ -493,11 +551,13 @@
     background-color: #fff;
     width: 92%;
 }
+
 .brz-feedback-text-alert {
     max-width: fit-content;
     color: #b01b1b;
     padding: 0;
 }
+
 @-webkit-keyframes brz-feedback-modal-fadein {
     0% {
         opacity: 0;
@@ -507,6 +567,7 @@
         opacity: 1;
     }
 }
+
 @-webkit-keyframes brz-feedback-overlay-fadein {
     0% {
         opacity: 0;
@@ -516,6 +577,7 @@
         opacity: 0.7;
     }
 }
+
 @-webkit-keyframes brz-rotation {
     0% {
         -webkit-transform: rotate(0deg);
@@ -527,6 +589,7 @@
         transform: rotate(359deg);
     }
 }
+
 @keyframes brz-rotation {
     0% {
         -webkit-transform: rotate(0deg);
@@ -538,10 +601,17 @@
         transform: rotate(359deg);
     }
 }
+
 .brz-loading:before {
     display: inline-block;
     content: "\f463";
     font: 18px dashicons;
     animation: brz-rotation 2s linear infinite;
-    margin-top:10px;
+    margin-top: 10px;
+}
+
+.brz-leads-export-disable {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
 }

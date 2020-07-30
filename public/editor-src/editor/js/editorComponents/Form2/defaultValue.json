@@ -12,6 +12,7 @@
     "placeholder": "on",
     "width": 50,
     "submitWidth": 100,
+    "submitWidthSuffix": null,
 
     "padding": 15,
     "paddingTop": 0,
@@ -40,6 +41,7 @@
     "tabletHorizontalAlign": null,
     "tabletWidth": null,
     "tabletSubmitWidth": null,
+    "tabletSubmitWidthSuffix": null,
 
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
@@ -70,6 +72,7 @@
 
     "mobileHorizontalAlign": null,
     "mobileSubmitWidth": null,
+    "mobileSubmitWidthSuffix": null,
 
     "mobilePaddingType": "ungrouped",
     "tempMobilePaddingType": "ungrouped",

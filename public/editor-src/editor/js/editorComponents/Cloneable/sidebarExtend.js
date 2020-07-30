@@ -2,26 +2,30 @@ import { t } from "visual/utils/i18n";
 import {
   toolbarPaddingFourFields,
   toolbarMargin,
-  toolbarShowOnDesktop,
-  toolbarZIndex,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
+  const dvv = key => defaultValueValue({ v, key, device });
+
+  const isRelative = dvv("elementPosition") === "relative";
+  const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
-      align: "start",
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           position: 10,
           options: [
             toolbarPaddingFourFields({
@@ -37,26 +41,109 @@ export function getItems({ v, device }) {
               state: "normal",
               onChangeGrouped: ["onChangeMarginGrouped"],
               onChangeUngrouped: ["onChangeMarginUngrouped"]
-            })
+            }),
+            {
+              id: "groupPosition",
+              type: "group-dev",
+              options: [
+                {
+                  id: "elementPosition",
+                  label: t("Position"),
+                  type: "select-dev",
+                  choices: [
+                    { value: "relative", title: "None" },
+                    { value: "absolute", title: "Absolute" },
+                    { value: "fixed", title: "Fixed" }
+                  ]
+                },
+                {
+                  id: "width",
+                  label: t("Width"),
+                  type: "slider-dev",
+                  disabled: isRelative,
+                  config: {
+                    min: 0,
+                    max: dvv("widthSuffix") === "px" ? 1200 : 300,
+                    units: [
+                      { value: "px", title: "px" },
+                      { value: "%", title: "%" }
+                    ]
+                  }
+                },
+                {
+                  id: "offsetXAlignment",
+                  label: t("Horizontal Offset"),
+                  type: "radioGroup-dev",
+                  disabled: isRelative,
+                  choices: [
+                    { value: "left", icon: "nc-align-left" },
+                    { value: "right", icon: "nc-align-right" }
+                  ]
+                },
+                {
+                  id: "offsetX",
+                  type: "slider-dev",
+                  disabled: isRelative,
+                  config: {
+                    min: dvv("offsetXSuffix") === "px" ? -1200 : -200,
+                    max: dvv("offsetXSuffix") === "px" ? 1200 : 200,
+                    units: [
+                      { value: "px", title: "px" },
+                      { value: "%", title: "%" }
+                    ]
+                  }
+                },
+                {
+                  id: "offsetYAlignment",
+                  label: t("Vertical Offset"),
+                  type: "radioGroup-dev",
+                  disabled: isRelative,
+                  choices: [
+                    { value: "top", icon: "nc-align-top" },
+                    { value: "bottom", icon: "nc-align-bottom" }
+                  ]
+                },
+                {
+                  id: "offsetY",
+                  type: "slider-dev",
+                  disabled: isRelative,
+                  config: {
+                    min: dvv("offsetYSuffix") === "px" ? -1200 : -200,
+                    max: dvv("offsetYSuffix") === "px" ? 1200 : 200,
+                    units: [
+                      { value: "px", title: "px" },
+                      { value: "%", title: "%" }
+                    ]
+                  }
+                }
+              ]
+            }
           ]
         },
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
-            toolbarShowOnDesktop({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "showOnDesktop",
+              label: t("Show on Desktop"),
+              position: 10,
+              closeTooltip: true,
+              type: "switch-dev",
               devices: "desktop"
-            }),
-            toolbarZIndex({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop"
-            }),
+            },
+            {
+              id: "zIndex",
+              type: "slider-dev",
+              position: 20,
+              label: t("Z-index"),
+              devices: "desktop",
+              config: {
+                min: 0,
+                max: 100
+              }
+            },
             {
               id: "cssID",
               label: t("CSS ID"),
@@ -68,7 +155,7 @@ export function getItems({ v, device }) {
                 content: "Add your custom ID without the #pound, example: my-id"
               },
               config: {
-                choices: cssIDDynamicContentChoices
+                choices: richTextDC
               },
               options: [
                 {
@@ -89,7 +176,7 @@ export function getItems({ v, device }) {
                   "Add your custom class without the .dot, example: my-class"
               },
               config: {
-                choices: cssIDDynamicContentChoices
+                choices: richTextDC
               },
               options: [
                 {
@@ -98,11 +185,24 @@ export function getItems({ v, device }) {
                 }
               ]
             },
+            {
+              id: "customAttributes",
+              label: t("Custom Attributes"),
+              type: "codeMirror-dev",
+              position: 45,
+              placeholder: "key1:value1\nkey2:value2",
+              display: "block",
+              devices: "desktop",
+              helper: {
+                content:
+                  "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+              },
+              population: richTextDC
+            },
             toolbarEntranceAnimation({
               v,
               device,
-              state: "normal",
-              devices: "desktop"
+              state: "normal"
             })
           ]
         }
@@ -121,6 +221,89 @@ export function getItems({ v, device }) {
       state: "normal",
       onChangeGrouped: ["onChangeMarginGrouped"],
       onChangeUngrouped: ["onChangeMarginUngrouped"]
-    })
+    }),
+    toolbarEntranceAnimation({
+      v,
+      device,
+      devices: "responsive",
+      state: "normal"
+    }),
+    {
+      id: "groupPosition",
+      type: "group-dev",
+      devices: "responsive",
+      options: [
+        {
+          id: "elementPosition",
+          label: t("Position"),
+          type: "select-dev",
+          choices: [
+            { value: "relative", title: "None" },
+            { value: "absolute", title: "Absolute" },
+            { value: "fixed", title: "Fixed" }
+          ]
+        },
+        {
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          disabled: isRelative,
+          config: {
+            min: 0,
+            max: dvv("widthSuffix") === "px" ? 1200 : 300,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
+          }
+        },
+        {
+          id: "offsetXAlignment",
+          label: t("Horizontal Offset"),
+          type: "radioGroup-dev",
+          disabled: isRelative,
+          choices: [
+            { value: "left", icon: "nc-align-left" },
+            { value: "right", icon: "nc-align-right" }
+          ]
+        },
+        {
+          id: "offsetX",
+          type: "slider-dev",
+          disabled: isRelative,
+          config: {
+            min: dvv("offsetXSuffix") === "px" ? -1200 : -200,
+            max: dvv("offsetXSuffix") === "px" ? 1200 : 200,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
+          }
+        },
+        {
+          id: "offsetYAlignment",
+          label: t("Vertical Offset"),
+          type: "radioGroup-dev",
+          disabled: isRelative,
+          choices: [
+            { value: "top", icon: "nc-align-top" },
+            { value: "bottom", icon: "nc-align-bottom" }
+          ]
+        },
+        {
+          id: "offsetY",
+          type: "slider-dev",
+          disabled: isRelative,
+          config: {
+            min: dvv("offsetYSuffix") === "px" ? -1200 : -200,
+            max: dvv("offsetYSuffix") === "px" ? 1200 : 200,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
+          }
+        }
+      ]
+    }
   ];
 }

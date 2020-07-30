@@ -26,7 +26,7 @@ export const bindStateToOption = (state, onChange, option) => {
             {
               id: "tabsState",
               type: "stateMode",
-              options: tab.options,
+              options: tab.options ?? [],
               value: State.mRead(state),
               onChange
             }
@@ -42,7 +42,7 @@ export const bindStateToOption = (state, onChange, option) => {
           {
             id: "tabsState",
             type: "stateMode",
-            options: option.options,
+            options: option.options ?? [],
             value: State.mRead(state),
             onChange
           }

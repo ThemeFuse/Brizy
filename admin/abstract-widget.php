@@ -27,6 +27,6 @@ abstract class Brizy_Admin_AbstractWidget {
 			throw new Exception( 'You should return an Id for the widget' );
 		}
 
-		return Brizy_Editor::get()->get_slug() . '_' . $id;
+		return Brizy_Editor::get_slug() . '_' . $id;
 	}
 }

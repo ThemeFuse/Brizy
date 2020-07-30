@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import classNames from "classnames";
+import { sortBy } from "underscore";
 import Options, { filterOptionsData } from "visual/component/Options";
 import * as Option from "visual/component/Options/Type";
 import { Literal, read } from "visual/utils/types/Literal";
@@ -30,6 +30,7 @@ export type Props = Option.Props<Literal, SimpleValue<Literal>> &
         title?: string;
         icon?: string;
         label?: string;
+        position?: number;
         options: OptionDefinition[];
       })[];
   };
@@ -55,6 +56,8 @@ export const Tabs: FC<Props> &
     }
   }, [_value]);
 
+  const tabsList = tabs.filter(t => filterOptionsData(t.options).length > 0);
+
   return (
     <Control
       align={align}
@@ -62,28 +65,24 @@ export const Tabs: FC<Props> &
       onChange={_onChange}
       position={position}
       showSingle={config?.showSingle ?? false}
-      className={classNames("brz-ed-tabs__option--inline", className)}
+      className={className}
     >
-      {tabs
-        .filter(t => filterOptionsData(t.options).length > 0)
-        .map(({ id, title, label, options, className }) => {
+      {sortBy(tabsList, ({ position = 100 }) => position).map(
+        ({ id, title, label, options, className, icon }) => {
           return (
             <Tab
               key={id}
               value={id}
               title={title}
               label={label}
+              icon={icon}
               className={className}
             >
-              <Options
-                className="brz-ed-tabs__options"
-                optionClassName="brz-ed-tabs__option"
-                data={options}
-                toolbar={toolbar}
-              />
+              <Options wrapOptions={false} data={options} toolbar={toolbar} />
             </Tab>
           );
-        })}
+        }
+      )}
     </Control>
   );
 };

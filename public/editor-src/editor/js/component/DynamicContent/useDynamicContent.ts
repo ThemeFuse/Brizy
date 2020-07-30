@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDynamicContent } from "visual/utils/api/editor/index";
-import {
-  TGetDynamicContentResolve,
-  TGetDynamicContentReject
-} from "visual/utils/api/editor/types";
+import { ApiProxy } from "./ApiProxy";
 
 export type DynamicContentState =
   | {
@@ -53,31 +49,40 @@ export function useDynamicContent(
     const signal = controller.signal;
     let tid: number;
 
-    getDynamicContent({
-      placeholders: [placeholder],
-      signal
-    })
-      .then((r: TGetDynamicContentResolve) => {
-        if (signal.aborted === false) {
-          setState({
-            status: "success",
-            data: r[0],
-            error: null
-          });
-        }
-      })
-      .catch((e: TGetDynamicContentReject) => {
-        if (signal.aborted === false) {
-          setState({
-            status: "failed",
-            data: null,
-            error: e
-          });
-        }
-      })
-      .finally(() => {
-        window.clearTimeout(tid);
-      });
+    const cached = ApiProxy.cache.get(placeholder);
+
+    if (cached !== undefined) {
+      if (signal.aborted === false) {
+        setState({
+          status: "success",
+          data: cached,
+          error: null
+        });
+      }
+    } else {
+      ApiProxy.getDynamicContent([placeholder])
+        .then(r => {
+          if (signal.aborted === false) {
+            setState({
+              status: "success",
+              data: r[0],
+              error: null
+            });
+          }
+        })
+        .catch(e => {
+          if (signal.aborted === false) {
+            setState({
+              status: "failed",
+              data: null,
+              error: e
+            });
+          }
+        })
+        .finally(() => {
+          window.clearTimeout(tid);
+        });
+    }
 
     if (delayMs > 0) {
       tid = window.setTimeout(() => {

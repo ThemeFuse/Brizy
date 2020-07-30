@@ -1,6 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import UIEvents from "visual/global/UIEvents";
+import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import Blocks from "./Blocks";
 import { uuid } from "visual/utils/uuid";
 import { changeValueAfterDND } from "./utils";
@@ -50,7 +51,19 @@ class Page extends EditorComponent {
     return (
       <div className="brz-root__container brz-reset-all">
         <Blocks {...blocksProps} />
-        <div className="brz-root__container-after" />
+        <DraggableOverlay />
+      </div>
+    );
+  }
+
+  renderForView() {
+    const blocksProps = this.makeSubcomponentProps({
+      bindWithKey: "items"
+    });
+
+    return (
+      <div className="brz-root__container brz-reset-all">
+        <Blocks {...blocksProps} />
       </div>
     );
   }

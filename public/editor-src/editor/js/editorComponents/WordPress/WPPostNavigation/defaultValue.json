@@ -1,0 +1,146 @@
+{
+  "content": {
+    "categories": "[]",
+    "post": "category",
+    "product": "product_cat",
+
+    "previous": "PREVIOUS",
+    "next": "NEXT",
+    "showTitle": "on",
+    "showPost": "on",
+    "showSeparation": "on"
+  },
+  "styles": {
+    "height": 80,
+    "heightSuffix": null,
+    "left": 50,
+    "leftSuffix": null,
+
+    "width": 100,
+    "widthSuffix": null,
+
+    "spacing": 20,
+    "spacingSuffix": null,
+
+    "customCSS": "",
+
+    "families": {
+      "titleTypographyFontFamily": "lato",
+      "tabletTitleTypographyFontFamily": null,
+      "mobileTitleTypographyFontFamily": null,
+      "postTypographyFontFamily": "lato",
+      "tabletPostTypographyFontFamily": null,
+      "mobilePostTypographyFontFamily": null
+    },
+
+    "titleTypographyFontStyle": "",
+    "titleTypographyFontFamilyType": "google",
+    "titleTypographyFontSize": 14,
+    "titleTypographyFontWeight": 600,
+    "titleTypographyLineHeight": 1.7,
+    "titleTypographyLetterSpacing": 1.4,
+
+    "postTypographyFontStyle": "",
+    "postTypographyFontFamilyType": "google",
+    "postTypographyFontSize": 21,
+    "postTypographyFontWeight": 600,
+    "postTypographyLineHeight": 1.5,
+    "postTypographyLetterSpacing": 0,
+
+    "titleColorHex": "#818a91",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "",
+
+    "tempTitleColorOpacity": 1,
+    "tempTitleColorPalette": "",
+
+    "postColorHex": "#03080f",
+    "postColorOpacity": 1,
+    "postColorPalette": "",
+
+    "tempPostColorOpacity": 1,
+    "tempPostColorPalette": "",
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#a5aeb4",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "hoverTitleColorHex": null,
+    "hoverTitleColorOpacity": null,
+    "hoverTitleColorPalette": null,
+
+    "tempHoverTitleColorOpacity": null,
+    "tempHoverTitleColorPalette": null,
+
+    "hoverPostColorHex": null,
+    "hoverPostColorOpacity": null,
+    "hoverPostColorPalette": null,
+
+    "tempHoverPostColorOpacity": null,
+    "tempHoverPostColorPalette": null,
+
+    "hoverBgColorType": null,
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
+    "tabletTitleTypographyFontStyle": "",
+    "tabletTitleTypographyFontFamilyType": null,
+    "tabletTitleTypographyFontSize": 14,
+    "tabletTitleTypographyFontWeight": 600,
+    "tabletTitleTypographyLineHeight": 1.3,
+    "tabletTitleTypographyLetterSpacing": 0,
+
+    "tabletPostTypographyFontStyle": "",
+    "tabletPostTypographyFontFamilyType": null,
+    "tabletPostTypographyFontSize": 14,
+    "tabletPostTypographyFontWeight": 600,
+    "tabletPostTypographyLineHeight": 1.3,
+    "tabletPostTypographyLetterSpacing": 0,
+
+    "tabletHeight": null,
+    "tabletHeightSuffix": null,
+    "tabletLeft": null,
+    "tabletLeftSuffix": null,
+
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
+
+    "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
+
+    "mobileTitleTypographyFontStyle": "",
+    "mobileTitleTypographyFontFamilyType": null,
+    "mobileTitleTypographyFontSize": 14,
+    "mobileTitleTypographyFontWeight": 600,
+    "mobileTitleTypographyLineHeight": 1.3,
+    "mobileTitleTypographyLetterSpacing": 0,
+
+    "mobilePostTypographyFontStyle": "",
+    "mobilePostTypographyFontFamilyType": null,
+    "mobilePostTypographyFontSize": 14,
+    "mobilePostTypographyFontWeight": 600,
+    "mobilePostTypographyLineHeight": 1.3,
+    "mobilePostTypographyLetterSpacing": 0,
+
+    "mobileHeight": null,
+    "mobileHeightSuffix": null,
+    "mobileLeft": null,
+    "mobileLeftSuffix": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+
+    "mobileSpacing": null,
+    "mobileSpacingSuffix": null
+  }
+}

@@ -7,11 +7,14 @@
   },
 
   "style": {
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
     "fontStyle": "paragraph",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "lato"
-    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.3,
@@ -19,7 +22,7 @@
 
     "colorHex": "#000000",
     "colorOpacity": 1,
-    "colorPalette": "",   
+    "colorPalette": "",
 
     "tempColorOpacity": 1,
     "tempColorPalette": "",
@@ -38,25 +41,19 @@
 
     "tabletFontStyle": "paragraph",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
-    "tabletFontSize":16,
-    "tabletFontWeight":400,
-    "tabletLineHeight":1.3,
-    "tabletLetterSpacing":0,
+    "tabletFontSize": 16,
+    "tabletFontWeight": 400,
+    "tabletLineHeight": 1.3,
+    "tabletLetterSpacing": 0,
 
-     "tabletContentHorizontalAlign": null,
+    "tabletContentHorizontalAlign": null,
 
     "mobileFontStyle": "paragraph",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
-    "mobileFontSize":16,
-    "mobileFontWeight":400,
-    "mobileLineHeight":1.3,
-    "mobileLetterSpacing":0,
+    "mobileFontSize": 16,
+    "mobileFontWeight": 400,
+    "mobileLineHeight": 1.3,
+    "mobileLetterSpacing": 0,
 
     "mobileContentHorizontalAlign": null
   },

@@ -1,0 +1,14 @@
+// WOORating
+.brz-wp-shortcode.brz-woorating {
+  min-height: auto;
+  width: fit-content;
+
+  .woocommerce-product-rating {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  span.rating {
+    width: 100%;
+  }
+}

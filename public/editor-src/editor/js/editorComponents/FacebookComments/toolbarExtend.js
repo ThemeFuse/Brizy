@@ -8,7 +8,7 @@ import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvkn = key => defaultValueKey({ key, device });
+  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -18,23 +18,27 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvkn("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
+        }
+      },
       devices: "desktop",
       roles: ["admin"],
       position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
-        }
-      },
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          hideHandlesWhenOne: false,
+          type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabBgColor",
@@ -74,10 +78,12 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
@@ -92,7 +98,7 @@ export function getItems({ v, device, state }) {
           }
         },
         {
-          id: dvkn("advancedSettings"),
+          id: dvk("advancedSettings"),
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

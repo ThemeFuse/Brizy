@@ -28,10 +28,6 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_WPML();
 		}
 
-		if ( $this->is_plugin_active( 'litespeed-cache/litespeed-cache.php' ) ) {
-			new Brizy_Compatibilities_LiteSpeed();
-		}
-
 		if ( function_exists( 'fvm_cachepath' ) ) {
 			new Brizy_Compatibilities_FastVelocityMinify();
 		}
@@ -65,6 +61,14 @@ class Brizy_Compatibilities_Init {
 				new Brizy_Compatibilities_BrokenLinkChecker();
 			}
 		}
+
+        if ( defined( 'LSCWP_V' ) ) {
+            new Brizy_Compatibilities_LiteSpeed();
+        }
+
+        if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
+            new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
+        }
 	}
 
 	private function is_plugin_active( $plugin_file ) {

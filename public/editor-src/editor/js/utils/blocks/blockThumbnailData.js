@@ -1,3 +1,5 @@
+import _ from "underscore";
+import produce from "immer";
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { urlContainsQueryString, objectToQueryString } from "visual/utils/url";
@@ -43,10 +45,12 @@ export const blockThumbnailData = (block, options = {}) => {
   return data;
 };
 
+const getScreenshots = block => block.meta || block.value || {};
+
 function blockScreenshotData(block, options) {
   if (block.type === "GlobalBlock") {
     block = globalBlocksAssembledSelector(getStore().getState())[
-      block.value.globalBlockId
+      block.value._id
     ].data;
   }
 
@@ -54,24 +58,24 @@ function blockScreenshotData(block, options) {
     const screenshots = screenshotsSelector(getStore().getState());
 
     if (screenshots[block.value._id]) {
-      block = {
-        ...block,
-        value: {
-          ...block.value,
-          ...screenshots[block.value._id]
-        }
-      };
+      block = produce(block, draft => {
+        draft.meta = { ...draft.meta, ...screenshots[block.value._id] };
+      });
     }
   }
 
-  const { _thumbnailSrc, _thumbnailWidth, _thumbnailHeight } = block.value;
+  const { _thumbnailSrc, _thumbnailWidth, _thumbnailHeight } = getScreenshots(
+    block
+  );
 
   if (_thumbnailSrc && _thumbnailWidth && _thumbnailHeight) {
+    const getUrl = _.compose(
+      TARGET === "WP" ? blockScreenshotUrlWP : blockScreenshotUrlCloud,
+      getScreenshots
+    );
+
     return {
-      url:
-        TARGET === "WP"
-          ? blockScreenshotUrlWP(block)
-          : blockScreenshotUrlCloud(block),
+      url: getUrl(block),
       width: _thumbnailWidth,
       height: _thumbnailHeight
     };
@@ -80,8 +84,7 @@ function blockScreenshotData(block, options) {
   return null;
 }
 
-function blockScreenshotUrlCloud(block) {
-  const { _thumbnailSrc, _thumbnailTime } = block.value;
+function blockScreenshotUrlCloud({ _thumbnailSrc, _thumbnailTime }) {
   const screenshotUrl = Config.get("urls").screenshot;
   const qs = objectToQueryString({
     t: _thumbnailTime || Date.now()
@@ -90,13 +93,13 @@ function blockScreenshotUrlCloud(block) {
   return `${screenshotUrl}/${_thumbnailSrc}?${qs}`;
 }
 
-function blockScreenshotUrlWP(block) {
-  const { _thumbnailSrc, _thumbnailTime } = block.value;
+function blockScreenshotUrlWP({ _thumbnailSrc, _thumbnailTime }) {
   const siteUrl = Config.get("urls").site;
   const page = Config.get("wp").page;
+  const prefix = Config.get("prefix") ?? "brizy";
   const qs = objectToQueryString({
-    brizy_post: page,
-    brizy_block_screenshot: _thumbnailSrc,
+    [`${prefix}_post`]: page,
+    [`${prefix}_block_screenshot`]: _thumbnailSrc,
     t: _thumbnailTime || Date.now()
   });
 

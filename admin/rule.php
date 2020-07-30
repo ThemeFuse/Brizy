@@ -10,34 +10,37 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const ARCHIVE = 4;
 	const TEMPLATE = 8;
 	const BRIZY_TEMPLATE = 16;
-	const ALL_FROM_TAXONOMY = 32;
+	const POSTS_FROM_TAXONOMY = 32;
+	const POSTS_FROM_CHILD_TAXONOMY = 64;
+
+	const ANY_CHILD_TAXONOMY = 128;
 
 	/**
 	 * @var int
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * @var int
 	 */
-	private $type;
+	protected $type;
 
 	/**
 	 * @var int
 	 */
-	private $appliedFor;
+	protected $appliedFor;
 
 	/**
 	 * @var string
 	 */
-	private $entityType;
+	protected $entityType;
 
 	/**
 	 * If null the rule will be applied on all entities
 	 *
 	 * @var int[]
 	 */
-	private $entityValues = array();
+	protected $entityValues = array();
 
 	/**
 	 * @return array|mixed
@@ -98,9 +101,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			$entityValues,
 		);
 
-		// exception for home page that has two behaviors.. as page and as a template
 		$entity_values = $this->getEntityValues();
 
+		// exception for home page that has two behaviors.. as page and as a template
 		if ( $applyFor == self::TEMPLATE &&
 		     $entityType == 'front_page' &&
 		     $this->getAppliedFor() == self::POSTS &&
@@ -111,15 +114,40 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		}
 
 		// check if post is in a term
-		if ( $applyFor == self::POSTS &&
-		     $this->getAppliedFor() == self::POSTS &&
-		     isset( $entity_values[0] ) && is_array($values = explode( '|', $entity_values[0] )) && count( $values ) > 1
-		) {
+		if ( isset($entity_values[0]) && ( $values = explode( '|', $entity_values[0] ) ) &&  count( $values ) == 3 ) {
 
-			// check if the post is in taxonomy with name $values[0] and with id $values[1]
-			return has_term( $values[1], $values[0], $entityValues[0] );
+			// POSTS
+			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
+				// check if the post is in taxonomy with name $values[0] and with id $values[1]
+				return has_term( $values[2], $values[1], $entityValues[0] );
+			}
+
+			// check if post is in a term
+			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'child' ) {
+				// check if the post is in taxonomy with name $values[0] and with id $values[1]
+				$tax = get_term_children( $values[2], $values[1] );
+
+				foreach ( $tax as $t ) {
+					if ( has_term( $t, $values[1], $entityValues[0] ) ) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			// TAXONOMY
+			if ( $applyFor == self::TAXONOMY && $this->getAppliedFor() == self::TAXONOMY && $values[0] === 'in' ) {
+				return $entityValues[0] == $values[2];
+			}
+
+			// check if terms is child of a term
+			if ( $applyFor == self::TAXONOMY && $this->getAppliedFor() == self::TAXONOMY && $values[0] === 'child' ) {
+				$tax = get_term_children( $values[2], $values[1] );
+
+				return in_array( $entityValues[0], $tax );
+			}
 		}
-
 
 		foreach ( $ruleValues as $i => $value ) {
 
@@ -135,7 +163,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 				}
 
 			} else {
-
 				if ( $ruleValues[ $i ] != $checkValues[ $i ] ) {
 					return false;
 				}
@@ -154,7 +181,8 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		return $this->getType() == $rule->getType() &&
 		       $this->getAppliedFor() == $rule->getAppliedFor() &&
 		       $this->getEntityType() == $rule->getEntityType() &&
-		       ( count( $rule->getEntityValues() ) == count( $this->getEntityValues() ) && count( array_diff( $rule->getEntityValues(), $this->getEntityValues() ) ) == 0 );
+		       ( count( $rule->getEntityValues() ) == count( $this->getEntityValues() ) &&
+		         count( array_diff( $rule->getEntityValues(), $this->getEntityValues() ) ) == 0 );
 	}
 
 	/**
@@ -369,6 +397,13 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		);
 	}
 
+	/**
+	 * @return string
+	 */
+	public function serialize() {
+		return serialize( $this->convertToOptionValue() );
+	}
+
 
 	/**
 	 * @param string $delimited
@@ -383,6 +418,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string
 	 */
 	private function generateId() {
-		return md5( implode( '', func_get_args() ) . time() );
+		return md5( implode( '', func_get_args() ) . rand( 1, time() ) );
 	}
 }

@@ -7,7 +7,8 @@ import HotKeys from "visual/component/HotKeys";
 import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
 import { monitor, ToolbarMonitorHandler } from "./monitor";
 import { OptionDefinition } from "visual/component/Options/Type";
-import { RightSidebarItems } from "../RightSidebar/RightSidebarItems";
+import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
+import { setPosition } from "./state";
 
 type CollapsibleToolbarProps = {
   getItems: () => OptionDefinition[];
@@ -15,7 +16,7 @@ type CollapsibleToolbarProps = {
   getSidebarTitle?: () => string;
   className?: string;
   animation?: "leftToRight" | "rightToLeft";
-  badge?: boolean;
+  badge?: React.ReactNode;
   onBeforeOpen?: () => void;
   onBeforeClose?: () => void;
   onOpen?: () => void;
@@ -47,6 +48,8 @@ export default class CollapsibleToolbar
       ".brz-ed-collapsible__toolbar",
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
+      ".brz-ed-popup-integrations",
+      ".brz-ed-popup-authorization",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal
@@ -86,6 +89,8 @@ export default class CollapsibleToolbar
     if (this.state.opened) {
       return;
     }
+
+    setPosition("below");
 
     const { onBeforeOpen, onOpen } = this.props;
 
@@ -172,7 +177,7 @@ export default class CollapsibleToolbar
           exceptions={this.getClickOutSideExceptions()}
         >
           <TransitionGroup className={className}>
-            {badge && this.renderBadge()}
+            {typeof badge === "function" && badge(this.renderBadge())}
             {opened ? this.renderToolbar() : this.renderIcon()}
           </TransitionGroup>
         </ClickOutside>

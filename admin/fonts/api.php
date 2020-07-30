@@ -11,9 +11,9 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
 
-	const AJAX_CREATE_FONT_ACTION = 'brizy-create-font';
-	const AJAX_DELETE_FONT_ACTION = 'brizy-delete-font';
-	const AJAX_GET_FONTS_ACTION = 'brizy-get-fonts';
+	const AJAX_CREATE_FONT_ACTION = '-create-font';
+	const AJAX_DELETE_FONT_ACTION = '-delete-font';
+	const AJAX_GET_FONTS_ACTION = '-get-fonts';
 
 	/**
 	 * @var Brizy_Admin_Fonts_Manager
@@ -50,9 +50,10 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::AJAX_CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
-		add_action( 'wp_ajax_' . self::AJAX_DELETE_FONT_ACTION, array( $this, 'actionDeleteFont' ) );
-		add_action( 'wp_ajax_' . self::AJAX_GET_FONTS_ACTION, array( $this, 'actionGetFonts' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::AJAX_CREATE_FONT_ACTION, array( $this, 'actionCreateFont' ) );
+		add_action( $pref . self::AJAX_DELETE_FONT_ACTION, array( $this, 'actionDeleteFont' ) );
+		add_action( $pref . self::AJAX_GET_FONTS_ACTION, array( $this, 'actionGetFonts' ) );
 	}
 
 	public function actionGetFonts() {

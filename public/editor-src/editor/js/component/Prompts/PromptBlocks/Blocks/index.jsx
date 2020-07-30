@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { connect } from "react-redux";
-import {
-  projectSelector,
-  fontSelector,
-  stylesSelector
-} from "visual/redux/selectors";
+import { projectSelector, stylesSelector } from "visual/redux/selectors";
+import { fontSelector } from "visual/redux/selectors2";
 import { importKit, updateCurrentKitId } from "visual/redux/actions";
 import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { assetUrl } from "visual/utils/asset";
@@ -24,10 +21,8 @@ class BlocksContainer extends Component {
     showSearch: true,
     showType: true, // dark | light
     showCategories: true,
-    type: "kits", // kits | popups
-    categoriesFilter: categories => categories,
+    type: "normal", // normal | popup
     HeaderSlotLeft: _.noop(),
-    HeaderSlotRight: _.noop(),
     onAddBlocks: _.noop,
     onClose: _.noop
   };
@@ -41,37 +36,47 @@ class BlocksContainer extends Component {
     blocks: []
   };
 
+  mounted = false;
+
   async getMeta() {
     const { type } = this.props;
-    const r = await fetch(assetUrl(`${type}/meta.json`));
-    return await r.json();
+
+    if (type === "popup") {
+      const r = await fetch(assetUrl("popups/meta.json"));
+      return await r.json();
+    } else {
+      const r = await fetch(assetUrl("kits/meta.json"));
+      return await r.json();
+    }
   }
 
   async getBlockResolve(id) {
     const { type } = this.props;
-    const r = await fetch(assetUrl(`${type}/resolves/${id}.json`));
-    return await r.json();
+
+    if (type === "popup") {
+      const r = await fetch(assetUrl(`popups/resolves/${id}.json`));
+      return await r.json();
+    } else {
+      const r = await fetch(assetUrl(`kits/resolves/${id}.json`));
+      return await r.json();
+    }
   }
 
   getKitData(kits, kitId = this.props.selectedKit) {
-    const { categoriesFilter } = this.props;
     const kit = kits.find(({ id }) => id === kitId);
     const { categories, blocks, styles, types } = kit;
 
     // categories
-    const allCategoriesData = categoriesFilter([
+    const allCategoriesData = [
       { id: "*", title: t("All Categories") },
       ...categories
-    ]);
+    ];
 
     // filter blocks
-    const categoryIds = new Map(allCategoriesData.map(cat => [cat.id, true]));
-    const blocksData = blocks
-      .filter(block => block.cat.some(cat => categoryIds.get(cat)))
-      .map(block => ({
-        ...block,
-        thumbnailSrc: blockTemplateThumbnailUrl(block)
-      }));
+    const blocksData = blocks.map(block => ({
+      ...block,
+      thumbnailSrc: blockTemplateThumbnailUrl(block)
+    }));
     const categoriesData = allCategoriesData.filter(
       ({ hidden }) => hidden !== true
     );
@@ -85,28 +90,46 @@ class BlocksContainer extends Component {
     };
   }
 
-  getPopupData({ blocks }) {
+  getPopupData({ blocks, categories = [], types = [] }) {
+    const allCategoriesData = [
+      { id: "*", title: t("All Categories") },
+      ...categories
+    ];
+
     const blocksData = blocks.map(block => ({
       ...block,
       thumbnailSrc: blockTemplateThumbnailUrl(block)
     }));
+    const categoriesData = allCategoriesData.filter(
+      ({ hidden }) => hidden !== true
+    );
 
     return {
-      blocks: blocksData
+      types,
+      blocks: blocksData,
+      categories: categoriesData
     };
   }
 
   async componentDidMount() {
+    this.mounted = true;
     const metaData = await this.getMeta();
-    const state =
-      this.props.type === "kits"
-        ? this.getKitData(metaData)
-        : this.getPopupData(metaData);
 
-    this.setState({
-      ...state,
-      loading: false
-    });
+    if (this.mounted) {
+      const state =
+        this.props.type === "normal"
+          ? this.getKitData(metaData)
+          : this.getPopupData(metaData);
+
+      this.setState({
+        ...state,
+        loading: false
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleThumbnailAdd = async thumbnailData => {
@@ -166,15 +189,19 @@ class BlocksContainer extends Component {
 
   render() {
     const { kits, types, blocks, categories, loading } = this.state;
+    const { showSearch, showSidebar, selectedKit, HeaderSlotLeft } = this.props;
 
     return (
       <Blocks
-        {...this.props}
         loading={loading}
+        selectedKit={selectedKit}
         kits={kits}
         blocks={blocks}
         categories={categories}
         types={types}
+        showSearch={showSearch}
+        showSidebar={showSidebar}
+        HeaderSlotLeft={HeaderSlotLeft}
         onChangeKit={this.handleImportKit}
         onChange={this.handleThumbnailAdd}
       />
@@ -191,7 +218,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BlocksContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BlocksContainer);

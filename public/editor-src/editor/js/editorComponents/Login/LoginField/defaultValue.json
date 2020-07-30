@@ -1,0 +1,13 @@
+{
+  "content": {
+    "type": "Email",
+    "label": "Enter Text",
+    "placeholder": null
+  },
+
+  "style": {
+    "width": 100,
+    "tabletWidth": null,
+    "mobileWidth": null
+  }
+}

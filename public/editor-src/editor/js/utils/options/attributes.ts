@@ -8,6 +8,7 @@ export type Size = "short" | "medium" | "large" | "auto";
 
 export interface WithLabel {
   label?: string;
+  icon?: string;
   display?: "inline" | "block";
 }
 

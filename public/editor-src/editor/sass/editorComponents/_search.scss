@@ -1,7 +1,19 @@
 .brz-search-container {
   display: flex;
   align-items: center;
+  overflow: visible;
 
+  &--minimal {
+    overflow: hidden;
+
+    .brz-search-form {
+      padding: 0 15px;
+    }
+  }
+
+  .brz-ed-box__resizer {
+    height: unset;
+  }
   .brz-search-form {
     display: flex;
     width: 100%;
@@ -28,13 +40,6 @@
     }
     &::placeholder {
       color: inherit;
-    }
-  }
-  &__minimal {
-    overflow: hidden;
-
-    .brz-search-form {
-      padding: 0 15px;
     }
   }
 }

@@ -1,0 +1,66 @@
+@import "../../mixins/input";
+
+.brz-ed-control__backgroundColor {
+  &--degree .brz-input {
+    @include small-input;
+    flex: none;
+    width: 30px;
+  }
+
+  &__gradientType {
+    @include small-select;
+    flex: 0;
+    margin-left: auto;
+    width: auto;
+
+    &--linear + .brz-ed-control__backgroundColor--degree {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        display: block;
+        border: 1px solid $options-label-color;
+        border-radius: 100%;
+        top: 1px;
+        right: -3px;
+      }
+    }
+  }
+
+  .brz-ed-control__range {
+    margin-bottom: 10px;
+
+    .rc-slider {
+      height: 12px;
+      padding: 0;
+
+      .rc-slider-rail {
+        height: 100%;
+      }
+
+      .brz-ed-rc-slider-handle {
+        background-color: transparent;
+        border: solid 3px #fff;
+
+        &:before,
+        &:after {
+          display: none;
+        }
+
+        &--active:before {
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border: solid 4px #fff;
+          top: 2px;
+          border-radius: 100%;
+          box-shadow: 0 0 3px 0 #fff;
+        }
+      }
+    }
+  }
+}

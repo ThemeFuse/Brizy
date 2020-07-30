@@ -380,7 +380,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">No more buffering: create, style and enjoy. The UI - user interface - was built on React the most efficient JavaScript library. We guarantee you'll love the difference in speed and performance that Brizy comes with.</span></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>No more buffering: create, style and enjoy. The UI - user interface - was built on React the most efficient JavaScript library. We guarantee you'll love the difference in speed and performance that it comes with.</span></span></p>"
                                                                 }
                                                             }
                                                         ]

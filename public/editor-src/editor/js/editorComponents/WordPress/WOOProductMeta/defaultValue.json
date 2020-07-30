@@ -1,0 +1,100 @@
+{
+  "content": {
+    "productID": ""
+  },
+
+  "toolbar": {
+    "elementType": "column"
+  },
+
+  "style": {
+    "className": "",
+
+    "topSpacing": 0,
+    "rightSpacing": 10,
+
+    "families": {
+      "categoryFontFamily": "lato",
+      "tabletCategoryFontFamily": null,
+      "mobileCategoryFontFamily": null,
+      "valueFontFamily": "lato",
+      "tabletValueFontFamily": null,
+      "mobileValueFontFamily": null
+    },
+
+    "categoryFontStyle": "",
+    "categoryFontFamilyType": "google",
+    "categoryFontSize": 20,
+    "categoryFontWeight": 300,
+    "categoryLineHeight": 1.3,
+    "categoryLetterSpacing": -1.5,
+
+    "valueFontStyle": "",
+    "valueFontFamilyType": "google",
+    "valueFontSize": 20,
+    "valueFontWeight": 300,
+    "valueLineHeight": 1.3,
+    "valueLetterSpacing": -1.5,
+
+    "categoryColorHex": "#1c1c1c",
+    "categoryColorOpacity": 1,
+    "categoryColorPalette": "color2",
+
+    "tempCategoryColorOpacity": 1,
+    "tempCategoryColorPalette": "color2",
+
+    "valueColorHex": "#666666",
+    "valueColorOpacity": 1,
+    "valueColorPalette": "color7",
+
+    "tempValueColorOpacity": 1,
+    "tempValueColorPalette": "color7",
+
+    "dvidersColorHex": "#000000",
+    "dvidersColorOpacity": 0.3,
+    "dvidersColorPalette": "color1",
+
+    "tempDvidersColorOpacity": 0.3,
+    "tempDvidersColorPalette": "color1",
+
+    "tabletTopSpacing": null,
+    "tabletRightSpacing": null,
+    "tabletValueSpacing": null,
+
+    "tabletCategoryFontStyle": "",
+    "tabletCategoryFontFamilyType": null,
+    "tabletCategoryFontSize": 15,
+    "tabletCategoryFontWeight": 300,
+    "tabletCategoryLineHeight": 1.3,
+    "tabletCategoryLetterSpacing": 0,
+
+    "tabletValueFontStyle": "",
+    "tabletValueFontFamilyType": null,
+    "tabletValueFontSize": 15,
+    "tabletValueFontWeight": 300,
+    "tabletValueLineHeight": 1.3,
+    "tabletValueLetterSpacing": 0,
+
+    "mobileTopSpacing": null,
+    "mobileRightSpacing": null,
+    "mobileValueSpacing": null,
+
+    "mobileCategoryFontStyle": "",
+    "mobileCategoryFontFamilyType": null,
+    "mobileCategoryFontSize": 15,
+    "mobileCategoryFontWeight": 300,
+    "mobileCategoryLineHeight": 1.3,
+    "mobileCategoryLetterSpacing": 0,
+
+    "mobileValueFontStyle": "",
+    "mobileValueFontFamilyType": null,
+    "mobileValueFontSize": 15,
+    "mobileValueFontWeight": 300,
+    "mobileValueLineHeight": 1.3,
+    "mobileValueLetterSpacing": 0,
+
+    "style": "",
+
+    "customCSS": ""
+  }
+}

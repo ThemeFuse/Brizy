@@ -108,10 +108,11 @@ function calcOptions(node) {
 function proxyUrl() {
   if (TARGET === "WP") {
     const siteUrl = Config.get("urls").site;
+    const prefix = Config.get("prefix") ?? "brizy";
 
     return urlContainsQueryString(siteUrl)
-      ? `${siteUrl}&brizy_file=`
-      : `${siteUrl}?brizy_file=`;
+      ? `${siteUrl}&${prefix}_file=`
+      : `${siteUrl}?${prefix}_file=`;
   } else {
     const siteUrl = Config.get("urls").site;
 

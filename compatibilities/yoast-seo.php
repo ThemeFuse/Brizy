@@ -3,6 +3,7 @@
 class Brizy_Compatibilities_YoastSeo {
 
 	public function __construct() {
+		add_filter( 'admin_init', array( $this, 'compile_post' ) );
 		add_filter( 'wpseo_twitter_image', array( $this, 'wpseo_twitter_image' ) );
 	}
 
@@ -17,8 +18,51 @@ class Brizy_Compatibilities_YoastSeo {
 	 * @param $img_url
 	 *
 	 * @return string
+	 * @throws Exception
 	 */
 	public function wpseo_twitter_image( $img_url ) {
-		return Brizy_SiteUrlReplacer::restoreSiteUrl( $img_url );
+
+		try {
+			$project          = Brizy_Editor_Project::get();
+			$context          = Brizy_Content_ContextFactory::createContext( $project, null, null, null );
+			$urlBuilder       = new Brizy_Editor_UrlBuilder( $project, null );
+			$media_storage    = new Brizy_Editor_Asset_MediaProxyStorage( $urlBuilder );
+			$media_processor  = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
+			$domain_processor = new Brizy_Editor_Asset_DomainProcessor();
+			$url              = $domain_processor->process( $img_url, $context );
+			$url              = $media_processor->process( $url, $context );
+
+			return $url;
+		} catch ( Exception $e ) {
+			// do nothing... :) :)
+		}
+
+		return $img_url;
+	}
+
+	public function compile_post() {
+		global $pagenow;
+
+		if ( 'post.php' !== $pagenow ) {
+			return;
+		}
+
+		try {
+			$post = Brizy_Editor_Post::get( $_GET['post'] );
+
+			if ( ! $post->uses_editor() ) {
+				return;
+			}
+
+			$needs_compile = ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
+
+			if ( $needs_compile ) {
+				$post->compile_page();
+				$post->saveStorage();
+				$post->savePost();
+			}
+
+		} catch ( Exception $e ) {
+		}
 	}
 }

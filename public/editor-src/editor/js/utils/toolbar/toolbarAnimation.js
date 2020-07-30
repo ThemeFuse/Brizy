@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { getAnimations } from "visual/utils/options";
+import { getAnimations } from "visual/utils/options/getAnimations";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function toolbarEntranceAnimation({
@@ -7,6 +7,7 @@ export function toolbarEntranceAnimation({
   position = 60,
   device,
   state,
+  choices = getAnimations(),
   devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -48,10 +49,10 @@ export function toolbarEntranceAnimation({
             },
             onChange: ({ value: animationDuration }, { sliderDragEnd }) => {
               return {
-                animationName: sliderDragEnd
+                [dvk("animationName")]: sliderDragEnd
                   ? dvv("tempAnimationName")
                   : "initial",
-                animationDuration: animationDuration * 1000
+                [dvk("animationDuration")]: animationDuration * 1000
               };
             }
           },
@@ -59,6 +60,7 @@ export function toolbarEntranceAnimation({
             id: dvk("animationDelay"),
             label: t("Delay"),
             type: "slider",
+            devices,
             slider: {
               min: 0,
               max: 5,
@@ -82,10 +84,10 @@ export function toolbarEntranceAnimation({
             },
             onChange: ({ value: animationDelay }, { sliderDragEnd }) => {
               return {
-                animationName: sliderDragEnd
+                [dvk("animationName")]: sliderDragEnd
                   ? dvv("tempAnimationName")
                   : "initial",
-                animationDelay: animationDelay * 1000
+                [dvk("animationDelay")]: animationDelay * 1000
               };
             }
           }
@@ -100,18 +102,19 @@ export function toolbarEntranceAnimation({
     id: dvk("animation"),
     type: "multiPicker",
     position,
+    devices,
     picker: {
       id: dvk("animationName"),
       label: t("Entrance Animation"),
       type: "select",
-      choices: getAnimations(),
+      choices: choices,
       value:
         dvv("animationName") === "initial"
           ? dvv("tempAnimationName")
           : dvv("animationName"),
       onChange: animationName => ({
-        animationName,
-        tempAnimationName: animationName
+        [dvk("animationName")]: animationName,
+        [dvk("tempAnimationName")]: animationName
       })
     },
     choices: getAnimationChoices()

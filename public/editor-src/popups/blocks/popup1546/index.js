@@ -105,7 +105,7 @@ module.exports = {
                                                                         {
                                                                             "type": "Form2Field",
                                                                             "value": {
-                                                                                "type": "Password",
+                                                                                "type": "Email",
                                                                                 "label": "PASSWORD",
                                                                                 "required": "on",
                                                                                 "options": [
@@ -117,23 +117,26 @@ module.exports = {
                                                                         }
                                                                     ],
                                                                     "fontStyle": "abovetitle",
-                                                                    "tabsState": "",
-                                                                    "tabsColor": "",
-                                                                    "colorHex": "#73777f",
-                                                                    "colorOpacity": 0.5,
-                                                                    "tempColorOpacity": 0.5,
-                                                                    "colorPalette": "",
+                                                                    "bgColorHex": "#ffffff",
+                                                                    "bgColorOpacity": 1,
+                                                                    "bgColorPalette": "",
+                                                                    "tempBgColorOpacity": 1,
+                                                                    "tempBgColorPalette": "",
+                                                                    "colorHex": "#666666",
+                                                                    "colorOpacity": 0.4,
+                                                                    "colorPalette": "color7",
+                                                                    "tempColorOpacity": 0.4,
                                                                     "tempColorPalette": "",
-                                                                    "borderRadius": 4,
-                                                                    "borderTopLeftRadius": 4,
-                                                                    "borderTopRightRadius": 4,
-                                                                    "borderBottomLeftRadius": 4,
-                                                                    "borderBottomRightRadius": 4,
-                                                                    "tempBorderRadius": 4,
-                                                                    "tempBorderTopLeftRadius": 4,
-                                                                    "tempBorderTopRightRadius": 4,
-                                                                    "tempBorderBottomLeftRadius": 4,
-                                                                    "tempBorderBottomRightRadius": 4,
+                                                                    "borderRadius": 5,
+                                                                    "borderTopLeftRadius": 5,
+                                                                    "borderTopRightRadius": 5,
+                                                                    "borderBottomLeftRadius": 5,
+                                                                    "borderBottomRightRadius": 5,
+                                                                    "tempBorderRadius": 5,
+                                                                    "tempBorderTopLeftRadius": 5,
+                                                                    "tempBorderTopRightRadius": 5,
+                                                                    "tempBorderBottomLeftRadius": 5,
+                                                                    "tempBorderBottomRightRadius": 5,
                                                                     "borderStyle": "solid",
                                                                     "borderWidth": 1,
                                                                     "borderTopWidth": 1,
@@ -183,23 +186,34 @@ module.exports = {
                                                                     "bgColorPalette": "color3",
                                                                     "hoverBgColorOpacity": 0.8,
                                                                     "hoverBorderColorOpacity": 0.8,
+                                                                    "tempBorderRadius": 4,
                                                                     "tempBorderWidth": 2,
-                                                                    "tempBorderRadius": 4
+                                                                    "tabsState": "",
+                                                                    "tabsColor": "",
+                                                                    "colorPalette": "color2",
+                                                                    "colorOpacity": 0.8,
+                                                                    "hoverBgColorPalette": "color1",
+                                                                    "hoverBorderColorPalette": "color1",
+                                                                    "tempHoverBorderColorPalette": "color1",
+                                                                    "colorHex": "#1c1c1c",
+                                                                    "tempColorOpacity": 0.8,
+                                                                    "hoverColorHex": "#1c1c1c",
+                                                                    "hoverColorOpacity": 0.8
                                                                 }
                                                             }
                                                         ],
                                                         "submitWidth": 60,
-                                                        "tabletSubmitWidth": 60,
+                                                        "submitWidthSuffix": "",
                                                         "mobileHorizontalAlign": "center"
                                                     }
                                                 }
                                             ],
                                             "paddingType": "ungrouped",
+                                            "paddingRight": 40,
                                             "paddingRightSuffix": "px",
                                             "tempPaddingRightSuffix": "px",
                                             "paddingSuffix": "px",
                                             "tempPaddingSuffix": "px",
-                                            "paddingRight": 40,
                                             "tempPaddingRight": 40
                                         }
                                     },
@@ -457,60 +471,10 @@ module.exports = {
                                                         "tempBoxShadowSpread": 0,
                                                         "tempBoxShadowVertical": 2,
                                                         "tempBoxShadowHorizontal": 1,
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "strokeWidth": 1,
                                                         "customCSS": "",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "tempMobilePadding": 20,
-                                                        
-                                                        "tempMobileBorderRadius": 4,
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
+                                                        "tempMobileBorderRadius": 4
                                                     }
                                                 }
                                             ],
@@ -961,7 +925,7 @@ module.exports = {
         "bgColorHex": "#a170d9",
         "bgColorOpacity": 0.76,
         "tempBgColorOpacity": 0.76,
-        "popupId": "upoktposnazwcalsmkywwtjyihirpcapnipg",
+        "popupId": "btqeiolnekiqpgftfwyunvyizzjowkizysdd",
         "tempBgColorPalette": "color1",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,

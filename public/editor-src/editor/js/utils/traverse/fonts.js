@@ -1,16 +1,6 @@
-import EditorComponents from "visual/global/Editor";
 import { modelTraverse, styleTraverse } from "visual/utils/traverse";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
-
-const splitFont = ({ type, family }) => `${type}|${family}`;
-const unSplitFont = font => {
-  const [type, family] = font.split("|");
-  return { type, family };
-};
-const getComponentDefaultValue = type => {
-  const component = EditorComponents.getComponent(type);
-  return component ? component.defaultValue : {};
-};
+import { getComponentDefaultValue, splitFont, unSplitFont } from "./common";
 
 export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
   const fontFamilies = new Set();
@@ -74,8 +64,8 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
         }
       }
     },
-    GlobalBlock({ value: { globalBlockId } }) {
-      const globalBlockValue = globalBlocks[globalBlockId];
+    GlobalBlock({ value: { _id } }) {
+      const globalBlockValue = globalBlocks[_id];
 
       if (globalBlockValue) {
         const models = { models: globalBlockValue, globalBlocks };

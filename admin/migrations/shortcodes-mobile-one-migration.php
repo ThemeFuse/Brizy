@@ -90,6 +90,11 @@ class Brizy_Admin_Migrations_ShortcodesMobileOneMigration implements Brizy_Admin
 
 			$instance   = Brizy_Editor_Storage_Project::instance( $item->ID );
 			$storage    = $instance->get_storage();
+
+			if ( ! isset( $storage['globals'] ) ) {
+				continue;
+			}
+
 			$json_value = base64_decode($storage['globals']);
 
 			if( !is_null($json_value) ) {

@@ -1,11 +1,13 @@
-
 {
   "style": {
-    "fontStyle": "paragraph",
-    "fontFamilyType": "montserrat",
     "families": {
-      "fontFamily": "google"
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
     },
+
+    "fontStyle": "paragraph",
+    "fontFamilyType": "google",
     "fontSize": 12,
     "fontWeight": 700,
     "lineHeight": 1.8,
@@ -20,9 +22,6 @@
 
     "tabletFontStyle": "paragraph",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": 11,
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
@@ -30,9 +29,6 @@
 
     "mobileFontStyle": "paragraph",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": 11,
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,

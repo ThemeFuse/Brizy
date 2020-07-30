@@ -63,7 +63,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-text-lg-center brz-tp-subtitle\"><em class=\"brz-cp-color7\">&nbsp;With Brizy you can enjoy your website's building process!</em></p>"
+                                            "text": "<p class=\"brz-tp-subtitle brz-text-lg-center\"><em class=\"brz-cp-color7\">&nbsp;With our builder you can enjoy your website's building process!</em></p>"
                                         }
                                     }
                                 ]
@@ -461,7 +461,7 @@ module.exports = {
                                             "_styles": [
                                                 "button"
                                             ],
-                                            "text": "DOWNLOAD BRIZY",
+                                            "text": "DOWNLOAD",
                                             "bgColorPalette": "color1",
                                             "tempBgColorPalette": "color1",
                                             "borderColorPalette": "color1",

@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 186,
   title: "block1kit4274",
   
-  keywords: "header,logo,menu",
+  keywords: "header,logo,menu,pro",
   cat: [4590],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionHeader",
@@ -536,7 +536,10 @@ module.exports = {
                     "boxShadowColorOpacity": 0.1,
                     "boxShadowBlur": 10,
                     "boxShadowColorHex": "#000000",
-                    "boxShadowColorPalette": ""
+                    "boxShadowColorPalette": "",
+                    "tabsState": "tabNormal",
+                    "tabsCurrentElement": "tabCurrentElement",
+                    "tabsColor": "tabOverlay"
                 }
             },
             {

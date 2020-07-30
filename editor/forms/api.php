@@ -8,24 +8,24 @@
  */
 class Brizy_Editor_Forms_Api {
 
-	const AJAX_GET_FORM = 'brizy_get_form';
-	const AJAX_CREATE_FORM = 'brizy_create_form';
-	const AJAX_UPDATE_FORM = 'brizy_update_form';
-	const AJAX_DELETE_FORM = 'brizy_delete_form';
-	const AJAX_SUBMIT_FORM = 'brizy_submit_form';
+	const AJAX_GET_FORM = '_get_form';
+	const AJAX_CREATE_FORM = '_create_form';
+	const AJAX_UPDATE_FORM = '_update_form';
+	const AJAX_DELETE_FORM = '_delete_form';
+	const AJAX_SUBMIT_FORM = '_submit_form';
 
-	const AJAX_GET_INTEGRATION = 'brizy_get_integration';
-	const AJAX_CREATE_INTEGRATION = 'brizy_create_integration';
-	const AJAX_UPDATE_INTEGRATION = 'brizy_update_integration';
-	const AJAX_DELETE_INTEGRATION = 'brizy_delete_integration';
+	const AJAX_GET_INTEGRATION = '_get_integration';
+	const AJAX_CREATE_INTEGRATION = '_create_integration';
+	const AJAX_UPDATE_INTEGRATION = '_update_integration';
+	const AJAX_DELETE_INTEGRATION = '_delete_integration';
 
-	const AJAX_SET_RECAPTCHA_ACCOUNT = 'brizy_set_recaptcha_account';
-	const AJAX_GET_RECAPTCHA_ACCOUNT = 'brizy_get_recaptcha_account';
-	const AJAX_DELETE_RECAPTCHA_ACCOUNT = 'brizy_delete_recaptcha_account';
-	const AJAX_VALIDATE_RECAPTCHA_ACCOUNT = 'brizy_validate_recaptcha_account';
+	const AJAX_SET_RECAPTCHA_ACCOUNT = '_set_recaptcha_account';
+	const AJAX_GET_RECAPTCHA_ACCOUNT = '_get_recaptcha_account';
+	const AJAX_DELETE_RECAPTCHA_ACCOUNT = '_delete_recaptcha_account';
+	const AJAX_VALIDATE_RECAPTCHA_ACCOUNT = '_validate_recaptcha_account';
 
 
-	const AJAX_AUTHENTICATION_CALLBACK = 'brizy_authentication_callback';
+	const AJAX_AUTHENTICATION_CALLBACK = '_authentication_callback';
 
 	/**
 	 * @var Brizy_Editor_Post
@@ -52,27 +52,29 @@ class Brizy_Editor_Forms_Api {
 	}
 
 	private function initialize() {
+		$pref        = 'wp_ajax_' . Brizy_Editor::prefix();
+		$pref_nopriv = 'wp_ajax_nopriv_' . Brizy_Editor::prefix();
+		if ( Brizy_Editor_User::is_user_allowed() ) {
 
-		if ( Brizy_Editor::is_user_allowed() ) {
-			add_action( 'wp_ajax_' . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
-			add_action( 'wp_ajax_' . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
-			add_action( 'wp_ajax_' . self::AJAX_UPDATE_FORM, array( $this, 'update_form' ) );
-			add_action( 'wp_ajax_' . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
-
-			add_action( 'wp_ajax_' . self::AJAX_CREATE_INTEGRATION, array( $this, 'createIntegration' ) );
-			add_action( 'wp_ajax_' . self::AJAX_GET_INTEGRATION, array( $this, 'getIntegration' ) );
-			add_action( 'wp_ajax_' . self::AJAX_UPDATE_INTEGRATION, array( $this, 'updateIntegration' ) );
-			add_action( 'wp_ajax_' . self::AJAX_DELETE_INTEGRATION, array( $this, 'deleteIntegration' ) );
+			add_action( $pref . self::AJAX_GET_FORM, array( $this, 'get_form' ) );
+			add_action( $pref . self::AJAX_CREATE_FORM, array( $this, 'create_form' ) );
+			add_action( $pref . self::AJAX_UPDATE_FORM, array( $this, 'update_form' ) );
+			add_action( $pref . self::AJAX_DELETE_FORM, array( $this, 'delete_form' ) );
+			add_action( $pref . self::AJAX_CREATE_INTEGRATION, array( $this, 'createIntegration' ) );
+			add_action( $pref . self::AJAX_GET_INTEGRATION, array( $this, 'getIntegration' ) );
+			add_action( $pref . self::AJAX_UPDATE_INTEGRATION, array( $this, 'updateIntegration' ) );
+			add_action( $pref . self::AJAX_DELETE_INTEGRATION, array( $this, 'deleteIntegration' ) );
 		}
 
 		add_filter( 'brizy_form_submit_data', array( $this, 'handleFileTypeFields' ), - 100, 2 );
 
-		add_action( 'wp_ajax_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
-		add_action( 'wp_ajax_nopriv_' . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
+		add_action( $pref . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
+		add_action( $pref_nopriv . self::AJAX_SUBMIT_FORM, array( $this, 'submit_form' ) );
 	}
 
+
 	protected function error( $code, $message ) {
-		wp_send_json_error( array( 'code' => $code, 'message' => $message ), $code );
+		wp_send_json_error( array( 'code' => $code, 'message' => $message ), 200 );
 	}
 
 	protected function success( $data, $code = 200 ) {
@@ -84,7 +86,6 @@ class Brizy_Editor_Forms_Api {
 			wp_send_json_error( array( 'code' => 400, 'message' => 'Bad request' ), 400 );
 		}
 	}
-
 
 	public function get_form() {
 		try {
@@ -254,7 +255,7 @@ class Brizy_Editor_Forms_Api {
 					Brizy_Logger::instance()->exception( $e );
 					$this->error( 500, 'Member was not created.' );
 				} finally {
-					if(!$result && $integration->getException()) {
+					if ( ! $result && $integration->getException() ) {
 						throw new Exception( $integration->getException()->get_error_message() );
 					}
 				}

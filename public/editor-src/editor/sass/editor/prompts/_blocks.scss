@@ -199,7 +199,7 @@
           font-size: 16px;
         }
         &-text {
-          max-width: 58%;
+          max-width: 59%;
         }
         &-new {
           width: 32px;
@@ -245,6 +245,12 @@
         display: block;
       }
     }
+    &-separator {
+      width: 100%;
+      height: 1px;
+      background-color: #424951;
+      margin-bottom: 29px;
+    }
   }
 
   // Blooks
@@ -288,13 +294,11 @@
       }
       &-clear-image-saved {
         width: 322px;
-        height: 145px;
         margin-top: -21px;
         pointer-events: none;
       }
       &-clear-image-global {
         width: 524px;
-        height: 207px;
         margin-top: -28px;
         pointer-events: none;
       }
@@ -323,7 +327,7 @@
         border-color: $brand-primary;
       }
       &:after {
-        border-color: #ececec;
+        border-color: #3dbfe8;
       }
     }
     &__span-pro {
@@ -425,13 +429,13 @@
       justify-content: center;
       align-items: center;
 
-      .brz-p {
+      .brz-p:not(.brz-ed-badge) {
         color: rgba(3, 8, 15, 0.92);
         font-family: $font-family-1;
         font-size: 15px;
         font-weight: 600;
         line-height: 18px;
-        padding-left: 20px;
+        padding-left: 10px;
       }
       .brz-ed-container-trigger--small {
         position: relative;
@@ -445,7 +449,7 @@
         &:after,
         &:before {
           width: 3px;
-          height: 14px;
+          height: 13px;
           margin: -7px 0 0 -1px;
         }
       }
@@ -464,6 +468,26 @@
       }
       &:hover:before {
         opacity: 0;
+      }
+    }
+    &__blank--pro {
+      &:after,
+      &:before,
+      &:hover:after {
+        border-color: $brand-primary-pro !important;
+        transition: border-color 0.3s ease-in-out;
+      }
+      &:hover:before {
+        opacity: 0;
+      }
+      .brz-icon-svg {
+        color: $brand-primary-pro;
+      }
+      .brz-p:not(.brz-ed-badge) {
+        padding: 2px;
+      }
+      .brz-p:not(.brz-ed-badge) .brz-icon-svg {
+        margin-right: 7px;
       }
     }
     &-remove {
@@ -560,6 +584,33 @@
           border-radius: 3px 3px 0 0;
         }
       }
+    }
+    &-sync {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 0;
+      color: $brand-primary;
+      border: 2px solid #fff;
+      background-color: #fff;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+    }
+    &-sync--uploaded {
+      color: #48be24;
+    }
+    &-sync .brz-icon-svg {
+      font-size: 16px;
+    }
+    &--loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0;
+    }
+    &--loading .brz-icon-svg {
+      font-size: 20px;
     }
     .brz-observer__image {
       position: relative;
@@ -814,6 +865,79 @@
       }
     }
   }
+
+  // cloud
+  &__cloud {
+    font-family: $font-family-1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #818a91;
+    text-align: center;
+
+    .brz-p {
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+  }
+  &__cloud-button {
+    margin-bottom: 20px;
+  }
+  &__cloud-icon {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #818a91;
+  }
+  &__cloud-button-sync {
+    margin-bottom: 18px;
+  }
+  &__cloud-icon--connect {
+    position: absolute;
+    top: -5px;
+    right: -11px;
+    color: #48be24;
+    padding: 3px;
+    font-size: 0;
+    background-color: #2a2e37;
+    border-radius: 20px;
+
+    .brz-icon-svg {
+      font-size: 14px;
+    }
+  }
+  &__cloud-info {
+    margin-bottom: 18px;
+
+    &:hover,
+    &:hover .brz-a {
+      color: rgba(255, 255, 255, 0.9) !important;
+      transition: 0.2s linear color;
+    }
+    .brz-icon-svg {
+      font-size: 12px;
+    }
+    .brz-a {
+      color: #767f86;
+      margin-left: 5px;
+    }
+  }
+
+  // Tooltip uses in Free
+  &-block--pro .brz-ed-tooltip--opened {
+    // Blank
+    .brz-ed-popup-two-block__blank {
+      &:after,
+      &:before {
+        border-color: $brand-primary-pro !important;
+      }
+      &:after {
+        border-radius: 3px;
+        opacity: 1;
+      }
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
 }
 
 // Responsive
@@ -826,5 +950,12 @@
   }
   .brz-ed-popup-two-details-page-select {
     width: 29%;
+  }
+}
+
+// TMP
+.brz-ed-global-tooltip {
+  .brz-ed-tooltip__content {
+    width: 100%;
   }
 }

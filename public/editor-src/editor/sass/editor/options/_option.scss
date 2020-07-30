@@ -2,7 +2,9 @@
 
 // --- Option
 .brz-ed-popover__option,
-.brz-ed-sidebar__right__option {
+.brz-ed-popover__options .brz-ed-option,
+.brz-ed-sidebar__right__option,
+.brz-ed-sidebar__right .brz-ed-option {
   font-family: $font-family-1;
   font-size: $options-item-font-size;
   line-height: normal;
@@ -26,9 +28,9 @@
 }
 
 // Padding for option
+.brz-ed-popover__options,
 .brz-ed-popover__option {
-  &,
-  & .brz-ed-option-wrapper {
+  .brz-ed-option {
     padding: 10px $options-item-padding;
     user-select: none;
 
@@ -150,7 +152,6 @@
     font-size: $options-item-font-size;
     color: $options-label-color;
     font-weight: 600;
-    flex-basis: auto;
     margin-right: 17px;
     display: flex;
     line-height: 1.3;
@@ -164,6 +165,12 @@
   // Select Label
   &__slider__label {
     flex-basis: 65px;
+  }
+
+  &.brz-ed-grid__typography {
+    .brz-ed-popover__font-style {
+      padding-top: 0;
+    }
   }
 }
 
@@ -192,5 +199,23 @@
     .brz-icon-svg {
       font-size: $toolbar-font-size;
     }
+  }
+}
+
+.brz-ed-option__label {
+  flex: 1 1 auto;
+
+  &__icon {
+    font-size: 16px;
+    color: #fff;
+  }
+
+  &__text {
+    word-break: keep-all;
+  }
+
+  // Cannot use `&__icon + &__text` as `.brz-ed-option__label__text` !== `&__text`
+  &__icon + .brz-ed-option__label__text {
+    margin-left: 10px;
   }
 }

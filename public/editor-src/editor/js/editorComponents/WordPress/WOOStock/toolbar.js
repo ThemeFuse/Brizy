@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -14,11 +13,13 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -32,18 +33,20 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          }
+        }
+      },
       roles: ["admin"],
       devices: "desktop",
       position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
-        }
-      },
       options: [
         {
           id: "color",

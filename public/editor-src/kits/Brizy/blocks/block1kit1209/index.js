@@ -77,7 +77,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-subtitle brz-text-xs-center\"><em class=\"brz-cp-color3\">Brizy support is always there for you!</em></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-subtitle brz-text-lg-left\"><em class=\"brz-cp-color3\">Support service is always there for you!</em></p>"
                                                                 }
                                                             }
                                                         ]
@@ -97,7 +97,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-paragraph brz-mb-xs-15 brz-mb-lg-10\"><span class=\"brz-cp-color7\">With Brizy, you can create beautiful WordPress pages in minutes by adding pre-made design elements, called items to the page and then edit everything within.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-mb-lg-10 brz-mb-xs-15 brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\"><span>With this, you can create beautiful WordPress pages in minutes by adding pre-made design elements, called items to the page and then edit everything within.&nbsp;</span></span></p>"
                                                                 }
                                                             }
                                                         ]

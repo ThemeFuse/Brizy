@@ -20,8 +20,6 @@ class Blocks extends Component {
   static defaultProps = {
     showSidebar: true,
     showSearch: true,
-    showType: true, // dark | light
-    showCategories: true,
     loading: false,
     kits: [],
     styles: [],
@@ -29,45 +27,65 @@ class Blocks extends Component {
     categories: [],
     blocks: [],
     HeaderSlotLeft: _.noop,
-    HeaderSlotRight: _.noop,
     onAddBlocks: _.noop,
     onClose: _.noop,
     onChange: _.noop,
     onChangeKit: _.noop
   };
 
-  getData(kits, kitId) {
-    const { categoriesFilter } = this.props;
-    const kit = kits.find(({ id }) => id === kitId);
-    const { categories, blocks, styles, types } = kit;
+  filterData = (item, currentFilter) => {
+    const typeMatch = currentFilter.type === item.type;
+    const categoryMatch =
+      currentFilter.category === "*" ||
+      item.cat.includes(Number(currentFilter.category));
 
-    // categories
-    const categoriesData = categoriesFilter([
-      { id: "*", title: t("All Categories") },
-      ...categories
-    ]);
+    const searchMatch =
+      currentFilter.search === "" ||
+      new RegExp(
+        currentFilter.search.replace(/[.*+?^${}()|[\]\\]/g, ""),
+        "i"
+      ).test(item.keywords);
 
-    // filter blocks
-    const categoryIds = new Map(categoriesData.map(cat => [cat.id, true]));
-    const blocksData = blocks.filter(block =>
-      block.cat.some(cat => categoryIds.get(cat))
-    );
+    return typeMatch && categoryMatch && searchMatch;
+  };
 
-    return {
-      styles,
-      types,
-      categories: categoriesData,
-      blocks: blocksData
-    };
+  getTypesCounters() {
+    const { blocks, types } = this.props;
+    const counters = types.reduce((acc, { id }) => {
+      return Object.assign(acc, { [id]: 0 });
+    }, {});
+
+    blocks.forEach(({ type }) => {
+      counters[type]++;
+    });
+
+    return counters;
   }
 
-  handleThumbnailAdd = thumbnailData => {
-    this.props.onChange(thumbnailData);
-  };
+  getCategoriesCounter(type) {
+    let { blocks, types, showType } = this.props;
+    let allCategoriesCount = blocks.length;
 
-  handleImportKit = kitId => {
-    this.props.onChangeKit(kitId);
-  };
+    if (showType && types.length) {
+      blocks = blocks.filter(block => block.type === type);
+      allCategoriesCount = blocks.length;
+    }
+
+    return blocks.reduce(
+      (acc, { cat }) => {
+        cat.forEach(cat => {
+          if (acc[cat]) {
+            Object.assign(acc, { [cat]: ++acc[cat] });
+          } else {
+            Object.assign(acc, { [cat]: 1 });
+          }
+        });
+
+        return acc;
+      },
+      { "*": allCategoriesCount }
+    );
+  }
 
   renderLoading() {
     const { showSidebar, showSearch, HeaderSlotLeft } = this.props;
@@ -101,72 +119,28 @@ class Blocks extends Component {
       selectedKit,
       showSearch,
       showSidebar,
-      showType,
-      showCategories,
-      HeaderSlotLeft
+      HeaderSlotLeft,
+      onChangeKit,
+      onChange
     } = this.props;
 
     if (loading) {
       return this.renderLoading();
     }
 
-    const filterFn = (item, currentFilter) => {
-      const typeMatch = currentFilter.type === item.type;
-
-      const categoryMatch =
-        currentFilter.category === "*" ||
-        item.cat.includes(Number(currentFilter.category));
-
-      const searchMatch =
-        currentFilter.search === "" ||
-        new RegExp(
-          currentFilter.search.replace(/[.*+?^${}()|[\]\\]/g, ""),
-          "i"
-        ).test(item.keywords);
-
-      return typeMatch && categoryMatch && searchMatch;
-    };
-
-    const countersColorBlocks = {};
-    const countersSectionBlocks = {};
     const showImportKit =
       kits.filter(({ id }) => id !== selectedKit).length > 0;
+    const showType = types.length > 0;
+    const showCategories = categories.length > 0;
 
     return (
       <DataFilter
         data={blocks}
-        filterFn={filterFn}
+        filterFn={this.filterData}
         defaultFilter={defaultFilter}
       >
         {(filteredThumbnails, currentFilter, setFilter) => {
           defaultFilter.type = currentFilter.type;
-
-          if (!countersColorBlocks[currentFilter.type]) {
-            for (let i = 0; i < blocks.length; i++) {
-              const blockType = blocks[i].type; // dark | light
-              const blockCategories = blocks[i].cat; // header | footer etc.
-
-              if (countersColorBlocks[blockType] === undefined) {
-                countersColorBlocks[blockType] = 1;
-              } else {
-                countersColorBlocks[blockType]++;
-              }
-
-              if (currentFilter.type === blockType) {
-                countersSectionBlocks["*"] = countersColorBlocks[blockType];
-
-                for (let j = 0; j < blockCategories.length; j++) {
-                  const category = blockCategories[j];
-
-                  if (countersSectionBlocks[category] === undefined) {
-                    countersSectionBlocks[category] = 1;
-                  } else {
-                    countersSectionBlocks[category]++;
-                  }
-                }
-              }
-            }
-          }
 
           return (
             <>
@@ -189,7 +163,7 @@ class Blocks extends Component {
                         className="brz-control__select--dark brz-control__select--full-width"
                         maxItems="6"
                         itemHeight="30"
-                        onChange={this.handleImportKit}
+                        onChange={onChangeKit}
                       >
                         {kits.map(({ id, name }, index) => (
                           <SelectItem key={index} value={id}>
@@ -203,7 +177,7 @@ class Blocks extends Component {
                     <SidebarOption title="STYLES">
                       <SidebarList
                         lists={types}
-                        counters={countersColorBlocks}
+                        counters={this.getTypesCounters()}
                         value={currentFilter.type}
                         onChange={value => setFilter({ type: value })}
                       />
@@ -213,7 +187,7 @@ class Blocks extends Component {
                     <SidebarOption title="CATEGORIES">
                       <SidebarList
                         lists={categories}
-                        counters={countersSectionBlocks}
+                        counters={this.getCategoriesCounter(currentFilter.type)}
                         value={currentFilter.category}
                         onChange={value => setFilter({ category: value })}
                       />
@@ -227,7 +201,7 @@ class Blocks extends Component {
                   {filteredThumbnails.length > 0 ? (
                     <ThumbnailGrid
                       data={filteredThumbnails}
-                      onThumbnailAdd={this.handleThumbnailAdd}
+                      onThumbnailAdd={onChange}
                     />
                   ) : (
                     <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">

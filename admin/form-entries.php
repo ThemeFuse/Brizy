@@ -32,6 +32,7 @@ class Brizy_Admin_FormEntries {
 			//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
 			//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
 			add_action( 'admin_footer', array( $this, 'customStylesForList' ) );
+			add_action( 'admin_init', [ $this, 'export_leads' ] );
 
 			add_filter( 'post_row_actions', array( $this, 'filterRowActions' ), 10, 2 );
 			add_filter( 'manage_' . self::CP_FORM_ENTRY . '_posts_columns', array( $this, 'replaceTitleColumn' ) );
@@ -70,6 +71,15 @@ class Brizy_Admin_FormEntries {
 			$post = get_post( $post_ID );
 			$data = json_decode( $post->post_content );
 
+			// We use html_entity_decode the user can insert text in some languages like German, Hindi, etc.
+			// and the function json_encode broke the json or encode the characters like this ud83dude00.
+			if ( isset( $data->formData ) ) {
+				foreach ( $data->formData as $i => $field ) {
+					$data->formData[ $i ]->name  = html_entity_decode( $field->name );
+					$data->formData[ $i ]->value = html_entity_decode( $field->value );
+				}
+			}
+
 			echo Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/views" ) )
 			                     ->render( 'form-data.html.twig', array( 'data' => $data ) );
 		}
@@ -89,7 +99,7 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function filterRowActions( $actions, $post ) {
 
-		$is_allowed = Brizy_Editor::is_user_allowed();
+		$is_allowed = Brizy_Editor_User::is_user_allowed();
 
 		if ( ! $is_allowed ) {
 			return $actions;
@@ -170,14 +180,91 @@ class Brizy_Admin_FormEntries {
 		$screen = get_current_screen();
 
 		if ( self::CP_FORM_ENTRY == $screen->post_type ) {
+
+			$disable = get_posts( [ 'post_type'      => self::CP_FORM_ENTRY,
+			                        'posts_per_page' => 1
+			] ) ? '' : ' brz-leads-export-disable';
 			?>
             <style>
                 .subsubsub {
                     display: none;
                 }
             </style>
+            <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+                    $($(".wrap h1")[0]).append($('#brz-leads-export-tpl-buttons').html());
+                });
+            </script>
+            <template id="brz-leads-export-tpl-buttons">
+                <a class="brz-leads-export add-new-h2<?php echo $disable; ?>"
+                   href="<?php echo admin_url( 'edit.php?post_type=' . self::CP_FORM_ENTRY . '&brizy-export-leads=' . wp_create_nonce( 'brizy-admin-export-leads' ) ); ?>">
+					<?php esc_html_e( 'Export to .csv', 'brizy' ); ?>
+                </a>
+            </template>
+
 			<?php
 		}
+	}
+
+	public function export_leads() {
+
+		if ( ! current_user_can( 'manage_options' ) || ! isset( $_GET['brizy-export-leads'] ) || ! wp_verify_nonce( $_GET['brizy-export-leads'], 'brizy-admin-export-leads' ) ) {
+			return;
+		}
+
+		$leads = get_posts( [ 'post_type' => self::CP_FORM_ENTRY, 'posts_per_page' => - 1 ] );
+
+		if ( ! $leads ) {
+			return;
+		}
+
+		$cols = [];
+		$data = [];
+
+		foreach ( $leads as $lead ) {
+			$lead_fields = json_decode( $lead->post_content, true );
+			if ( empty( $lead_fields['formData'] ) ) {
+				continue;
+			}
+
+			$data[] = $lead_fields['formData'];
+
+			foreach ( $lead_fields['formData'] as $field ) {
+				if ( ! in_array( $field['label'], $cols ) ) {
+					$cols[] = $field['label'];
+				}
+			}
+		}
+
+		if ( empty( $data ) || empty( $cols ) ) {
+			return;
+		}
+
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename=leads.csv' );
+		header( 'Pragma: no-cache' );
+		header( 'Expires: 0' );
+
+		$fp = fopen( 'php://output', 'wb' );
+		fputcsv( $fp, $cols );
+
+		$cols  = array_flip( $cols );
+		$range = count( $cols );
+
+		foreach ( $data as $lines ) {
+
+			$val = array_fill( 0, $range, '' );
+
+			foreach ( $lines as $line ) {
+				$val[ $cols[ $line['label'] ] ] = $line['value'];
+			}
+
+			fputcsv( $fp, $val );
+		}
+
+		fclose( $fp );
+
+		die();
 	}
 
 	/**
@@ -199,13 +286,20 @@ class Brizy_Admin_FormEntries {
 				unset( $fields[ $i ] );
 				$fields = array_values( $fields );
 			}
+
+			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
+			// and the function json_encode broke the json or encode the characters.
+			$fields[ $i ]->name  = htmlentities( $field->name );
+			$fields[ $i ]->value = htmlentities( $field->value );
 		}
 
 		$params = array(
 			'post_title'   => $title,
 			'post_type'    => self::CP_FORM_ENTRY,
 			'post_status'  => 'publish',
-			'post_content' => json_encode( array( 'formId' => $form->getId(), 'formData' => $fields ) )
+			'post_content' => json_encode( array( 'formId'   => $form->getId(),
+			                                      'formData' => $fields
+			), JSON_UNESCAPED_UNICODE )
 		);
 
 		wp_insert_post( $params );
@@ -238,7 +332,7 @@ class Brizy_Admin_FormEntries {
 				'public'              => false,
 				'has_archive'         => false,
 				'description'         => __( 'Leads', 'brizy' ),
-				'publicly_queryable'  => Brizy_Editor::is_user_allowed(),
+				'publicly_queryable'  => false,
 				'show_ui'             => true,
 				'show_in_menu'        => false, //Brizy_Admin_Settings::menu_slug(),
 				'query_var'           => false,

@@ -22,7 +22,7 @@ class Brizy_Content_PlaceholderExtractor
 
     private static function getPlaceholderRegexExpression()
     {
-        return "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*'(?:.[^']*|)'\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";;
+        return "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*(?:'|\")(?:.[^\"']*|)(?:'|\")\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";;
     }
 
     public static function stripPlaceholders($content)

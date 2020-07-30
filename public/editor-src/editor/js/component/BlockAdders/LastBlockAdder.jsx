@@ -1,66 +1,27 @@
 import React from "react";
 import classnames from "classnames";
 import { connect } from "react-redux";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
 import { t } from "visual/utils/i18n";
-import { addBlock, importTemplate } from "visual/redux/actions";
 
 class LastBlockAdder extends React.Component {
   static defaultProps = {
-    insertIndex: 0,
     blocks: []
   };
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  handleTemplateAdd = data => {
-    const { insertIndex, dispatch } = this.props;
-    const meta = { insertIndex };
-    dispatch(importTemplate(data, meta));
-  };
-
-  handleBlockAdd = data => {
-    const { insertIndex, dispatch } = this.props;
-    const meta = { insertIndex };
-    dispatch(addBlock(data, meta));
-  };
-
-  open = () => {
-    UIState.set("prompt", {
+  handleOpen = () => {
+    const { onAddBlock, onAddTemplate } = this.props;
+    Prompts.open({
       prompt: "blocks",
-      tabProps: {
-        blocks: {
-          onAddBlocks: this.handleBlockAdd
-        },
-        saved: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              // eslint-disable-next-line no-unused-vars
-              ([_, { data: blockData }]) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        global: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              // eslint-disable-next-line no-unused-vars
-              ([_, { data: blockData }]) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        templates: {
-          onAddBlocks: this.handleTemplateAdd
-        }
+      mode: "single",
+      props: {
+        type: "normal",
+        onChangeBlocks: onAddBlock,
+        onChangeTemplate: onAddTemplate,
+        onChangeSaved: onAddTemplate,
+        onChangeGlobal: onAddBlock
       }
     });
   };
@@ -76,7 +37,7 @@ class LastBlockAdder extends React.Component {
         <span className="brz-span brz-ed-block-adder-title">
           {t("Add a new block")}
         </span>
-        <RoundPlus onClick={this.open} />
+        <RoundPlus onClick={this.handleOpen} />
         <span className="brz-span brz-ed-block-adder-desc">
           {t("Press the button to add blocks")}
         </span>

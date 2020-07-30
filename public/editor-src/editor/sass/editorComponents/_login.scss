@@ -1,0 +1,88 @@
+&:not(.brz-ed) {
+  .brz-form-login.brz-form-login,
+  .brz-login__autorized {
+    display: none;
+  }
+}
+.brz-login {
+  width: 100%;
+
+  &__autorized {
+    * {
+      display: inline;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  span.psw {
+    float: right;
+    padding-top: 16px;
+  }
+  .brz-input {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    min-height: auto;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    letter-spacing: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    box-shadow: none;
+
+    &::placeholder {
+      color: inherit;
+      opacity: 0.5;
+    }
+  }
+  &__item {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+  &__item-button {
+    .brz-btn {
+      outline: none;
+      width: 100%;
+    }
+    .brz-icon-svg {
+      flex-grow: 0;
+    }
+  }
+  .brz-control__check-group-option {
+    display: flex;
+    align-items: center;
+
+    .brz-control__check-group-icon {
+      margin-right: 10px;
+    }
+  }
+  .brz-login__field-label {
+    display: block;
+  }
+  .brz-form-login {
+    flex-wrap: wrap !important;
+    margin-top: -0 !important;
+  }
+  .brz-form-login__field {
+    padding-top: 0 !important;
+
+    a {
+      text-decoration: none;
+    }
+  }
+  .brz-form-login__field-lost-password {
+    width: 100%;
+
+    a {
+      display: block;
+    }
+  }
+  .brz-form-login__field-remember-off.brz-form-login__field-Remember {
+    padding: 0 !important;
+  }
+}

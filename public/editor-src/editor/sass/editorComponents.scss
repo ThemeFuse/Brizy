@@ -121,11 +121,14 @@
 // tabs
 @import "editorComponents/tabs";
 
-//timeline
+// timeline
 @import "editorComponents/timeline";
 
 // switcher
 @import "editorComponents/switcher";
+
+// table
+@import "editorComponents/table";
 
 // accordion
 @import "editorComponents/accordion";
@@ -154,16 +157,13 @@
 // WOOSku
 @import "editorComponents/WOOSku";
 
-// WOOStock
-@import "editorComponents/WOOStock";
-
-// WP Content
-@import "editorComponents/wpcontent";
-
 // Post info
 @import "editorComponents/postinfo";
 
-// Star rating
+// wpPostNavigation
+@import "editorComponents/postNavigation";
+
+// star rating
 @import "editorComponents/starrating";
 
 // Search
@@ -181,5 +181,22 @@
 // Image
 @import "editorComponents/image";
 
+// WOOProductMeta
+@import "editorComponents/WOOProductMeta";
+
+// WOORating
+@import "editorComponents/WOORating";
+
+// WOOCart
+@import "editorComponents/WOOCart";
+
 // MenuSimple
 @import "editorComponents/menu-simple";
+
+// Login
+@import "editorComponents/login";
+
+// wp
+@import "editorComponents/wp-post-content";
+@import "editorComponents/wp-post-excerpt";
+@import "editorComponents/woo-stock";

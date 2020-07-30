@@ -5,7 +5,7 @@ module.exports = {
   title: "popup1765",
   
   keywords: "",
-  cat: [1754],
+  cat: [1493],
   type: 0,
   pro: true,
   resolve: {
@@ -394,7 +394,7 @@ module.exports = {
         "tempColorOpacity": 1,
         "hoverColorHex": "#239ddb",
         "hoverColorOpacity": 0.8,
-        "popupId": "tlrmezmpqmyacsupyiwiwrspxdhfwfqtuxjp",
+        "popupId": "vrlusovyhradhxayentidklhbrsgscjsxqqm",
         "width": 450,
         "widthSuffix": "px",
         "tabletWidth": 450,

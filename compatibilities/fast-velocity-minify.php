@@ -1,16 +1,17 @@
 <?php
+
 /**
  * Compatibility with Fast Velocity Minify plugin: https://wordpress.org/plugins/fast-velocity-minify/
  */
 class Brizy_Compatibilities_FastVelocityMinify {
 
 	public function __construct() {
-		add_action( 'init',  array( $this, 'remove_actions' ), 9 );
+		add_action( 'init', array( $this, 'remove_actions' ), 9 );
 	}
 
 	public function remove_actions() {
 
-		if (  ! isset( $_GET['brizy-edit'] ) && ! isset( $_GET['brizy-edit-iframe'] ) ) {
+		if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
 			return;
 		}
 

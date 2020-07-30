@@ -1,5 +1,4 @@
 import $ from "jquery";
-import Isotope from "isotope-layout";
 
 export default function($node) {
   $node.find(".brz-switcher").each(function() {
@@ -13,14 +12,8 @@ export default function($node) {
       $switcherNavItems.toggleClass("brz-switcher__nav--item--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
 
-      // Need Update Isotope
-      $switcherContent.find(".brz-image__gallery").each(function() {
-        const iso = Isotope.data($(this)[0]);
-
-        if (iso) {
-          iso.layout();
-        }
-      });
+      // Emit Switcher Changed
+      window.Brizy.emit("elements.switcher.changed", $this.get(0));
     });
 
     // style 2
@@ -30,14 +23,8 @@ export default function($node) {
       $switcherNavControl.toggleClass("brz-switcher__nav2--control--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
 
-      // Need Update Isotope
-      $switcherContent.find(".brz-image__gallery").each(function() {
-        const iso = Isotope.data($(this)[0]);
-
-        if (iso) {
-          iso.layout();
-        }
-      });
+      // Emit Switcher Changed
+      window.Brizy.emit("elements.switcher.changed", $this.get(0));
     });
   });
 }

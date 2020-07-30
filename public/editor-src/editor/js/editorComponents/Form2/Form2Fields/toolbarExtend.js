@@ -27,11 +27,11 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
+      type: "popover-dev",
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "background",
@@ -65,11 +65,12 @@ export function getItems({ v, device, state }) {
 
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -83,11 +84,12 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypographyCheckbox",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -102,21 +104,22 @@ export function getItems({ v, device, state }) {
 
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBg",
@@ -228,20 +231,22 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColorCheckbox",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      devices: "desktop",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            checkboxColorHex,
-            dvv("checkboxColorOpacity")
-          )
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              checkboxColorHex,
+              dvv("checkboxColorOpacity")
+            )
+          }
         }
       },
+      position: 80,
+      devices: "desktop",
+
       options: [
         {
           id: "checkboxColor",

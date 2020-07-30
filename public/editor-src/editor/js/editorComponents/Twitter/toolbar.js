@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { getDynamicContentChoices } from "visual/utils/options";
 import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementTwitter,
@@ -28,18 +29,22 @@ export function getItems({ v, device, state }) {
             value: "mentionButton"
           }
         ];
+  const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
     {
-      id: dvkn("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-twitter",
-      title: t("Twitter"),
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
+      config: {
+        icon: "nc-twitter",
+        title: t("Twitter")
+      },
+      devices: "desktop",
       position: 60,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -50,7 +55,8 @@ export function getItems({ v, device, state }) {
                   label: t("Username"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  placeholder: "username"
+                  placeholder: "username",
+                  population: richTextDC
                 },
                 toolbarElementTwitter({
                   v,
@@ -85,27 +91,17 @@ export function getItems({ v, device, state }) {
               label: t("Advanced"),
               options: [
                 {
-                  type: "multiPicker",
+                  id: "buttonLarge",
+                  label: t("Button Size"),
+                  type: "radioGroup-dev",
                   disabled:
                     v.twitterType !== "followButton" &&
                     v.twitterType !== "mentionButton",
                   position: 10,
-                  picker: {
-                    id: "buttonLarge",
-                    label: t("Button Size"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "small",
-                        icon: "nc-small"
-                      },
-                      {
-                        value: "large",
-                        icon: "nc-large"
-                      }
-                    ],
-                    value: v.buttonLarge
-                  }
+                  choices: [
+                    { value: "small", icon: "nc-small" },
+                    { value: "large", icon: "nc-large" }
+                  ]
                 },
                 {
                   id: "buttonShowCount",
@@ -138,11 +134,12 @@ export function getItems({ v, device, state }) {
 
     v.twitterType === "embed"
       ? {
-          id: dvkn("toolbarSettings"),
-          type: "popover",
-          icon: "nc-cog",
-          title: t("Settings"),
-          roles: ["admin"],
+          id: "toolbarSettings",
+          type: "popover-dev",
+          config: {
+            icon: "nc-cog",
+            title: t("Settings")
+          },
           position: 110,
           options: [
             {

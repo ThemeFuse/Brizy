@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { last } from "underscore";
 import classNames from "classnames";
 import {
@@ -6,42 +6,32 @@ import {
   Props as MP
 } from "visual/component/Controls/MultiSelect";
 import { OnChange } from "visual/component/Options/Type";
-import { Value, read } from "visual/component/Controls/MultiSelect/types/Value";
-import { apply } from "visual/component/Options/types/dev/MultiSelect/utils";
+import { Literal } from "visual/utils/types/Literal";
+import { mCompose } from "visual/utils/value";
 
-type Props = Omit<Omit<MP, "onChange">, "value"> & {
-  onChange: OnChange<Value>;
-  value: Value;
+type Props<T extends Literal> = Omit<Omit<MP<T>, "onChange">, "value"> & {
+  onChange: OnChange<T>;
+  value: T;
 };
 
-export const Select2: FC<Props> = ({
+export function Select2<T extends Literal>({
   value,
   onChange,
   children,
   className,
   ...props
-}) => {
-  const [_value, setValue] = useState(value);
-
+}: Props<T>): ReactElement {
+  const _value = value !== undefined ? [value] : [];
+  const _onChange = useCallback(mCompose(onChange, last), [onChange]);
   return (
     <MultiSelect
       {...props}
       className={classNames(className, "brz-ed-control__select-single")}
-      onChange={(v): void => onChange(read(last(v)) || "")}
-      value={[_value]}
+      onChange={_onChange}
+      value={_value}
       hideSelected={false}
     >
-      {apply(items => {
-        const v =
-          items.find(i => i.props.value === value)?.props.value ??
-          items[0]?.props.value ??
-          "";
-        if (_value !== v) {
-          setValue(v);
-        }
-
-        return items;
-      }, children)}
+      {children}
     </MultiSelect>
   );
-};
+}

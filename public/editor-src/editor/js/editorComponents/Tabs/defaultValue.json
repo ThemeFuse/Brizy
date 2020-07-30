@@ -6,7 +6,9 @@
     "verticalAlign": "left",
     "navStyle": "style-1",
     "spacing": 3,
+    "spacingSuffix": null,
     "spacingAfter": 30,
+    "spacingAfterSuffix": null,
     "action": "click"
   },
 
@@ -21,18 +23,24 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
+    "iconCustomSizeSuffix": null,
     "iconPosition": "left",
     "iconSpacing": 10,
+    "iconSpacingSuffix": null,
 
     "tabletIconSize": null,
     "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
     "tabletIconPosition": null,
     "tabletIconSpacing": null,
+    "tabletIconSpacingSuffix": null,
 
     "mobileIconSize": null,
     "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null,
     "mobileIconPosition": null,
     "mobileIconSpacing": null,
+    "mobileIconSpacingSuffix": null,
 
     "iconStrokeWidth": 1,
 
@@ -48,11 +56,14 @@
     "mobileIconMediumSize": 24,
     "mobileIconLargeSize": 32,
 
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "noto_serif"
-    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.5,
@@ -94,6 +105,43 @@
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
+
+    "activeBorderStyle": null,
+
+    "tempActiveBorderStyle": null,
+
+    "activeBorderWidthType": null,
+    "activeBorderWidth": null,
+    "activeBorderTopWidth": null,
+    "activeBorderRightWidth": null,
+    "activeBorderBottomWidth": null,
+    "activeBorderLeftWidth": null,
+
+    "tempActiveBorderWidth": null,
+    "tempActiveBorderTopWidth": null,
+    "tempActiveBorderRightWidth": null,
+    "tempActiveBorderBottomWidth": null,
+    "tempActiveBorderLeftWidth": null,
+
+    "activeBorderRadiusType": null,
+    "activeBorderRadius": null,
+    "activeBorderTopLeftRadius": null,
+    "activeBorderTopRightRadius": null,
+    "activeBorderBottomRightRadius": null,
+    "activeBorderBottomLeftRadius": null,
+
+    "tempActiveBorderRadius": null,
+    "tempActiveBorderTopLeftRadius": null,
+    "tempActiveBorderTopRightRadius": null,
+    "tempActiveBorderBottomRightRadius": null,
+    "tempActiveBorderBottomLeftRadius": null,
+
+    "activeBorderColorHex": null,
+    "activeBorderColorOpacity": null,
+    "activeBorderColorPalette": null,
+
+    "tempActiveBorderColorOpacity": null,
+    "tempActiveBorderColorPalette": null,
 
     "hoverBorderStyle": null,
 
@@ -146,6 +194,13 @@
     "tempHoverColorOpacity": 0.7,
     "tempHoverColorPalette": null,
 
+    "activeColorHex": null,
+    "activeColorOpacity": null,
+    "activeColorPalette": null,
+
+    "tempActiveColorOpacity": null,
+    "tempActiveColorPalette": null,
+
     "bgColorType": "solid",
 
     "bgColorHex": "#ffffff",
@@ -162,6 +217,13 @@
 
     "tempHoverBgColorOpacity": 1,
     "tempHoverBgColorPalette": null,
+
+    "activeBgColorHex": null,
+    "activeBgColorOpacity": null,
+    "activeBgColorPalette": null,
+
+    "tempActiveBgColorOpacity": null,
+    "tempActiveBgColorPalette": null,
 
     "boxShadow": "",
 
@@ -194,6 +256,13 @@
 
     "tempHoverBoxShadowColorPalette": null,
     "tempHoverBoxShadowColorOpacity": null,
+
+    "activeBoxShadowColorHex": null,
+    "activeBoxShadowColorOpacity": null,
+    "activeBoxShadowColorPalette": null,
+
+    "tempActiveBoxShadowColorPalette": null,
+    "tempActiveBoxShadowColorOpacity": null,
 
     "hoverBoxShadowBlur": null,
     "hoverBoxShadowSpread": null,
@@ -263,9 +332,6 @@
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": 14,
     "tabletLineHeight": 1.5,
     "tabletLetterSpacing": 0,
@@ -301,9 +367,6 @@
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": 14,
     "mobileLineHeight": 1.5,
     "mobileLetterSpacing": 0,
@@ -336,5 +399,22 @@
     "tempMobilePaddingRightSuffix": "px",
     "tempMobilePaddingBottomSuffix": "px",
     "tempMobilePaddingLeftSuffix": "px"
+  },
+
+  "animation": {
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+    "tempMobileAnimationName": null
   }
 }

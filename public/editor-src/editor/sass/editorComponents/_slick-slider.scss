@@ -6,6 +6,10 @@
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 
+  // solve problems with big with
+  width: 0;
+  min-width: 100%;
+
   &.slick-dotted {
     margin: 0;
   }

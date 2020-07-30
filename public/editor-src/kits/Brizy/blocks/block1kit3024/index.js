@@ -81,7 +81,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;No more buffering - create, style and enjoy. Our user interface was built on React - the most efficient JavaScript library. We guarantee you will love the difference in performance.</span></p>"
+                                            "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>This is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click, modify and watch the results.&nbsp;No more buffering - create, style and enjoy. Our user interface was built on React - the most efficient JavaScript library. We guarantee you will love the difference in performance.</span></span></p>"
                                         }
                                     }
                                 ],

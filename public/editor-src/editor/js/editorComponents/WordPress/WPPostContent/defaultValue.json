@@ -1,88 +1,89 @@
-{ 
+{
   "toolbar": {
-     "tabsState": "", 
-     "tabsColor": "" 
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
+  "style": {
+    "families": {
+      "paragraphFontFamily": "lato",
+      "tabletParagraphFontFamily": null,
+      "mobileParagraphFontFamily": null,
+      "h1FontFamily": "lato",
+      "tabletH1FontFamily": null,
+      "mobileH1FontFamily": null,
+      "h2FontFamily": "lato",
+      "tabletH2FontFamily": null,
+      "mobileH2FontFamily": null,
+      "h3FontFamily": "lato",
+      "tabletH3FontFamily": null,
+      "mobileH3FontFamily": null,
+      "h4FontFamily": "lato",
+      "tabletH4FontFamily": null,
+      "mobileH4FontFamily": null,
+      "h5FontFamily": "lato",
+      "tabletH5FontFamily": null,
+      "mobileH5FontFamily": null,
+      "h6FontFamily": "lato",
+      "tabletH6FontFamily": null,
+      "mobileH6FontFamily": null
     },
 
-"style": {
-  "paragraphFontStyle": "paragraph",
-  "paragraphFontFamilyType": "google",
-  "paragraphFamilies": {
-    "paragraphFontFamily": "lato"
-  },
-  "paragraphFontSize": 16,
-  "paragraphFontWeight": 400,
-  "paragraphLineHeight": 1.3,
-  "paragraphLetterSpacing": 0,
+    "paragraphFontStyle": "paragraph",
+    "paragraphFontFamilyType": "google",
+    "paragraphFontSize": 16,
+    "paragraphFontWeight": 400,
+    "paragraphLineHeight": 1.3,
+    "paragraphLetterSpacing": 0,
 
-  "h1FontStyle": "heading1",
-  "h1FontFamilyType": "google",
-  "h1Families": {
-    "h1FontFamily": "lato"
-  },
-  "h1FontSize": 16,
-  "h1FontWeight": 400,
-  "h1LineHeight": 1.3,
-  "h1LetterSpacing": 0,
+    "h1FontStyle": "heading1",
+    "h1FontFamilyType": "google",
+    "h1FontSize": 16,
+    "h1FontWeight": 400,
+    "h1LineHeight": 1.3,
+    "h1LetterSpacing": 0,
 
-  "h2FontStyle": "heading2",
-  "h2FontFamilyType": "google",
-  "h2Families": {
-    "h2FontFamily": "lato"
-  },
-  "h2FontSize": 16,
-  "h2FontWeight": 400,
-  "h2LineHeight": 1.3,
-  "h2LetterSpacing": 0,
+    "h2FontStyle": "heading2",
+    "h2FontFamilyType": "google",
+    "h2FontSize": 16,
+    "h2FontWeight": 400,
+    "h2LineHeight": 1.3,
+    "h2LetterSpacing": 0,
 
-  "h3FontStyle": "heading3",
-  "h3FontFamilyType": "google",
-  "h3Families": {
-    "h3FontFamily": "lato"
-  },
-  "h3FontSize": 16,
-  "h3FontWeight": 400,
-  "h3LineHeight": 1.3,
-  "h3LetterSpacing": 0,
+    "h3FontStyle": "heading3",
+    "h3FontFamilyType": "google",
+    "h3FontSize": 16,
+    "h3FontWeight": 400,
+    "h3LineHeight": 1.3,
+    "h3LetterSpacing": 0,
 
-  "h4FontStyle": "heading4",
-  "h4FontFamilyType": "google",
-  "h4Families": {
-    "h4FontFamily": "lato"
-  },
-  "h4FontSize": 16,
-  "h4FontWeight": 400,
-  "h4LineHeight": 1.3,
-  "h4LetterSpacing": 0,
+    "h4FontStyle": "heading4",
+    "h4FontFamilyType": "google",
+    "h4FontSize": 16,
+    "h4FontWeight": 400,
+    "h4LineHeight": 1.3,
+    "h4LetterSpacing": 0,
 
-  "h5FontStyle": "heading5",
-  "h5FontFamilyType": "google",
-  "h5Families": {
-    "h5FontFamily": "lato"
-  },
-  "h5FontSize": 16,
-  "h5FontWeight": 400,
-  "h5LineHeight": 1.3,
-  "h5LetterSpacing": 0,
+    "h5FontStyle": "heading5",
+    "h5FontFamilyType": "google",
+    "h5FontSize": 16,
+    "h5FontWeight": 400,
+    "h5LineHeight": 1.3,
+    "h5LetterSpacing": 0,
 
-  "h6FontStyle": "heading6",
-  "h6FontFamilyType": "google",
-  "h6Families": {
-    "h6FontFamily": "lato"
-  },
-  "h6FontSize": 16,
-  "h6FontWeight": 400,
-  "h6LineHeight": 1.3,
-  "h6LetterSpacing": 0,
+    "h6FontStyle": "heading6",
+    "h6FontFamilyType": "google",
+    "h6FontSize": 16,
+    "h6FontWeight": 400,
+    "h6LineHeight": 1.3,
+    "h6LetterSpacing": 0,
 
-
-  "paragraphColorHex": "#000000",
+    "paragraphColorHex": "#000000",
     "paragraphColorOpacity": 1,
     "paragraphColorPalette": "",
 
     "tempParagraphColorOpacity": 1,
     "tempParagraphColorPalette": "",
-
 
     "h1ColorHex": "#000000",
     "h1ColorOpacity": 1,
@@ -126,151 +127,108 @@
     "tempH6ColorOpacity": 1,
     "tempH6ColorPalette": "",
 
-  "contentHorizontalAlign": "left",
+    "contentHorizontalAlign": "left",
 
-  "tabletParagraphFontStyle": null,
-  "tabletParagraphFontFamilyType": null,
-  "tabletParagraphFamilies": {
-    "tabletParagraphFontFamily": null
-  },
-  "tabletParagraphFontSize":null,
-  "tabletParagraphFontWeight":null,
-  "tabletParagraphLineHeight":null,
-  "tabletParagraphLetterSpacing":null,
+    "tabletParagraphFontStyle": null,
+    "tabletParagraphFontFamilyType": null,
+    "tabletParagraphFontSize": null,
+    "tabletParagraphFontWeight": null,
+    "tabletParagraphLineHeight": null,
+    "tabletParagraphLetterSpacing": null,
 
-  "tabletH1FontStyle":null,
-  "tabletH1FontFamilyType":null,
-  "tabletH1Families":{
-    "tabletH1FontFamily":null
-  },
-  "tabletH1FontSize":null,
-  "tabletH1FontWeight":null,
-  "tabletH1LineHeight":null,
-  "tabletH1LetterSpacing":null,
+    "tabletH1FontStyle": null,
+    "tabletH1FontFamilyType": null,
+    "tabletH1FontSize": null,
+    "tabletH1FontWeight": null,
+    "tabletH1LineHeight": null,
+    "tabletH1LetterSpacing": null,
 
-  "tabletH2FontStyle":null,
-  "tabletH2FontFamilyType":null,
-  "tabletH2Families":{
-    "tabletH2FontFamily":null
-  },
-  "tabletH2FontSize":null,
-  "tabletH2FontWeight":null,
-  "tabletH2LineHeight":null,
-  "tabletH2LetterSpacing":null,
+    "tabletH2FontStyle": null,
+    "tabletH2FontFamilyType": null,
+    "tabletH2FontSize": null,
+    "tabletH2FontWeight": null,
+    "tabletH2LineHeight": null,
+    "tabletH2LetterSpacing": null,
 
-  "tabletH3FontStyle":null,
-  "tabletH3FontFamilyType":null,
-  "tabletH3Families":{
-    "tabletH3FontFamily":null
-  },
-  "tabletH3FontSize":null,
-  "tabletH3FontWeight":null,
-  "tabletH3LineHeight":null,
-  "tabletH3LetterSpacing":null,
+    "tabletH3FontStyle": null,
+    "tabletH3FontFamilyType": null,
+    "tabletH3FontSize": null,
+    "tabletH3FontWeight": null,
+    "tabletH3LineHeight": null,
+    "tabletH3LetterSpacing": null,
 
-  "tabletH4FontStyle":null,
-  "tabletH4FontFamilyType":null,
-  "tabletH4Families":{
-    "tabletH4FontFamily":null
-  },
-  "tabletH4FontSize":null,
-  "tabletH4FontWeight":null,
-  "tabletH4LineHeight":null,
-  "tabletH4LetterSpacing":null,
+    "tabletH4FontStyle": null,
+    "tabletH4FontFamilyType": null,
+    "tabletH4FontSize": null,
+    "tabletH4FontWeight": null,
+    "tabletH4LineHeight": null,
+    "tabletH4LetterSpacing": null,
 
-  "tabletH5FontStyle":null,
-  "tabletH5FontFamilyType":null,
-  "tabletH5Families":{
-    "tabletH5FontFamily":null
-  },
-  "tabletH5FontSize":null,
-  "tabletH5FontWeight":null,
-  "tabletH5LineHeight":null,
-  "tabletH5LetterSpacing":null,
+    "tabletH5FontStyle": null,
+    "tabletH5FontFamilyType": null,
+    "tabletH5FontSize": null,
+    "tabletH5FontWeight": null,
+    "tabletH5LineHeight": null,
+    "tabletH5LetterSpacing": null,
 
-  "tabletH6FontStyle":null,
-  "tabletH6FontFamilyType":null,
-  "tabletH6Families":{
-    "tabletH6FontFamily":null
-  },
-  "tabletH6FontSize":null,
-  "tabletH6FontWeight":null,
-  "tabletH6LineHeight":null,
-  "tabletH6LetterSpacing":null,
+    "tabletH6FontStyle": null,
+    "tabletH6FontFamilyType": null,
+    "tabletH6FontSize": null,
+    "tabletH6FontWeight": null,
+    "tabletH6LineHeight": null,
+    "tabletH6LetterSpacing": null,
 
-  "tabletContentHorizontalAlign": null,
+    "tabletContentHorizontalAlign": null,
 
-  "mobileParagraphFontStyle":null,
-  "mobileParagraphFontFamilyType":null,
-  "mobileParagraphFamilies":{
-    "mobileParagraphFontFamily":null
-  },
-  "mobileParagraphFontSize":null,
-  "mobileParagraphFontWeight":null,
-  "mobileParagraphLineHeight":null,
-  "mobileParagraphLetterSpacing":null,
+    "mobileParagraphFontStyle": null,
+    "mobileParagraphFontFamilyType": null,
+    "mobileParagraphFontSize": null,
+    "mobileParagraphFontWeight": null,
+    "mobileParagraphLineHeight": null,
+    "mobileParagraphLetterSpacing": null,
 
-  "mobileH1FontStyle":null,
-  "mobileH1FontFamilyType":null,
-  "mobileH1Families":{
-    "mobileH1FontFamily":null
-  },
-  "mobileH1FontSize":null,
-  "mobileH1FontWeight":null,
-  "mobileH1LineHeight":null,
-  "mobileH1LetterSpacing":null,
+    "mobileH1FontStyle": null,
+    "mobileH1FontFamilyType": null,
+    "mobileH1FontSize": null,
+    "mobileH1FontWeight": null,
+    "mobileH1LineHeight": null,
+    "mobileH1LetterSpacing": null,
 
-  "mobileH2FontStyle":null,
-  "mobileH2FontFamilyType":null,
-  "mobileH2Families":{
-    "mobileH2FontFamily":null
-  },
-  "mobileH2FontSize":null,
-  "mobileH2FontWeight":null,
-  "mobileH2LineHeight":null,
-  "mobileH2LetterSpacing":null,
+    "mobileH2FontStyle": null,
+    "mobileH2FontFamilyType": null,
+    "mobileH2FontSize": null,
+    "mobileH2FontWeight": null,
+    "mobileH2LineHeight": null,
+    "mobileH2LetterSpacing": null,
 
-  "mobileH3FontStyle":null,
-  "mobileH3FontFamilyType":null,
-  "mobileH3Families":{
-    "mobileH3FontFamily":null
-  },
-  "mobileH3FontSize":null,
-  "mobileH3FontWeight":null,
-  "mobileH3LineHeight":null,
-  "mobileH3LetterSpacing":null,
+    "mobileH3FontStyle": null,
+    "mobileH3FontFamilyType": null,
+    "mobileH3FontSize": null,
+    "mobileH3FontWeight": null,
+    "mobileH3LineHeight": null,
+    "mobileH3LetterSpacing": null,
 
-  "mobileH4FontStyle":null,
-  "mobileH4FontFamilyType":null,
-  "mobileH4Families":{
-    "mobileH4FontFamily":null
-  },
-  "mobileH4FontSize":null,
-  "mobileH4FontWeight":null,
-  "mobileH4LineHeight":null,
-  "mobileH4LetterSpacing":null,
+    "mobileH4FontStyle": null,
+    "mobileH4FontFamilyType": null,
+    "mobileH4FontSize": null,
+    "mobileH4FontWeight": null,
+    "mobileH4LineHeight": null,
+    "mobileH4LetterSpacing": null,
 
-  "mobileH5FontStyle":null,
-  "mobileH5FontFamilyType":null,
-  "mobileH5Families":{
-    "mobileH5FontFamily":null
-  },
-  "mobileH5FontSize":null,
-  "mobileH5FontWeight":null,
-  "mobileH5LineHeight":null,
-  "mobileH5LetterSpacing":null,
+    "mobileH5FontStyle": null,
+    "mobileH5FontFamilyType": null,
+    "mobileH5FontSize": null,
+    "mobileH5FontWeight": null,
+    "mobileH5LineHeight": null,
+    "mobileH5LetterSpacing": null,
 
-  "mobileH6FontStyle":null,
-  "mobileH6FontFamilyType":null,
-  "mobileH6Families":{
-    "mobileH6FontFamily":null
-  },
-  "mobileH6FontSize":null,
-  "mobileH6FontWeight":null,
-  "mobileH6LineHeight":null,
-  "mobileH6LetterSpacing":null,
+    "mobileH6FontStyle": null,
+    "mobileH6FontFamilyType": null,
+    "mobileH6FontSize": null,
+    "mobileH6FontWeight": null,
+    "mobileH6LineHeight": null,
+    "mobileH6LetterSpacing": null,
 
-  "mobileContentHorizontalAlign": null
-}
-
+    "mobileContentHorizontalAlign": null
+  }
 }

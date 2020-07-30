@@ -146,14 +146,14 @@ export default class CreateList extends Component {
 
           <div className="brz-ed-popup-integrations-step__buttons">
             <Button
-              type="gray"
+              size={3}
               leftIcon="nc-arrow-left"
               loading={prevLoading}
               onClick={onPrev}
             >
               {t("Back")}
             </Button>
-            <Button type="tail" loading={nextLoading} onClick={onNext}>
+            <Button color="teal" loading={nextLoading} onClick={onNext}>
               {t("Create")}
             </Button>
           </div>

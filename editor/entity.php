@@ -44,6 +44,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		$type = get_post_type( $postId );
 
 		switch ( $type ) {
+			case 'page':
 			case 'post':
 			case Brizy_Admin_Popups_Main::CP_POPUP:
 				return Brizy_Editor_Post::get( $postId );
@@ -53,6 +54,38 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 				return Brizy_Editor_Block::get( $postId );
 		}
 	}
+
+	/**
+	 * @param $postId
+	 *
+	 * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed
+	 * @throws Exception
+	 */
+	public function duplicateTo( $postId ) {
+		// check post types
+		if ( get_post_type( $postId ) !== $this->getWpPost()->post_type ) {
+			throw new Exception( 'Cannot duplicate post. Invalid target post type' );
+		}
+
+		if ( ! $this->uses_editor() ) {
+			throw new Exception( 'The source post is not using Brizy.' );
+		}
+
+		// copy current date the the new post
+		$newPost = self::get( $postId );
+
+		if ( $newPost->uses_editor() ) {
+			throw new Exception( 'Target post is using Brizy.' );
+		}
+
+		$newPost->set_needs_compile( true );
+		$newPost->set_uses_editor( true );
+		$newPost->setDataVersion( 1 );
+		$newPost->createUid();
+
+		return $newPost;
+	}
+
 
 	/**
 	 * Will return the key on witch the object data will be saved in storage
@@ -69,7 +102,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	/**
 	 * @return mixed
 	 */
-	abstract public function createResponse();
+	abstract public function createResponse($fields = array());
 
 	/**
 	 * Save post data and and trigger post update
@@ -115,7 +148,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		global $wpdb;
 		$posts = $wpdb->get_results(
 			$wpdb->prepare( "SELECT p.ID FROM {$wpdb->postmeta} pm 
-									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment'
+									JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment' and p.post_status='publish'
 									WHERE pm.meta_key = %s ", Brizy_Editor_Storage_Post::META_KEY )
 		);
 
@@ -216,7 +249,14 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 * @return mixed|string
 	 */
 	protected function createUid() {
+
+		$post_parent_id = $this->getWpPostId();
+
 		if ( $uid = $this->getUid() ) {
+			$uid            = get_post_meta( $post_parent_id, 'brizy_post_uid', true );
+			if ( ! $uid ) {
+				update_post_meta( $post_parent_id, 'brizy_post_uid', $this->getUid() );
+			}
 			return $uid;
 		}
 
@@ -230,4 +270,6 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 		return $this->uid = $uid;
 	}
+
+
 }

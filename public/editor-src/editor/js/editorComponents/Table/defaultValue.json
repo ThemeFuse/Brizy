@@ -1,0 +1,199 @@
+{
+  "content": {
+    "items": [],
+    "rows": 9,
+    "columns": 2
+  },
+
+  "style": {
+    "tableHead": "on",
+    "tableAside": "on",
+
+    "width": 100,
+    "widthSuffix": null,
+    "asideWidth": 288,
+    "asideWidthSuffix": null,
+
+    "className": "",
+    "customCSS": "",
+
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.5,
+    "typographyLetterSpacing": 0,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "activeBgColorHex": "#f9f9f9",
+    "activeBgColorOpacity": 1,
+    "activeBgColorPalette": "",
+
+    "tempActiveBgColorOpacity": 1,
+    "tempActiveBgColorPalette": "",
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 0.11,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 0.11,
+    "tempBorderColorPalette": "",
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 0.1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 0.1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "tablePaddingType": "ungrouped",
+    "tempTablePaddingType": "ungrouped",
+
+    "tablePadding": 0,
+    "tablePaddingTop": 0,
+    "tablePaddingRight": 0,
+    "tablePaddingBottom": 0,
+    "tablePaddingLeft": 20,
+
+    "tempTablePadding": 0,
+    "tempTablePaddingTop": 0,
+    "tempTablePaddingRight": 0,
+    "tempTablePaddingBottom": 0,
+    "tempTablePaddingLeft": 20,
+
+    "tablePaddingSuffix": "px",
+    "tablePaddingTopSuffix": "px",
+    "tablePaddingRightSuffix": "px",
+    "tablePaddingBottomSuffix": "px",
+    "tablePaddingLeftSuffix": "px",
+
+    "tempTablePaddingSuffix": "px",
+    "tempTablePaddingTopSuffix": "px",
+    "tempTablePaddingRightSuffix": "px",
+    "tempTablePaddingBottomSuffix": "px",
+    "tempTablePaddingLeftSuffix": "px",
+
+    "tabletWidth": 100,
+    "tabletWidthSuffix": null,
+    "tabletAsideWidth": null,
+    "tabletAsideWidthSuffix": null,
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFontSize": null,
+    "tabletTypographyLineHeight": null,
+    "tabletTypographyLetterSpacing": null,
+    "tabletTypographyFontWeight": null,
+
+    "tabletTablePaddingType": "ungrouped",
+    "tempTabletTablePaddingType": "ungrouped",
+
+    "tabletTablePadding": 0,
+    "tabletTablePaddingTop": 0,
+    "tabletTablePaddingRight": 10,
+    "tabletTablePaddingBottom": 0,
+    "tabletTablePaddingLeft": 10,
+
+    "tempTabletTablePadding": 0,
+    "tempTabletTablePaddingTop": 0,
+    "tempTabletTablePaddingRight": 10,
+    "tempTabletTablePaddingBottom": 0,
+    "tempTabletTablePaddingLeft": 10,
+
+    "tabletTablePaddingSuffix": "px",
+    "tabletTablePaddingTopSuffix": "px",
+    "tabletTablePaddingRightSuffix": "px",
+    "tabletTablePaddingBottomSuffix": "px",
+    "tabletTablePaddingLeftSuffix": "px",
+
+    "tempTabletTablePaddingSuffix": "px",
+    "tempTabletTablePaddingTopSuffix": "px",
+    "tempTabletTablePaddingRightSuffix": "px",
+    "tempTabletTablePaddingBottomSuffix": "px",
+    "tempTabletTablePaddingLeftSuffix": "px",
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFontSize": null,
+    "mobileTypographyLineHeight": null,
+    "mobileTypographyLetterSpacing": null,
+    "mobileTypographyFontWeight": null,
+
+    "mobileWidth": 100,
+    "mobileWidthSuffix": null,
+    "mobileAsideWidth": null,
+    "mobileAsideWidthSuffix": null,
+
+    "mobileTablePaddingType": "ungrouped",
+    "tempMobileTablePaddingType": "ungrouped",
+
+    "mobileTablePadding": 0,
+    "mobileTablePaddingTop": 0,
+    "mobileTablePaddingRight": 10,
+    "mobileTablePaddingBottom": 0,
+    "mobileTablePaddingLeft": 10,
+
+    "tempMobileTablePadding": 0,
+    "tempMobileTablePaddingTop": 0,
+    "tempMobileTablePaddingRight": 10,
+    "tempMobileTablePaddingBottom": 0,
+    "tempMobileTablePaddingLeft": 10,
+
+    "mobileTablePaddingSuffix": "px",
+    "mobileTablePaddingTopSuffix": "px",
+    "mobileTablePaddingRightSuffix": "px",
+    "mobileTablePaddingBottomSuffix": "px",
+    "mobileTablePaddingLeftSuffix": "px",
+
+    "tempMobileTablePaddingSuffix": "px",
+    "tempMobileTablePaddingTopSuffix": "px",
+    "tempMobileTablePaddingRightSuffix": "px",
+    "tempMobileTablePaddingBottomSuffix": "px",
+    "tempMobileTablePaddingLeftSuffix": "px"
+  }
+}

@@ -126,7 +126,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
 
   let disablePopup;
   if (device === "desktop") {
-    disablePopup = !proEnabled || inPopup || inPopup2 || IS_GLOBAL_POPUP;
+    disablePopup = inPopup || inPopup2 || IS_GLOBAL_POPUP;
   } else {
     disablePopup = v.linkType !== "popup" || v.linkPopup === "";
   }
@@ -137,10 +137,12 @@ const getItems = (v, onChange) => ({ device, component }) => {
   return [
     {
       id: "toolbarFont",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 10,
       disabled: isPopulationBlock,
@@ -638,17 +640,21 @@ const getItems = (v, onChange) => ({ device, component }) => {
     },
     {
       id: "toolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        size: "medium",
+        title: t("Link")
+      },
       disabled: disableLink,
-      size: "medium",
-      title: t("Link"),
       position: 80,
       options: [
         {
           id: "linkType",
           type: "tabs",
-          value: v.linkType,
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "external",
@@ -720,11 +726,10 @@ const getItems = (v, onChange) => ({ device, component }) => {
             {
               id: "anchor",
               label: t("Block"),
-              disabled: device !== "desktop",
               options: [
                 {
                   ...toolbarLinkAnchor({ v }),
-                  disabled: device !== "desktop",
+                  disabled: device !== "desktop" || IS_GLOBAL_POPUP,
                   onChange: linkAnchor =>
                     onChange({
                       link: encodeToString({
@@ -797,6 +802,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
               ]
             }
           ],
+          value: v.linkType,
           onChange: linkType =>
             onChange({
               link: encodeToString({
@@ -816,8 +822,10 @@ const getItems = (v, onChange) => ({ device, component }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [

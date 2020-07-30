@@ -163,3 +163,35 @@ export function cssStyleElementImageGallery3FontWeight({ v, device }) {
 export function cssStyleElementImageGallery3LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "filter" });
 }
+
+export function cssStyleElementImageGalleryFilterActiveColor({
+  v,
+  device,
+  state
+}) {
+  return cssStyleColor({ v, device, state, prefix: "activeFilterColor" });
+}
+
+export function cssStyleElementImageGalleryFilterActiveBgColor({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBgColor({ v, device, state, prefix: "activeFilterBg" });
+}
+
+export function cssStyleElementImageGalleryFilterActiveBorder({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBorder({ v, device, state, prefix: "activeFilter" });
+}
+
+export function cssStyleElementImageGalleryFilterActiveShadow({
+  v,
+  device,
+  state
+}) {
+  return cssStyleBoxShadow({ v, device, state, prefix: "activeFilter" });
+}

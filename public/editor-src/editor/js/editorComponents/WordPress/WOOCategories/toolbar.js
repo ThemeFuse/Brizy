@@ -1,20 +1,21 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import { toolbarElementWOOCategoriesOrder } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ device }) {
   const dvk = key => defaultValueKey({ key, device });
   return [
     {
-      id: dvk("toolbarWOOCategories"),
-      type: "popover",
+      id: "toolbarWOOCategories",
+      type: "popover-dev",
+      config: {
+        icon: "nc-woo-2"
+      },
       devices: "desktop",
-      icon: "nc-woo-2",
       position: 10,
       options: [
         {
-          id: dvk("WOOCategoriesTabs"),
-          type: "tabs",
+          id: "WOOCategoriesTabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("layoutTab"),
@@ -61,12 +62,16 @@ export function getItems({ v, device }) {
                     { title: t("Count"), value: "count" }
                   ]
                 },
-                toolbarElementWOOCategoriesOrder({
-                  v,
-                  device,
+                {
+                  id: "order",
                   devices: "desktop",
-                  state: "normal"
-                })
+                  label: t("Order"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "ASC", icon: "nc-up" },
+                    { value: "DESC", icon: "nc-down" }
+                  ]
+                }
               ]
             }
           ]
@@ -74,10 +79,11 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      roles: ["admin"],
-      icon: "nc-cog",
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog"
+      },
       position: 110,
       options: [
         {

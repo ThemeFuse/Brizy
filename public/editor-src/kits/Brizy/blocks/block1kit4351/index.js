@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 137,
   title: "block1kit4351",
   
-  keywords: "address,contact,email,footer,icons,links,phone,social,text",
+  keywords: "address,contact,email,footer,icons,links,phone,pro,social,text",
   cat: [4547],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionFooter",
@@ -503,7 +503,10 @@ module.exports = {
         "mobilePaddingType": "ungrouped",
         "mobilePaddingTop": 25,
         "mobilePaddingBottom": 15,
-        "mobilePadding": 25
+        "mobilePadding": 25,
+        "tabsState": "tabNormal",
+        "tabsCurrentElement": "tabCurrentElement",
+        "tabsColor": "tabOverlay"
     }
 }
 };

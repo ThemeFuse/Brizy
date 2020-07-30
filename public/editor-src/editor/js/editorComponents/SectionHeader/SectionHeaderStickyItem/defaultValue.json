@@ -4,9 +4,15 @@
 
     "media": "image",
 
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgImageSrc": "",
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
@@ -21,7 +27,6 @@
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
-    "hoverBgImageSrc": null,
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
@@ -36,7 +41,6 @@
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
-    "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
@@ -51,7 +55,6 @@
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
-    "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
@@ -425,8 +428,7 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
-    "tabletShapeTopType": null,
-    "tabletShapeBottomType": null,
+    "tabletShape": null,
 
     "tabletShapeTopColorHex": null,
     "tabletShapeTopColorOpacity": null,
@@ -442,11 +444,16 @@
     "tempTabletShapeBottomColorOpacity": null,
     "tempTabletShapeBottomColorPalette": null,
 
-    "tabletShape": null,
     "tabletShapeTopHeight": null,
     "tabletShapeTopHeightSuffix": null,
     "tabletShapeBottomHeight": null,
     "tabletShapeBottomHeightSuffix": null,
+    "tabletShapeTopType": null,
+    "tabletShapeBottomType": null,
+    "tabletShapeTopIndex": null,
+    "tabletShapeBottomIndex": null,
+    "tabletShapeTopHorizontal": null,
+    "tabletShapeBottomHorizontal": null,
 
     "tabletBoxShadow": null,
 
@@ -582,8 +589,7 @@
     "tempMobilePaddingBottomSuffix": "px",
     "tempMobilePaddingLeftSuffix": "px",
 
-    "mobileShapeTopType": null,
-    "mobileShapeBottomType": null,
+    "mobileShape": null,
 
     "mobileShapeTopColorHex": null,
     "mobileShapeTopColorOpacity": null,
@@ -599,10 +605,15 @@
     "tempMobileShapeBottomColorOpacity": null,
     "tempMobileShapeBottomColorPalette": null,
 
-    "mobileShape": null,
     "mobileShapeTopHeight": null,
     "mobileShapeTopHeightSuffix": null,
     "mobileShapeBottomHeight": null,
-    "mobileShapeBottomHeightSuffix": null
+    "mobileShapeBottomHeightSuffix": null,
+    "mobileShapeTopType": null,
+    "mobileShapeBottomType": null,
+    "mobileShapeTopIndex": null,
+    "mobileShapeBottomIndex": null,
+    "mobileShapeTopHorizontal": null,
+    "mobileShapeBottomHorizontal": null
   }
 }

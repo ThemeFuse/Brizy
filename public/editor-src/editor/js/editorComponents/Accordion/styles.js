@@ -20,6 +20,14 @@ export function style(v, vs, vd) {
         "cssStyleBgColor"
       ]
     },
+    ".brz && .brz-accordion__item.brz-accordion__item--active": {
+      standart: [
+        "cssStyleElementAccordionActiveColor",
+        "cssStyleElementAccordionActiveBgColor",
+        "cssStyleElementAccordionActiveBorder",
+        "cssStyleElementAccordionActiveShadow"
+      ]
+    },
     ".brz && .brz-accordion__nav": {
       standart: ["cssStyleElementAccordionNavAlign"]
     },
@@ -73,6 +81,14 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionFilterShadow"
       ]
     },
+    ".brz && .brz-accordion__filter__item--style-1.brz-accordion__filter__item--active": {
+      standart: [
+        "cssStyleElementAccordionFilterActiveColor",
+        "cssStyleElementAccordionFilterActiveBgColor",
+        "cssStyleElementAccordionFilterActiveBorder",
+        "cssStyleElementAccordionFilterActiveShadow"
+      ]
+    },
     ".brz && .brz-accordion__filter--style-2:hover": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
@@ -82,7 +98,24 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionFilterBorderRadius",
         "cssStyleDisplayInlineFlex"
       ]
+    },
+    ".brz && .brz-accordion__filter__item--style-2.brz-accordion__filter__item--active": {
+      standart: ["cssStyleElementAccordionFilterActiveColor"]
     }
   };
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleAnimation(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleAnimation",
+        "cssStyleAnimationDuration",
+        "cssStyleAnimationDelay"
+      ]
+    }
+  };
+
   return renderStyles({ v, vs, vd, styles });
 }

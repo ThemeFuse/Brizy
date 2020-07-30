@@ -1,9 +1,10 @@
 {
   "content": {
     "address": "Wall Street",
-    "addressPopulation": "",
+    "addressPopulation": null,
 
-    "zoom": 15
+    "zoom": 15,
+    "zoomSuffix": null
   },
 
   "toolbar": {
@@ -27,7 +28,9 @@
     "contrast": 100,
 
     "size": 100,
+    "sizeSuffix": "%",
     "height": 400,
+    "heightSuffix": "px",
 
     "borderStyle": "solid",
 
@@ -153,6 +156,7 @@
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletBrightness": null,
     "tabletHue": null,
@@ -160,7 +164,9 @@
     "tabletContrast": null,
 
     "tabletSize": null,
+    "tabletSizeSuffix": null,
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
     "tabletBorderStyle": null,
 
@@ -224,7 +230,9 @@
     "mobileContrast": null,
 
     "mobileSize": null,
+    "mobileSizeSuffix": null,
     "mobileHeight": null,
+    "mobileHeightSuffix": null,
 
     "mobileBorderStyle": null,
 

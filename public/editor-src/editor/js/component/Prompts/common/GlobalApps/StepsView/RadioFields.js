@@ -35,6 +35,10 @@ class RadioFields extends Component {
     onNext: _.noop
   };
 
+  handleConfirmation = confirmation => {
+    this.props.onConfirm(confirmation === "true");
+  };
+
   renderError() {
     return (
       <div className="brz-ed-alert brz-ed-alert-error">
@@ -83,20 +87,20 @@ class RadioFields extends Component {
   }
 
   renderConfirmation() {
-    const { confirmationNeeded, onConfirm } = this.props;
+    const { confirmationNeeded } = this.props;
 
     return (
       <div className="brz-ed-popup-integrations__confirmation">
         <p className="brz-p">{t("Email confirmation to join the list")}</p>
         <Select
-          defaultValue={confirmationNeeded}
+          defaultValue={confirmationNeeded ? "true" : "false"}
           className="brz-control__select--white"
           maxItems="6"
           itemHeight="30"
-          onChange={onConfirm}
+          onChange={this.handleConfirmation}
         >
-          <SelectItem value={false}>{t("Not Required")}</SelectItem>
-          <SelectItem value={true}>{t("Required")}</SelectItem>
+          <SelectItem value="false">{t("Not Required")}</SelectItem>
+          <SelectItem value="true">{t("Required")}</SelectItem>
         </Select>
       </div>
     );
@@ -165,7 +169,7 @@ class RadioFields extends Component {
           <div className="brz-ed-popup-integrations-step__buttons">
             {prevLoading !== null && (
               <Button
-                type="gray"
+                size={3}
                 leftIcon="nc-arrow-left"
                 loading={prevLoading}
                 onClick={onPrev}
@@ -175,7 +179,8 @@ class RadioFields extends Component {
             )}
             {nextLoading !== null && (
               <Button
-                type={hasLists || listPro ? "tail" : "gray"}
+                size={hasLists || listPro ? 1 : 3}
+                color={hasLists || listPro ? "teal" : "gray"}
                 rightIcon="nc-arrow-right"
                 loading={nextLoading}
                 onClick={hasLists || listPro ? onNext : null}

@@ -84,7 +84,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-subtitle\"><em class=\"brz-cp-color3\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click &amp; modify.</em></p>"
+                                                                    "text": "<p class=\"brz-tp-subtitle brz-text-xs-center\"><em class=\"brz-cp-color3\">This is a front-end page builder where what you see is what you get. We designed it so you can be in complete control of your website. Just click &amp; modify.</em></p>"
                                                                 }
                                                             }
                                                         ],

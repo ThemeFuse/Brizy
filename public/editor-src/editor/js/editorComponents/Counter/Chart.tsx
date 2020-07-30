@@ -1,13 +1,13 @@
 import React from "react";
 import classnames from "classnames";
 
-type ChartProps = {
+type Props = {
   className: string;
   type: string;
   strokeW: number;
 };
 
-export const Chart: React.SFC<ChartProps> = ({
+export const Chart: React.FC<Props> = ({
   className: _className,
   type,
   strokeW

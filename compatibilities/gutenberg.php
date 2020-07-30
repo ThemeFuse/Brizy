@@ -7,8 +7,6 @@ class Brizy_Compatibilities_Gutenberg {
 		add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
 		add_action( 'admin_init', array( $this, 'action_disable_gutenberg' ) );
 		add_action( 'admin_footer', array( $this, 'print_admin_footer_tpls' ) );
-		add_action( 'rest_api_init', array( $this, 'create_feature_image_focal_point_field' ) );
-
 	}
 
 
@@ -77,7 +75,7 @@ class Brizy_Compatibilities_Gutenberg {
 		}
 
 		$continueUrl = add_query_arg(
-			array( Brizy_Editor_Constants::EDIT_KEY => '' ),
+			array( Brizy_Editor::prefix('-edit') => '' ),
 			get_permalink( get_the_ID() )
 		);
 
@@ -124,19 +122,5 @@ class Brizy_Compatibilities_Gutenberg {
 		} catch ( Exception $e ) {
 
 		}
-	}
-
-
-	public function create_feature_image_focal_point_field() {
-		register_rest_field( 'page', 'brizy_attachment_focal_point', array(
-				'get_callback'    => function ( $post, $field_name, $request ) {
-					return get_post_meta( $post['id'], $field_name, true );
-				},
-				'update_callback' => function ( $meta_value, $post ) {
-					update_post_meta( $post->ID, 'brizy_attachment_focal_point', $meta_value );
-				}
-			)
-		);
-
 	}
 }

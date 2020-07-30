@@ -37,15 +37,6 @@ class Brizy_Admin_Blocks_Main {
 		add_filter( 'brizy_global_data', array( $this, 'populateGlobalData' ) );
 	}
 
-	static public function registerSupportedPostType() {
-		add_filter( 'brizy_supported_post_types', function ( $posts ) {
-			$posts[] = self::CP_SAVED;
-			$posts[] = self::CP_GLOBAL;
-
-			return $posts;
-		} );
-	}
-
 	/**
 	 * Populated the global data for compiler
 	 *
@@ -71,7 +62,12 @@ class Brizy_Admin_Blocks_Main {
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
 			$uid                              = $brizy_editor_block->getUid();
-			$globalData->globalBlocks[ $uid ] = json_decode( $brizy_editor_block->get_editor_data() );
+			$block_data                       = $brizy_editor_block->convertToOptionValue();
+			$globalData->globalBlocks[ $uid ] = array(
+				'data'     => json_decode( $brizy_editor_block->get_editor_data() ),
+				'position' => $block_data['position'],
+				'rules'    => $block_data['rules']
+			);
 		}
 
 		$blocks = get_posts( array(
@@ -84,19 +80,19 @@ class Brizy_Admin_Blocks_Main {
 
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block        = Brizy_Editor_Block::get( $block );
-			$globalData->savedBlocks[] = json_decode( $brizy_editor_block->get_editor_data() );
+			$block_data                       = $brizy_editor_block->convertToOptionValue();
+			$globalData->savedBlocks[] = array(
+				'data' => json_decode( $brizy_editor_block->get_editor_data() ),
+				'rules'    => $block_data['rules']
+			);
 		}
 
 		return $globalData;
 	}
 
-	/**
-	 *
-	 */
 	public function initializeActions() {
 		Brizy_Admin_Blocks_Api::_init();
 	}
-
 
 	static public function registerCustomPosts() {
 
@@ -143,7 +139,12 @@ class Brizy_Admin_Blocks_Main {
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
 		);
+
+		add_filter( 'brizy_supported_post_types', function ( $posts ) {
+			$posts[] = self::CP_SAVED;
+			$posts[] = self::CP_GLOBAL;
+
+			return $posts;
+		} );
 	}
-
-
 }

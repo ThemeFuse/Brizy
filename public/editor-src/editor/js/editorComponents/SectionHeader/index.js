@@ -9,17 +9,14 @@ import Sticky from "visual/component/Sticky";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
-import { uuid } from "visual/utils/uuid";
-import { stripIds } from "visual/utils/models";
 import { capitalize } from "visual/utils/string";
-import { getStore } from "visual/redux/store";
-import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleSection } from "./styles";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -37,7 +34,7 @@ const fixedContainerPlus = ({ fixed = false, node = null, height = 0 }) => {
   }
 };
 
-class SectionHeader extends EditorComponent {
+export default class SectionHeader extends EditorComponent {
   static get componentId() {
     return "SectionHeader";
   }
@@ -48,6 +45,8 @@ class SectionHeader extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   state = {
     height: "auto"
   };
@@ -57,18 +56,6 @@ class SectionHeader extends EditorComponent {
 
   sectionNode = React.createRef();
   stickyNode = React.createRef();
-
-  getMeta(v) {
-    const { showOnDesktop, showOnMobile, showOnTablet } = v;
-
-    return Object.assign({}, this.props.meta, {
-      section: {
-        showOnDesktop: showOnDesktop === "on",
-        showOnMobile: showOnMobile === "on",
-        showOnTablet: showOnTablet === "on"
-      }
-    });
-  }
 
   shouldComponentUpdate(nextProps, nextState) {
     const stateUpdate = this.state.height !== nextState.height;
@@ -122,6 +109,12 @@ class SectionHeader extends EditorComponent {
       this.forceUpdate();
     } else {
       this.isSticky = false;
+
+      const megaMenu = getOpenedMegaMenu();
+
+      if (megaMenu) {
+        megaMenu.close();
+      }
     }
   };
 
@@ -145,24 +138,34 @@ class SectionHeader extends EditorComponent {
     return v.type === "fixed" ? { height: this.state.height } : null;
   }
 
-  getAttributes = customAttributes => {
-    let myAttributes = customAttributes
-      .split(" ")
-      .join("")
-      .split(":")
-      .join(" ")
-      .split("\n")
-      .join(" ");
+  getMeta() {
+    return {
+      ...this.props.meta,
+      section: {}
+    };
+  }
 
-    let atributesToObj = [];
-    let atributesToMas = myAttributes.split(" ");
+  getRerender(v) {
+    const {
+      showOnDesktop,
+      showOnMobile,
+      showOnTablet,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes,
+      customAttributesPopulation
+    } = v;
 
-    for (let i = 0; i < atributesToMas.length; i += 2) {
-      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
-    }
-
-    return Object.assign({}, atributesToObj);
-  };
+    return {
+      showOnDesktop,
+      showOnMobile,
+      showOnTablet,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributes,
+      customAttributesPopulation
+    };
+  }
 
   renderAnimated({ v, vs, vd }) {
     let sticky = (
@@ -213,7 +216,8 @@ class SectionHeader extends EditorComponent {
           toolbarExtendConfig,
           sidebarExtendConfig
         ),
-        meta: this.getMeta(v)
+        meta: this.getMeta(v),
+        rerender: this.getRerender(v)
       }
     });
 
@@ -267,7 +271,8 @@ class SectionHeader extends EditorComponent {
           toolbarExtendConfig,
           sidebarExtendConfig
         ),
-        meta: this.getMeta(v)
+        meta: this.getMeta(v),
+        rerender: this.getRerender(v)
       }
     });
 
@@ -299,7 +304,7 @@ class SectionHeader extends EditorComponent {
         className={classNameSection}
         style={this.getStyle(v)}
         ref={this.sectionNode}
-        {...this.getAttributes(customAttributes)}
+        {...parseCustomAttributes(customAttributes)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
@@ -335,89 +340,10 @@ class SectionHeader extends EditorComponent {
         }
         className={classNameSection}
         data-uid={this.getId()}
-        {...this.getAttributes(customAttributes)}
+        {...parseCustomAttributes(customAttributes)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
     );
   }
-
-  // api
-  becomeSaved() {
-    const { blockId } = this.props;
-    const dbValue = this.getDBValue();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createSavedBlock({
-        id: uuid(),
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-  }
-
-  becomeGlobal() {
-    const { blockId, onChange } = this.props;
-    const dbValue = this.getDBValue();
-    const globalBlockId = uuid();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createGlobalBlock({
-        id: globalBlockId,
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-
-    onChange(
-      {
-        type: "GlobalBlock",
-        blockId,
-        value: {
-          _id: this.getId(),
-          globalBlockId
-        }
-      },
-      {
-        intent: "replace_all",
-        idOptions: {
-          keepExistingIds: true
-        }
-      }
-    );
-  }
-
-  becomeNormal() {
-    const {
-      meta: { globalBlockId },
-      onChange
-    } = this.props;
-    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
-
-    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
-    globalsData.value._id = this.getId();
-
-    onChange(globalsData, {
-      intent: "replace_all",
-      idOptions: {
-        keepExistingIds: true
-      }
-    });
-  }
 }
-
-export default SectionHeader;

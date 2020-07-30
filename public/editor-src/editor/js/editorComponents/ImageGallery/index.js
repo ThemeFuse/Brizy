@@ -14,6 +14,7 @@ import defaultValue from "./defaultValue.json";
 import { style, styleForFilter } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { applyFilter } from "visual/utils/filters";
+import { Wrapper } from "../tools/Wrapper";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -25,6 +26,16 @@ class ImageGallery extends EditorComponent {
   static defaultProps = {
     extendParentToolbar: noop
   };
+
+  state = {
+    visibleTag: "All"
+  };
+
+  handleFilterClick(tag) {
+    if (tag !== this.state.visibleTag) {
+      this.setState({ visibleTag: tag });
+    }
+  }
 
   node = null;
 
@@ -92,7 +103,8 @@ class ImageGallery extends EditorComponent {
       tabletW: Math.round(tabletW),
       mobileW: Math.round(mobileW),
       gallery: {
-        inGallery: true
+        inGallery: true,
+        enableTags: v.enableTags === "on"
       }
     });
   }
@@ -147,11 +159,18 @@ class ImageGallery extends EditorComponent {
           key={index}
         >
           <li
-            className={className}
+            className={
+              className +
+              `${
+                this.state.visibleTag === tag
+                  ? " brz-image__gallery-filter__item--active"
+                  : ""
+              }`
+            }
             data-filter={tag === "All" ? "*" : tagClassName}
             onClick={() => {
               const iso = this.getIsotope();
-
+              this.handleFilterClick(tag);
               iso.arrange({
                 filter: tag === "All" ? "*" : `.${tagClassName}`
               });
@@ -199,12 +218,14 @@ class ImageGallery extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className="brz-image__gallery">
+        <Wrapper
+          {...this.makeWrapperProps({ className: "brz-image__gallery" })}
+        >
           {enableTags === "on" && tags.length > 0 && this.renderTags(v, vs, vd)}
           <div className={className} ref={this.handleRef}>
             <Items {...itemProps} />
           </div>
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

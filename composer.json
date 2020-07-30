@@ -11,16 +11,17 @@
   "require-dev": {
     "phpunit/phpunit": "8.1",
     "facebook/webdriver": "^1.7",
-    "codeception/codeception": "^3.0",
+    "codeception/codeception": "^3.1.2",
     "codeception/remote-debug": "^0.3",
     "lucatume/wp-browser": "^2.2",
-    "squizlabs/php_codesniffer": "^3.0@dev"
+    "squizlabs/php_codesniffer": "^3.0@dev",
+    "gumlet/php-image-resize": "^1.6"
   },
   "require": {
-    "twig/twig": "1.42.0",
+    "twig/twig": "1.42.5",
     "shortpixel/shortpixel-php": "^1.5",
-    "knplabs/gaufrette": "0.3",
-    "bagrinsergiu/brizy-migration-utils": "^1.3",
+    "knplabs/gaufrette": "0.7",
+    "bagrinsergiu/brizy-migration-utils": "^1.4.2",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0"
   },

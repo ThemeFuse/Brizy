@@ -23,10 +23,3 @@ export const parseJSON = response => {
       };
     });
 };
-
-export const fakeRequest = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 650);
-  });

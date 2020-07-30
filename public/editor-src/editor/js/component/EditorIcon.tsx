@@ -1,20 +1,23 @@
-import React, { MouseEventHandler } from "react";
+import React, { CSSProperties, MouseEvent } from "react";
 import _ from "underscore";
-import classNames from "classnames";
+import classnames from "classnames";
 import { editorIconUrl } from "visual/utils/icons";
 
-type Props = {
-  icon: string;
+export type EditorIconProps = {
   className?: string;
-  style?: object;
-  onClick?: MouseEventHandler;
+  icon?: string;
+  style?: CSSProperties;
+  onClick?: (e: MouseEvent<SVGElement>) => void;
 };
 
-const _EditorIcon: React.FC<Props> = (
-  { className: _className, icon = "nc-circle-add", style, onClick = _.noop },
-  ref
-) => {
-  const className = classNames("brz-icon-svg brz-ed-icon-svg", _className);
+const _EditorIcon: React.FC<EditorIconProps> = (props, ref) => {
+  const {
+    className: _className = "",
+    icon = "nc-circle-add",
+    style = {},
+    onClick = _.noop
+  } = props;
+  const className = classnames("brz-icon-svg brz-ed-icon-svg", _className);
 
   return (
     <svg ref={ref} className={className} onClick={onClick} style={style}>

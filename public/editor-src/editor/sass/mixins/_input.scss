@@ -34,14 +34,17 @@
 
   &--short {
     width: $control-sm-width;
+    flex: 0 0 $control-sm-width;
   }
 
   &--large {
     width: $control-lg-width;
+    flex: 0 0 $control-lg-width;
   }
 
   &--medium {
     width: $control-md-width;
+    flex: 0 0 $control-md-width;
   }
 }
 
@@ -69,6 +72,34 @@
       font-style: italic;
       font-size: 1em;
     }
+  }
+}
+
+@mixin input {
+  font-family: $font-family-1;
+  font-size: $control-font-size;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  background: $control-background-color none;
+  color: #fff;
+  flex: 1 1 auto;
+  height: $control-height;
+  text-indent: 5px;
+  padding: 0 5px;
+  border-radius: $control-border-radius;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  text-shadow: none;
+  text-align: left;
+  margin-left: auto;
+  width: 100%;
+
+  &:focus,
+  &:active {
+    background-color: $control-background-color;
+    color: #fff;
   }
 }
 
@@ -106,14 +137,15 @@
 @mixin small-select {
   .brz-ed-control__multiSelect--value-container {
     min-height: 24px;
+    background: transparent;
   }
 
   .brz-ed-control__multiSelect--tag {
-    font-size: $options-handle-font-size-small;
+    font-size: $control-font-size;
   }
 
   .brz-ed-control__multiSelect__option {
-    font-size: $options-handle-font-size-small;
+    font-size: $control-font-size;
     height: 24px;
   }
 }

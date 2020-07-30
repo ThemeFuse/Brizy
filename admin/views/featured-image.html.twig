@@ -16,45 +16,62 @@
 </div>
 
 <script>
-    (function () {
-        var $focalPointDiv = $('.focal-point');
-        var $focalPointX = $('#_thumbnail_focal_point_x');
-        var $focalPointY = $('#_thumbnail_focal_point_y');
-        var $featuredImageEl = $('#featured-image-el');
-        var isDragging = false;
+	jQuery(document).ready(function ($) {
+		(function () {
+			var $focalPointDiv = $('.focal-point');
+			var $focalPointX = $('#_thumbnail_focal_point_x');
+			var $focalPointY = $('#_thumbnail_focal_point_y');
+			var $featuredImageEl = $('#featured-image-el');
+			var isDragging = false;
 
-        $featuredImageEl.on('mousedown', function () {
-            isDragging = true;
-        });
+			$('.brizy-featured-image .wrapper').on('mouseleave', function () {
+				isDragging = false;
+			});
 
-        $featuredImageEl.on('mouseup', function () {
-            isDragging = false;
-        });
+			$featuredImageEl.on('mousedown', function () {
+				isDragging = true;
+			});
 
-        $focalPointDiv.on('mouseup', function () {
-            isDragging = false;
-        });
+			$featuredImageEl.on('mouseup', function () {
+				isDragging = false;
+			});
 
-        $featuredImageEl.on('click mousemove', function (e) {
-            if (!isDragging && e.type!=='click') return;
+			$focalPointDiv.on('mouseup', function () {
+				isDragging = false;
+			});
 
-            var $this = $(this);
-            var imageW = $this.width();
-            var imageH = $this.height();
+			$focalPointDiv.on('mousedown', function () {
+				isDragging = true;
+			});
 
-            //Calculate FocusPoint coordinates
-            var offsetX = e.pageX - $this.offset().left;
-            var offsetY = e.pageY - $this.offset().top;
+			$featuredImageEl.on( 'click mousemove', function ( e ) {
+				if ( ! isDragging && e.type!=='click' ) {
+					return;
+                }
 
-            //Calculate CSS Percentages
-            var percentageX = (offsetX / imageW) * 100;
-            var percentageY = (offsetY / imageH) * 100;
+				if ( window.getSelection ) {
+					window.getSelection().removeAllRanges();
+				} else if ( document.selection ) {
+					document.selection.empty();
+				}
 
-            // Set positioning
-            $focalPointDiv.css({left: percentageX.toFixed(0) + '% ', top: percentageY.toFixed(0) + '%'});
-            $focalPointX.val(percentageX.toFixed(0));
-            $focalPointY.val(percentageY.toFixed(0));
-        });
+				var $this = $(this);
+				var imageW = $this.width();
+				var imageH = $this.height();
 
-    })();
+				//Calculate FocusPoint coordinates
+				var offsetX = e.pageX - $this.offset().left;
+				var offsetY = e.pageY - $this.offset().top;
+
+				//Calculate CSS Percentages
+				var percentageX = (offsetX / imageW) * 100;
+				var percentageY = (offsetY / imageH) * 100;
+
+				// Set positioning
+				$focalPointDiv.css({left: percentageX.toFixed(0) + '% ', top: percentageY.toFixed(0) + '%'});
+				$focalPointX.val(percentageX.toFixed(0));
+				$focalPointY.val(percentageY.toFixed(0));
+			});
+		})();
+    });
 </script>

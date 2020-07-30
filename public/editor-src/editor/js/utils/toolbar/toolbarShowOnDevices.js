@@ -1,22 +1,5 @@
 import { t } from "visual/utils/i18n";
 
-export function toolbarShowOnDesktop({
-  v,
-  position = 10,
-  devices = "all",
-  closeTooltip = true
-}) {
-  return {
-    id: "showOnDesktop",
-    label: t("Show on Desktop"),
-    position,
-    closeTooltip,
-    type: "switch",
-    devices,
-    value: v.showOnDesktop
-  };
-}
-
 export function toolbarShowOnTablet({
   v,
   position = 10,

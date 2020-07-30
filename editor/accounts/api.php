@@ -10,11 +10,11 @@
 class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
-	const BRIZY_GET_ACCOUNT = 'brizy_get_account';
-	const BRIZY_GET_ACCOUNTS = 'brizy_get_accounts';
-	const BRIZY_ADD_ACCOUNT = 'brizy_add_account';
-	const BRIZY_UPDATE_ACCOUNT = 'brizy_update_account';
-	const BRIZY_DELETE_ACCOUNT = 'brizy_delete_account';
+	const BRIZY_GET_ACCOUNT = '_get_account';
+	const BRIZY_GET_ACCOUNTS = '_get_accounts';
+	const BRIZY_ADD_ACCOUNT = '_add_account';
+	const BRIZY_UPDATE_ACCOUNT = '_update_account';
+	const BRIZY_DELETE_ACCOUNT = '_delete_account';
 
 	/**
 	 * @var Brizy_Editor_Accounts_ServiceAccountManager
@@ -57,11 +57,12 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 	 * Register all api actions
 	 */
 	protected function initializeApiActions() {
-		add_action( 'wp_ajax_' . self::BRIZY_GET_ACCOUNT, array( $this, 'actionGetAccount' ) );
-		add_action( 'wp_ajax_' . self::BRIZY_GET_ACCOUNTS, array( $this, 'actionGetAccounts' ) );
-		add_action( 'wp_ajax_' . self::BRIZY_ADD_ACCOUNT, array( $this, 'actionAddAccount' ) );
-		add_action( 'wp_ajax_' . self::BRIZY_UPDATE_ACCOUNT, array( $this, 'actionUpdateAccount' ) );
-		add_action( 'wp_ajax_' . self::BRIZY_DELETE_ACCOUNT, array( $this, 'actionDeleteAccount' ) );
+		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::BRIZY_GET_ACCOUNT, array( $this, 'actionGetAccount' ) );
+		add_action( $pref . self::BRIZY_GET_ACCOUNTS, array( $this, 'actionGetAccounts' ) );
+		add_action( $pref . self::BRIZY_ADD_ACCOUNT, array( $this, 'actionAddAccount' ) );
+		add_action( $pref . self::BRIZY_UPDATE_ACCOUNT, array( $this, 'actionUpdateAccount' ) );
+		add_action( $pref . self::BRIZY_DELETE_ACCOUNT, array( $this, 'actionDeleteAccount' ) );
 	}
 
 

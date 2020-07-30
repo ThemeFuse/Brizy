@@ -2,13 +2,13 @@
 
 
 class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
-	const ENDPOINT = 'brizy-font';
+	const ENDPOINT = '-font';
 
 	/**
 	 * @return array
 	 */
 	protected function get_endpoint_keys() {
-		return array( self::ENDPOINT );
+		return array( Brizy_Editor::prefix( self::ENDPOINT ) );
 	}
 
 	/**
@@ -23,13 +23,14 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 
 		// Check if user is not querying API
-		if ( ! isset( $vars[ self::ENDPOINT ] ) || ! is_string( $vars[ self::ENDPOINT ] ) ) {
+		$ENDPOINT = Brizy_Editor::prefix( self::ENDPOINT );
+		if ( ! isset( $vars[ $ENDPOINT ] ) || ! is_string( $vars[ $ENDPOINT ] ) ) {
 			return;
 		}
 
 		session_write_close();
 
-		$fontQueries = $this->explodeFont( $vars[ self::ENDPOINT ] );
+		$fontQueries = $this->explodeFont( $vars[ $ENDPOINT ] );
 
 		if ( count( $fontQueries ) == 0 ) {
 			return;

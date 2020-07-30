@@ -11,25 +11,45 @@
     "mobileMMenu": "on"
   },
 
+  "toolbar": {
+    "tabsState": "tabNormal"
+  },
+
   "style": {
     "className": "",
 
     "colorHex": "#000000",
     "colorOpacity": 1,
     "colorPalette": "",
+    "tempColorOpacity": 1,
+    "tempColorPalette": 1,
+
     "hoverColorHex": "#000000",
     "hoverColorOpacity": 1,
     "hoverColorPalette": "",
-    "tempColorOpacity": 1,
     "tempHoverColorOpacity": 1,
+    "tempHoverColorPalette": 1,
+
+    "activeColorHex": null,
+    "activeColorOpacity": null,
+    "activeColorPalette": null,
+    "tempActiveColorOpacity": null,
+    "tempActiveColorPalette": null,
+
     "fontStyle": "button",
     "fontFamilyType": "google",
     "subMenuFontFamilyType": "google",
     "mMenuFontFamilyType": "google",
     "families": {
-      "fontFamily": "montserrat",
-      "subMenuFontFamily": "montserrat",
-      "mMenuFontFamily": "montserrat"
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null,
+      "subMenuFontFamily": "lato",
+      "tabletSubMenuFontFamily": null,
+      "mobileSubMenuFontFamily": null,
+      "mMenuFontFamily": "lato",
+      "tabletMMenuFontFamily": null,
+      "mobileMMenuFontFamily": null
     },
     "fontSize": 12,
     "fontWeight": 700,
@@ -38,24 +58,214 @@
 
     "customCSS": "",
 
+    "verticalMode": "horizontal",
+
+    "menuSize": 33,
+
+    "menuBgColorHex": "#ffffff",
+    "menuBgColorOpacity": 0,
+    "menuBgColorPalette": "",
+    "tempMenuBgColorPalette": 1,
+    "tempMenuBgColorOpacity": 1,
+
+    "hoverMenuBgColorHex": "#ffffff",
+    "hoverMenuBgColorOpacity": 0,
+    "hoverMenuBgColorPalette": "",
+    "tempHoverMenuBgColorOpacity": 1,
+    "tempHoverMenuBgColorPalette": 1,
+
+    "activeMenuBgColorHex": null,
+    "activeMenuBgColorOpacity": null,
+    "activeMenuBgColorPalette": null,
+    "tempActiveMenuBgColorOpacity": null,
+    "tempActiveMenuBgColorPalette": null,
+
+    "menuBorderColorHex": "#555555",
+    "menuBorderColorOpacity": 1,
+    "menuBorderColorPalette": "",
+    "tempMenuBorderColorOpacity": 1,
+    "tempMenuBorderColorPalette": "",
+
+    "hoverMenuBorderColorHex": null,
+    "hoverMenuBorderColorOpacity": null,
+    "hoverMenuBorderColorPalette": null,
+    "tempHoverMenuBorderColorOpacity": null,
+    "tempHoverMenuBorderColorPalette": null,
+
+    "activeMenuBorderColorHex": null,
+    "activeMenuBorderColorOpacity": null,
+    "activeMenuBorderColorPalette": null,
+    "tempActiveMenuBorderColorOpacity": null,
+    "tempActiveMenuBorderColorPalette": null,
+
+    "menuBorderStyle": "solid",
+    "tempMenuBorderStyle": "solid",
+    "hoverMenuBorderStyle": null,
+    "tempHoverMenuBorderStyle": null,
+
+    "activeMenuBorderStyle": null,
+    "tempActiveMenuBorderStyle": null,
+
+    "menuBorderWidthType": "grouped",
+    "menuBorderWidth": 0,
+    "menuBorderTopWidth": 0,
+    "menuBorderRightWidth": 0,
+    "menuBorderBottomWidth": 0,
+    "menuBorderLeftWidth": 0,
+
+    "tempMenuBorderWidth": 2,
+    "tempMenuBorderTopWidth": 2,
+    "tempMenuBorderRightWidth": 2,
+    "tempMenuBorderBottomWidth": 2,
+    "tempMenuBorderLeftWidth": 2,
+
+    "hoverMenuBorderWidthType": null,
+    "hoverMenuBorderWidth": null,
+    "hoverMenuBorderTopWidth": null,
+    "hoverMenuBorderRightWidth": null,
+    "hoverMenuBorderBottomWidth": null,
+    "hoverMenuBorderLeftWidth": null,
+
+    "tempHoverMenuBorderWidth": null,
+    "tempHoverMenuBorderTopWidth": null,
+    "tempHoverMenuBorderRightWidth": null,
+    "tempHoverMenuBorderBottomWidth": null,
+    "tempHoverMenuBorderLeftWidth": null,
+
+    "activeMenuBorderWidthType": null,
+    "activeMenuBorderWidth": null,
+    "activeMenuBorderTopWidth": null,
+    "activeMenuBorderRightWidth": null,
+    "activeMenuBorderBottomWidth": null,
+    "activeMenuBorderLeftWidth": null,
+
+    "tempActiveMenuBorderWidth": null,
+    "tempActiveMenuBorderTopWidth": null,
+    "tempActiveMenuBorderRightWidth": null,
+    "tempActiveMenuBorderBottomWidth": null,
+    "tempActiveMenuBorderLeftWidth": null,
+
+    "menuBorderRadiusType": "grouped",
+    "menuBorderRadius": 0,
+    "menuBorderTopLeftRadius": 0,
+    "menuBorderTopRightRadius": 0,
+    "menuBorderBottomRightRadius": 0,
+    "menuBorderBottomLeftRadius": 0,
+
+    "tempMenuBorderRadius": 0,
+    "tempMenuBorderTopLeftRadius": 0,
+    "tempMenuBorderTopRightRadius": 0,
+    "tempMenuBorderBottomRightRadius": 0,
+    "tempMenuBorderBottomLeftRadius": 0,
+
+    "hoverMenuBorderRadiusType": null,
+    "hoverMenuBorderRadius": null,
+    "hoverMenuBorderTopLeftRadius": null,
+    "hoverMenuBorderTopRightRadius": null,
+    "hoverMenuBorderBottomRightRadius": null,
+    "hoverMenuBorderBottomLeftRadius": null,
+
+    "tempHoverMenuBorderRadius": null,
+    "tempHoverMenuBorderTopLeftRadius": null,
+    "tempHoverMenuBorderTopRightRadius": null,
+    "tempHoverMenuBorderBottomRightRadius": null,
+    "tempHoverMenuBorderBottomLeftRadius": null,
+
+    "activeMenuBorderRadiusType": null,
+    "activeMenuBorderRadius": null,
+    "activeMenuBorderTopLeftRadius": null,
+    "activeMenuBorderTopRightRadius": null,
+    "activeMenuBorderBottomRightRadius": null,
+    "activeMenuBorderBottomLeftRadius": null,
+
+    "tempActiveMenuBorderRadius": null,
+    "tempActiveMenuBorderTopLeftRadius": null,
+    "tempActiveMenuBorderTopRightRadius": null,
+    "tempActiveMenuBorderBottomRightRadius": null,
+    "tempActiveMenuBorderBottomLeftRadius": null,
+
+    "menuPaddingType": "ungrouped",
+    "tempMenuPaddingType": "ungrouped",
+
+    "menuPadding": 5,
+    "menuPaddingTop": 0,
+    "menuPaddingRight": 5,
+    "menuPaddingBottom": 0,
+    "menuPaddingLeft": 5,
+
+    "menuPaddingSuffix": "px",
+    "menuPaddingTopSuffix": "px",
+    "menuPaddingRightSuffix": "px",
+    "menuPaddingBottomSuffix": "px",
+    "menuPaddingLeftSuffix": "px",
+
+    "tempMenuPaddingSuffix": "px",
+    "tempMenuPaddingTopSuffix": "px",
+    "tempMenuPaddingRightSuffix": "px",
+    "tempMenuPaddingBottomSuffix": "px",
+    "tempMenuPaddingLeftSuffix": "px",
+
+    "tempMenuPadding": 0,
+    "tempMenuPaddingTop": 0,
+    "tempMenuPaddingRight": 0,
+    "tempMenuPaddingBottom": 0,
+    "tempMenuPaddingLeft": 0,
+
+    "mMenuPaddingType": "ungrouped",
+    "tempMMenuPaddingType": "ungrouped",
+
+    "mMenuPadding": 10,
+    "mMenuPaddingTop": 10,
+    "mMenuPaddingRight": 20,
+    "mMenuPaddingBottom": 10,
+    "mMenuPaddingLeft": 20,
+
+    "mMenuPaddingSuffix": "px",
+    "mMenuPaddingTopSuffix": "px",
+    "mMenuPaddingRightSuffix": "px",
+    "mMenuPaddingBottomSuffix": "px",
+    "mMenuPaddingLeftSuffix": "px",
+
+    "tempMMenuPaddingSuffix": "px",
+    "tempMMenuPaddingTopSuffix": "px",
+    "tempMMenuPaddingRightSuffix": "px",
+    "tempMMenuPaddingBottomSuffix": "px",
+    "tempMMenuPaddingLeftSuffix": "px",
+
+    "tempMMenuPadding": 0,
+    "tempMMenuPaddingTop": 0,
+    "tempMMenuPaddingRight": 0,
+    "tempMMenuPaddingBottom": 0,
+    "tempMMenuPaddingLeft": 0,
+
+    "tabletVerticalMode": null,
+
     "tabletFontStyle": "button",
     "tabletFontSize": 11,
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
     "tabletLetterSpacing": 1,
+    "tabletFontFamilyType": null,
+    "tabletSubMenuFontFamilyType": null,
+    "tabletMMenuFontFamilyType": null,
 
     "mobileFontStyle": "button",
     "mobileFontSize": 11,
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,
     "mobileLetterSpacing": 1,
+    "mobileFontFamilyType": null,
+    "mobileSubMenuFontFamilyType": null,
+    "mobileMMenuFontFamilyType": null,
 
     "horizontalAlign": "center",
     "tabletHorizontalAlign": null,
     "mobileHorizontalAlign": null,
 
     "iconSize": 12,
+    "iconSizeSuffix": null,
     "iconSpacing": 15,
+    "iconSpacingSuffix": null,
     "itemPadding": 10,
     "itemPaddingTop": 0,
     "itemPaddingRight": 10,
@@ -63,6 +273,7 @@
     "itemPaddingLeft": 10,
 
     "tabletIconSize": 12,
+    "tabletIconSizeSuffix": null,
     "tabletItemPadding": 10,
     "tabletItemPaddingTop": 0,
     "tabletItemPaddingRight": 10,
@@ -70,6 +281,7 @@
     "tabletItemPaddingLeft": 10,
 
     "mobileIconSize": 12,
+    "mobileIconSizeSuffix": null,
     "mobileItemPadding": 10,
     "mobileItemPaddingTop": 0,
     "mobileItemPaddingRight": 10,
@@ -79,6 +291,13 @@
     "subMenuColorHex": "#ffffff",
     "subMenuColorOpacity": 1,
     "subMenuColorPalette": "",
+
+    "activeSubMenuColorHex": null,
+    "activeSubMenuColorOpacity": null,
+    "activeSubMenuColorPalette": null,
+    "tempActiveSubMenuColorOpacity": null,
+    "tempActiveSubMenuColorPalette": null,
+
     "subMenuHoverColorHex": "#ffffff",
     "subMenuHoverColorOpacity": 1,
     "subMenuHoverColorPalette": "",
@@ -96,6 +315,13 @@
     "subMenuHoverBgColorOpacity": 1,
     "subMenuHoverBgColorPalette": "",
 
+    "activeSubMenuBgColorType": "solid",
+    "activeSubMenuBgColorHex": null,
+    "activeSubMenuBgColorOpacity": null,
+    "activeSubMenuBgColorPalette": null,
+    "tempActiveSubMenuBgColorOpacity": null,
+    "tempActiveSubMenuBgColorPalette": null,
+
     "subMenuTempBgColorOpacity": 1,
     "subMenuTempHoverBgColorOpacity": 1,
 
@@ -104,11 +330,24 @@
     "subMenuBorderColorPalette": "",
     "subMenuTempBorderColorOpacity": 1,
 
+    "subMenuHoverBorderColorHex": null,
+    "subMenuHoverBorderColorOpacity": null,
+    "subMenuHoverBorderColorPalette": null,
+    "subMenuTempHoverBorderColorOpacity": null,
+
+    "activeSubMenuBorderColorHex": null,
+    "activeSubMenuBorderColorOpacity": null,
+    "activeSubMenuBorderColorPalette": null,
+    "tempActiveSubMenuBorderColorOpacity": null,
+    "tempActiveSubMenuBorderColorPalette": null,
+
     "subMenuBorderWidth": 1,
     "subMenuBorderStyle": "solid",
 
     "subMenuIconSize": 12,
+    "subMenuIconSizeSuffix": null,
     "subMenuIconSpacing": 15,
+    "subMenuIconSpacingSuffix": null,
 
     "subMenuFontStyle": "button",
 
@@ -152,15 +391,22 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
-
     "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
     "hoverBoxShadowColorOpacity": null,
     "hoverBoxShadowColorPalette": null,
-
     "tempHoverBoxShadowColorPalette": null,
     "tempHoverBoxShadowColorOpacity": null,
+
+    "activeBoxShadow": null,
+    "tempActiveBoxShadow": null,
+
+    "activeBoxShadowColorHex": null,
+    "activeBoxShadowColorOpacity": null,
+    "activeBoxShadowColorPalette": null,
+    "tempActiveBoxShadowColorPalette": null,
+    "tempActiveBoxShadowColorOpacity": null,
 
     "hoverBoxShadowBlur": null,
     "hoverBoxShadowVertical": null,
@@ -171,6 +417,16 @@
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowSpread": null,
     "tempHoverBoxShadowHorizontal": null,
+
+    "activeBoxShadowBlur": null,
+    "activeBoxShadowVertical": null,
+    "activeBoxShadowSpread": null,
+    "activeBoxShadowHorizontal": null,
+
+    "tempActiveBoxShadowBlur": null,
+    "tempActiveBoxShadowVertical": null,
+    "tempActiveBoxShadowSpread": null,
+    "tempActiveBoxShadowHorizontal": null,
 
     "tabletSubMenuFontStyle": "button",
     "tabletSubMenuFontSize": 11,
@@ -185,6 +441,7 @@
     "mobileSubMenuLetterSpacing": 1,
 
     "mMenuSize": 18,
+    "mMenuSizeSuffix": null,
     "mMenuFontStyle": "button",
     "mMenuFontSize": 12,
     "mMenuFontWeight": 700,
@@ -201,6 +458,12 @@
     "mMenuTempColorOpacity": 1,
     "mMenuTempHoverColorOpacity": 1,
 
+    "activeMMenuColorHex": null,
+    "activeMMenuColorOpacity": null,
+    "activeMMenuColorPalette": null,
+    "tempActiveMMenuColorOpacity": null,
+    "tempActiveMMenuColorPalette": null,
+
     "mMenuBgColorType": "solid",
 
     "mMenuBgColorHex": "#333333",
@@ -215,7 +478,9 @@
     "mMenuTempBorderColorOpacity": 1,
 
     "mMenuIconSize": 12,
+    "mMenuIconSizeSuffix": null,
     "mMenuIconSpacing": 15,
+    "mMenuIconSpacingSuffix": null,
 
     "mMenuIconColorHex": "#333333",
     "mMenuIconColorOpacity": 1,
@@ -226,7 +491,41 @@
     "tabletMMenuItemHorizontalAlign": null,
     "mobileMMenuItemHorizontalAlign": null,
 
+    "tabletMenuSize": null,
+    "tabletMenuSizeSuffix": null,
+
+    "tabletMenuPaddingTopSuffix": null,
+    "tabletMenuPaddingTop": null,
+    "tabletMenuPaddingSuffix": null,
+    "tempTabletMenuPaddingTopSuffix": null,
+    "tempTabletMenuPaddingSuffix": null,
+    "tempTabletMenuPaddingTop": null,
+
+    "tabletMMenuPaddingType": null,
+    "tabletMMenuPadding": null,
+    "tabletMMenuPaddingSuffix": null,
+    "tabletMMenuPaddingTop": null,
+    "tabletMMenuPaddingTopSuffix": null,
+    "tabletMMenuPaddingRight": null,
+    "tabletMMenuPaddingRightSuffix": null,
+    "tabletMMenuPaddingBottom": null,
+    "tabletMMenuPaddingBottomSuffix": null,
+    "tabletMMenuPaddingLeft": null,
+    "tabletMMenuPaddingLeftSuffix": null,
+
+    "tempTabletMMenuPadding": null,
+    "tempTabletMMenuPaddingSuffix": null,
+    "tempTabletMMenuPaddingTopSuffix": null,
+    "tempTabletMMenuPaddingTop": null,
+    "tempTabletMMenuPaddingRightSuffix": null,
+    "tempTabletMMenuPaddingRight": null,
+    "tempTabletMMenuPaddingBottomSuffix": null,
+    "tempTabletMMenuPaddingBottom": null,
+    "tempTabletMMenuPaddingLeftSuffix": null,
+    "tempTabletMMenuPaddingLeft": null,
+
     "tabletMMenuSize": null,
+    "tabletMMenuSizeSuffix": null,
     "tabletMMenuFontStyle": "button",
     "tabletMMenuFontSize": 12,
     "tabletMMenuFontWeight": 700,
@@ -235,13 +534,49 @@
     "tabletMMenuPosition": null,
 
     "tabletMMenuIconSize": 12,
+    "tabletMMenuIconSizeSuffix": null,
     "tabletMMenuIconSpacing": 15,
+    "tabletMMenuIconSpacingSuffix": null,
 
     "tabletMMenuIconColorHex": null,
     "tabletMMenuIconColorOpacity": null,
     "tabletMMenuIconColorPalette": null,
 
+    "mobileVerticalMode": null,
+    "mobileMenuSize": null,
+    "mobileMenuSizeSuffix": null,
+
+    "mobileMenuPadding": null,
+    "mobileMenuPaddingTop": null,
+    "mobileMenuPaddingRight": null,
+    "mobileMenuPaddingBottom": null,
+    "mobileMenuPaddingLeft": null,
+
+    "mobileMMenuPaddingType": null,
+    "mobileMMenuPadding": null,
+    "mobileMMenuPaddingSuffix": null,
+    "mobileMMenuPaddingTop": null,
+    "mobileMMenuPaddingTopSuffix": null,
+    "mobileMMenuPaddingRight": null,
+    "mobileMMenuPaddingRightSuffix": null,
+    "mobileMMenuPaddingBottom": null,
+    "mobileMMenuPaddingBottomSuffix": null,
+    "mobileMMenuPaddingLeft": null,
+    "mobileMMenuPaddingLeftSuffix": null,
+
+    "tempMobileMMenuPadding": null,
+    "tempMobileMMenuPaddingSuffix": null,
+    "tempMobileMMenuPaddingTopSuffix": null,
+    "tempMobileMMenuPaddingTop": null,
+    "tempMobileMMenuPaddingRightSuffix": null,
+    "tempMobileMMenuPaddingRight": null,
+    "tempMobileMMenuPaddingBottomSuffix": null,
+    "tempMobileMMenuPaddingBottom": null,
+    "tempMobileMMenuPaddingLeftSuffix": null,
+    "tempMobileMMenuPaddingLeft": null,
+
     "mobileMMenuSize": null,
+    "mobileMMenuSizeSuffix": null,
     "mobileMMenuFontStyle": "button",
     "mobileMMenuFontSize": 12,
     "mobileMMenuFontWeight": 700,
@@ -250,7 +585,9 @@
     "mobileMMenuPosition": null,
 
     "mobileMMenuIconSize": 12,
+    "mobileMMenuIconSizeSuffix": null,
     "mobileMMenuIconSpacing": 15,
+    "mobileMMenuIconSpacingSuffix": null,
 
     "mobileMMenuIconColorHex": null,
     "mobileMMenuIconColorOpacity": null,

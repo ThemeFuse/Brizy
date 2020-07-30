@@ -27,13 +27,6 @@ export function getItems({ v, device, state }) {
   const menuChoices = getMenuChoices();
   const hasMenu = menuChoices.some(({ value }) => value === v.menuSelected);
 
-  const mMenuSize =
-    device === "desktop"
-      ? v.mMenuSize
-      : device === "tablet"
-      ? tabletSyncOnChange(v, "mMenuSize")
-      : mobileSyncOnChange(v, "mMenuSize");
-
   const { hex: mMenuIconColorHex } = getOptionColorHexByPalette(
     dvv("mMenuIconColorHex"),
     dvv("mMenuIconColorPalette")
@@ -69,10 +62,12 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarMenu",
-      type: "popover",
-      icon: "nc-menu-3",
+      type: "popover-dev",
+      config: {
+        icon: "nc-menu-3",
+        title: t("Menu")
+      },
       roles: ["admin"],
-      title: t("Menu"),
       position: 10,
       options: [
         {
@@ -94,63 +89,48 @@ export function getItems({ v, device, state }) {
           }
         },
         {
-          type: "multiPicker",
+          id: "groupSettings",
+          type: "group-dev",
           position: 20,
-          picker: {
-            id: dvk("mMenu"),
-            label: t("Make it Hamburger"),
-            type: "switch",
-            value: dvv("mMenu")
-          },
-          choices: {
-            on: [
-              {
-                id: "mMenuSize",
-                type: "slider",
-                label: t("Size"),
-                roles: ["admin"],
-                slider: {
-                  min: 8,
-                  max: 64
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: mMenuSize
-                },
-                onChange: ({ value }) => ({
-                  [dvk("mMenuSize")]: value
-                })
+          options: [
+            {
+              id: "mMenu",
+              type: "switch-dev",
+              label: t("Make it Hamburger")
+            },
+            {
+              id: "mMenuSize",
+              type: "slider-dev",
+              label: t("Size"),
+              disabled: dvv("mMenu") !== "on",
+              config: {
+                min: 8,
+                max: 64,
+                units: [{ title: "px", value: "px" }]
               }
-            ]
-          }
+            }
+          ]
+        },
+        {
+          id: "verticalMode",
+          label: t("Orientation"),
+          type: "radioGroup-dev",
+          position: 30,
+          disabled: v.mMenu === "on",
+          choices: [
+            { value: "vertical", icon: "nc-vertical-items" },
+            { value: "horizontal", icon: "nc-horizontal-items" }
+          ]
         },
         {
           id: "mMenuPosition",
           label: t("Drawer Position"),
           type: "radioGroup",
-          roles: ["admin"],
-          devices: "desktop",
-          disabled: v.mMenu === "off",
+          disabled: dvv("mMenu") === "off",
+          position: 40,
           choices: [
-            {
-              value: "left",
-              icon: "nc-align-left"
-            },
-            {
-              value: "right",
-              icon: "nc-align-right"
-            }
+            { value: "left", icon: "nc-align-left" },
+            { value: "right", icon: "nc-align-right" }
           ],
           value: v.mMenuPosition
         },
@@ -159,7 +139,7 @@ export function getItems({ v, device, state }) {
           type: "slider",
           label: t("Spacing"),
           roles: ["admin"],
-          position: 30,
+          position: 50,
           slider: {
             min: 0,
             max: 100
@@ -192,16 +172,18 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "mMenuColors",
-      type: "popover",
-      size: "auto",
-      title: t("Color"),
-      position: 20,
-      disabled: dvv("mMenu") === "off",
-      icon: {
-        style: {
-          backgroundColor: mMenuIconBgColor
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Color"),
+        icon: {
+          style: {
+            backgroundColor: mMenuIconBgColor
+          }
         }
       },
+      position: 20,
+      disabled: dvv("mMenu") === "off",
       options: [
         toolbarColor2({
           v,

@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
 import classnames from "classnames";
+import Prompts from "visual/component/Prompts";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { Roles } from "visual/component/Roles";
-import UIState from "visual/global/UIState";
 import { fontTransform } from "visual/utils/fonts";
 import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
@@ -39,8 +39,9 @@ class FontFamily extends Component {
   handleOpenFonts = event => {
     event.preventDefault();
 
-    UIState.set("prompt", {
-      prompt: "fonts"
+    Prompts.open({
+      prompt: "fonts",
+      mode: "single"
     });
   };
 

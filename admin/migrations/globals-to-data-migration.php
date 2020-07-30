@@ -1,5 +1,8 @@
 <?php
 
+use \Brizy\DataToProjectContext;
+use \Brizy\DataToProjectTransformer;
+
 class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migrations_MigrationInterface {
 
 	use Brizy_Admin_Migrations_PostsTrait;
@@ -36,8 +39,8 @@ class Brizy_Admin_Migrations_GlobalsToDataMigration implements Brizy_Admin_Migra
 				$beforeMergeGlobals = json_decode( base64_decode( $globals ) );
 				$editorBuildPath    = Brizy_Editor_UrlBuilder::editor_build_path();
 
-				$context          = new \Brizy\DataToProjectContext( $beforeMergeGlobals, $editorBuildPath );
-				$projectMigration = new \Brizy\DataToProjectTransformer();
+				$context          = new DataToProjectContext( $beforeMergeGlobals, $editorBuildPath );
+				$projectMigration = new DataToProjectTransformer();
 				$mergedGlobals    = $projectMigration->execute( $context );
 				$storage->set( 'data', base64_encode( json_encode( $mergedGlobals ) ) );
 				$storage->delete( 'globals' );

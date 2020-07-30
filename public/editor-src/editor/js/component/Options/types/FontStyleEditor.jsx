@@ -3,7 +3,7 @@ import classnames from "classnames";
 import Scrollbars from "react-custom-scrollbars";
 import Toolbar from "visual/component/Toolbar";
 import EditorIcon from "visual/component/EditorIcon";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import { getFontById } from "visual/utils/fonts";
 import { getWeightChoices } from "visual/utils/fonts";
@@ -407,7 +407,7 @@ class FontStyleEditor extends React.Component {
     const newFont = {
       ...value[0],
       deletable: "on",
-      id: uuid(10),
+      id: uuid(),
       title: printf(t("New Style #%s"), value.length)
     };
     const newValue = [...value, newFont];

@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.3.2
+Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 1.0.126
+Stable tag: 1.0.127
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,11 +139,41 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 1.0.127 - 2020-07-30 =
+* New: Introduced working in Draft
+* New: Links to Support and Docs in left sidebar
+* New: Brizy Sync functionality for blocks and layouts
+* New: You can Clear or Save an entire layout
+* New: Absolute and Fixed positions for elements
+* Improved: Increased the size limit of Image population to 5000px
+* Improved: Enabled shape option on responsive for all Sections
+* Improved: Updated Google Fonts list
+* Improved: Added Animation options on all elements
+* Improved: Re-written == Changelog == extended the Image element (added fixed px size)
+* Improved: Plugin loading
+* Improved: Sent post directly in the get_the_content post content element
+* Improved: Increased the size limit of Image population to 5000px
+* Improved: Enabled shape option on responsive for all Sections
+* Fixed: Section tag name
+* Fixed: Global block toolbar icon
+* Fixed: Removed content editable attribute on texts at preview
+* Fixed: Toolbar positioning inside popups
+* Fixed: TextEditor at undo / redo
+* Fixed: Background video loop
+* Fixed: Form select responsive width at preview
+* Fixed: Section padding resize width
+* Fixed: Ignore empty data values when updating global blocks
+* Fixed: Changed the update global blocks to allow to update blocks without sending the data
+* Fixed: Revision for compile page on preview
+* Fixed: Compatibility with TranslatePress (Language by GET parameter)
+* Fixed: Compatibility with LiteSpeed plugin
+* Fixed: Missing translation ready strings
+
 = 1.0.126 - 2020-06-03 =
-* Fix: Security fixes
+* Fixed: Security fixes
 
 = 1.0.125 - 2020-06-02 =
-* Fix: Security fixes
+* Fixed: Security fixes
 
 = 1.0.124 - 2020-04-25 =
 * New: Switched Nucleo icons for Font Awesome
@@ -167,7 +197,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Added backward compatibility with old PRO plugins
 
 = 1.0.120 - 2020-03-26 =
-* FIxed: Failed to enqueue script Select2
+* Fixed: Failed to enqueue script Select2
 
 = 1.0.119 - 2020-03-25 =
 * Fixed: Tooltip position
@@ -215,7 +245,7 @@ The progress you're making while building your page is always backed up in the c
 * Fixed: Removed local Lato font
 * Fixed: Removed Europa Font
 * Fixed: Removed IowanOldStyleBT-Bold Font
-* Fixed: Use jQuery from WordPress 
+* Fixed: Use jQuery from WordPress
 * Fixed: Removed all possible screenshot extensions al leaved only jpeg
 * Fixed: Force jQuery enqueue.
 * Fixed: Removed some unused code added Select2 as a dependency

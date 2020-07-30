@@ -2,7 +2,9 @@ import $ from "jquery";
 
 export default function($node) {
   $node
-    .find(".brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a")
+    .find(
+      ".brz-a[href^='#'], .brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a"
+    )
     .on("click", function(event) {
       const _this = this;
       const anchorHash = _this.hash;

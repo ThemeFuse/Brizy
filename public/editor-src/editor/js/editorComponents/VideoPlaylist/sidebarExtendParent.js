@@ -1,12 +1,16 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarBorderRadius,
-  toolbarHoverTransition,
-  toolbarCustomCSS
-} from "visual/utils/toolbar";
+import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 export const title = t("Playlist");
+
+const helperHTML = `
+<p class="brz-p">You can use the following selectors to create targeted CSS.</p>
+<p class="brz-p">
+  <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
+  <br class="brz-br">
+  <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
+</p>`;
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device });
@@ -14,14 +18,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
-      align: "start",
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           devices: "desktop",
           options: [
             toolbarBorderRadius({
@@ -43,21 +49,30 @@ export function getItems({ v, device }) {
         {
           id: dvk("moreSettingsAdvanced"),
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
-            toolbarCustomCSS({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop"
-            }),
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "customCSS",
+              label: t("Custom CSS"),
+              type: "codeMirror-dev",
+              position: 45,
+              display: "block",
               devices: "desktop",
-              position: 100
-            })
+              helper: { content: helperHTML },
+              placeholder: "element { CSS goes here }"
+            },
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              devices: "desktop",
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

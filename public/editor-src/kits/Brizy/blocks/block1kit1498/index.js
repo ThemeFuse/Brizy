@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1498",
   thumbnailWidth: 600,
-  thumbnailHeight: 312,
+  thumbnailHeight: 302,
   title: "block1kit1498",
   
   keywords: "button,call to action,cover,header,hero,image background,text",
@@ -44,7 +44,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-tp-heading1 brz-text-lg-center brz-fw-xs-300\"><span class=\"brz-cp-color8\">Be The Webdesigner! Brizy Gives You T&nbsp;he Power</span></h1>"
+                                            "text": "<h1 class=\"brz-tp-heading1 brz-text-lg-center brz-fw-xs-300\"><span class=\"brz-cp-color8\">Be The Webdesigner! This Gives You The Power</span></h1>"
                                         }
                                     }
                                 ],
@@ -88,7 +88,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">Every editing option is extremely well-thought to make it easy for&nbsp;you to find and work with. This will shorten the time neede1d to&nbsp;build your dream website. It\u2019s easy-brizy!</span></p>"
+                                            "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>Every editing option is extremely well-thought to make it easy for&nbsp;you to find and work with. This will shorten the time neede1d to&nbsp;build your dream website. It\u2019s easy!</span></span></p>"
                                         }
                                     }
                                 ],
@@ -110,8 +110,9 @@ module.exports = {
                                             "_styles": [
                                                 "spacer"
                                             ],
-                                            "height": 40,
-                                            "mobileHeight": 40
+                                            "height": 30,
+                                            "mobileHeight": 40,
+                                            "heightSuffix": ""
                                         }
                                     }
                                 ],

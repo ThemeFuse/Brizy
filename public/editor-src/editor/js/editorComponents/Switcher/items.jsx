@@ -20,6 +20,7 @@ class SwitcherItems extends EditorArrayComponent {
       renderType,
       meta,
       activeTab,
+      animationClassName,
       toolbarExtend,
       onChangeNav
     } = this.props;
@@ -27,6 +28,7 @@ class SwitcherItems extends EditorArrayComponent {
     return {
       meta,
       renderType,
+      animationClassName,
       toolbarExtend,
       active: itemIndex === activeTab,
       onChangeNav: () => {

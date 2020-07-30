@@ -35,7 +35,7 @@ export const NumberSlider: FC<Props> = ({
 }) => {
   const _sliderChange = useCallback(
     (number: number, m: Meta): void => onChange({ number, unit }, m),
-    [onChange]
+    [onChange, unit]
   );
   const _numberChange = useCallback(
     (v: Value): void => onChange(v, { editing: false }),

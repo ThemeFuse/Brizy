@@ -1,9 +1,13 @@
+@import "../../variables";
+
 // --- Tabs
 .brz-ed-control__tabs .brz-ed-control__tab {
   // Reset margin that may be set from outside
   margin: 0;
 }
-
+.brz-ed-control__tab__content {
+  flex: 1 1 auto;
+}
 .brz-ed-control__tabs:not(.brz-ed-control__tabs__left) {
   display: flex;
   flex-wrap: wrap;
@@ -37,6 +41,10 @@
     }
     &:not(:last-child) {
       margin-right: 15px;
+    }
+
+    .brz-span {
+      font-weight: 600;
     }
 
     // Tab with Icon

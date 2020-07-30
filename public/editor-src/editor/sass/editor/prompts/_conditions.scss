@@ -5,6 +5,7 @@
 .brz-ed-option__popup_conditions {
   min-height: 0 !important;
   color: #3dbfe8;
+  transition: color .2s linear;
   cursor: pointer;
   font-family: $font-family-1;
   font-size: 13px;
@@ -12,7 +13,6 @@
   padding-bottom: 15px !important;
   padding-top: 15px !important;
 }
-
 .brz-ed-popup-conditions {
   padding: 35px 43px 45px 43px;
 
@@ -116,7 +116,7 @@
     &-include {
       .brz-ed-popup-conditions__type-text {
         background-color: #3dbfe8;
-        &:hover{
+        &:hover {
           background-color: #31a7cd;
         }
       }
@@ -124,7 +124,7 @@
     &-exclude {
       .brz-ed-popup-conditions__type-text {
         background-color: #d62c64;
-        &:hover{
+        &:hover {
           background-color: #c12659;
         }
       }
@@ -203,7 +203,7 @@
     border-right-width: 0 !important;
   }
   .brz-ed-tall-track {
-    right: 0px !important;
+    right: 0 !important;
   }
 }
 .brz-ed-option__popup_conditions {

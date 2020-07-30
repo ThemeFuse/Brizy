@@ -11,6 +11,7 @@ class Brizy_Config {
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'https://api.brizy.io';
+	const CDN = 'http://bzassets.net/upload';
 
 	const BRIZY_BLANK_TEMPLATE_FILE_NAME = 'brizy-blank-template.php';
 	const BRIZY_TEMPLATE_FILE_NAME = 'brizy-header-footer-template.php';
@@ -30,6 +31,23 @@ class Brizy_Config {
 
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/'.BRIZY_EDITOR_VERSION;
+
+	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
+	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
+	const CLOUD_EDITOR_VERSIONS = '/api/versions';
+	const CLOUD_LIBRARY = '/dev/library';
+	const CLOUD_SIGNIN = '/api/sign_ins';
+	const CLOUD_SIGNUP = '/api/sign_ups';
+	const CLOUD_RESET_PASSWORD = '/api/recover_passwords';
+	const CLOUD_MEDIA = '/api/media';
+	const CLOUD_CONTAINERS = '/api/containers';
+	const CLOUD_PROJECTS = '/api/projects';
+	const CLOUD_SAVEDBLOCKS = '/api/saved_blocks';
+	const CLOUD_FONTS = '/api/fonts';
+	const CLOUD_POPUPS = '/api/saved_popups';
+	const CLOUD_LAYOUTS = '/api/layouts';
+	const CLOUD_SCREENSHOT = '/screenshot/%s';
+	const CLOUD_SCREENSHOTS = '/api/screenshots';
 
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(

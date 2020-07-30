@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 220,
   title: "block1kit4328",
   
-  keywords: "address,contact,email,footer,four columns,icons,links,phone,social,text",
+  keywords: "address,contact,email,footer,four columns,icons,links,phone,pro,social,text",
   cat: [4547],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionFooter",
@@ -581,7 +581,7 @@ module.exports = {
         "mobilePaddingTop": 25,
         "mobilePaddingBottom": 15,
         "mobilePadding": 25,
-        "tabsColor": "",
+        "tabsColor": "tabOverlay",
         "bgColorPalette": "color2",
         "tempBgColorPalette": "color2",
         "bgColorOpacity": 1,

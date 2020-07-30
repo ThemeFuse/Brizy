@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import LazyLoadImage from "visual/component/LazyLoadImage";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
+import { authorizedSelector } from "visual/redux/selectors2";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 const MAX_CONTAINER_WIDTH = 292;
 
@@ -21,15 +22,18 @@ const animationStyle = {
 const IS_PRO = Config.get("pro");
 const ConfigUrl = Config.get("urls");
 
-export default class Thumbnail extends Component {
+class Thumbnail extends Component {
   static defaultProps = {
     showRemoveIcon: false,
-    blockData: {},
+    data: {},
     animation: false,
     isLayout: false,
+    isAuthorized: false,
+    showSync: false,
     onAdd: _.noop,
     onRemove: _.noop,
-    onImageLoaded: _.noop
+    onImageLoaded: _.noop,
+    onSync: _.noop
   };
 
   static propTypes = {
@@ -37,9 +41,12 @@ export default class Thumbnail extends Component {
     blockData: PropTypes.object,
     animation: PropTypes.bool,
     isLayout: PropTypes.bool,
+    isAuthorized: PropTypes.bool,
+    showSync: PropTypes.bool,
     onAdd: PropTypes.func,
     onRemove: PropTypes.func,
-    onImageLoaded: PropTypes.func
+    onImageLoaded: PropTypes.func,
+    onSync: PropTypes.func
   };
 
   state = {
@@ -59,13 +66,21 @@ export default class Thumbnail extends Component {
   handleClick = () => {
     const { data, onAdd } = this.props;
 
-    onAdd(data);
+    if (!data.loading && !data.inactive) {
+      onAdd(data);
+    }
   };
 
   handleRemove = () => {
     const { data, onRemove } = this.props;
 
     onRemove(data);
+  };
+
+  handleSync = () => {
+    const { data, onSync } = this.props;
+
+    onSync(data);
   };
 
   renderProInfo() {
@@ -90,15 +105,45 @@ export default class Thumbnail extends Component {
   }
 
   renderBlank() {
-    const title = IS_GLOBAL_POPUP
-      ? t("Add a blank popup")
-      : t("Add a blank block");
+    const {
+      data: { pro }
+    } = this.props;
+    const blankIsPro = !IS_PRO && pro;
+    const title = this.props.data?.blankTitle ?? t("Create your own");
+    const className = classnames(
+      "brz-ed-popup-two-block-item",
+      "brz-ed-popup-two-block__blank",
+      "brz-ed-popup-two-block__blank-first",
+      { "brz-ed-popup-two-block__blank--pro": blankIsPro }
+    );
+
+    if (blankIsPro) {
+      return (
+        <Tooltip
+          overlayClassName="brz-ed-tooltip--delay-1"
+          size="small"
+          offset="5"
+          openOnClick={false}
+          nodeRef={this.iconRef}
+          overlay={this.renderProInfo()}
+          onOpen={this.handleTooltipOpen}
+          onClose={this.handleTooltipClose}
+        >
+          <div className={className}>
+            <p
+              ref={this.iconRef}
+              className="brz-p brz-d-xs-flex brz-align-items-xs-center"
+            >
+              <EditorIcon icon="nc-lock" /> {title}
+            </p>
+            <p className="brz-p brz-ed-badge brz-ed-badge--pro">pro</p>
+          </div>
+        </Tooltip>
+      );
+    }
 
     return (
-      <div
-        onClick={this.handleClick}
-        className="brz-ed-popup-two-block-item brz-ed-popup-two-block__blank brz-ed-popup-two-block__blank-first"
-      >
+      <div onClick={this.handleClick} className={className}>
         <div className="brz-ed-container-trigger brz-ed-container-trigger--small" />
         <p className="brz-p">{title}</p>
       </div>
@@ -203,33 +248,73 @@ export default class Thumbnail extends Component {
     );
   }
 
+  renderSyncIcon() {
+    const {
+      isAuthorized,
+      data: { synchronizable, synchronized }
+    } = this.props;
+
+    if (synchronizable && isAuthorized) {
+      const className = classnames("brz-ed-popup-two-block-sync", {
+        "brz-ed-popup-two-block-sync--uploaded": synchronized
+      });
+
+      return (
+        <div className={className} onClick={this.handleSync}>
+          <EditorIcon
+            icon={synchronized ? "nc-check-circle-on" : "nc-reverse-glyph"}
+          />
+        </div>
+      );
+    }
+  }
+
+  renderLoading() {
+    return (
+      <div className="brz-ed-popup-two-block--loading">
+        <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+      </div>
+    );
+  }
+
   render() {
     const {
       isLayout,
-      data: { blank, showRemoveIcon, pro }
+      showSync,
+      data: { blank, showRemoveIcon, pro, loading, inactive, renderWrapper }
     } = this.props;
     const blockIsPro = !IS_PRO && pro;
     const isBlank = blank && blank === "blank";
     const className = classnames(
       "brz-ed-popup-two-block",
       blockIsPro && "brz-ed-popup-two-block--pro",
-      isLayout && "brz-ed-popup-two-block--layout"
+      isLayout && "brz-ed-popup-two-block--layout",
+      inactive && "inactive"
     );
+
+    let content;
+    if (isBlank) {
+      content = this.renderBlank();
+    } else {
+      content = blockIsPro ? this.renderPro() : this.renderFree();
+
+      if (renderWrapper) {
+        content = renderWrapper(content);
+      }
+    }
 
     return (
       <div className={className}>
-        {isBlank
-          ? this.renderBlank()
-          : blockIsPro
-          ? this.renderPro()
-          : this.renderFree()}
+        {content}
         {showRemoveIcon && this.renderRemoveIcon()}
+        {loading && this.renderLoading()}
+        {showSync && this.renderSyncIcon()}
       </div>
     );
   }
 }
 
-export class LayoutThumbnail extends Component {
+class Layout extends Component {
   state = {
     thumbnailLoaded: false
   };
@@ -279,3 +364,10 @@ export class LayoutThumbnail extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isAuthorized: authorizedSelector(state) === "connected"
+});
+const LayoutThumbnail = connect(mapStateToProps)(Layout);
+
+export default connect(mapStateToProps)(Thumbnail);
+export { LayoutThumbnail };

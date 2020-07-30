@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit2335",
   thumbnailWidth: 600,
-  thumbnailHeight: 340,
+  thumbnailHeight: 336,
   title: "block1kit2335",
   
   keywords: "Blog,features,icons,news,services,two columns",
@@ -68,7 +68,7 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                         ],
-                                                        "text": "<p class=\"brz-tp-abovetitle\"><span style=\"opacity: 1;\" class=\"brz-cp-color3\">BRIZY VISUAL BUILDER</span></p><h2 class=\"brz-tp-heading2\"><span style=\"opacity: 1;\" class=\"brz-cp-color8\">2 Years in the Making</span></h2>"
+                                                        "text": "<p class=\"brz-tp-abovetitle\"><span class=\"brz-cp-color3\" style=\"opacity: 1;\"><span>VISUAL BUILDER</span></span></p><h2 class=\"brz-tp-heading2\"><span class=\"brz-cp-color8\" style=\"opacity: 1;\"><span>2 Years in the Making</span></span></h2>"
                                                     }
                                                 }
                                             ]
@@ -106,7 +106,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\">Brizy is a front-end WordPress page builder where what you see is what you get. We designed it so you can be in complete control of your website.&nbsp;</span><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Create up-to-date designs without writing a single line of code.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\"><span>This is a front-end WordPress page builder where what you see is what you get. We designed it so you can be in complete control of your website.&nbsp;</span></span><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">Create up-to-date designs without writing a single line of code.&nbsp;</span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -136,7 +136,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\">Just click &amp; drag to create beautiful pages in a matter of minutes. No designer talent or coding skills necessary.&nbsp;No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\"><span>Just click &amp; drag to create beautiful pages in a matter of minutes. No designer talent or coding skills necessary.&nbsp;No matter if you've used a visual page builder before, with it you'll be a pro the second you start using it.&nbsp;</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -216,7 +216,7 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                         ],
-                                                        "text": "<p class=\"brz-tp-abovetitle\"><span style=\"opacity: 1;\" class=\"brz-cp-color3\">JUST CLICK &amp; EDIT</span></p><h2 class=\"brz-tp-heading2\"><span class=\"brz-cp-color8\">It's Easy Brizy</span></h2>"
+                                                        "text": "<p class=\"brz-tp-abovetitle\"><span class=\"brz-cp-color3\" style=\"opacity: 1;\"><span>JUST CLICK &amp; EDIT</span></span></p><h2 class=\"brz-tp-heading2\"><span class=\"brz-cp-color8\"><span>It's User-friendly</span></span></h2>"
                                                     }
                                                 }
                                             ]
@@ -254,7 +254,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\">Just click &amp; drag to create beautiful pages in a matter of minutes. No designer talent or coding skills necessary.&nbsp;No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\"><span>Just click &amp; drag to create beautiful pages in a matter of minutes. No designer talent or coding skills necessary.&nbsp;No matter if you've used a visual page builder before, with it you'll be a pro the second you start using it.&nbsp;</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -284,7 +284,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\">Brizy is a front-end WordPress page builder where what you see is what you get. We designed it so you can be in complete control of your website.&nbsp;</span><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Create up-to-date designs without writing a single line of code.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\"><span>This is a front-end WordPress page builder where what you see is what you get. We designed it so you can be in complete control of your website.&nbsp;</span></span><span class=\"brz-cp-color7\" style=\"background-color: transparent;\">Create up-to-date designs without writing a single line of code.&nbsp;</span></p>"
                                                                 }
                                                             }
                                                         ]

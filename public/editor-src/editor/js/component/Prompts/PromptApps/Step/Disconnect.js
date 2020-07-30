@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { Disconnect as ViewDisconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
 import { Context } from "../../common/GlobalApps/Context";
-import { fakeRequest } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 class Disconnect extends Component {
   static contextType = Context;
@@ -45,7 +45,7 @@ class Disconnect extends Component {
       error: null
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangePrev("appList");
   };

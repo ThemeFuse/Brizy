@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleContent(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent", "cssStyleSizeMinHeightPx"]
+      standart: ["cssStyleSizeWidth", "cssStyleSizeMinHeightPx"]
     },
     ".brz &&:hover .brz-audio-progress": {
       standart: ["cssStyleBg2Color"]

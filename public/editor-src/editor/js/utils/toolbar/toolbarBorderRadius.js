@@ -13,30 +13,23 @@ export function toolbarBorderRadius({
   state,
   onChangeGrouped,
   onChangeUngrouped,
-  prefix = ""
+  prefix = "",
+  position = 60
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
   const borderRadiusType = capByPrefix(prefix, "borderRadiusType");
 
   return {
     type: "multiPicker",
     devices,
+    position,
     picker: {
-      id: dvk(borderRadiusType),
+      id: borderRadiusType,
       label: t("Corner"),
-      type: "radioGroup",
+      type: "radioGroup-dev",
       choices: [
-        {
-          value: "grouped",
-          icon: "nc-corners-all"
-        },
-        {
-          value: "ungrouped",
-          icon: "nc-corners-individual"
-        }
-      ],
-      value: dvv(borderRadiusType)
+        { value: "grouped", icon: "nc-corners-all" },
+        { value: "ungrouped", icon: "nc-corners-individual" }
+      ]
     },
     choices: {
       ...toolbarBorderRadiusGrouped({

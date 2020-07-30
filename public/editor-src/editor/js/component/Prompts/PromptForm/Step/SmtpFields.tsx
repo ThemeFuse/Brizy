@@ -1,7 +1,8 @@
 import React, { Component, ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import Smtp from "./common/Smtp";
-import { Context, ContextIntegration } from "../../common/GlobalApps/Context";
+import { Context } from "../../common/GlobalApps/Context";
+import { BaseIntegrationContext } from "../../common/GlobalApps/type";
 
 const apiKeys = [
   {
@@ -50,7 +51,7 @@ type Props = {
   onClose: () => void;
 };
 
-class SmtpFields extends Component<Props, {}, ContextIntegration> {
+class SmtpFields extends Component<Props, {}, BaseIntegrationContext> {
   static contextType = Context;
 
   render(): ReactElement {

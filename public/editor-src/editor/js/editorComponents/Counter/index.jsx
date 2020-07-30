@@ -11,6 +11,7 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleChart, styleNumber } from "./styles";
 import { roundTo } from "visual/utils/math";
 import { css } from "visual/utils/cssStyle";
+import { Wrapper } from "../tools/Wrapper";
 
 import defaultValue from "./defaultValue.json";
 
@@ -25,6 +26,8 @@ class Counter extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   handleResizerChange = patch => this.patchValue(patch);
 
   state = {
@@ -38,7 +41,10 @@ class Counter extends EditorComponent {
   componentDidUpdate(prevProps) {
     if (
       prevProps.dbValue.start !== this.props.dbValue.start ||
+      prevProps.dbValue.startPopulation !==
+        this.props.dbValue.startPopulation ||
       prevProps.dbValue.end !== this.props.dbValue.end ||
+      prevProps.dbValue.endPopulation !== this.props.dbValue.endPopulation ||
       prevProps.dbValue.duration !== this.props.dbValue.duration
     ) {
       this.initCounter();
@@ -72,6 +78,25 @@ class Counter extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { final } = this.state;
     const { type, start, end, duration } = v;
+    const isSimple = type === "simple";
+
+    const prefixLabel = isSimple ? v.prefixLabel : v.prefixLabelRadial;
+    const suffixLabel = isSimple ? v.suffixLabel : v.suffixLabelRadial;
+
+    const resizerRestrictions = {
+      width: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      tabletWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      mobileWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      }
+    };
 
     const className = classnames(
       "brz-counter",
@@ -101,36 +126,51 @@ class Counter extends EditorComponent {
       )
     );
 
+    const formatNumber = function(number) {
+      var splitNum;
+      number = Math.abs(number);
+      number = number.toFixed(0);
+      splitNum = number.split(".");
+      splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return splitNum.join("-");
+    };
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div
-            className={className}
-            data-start={start}
-            data-end={end}
-            data-duration={duration}
+          <Wrapper
+            {...this.makeWrapperProps({
+              className,
+              attributes: {
+                "data-start": start,
+                "data-end": end,
+                "data-duration": duration
+              }
+            })}
           >
-            <BoxResizer
-              points={resizerPoints}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {type !== "simple" && (
+            {type !== "simple" && (
+              <BoxResizer
+                points={resizerPoints}
+                restrictions={resizerRestrictions}
+                meta={this.props.meta}
+                value={v}
+                onChange={this.handleResizerChange}
+              >
                 <Chart
                   className={classNameChart}
                   type={type}
                   strokeW={v.strokeWidth}
                 />
-              )}
-            </BoxResizer>
+              </BoxResizer>
+            )}
             <div className={classNameNumber}>
-              <span className="brz-counter-numbers">{parseInt(final)}</span>
-              {type !== "simple" && <span>%</span>}
+              {prefixLabel && <span>{`${prefixLabel} `}</span>}
+              <span className="brz-counter-numbers">{formatNumber(final)}</span>
+              {suffixLabel && <span>{` ${suffixLabel}`}</span>}
             </div>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

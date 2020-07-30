@@ -10,7 +10,7 @@ class Brizy_Compatibilities_Phastpress {
 
 	public function disable_phastpress() {
 
-		if (  ! isset( $_GET['brizy-edit'] ) && ! isset( $_GET['brizy-edit-iframe'] ) ) {
+		if (  ! isset( $_GET[Brizy_Editor::prefix('-edit')] ) && ! isset( $_GET[Brizy_Editor::prefix('-edit-iframe')] ) ) {
 			return;
 		}
 

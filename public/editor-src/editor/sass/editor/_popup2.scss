@@ -4,10 +4,11 @@
     height: 100%;
   }
   &__button-go-to-editor {
+    display: flex;
     font-family: $font-family-1;
     position: absolute;
     left: 40px;
-    top: 34px;
+    top: 36px;
     font-size: 13px;
     font-weight: 600;
     padding: 13px 23px 13px 18px;
@@ -19,7 +20,6 @@
     cursor: pointer;
     z-index: 9999;
     outline: none;
-    text-transform: uppercase;
     transition: 0.2s linear color;
 
     &:hover {
@@ -33,7 +33,11 @@
   }
   &__icon-go-to-editor {
     vertical-align: text-top;
-    margin-right: 16px;
+    margin: auto 16px auto 0;
+  }
+
+  .brz-ed-collapsible > .brz-ed-collapsible__icon {
+    top: 34px;
   }
 }
 .brz-container__wrap > .brz-container > .brz-row__container > .brz-ed-border,

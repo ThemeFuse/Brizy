@@ -148,7 +148,7 @@ class SelectFields extends Component {
           <div className="brz-ed-popup-integrations-step__buttons">
             {prevLoading !== null && (
               <Button
-                type="gray"
+                size={3}
                 leftIcon="nc-arrow-left"
                 loading={prevLoading}
                 onClick={onPrev}
@@ -158,7 +158,7 @@ class SelectFields extends Component {
             )}
             {nextLoading !== null && (
               <Button
-                type="tail"
+                color="teal"
                 rightIcon="nc-arrow-right"
                 loading={nextLoading}
                 onClick={onNext}

@@ -12,10 +12,12 @@ import { stripSystemKeys } from "./stripSystemKeys";
 import { insertItem } from "./insertItem";
 import {
   IS_PAGE,
+  IS_TEMPLATE,
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
   IS_GLOBAL_POPUP,
-  isGlobalPopup
+  isGlobalPopup,
+  IS_WP
 } from "./modes";
 
 const isModel = obj => hasProps(["type", "value"], obj);
@@ -27,8 +29,6 @@ const mapModels = (fn, model) => {
 };
 
 export {
-  isModel,
-  mapModels,
   setIds,
   stripIds,
   setStyles,
@@ -38,7 +38,11 @@ export {
   getParentWhichContainsStyleProperty,
   stripSystemKeys,
   insertItem,
+  mapModels,
+  isModel,
+  IS_WP,
   IS_PAGE,
+  IS_TEMPLATE,
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
   IS_GLOBAL_POPUP,

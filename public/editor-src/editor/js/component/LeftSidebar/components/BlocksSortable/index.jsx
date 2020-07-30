@@ -8,8 +8,12 @@ import {
 } from "react-sortable-hoc";
 import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
-import { pageAssembledSelector } from "visual/redux/selectors";
-import { removeBlock, reorderBlocks } from "visual/redux/actions";
+import {
+  pageBlocksAssembledSelector,
+  globalBlocksSelector
+} from "visual/redux/selectors";
+import { canUseConditionInPage } from "visual/utils/blocks";
+import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
@@ -18,7 +22,15 @@ const DragHandle = SortableHandle(({ item }) => (
   <BlockThumbnail blockData={item} />
 ));
 
-const SortableItem = SortableElement(({ item, onRemove }) => {
+const SortableItem = SortableElement(({ item, globalBlocks, onRemove }) => {
+  if (item.type === "GlobalBlock") {
+    const { _id } = item.value;
+
+    if (!canUseConditionInPage(globalBlocks[_id])) {
+      return <div />;
+    }
+  }
+
   return (
     <div className="brz-ed-sidebar-block-item">
       <DragHandle item={item} />
@@ -30,11 +42,11 @@ const SortableItem = SortableElement(({ item, onRemove }) => {
 });
 
 const SortableList = SortableContainer(
-  ({ isSorting, items, innerRef, onItemRemove }) => {
+  ({ isSorting, items, innerRef, globalBlocks, onItemRemove }) => {
     const filteredItems = [];
 
     for (let i = 0; i < items.length; i++) {
-      const item = items[i];
+      let item = items[i];
 
       if (item.value._blockVisibility === "unlisted") {
         continue;
@@ -44,6 +56,7 @@ const SortableList = SortableContainer(
         <SortableItem
           key={item.value._id}
           item={item}
+          globalBlocks={globalBlocks}
           index={i}
           onRemove={() => onItemRemove(i)}
         />
@@ -74,9 +87,9 @@ class DrawerComponent extends React.Component {
       };
     }
 
-    if (props.page.data.items !== state.blocks) {
+    if (props.pageBlocks !== state.blocks) {
       return {
-        blocks: props.page.data.items || []
+        blocks: props.pageBlocks || []
       };
     }
 
@@ -133,7 +146,11 @@ class DrawerComponent extends React.Component {
   };
 
   handleItemRemove = index => {
-    this.props.dispatch(removeBlock({ index }));
+    const {
+      value: { _id }
+    } = this.state.blocks[index];
+
+    this.props.dispatch(removeBlock({ index, id: _id }));
   };
 
   render() {
@@ -144,6 +161,7 @@ class DrawerComponent extends React.Component {
         helperClass="brz-ed-sidebar-block-item-helper"
         isSorting={isSorting}
         items={blocks}
+        globalBlocks={this.props.globalBlocks}
         distance={5}
         useDragHandle={true}
         innerRef={this.content}
@@ -158,7 +176,8 @@ class DrawerComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  page: pageAssembledSelector(state)
+  pageBlocks: pageBlocksAssembledSelector(state),
+  globalBlocks: globalBlocksSelector(state)
 });
 
 export const BlocksSortable = {

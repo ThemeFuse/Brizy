@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent"]
+      standart: ["cssStyleSizeWidth"]
     },
     ".brz &&:hover:before": {
       standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBorderRadius"],

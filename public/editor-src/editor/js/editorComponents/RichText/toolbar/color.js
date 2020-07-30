@@ -357,17 +357,17 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   return [
     {
       id: "color",
-      tabsPosition: "left",
-      type: "tabs",
+      type: "tabs-dev",
+      config: { position: "left" },
       tabs: [
         {
-          tabIcon: "nc-circle",
+          icon: "nc-circle",
           title: t("Normal"),
           options: [
             {
               id: "colorTabs",
               className: "",
-              type: "tabs",
+              type: "tabs-dev",
               tabs: getPopulationTabs({ populationColor }, onChange)
             }
           ]
@@ -458,7 +458,7 @@ function getSimpleColorOptions(v, { device }, onChange) {
   return [
     {
       id: "colorTabs",
-      type: "tabs",
+      type: "tabs-dev",
       tabs: [
         {
           id: "tabText",
@@ -682,17 +682,19 @@ const getColorToolbar = (v, { device }, onChange) => {
 
   return {
     id: "toolbarColor",
-    type: "popover",
-    size: "auto",
-    devices: "desktop",
-    title: t("Colors"),
-    roles: ["admin"],
-    position: 20,
-    icon: {
-      style: {
-        backgroundColor: getColorValue(v.color)
+    type: "popover-dev",
+    config: {
+      size: "auto",
+      title: t("Colors"),
+      icon: {
+        style: {
+          backgroundColor: getColorValue(v.color)
+        }
       }
     },
+    devices: "desktop",
+    roles: ["admin"],
+    position: 20,
     options: isPopulationBlock
       ? getPopulationColorOptions({ populationColor }, onChange)
       : getSimpleColorOptions(v, { device }, onChange)

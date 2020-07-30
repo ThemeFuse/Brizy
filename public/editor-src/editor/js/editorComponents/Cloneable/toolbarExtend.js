@@ -38,12 +38,12 @@ export function getItems({ v, device }) {
       devices: "responsive"
     }),
     {
-      id: dvk("toolbarCurrentShortcode"),
-      type: "popover",
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
       options: [
         {
-          id: dvk("currentShortcodeTabs"),
-          type: "tabs",
+          id: "currentShortcodeTabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("currentShortcodeTab"),

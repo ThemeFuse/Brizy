@@ -1,4 +1,5 @@
 import { defaultValueKey } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarDisabledAdvancedSettings({
   device,
@@ -33,15 +34,6 @@ export function toolbarDisabledMedia({ device, state, devices = "all" }) {
   };
 }
 
-export function toolbarDisabledShowOnDesktop({ devices = "desktop" }) {
-  return {
-    id: "showOnDesktop",
-    type: "switch",
-    disabled: true,
-    devices
-  };
-}
-
 export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
   return {
     id: "showOnTablet",
@@ -57,14 +49,6 @@ export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
     type: "toggle",
     disabled: true,
     devices
-  };
-}
-
-export function toolbarDisabledZIndex() {
-  return {
-    id: "zIndex",
-    type: "slider",
-    disabled: true
   };
 }
 
@@ -108,22 +92,22 @@ export function toolbarDisabledRemove({ device, devices = "all" }) {
   };
 }
 
-export function toolbarDisabledPadding({ device, state, devices = "all" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
+export function toolbarDisabledPadding({ prefix = "", devices = "all" }) {
+  const padding = capByPrefix(prefix, "padding");
+
   return {
-    id: dvk("padding"),
     devices,
-    type: "multiPicker",
+    id: padding,
+    type: "group-dev",
     disabled: true
   };
 }
 
-export function toolbarDisabledMargin({ device, state, devices = "all" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
+export function toolbarDisabledMargin({ devices = "all" }) {
   return {
-    id: dvk("margin"),
     devices,
-    type: "multiPicker",
+    id: "margin",
+    type: "group-dev",
     disabled: true
   };
 }

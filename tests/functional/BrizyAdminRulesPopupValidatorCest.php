@@ -8,6 +8,8 @@ class BrizyAdminRulesPopupValidatorCest {
 		global $wpdb;
 		$wpdb->db_connect();
 		$I->havePostInDatabase( [] );
+
+		$I->loginAs( 'admin', 'admin' );
 	}
 
 	public function testValidateRuleForPostId( FunctionalTester $I ) {

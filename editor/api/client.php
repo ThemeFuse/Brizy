@@ -186,21 +186,22 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 	 */
 	public function compile_page( Brizy_Editor_Project $project, $page_data, $config, $compiler_url ) {
 
+		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 
 		$body = apply_filters( 'brizy_compiler_params', array(
-			'page_id'            => 1,
+			'page_id'            => (int)$config['wp']['page'],
 			'free_version'       => BRIZY_EDITOR_VERSION,
 			'download_url'       => 'https://static.brizy.io/builds',
 			'config_json'        => json_encode( $config ),
 			'pages_json'         => json_encode( array(
 				array(
-					'id'       => 1,
+					'id'       => (int)$config['wp']['page'],
 					'data'     => $page_data,
 					'is_index' => true
 				)
 			) ),
 			'project_json'       => json_encode( $project->createResponse() ),
-			'global_blocks_json' => json_encode( Brizy_Editor_Block::getBlocksByType( Brizy_Admin_Blocks_Main::CP_GLOBAL ) )
+			'global_blocks_json' => json_encode( $blockManager->createResponseForEntities( $blockManager->getEntities( [] ) ) )
 		) );
 
 

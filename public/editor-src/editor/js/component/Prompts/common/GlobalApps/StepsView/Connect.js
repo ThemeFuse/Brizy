@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
 import Button from "../../../common/Button";
+import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 
 class Connect extends Component {
   static defaultProps = {
@@ -44,24 +45,17 @@ class Connect extends Component {
       const { title, name, value } = key;
 
       return (
-        <label key={index} className="brz-ed-popup-integrations__connect-label">
-          <input
-            className="brz-input"
-            name={title}
-            type="text"
-            value={value}
-            required
-            onChange={e => {
-              onChange(e.target.value, name);
-            }}
-            onKeyDown={this.handleKeyDown}
-          />
-          <p className="brz-p">
-            <strong className="brz-strong">
-              {title} <span className="brz-span">({t("required")})</span>
-            </strong>
-          </p>
-        </label>
+        <InputPlaceholder
+          key={index}
+          title={title}
+          name={name}
+          required={true}
+          value={value}
+          onChange={({ target }) => {
+            onChange(target.value, name);
+          }}
+          onKeyDonw={this.handleKeyDown}
+        />
       );
     });
   }
@@ -81,19 +75,24 @@ class Connect extends Component {
     return (
       <div className="brz-ed-popup-integrations__connect">
         <div className="brz-ed-popup-integrations__connect-head">
-          <img className="brz-img" src={img} title={title} />
+          <img className="brz-img" src={img} title={title} alt={title} />
           <p className="brz-p">{descriptions}</p>
+          <p className="brz-p brz-ed-popup-integrations__connect-info">
+            <a className="brz-a" href="#" target="_blank">
+              {t("Need help")}?
+            </a>
+          </p>
         </div>
         <div className="brz-ed-popup-integrations__connect-body">
           {error && this.renderError()}
           {this.renderInputs()}
           {nextLoading !== null && (
-            <Button type="tail" loading={nextLoading} onClick={onNext}>
+            <Button color="teal" loading={nextLoading} onClick={onNext}>
               {t("Connect")}
             </Button>
           )}
           {prevLoading !== null && (
-            <Button type="default" loading={prevLoading} onClick={onPrev}>
+            <Button color="default" loading={prevLoading} onClick={onPrev}>
               {t("Cancel")}
             </Button>
           )}

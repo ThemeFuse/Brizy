@@ -1,14 +1,17 @@
 import { t } from "visual/utils/i18n";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device });
 
+  const richTextDC = getDynamicContentChoices("richText", true);
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
@@ -17,31 +20,23 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarProgressBar",
-      type: "popover",
-      devices: "desktop",
-      icon: "nc-progress-bar",
+      type: "popover-dev",
+      config: {
+        devices: "desktop",
+        icon: "nc-progress-bar"
+      },
       title: t("Progress"),
       position: 70,
       options: [
         {
           id: "progressBarStyle",
           label: t("Style"),
-          type: "radioGroup",
+          type: "radioGroup-dev",
           devices: "desktop",
           choices: [
-            {
-              value: "style1",
-              icon: "nc-progress-bar-style-1"
-            },
-            {
-              value: "style2",
-              icon: "nc-progress-bar-style-2"
-            }
-          ],
-          value: dvv("progressBarStyle"),
-          onChange: value => ({
-            [dvk("progressBarStyle")]: value
-          })
+            { value: "style1", icon: "nc-progress-bar-style-1" },
+            { value: "style2", icon: "nc-progress-bar-style-2" }
+          ]
         },
         {
           id: "percentage",
@@ -52,7 +47,8 @@ export function getItems({ v, device }) {
             min: 1,
             max: 100,
             units: [{ value: "%", title: "%" }]
-          }
+          },
+          population: richTextDC
         },
         {
           id: "showText",
@@ -71,29 +67,62 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
         {
           id: "tabsTypography",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabText",
               label: t("Title"),
               options: [
                 {
-                  id: "typography",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  },
-                  disabled:
-                    v.showText === "off" || v.progressBarStyle === "style2"
+                  id: "gridTypography",
+                  type: "grid",
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "typography",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          disabled:
+                            v.showText === "off" ||
+                            v.progressBarStyle === "style2"
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          disabled:
+                            v.showText === "off" ||
+                            v.progressBarStyle === "style2",
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -102,12 +131,39 @@ export function getItems({ v, device }) {
               label: t("Percent"),
               options: [
                 {
-                  id: "",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  },
-                  disabled: v.showPercentage === "off"
+                  type: "grid",
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          disabled: v.showPercentage === "off"
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "percentage",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop",
+                          disabled: v.showPercentage === "off"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -117,21 +173,22 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabText",
@@ -197,9 +254,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
@@ -207,16 +266,21 @@ export function getItems({ v, device }) {
           id: "width",
           label: t("Width"),
           type: "slider-dev",
+          position: 100,
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("widthSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {
           id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
+          position: 110,
           icon: "nc-cog"
         }
       ]

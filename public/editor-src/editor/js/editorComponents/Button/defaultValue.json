@@ -1,6 +1,8 @@
 {
   "content": {
     "text": "BUTTON",
+    "textPopulation": null,
+
     "type": "link",
 
     "iconName": "tail-right",
@@ -39,11 +41,14 @@
     "mediumIconSize": 24,
     "largeIconSize": 32,
 
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
     "fontStyle": "button",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "montserrat"
-    },
     "fontSize": 12,
     "fontWeight": 700,
     "lineHeight": 1.8,
@@ -270,6 +275,7 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "customCSS": "",
 
@@ -298,6 +304,7 @@
     "tempTabletPaddingBottom": 11,
     "tempTabletPaddingLeft": 26,
 
+    "tabletFontFamilyType": null,
     "tabletFontStyle": "button",
     "tabletFontSize": 11,
     "tabletFontWeight": 700,
@@ -353,6 +360,7 @@
     "tempMobilePaddingBottom": 11,
     "tempMobilePaddingLeft": 26,
 
+    "mobileFontFamilyType": null,
     "mobileFontStyle": "button",
     "mobileFontSize": 11,
     "mobileFontWeight": 700,

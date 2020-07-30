@@ -6,10 +6,12 @@ export function getItems({ device }) {
 
   return [
     {
-      id: dvk("toolbarWOOPages"),
-      type: "popover",
+      id: "toolbarWOOPages",
+      type: "popover-dev",
+      config: {
+        icon: "nc-woo-2"
+      },
       devices: "desktop",
-      icon: "nc-woo-2",
       position: 10,
       options: [
         {
@@ -30,10 +32,11 @@ export function getItems({ device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      roles: ["admin"],
-      icon: "nc-cog",
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog"
+      },
       position: 110,
       options: [
         {

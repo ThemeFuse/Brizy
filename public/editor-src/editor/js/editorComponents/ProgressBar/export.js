@@ -32,6 +32,9 @@ export default function($node) {
 
         complete: function() {
           $percentText.text(Math.round(this.countNum) + "%");
+          $percentWrapper.css({
+            maxWidth: Math.round(this.countNum + 0.5) + "%"
+          });
         }
       }
     );

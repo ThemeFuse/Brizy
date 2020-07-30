@@ -13,7 +13,7 @@ export function style(v, vs, vd) {
         "cssStyleContentAlign"
       ]
     },
-    ".brz &&:hover > .brz-a": {
+    ".brz && > .brz-a.brz-a:not(.brz-btn):hover": {
       standart: ["cssStyleColor"]
     }
   };

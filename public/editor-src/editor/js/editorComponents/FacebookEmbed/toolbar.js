@@ -20,15 +20,17 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverCurrentElement",
-      type: "popover",
-      icon: "nc-facebook",
-      title: t("Embed"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-facebook",
+        title: t("Embed")
+      },
       devices: "desktop",
       position: 70,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -105,22 +107,25 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
-          hideHandlesWhenOne: false,
+          type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabBorder",
