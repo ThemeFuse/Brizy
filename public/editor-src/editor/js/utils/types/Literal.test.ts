@@ -1,5 +1,6 @@
 import { testReader } from "visual/utils/types/Type.test";
-import { read } from "visual/component/Controls/MultiSelect/types/Value";
+import { eq, Literal, read } from "./Literal";
+import { testEq } from "visual/utils/types/Eq.test";
 
 describe("Testing Value Type integration", function() {
   test("If value type is number, return number", () => {
@@ -11,4 +12,8 @@ describe("Testing Value Type integration", function() {
   });
 
   testReader(read, [1, "1", "abc", -22, 0, ""], [undefined, null, [], {}]);
+});
+
+describe("Testing Literal EQ implementation", () => {
+  testEq<Literal>(eq, 1, 1, "2");
 });

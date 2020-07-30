@@ -1,0 +1,192 @@
+//WOOCart
+.brz-woocart {
+  display: flex;
+  align-items: center;
+
+  &-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1060;
+    cursor: auto;
+
+    &-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+  &__parent {
+    cursor: pointer;
+
+    &.brz-purchases-bubble .brz-woocart__icon::before {
+      position: absolute;
+      min-width: 1.6em;
+      height: 1.6em;
+      line-height: 1.5em;
+      top: -0.7em;
+      right: -1em;
+      border-radius: 100%;
+      color: #fff;
+      background-color: #d9534f;
+      text-align: center;
+      font-size: 10px;
+      z-index: 1;
+    }
+
+    .brz-wp-shortcode {
+      padding: 10px 15px;
+    }
+  }
+  &__icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  &__sidebar {
+    width: 330px;
+    max-width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 1060;
+    background-color: #ffffff;
+    padding: 40px 15px 15px 15px;
+    opacity: 0;
+    overflow: auto;
+    pointer-events: none;
+    cursor: auto;
+    transition: opacity 0.3s ease-in-out;
+
+    &-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    &-item {
+      display: flex;
+      padding: 20px 0;
+
+      &:first-child {
+        padding-top: 0;
+      }
+      &:not(:first-child) {
+        border-top: 1px solid #000;
+      }
+    }
+    &__product-info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 15px;
+    }
+    &-remove {
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+    &-image__block {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+
+      & * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      & img {
+        object-fit: cover;
+      }
+    }
+    &-toolbar {
+      width: fit-content;
+      padding: 10px 20px;
+      display: block;
+      margin: 10px;
+      background: #000;
+      color: #fff;
+      font-family: $font-family-1;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s linear;
+
+      &:hover {
+        color: #3dbfe8;
+      }
+      .brz-woocart-toolbar {
+        width: 30%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        position: absolute;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: -234%;
+          width: 232%;
+          height: 100%;
+          top: 0;
+        }
+      }
+    }
+    &-close {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background-color: #000000;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      &::before {
+        transform: rotate(45deg);
+      }
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
+    &-subtotal {
+      margin-bottom: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #000;
+
+      &:not(:nth-child(2)) {
+        border-top: 1px solid #000;
+      }
+    }
+    &-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-button {
+      padding: 10px 15px;
+      text-align: center;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

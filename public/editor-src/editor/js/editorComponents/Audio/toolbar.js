@@ -1,7 +1,10 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { toolbarElementSoundCloudStyle } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
 
@@ -12,23 +15,25 @@ export function getItems({ v, device }) {
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
+  const linkDC = getDynamicContentChoices("link", true);
 
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-audio",
-      title: t("Audio"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-audio",
+        title: t("Audio")
+      },
       position: 80,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElementUpload",
@@ -40,9 +45,9 @@ export function getItems({ v, device }) {
                   type: "inputText-dev",
                   devices: "desktop",
                   disabled: dvv("type") === "custom",
-                  placeholder: t("SoundCloud Link")
+                  placeholder: t("SoundCloud Link"),
+                  population: linkDC
                 },
-
                 toolbarElementSoundCloudStyle({
                   v,
                   device,
@@ -65,24 +70,26 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 100,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(borderColorHex, v.borderColorOpacity)
-              : hexToRgba(bgColorHex, v.bgColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(borderColorHex, v.borderColorOpacity)
+                : hexToRgba(bgColorHex, v.bgColorOpacity)
+          }
         }
       },
+      roles: ["admin"],
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabIcon",
@@ -148,9 +155,8 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
       roles: ["admin"],
       position: 110,
       options: [
@@ -160,8 +166,11 @@ export function getItems({ v, device }) {
           type: "slider-dev",
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("widthSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "%", title: "%" },
+              { value: "px", title: "px" }
+            ]
           }
         },
         {

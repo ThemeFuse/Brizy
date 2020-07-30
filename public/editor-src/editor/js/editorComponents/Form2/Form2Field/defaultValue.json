@@ -14,7 +14,9 @@
 
   "style": {
     "width": 100,
+    "widthSuffix":null,
     "height": 165,
+    "heightSuffix": null,
     "min": "",
     "max": "",
 
@@ -22,10 +24,14 @@
 
     "tabletColumns": null,
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
     "mobileColumns": null,
     "mobileWidth": null,
-    "mobileHeight": null
+    "mobileWidthSuffix": null,
+    "mobileHeight": null,
+    "mobileHeightSuffix": null
   }
 }

@@ -31,83 +31,109 @@ export function toolbarElementPostsTaxonomy({
   };
 }
 
-export function toolbarElementPostsOrder({
+export function toolbarElementPostsColumns({
   v,
   device,
   devices = "all",
   state
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const max = device === "desktop" ? 6 : Math.min(v.gridColumn * v.gridRow, 6);
 
   return {
-    id: dvk("order"),
-    label: t("Order"),
+    id: defaultValueKey({ key: "gridColumn", device, state }),
+    type: "slider",
+    label: t("Columns"),
     devices,
-    type: "radioGroup",
-    choices: [
-      {
-        value: "ASC",
-        icon: "nc-up"
-      },
-      {
-        value: "DESC",
-        icon: "nc-down"
+    className: "brz-ed-option__slider--skin-dev",
+    slider: {
+      min: 1,
+      max,
+      step: 1
+    },
+    input: {
+      show: true,
+      min: 1,
+      max,
+      step: 1
+    },
+    value: {
+      value: defaultValueValue({ v, key: "gridColumn", device, state }),
+      suffix: null
+    },
+    onChange: ({ value }) => {
+      const key = defaultValueKey({ key: "gridColumn", device, state });
+      const ret = {
+        [key]: value,
+        [`${key}Suffix`]: "" // mimic the value of slider-dev
+      };
+
+      // this is done to avoid situations where the number of items
+      // that ought to be shown on responsive is greater than on desktop,
+      // thus breaking the pagination
+      // (because the server will render only as many items as are needed for desktop)
+      if (device === "desktop") {
+        const maxGridColumnsResponsive = Number(value) * Number(v.gridRow);
+
+        if (maxGridColumnsResponsive < v.tabletGridColumn) {
+          ret.tabletGridColumn = maxGridColumnsResponsive;
+        }
+
+        if (maxGridColumnsResponsive < v.mobileGridColumn) {
+          ret.mobileGridColumn = maxGridColumnsResponsive;
+        }
       }
-    ],
-    value: dvv("order")
+
+      return ret;
+    }
   };
 }
 
-export function toolbarElementPostsPagination({
-  v,
-  device,
-  devices = "all",
-  state
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
+export function toolbarElementPostsRows({ v, device, devices = "all", state }) {
   return {
-    type: "multiPicker",
+    id: defaultValueKey({ key: "gridRow", device, state }),
+    type: "slider",
+    label: t("Rows"),
     devices,
-    picker: {
-      id: dvk("pagination"),
-      label: t("Pagination"),
-      type: "switch",
-      value: dvv("pagination")
+    className: "brz-ed-option__slider--skin-dev",
+    slider: {
+      min: 1,
+      max: 10,
+      step: 1
     },
-    choices: {
-      on: [
-        {
-          id: dvk("paginationSpacing"),
-          label: t("Spacing"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: 100
-          },
-          input: {
-            show: true,
-            min: 0
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: dvv("paginationSpacing")
-          },
-          onChange: ({ value }) => ({
-            [dvk("paginationSpacing")]: value
-          })
+    input: {
+      show: true,
+      min: 1,
+      max: 10,
+      step: 1
+    },
+    value: {
+      value: defaultValueValue({ v, key: "gridRow", device, state }),
+      suffix: null
+    },
+    onChange: ({ value }) => {
+      const key = defaultValueKey({ key: "gridRow", device, state });
+      const ret = {
+        [key]: value,
+        [`${key}Suffix`]: "" // mimic the value of slider-dev
+      };
+
+      // this is done to avoid situations where the number of items
+      // that ought to be shown on responsive is greater than on desktop,
+      // thus breaking the pagination
+      // (because the server will render only as many items as are needed for desktop)
+      if (device === "desktop") {
+        const maxGridColumnsResponsive = Number(value) * Number(v.gridColumn);
+
+        if (maxGridColumnsResponsive < v.tabletGridColumn) {
+          ret.tabletGridColumn = maxGridColumnsResponsive;
         }
-      ]
+
+        if (maxGridColumnsResponsive < v.mobileGridColumn) {
+          ret.mobileGridColumn = maxGridColumnsResponsive;
+        }
+      }
+
+      return ret;
     }
   };
 }

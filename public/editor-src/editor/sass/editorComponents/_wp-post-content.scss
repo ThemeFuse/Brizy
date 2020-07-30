@@ -1,0 +1,11 @@
+.brz-wp-post-content {
+  width: 100%;
+
+  > div > :first-child {
+    margin-top: 0;
+  }
+
+  > div > :last-child {
+    margin-bottom: 0;
+  }
+}

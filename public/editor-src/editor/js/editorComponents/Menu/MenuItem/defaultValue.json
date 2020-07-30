@@ -9,7 +9,25 @@
     "items": [],
     "iconName": "",
     "iconType": "",
+    "current": null,
+
     "megaMenu": "off",
+
+    "megaMenuWidth": 100,
+    "megaMenuWidthSuffix": "%",
+    "megaMenuOffsetTop": 10,
+    "megaMenuOffsetTopSuffix": null,
+
+    "tabletMegaMenuWidth": null,
+    "tabletMegaMenuWidthSuffix": null,
+    "tabletMegaMenuOffsetTop": null,
+    "tabletMegaMenuOffsetTopSuffix": null,
+
+    "mobileMegaMenuWidth": null,
+    "mobileMegaMenuWidthSuffix": null,
+    "mobileMegaMenuOffsetTop": 0,
+    "mobileMegaMenuOffsetTopSuffix": null,
+
     "megaMenuItems": [
       {
         "type": "SectionMegaMenu",

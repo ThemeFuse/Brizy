@@ -7,7 +7,7 @@ import Editor from "visual/global/Editor";
 import UIEvents from "visual/global/UIEvents";
 import EditorIcon from "visual/component/EditorIcon";
 import Sortable from "visual/component/Sortable";
-import SortableElement from "visual/component/Sortable/SortableElement";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { setIds } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
 import { updateDisabledElements } from "visual/redux/actions";
@@ -174,8 +174,9 @@ class DrawerComponent extends Component {
           <input
             type="text"
             className="brz-input"
-            autoFocus={true}
             placeholder={t("Search element")}
+            autoFocus={true}
+            spellCheck={false}
             value={inputValue}
             onChange={({ target: { value } }) =>
               this.setState({ inputValue: value })

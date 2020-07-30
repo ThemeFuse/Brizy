@@ -24,15 +24,15 @@ export function cssStyleShapeTopType({ v, device, state }) {
     : `background-image: url(${shapeTopSvg});`;
 }
 
-export function cssStyleShapeTopHeight({ v, device }) {
-  const shapeTopHeight = styleShapeTopHeight({ v, device });
-  const shapeTopHeightSuffix = styleShapeTopHeightSuffix({ v, device });
+export function cssStyleShapeTopHeight({ v, device, state }) {
+  const shapeTopHeight = styleShapeTopHeight({ v, device, state });
+  const shapeTopHeightSuffix = styleShapeTopHeightSuffix({ v, device, state });
 
   return `background-size: 100% ${shapeTopHeight}${shapeTopHeightSuffix}; height: ${shapeTopHeight}${shapeTopHeightSuffix};`;
 }
 
-export function cssStyleShapeTopFlip({ v }) {
-  const shapeTopFlip = styleShapeTopFlip({ v });
+export function cssStyleShapeTopFlip({ v, device, state }) {
+  const shapeTopFlip = styleShapeTopFlip({ v, device, state });
 
   return `transform: ${
     shapeTopFlip === "on"
@@ -41,8 +41,8 @@ export function cssStyleShapeTopFlip({ v }) {
   };`;
 }
 
-export function cssStyleShapeTopIndex({ v }) {
-  const shapeTopIndex = styleShapeTopIndex({ v });
+export function cssStyleShapeTopIndex({ v, device, state }) {
+  const shapeTopIndex = styleShapeTopIndex({ v, device, state });
   return `z-index: ${shapeTopIndex};`;
 }
 
@@ -57,15 +57,19 @@ export function cssStyleShapeBottomType({ v, device, state }) {
     : `background-image: url(${shapeBottomSvg});`;
 }
 
-export function cssStyleShapeBottomHeight({ v, device }) {
-  const shapeBottomHeight = styleShapeBottomHeight({ v, device });
-  const shapeBottomHeightSuffix = styleShapeBottomHeightSuffix({ v, device });
+export function cssStyleShapeBottomHeight({ v, device, state }) {
+  const shapeBottomHeight = styleShapeBottomHeight({ v, device, state });
+  const shapeBottomHeightSuffix = styleShapeBottomHeightSuffix({
+    v,
+    device,
+    state
+  });
 
   return `background-size: 100% ${shapeBottomHeight}${shapeBottomHeightSuffix}; height: ${shapeBottomHeight}${shapeBottomHeightSuffix};`;
 }
 
-export function cssStyleShapeBottomFlip({ v }) {
-  const shapeBottomFlip = styleShapeBottomFlip({ v });
+export function cssStyleShapeBottomFlip({ v, device, state }) {
+  const shapeBottomFlip = styleShapeBottomFlip({ v, device, state });
 
   return `transform: ${
     shapeBottomFlip === "on"
@@ -74,7 +78,7 @@ export function cssStyleShapeBottomFlip({ v }) {
   };`;
 }
 
-export function cssStyleShapeBottomIndex({ v }) {
-  const shapeBottomIndex = styleShapeBottomIndex({ v });
+export function cssStyleShapeBottomIndex({ v, device, state }) {
+  const shapeBottomIndex = styleShapeBottomIndex({ v, device, state });
   return `z-index: ${shapeBottomIndex};`;
 }

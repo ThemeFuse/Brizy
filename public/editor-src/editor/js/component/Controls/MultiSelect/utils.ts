@@ -75,21 +75,6 @@ export function apply<T, S>(
   }
 }
 
-/**
- * Order a react like objects list by a list of values
- */
-export function orderBy<T, A extends Props<T>>(by: T[], items: A[]): A[] {
-  return by.reduce((acc: A[], value: T) => {
-    const v = items.find(i => getValue(i) === value);
-
-    if (v) {
-      acc.push(v);
-    }
-
-    return acc;
-  }, []);
-}
-
 export const arrowFn = (
   k: "ArrowDown" | "ArrowUp"
 ): typeof nextValue | typeof prevValue =>

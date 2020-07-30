@@ -148,7 +148,7 @@ export default class List extends Component {
 
             <div className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts">
               <Scrollbars>
-                {filteredThumbnails.length > 1 ? (
+                {filteredThumbnails.length > 0 ? (
                   <ThumbnailGrid
                     data={filteredThumbnails}
                     ThumbnailComponent={LayoutThumbnail}

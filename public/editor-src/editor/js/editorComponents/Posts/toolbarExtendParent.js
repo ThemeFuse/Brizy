@@ -1,101 +1,49 @@
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementPostsTaxonomy,
-  toolbarElementPostsOrder,
-  toolbarElementPostsPagination
+  toolbarElementPostsColumns,
+  toolbarElementPostsRows
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-
-  const { hex: paginationColorHex } = getOptionColorHexByPalette(
-    dvv("paginationColorHex"),
-    dvv("paginationColorPalette")
-  );
-
   return [
     {
       id: "horizontalAlign",
       type: "toggle-dev",
       disabled: true
     },
-    ...(dvv("type") === "archives"
+    ...(v.type === "archives"
       ? getToolbarArchives(v, device)
-      : getToolbarPosts(v, device)),
-    {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      devices: "desktop",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      disabled: dvv("pagination") === "off",
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(
-            paginationColorHex,
-            dvv("paginationColorOpacity")
-          )
-        }
-      },
-      options: [
-        {
-          type: "tabs",
-          hideHandlesWhenOne: false,
-          tabs: [
-            {
-              label: t("Pagination"),
-              options: [
-                {
-                  id: "paginationColor",
-                  type: "colorPicker-dev"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+      : getToolbarPosts(v, device))
   ];
 }
 
 function getToolbarArchives(v, device) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
-      id: dvk("toolbarPosts"),
-      type: "popover",
-      icon: "nc-wp-shortcode",
-      title: t("Archives"),
+      id: "toolbarPosts",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-shortcode",
+        title: t("Archives")
+      },
       roles: ["admin"],
       devices: "desktop",
       position: 80,
       options: [
-        {
-          id: "gridColumn",
-          label: t("Columns"),
-          type: "slider-dev",
-          config: {
-            min: 1,
-            max: 6
-          }
-        },
-        {
-          id: "gridRow",
-          label: t("Rows"),
-          type: "slider-dev",
+        // haven't moved to options-dev because of custom onchange
+        toolbarElementPostsColumns({
+          v,
+          device,
+          state: "normal"
+        }),
+        // haven't moved to options-dev because of custom onchange
+        toolbarElementPostsRows({
+          v,
+          device,
           devices: "desktop",
-          config: {
-            min: 1,
-            max: 10
-          }
-        },
+          state: "normal"
+        }),
         {
           id: "padding",
           label: t("Spacing"),
@@ -112,42 +60,37 @@ function getToolbarArchives(v, device) {
 }
 
 function getToolbarPosts(v, device) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
-      id: dvk("toolbarPosts"),
-      type: "popover",
-      icon: "nc-wp-shortcode",
-      title: t("Posts"),
+      id: "toolbarPosts",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-shortcode",
+        title: t("Posts")
+      },
       roles: ["admin"],
       position: 80,
       options: [
         {
-          type: "tabs",
-          devices: "desktop",
+          type: "tabs-dev",
           tabs: [
             {
+              id: "posts",
               label: t("Posts"),
               options: [
-                {
-                  id: "gridColumn",
-                  label: t("Columns"),
-                  type: "slider-dev",
-                  config: {
-                    min: 1,
-                    max: 6
-                  }
-                },
-                {
-                  id: "gridRow",
-                  label: t("Rows"),
-                  type: "slider-dev",
-                  config: {
-                    min: 1,
-                    max: 10
-                  }
-                },
+                // haven't moved to options-dev because of custom onchange
+                toolbarElementPostsColumns({
+                  v,
+                  device,
+                  state: "normal"
+                }),
+                // haven't moved to options-dev because of custom onchange
+                toolbarElementPostsRows({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
                 {
                   id: "padding",
                   label: t("Spacing"),
@@ -161,17 +104,21 @@ function getToolbarPosts(v, device) {
               ]
             },
             {
+              id: "filter",
               label: t("Filter"),
               options: [
+                // haven't moved to options-dev because of custom onchange
                 toolbarElementPostsTaxonomy({
                   v,
                   device,
+                  devices: "desktop",
                   state: "normal"
                 }),
                 {
                   id: "orderBy",
-                  label: t("Filter By"),
                   type: "select-dev",
+                  label: t("Filter By"),
+                  devices: "desktop",
                   choices: [
                     { title: t("ID"), value: "ID" },
                     { title: t("Title"), value: "title" },
@@ -180,45 +127,54 @@ function getToolbarPosts(v, device) {
                     { title: t("Comment Count"), value: "comment_count" }
                   ]
                 },
-                toolbarElementPostsOrder({
-                  v,
-                  device,
-                  state: "normal"
-                })
+                {
+                  id: "order",
+                  type: "radioGroup-dev",
+                  label: t("Order"),
+                  devices: "desktop",
+                  choices: [
+                    { value: "ASC", icon: "nc-up" },
+                    { value: "DESC", icon: "nc-down" }
+                  ]
+                },
+                {
+                  id: "filter",
+                  type: "switch-dev",
+                  label: t("Tags filter"),
+                  devices: "desktop"
+                }
               ]
             },
             {
+              id: "navigation",
               label: t("Navigation"),
               options: [
-                toolbarElementPostsPagination({
-                  v,
-                  device,
-                  state: "normal"
-                })
+                {
+                  id: "groupPagination",
+                  type: "group-dev",
+                  devices: "desktop",
+                  options: [
+                    {
+                      id: "pagination",
+                      label: t("Pagination"),
+                      type: "switch-dev"
+                    },
+                    {
+                      id: "paginationSpacing",
+                      label: t("Spacing"),
+                      type: "slider-dev",
+                      disabled: v.pagination !== "on",
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                }
               ]
             }
           ]
-        },
-        {
-          id: "gridColumn",
-          label: t("Columns"),
-          type: "slider-dev",
-          disabled: device !== "tablet",
-          config: {
-            min: 1,
-            max: 6
-          }
-        },
-        {
-          id: "padding",
-          label: t("Spacing"),
-          type: "slider-dev",
-          devices: "responsive",
-          config: {
-            min: 0,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
         }
       ]
     }

@@ -10,9 +10,10 @@ import {
   toolbarBorder2,
   toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
+import { NORMAL, HOVER, ACTIVE } from "visual/utils/stateMode";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v, device, state }) {
@@ -22,120 +23,114 @@ export function getItems({ v, device, state }) {
 }
 
 export function getItemsSimple({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
   const { hex: colorHex } = getOptionColorHexByPalette(
-    dvk("colorHex"),
+    dvv("colorHex"),
     dvv("colorPalette")
   );
   const { hex: subMenuColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "subMenuColorHex", device }),
-    defaultValueValue({ v, key: "subMenuColorPalette", device })
+    dvv("subMenuColorHex"),
+    dvv("subMenuColorPalette")
   );
 
   return [
     {
+      id: "toolbarMenuSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-menu-3",
+        title: t("Menu")
+      },
+      position: 10,
+      options: [
+        {
+          id: "menuSize",
+          type: "slider-dev",
+          label: t("Size"),
+          position: 20,
+          disabled: dvv("verticalMode") === "horizontal",
+          config: {
+            min: 10,
+            max: 100,
+            units: [
+              {
+                title: "%",
+                value: "%"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       id: "toolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       options: [
         {
-          id: dvk("iconSize"),
-          type: "slider",
+          id: "iconSize",
+          type: "slider-dev",
           label: t("Size"),
-          roles: ["admin"],
           position: 20,
-          slider: {
+          config: {
             min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
+            max: 100,
+            units: [
               {
                 title: "px",
                 value: "px"
               }
             ]
-          },
-          value: {
-            value: dvv("iconSize")
-          },
-          onChange: ({ value }) => ({
-            [dvk("iconSize")]: value
-          })
+          }
         },
         {
           id: "iconSpacing",
-          type: "slider",
+          type: "slider-dev",
           devices: "desktop",
           label: t("Spacing"),
           roles: ["admin"],
           position: 30,
-          slider: {
+          config: {
             min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
+            max: 100,
+            units: [
               {
                 title: "px",
                 value: "px"
               }
             ]
-          },
-          value: {
-            value: dvv("iconSpacing")
-          },
-          onChange: ({ value }) => ({
-            [dvk("iconSpacing")]: value
-          })
+          }
         }
       ]
     },
     {
       id: "subMenuToolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       options: [
         {
           id: "subMenuIconSize",
-          type: "slider",
+          type: "slider-dev",
           label: t("Size"),
-          roles: ["admin"],
           position: 20,
-          slider: {
+          config: {
             min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
+            max: 100,
+            units: [
               {
                 title: "px",
                 value: "px"
               }
             ]
-          },
-          value: {
-            value: v.subMenuIconSize
-          },
-          onChange: ({ value: subMenuIconSize }) => ({ subMenuIconSize })
+          }
         },
         {
           id: "subMenuIconSpacing",
@@ -176,10 +171,12 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === DESKTOP ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === DESKTOP ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -194,10 +191,12 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "subMenuToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === DESKTOP ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === DESKTOP ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -210,106 +209,57 @@ export function getItemsSimple({ v, device, state }) {
         }
       ]
     },
+
     {
       id: "toolbarColor",
-      type: "popover",
-      devices: "desktop",
-      size: "auto",
-      title: t("Colors"),
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       roles: ["admin"],
       options: [
         {
           id: "color",
-          tabsPosition: "left",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: "tabText",
+              label: t("Text"),
               options: [
                 {
-                  id: "colorTabs",
-                  className: "",
-                  type: "tabs",
-                  tabs: [
-                    {
-                      label: t("Text"),
-                      options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeHex: ["onChangeMenuColorHex2"],
-                          onChangePalette: ["onChangeMenuColorPalette2"]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: ["onChangeMenuColorFields2"]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  id: "color",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
             {
-              tabIcon: "nc-hover",
-              title: t("Hover"),
+              id: "bg",
+              label: t("Bg"),
               options: [
                 {
-                  id: "colorTabs",
-                  className: "",
-                  type: "tabs",
-                  tabs: [
-                    {
-                      label: t("Text"),
-                      options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "hover",
-                          onChangeHex: ["onChangeMenuHoverColorHex2"],
-                          onChangePalette: ["onChangeMenuHoverColorPalette2"]
-                        }),
-                        {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "hover",
-                                  onChange: ["onChangeMenuHoverColorFields2"]
-                                })
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  id: "menuBgColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER, ACTIVE]
+                }
+              ]
+            },
+            {
+              id: "border",
+              label: t("Border"),
+              options: [
+                {
+                  id: "menuBorder",
+                  type: "border-dev",
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }
@@ -317,34 +267,41 @@ export function getItemsSimple({ v, device, state }) {
         }
       ]
     },
+
     {
       id: "subMenuToolbarColor",
-      type: "popover",
-      devices: "desktop",
-      size: "auto",
-      title: t("Colors"),
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(subMenuColorHex, v.subMenuColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(subMenuColorHex, v.subMenuColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
       roles: ["admin"],
       options: [
         {
           id: "subMenuColor",
-          tabsPosition: "left",
-          type: "tabs",
+          type: "tabs-dev",
+          config: {
+            position: "left"
+          },
           tabs: [
             {
-              tabIcon: "nc-circle",
+              id: "tabNormal",
+              icon: "nc-circle",
               title: t("Normal"),
               options: [
                 {
                   id: "subMenuColorTabs",
-                  type: "tabs",
+                  type: "tabs-dev",
                   tabs: [
                     {
+                      id: "tabText",
                       label: t("Text"),
                       options: [
                         toolbarColor2({
@@ -374,6 +331,7 @@ export function getItemsSimple({ v, device, state }) {
                       ]
                     },
                     {
+                      id: "tabBackground",
                       label: t("Bg"),
                       options: [
                         toolbarBgColor2({
@@ -406,6 +364,7 @@ export function getItemsSimple({ v, device, state }) {
                       ]
                     },
                     {
+                      id: "tabBorder",
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
@@ -508,15 +467,17 @@ export function getItemsSimple({ v, device, state }) {
               ]
             },
             {
-              tabIcon: "nc-hover",
+              id: "tabHover",
+              icon: "nc-hover",
               title: t("Hover"),
               options: [
                 {
                   id: "subMenuHoverColorTabs",
                   className: "",
-                  type: "tabs",
+                  type: "tabs-dev",
                   tabs: [
                     {
+                      id: "tabText",
                       label: t("Text"),
                       options: [
                         toolbarColor2({
@@ -546,6 +507,7 @@ export function getItemsSimple({ v, device, state }) {
                       ]
                     },
                     {
+                      id: "tabBackground",
                       label: t("Background"),
                       options: [
                         toolbarBgColor2({
@@ -555,7 +517,9 @@ export function getItemsSimple({ v, device, state }) {
                           prefix: "subMenuHoverBg",
                           showSelect: false,
                           onChangeHex: ["onChangeBgHoverColorHexSubMenu2"],
-                          onChangePalette: ["onChangeBorderColorPaletteMMenu2"]
+                          onChangePalette: [
+                            "onChangeBgHoverColorPaletteSubMenu2"
+                          ]
                         }),
                         {
                           type: "grid",
@@ -579,7 +543,6 @@ export function getItemsSimple({ v, device, state }) {
                         }
                       ]
                     },
-
                     {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
@@ -645,99 +608,230 @@ export function getItemsSimple({ v, device, state }) {
                   ]
                 }
               ]
+            },
+            {
+              id: "tabActive",
+              icon: "nc-target",
+              title: t("Active"),
+              options: [
+                {
+                  id: "activeSubMenuColorTabs",
+                  className: "",
+                  type: "tabs-dev",
+                  tabs: [
+                    {
+                      id: "tabText",
+                      label: t("Text"),
+                      options: [
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "activeSubMenuColor",
+                          onChangeHex: ["onChangeActiveColorHexSubMenu2"],
+                          onChangePalette: [
+                            "onChangeActiveColorPaletteSubMenu2"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "activeSubMenuColor",
+                                  onChange: [
+                                    "onChangeActiveColorFieldsSubMenu2"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      id: "tabBackground",
+                      label: t("Background"),
+                      options: [
+                        toolbarBgColor2({
+                          v,
+                          device,
+                          state: "normal",
+                          prefix: "activeSubMenuBg",
+                          showSelect: false,
+                          onChangeHex: ["onChangeBgActiveColorHexSubMenu2"],
+                          onChangePalette: [
+                            "onChangeBgActiveColorPaletteSubMenu2"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 30,
+                              options: [
+                                toolbarBgColorHexField2({
+                                  v,
+                                  device,
+                                  state: "normal",
+                                  prefix: "activeSubMenuBg",
+                                  onChange: [
+                                    "onChangeBgActiveColorFieldsSubMenu2"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      id: "tabBoxShadow",
+                      label: t("Shadow"),
+                      options: [
+                        toolbarBoxShadow2({
+                          v,
+                          device,
+                          choices: "outset",
+                          state: "active",
+                          onChangeType: [
+                            "onChangeBoxShadowType2",
+                            "onChangeBoxShadowTypeDependencies2"
+                          ],
+                          onChangeHex: [
+                            "onChangeBoxShadowHexAndOpacity2",
+                            "onChangeBoxShadowHexAndOpacityPalette2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ],
+                          onChangePalette: [
+                            "onChangeBoxShadowPalette2",
+                            "onChangeBoxShadowPaletteOpacity2",
+                            "onChangeBoxShadowHexAndOpacityDependencies2"
+                          ]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 41,
+                              options: [
+                                toolbarBoxShadowHexField2({
+                                  v,
+                                  device,
+                                  state: "active",
+                                  onChange: [
+                                    "onChangeBoxShadowHexAndOpacity2",
+                                    "onChangeBoxShadowHexAndOpacityPalette2",
+                                    "onChangeBoxShadowHexAndOpacityDependencies2"
+                                  ]
+                                })
+                              ]
+                            },
+                            {
+                              width: 59,
+                              options: [
+                                toolbarBoxShadowFields2({
+                                  v,
+                                  device,
+                                  state: "active",
+                                  choices: "outset",
+                                  onChange: [
+                                    "onChangeBoxShadowFields2",
+                                    "onChangeBoxShadowFieldsDependencies2"
+                                  ]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      roles: ["admin"],
+      position: 110,
+      icon: "nc-cog",
+      title: t("Settings")
     }
-
-    // mMenu
   ];
 }
 
 export function getItemsMMenu({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
-
   const { hex: mMenuColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "mMenuColorHex", device }),
-    defaultValueValue({ v, key: "mMenuColorPalette", device })
+    dvv("mMenuColorHex"),
+    dvv("mMenuColorPalette")
   );
 
   return [
     {
       id: "mMenuToolbarMenuItem",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 20,
       options: [
         {
-          id: dvk("mMenuIconSize"),
-          type: "slider",
+          id: "mMenuIconSize",
+          type: "slider-dev",
           label: t("Size"),
           roles: ["admin"],
           position: 20,
-          slider: {
+          config: {
             min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
+            max: 100,
+            units: [
               {
-                title: "px",
-                value: "px"
+                title: "%",
+                value: "%"
               }
             ]
-          },
-          value: {
-            value: dvv("mMenuIconSize")
-          },
-          onChange: ({ value }) => ({
-            [dvk("mMenuIconSize")]: value
-          })
+          }
         },
         {
-          id: dvk("mMenuIconSpacing"),
-          type: "slider",
+          id: "mMenuIconSpacing",
+          type: "slider-dev",
           label: t("Spacing"),
           roles: ["admin"],
           position: 30,
-          slider: {
+          config: {
             min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
+            max: 100,
+            units: [
               {
-                title: "px",
-                value: "px"
+                title: "%",
+                value: "%"
               }
             ]
-          },
-          value: {
-            value: dvv("mMenuIconSpacing")
-          },
-          onChange: ({ value }) => ({
-            [dvk("mMenuIconSpacing")]: value
-          })
+          }
         }
       ]
     },
     {
       id: "mMenuToolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === DESKTOP ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        title: t("Typography"),
+        size: device === DESKTOP ? "large" : "auto"
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -752,32 +846,38 @@ export function getItemsMMenu({ v, device, state }) {
     },
     {
       id: "mMenuToolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(mMenuColorHex, v.mMenuColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(mMenuColorHex, v.mMenuColorOpacity)
+          }
         }
       },
+      position: 80,
       roles: ["admin"],
       options: [
         {
           id: "mMenuColor",
-          tabsPosition: "left",
-          type: "tabs",
+          type: "tabs-dev",
+          config: {
+            position: "left"
+          },
           tabs: [
             {
-              tabIcon: "nc-circle",
+              id: "tabNormal",
+              icon: "nc-circle",
               title: t("Normal"),
               options: [
                 {
                   id: "mMenuColorTabs",
                   className: "",
-                  type: "tabs",
+                  type: "tabs-dev",
                   tabs: [
                     {
+                      id: "tabText",
                       label: t("Text"),
                       options: [
                         toolbarColor2({
@@ -809,6 +909,7 @@ export function getItemsMMenu({ v, device, state }) {
                       ]
                     },
                     {
+                      id: "tabBackground",
                       label: t("Background"),
                       options: [
                         toolbarBgColor2({
@@ -841,6 +942,7 @@ export function getItemsMMenu({ v, device, state }) {
                       ]
                     },
                     {
+                      id: "tabBorder",
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
@@ -877,15 +979,20 @@ export function getItemsMMenu({ v, device, state }) {
               ]
             },
             {
-              tabIcon: "nc-hover",
+              id: "tabHover",
+              icon: "nc-hover",
               title: t("Hover"),
               options: [
                 {
                   id: "mMenuColorTabs",
                   className: "",
-                  type: "tabs",
+                  config: {
+                    showSingle: true
+                  },
+                  type: "tabs-dev",
                   tabs: [
                     {
+                      id: "tabText",
                       label: t("Text"),
                       options: [
                         toolbarColor2({
@@ -913,10 +1020,53 @@ export function getItemsMMenu({ v, device, state }) {
                           ]
                         }
                       ]
-                    },
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabActive",
+              icon: "nc-target",
+              title: t("Active"),
+              options: [
+                {
+                  id: "mMenuColorTabs",
+                  className: "",
+                  config: {
+                    showSingle: true
+                  },
+                  type: "tabs-dev",
+                  tabs: [
                     {
-                      id: "hiddenTab",
-                      options: []
+                      id: "tabText",
+                      label: t("Text"),
+                      options: [
+                        toolbarColor2({
+                          v,
+                          device,
+                          prefix: "activeMMenuColor",
+                          onChangeHex: ["onChangeActiveColorHexMMenu2"],
+                          onChangePalette: ["onChangeActiveColorPaletteMMenu2"]
+                        }),
+                        {
+                          type: "grid",
+                          className: "brz-ed-grid__color-fileds",
+                          columns: [
+                            {
+                              width: 100,
+                              options: [
+                                toolbarColorHexField2({
+                                  v,
+                                  device,
+                                  prefix: "activeMMenuColor",
+                                  onChange: ["onChangeActiveColorFieldsMMenu2"]
+                                })
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -947,6 +1097,14 @@ export function getItemsMMenu({ v, device, state }) {
           value: "right"
         }
       ]
+    },
+    {
+      id: "mMenuAdvancedSettings",
+      type: "advancedSettings",
+      roles: ["admin"],
+      position: 110,
+      icon: "nc-cog",
+      title: t("Settings")
     }
   ];
 }

@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit662",
   thumbnailWidth: 600,
-  thumbnailHeight: 320,
+  thumbnailHeight: 317,
   title: "block1kit662",
   
   keywords: "button,features,image,projects,two columns",
@@ -97,7 +97,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h2 class=\"brz-text-lg-left brz-tp-heading2 brz-text-xs-center\"><span class=\"brz-cp-color8\">Easy with Brizy</span></h2>"
+                                                                    "text": "<h2 class=\"brz-text-xs-center brz-tp-heading2 brz-text-lg-left\"><span class=\"brz-cp-color8\"><span>User-friendly</span></span></h2>"
                                                                 }
                                                             }
                                                         ],
@@ -143,7 +143,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-mb-sm-0 brz-tp-paragraph brz-text-xs-center brz-mb-lg-20 brz-mb-xs-0\"><span class=\"brz-cp-color7\">With Brizy, you can create beautiful WordPress pages in minutes by adding pre-made design elements, called items to the page and then edit everything within. You can even start from scratch and build your own items. It's easy with Brizy.</span></p>"
+                                                                    "text": "<p class=\"brz-mb-xs-0 brz-mb-lg-20 brz-text-xs-center brz-tp-paragraph brz-mb-sm-0\"><span class=\"brz-cp-color7\"><span>With this, you can create beautiful WordPress pages in minutes by adding pre-made design elements, called items to the page and then edit everything within. You can even start from scratch and build your own items. </span></span></p>"
                                                                 }
                                                             }
                                                         ]

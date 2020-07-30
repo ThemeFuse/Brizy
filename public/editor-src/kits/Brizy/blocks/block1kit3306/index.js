@@ -328,7 +328,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-abovetitle brz-text-lg-center brz-mb-lg-5\"><span class=\"brz-cp-color3\">E-MAIL</span></p><h6 class=\"brz-tp-heading6 brz-text-lg-center\"><span class=\"brz-cp-color2\">Hello@Brizy.com</span></h6>"
+                                                                    "text": "<p class=\"brz-mb-lg-5 brz-text-lg-center brz-tp-abovetitle\"><span class=\"brz-cp-color3\"><span>E-MAIL</span></span></p><h6 class=\"brz-text-lg-center brz-tp-heading6\"><span class=\"brz-cp-color2\"><span>Hello@Test.com</span></span></h6>"
                                                                 }
                                                             }
                                                         ]

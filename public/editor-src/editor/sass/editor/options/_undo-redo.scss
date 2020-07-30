@@ -12,8 +12,6 @@
   user-select: none;
 
   .brz-ul {
-    padding: 0;
-    margin: 0;
     display: flex;
     justify-content: space-between;
   }
@@ -48,6 +46,9 @@
       font-size: 14px;
     }
   }
+  &__item-btn {
+    padding: 8px 13px;
+  }
   &__preview {
     cursor: pointer;
     padding: 0;
@@ -67,38 +68,108 @@
     color: #fff;
   }
   &__btn {
-    padding: 8px 13px;
     cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    font-size: 13px;
+    line-height: 1;
+    color: #fff;
+    border-bottom: 2px solid #006799;
+    border-radius: 15px;
+    height: 28px;
+    text-align: center;
 
-    .brz-span,
-    .brz-a {
-      font-size: 13px;
-      line-height: 1;
-      color: #fff;
-      padding: 8px 14px 5px;
-      border-bottom: 2px solid #006799;
-      background-color: #0085ba;
-      border-radius: 15px;
-      height: 28px;
-      min-width: 75px;
-      text-align: center;
-      transition: background-color 150ms linear;
-
-      &:hover {
-        background-color: #0092cc;
-        color: #fff;
-      }
-      .brz-icon-svg {
-        width: 1em;
-        height: 1em;
-      }
+    .brz-icon-svg {
+      width: 1em;
+      height: 1em;
     }
+    .brz-ed-tooltip--opened .brz-button {
+      color: #2b3039;
+    }
+    .brz-button {
+      position: relative;
+      height: 100%;
+      background-color: #0085ba;
+      border: none;
+      border-left: 1px solid rgba(#fff, 0.1);
+      color: #fff;
+      outline: none;
+      padding-left: 7px;
+      padding-right: 10px;
+      cursor: pointer;
+      border-radius: 0 15px 15px 0;
+      transition: 0.2s linear color;
+    }
+    .brz-button:hover {
+      color: #03080f;
+      transition: 0.2s linear color;
+    }
+    .brz-button:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -2px;
+      width: 1px;
+      height: 100%;
+      background-color: #2b3039;
+      opacity: 0.35;
+    }
+    .brz-button .brz-icon-svg {
+      font-size: 8px;
+    }
+  }
+  &__btn-loading {
+    position: relative;
+    height: 100%;
+    min-width: 70px;
+    line-height: 26px;
+    padding-left: 14px;
+    padding-right: 14px;
+    background-color: #0085ba;
+    border-radius: 15px;
+    transition: background-color 150ms linear;
 
-    &--download {
-      .brz-span,
-      .brz-a {
-        min-width: 97px;
-      }
+    &:hover {
+      background-color: #0092cc;
+      color: #fff;
+    }
+    .brz-icon-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -0.5em;
+      margin-left: -0.5em;
+    }
+  }
+  &__btn-popover .brz-ed-fixed-bottom-panel__btn-loading {
+    border-radius: 15px 0 0 15px;
+    padding-left: 14px;
+    padding-right: 8px;
+
+    .brz-icon-svg {
+      margin-left: 0;
+    }
+  }
+  &__btn--download {
+    .brz-button,
+    .brz-a {
+      min-width: 97px;
+    }
+  }
+  &-popover__item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s linear color;
+    white-space: nowrap;
+
+    &:hover {
+      color: $brand-primary;
+      transition: 0.3s linear color;
+    }
+    .brz-icon-svg {
+      margin-right: 11px;
+      font-size: 12px;
     }
   }
 }

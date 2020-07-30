@@ -13,6 +13,7 @@ export function bindPopulation<K extends OptionName>(
   const {
     population,
     label,
+    icon,
     disabled,
     display,
     states,
@@ -29,6 +30,7 @@ export function bindPopulation<K extends OptionName>(
   return {
     id: o.id,
     label,
+    icon,
     disabled,
     display,
     states,

@@ -44,15 +44,25 @@ class Background extends Component {
     style: {}
   };
 
+  isUnMounted = false;
+
   componentDidMount() {
     UIEvents.on("deviceMode.change", this.handleChange);
   }
 
   componentWillUnmount() {
+    this.isUnMounted = true;
     UIEvents.off("deviceMode.change", this.handleChange);
   }
 
-  handleChange = () => this.forceUpdate();
+  handleChange = () => {
+    // NOTE: although this callback is removed at willUnmount
+    // there was still a problem with MegaMenu.
+    // UIEvents.off does not work during the emit phase
+    if (!this.isUnMounted) {
+      this.forceUpdate();
+    }
+  };
 
   render() {
     const {

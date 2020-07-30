@@ -33,15 +33,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-form-left",
-      title: t("Field"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-form-left",
+        title: t("Field")
+      },
       position: 60,
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "field",
@@ -58,7 +59,6 @@ export function getItems({ v, device }) {
                     value: item.componentType
                   }))
                 },
-
                 ...(isDateOrTime
                   ? [
                       {
@@ -239,34 +239,35 @@ export function getItems({ v, device }) {
       ? [
           {
             id: "toolbarTypography",
-            type: "popover",
+            type: "popover-dev",
             disabled: true
           },
           {
             id: "toolbarColor",
-            type: "popover",
+            type: "popover-dev",
             disabled: true
           }
         ]
       : [
           {
             id: "toolbarTypographyCheckbox",
-            type: "popover",
+            type: "popover-dev",
             disabled: true
           },
           {
             id: "toolbarColorCheckbox",
-            type: "popover",
+            type: "popover-dev",
             disabled: true
           }
         ]),
 
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 184,
   title: "block1kit4290",
   
-  keywords: "address,contact,email,footer,four columns,icons,links,phone,social,text",
+  keywords: "address,contact,email,footer,four columns,icons,links,phone,pro,social,text",
   cat: [4547],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionFooter",
@@ -394,7 +394,10 @@ module.exports = {
         "bgImageSrc": "",
         "bgPositionX": 50,
         "bgPositionY": 50,
-        "bgPopulation": ""
+        "bgPopulation": "",
+        "tabsState": "tabNormal",
+        "tabsCurrentElement": "tabCurrentElement",
+        "tabsColor": "tabOverlay"
     }
 }
 };

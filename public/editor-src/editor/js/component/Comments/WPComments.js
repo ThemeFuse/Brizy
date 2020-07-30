@@ -12,7 +12,7 @@ class WPComments extends Component {
 
   templateComment(item, skin) {
     const { name, photo, message, children } = item;
-    const nameDateClassName = classnames("brz-li", {
+    const nameDateClassName = classnames({
       "brz-comments__name": skin === "skin1" || skin === "skin3",
       "brz-comments__name-date": skin === "skin2"
     });
@@ -20,8 +20,8 @@ class WPComments extends Component {
     if (skin === "skin4") {
       return (
         <>
-          <ul className="brz-ul brz-comments__right-date">
-            <li className="brz-li brz-comments__name-date">
+          <div className="brz-ul brz-comments__right-date">
+            <div className="brz-comments__name-date">
               <span className="brz-span brz-comments__name">
                 <a href="#">{name}</a>
               </span>
@@ -30,27 +30,25 @@ class WPComments extends Component {
                   <span className="brz-span">23.09.2019, 14:35</span>
                 </a>
               </span>
-            </li>
-            <li className="brz-comments__logo">
+            </div>
+            <div className="brz-comments__logo">
               <a href="#">
                 <img src={photo} className="brz-img brz-comments__logo-img" />
               </a>
-            </li>
-            <li className="brz-li brz-comments__text">
+            </div>
+            <div className="brz-comments__text">
               <p>
                 {message}
                 <a className="comment-reply-link" href="#">
                   Reply
                 </a>
               </p>
-            </li>
-          </ul>
+            </div>
+          </div>
           {children && (
-            <ul className="brz-comments-children">
-              <li className="comment even depth-2 brz-comments brz-comments__skin-skin4">
-                {this.templateComment(children[0], skin)}
-              </li>
-            </ul>
+            <div className="comment even depth-2 brz-comments brz-comments__skin-skin4 brz-parent">
+              {this.templateComment(children[0], skin)}
+            </div>
           )}
         </>
       );
@@ -64,8 +62,8 @@ class WPComments extends Component {
           </a>
         </div>
 
-        <ul className="brz-ul brz-comments__right-date">
-          <li className={nameDateClassName}>
+        <div className="brz-ul brz-comments__right-date">
+          <div className={nameDateClassName}>
             {(skin === "skin1" || skin === "skin3") && <a href="#">{name}</a>}
 
             {skin === "skin2" && (
@@ -80,50 +78,48 @@ class WPComments extends Component {
                 </span>
               </>
             )}
-          </li>
+          </div>
 
           {(skin === "skin1" || skin === "skin3") && (
-            <li className="brz-li brz-comments__date">
+            <div className="brz-comments__date">
               <a href="#">
                 <span className="brz-span">23.09.2019, 14:35</span>
               </a>
-            </li>
+            </div>
           )}
 
           {skin === "skin1" && (
-            <li className="brz-li brz-comments__reply">
+            <div className="brz-comments__reply">
               <a className="comment-reply-link" href="#">
                 Reply
               </a>
-            </li>
+            </div>
           )}
 
-          <li className="brz-comment-awaiting-moderation">
+          <div className="brz-comment-awaiting-moderation">
             {message}
             {skin === "skin3" && (
               <a className="comment-reply-link" href="#">
                 Reply
               </a>
             )}
-          </li>
+          </div>
 
           {skin === "skin2" && (
-            <li className="brz-li brz-comments__reply">
+            <div className="brz-comments__reply">
               <a className="comment-reply-link" href="#">
                 Reply
               </a>
-            </li>
+            </div>
           )}
-        </ul>
+        </div>
 
         {children && (
-          <ul className="brz-comments-children">
-            <li
-              className={`comment even depth-2 brz-comments brz-comments__skin-${skin}`}
-            >
-              {this.templateComment(children[0], skin)}
-            </li>
-          </ul>
+          <div
+            className={`comment even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
+          >
+            {this.templateComment(children[0], skin)}
+          </div>
         )}
       </>
     );
@@ -137,16 +133,16 @@ class WPComments extends Component {
       <div className="brz-comments-parrent">
         <div>
           <div className="brz-blocked">
-            <ul className="brz-comments">
+            <div className="brz-comments">
               {comments.map((item, key) => (
-                <li
+                <div
                   key={key}
-                  className={`comment even depth-2 brz-comments brz-comments__skin-${skin}`}
+                  className={`comment even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
                 >
                   {this.templateComment(item, skin)}
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
             <div className="brz-comment-respond">
               <h3 id="reply-title" className="brz-comment-reply-title">
                 Leave a comment

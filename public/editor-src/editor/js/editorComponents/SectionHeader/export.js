@@ -12,6 +12,18 @@ export default function($node) {
     onStickyChange: function(isSticky) {
       $(this).toggleClass("brz-section__header--animated-closed", !isSticky);
       $(this).toggleClass("brz-section__header--animated-opened", isSticky);
+
+      if (isSticky) {
+        window.Brizy.emit("elements.headerSticky.show", {
+          node: this,
+          type: "animated"
+        });
+      } else {
+        window.Brizy.emit("elements.headerSticky.hide", {
+          node: this,
+          type: "animated"
+        });
+      }
     }
   });
   $node.find(".brz-section__header--fixed").brzSticky({
@@ -29,10 +41,20 @@ export default function($node) {
         $this.closest(".brz-section__header").css({
           height: $this.outerHeight()
         });
+
+        window.Brizy.emit("elements.headerSticky.show", {
+          node: this,
+          type: "fixed"
+        });
       } else {
         $this.removeClass("brz-section__header--fixed-opened");
         $this.closest(".brz-section__header").css({
           height: "auto"
+        });
+
+        window.Brizy.emit("elements.headerSticky.hide", {
+          node: this,
+          type: "fixed"
         });
       }
     }

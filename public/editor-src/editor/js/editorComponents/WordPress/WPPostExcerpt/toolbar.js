@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
@@ -8,6 +7,7 @@ import {
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -20,17 +20,18 @@ export function getItems({ v, device, component }) {
     dvv("colorPalette")
   );
 
-  const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   return [
     {
-      id: dvk("popoverTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      id: "popoverTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -44,22 +45,24 @@ export function getItems({ v, device, component }) {
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+          }
+        }
+      },
       roles: ["admin"],
       devices: "desktop",
       position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
-        }
-      },
       options: [
         {
-          id: dvk("tabsColor"),
-          type: "tabs",
+          id: "tabsColor",
+          type: "tabs-dev",
           tabs: [
             {
               id: dvk("tabText"),
@@ -77,17 +80,22 @@ export function getItems({ v, device, component }) {
       ]
     },
     {
-      id: dvk("toolbarLink"),
-      type: "popover",
-      icon: "nc-link",
-      size: "medium",
-      title: t("Link"),
+      id: "toolbarLink",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        size: "medium",
+        title: t("Link")
+      },
       position: 90,
       options: [
         {
-          id: dvk("linkType"),
-          type: "tabs",
-          value: dvv("linkType"),
+          id: "linkType",
+          type: "tabs-dev",
+          config: {
+            saveTab: true,
+            showSingle: true
+          },
           tabs: [
             {
               id: dvk("external"),
@@ -121,7 +129,8 @@ export function getItems({ v, device, component }) {
                   v,
                   device,
                   devices: "desktop",
-                  state: "normal"
+                  state: "normal",
+                  disabled: IS_GLOBAL_POPUP
                 })
               ]
             },

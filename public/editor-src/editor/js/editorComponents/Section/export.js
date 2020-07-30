@@ -2,7 +2,7 @@ import $ from "jquery";
 import "slick-carousel";
 
 export default function($node) {
-  const isRtl = $node.find("html").attr("dir") === "rtl";
+  const isRtl = $node.closest("[dir='rtl']").length > 0;
   const makeArrow = node => {
     const $svg = $(node)
       .children(".brz-icon-svg")
@@ -18,7 +18,7 @@ export default function($node) {
     };
   };
 
-  $node.find(".brz-slick-slider, .brz-carousel__slider").each(function() {
+  $node.find(".brz-slick-slider").each(function() {
     const _this = this;
     const $this = $(this);
     const data = $this.data();

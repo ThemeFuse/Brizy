@@ -1,22 +1,21 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
       id: "popoverLink",
-      type: "popover",
-      icon: "nc-link",
-      title: t("Link"),
-      size: "medium",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
       position: 90,
       options: [
         {
           id: "linkForm",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "message",
@@ -56,11 +55,12 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

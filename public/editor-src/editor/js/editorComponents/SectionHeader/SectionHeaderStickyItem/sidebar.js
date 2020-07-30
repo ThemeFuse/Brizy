@@ -1,20 +1,14 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { hexToRgba } from "visual/utils/color";
 import {
   toolbarBorderRadius,
-  toolbarHoverTransition,
   toolbarPaddingFourFieldsPxSuffix,
-  toolbarShape,
   toolbarShapeTopType,
-  toolbarShapeTopColor,
-  toolbarShapeTopHeight,
   toolbarShapeTopFlip,
-  toolbarShapeTopIndex,
   toolbarShapeBottomType,
-  toolbarShapeBottomColor,
-  toolbarShapeBottomHeight,
-  toolbarShapeBottomFlip,
-  toolbarShapeBottomIndex
+  toolbarShapeBottomFlip
 } from "visual/utils/toolbar";
 
 export const title = t("Header");
@@ -22,16 +16,29 @@ export const title = t("Header");
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+
+  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
+    dvv("shapeTopColorHex"),
+    dvv("shapeTopColorPalette")
+  );
+
+  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
+    dvv("shapeBottomColorHex"),
+    dvv("shapeBottomColorPalette")
+  );
+
   return [
     {
-      id: dvk("settingsTabs"),
-      type: "tabs",
-      align: "start",
+      id: "settingsTabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       tabs: [
         {
-          id: dvk("settingsStyling"),
+          id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarPaddingFourFieldsPxSuffix({
               v,
@@ -51,104 +58,167 @@ export function getItems({ v, device }) {
               ]
             }),
             {
-              type: "multiPicker",
-              picker: toolbarShape({
-                v,
-                device,
-                state: "normal"
-              }),
-              disabled:
-                device !== "desktop"
-                  ? dvv("shapeTopType") === "none" &&
-                    dvv("shapeBottomType") === "none"
-                  : false,
-              choices: {
-                top: [
-                  toolbarShapeTopType({
-                    v,
-                    device,
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeTopColor({
-                    v,
-                    device,
-                    disabled: dvv("shapeTopType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeTopHeight({
-                    v,
-                    device,
-                    disabled: dvv("shapeTopType") === "none",
-                    state: "normal"
-                  }),
-                  toolbarShapeTopFlip({
-                    v,
-                    device,
-                    disabled: dvv("shapeTopType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeTopIndex({
-                    v,
-                    device,
-                    disabled: dvv("shapeTopType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  })
-                ],
-                bottom: [
-                  toolbarShapeBottomType({
-                    v,
-                    device,
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeBottomColor({
-                    v,
-                    device,
-                    disabled: dvv("shapeBottomType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeBottomHeight({
-                    v,
-                    device,
-                    disabled: dvv("shapeBottomType") === "none",
-                    state: "normal"
-                  }),
-                  toolbarShapeBottomFlip({
-                    v,
-                    device,
-                    disabled: dvv("shapeBottomType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  toolbarShapeBottomIndex({
-                    v,
-                    device,
-                    disabled: dvv("shapeBottomType") === "none",
-                    devices: "desktop",
-                    state: "normal"
-                  })
-                ]
-              }
+              id: "shapeDividersGroup",
+              type: "group-dev",
+              options: [
+                {
+                  id: "shape",
+                  label: t("Dividers"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "top", icon: "nc-dividers-top" },
+                    { value: "bottom", icon: "nc-dividers-bottom" }
+                  ]
+                },
+                {
+                  id: "shapeTopDividersGroup",
+                  type: "group-dev",
+                  disabled: dvv("shape") !== "top",
+                  options: [
+                    toolbarShapeTopType({
+                      v,
+                      device,
+                      state: "normal"
+                    }),
+                    {
+                      id: "shapeTopColors",
+                      type: "popover-dev",
+                      label: t("Color"),
+                      config: {
+                        size: "auto",
+                        title: t("Color"),
+                        icon: {
+                          style: {
+                            backgroundColor: hexToRgba(
+                              shapeTopColorHex,
+                              dvv("shapeTopColorOpacity")
+                            )
+                          }
+                        }
+                      },
+                      disabled: dvv("shapeTopType") === "none",
+                      options: [
+                        { id: "shapeTopColor", type: "colorPicker-dev" }
+                      ]
+                    },
+                    {
+                      id: "shapeTopHeight",
+                      type: "slider-dev",
+                      icon: "nc-height",
+                      disabled: dvv("shapeTopType") === "none",
+                      config: {
+                        min: 0,
+                        max: dvv("shapeTopHeightSuffix") === "px" ? 500 : 100,
+                        units: [
+                          { title: "px", value: "px" },
+                          { title: "%", value: "%" }
+                        ]
+                      }
+                    },
+                    toolbarShapeTopFlip({
+                      v,
+                      device,
+                      disabled: dvv("shapeTopType") === "none",
+                      state: "normal"
+                    }),
+                    {
+                      id: "shapeTopIndex",
+                      type: "radioGroup-dev",
+                      label: t("Arrangement"),
+                      disabled: dvv("shapeTopType") === "none",
+                      choices: [
+                        { value: "auto", icon: "nc-send-to-back" },
+                        { value: "10", icon: "nc-bring-to-top" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  id: "shapeBottomDividersGroup",
+                  type: "group-dev",
+                  disabled: dvv("shape") !== "bottom",
+                  options: [
+                    toolbarShapeBottomType({
+                      v,
+                      device,
+                      state: "normal"
+                    }),
+                    {
+                      id: "shapeBottomColors",
+                      type: "popover-dev",
+                      label: t("Color"),
+                      config: {
+                        size: "auto",
+                        title: t("Color"),
+                        icon: {
+                          style: {
+                            backgroundColor: hexToRgba(
+                              shapeBottomColorHex,
+                              dvv("shapeBottomColorOpacity")
+                            )
+                          }
+                        }
+                      },
+                      disabled: dvv("shapeBottomType") === "none",
+                      options: [
+                        { id: "shapeBottomColor", type: "colorPicker-dev" }
+                      ]
+                    },
+                    {
+                      id: "shapeBottomHeight",
+                      type: "slider-dev",
+                      icon: "nc-height",
+                      disabled: dvv("shapeBottomType") === "none",
+                      config: {
+                        min: 0,
+                        max:
+                          dvv("shapeBottomHeightSuffix") === "px" ? 500 : 100,
+                        units: [
+                          { title: "px", value: "px" },
+                          { title: "%", value: "%" }
+                        ]
+                      }
+                    },
+                    toolbarShapeBottomFlip({
+                      v,
+                      device,
+                      disabled: dvv("shapeBottomType") === "none",
+                      state: "normal"
+                    }),
+                    {
+                      id: "shapeBottomIndex",
+                      type: "radioGroup-dev",
+                      label: t("Arrangement"),
+                      disabled: dvv("shapeBottomType") === "none",
+                      choices: [
+                        { value: "auto", icon: "nc-send-to-back" },
+                        { value: "10", icon: "nc-bring-to-top" }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
         {
           id: dvk("moreSettingsAdvanced"),
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           devices: "desktop",
           options: [
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop"
-            })
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              devices: "desktop",
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

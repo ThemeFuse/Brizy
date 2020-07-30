@@ -2,70 +2,62 @@ import _ from "underscore";
 import produce from "immer";
 import Config from "visual/global/Config";
 import {
-  UPDATE_PAGE,
+  MAKE_NORMAL_TO_GLOBAL_BLOCK,
+  MAKE_GLOBAL_TO_NORMAL_BLOCK,
+  REORDER_BLOCKS,
   UPDATE_BLOCKS,
-  CREATE_GLOBAL_BLOCK,
   UPDATE_GLOBAL_BLOCK,
   DELETE_GLOBAL_BLOCK,
-  CREATE_SAVED_BLOCK,
-  UPDATE_SAVED_BLOCK,
-  DELETE_SAVED_BLOCK,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  UPDATE_EXTRA_FONT_STYLES,
-  PUBLISH,
   IMPORT_TEMPLATE,
   IMPORT_KIT,
   ADD_BLOCK,
+  ADD_GLOBAL_BLOCK,
   REMOVE_BLOCK,
   ADD_FONTS,
   DELETE_FONTS,
-  UPDATE_SCREENSHOT,
   UPDATE_DISABLED_ELEMENTS,
-  UPDATE_RULES,
+  UPDATE_POPUP_RULES,
+  UPDATE_GB_RULES,
   UPDATE_TRIGGERS,
   updateError,
   UPDATE_ERROR,
   HYDRATE
 } from "../../actions";
-import { ActionTypes as HistoryActionTypes } from "../../reducers/historyEnhancer";
+import { PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../../actions2";
 import {
   apiUpdateProject,
   debouncedApiUpdateProject,
   apiUpdatePage,
   debouncedApiUpdatePage,
-  debouncedApiCreateGlobalBlock,
   apiUpdateGlobalBlock,
   debouncedApiUpdateGlobalBlock,
-  debouncedApiCreateSavedBlock,
-  debouncedApiDUpdateSavedBlock,
-  debouncedApiDeleteSavedBlock,
-  apiUpdateRules,
+  apiUpdateGlobalBlocks,
+  debouncedApiUpdateGlobalBlocksPositions,
+  apiUpdatePopupRules,
   pollingSendHeartBeat
 } from "./utils";
 import {
   projectSelector,
   projectAssembled,
-  fontSelector,
   stylesSelector,
-  pageSelector,
-  pageBlocksSelector,
+  pageBlocksRawSelector,
   globalBlocksSelector,
-  globalBlocksInPageSelector,
-  savedBlocksSelector,
+  globalBlocksAssembledSelector,
+  changedGBIdsSelector,
   errorSelector
 } from "../../selectors";
+import { pageSelector, fontSelector } from "../../selectors2";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
+import { UNDO, REDO } from "../../history/types";
+import { historySelector } from "../../history/selectors";
 import { t } from "visual/utils/i18n";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
-
-const { UNDO, REDO } = HistoryActionTypes;
 
 export default store => next => {
   const apiHandler = apiCatch.bind(null, next);
@@ -79,11 +71,7 @@ export default store => next => {
     handleProject({ action, state, apiHandler });
     handlePage({ action, state, apiHandler });
     handleGlobalBlocks({ action, state, apiHandler });
-    handleSavedBlocks({ action, state, apiHandler });
-    handleScreenshots({ action, state, apiHandler });
     handleHeartBeat({ action, state, apiHandler });
-
-    IS_GLOBAL_POPUP && handlePopupRules({ action, state, apiHandler });
   };
 };
 
@@ -91,27 +79,39 @@ function handlePublish({ action, state, apiHandler }) {
   if (action.type === PUBLISH) {
     const { onSuccess = _.noop, onError = _.noop } = action.meta;
 
+    // update
+    const meta = { is_autosave: 0 };
+
     const project = projectSelector(state);
     const page = pageSelector(state);
-    const globalBlocksEntries = Object.values(
-      globalBlocksInPageSelector(state)
-    );
+
+    const changedGBIds = changedGBIdsSelector(state);
+    const globalBlocks = globalBlocksAssembledSelector(state);
 
     // cancel possible pending requests
     debouncedApiUpdatePage.cancel();
     debouncedApiUpdateProject.cancel();
-    for (const { id } of globalBlocksEntries) {
-      debouncedApiUpdateGlobalBlock(id).cancel();
-    }
+    debouncedApiUpdateGlobalBlocksPositions.cancel();
 
-    // update
-    const meta = { is_autosave: 0 };
+    const newGlobalBlocks = Object.entries(globalBlocks).reduce(
+      (acc, [id, globalBlock]) => {
+        debouncedApiUpdateGlobalBlock.cancel(id);
+
+        // eslint-disable-next-line no-unused-vars
+        const { data, ...rest } = globalBlock;
+
+        acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
+
+        return acc;
+      },
+      {}
+    );
 
     apiHandler(
       Promise.all([
         apiUpdateProject(project, meta),
         apiUpdatePage(page, meta),
-        ...globalBlocksEntries.map(block => apiUpdateGlobalBlock(block, meta))
+        apiUpdateGlobalBlocks(newGlobalBlocks, meta)
       ]),
       onSuccess,
       onError
@@ -175,17 +175,18 @@ function handleProject({ action, state, apiHandler }) {
     }
     case UNDO:
     case REDO: {
-      const currentStyleId = action.currentSnapshot.currentStyleId;
-      const nextStyleId = action.nextSnapshot.currentStyleId;
-      const currentStyle = action.currentSnapshot.currentStyle;
-      const nextStyle = action.nextSnapshot.currentStyle;
-      const currentExtraFontStyle = action.currentSnapshot.extraFontStyles;
-      const nextExtraFontStyle = action.nextSnapshot.extraFontStyles;
+      const { currSnapshot, prevSnapshot } = historySelector(state);
+      const currStyleId = currSnapshot.currentStyleId;
+      const prevStyleId = prevSnapshot.currentStyleId;
+      const currStyle = currSnapshot.currentStyle;
+      const prevStyle = prevSnapshot.currentStyle;
+      const currExtraFontStyle = currSnapshot.extraFontStyles;
+      const prevExtraFontStyle = prevSnapshot.extraFontStyles;
 
       if (
-        currentStyleId !== nextStyleId ||
-        currentStyle !== nextStyle ||
-        currentExtraFontStyle !== nextExtraFontStyle
+        currStyleId !== prevStyleId ||
+        currStyle !== prevStyle ||
+        currExtraFontStyle !== prevExtraFontStyle
       ) {
         const project = projectAssembled(state);
 
@@ -197,26 +198,24 @@ function handleProject({ action, state, apiHandler }) {
 
 function handlePage({ action, state }) {
   switch (action.type) {
-    case UPDATE_PAGE:
+    case MAKE_NORMAL_TO_GLOBAL_BLOCK:
+    case MAKE_GLOBAL_TO_NORMAL_BLOCK:
+    case REORDER_BLOCKS:
+    case UPDATE_BLOCKS:
     case ADD_BLOCK:
+    case ADD_GLOBAL_BLOCK:
     case REMOVE_BLOCK: {
-      const { page } = state;
-
-      debouncedApiUpdatePage(page, action.meta);
-      break;
-    }
-    case UPDATE_BLOCKS: {
       const page = produce(pageSelector(state), draft => {
-        draft.data.items = pageBlocksSelector(state);
+        draft.data.items = pageBlocksRawSelector(state);
       });
 
       debouncedApiUpdatePage(page, action.meta);
       break;
     }
-    case UPDATE_RULES: {
+    case UPDATE_POPUP_RULES: {
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const page = { ...state.page, rules: action.payload };
-      apiUpdateRules(page, action.meta)
+      const page = { ...state.page, rules: action.payload.rules };
+      apiUpdatePopupRules(page, action.meta)
         .then(syncSuccess)
         .catch(syncFail);
       break;
@@ -235,27 +234,70 @@ function handlePage({ action, state }) {
     }
     case UNDO:
     case REDO: {
-      const { page: currentPage } = action.currentSnapshot;
-      const { page: nextPage } = action.nextSnapshot;
-
-      if (currentPage !== nextPage) {
-        debouncedApiUpdatePage(nextPage);
-      }
+      // This wasn't working for some time because
+      // page wasn't part of the keys that were part of history
+      // for some time now, and thus currentPage and nextPage were undefined
+      // leaving this as it was for now
+      // ==========
+      // const currentSnapshot = action.currentSnapshot;
+      // const nextSnapshot = action.nextSnapshot;
+      // const currentState = { ...state, ...currentSnapshot };
+      // const newState = { ...state, ...nextSnapshot };
+      // const blocksOrderRawCurrent = blocksOrderRawSelector(currentState);
+      // const blocksOrderRawNext = blocksOrderRawSelector(newState);
+      // const differentOrder = blocksOrderRawCurrent !== blocksOrderRawNext;
+      // const differentData = blocksOrderRawNext.some(
+      //   id => currentSnapshot.blocksData[id] !== nextSnapshot.blocksData[id]
+      // );
+      // if (differentOrder || differentData) {
+      //   const page = produce(pageSelector(newState), draft => {
+      //     draft.data.items = pageBlocksRawSelector(newState);
+      //   });
+      //   debouncedApiUpdatePage(page);
+      // }
     }
   }
 }
 
 function handleGlobalBlocks({ action, state }) {
-  if (action.type === CREATE_GLOBAL_BLOCK) {
+  if (action.type === ADD_GLOBAL_BLOCK) {
+    const { _id } = action.payload.block.value;
+
+    const globalBlock = globalBlocksSelector(state)[_id];
+
+    debouncedApiUpdateGlobalBlock.set(_id, _id, globalBlock, action.meta);
+  } else if (
+    action.type === UPDATE_GLOBAL_BLOCK ||
+    action.type === REMOVE_BLOCK
+  ) {
     const { id } = action.payload;
+    const globalBlock = globalBlocksAssembledSelector(state)[id];
+
+    if (globalBlock) {
+      debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, action.meta);
+    }
+  } else if (action.type === UPDATE_GB_RULES) {
+    const { id } = action.payload;
+    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+    const meta = {
+      is_autosave: 0
+    };
     const globalBlock = globalBlocksSelector(state)[id];
 
-    debouncedApiCreateGlobalBlock(id)(globalBlock);
-  } else if (action.type === UPDATE_GLOBAL_BLOCK) {
-    const { id } = action.payload;
-    const globalBlock = globalBlocksSelector(state)[id];
+    apiUpdateGlobalBlock(id, globalBlock, meta)
+      .then(syncSuccess)
+      .catch(syncFail);
+  }
+  if (action.type === MAKE_GLOBAL_TO_NORMAL_BLOCK) {
+    const { fromBlockId } = action.payload;
+    const globalBlock = globalBlocksAssembledSelector(state)[fromBlockId];
 
-    debouncedApiUpdateGlobalBlock(id)(globalBlock, action.meta);
+    debouncedApiUpdateGlobalBlock.set(
+      fromBlockId,
+      fromBlockId,
+      globalBlock,
+      action.meta
+    );
   } else if (action.type === DELETE_GLOBAL_BLOCK) {
     const { id } = action.payload;
     const globalBlock = globalBlocksSelector(state)[id];
@@ -263,91 +305,20 @@ function handleGlobalBlocks({ action, state }) {
       is_autosave: 0
     };
 
-    debouncedApiUpdateGlobalBlock(id)(globalBlock, meta);
+    debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, meta);
   } else if (action.type === UNDO || action.type === REDO) {
-    const { globalBlocks: currentGlobalBlocks } = action.currentSnapshot;
-    const { globalBlocks: nextGlobalBlocks } = action.nextSnapshot;
-
-    if (currentGlobalBlocks !== nextGlobalBlocks) {
-      Object.keys(nextGlobalBlocks).forEach(id => {
-        if (
-          nextGlobalBlocks[id] &&
-          currentGlobalBlocks[id] &&
-          nextGlobalBlocks[id] !== currentGlobalBlocks[id]
-        ) {
-          const globalBlock = nextGlobalBlocks[id];
-          debouncedApiUpdateGlobalBlock(id)(globalBlock);
-        }
-      });
-    }
-  }
-}
-
-function handleSavedBlocks({ action, state }) {
-  if (action.type === CREATE_SAVED_BLOCK) {
-    const { id } = action.payload;
-    const savedBlock = savedBlocksSelector(state)[id];
-
-    debouncedApiCreateSavedBlock(id)(savedBlock);
-  } else if (action.type === UPDATE_SAVED_BLOCK) {
-    const { id } = action.payload;
-    const savedBlock = savedBlocksSelector(state)[id];
-
-    debouncedApiDUpdateSavedBlock(id)(savedBlock, action.meta);
-  } else if (action.type === DELETE_SAVED_BLOCK) {
-    const { id } = action.payload;
-
-    debouncedApiDeleteSavedBlock(id)(action.payload);
-  }
-}
-
-function handleScreenshots({ action, state }) {
-  if (action.type === UPDATE_SCREENSHOT) {
-    const {
-      payload: { blockId },
-      meta: { blockType, action: metaAction }
-    } = action;
-
-    if (blockType === "saved") {
-      const savedBlock = savedBlocksSelector(state)[blockId];
-
-      if (savedBlock) {
-        const meta = { is_autosave: 0 };
-
-        debouncedApiDUpdateSavedBlock(blockId)(savedBlock, meta);
-      }
-    }
-
-    if (blockType === "global" && metaAction === "create") {
-      const globalBlock = globalBlocksSelector(state)[blockId];
-
-      if (globalBlock) {
-        const meta = { is_autosave: 0 };
-
-        debouncedApiUpdateGlobalBlock(blockId)(globalBlock, meta);
-      }
-    }
-  }
-}
-
-function handlePopupRules({ action, state, apiHandler }) {
-  if (action.type === UPDATE_RULES) {
-    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-
-    apiHandler(
-      apiUpdateRules(action.payload, action.meta),
-      syncSuccess,
-      syncFail
-    );
-  }
-  if (action.type === UPDATE_RULES || action.type === UPDATE_TRIGGERS) {
-    const { page } = state;
-    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-    const meta = {
-      is_autosave: 0
-    };
-
-    apiHandler(apiUpdatePage(page, meta), syncSuccess, syncFail);
+    // const { blocksData: currentBlocksData } = action.currentSnapshot;
+    // const { blocksData: nextBlocksData } = action.nextSnapshot;
+    // const nextGlobalBlocks = globalBlocksAssembledSelector({
+    //   ...state,
+    //   ...action.nextSnapshot
+    // });
+    // Object.keys(nextGlobalBlocks).forEach(id => {
+    //   if (currentBlocksData[id] !== nextBlocksData[id]) {
+    //     const globalBlock = nextGlobalBlocks[id];
+    //     debouncedApiUpdateGlobalBlock.set(id, id, globalBlock);
+    //   }
+    // });
   }
 }
 

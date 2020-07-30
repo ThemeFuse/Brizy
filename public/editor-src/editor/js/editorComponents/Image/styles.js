@@ -20,8 +20,10 @@ export function imageStylesClassName(v, sizes, props) {
     linkLightBox
   } = v;
   const {
-    meta: { desktopW, tabletW, mobileW, inGallery }
+    meta: { desktopW, tabletW, mobileW, gallery = {} }
   } = props;
+  const { inGallery } = gallery;
+
   let glamorObj;
 
   if (IS_PREVIEW) {

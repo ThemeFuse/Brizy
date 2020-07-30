@@ -3,7 +3,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementSwitcherStyle } from "visual/utils/toolbar/toolbarElementSwitcher";
 
 export function getItems({ v, device, state }) {
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -14,18 +13,24 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
+      type: "popover-dev",
+      config: {
+        icon: "nc-switcher",
+        title: t("Switcher")
+      },
       devices: "desktop",
-      icon: "nc-switcher",
-      title: t("Switcher"),
       position: 70,
       options: [
-        toolbarElementSwitcherStyle({
-          v,
-          device,
+        {
+          id: "switcherStyle",
+          label: t("Style"),
+          type: "radioGroup-dev",
           devices: "desktop",
-          state: "normal"
-        }),
+          choices: [
+            { value: "style-1", icon: "nc-switcher-style-1" },
+            { value: "style-2", icon: "nc-switcher-style-2" }
+          ]
+        },
         {
           id: "spacing",
           type: "slider-dev",
@@ -41,10 +46,12 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
       position: 70,
       options: [
@@ -59,23 +66,26 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      devices: "desktop",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      roles: ["admin"],
+      position: 90,
       options: [
         {
           id: "color",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
+              id: "bg",
               label: t("Bg"),
               options: [
                 {
@@ -86,6 +96,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
+              id: "text",
               label: t("Text"),
               options: [
                 {
@@ -96,6 +107,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
+              id: "border",
               label: t("Border"),
               options: [
                 {
@@ -105,6 +117,7 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
+              id: "shadow",
               label: t("Shadow"),
               options: [
                 {
@@ -119,9 +132,11 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

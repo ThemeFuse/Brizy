@@ -25,6 +25,13 @@ export default function($node) {
     const $video = $this.find(".brz-video-playlist-main__video");
     const $placeholder = $this.find(".brz-video-playlist-main__placeholder");
     const isMobile = $window.innerWidth() < 767;
+    const activeClass = "brz-video-playlist-video-item--active";
+
+    // switch active class
+    if (!$target.hasClass(activeClass)) {
+      $target.addClass(activeClass);
+      $target.siblings().removeClass(activeClass);
+    }
 
     if ($playlistItem.length) {
       const src = $playlistItem.attr("data-link");

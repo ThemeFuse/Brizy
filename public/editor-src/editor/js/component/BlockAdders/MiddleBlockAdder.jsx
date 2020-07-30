@@ -1,62 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 import { rolesHOC } from "visual/component/Roles";
-import { addBlock, importTemplate } from "visual/redux/actions";
 
 class MiddleBlockAdder extends React.Component {
-  static defaultProps = {
-    insertIndex: 0
-  };
+  handleOpen = () => {
+    const { onAddBlock, onAddTemplate } = this.props;
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  handleTemplateAdd = data => {
-    const { insertIndex, dispatch } = this.props;
-    const meta = { insertIndex };
-    dispatch(importTemplate(data, meta));
-  };
-
-  handleBlockAdd = data => {
-    const { insertIndex, dispatch } = this.props;
-    const meta = { insertIndex };
-    dispatch(addBlock(data, meta));
-  };
-
-  open = () => {
-    UIState.set("prompt", {
+    Prompts.open({
       prompt: "blocks",
-      tabProps: {
-        blocks: {
-          onAddBlocks: this.handleBlockAdd
-        },
-        saved: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              // eslint-disable-next-line no-unused-vars
-              ([_, { data: blockData }]) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        global: {
-          blocksFilter: blocks => {
-            return blocks.filter(
-              // eslint-disable-next-line no-unused-vars
-              ([_, { data: blockData }]) =>
-                blockData.type !== "SectionPopup" &&
-                blockData.type !== "SectionPopup2"
-            );
-          },
-          onAddBlocks: this.handleBlockAdd
-        },
-        templates: {
-          onAddBlocks: this.handleTemplateAdd
-        }
+      mode: "single",
+      props: {
+        type: "normal",
+        onChangeBlocks: onAddBlock,
+        onChangeTemplate: onAddTemplate,
+        onChangeSaved: onAddTemplate,
+        onChangeGlobal: onAddBlock
       }
     });
   };
@@ -66,7 +25,7 @@ class MiddleBlockAdder extends React.Component {
       <div className="brz-ed-container-plus">
         <div
           className="brz-ed-container-trigger brz-ed-container-trigger--small"
-          onClick={this.open}
+          onClick={this.handleOpen}
         />
       </div>
     );

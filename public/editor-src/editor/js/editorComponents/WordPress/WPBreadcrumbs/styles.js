@@ -25,7 +25,7 @@ export function style(v, vs, vd) {
         "cssStyleElementBreadcrumbsColorArrows"
       ]
     },
-    ".brz && .brz-breadcrumbs > .brz-li:last-child .brz-span:hover": {
+    ".brz && .brz-breadcrumbs > .brz-li:last-child .brz-a:hover": {
       standart: ["cssStyleElementBreadcrumbsColorActive"]
     }
   };

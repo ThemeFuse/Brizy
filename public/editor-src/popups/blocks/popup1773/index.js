@@ -5,7 +5,7 @@ module.exports = {
   title: "popup1773",
   
   keywords: "",
-  cat: [1754],
+  cat: [1579],
   type: 0,
   pro: true,
   resolve: {
@@ -1919,7 +1919,7 @@ module.exports = {
         "colorPalette": "",
         "colorOpacity": 1,
         "colorHex": "#434b5b",
-        "popupId": "hmlsgjjvzfgghbmdtryxidbvkvklaytizwlu",
+        "popupId": "cridxuovhmgltvudivrrgwmucvvvnjioocbp",
         "closeAlign": "topLeft",
         "width": 900,
         "widthSuffix": "px",

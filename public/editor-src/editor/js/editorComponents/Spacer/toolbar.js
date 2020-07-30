@@ -4,10 +4,10 @@ export function getItems() {
   return [
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {

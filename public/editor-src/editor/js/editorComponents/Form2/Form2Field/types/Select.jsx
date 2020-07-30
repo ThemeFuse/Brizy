@@ -39,6 +39,15 @@ export default class Select extends TextField {
     );
   }
 
+  getAttributes() {
+    const { multipleSelection } = this.props;
+
+    return {
+      multiple: multipleSelection === "on",
+      "data-max-item-dropdown": MAX_ITEM_DROPDOWN
+    };
+  }
+
   handleOutside = () => {
     if (this.state.isOpen) {
       this.setState({ isOpen: false });
@@ -239,23 +248,12 @@ export default class Select extends TextField {
   }
 
   renderForView(v) {
-    const { label, attr: _attr } = v;
-    const attr = _.omit(_attr, [
-      "type",
-      "accept",
-      "data-min",
-      "data-max",
-      "data-native"
-    ]);
+    const { label, attr } = v;
     const options = v.options.filter(option => option && option.trim());
 
     return options.length ? (
       <div className={this.getClassName(v)}>
-        <select
-          {...attr}
-          data-max-item-dropdown={MAX_ITEM_DROPDOWN}
-          className="brz-select"
-        >
+        <select {...attr} className="brz-select">
           <option value=" ">{label}</option>
           {options.map((item, index) => (
             <option key={index} value={item}>

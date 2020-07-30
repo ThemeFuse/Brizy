@@ -1,44 +1,515 @@
 {
   "content": {
-    "type": "posts",
     "items": [],
+
+    "type": "posts",
+
     "taxonomy": "category",
     "taxonomyId": 1,
     "order": "ASC",
-    "orderBy": "ID",
-    "pagination": "off",
-
-    "gridRow": 1,
-
-    "gridColumn": 3,
-
-    "tabletGridColumn": 2
+    "orderBy": "ID"
   },
 
   "style": {
     "className": "",
 
+    "customCSS": "",
+
+
+    "gridRow": 1,
+    "gridRowSuffix": "",
+    "gridColumn": 3,
+    "gridColumnSuffix": "",
+
+    "tabletGridColumn": 2,
+    "tabletGridColumnSuffix": "",
+
+    "mobileGridColumn": 1,
+    "mobileGridColumnSuffix": "",
+
+
     "padding": 0,
+    "paddingSuffix": "",
+
+    "tabletPadding": null,
+    "tabletPaddingSuffix": null,
+
+    "mobilePadding": null,
+    "mobilePaddingSuffix": null,
+
+
+    "families": {
+      "paginationFontFamily": "noto_serif",
+      "tabletPaginationFontFamily": null,
+      "mobilePaginationFontFamily": null,
+
+      "filterFontFamily": "noto_serif",
+      "tabletFilterFontFamily": null,
+      "mobileFilterFontFamily": null
+    },
+
+
+    "pagination": "off",
+
 
     "paginationSpacing": 20,
+    "paginationSpacingSuffix": "",
+
+
+    "paginationFontStyle": "",
+    "paginationFontFamilyType": "google",
+    "paginationFontSize": 16,
+    "paginationFontWeight": 400,
+    "paginationLineHeight": 1.5,
+    "paginationLetterSpacing": 0,
+
+    "tabletPaginationFontStyle": "",
+    "tabletPaginationFontFamilyType": null,
+    "tabletPaginationFontSize": 14,
+    "tabletPaginationFontWeight": 400,
+    "tabletPaginationLineHeight": 1.5,
+    "tabletPaginationLetterSpacing": 0,
+
+    "mobilePaginationFontStyle": "",
+    "mobilePaginationFontFamilyType": null,
+    "mobilePaginationFontSize": 14,
+    "mobilePaginationFontWeight": 400,
+    "mobilePaginationLineHeight": 1.5,
+    "mobilePaginationLetterSpacing": 0,
+
 
     "paginationColorHex": "#ffffff",
     "paginationColorOpacity": 1,
     "paginationColorPalette": "color3",
 
-    "//1": "Aici ii hernea cu 2 temp dar sa gresit mai demult si acum sa corectat",
     "tempPaginationColorOpacity": 1,
     "tempPaginationColorPalette": "color3",
 
-    "paginationTempColorOpacity": 1,
-    "paginationTempColorPalette": "color3",
+    "hoverPaginationColorHex": null,
+    "hoverPaginationColorOpacity": null,
+    "hoverPaginationColorPalette": null,
 
-    "customCSS": "",
+    "tempHoverPaginationColorOpacity": null,
+    "tempHoverPaginationColorPalette": null,
 
-    "tabletPadding": null,
-    "tabletPaginationSpacing": null,
 
-    "mobilePadding": null,
-    "mobilePaginationSpacing": null
+    "paginationBgColorHex": "#ffffff",
+    "paginationBgColorOpacity": 1,
+    "paginationBgColorPalette": "",
+
+    "tempPaginationBgColorOpacity": 1,
+    "tempPaginationBgColorPalette": "",
+
+    "hoverPaginationBgColorHex": null,
+    "hoverPaginationBgColorOpacity": null,
+    "hoverPaginationBgColorPalette": null,
+
+    "tempHoverPaginationBgColorOpacity": null,
+    "tempHoverPaginationBgColorPalette": null,
+
+
+    "paginationBorderColorHex": "#e5e5e5",
+    "paginationBorderColorOpacity": 1,
+    "paginationBorderColorPalette": "",
+
+    "tempPaginationBorderColorOpacity": 1,
+    "tempPaginationBorderColorPalette": "",
+
+    "hoverPaginationBorderColorHex": null,
+    "hoverPaginationBorderColorOpacity": null,
+    "hoverPaginationBorderColorPalette": null,
+
+    "tempHoverPaginationBorderColorOpacity": null,
+    "tempHoverPaginationBorderColorPalette": null,
+
+
+    "paginationBorderStyle": "solid",
+    "paginationBorderWidthType": "grouped",
+    "paginationBorderWidth": 1,
+    "paginationBorderTopWidth": 1,
+    "paginationBorderRightWidth": 1,
+    "paginationBorderBottomWidth": 1,
+    "paginationBorderLeftWidth": 1,
+
+    "tempPaginationBorderStyle": "solid",
+    "tempPaginationBorderWidth": 1,
+    "tempPaginationBorderTopWidth": 1,
+    "tempPaginationBorderRightWidth": 1,
+    "tempPaginationBorderBottomWidth": 1,
+    "tempPaginationBorderLeftWidth": 1,
+
+    "hoverPaginationBorderStyle": null,
+    "hoverPaginationBorderWidthType": null,
+    "hoverPaginationBorderWidth": null,
+    "hoverPaginationBorderTopWidth": null,
+    "hoverPaginationBorderRightWidth": null,
+    "hoverPaginationBorderBottomWidth": null,
+    "hoverPaginationBorderLeftWidth": null,
+
+    "tempHoverPaginationBorderStyle": null,
+    "tempHoverPaginationBorderWidth": null,
+    "tempHoverPaginationBorderTopWidth": null,
+    "tempHoverPaginationBorderRightWidth": null,
+    "tempHoverPaginationBorderBottomWidth": null,
+    "tempHoverPaginationBorderLeftWidth": null,
+
+
+    "paginationBorderRadiusType": "grouped",
+    "paginationBorderRadius": 0,
+    "paginationBorderTopLeftRadius": 0,
+    "paginationBorderTopRightRadius": 0,
+    "paginationBorderBottomRightRadius": 0,
+    "paginationBorderBottomLeftRadius": 0,
+
+    "tempPaginationBorderRadius": 0,
+    "tempPaginationBorderTopLeftRadius": 0,
+    "tempPaginationBorderTopRightRadius": 0,
+    "tempPaginationBorderBottomRightRadius": 0,
+    "tempPaginationBorderBottomLeftRadius": 0,
+
+
+    "filter": "off",
+
+    "filterStyle": "style-1",
+
+    "filterHorizontalAlign": "left",
+
+
+    "filterSpacing": 3,
+    "filterSpacingSuffix": "",
+
+    "tabletFilterSpacing": null,
+    "tabletFilterSpacingSuffix": null,
+
+    "mobileFilterSpacing": null,
+    "mobileFilterSpacingSuffix": null,
+
+
+    "afterFilterSpacing": 20,
+    "afterFilterSpacingSuffix": "",
+
+    "tabletAfterFilterSpacing": null,
+    "tabletAfterFilterSpacingSuffix": null,
+
+    "mobileAfterFilterSpacing": null,
+    "mobileAfterFilterSpacingSuffix": null,
+
+
+    "filterFontStyle": "",
+    "filterFontFamilyType": "google",
+    "filterFontSize": 16,
+    "filterFontWeight": 400,
+    "filterLineHeight": 1.5,
+    "filterLetterSpacing": 0,
+
+    "tabletFilterFontStyle": "",
+    "tabletFilterFontFamilyType": null,
+    "tabletFilterFontSize": 14,
+    "tabletFilterFontWeight": 400,
+    "tabletFilterLineHeight": 1.5,
+    "tabletFilterLetterSpacing": 0,
+
+    "mobileFilterFontStyle": "",
+    "mobileFilterFontFamilyType": null,
+    "mobileFilterFontSize": 14,
+    "mobileFilterFontWeight": 400,
+    "mobileFilterLineHeight": 1.5,
+    "mobileFilterLetterSpacing": 0,
+
+
+    "filterBgColorHex": "#ffffff",
+    "filterBgColorOpacity": 1,
+    "filterBgColorPalette": "",
+
+    "tempFilterBgColorOpacity": 1,
+    "tempFilterBgColorPalette": "",
+
+    "hoverFilterBgColorHex": null,
+    "hoverFilterBgColorOpacity": null,
+    "hoverFilterBgColorPalette": null,
+
+    "tempHoverFilterBgColorPalette": null,
+    "tempHoverFilterBgColorOpacity": null,
+
+    "activeFilterBgColorHex": null,
+    "activeFilterBgColorOpacity": null,
+    "activeFilterBgColorPalette": null,
+
+    "tempActiveFilterBgColorPalette": null,
+    "tempActiveFilterBgColorOpacity": null,
+
+
+    "filterColorHex": "#73777f",
+    "filterColorOpacity": 0.7,
+    "filterColorPalette": "",
+
+    "tempFilterColorOpacity": 0.7,
+    "tempFilterColorPalette": "",
+
+    "hoverFilterColorHex": null,
+    "hoverFilterColorOpacity": null,
+    "hoverFilterColorPalette": null,
+
+    "tempHoverFilterColorOpacity": null,
+    "tempHoverFilterColorPalette": null,
+
+    "activeFilterColorHex": null,
+    "activeFilterColorOpacity": null,
+    "activeFilterColorPalette": null,
+
+    "tempActiveFilterColorOpacity": null,
+    "tempActiveFilterColorPalette": null,
+
+
+    "filterBorderStyle": "solid",
+    "filterBorderWidthType": "grouped",
+    "filterBorderWidth": 2,
+    "filterBorderTopWidth": 2,
+    "filterBorderRightWidth": 2,
+    "filterBorderBottomWidth": 2,
+    "filterBorderLeftWidth": 2,
+
+    "tempFilterBorderStyle": "solid",
+    "tempFilterBorderWidth": 2,
+    "tempFilterBorderTopWidth": 2,
+    "tempFilterBorderRightWidth": 2,
+    "tempFilterBorderBottomWidth": 2,
+    "tempFilterBorderLeftWidth": 2,
+
+    "hoverFilterBorderStyle": null,
+    "hoverFilterBorderWidthType": null,
+    "hoverFilterBorderWidth": null,
+    "hoverFilterBorderTopWidth": null,
+    "hoverFilterBorderRightWidth": null,
+    "hoverFilterBorderBottomWidth": null,
+    "hoverFilterBorderLeftWidth": null,
+
+    "tempHoverFilterBorderStyle": null,
+    "tempHoverFilterBorderWidth": null,
+    "tempHoverFilterBorderTopWidth": null,
+    "tempHoverFilterBorderRightWidth": null,
+    "tempHoverFilterBorderBottomWidth": null,
+    "tempHoverFilterBorderLeftWidth": null,
+
+    "activeFilterBorderStyle": null,
+    "activeFilterBorderWidthType": null,
+    "activeFilterBorderWidth": null,
+    "activeFilterBorderTopWidth": null,
+    "activeFilterBorderRightWidth": null,
+    "activeFilterBorderBottomWidth": null,
+    "activeFilterBorderLeftWidth": null,
+
+    "tempActiveFilterBorderStyle": null,
+    "tempActiveFilterBorderWidth": null,
+    "tempActiveFilterBorderTopWidth": null,
+    "tempActiveFilterBorderRightWidth": null,
+    "tempActiveFilterBorderBottomWidth": null,
+    "tempActiveFilterBorderLeftWidth": null,
+
+
+    "filterBorderColorHex": "#dcdee1",
+    "filterBorderColorOpacity": 1,
+    "filterBorderColorPalette": "",
+
+    "tempFilterBorderColorOpacity": 1,
+    "tempFilterBorderColorPalette": "",
+
+    "hoverFilterBorderColorHex": null,
+    "hoverFilterBorderColorOpacity": null,
+    "hoverFilterBorderColorPalette": null,
+
+    "tempHoverFilterBorderColorOpacity": null,
+    "tempHoverFilterBorderColorPalette": null,
+
+    "activeFilterBorderColorHex": null,
+    "activeFilterBorderColorOpacity": null,
+    "activeFilterBorderColorPalette": null,
+
+    "tempActiveFilterBorderColorOpacity": null,
+    "tempActiveFilterBorderColorPalette": null,
+
+
+    "filterBorderRadiusType": "grouped",
+    "filterBorderRadius": 0,
+    "filterBorderTopLeftRadius": 0,
+    "filterBorderTopRightRadius": 0,
+    "filterBorderBottomRightRadius": 0,
+    "filterBorderBottomLeftRadius": 0,
+
+    "tempFilterBorderRadius": 0,
+    "tempFilterBorderTopLeftRadius": 0,
+    "tempFilterBorderTopRightRadius": 0,
+    "tempFilterBorderBottomRightRadius": 0,
+    "tempFilterBorderBottomLeftRadius": 0,
+
+    "tabletFilterBorderRadiusType": null,
+    "tabletFilterBorderRadius": null,
+    "tabletFilterBorderTopLeftRadius": null,
+    "tabletFilterBorderTopRightRadius": null,
+    "tabletFilterBorderBottomRightRadius": null,
+    "tabletFilterBorderBottomLeftRadius": null,
+
+    "tempTabletFilterBorderRadius": null,
+    "tempTabletFilterBorderTopLeftRadius": null,
+    "tempTabletFilterBorderTopRightRadius": null,
+    "tempTabletFilterBorderBottomRightRadius": null,
+    "tempTabletFilterBorderBottomLeftRadius": null,
+
+    "mobileFilterBorderRadiusType": null,
+    "mobileFilterBorderRadius": null,
+    "mobileFilterBorderTopLeftRadius": null,
+    "mobileFilterBorderTopRightRadius": null,
+    "mobileFilterBorderBottomRightRadius": null,
+    "mobileFilterBorderBottomLeftRadius": null,
+
+    "tempMobileFilterBorderRadius": null,
+    "tempMobileFilterBorderTopLeftRadius": null,
+    "tempMobileFilterBorderTopRightRadius": null,
+    "tempMobileFilterBorderBottomRightRadius": null,
+    "tempMobileFilterBorderBottomLeftRadius": null,
+
+
+    "filterBoxShadow": "",
+    "filterBoxShadowBlur": 0,
+    "filterBoxShadowSpread": 0,
+    "filterBoxShadowVertical": 0,
+    "filterBoxShadowHorizontal": 0,
+
+    "tempFilterBoxShadow": "on",
+    "tempFilterBoxShadowBlur": 4,
+    "tempFilterBoxShadowSpread": 0,
+    "tempFilterBoxShadowVertical": 2,
+    "tempFilterBoxShadowHorizontal": 1,
+
+    "hoverFilterBoxShadow": null,
+    "hoverFilterBoxShadowBlur": null,
+    "hoverFilterBoxShadowSpread": null,
+    "hoverFilterBoxShadowVertical": null,
+    "hoverFilterBoxShadowHorizontal": null,
+
+    "tempHoverFilterBoxShadow": null,
+    "tempHoverFilterBoxShadowBlur": null,
+    "tempHoverFilterBoxShadowSpread": null,
+    "tempHoverFilterBoxShadowVertical": null,
+    "tempHoverFilterBoxShadowHorizontal": null,
+
+    "activeFilterBoxShadow": null,
+    "activeFilterBoxShadowBlur": null,
+    "activeFilterBoxShadowSpread": null,
+    "activeFilterBoxShadowVertical": null,
+    "activeFilterBoxShadowHorizontal": null,
+
+    "tempActiveFilterBoxShadow": null,
+    "tempActiveFilterBoxShadowBlur": null,
+    "tempActiveFilterBoxShadowSpread": null,
+    "tempActiveFilterBoxShadowVertical": null,
+    "tempActiveFilterBoxShadowHorizontal": null,
+
+
+    "filterBoxShadowColorHex": "#000000",
+    "filterBoxShadowColorOpacity": 1,
+    "filterBoxShadowColorPalette": "",
+
+    "tempFilterBoxShadowColorOpacity": 1,
+    "tempFilterBoxShadowColorPalette": "",
+
+    "hoverFilterBoxShadowColorHex": null,
+    "hoverFilterBoxShadowColorOpacity": null,
+    "hoverFilterBoxShadowColorPalette": null,
+
+    "tempHoverFilterBoxShadowColorPalette": null,
+    "tempHoverFilterBoxShadowColorOpacity": null,
+
+    "activeFilterBoxShadowColorHex": null,
+    "activeFilterBoxShadowColorOpacity": null,
+    "activeFilterBoxShadowColorPalette": null,
+
+    "tempActiveFilterBoxShadowColorPalette": null,
+    "tempActiveFilterBoxShadowColorOpacity": null,
+
+
+    "filterPaddingType": "grouped",
+
+    "filterPadding": 10,
+    "filterPaddingTop": 10,
+    "filterPaddingRight": 10,
+    "filterPaddingBottom": 10,
+    "filterPaddingLeft": 10,
+
+    "filterPaddingSuffix": "px",
+    "filterPaddingTopSuffix": "px",
+    "filterPaddingRightSuffix": "px",
+    "filterPaddingBottomSuffix": "px",
+    "filterPaddingLeftSuffix": "px",
+
+    "tempFilterPaddingType": "grouped",
+
+    "tempFilterPadding": 10,
+    "tempFilterPaddingTop": 10,
+    "tempFilterPaddingRight": 10,
+    "tempFilterPaddingBottom": 10,
+    "tempFilterPaddingLeft": 10,
+
+    "tempFilterPaddingSuffix": "px",
+    "tempFilterPaddingTopSuffix": "px",
+    "tempFilterPaddingRightSuffix": "px",
+    "tempFilterPaddingBottomSuffix": "px",
+    "tempFilterPaddingLeftSuffix": "px",
+
+    "tabletFilterPaddingType": "grouped",
+
+    "tabletFilterPadding": null,
+    "tabletFilterPaddingTop": null,
+    "tabletFilterPaddingRight": null,
+    "tabletFilterPaddingBottom": null,
+    "tabletFilterPaddingLeft": null,
+
+    "tabletFilterPaddingSuffix": null,
+    "tabletFilterPaddingTopSuffix": null,
+    "tabletFilterPaddingRightSuffix": null,
+    "tabletFilterPaddingBottomSuffix": null,
+    "tabletFilterPaddingLeftSuffix": null,
+
+    "tempTabletFilterPaddingType": "grouped",
+
+    "tempTabletFilterPadding": null,
+    "tempTabletFilterPaddingTop": null,
+    "tempTabletFilterPaddingRight": null,
+    "tempTabletFilterPaddingBottom": null,
+    "tempTabletFilterPaddingLeft": null,
+
+    "tempTabletFilterPaddingSuffix": null,
+    "tempTabletFilterPaddingTopSuffix": null,
+    "tempTabletFilterPaddingRightSuffix": null,
+    "tempTabletFilterPaddingBottomSuffix": null,
+    "tempTabletFilterPaddingLeftSuffix": null,
+
+    "mobileFilterPaddingType": "grouped",
+
+    "mobileFilterPadding": null,
+    "mobileFilterPaddingTop": null,
+    "mobileFilterPaddingRight": null,
+    "mobileFilterPaddingBottom": null,
+    "mobileFilterPaddingLeft": null,
+
+    "mobileFilterPaddingSuffix": null,
+    "mobileFilterPaddingTopSuffix": null,
+    "mobileFilterPaddingRightSuffix": null,
+    "mobileFilterPaddingBottomSuffix": null,
+    "mobileFilterPaddingLeftSuffix": null,
+
+    "tempMobileFilterPaddingType": "grouped",
+
+    "tempMobileFilterPadding": null,
+    "tempMobileFilterPaddingTop": null,
+    "tempMobileFilterPaddingRight": null,
+    "tempMobileFilterPaddingBottom": null,
+    "tempMobileFilterPaddingLeft": null,
+
+    "tempMobileFilterPaddingSuffix": null,
+    "tempMobileFilterPaddingTopSuffix": null,
+    "tempMobileFilterPaddingRightSuffix": null,
+    "tempMobileFilterPaddingBottomSuffix": null,
+    "tempMobileFilterPaddingLeftSuffix": null
   }
 }

@@ -8,25 +8,27 @@ import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const mapDynamicContentChoices = getDynamicContentChoices("richText");
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
+  const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-pin",
-      title: t("Map"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-pin",
+        title: t("Map")
+      },
       devices: "desktop",
       position: 90,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -37,7 +39,7 @@ export function getItems({ v, device }) {
                   label: t("Address"),
                   type: "inputText-dev",
                   placeholder: t("Enter address"),
-                  population: mapDynamicContentChoices
+                  population: richTextDC
                 },
                 {
                   id: "zoom",
@@ -56,22 +58,26 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              borderColorHex,
+              dvv("borderColorOpacity")
+            )
+          }
+        }
+      },
       position: 90,
       devices: "desktop",
       disabled: dvv("coverImageSrc") === "",
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(borderColorHex, dvv("borderColorOpacity"))
-        }
-      },
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBorder",
@@ -103,10 +109,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {
@@ -116,8 +123,11 @@ export function getItems({ v, device }) {
           position: 80,
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("sizeSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {
@@ -126,8 +136,11 @@ export function getItems({ v, device }) {
           type: "slider-dev",
           config: {
             min: 5,
-            max: 500,
-            units: [{ value: "px", title: "px" }]
+            max: dvv("heightSuffix") === "%" ? 100 : 500,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {

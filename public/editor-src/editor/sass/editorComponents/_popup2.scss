@@ -56,7 +56,7 @@
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
 
   &.brz-popup2--opened {
-    z-index: z("toolbar");
+    z-index: z("section-popup-opened");
     visibility: visible;
     transform: translate(0, 0);
     opacity: 1;

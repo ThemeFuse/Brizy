@@ -8,7 +8,7 @@ import { OptionDefinition } from "visual/component/Options/Type";
 import { Animation } from "./Animation";
 import { Scrollbars } from "./Scrollbars";
 import { uiSelector, deviceModeSelector } from "visual/redux/selectors";
-import { updateUI, UpdateUIAction } from "visual/redux/actions2";
+import { updateUI, ActionUpdateUI } from "visual/redux/actions2";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { t } from "visual/utils/i18n";
 import { ReduxState } from "visual/redux/types";
@@ -18,7 +18,7 @@ export type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
 
 export type RightSidebarProps = RightSidebarStore & {
   deviceMode: DeviceModes;
-  dispatch: Dispatch<UpdateUIAction>;
+  dispatch: Dispatch<ActionUpdateUI>;
 };
 
 export let instance: RightSidebarInner | undefined;
@@ -120,16 +120,14 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     }
   }
 
-  renderEmpty(): React.ReactNode {
+  renderEmpty(message: string): React.ReactNode {
     return (
       <div className="brz-ed-sidebar__right__empty">
         <EditorIcon
           icon="nc-settings"
           className="brz-ed-sidebar__right__empty-icon"
         />
-        <div className="brz-ed-sidebar__right__empty-text">
-          {t("Select an element on the page to display more settings")}
-        </div>
+        <div className="brz-ed-sidebar__right__empty-text">{message}</div>
       </div>
     );
   }
@@ -181,7 +179,14 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
       this.getItems !== undefined
         ? filterOptionsData(this.getItems())
         : undefined;
-    const items = _items ? this.renderItems(_items) : this.renderEmpty();
+    const items =
+      _items && _items.length > 0
+        ? this.renderItems(_items)
+        : this.renderEmpty(
+            _items?.length === 0
+              ? t("The element you have selected doesn't have more settings")
+              : t("Select an element on the page to display more settings")
+          );
 
     return (
       <div className={sidebarClassName}>

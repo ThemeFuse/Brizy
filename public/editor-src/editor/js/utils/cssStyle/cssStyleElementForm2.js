@@ -77,7 +77,7 @@ export function cssStyleElementForm2Margin({ v, device, state }) {
     paddingBottom === undefined ||
     paddingLeft === undefined
     ? ""
-    : `margin:-${paddingTop}px -${paddingRight / 2}px 
+    : `margin:-${paddingTop}px -${paddingRight / 2}px
        -${paddingBottom}px -${paddingLeft / 2}px;`;
 }
 
@@ -98,9 +98,9 @@ export function cssStyleElementForm2Padding({ v, device, state }) {
     paddingBottom === undefined ||
     paddingLeft === undefined
     ? ""
-    : `padding:${paddingTop}${paddingTopSuffix} 
-      ${paddingRight / 2}${paddingRightSuffix} 
-      ${paddingBottom}${paddingBottomSuffix} 
+    : `padding:${paddingTop}${paddingTopSuffix}
+      ${paddingRight / 2}${paddingRightSuffix}
+      ${paddingBottom}${paddingBottomSuffix}
       ${paddingLeft / 2}${paddingLeftSuffix};`;
 }
 
@@ -115,7 +115,10 @@ export function cssStyleElementForm2FieldsLineHeight({ v, device, state }) {
   const borderWidth = getBorderTopBottomWidth({ v, device, state });
   const lineHeight = Math.round(fontSize * modelLineHeight * 10) / 10;
 
-  return `height:${lineHeight + paddingTop + paddingBottom + borderWidth}px;`;
+  return `min-height:${lineHeight +
+    paddingTop +
+    paddingBottom +
+    borderWidth}px;`;
 }
 
 // label Font

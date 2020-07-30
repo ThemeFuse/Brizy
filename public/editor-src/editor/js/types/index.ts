@@ -1,24 +1,82 @@
 // blocks
 
+import "react";
+
+declare module "react" {
+  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
+    loading?: "auto" | "eager" | "lazy";
+  }
+}
+
+export type BlockMetaType = "normal" | "popup";
+
 export type Block = {
   type: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+  value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   blockId: string;
 };
+
 export type GlobalBlock = {
-  id: string;
-  data: Block;
+  data: Block & { deleted?: boolean };
+  status: "draft" | "publish";
   dataVersion: number;
+  rules: {
+    type: 1 | 2;
+    appliedFor: number;
+    entityType: string;
+    entityValues: number[];
+  }[];
+  position: GlobalBlockPosition | null;
+  meta: {
+    type: BlockMetaType;
+    extraFontStyles: Array<{ id: string }>;
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
 };
 
-export type SavedBlock = GlobalBlock;
+export type SavedBlock = {
+  data: Block;
+  dataVersion: number;
+  meta: {
+    type: BlockMetaType;
+    extraFontStyles: Array<{ id: string }>;
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
+};
+
+export type SavedLayout = {
+  data: PageCommon["data"];
+  dataVersion: number;
+  meta: {
+    type: BlockMetaType;
+    extraFontStyles: Array<{ id: string }>;
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
+};
+
+export type GlobalBlockPosition = {
+  align: "top" | "bottom";
+  top: number;
+  bottom: number;
+};
 
 // page
 
 type PageCommon = {
   id: string;
-  data: object;
+  data: {
+    items: Block[];
+    [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  };
   title: string;
   slug: string;
   status: "draft" | "publish";
@@ -57,4 +115,25 @@ export type UploadedFont = {
   type: "uploaded";
   weights: string[];
   brizyId: string;
+};
+
+// authorized
+
+export type Authorized = "pending" | "connected" | "disconnect";
+
+// syncAllowed
+
+export type SyncAllowed = boolean;
+
+// deviceMode
+
+export type DeviceMode = "desktop" | "tablet" | "mobile";
+
+// screenshot
+
+export type Screenshot = {
+  _thumbnailSrc: string;
+  _thumbnailWidth: number;
+  _thumbnailHeight: number;
+  _thumbnailTime: number;
 };

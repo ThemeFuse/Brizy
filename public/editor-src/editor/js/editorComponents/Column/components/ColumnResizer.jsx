@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import Draggable from "visual/component/Draggable";
+import { DraggableDiv } from "visual/component/DraggableDiv";
 
 class ColumnResizer extends Component {
+  state = {
+    resize: false
+  };
+
   handleDragStart = () => {
     const { position, onResizeStart } = this.props;
 
     onResizeStart(position);
+
+    this.setState({ resize: true });
   };
 
   handleDrag = ({ deltaX }) => {
@@ -19,6 +25,7 @@ class ColumnResizer extends Component {
     const { position, onResizeEnd } = this.props;
 
     onResizeEnd(position);
+    this.setState({ resize: false });
   };
 
   renderPopover = () => {
@@ -59,18 +66,19 @@ class ColumnResizer extends Component {
     );
 
     return (
-      <Draggable
-        className={className}
-        draggingCursor="col-resize"
-        renderPopover={this.renderPopover}
-        onDragStart={this.handleDragStart}
-        onDrag={this.handleDrag}
-        onDragEnd={this.handleDragEnd}
-      >
-        <div className="brz-ed-draggable__column--item" />
-      </Draggable>
+      <>
+        <DraggableDiv
+          className={className}
+          draggingCursor="col-resize"
+          onDragStart={this.handleDragStart}
+          onDrag={this.handleDrag}
+          onDragEnd={this.handleDragEnd}
+        >
+          <div className="brz-ed-draggable__column--item" />
+          {this.state.resize && this.renderPopover()}
+        </DraggableDiv>
+      </>
     );
   }
 }
-
 export default ColumnResizer;

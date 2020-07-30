@@ -13,13 +13,13 @@
 
   "style": {
     "families": {
-      "fontFamily": "noto_serif",
+      "fontFamily": "lato",
       "tabletFontFamily": null,
       "mobileFontFamily": null,
-      "labelFontFamily": "noto_serif",
+      "labelFontFamily": "lato",
       "tabletLabelFontFamily": null,
       "mobileLabelFontFamily": null,
-      "checkboxFontFamily": "noto_serif",
+      "checkboxFontFamily": "lato",
       "tabletCheckboxFontFamily": null,
       "mobileCheckboxFontFamily": null
     },

@@ -7,13 +7,11 @@ import {
   parseProject,
   stringifyProject,
   parseGlobalBlock,
-  stringifyGlobalBlock,
-  parseSavedBlock,
-  stringifySavedBlock
+  stringifyGlobalBlock
 } from "./adapter";
 import * as Response from "./response";
 
-const apiUrl = Config.get("urls").api;
+const apiUrl = Config.get("urls")?.api;
 const paginationData = {
   page: 1,
   count: 200
@@ -98,6 +96,16 @@ export function request2(url, config = {}) {
       }
     });
   }
+}
+
+// pending request
+
+export function pendingRequest(time = 650) {
+  return new Promise(res => {
+    setTimeout(() => {
+      res(true);
+    }, time);
+  });
 }
 
 // Project
@@ -309,7 +317,7 @@ export function getRulesList() {
   }).then(({ rules }) => JSON.parse(rules));
 }
 
-export function updateRules(page) {
+export function updatePopupRules(page) {
   const { rules, dataVersion, status } = stringifyPage(page);
   const requestData = {
     rules: JSON.stringify(rules),
@@ -353,27 +361,46 @@ export function getGlobalBlocks() {
   }).then(r => {
     return r
       .map(parseGlobalBlock)
-      .reduce((acc, { id, uid, data, dataVersion }) => {
-        // map uids to ids to use them in updates
-        uidToApiId[uid] = id;
+      .reduce(
+        (
+          acc,
+          { id, uid, data, meta, rules, position, status, dataVersion }
+        ) => {
+          // map uids to ids to use them in updates
+          uidToApiId[uid] = id;
 
-        acc[uid] = { id: uid, data, dataVersion };
+          acc[uid] = {
+            id: uid,
+            data,
+            meta,
+            rules,
+            position,
+            status,
+            dataVersion
+          };
 
-        return acc;
-      }, {});
+          return acc;
+        },
+        {}
+      );
   });
 }
 
-export function createGlobalBlock(globalBlock, meta = {}) {
-  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
+export function createGlobalBlock(globalBlock) {
+  const uid = globalBlock.data.value._id;
+  const { data, rules, meta, status, dataVersion } = stringifyGlobalBlock(
+    globalBlock
+  );
   const projectId = Config.get("project").id;
-  const { is_autosave = 0 } = meta;
   const requestData = {
     project: projectId,
+    is_autosave: 0,
     uid,
+    status,
     data,
     dataVersion,
-    is_autosave
+    rules,
+    meta
   };
 
   return persistentRequest({
@@ -384,17 +411,22 @@ export function createGlobalBlock(globalBlock, meta = {}) {
   }).then(r => {
     // map our uid to the newly created block's id
     uidToApiId[uid] = r.id;
+    return r;
   });
 }
 
-export function updateGlobalBlock(globalBlock, meta = {}) {
-  const { id: uid, data, dataVersion } = stringifyGlobalBlock(globalBlock);
+export function updateGlobalBlock(uid, globalBlock, extraMeta = {}) {
+  // const uid = globalBlock.data.value._id;
+
+  const { data, rules, meta, dataVersion } = stringifyGlobalBlock(globalBlock);
   if (uidToApiId[uid]) {
-    const { is_autosave = 1 } = meta;
+    const { is_autosave = 1 } = extraMeta;
     const requestData = {
       uid,
       data,
+      rules,
       dataVersion,
+      meta,
       is_autosave
     };
 
@@ -410,91 +442,40 @@ export function updateGlobalBlock(globalBlock, meta = {}) {
   }
 }
 
-// saved blocks
+export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
+  const { is_autosave = 1 } = extraMeta;
+  const data = Object.entries(globalBlocks).reduce(
+    (acc, [uid, globalBlock]) => {
+      const {
+        data,
+        rules,
+        position,
+        dataVersion,
+        meta,
+        status
+      } = stringifyGlobalBlock(globalBlock);
 
-export function getSavedBlocks() {
-  const library = Config.get("library").id;
-  const requestData = {
-    ...paginationData,
-    library
-  };
+      acc.push({
+        id: uidToApiId[uid],
+        status,
+        data,
+        position: JSON.stringify(position),
+        dataVersion,
+        rules,
+        meta
+      });
 
-  return persistentRequest({
-    type: "GET",
-    dataType: "json",
-    url: apiUrl + "/saved_blocks",
-    data: requestData
-  }).then(r => {
-    return r
-      .map(parseSavedBlock)
-      .reduce((acc, { id, uid, data, dataVersion }) => {
-        // map uids to ids to use them in updates
-        uidToApiId[uid] = id;
-
-        acc[uid] = { uid, data, dataVersion };
-
-        return acc;
-      }, {});
-  });
-}
-
-export function createSavedBlock(savedBlock, meta = {}) {
-  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
-  const containerId = Config.get("container").id;
-  const { is_autosave = 0 } = meta;
-  const requestData = {
-    uid,
-    data,
-    dataVersion,
-    is_autosave,
-    container: containerId
-  };
+      return acc;
+    },
+    []
+  );
 
   return persistentRequest({
-    type: "POST",
+    type: "PUT",
     dataType: "json",
-    url: apiUrl + "/saved_blocks",
-    data: requestData
-  }).then(r => {
-    // map our uid to the newly created block's id
-    uidToApiId[uid] = r.id;
+    url: apiUrl + "/global_block/bulk",
+    data: { data, is_autosave }
   });
-}
-
-export function updateSavedBlock(savedBlock, meta = {}) {
-  const { id: uid, data, dataVersion } = stringifySavedBlock(savedBlock);
-  if (uidToApiId[uid]) {
-    const { is_autosave = 1 } = meta;
-    const requestData = {
-      uid,
-      data,
-      dataVersion,
-      is_autosave
-    };
-
-    return persistentRequest({
-      type: "PUT",
-      dataType: "json",
-      url: apiUrl + "/saved_blocks/" + uidToApiId[uid],
-      data: requestData
-    });
-  } else {
-    // need some kind of retry mechanism
-    return Promise.reject("not implemented yet");
-  }
-}
-
-export function deleteSavedBlock({ id: uid }) {
-  if (uidToApiId[uid]) {
-    return persistentRequest({
-      type: "DELETE",
-      dataType: "json",
-      url: apiUrl + "/saved_blocks/" + uidToApiId[uid]
-    });
-  } else {
-    // need some kind of retry mechanism
-    return Promise.reject("not implemented yet");
-  }
 }
 
 // image
@@ -523,57 +504,6 @@ export function getUploadedFonts() {
   })
     .then(r => r.json())
     .then(r => r.map(({ uid, ...data }) => ({ ...data, id: uid })));
-}
-
-// screenshots
-
-export function createBlockScreenshot({ base64 }) {
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request2(`${apiUrl}/screenshots`, {
-    method: "POST",
-    body: new URLSearchParams({
-      attachment
-    })
-  }).then(r => r.json());
-}
-
-export function updateBlockScreenshot({ id, base64 }) {
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request2(`${apiUrl}/screenshots/${id}`, {
-    method: "PUT",
-    body: new URLSearchParams({
-      attachment
-    })
-  }).then(r => r.json());
-}
-
-// dynamic content
-
-export function getDynamicContent({ placeholders, signal }) {
-  const apiUrl = Config.get("urls").api;
-  const projectId = Config.get("project").id;
-  const qs = new URLSearchParams();
-
-  for (const p of placeholders) {
-    qs.append("placeholders[]", p);
-  }
-
-  // mapped uid cloud to font id what used in models
-  return request2(`${apiUrl}/projects/${projectId}/placeholders?${qs}`, {
-    method: "GET",
-    // mode: "cors",
-    // redirect: "error"
-    signal
-  }).then(r => {
-    if (!r.ok) {
-      // TODO: add proper error handling
-      throw new Error("fetch dynamic content error");
-    }
-
-    return r.json();
-  });
 }
 
 export async function uploadFile(file) {
@@ -617,3 +547,10 @@ export function sendHearBeatTakeOver() {
     method: "POST"
   });
 }
+
+/**
+ * @param {string} type
+ * @return {Promise<{posts:[]}[]>}
+ */
+// eslint-disable-next-line no-unused-vars
+export const getPostObjects = async (type = undefined) => [];

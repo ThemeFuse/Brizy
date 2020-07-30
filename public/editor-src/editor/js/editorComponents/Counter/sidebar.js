@@ -1,28 +1,34 @@
 import { t } from "visual/utils/i18n";
-import { toolbarHoverTransition } from "visual/utils/toolbar";
 
 export const title = t("Counter");
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       devices: "desktop",
-      align: "start",
       tabs: [
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
-            toolbarHoverTransition({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
               devices: "desktop",
-              position: 100
-            })
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
+            }
           ]
         }
       ]

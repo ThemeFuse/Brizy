@@ -66,7 +66,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "color",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               label: t("Background"),

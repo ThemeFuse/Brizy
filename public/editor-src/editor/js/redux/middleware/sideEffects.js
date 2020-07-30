@@ -10,16 +10,11 @@ import {
 } from "visual/utils/fonts";
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
-import {
-  currentStyleSelector,
-  extraFontStylesSelector,
-  fontSelector,
-  unDeletedFontSelector
-} from "../selectors";
+import { currentStyleSelector, unDeletedFontSelector } from "../selectors";
+import { fontSelector, extraFontStylesSelector } from "../selectors2";
 import {
   HYDRATE,
   ADD_BLOCK,
-  UPDATE_PAGE,
   UPDATE_BLOCKS,
   REMOVE_BLOCK,
   REORDER_BLOCKS,
@@ -29,21 +24,19 @@ import {
   updateCopiedElement,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  UPDATE_EXTRA_FONT_STYLES,
   IMPORT_TEMPLATE,
   IMPORT_KIT,
   ADD_FONTS,
-  DELETE_FONTS,
-  PUBLISH
+  DELETE_FONTS
 } from "../actions";
-import { ActionTypes as HistoryActionTypes } from "../reducers/historyEnhancer";
+import { PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import {
   makeRichTextFontGoogleCSS,
   makeSubsetGoogleFontsUrl
 } from "visual/utils/fonts";
-
-const { UNDO, REDO } = HistoryActionTypes;
+import { UNDO, REDO } from "../history/types";
+import { historySelector } from "../history/selectors";
 
 export default config => store => next => action => {
   const callbacks = {
@@ -57,7 +50,6 @@ export default config => store => next => action => {
     case ADD_BLOCK:
     case REMOVE_BLOCK:
     case REORDER_BLOCKS:
-    case UPDATE_PAGE:
     case UPDATE_BLOCKS:
     case UPDATE_GLOBAL_BLOCK:
     case UPDATE_CURRENT_STYLE_ID:
@@ -324,18 +316,19 @@ function handleCopiedElementChange(callbacks) {
 }
 
 function handleHistoryChange(callbacks) {
-  callbacks.onAfterNext.push(({ state, action }) => {
-    const currentStyleId = action.currentSnapshot.currentStyleId;
-    const nextStyleId = action.nextSnapshot.currentStyleId;
-    const currentStyle = action.currentSnapshot.currentStyle;
-    const nextStyle = action.nextSnapshot.currentStyle;
-    const currentExtraFontStyle = action.currentSnapshot.extraFontStyles;
-    const nextExtraFontStyle = action.nextSnapshot.extraFontStyles;
+  callbacks.onAfterNext.push(({ state }) => {
+    const { currSnapshot, prevSnapshot } = historySelector(state);
+    const currStyleId = currSnapshot.currentStyleId;
+    const prevStyleId = prevSnapshot.currentStyleId;
+    const currStyle = currSnapshot.currentStyle;
+    const prevStyle = prevSnapshot.currentStyle;
+    const currExtraFontStyle = currSnapshot.extraFontStyles;
+    const prevExtraFontStyle = prevSnapshot.extraFontStyles;
 
     if (
-      currentStyleId !== nextStyleId ||
-      currentStyle !== nextStyle ||
-      currentExtraFontStyle !== nextExtraFontStyle
+      currStyleId !== prevStyleId ||
+      currStyle !== prevStyle ||
+      currExtraFontStyle !== prevExtraFontStyle
     ) {
       const { fontStyles, colorPalette } = currentStyleSelector(state);
       const extraFontStyles = extraFontStylesSelector(state);

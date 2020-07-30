@@ -21,6 +21,7 @@ import {
   styleElementTimelineWidthSuffix,
   styleMarginType
 } from "visual/utils/style2";
+import { Wrapper } from "../tools/Wrapper";
 
 export default class Timeline extends EditorComponent {
   static get componentId() {
@@ -89,10 +90,6 @@ export default class Timeline extends EditorComponent {
     });
   }
 
-  handleNav = activeTab => {
-    this.patchValue({ activeTab });
-  };
-
   renderForEdit(v, vs, vd) {
     const { verticalMode, timelineStyle } = v;
     const className = classnames(
@@ -106,9 +103,9 @@ export default class Timeline extends EditorComponent {
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
-        meta: this.getMeta(v),
         verticalMode,
         timelineStyle,
+        meta: this.getMeta(v),
         toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
           toolbarExtendLabel,
           sidebarExtendLabel
@@ -122,9 +119,9 @@ export default class Timeline extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={className}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
           <Items {...itemProps} />
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

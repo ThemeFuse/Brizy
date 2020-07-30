@@ -60,6 +60,7 @@ $scroll-border-radius: 4px;
   &--bottom-left,
   &--bottom-right {
     .brz-control__select-options {
+      top: 100%;
       margin-top: 3px;
     }
   }

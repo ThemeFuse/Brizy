@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
+import { style, styleAnimation } from "./styles";
 import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -13,7 +13,9 @@ import * as sidebarExtendParentConfig from "./sidebarExtendParent";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import Toolbar from "visual/component/Toolbar";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import { Wrapper } from "../tools/Wrapper";
+import { validateKeyByProperty } from "visual/utils/onChange";
 
 class Switcher extends EditorComponent {
   static get componentId() {
@@ -88,6 +90,15 @@ class Switcher extends EditorComponent {
     const classNameNav = classnames("brz-switcher__nav", {
       "brz-switcher__nav--active": activeTab === 0
     });
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
     const itemNavProps = this.makeSubcomponentProps({
       activeTab,
       bindWithKey: "items",
@@ -104,6 +115,7 @@ class Switcher extends EditorComponent {
     });
     const itemContentProps = this.makeSubcomponentProps({
       activeTab,
+      animationClassName,
       bindWithKey: "items",
       renderType: "content",
       meta: this.props.meta
@@ -112,7 +124,7 @@ class Switcher extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <div className={classNameSwitcher}>
+          <Wrapper {...this.makeWrapperProps({ className: classNameSwitcher })}>
             {switcherStyle === "style-2" ? (
               this.renderNav(v, vs, vd)
             ) : (
@@ -121,7 +133,7 @@ class Switcher extends EditorComponent {
               </div>
             )}
             <Items {...itemContentProps} />
-          </div>
+          </Wrapper>
         </ContextMenu>
       </CustomCSS>
     );

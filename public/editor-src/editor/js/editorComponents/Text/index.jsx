@@ -1,9 +1,9 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import TextEditor from "./Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import defaultValue from "./defaultValue.json";
 
-class Text extends EditorComponent {
+export default class Text extends EditorComponent {
   static get componentId() {
     return "Text";
   }
@@ -18,5 +18,3 @@ class Text extends EditorComponent {
     );
   }
 }
-
-export default Text;

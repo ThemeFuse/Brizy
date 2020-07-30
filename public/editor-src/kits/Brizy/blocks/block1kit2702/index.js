@@ -92,7 +92,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-subtitle brz-text-xs-center\"><em class=\"brz-cp-color7\" style=\"background-color: transparent;\">\"No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it. Let's not get technical! Create up-to-date designs without writing a single line of code.&nbsp;It's easy with Brizy...\"</em></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-subtitle\"><em class=\"brz-cp-color7\" style=\"background-color: transparent;\">\"No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it. Let's not get technical! Create up-to-date designs without writing a single line of code.\"</em></p>"
                                                                 }
                                                             }
                                                         ]

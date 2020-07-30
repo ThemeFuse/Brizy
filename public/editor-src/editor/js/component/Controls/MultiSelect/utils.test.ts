@@ -5,7 +5,6 @@ import {
   getIndex,
   getValue,
   nextValue,
-  orderBy,
   prevValue
 } from "./utils";
 
@@ -88,21 +87,6 @@ describe("Testing 'apply' function", function() {
 
     apply(id, () => new Promise(r => r(t)));
     expect(result).toBe(t);
-  });
-});
-
-describe("Testing 'orderBy' function", function() {
-  const values = [1, 2, 3, 4];
-  const items = values.map(i => ({ props: { value: i } })).reverse();
-
-  test("Should reverse the list", () => {
-    expect(orderBy(values, items)).toEqual(items.reverse());
-  });
-
-  test("If the values of the ordering and target do not match exactly. Return intersection", () => {
-    expect(orderBy([4, 10, 6, 3], items)).toEqual(
-      [4, 3].map(i => ({ props: { value: i } }))
-    );
   });
 });
 

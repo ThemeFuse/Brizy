@@ -1,24 +1,28 @@
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
-import {
-  toolbarSizeWidthWidthPercent,
-  toolbarElementVideoPlaylistSizeWidthPixel,
-  toolbarElementVideoPlaylistItemGrid,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device });
+  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+
+  const { hex: borderColorHex } = getOptionColorHexByPalette(
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
+  );
 
   return [
     {
-      id: dvk("toolbarCurrentElement"),
-      type: "popover",
-      icon: "nc-play",
-      title: t("Playlist"),
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
+      config: {
+        icon: "nc-play",
+        title: t("Playlist")
+      },
       position: 10,
       options: [
         {
@@ -42,31 +46,40 @@ export function getItems({ v, device }) {
             { value: "under", title: "Bottom" }
           ]
         },
-        toolbarElementVideoPlaylistItemGrid({
-          v,
-          device,
-          state: "normal",
-          disabled: v.positionItem === "horizontal"
-        })
+        {
+          id: "gridColumn",
+          label: t("Columns"),
+          type: "slider-dev",
+          disabled: v.positionItem === "horizontal",
+          config: {
+            min: 1,
+            max: 6
+          }
+        }
       ]
     },
     {
-      id: dvk("toolbarColor"),
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(v.borderColorHex)
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              borderColorHex,
+              dvv("borderColorOpacity")
+            )
+          }
         }
       },
+      position: 90,
+      devices: "desktop",
+      roles: ["admin"],
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBorder",
@@ -96,24 +109,35 @@ export function getItems({ v, device }) {
     },
     toolbarDisabledAdvancedSettings({ device }),
     {
-      id: dvk("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
       options: [
-        toolbarSizeWidthWidthPercent({
-          v,
-          device,
-          state: "normal"
-        }),
-        toolbarElementVideoPlaylistSizeWidthPixel({
-          v,
-          device,
-          state: "normal",
-          disabled: v.positionItem === "vertical" || device === "mobile"
-        }),
+        {
+          id: "width",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        },
+        {
+          id: "widthSidebar",
+          label: t("Sidebar"),
+          type: "slider-dev",
+          disabled: v.positionItem === "vertical" || device === "mobile",
+          config: {
+            min: 200,
+            max: 1000,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
         {
           id: dvk("advancedSettings"),
           type: "advancedSettings",

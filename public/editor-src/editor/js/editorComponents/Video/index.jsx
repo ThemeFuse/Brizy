@@ -22,6 +22,7 @@ import {
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -292,6 +293,39 @@ class Video extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { type, ratio, controls } = v;
 
+    const restrictions = {
+      size: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      tabletSize: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      mobileSize: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
+
     const classNameContent = classnames(
       "brz-video",
       { "brz-custom-video": type === "custom" },
@@ -326,16 +360,17 @@ class Video extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={classNameContent}>
+          <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
             <BoxResizer
               points={resizerPoints}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
+              restrictions={restrictions}
             >
               <div className="brz-video-content">{content}</div>
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

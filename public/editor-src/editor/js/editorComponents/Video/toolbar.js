@@ -8,7 +8,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementVideoUpload,
-  toolbarElementVideoControls,
   toolbarElementVideoPlaySize
 } from "visual/utils/toolbar";
 
@@ -30,6 +29,7 @@ export function getItems({ v, device }) {
   const videoDynamicContentChoices = getDynamicContentChoices("richText");
 
   const IS_PRO = Boolean(Config.get("pro"));
+  const noCover = !v.coverImageSrc;
 
   const customRatio = IS_PRO
     ? [
@@ -43,14 +43,16 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-play",
-      title: t("Video"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-play",
+        title: t("Video")
+      },
       position: 80,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -114,13 +116,30 @@ export function getItems({ v, device }) {
               id: "tabCurrentElementAdvanced",
               label: t("Advanced"),
               options: [
-                toolbarElementVideoControls({
-                  v,
-                  device,
+                {
+                  id: "groupSettings",
+                  type: "group-dev",
                   devices: "desktop",
-                  state: "normal",
-                  disabled: v.type === "vimeo"
-                }),
+                  disabled: v.type === "vimeo",
+                  options: [
+                    {
+                      id: "controls",
+                      label: t("Controls"),
+                      type: "switch-dev"
+                    },
+                    {
+                      id: "controlsIconCustomSize",
+                      type: "slider-dev",
+                      label: t("Size"),
+                      disabled: v.type !== "custom" || dvv("controls") !== "on",
+                      config: {
+                        min: 1,
+                        max: 40,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                },
                 {
                   id: "branding",
                   label: t("Branding"),
@@ -141,9 +160,7 @@ export function getItems({ v, device }) {
                   type: "switch-dev",
                   devices: "desktop",
                   disabled:
-                    v.type !== "custom" ||
-                    v.controls === "off" ||
-                    v.coverImageSrc !== ""
+                    v.type !== "custom" || v.controls === "off" || !noCover
                 },
                 {
                   id: "muted",
@@ -152,8 +169,8 @@ export function getItems({ v, device }) {
                   devices: "desktop",
                   disabled:
                     v.type !== "custom" ||
-                    (!v.coverImageSrc && v.controls === "off") ||
-                    (!v.coverImageSrc && v.autoplay === "on")
+                    (noCover && v.controls === "off") ||
+                    (noCover && v.autoplay === "on")
                 },
                 {
                   id: "loop",
@@ -164,29 +181,29 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "start",
+                  type: "number-dev",
                   label: t("Start"),
                   helper: {
                     content: t("Specify a start time (in seconds)")
                   },
                   config: {
-                    size: "short"
-                  },
-                  type: "inputText-dev",
-                  placeholder: "seconds",
-                  roles: ["admin"]
+                    size: "short",
+                    max: 99999,
+                    spinner: false
+                  }
                 },
                 {
                   id: "end",
+                  type: "number-dev",
                   label: t("End"),
                   helper: {
                     content: t("Specify an end time (in seconds)")
                   },
                   config: {
-                    size: "short"
-                  },
-                  type: "inputText-dev",
-                  placeholder: "seconds",
-                  roles: ["admin"]
+                    size: "short",
+                    max: 99999,
+                    spinner: false
+                  }
                 }
               ]
             },
@@ -203,8 +220,9 @@ export function getItems({ v, device }) {
                 {
                   id: "coverZoom",
                   label: t("Zoom"),
-                  devices: "desktop",
                   type: "slider-dev",
+                  devices: "desktop",
+                  disabled: noCover,
                   config: {
                     min: 100,
                     max: 300,
@@ -215,7 +233,8 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   state: "normal",
-                  devices: "desktop"
+                  devices: "desktop",
+                  disabled: noCover
                 })
               ]
             }
@@ -225,11 +244,12 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 90,
       disabled: v.type !== "custom" || v.controls === "off",
       options: [
@@ -244,24 +264,24 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      devices: "desktop",
-      roles: ["admin"],
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.coverImageSrc === ""
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: noCover
               ? hexToRgba(borderColorHex, v.borderColorOpacity)
               : hexToRgba(bgColorHex, v.bgColorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabIcon",
@@ -307,7 +327,7 @@ export function getItems({ v, device }) {
                   id: "bgColor",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled: v.coverImageSrc === "" || v.autoplay === "on"
+                  disabled: noCover || v.autoplay === "on"
                 }
               ]
             },
@@ -319,7 +339,7 @@ export function getItems({ v, device }) {
                   id: "color",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled: v.coverImageSrc === "" || v.autoplay === "on"
+                  disabled: noCover || v.autoplay === "on"
                 }
               ]
             },
@@ -352,10 +372,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       options: [
         {
@@ -365,8 +386,11 @@ export function getItems({ v, device }) {
           type: "slider-dev",
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("sizeSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {

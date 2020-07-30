@@ -7,7 +7,8 @@ import { getMenus } from "visual/utils/api/editor/index";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
-import { styleClassName, styleCSSVars } from "./styles";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
 
 export default class MenuSimpleWP extends EditorComponent {
   static get componentId() {
@@ -34,12 +35,17 @@ export default class MenuSimpleWP extends EditorComponent {
     });
   }
 
-  renderForEdit(_v) {
-    const v = this.applyRulesToValue(_v, [
-      _v.fontStyle && `${_v.fontStyle}__fsDesktop`,
-      _v.tabletFontStyle && `${_v.tabletFontStyle}__fsTablet`,
-      _v.mobileFontStyle && `${_v.mobileFontStyle}__fsMobile`
-    ]);
+  renderForEdit(v , vs, vd) {
+
+    const className = classnames(
+      "brz-menu-simple",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
     const { tabletToggleMenu, mobileToggleMenu } = v;
     const attributes = {
       name: v.menuName
@@ -77,7 +83,7 @@ export default class MenuSimpleWP extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+        <div className={className}>
           {content}
         </div>
       </Toolbar>

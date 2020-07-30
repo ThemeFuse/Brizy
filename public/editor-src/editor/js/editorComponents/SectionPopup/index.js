@@ -10,8 +10,7 @@ import ThemeIcon from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
 import SortableZIndex from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
-import { uuid } from "visual/utils/uuid";
-import { stripIds } from "visual/utils/models";
+import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -19,8 +18,6 @@ import {
   wInFullPage
 } from "visual/config/columns";
 import { getStore } from "visual/redux/store";
-import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
 import { triggersSelector } from "visual/redux/selectors";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import * as toolbar from "./toolbar";
@@ -60,11 +57,6 @@ class SectionPopup extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  // this is a used as a hack to reopen the
-  // popup after it is unmounted when switching
-  // from Global to normal
-  static tmpGlobal = null;
-
   constructor(...args) {
     super(...args);
 
@@ -72,9 +64,8 @@ class SectionPopup extends EditorComponent {
 
     if (IS_EDITOR) {
       this.state = {
-        isOpened: this.props.isOpened || SectionPopup.tmpGlobal === this.getId()
+        isOpened: this.props.isOpened
       };
-      SectionPopup.tmpGlobal = null;
 
       this.mounted = false;
       this.popupRef = React.createRef();
@@ -166,7 +157,15 @@ class SectionPopup extends EditorComponent {
         })}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={Boolean(globalBlockId)}
+        badge={
+          IS_GLOBAL_POPUP && globalBlockId
+            ? child => (
+                <ConditionsComponent type="popup">{child}</ConditionsComponent>
+              )
+            : globalBlockId
+            ? child => child
+            : null
+        }
       />
     );
   }
@@ -335,102 +334,21 @@ class SectionPopup extends EditorComponent {
     );
   }
 
-  open() {
+  open = () => {
     document.documentElement.classList.add("brz-ow-hidden");
     this.props.onOpen();
     this.setState({
       isOpened: true
     });
-  }
+  };
 
-  close() {
+  close = () => {
     document.documentElement.classList.remove("brz-ow-hidden");
     this.props.onClose();
     this.setState({
       isOpened: false
     });
-  }
-
-  // api
-  becomeSaved() {
-    const { blockId } = this.props;
-    const dbValue = this.getDBValue();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createSavedBlock({
-        id: uuid(),
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-  }
-
-  becomeGlobal() {
-    SectionPopup.tmpGlobal = this.getId();
-
-    const { blockId, onChange } = this.props;
-    const dbValue = this.getDBValue();
-    const globalBlockId = uuid();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createGlobalBlock({
-        id: globalBlockId,
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-
-    onChange(
-      {
-        type: "GlobalBlock",
-        blockId,
-        value: {
-          _id: this.getId(),
-          globalBlockId
-        }
-      },
-      {
-        intent: "replace_all",
-        idOptions: {
-          keepExistingIds: true
-        }
-      }
-    );
-  }
-
-  becomeNormal() {
-    SectionPopup.tmpGlobal = this.getId();
-
-    const {
-      meta: { globalBlockId },
-      onChange
-    } = this.props;
-    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
-
-    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
-    globalsData.value._id = this.getId();
-
-    onChange(globalsData, {
-      intent: "replace_all",
-      idOptions: {
-        keepExistingIds: true
-      }
-    });
-  }
+  };
 }
 
 export default SectionPopup;

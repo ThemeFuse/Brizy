@@ -1,7 +1,7 @@
 export default function imagePopulationUrl(
   population,
   options = {
-    cW: 1200,
+    cW: 5000,
     cH: 0
   }
 ) {

@@ -10,12 +10,15 @@
 
   .brz-img {
     max-width: 100%;
-    border-radius: inherit;
+
+    &-svg {
+      width: 100%;
+      height: 100%;
+    }
   }
   .brz-a,
   .brz-picture {
     outline: none;
-    border-radius: inherit;
   }
 }
 
@@ -32,10 +35,19 @@
       top: 0;
       left: 0;
       height: 100%;
+
+      &-svg {
+        position: absolute;
+      }
     }
     &__lightbox * {
       cursor: zoom-in;
     }
+
+    picture {
+      border-radius: inherit;
+    }
+
     &:after {
       content: "";
       width: 100%;
@@ -45,6 +57,7 @@
       top: 0;
       left: 0;
       border-radius: inherit;
+      transform: scale(1.01);
     }
   }
 }

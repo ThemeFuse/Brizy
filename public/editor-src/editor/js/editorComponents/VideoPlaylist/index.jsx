@@ -17,6 +17,7 @@ import * as sidebarExtendParentConfig from "./sidebarExtendParent";
 import Items from "./Items";
 import { styleContents, styleCover, styleSideBar } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -109,6 +110,7 @@ class VideoPlaylist extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { positionItem, positionThumbs, customCSS } = v;
     const { meta } = this.props;
+    const { currentIndex } = this.state;
     const itemV = this.getItemValue(v);
     const { coverImageSrc } = itemV;
     const videoSrc = this.getVideoSrc(v);
@@ -138,7 +140,7 @@ class VideoPlaylist extends EditorComponent {
     );
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      currentIndex: this.state.currentIndex,
+      currentIndex,
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtend,
         sidebarExtendConfig,
@@ -171,7 +173,7 @@ class VideoPlaylist extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={classNameContent}>
+        <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
           <BoxResizer
             points={resizerPoints}
             meta={meta}
@@ -186,7 +188,7 @@ class VideoPlaylist extends EditorComponent {
               {positionItem === "vertical" && content}
             </div>
           </BoxResizer>
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

@@ -1,29 +1,25 @@
 import React from "react";
 import classnames from "classnames";
+import { validateKeyByProperty } from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import CustomTag from "visual/component/CustomTag";
+import Animation from "visual/component/Animation";
 import {
   wInBoxedPage,
   wInTabletPage,
   wInMobilePage,
   wInFullPage
 } from "visual/config/columns";
-import { getStore } from "visual/redux/store";
-import { createGlobalBlock, createSavedBlock } from "visual/redux/actions";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
-import { uuid } from "visual/utils/uuid";
-import { stripIds } from "visual/utils/models";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
-import { styleSection } from "./styles";
+import { styleSection, styleAnimation } from "./styles";
 import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
-import { styleMarginType } from "visual/utils/style2";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 
-class Section extends EditorComponent {
+export default class Section extends EditorComponent {
   static get componentId() {
     return "Section";
   }
@@ -34,18 +30,11 @@ class Section extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  marginType = null;
+  static experimentalDynamicContent = true;
 
   getMeta(v) {
     const { meta } = this.props;
-    const {
-      showOnDesktop,
-      showOnMobile,
-      showOnTablet,
-      slider,
-      verticalAlign,
-      fullHeight
-    } = v;
+    const { slider } = v;
     const desktopFullW = getContainerW({
       v,
       w: wInFullPage,
@@ -73,13 +62,7 @@ class Section extends EditorComponent {
       tabletW,
       mobileW,
       section: {
-        isSlider: slider === "on",
-        showOnDesktop: showOnDesktop === "on",
-        showOnMobile: showOnMobile === "on",
-        showOnTablet: showOnTablet === "on",
-        marginType: this.marginType,
-        verticalAlign,
-        fullHeight
+        isSlider: slider === "on"
       }
     });
   }
@@ -106,31 +89,7 @@ class Section extends EditorComponent {
         super.handleValueChange(value, meta);
       }
     }
-
-    // need rerender sectionItem when the margin type changed
-    const { deviceMode: device } = getStore().getState().ui;
-    const marginType = styleMarginType({ device, v: value, state: "normal" });
-    this.marginType = `${device}-${marginType}`;
   }
-
-  getAttributes = customAttributes => {
-    let myAttributes = customAttributes
-      .split(" ")
-      .join("")
-      .split(":")
-      .join(" ")
-      .split("\n")
-      .join(" ");
-
-    let atributesToObj = [];
-    let atributesToMas = myAttributes.split(" ");
-
-    for (let i = 0; i < atributesToMas.length; i += 2) {
-      atributesToObj[atributesToMas[i]] = atributesToMas[i + 1];
-    }
-
-    return Object.assign({}, atributesToObj);
-  };
 
   renderItems(v) {
     const {
@@ -138,7 +97,19 @@ class Section extends EditorComponent {
       sliderArrows,
       sliderAutoPlay,
       sliderAutoPlaySpeed,
-      sliderAnimation
+      sliderAnimation,
+      showOnDesktop,
+      showOnTablet,
+      showOnMobile,
+      verticalAlign,
+      fullHeight,
+      tagName,
+      cssIDPopulation,
+      cssClassPopulation,
+      customAttributesPopulation,
+      marginType,
+      tabletMarginType,
+      mobileMarginType
     } = v;
 
     const itemsProps = this.makeSubcomponentProps({
@@ -153,7 +124,23 @@ class Section extends EditorComponent {
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
         sidebarExtendConfig
-      )
+      ),
+      itemProps: {
+        rerender: {
+          showOnDesktop,
+          showOnTablet,
+          showOnMobile,
+          verticalAlign,
+          fullHeight,
+          tagName,
+          cssIDPopulation,
+          cssClassPopulation,
+          customAttributesPopulation,
+          marginType,
+          tabletMarginType,
+          mobileMarginType
+        }
+      }
     });
 
     return <SectionItems {...itemsProps} />;
@@ -178,16 +165,31 @@ class Section extends EditorComponent {
       )
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      "data-block-id": this.props.blockId,
+      "data-uid": this.getId(),
+      id: this.getId(),
+      className: classNameSection
+    };
+
     return (
-      <section
-        id={this.getId()}
-        className={classNameSection}
-        data-block-id={this.props.blockId}
-        data-uid={this.getId()}
-        {...this.getAttributes(customAttributes)}
+      <Animation
+        component="section"
+        componentProps={props}
+        animationClass={animationClassName}
       >
         {this.renderItems(v)}
-      </section>
+      </Animation>
     );
   }
 
@@ -212,100 +214,31 @@ class Section extends EditorComponent {
       )
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      "data-uid": this.getId(),
+      id:
+        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
+      className: classNameSection
+    };
+
     return (
-      <CustomTag
-        tagName={tagName}
-        id={
-          cssIDPopulation === ""
-            ? v.anchorName || this.getId()
-            : cssIDPopulation
-        }
-        className={classNameSection}
-        data-uid={this.getId()}
-        {...this.getAttributes(customAttributes)}
+      <Animation
+        component={tagName}
+        componentProps={props}
+        animationClass={animationClassName}
       >
         {this.renderItems(v)}
-      </CustomTag>
+      </Animation>
     );
-  }
-
-  // api
-
-  becomeSaved() {
-    const { blockId } = this.props;
-    const dbValue = this.getDBValue();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createSavedBlock({
-        id: uuid(),
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-  }
-
-  becomeGlobal() {
-    const { blockId, onChange } = this.props;
-    const dbValue = this.getDBValue();
-    const globalBlockId = uuid();
-    const dispatch = getStore().dispatch;
-
-    dispatch(
-      createGlobalBlock({
-        id: globalBlockId,
-        data: {
-          type: this.constructor.componentId,
-          blockId,
-          value: dbValue
-        },
-        meta: {
-          sourceBlockId: this.getId()
-        }
-      })
-    );
-
-    onChange(
-      {
-        type: "GlobalBlock",
-        blockId,
-        value: {
-          _id: this.getId(),
-          globalBlockId
-        }
-      },
-      {
-        intent: "replace_all",
-        idOptions: {
-          keepExistingIds: true
-        }
-      }
-    );
-  }
-
-  becomeNormal() {
-    const {
-      meta: { globalBlockId },
-      onChange
-    } = this.props;
-    const globalBlocks = globalBlocksAssembled2Selector(getStore().getState());
-
-    const globalsData = stripIds(globalBlocks[globalBlockId]).data;
-    globalsData.value._id = this.getId();
-
-    onChange(globalsData, {
-      intent: "replace_all",
-      idOptions: {
-        keepExistingIds: true
-      }
-    });
   }
 }
-
-export default Section;

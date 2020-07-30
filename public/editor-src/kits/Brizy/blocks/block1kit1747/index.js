@@ -148,7 +148,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<p class=\"brz-fw-sm-700 brz-fs-lg-94 brz-mt-lg-20 brz-mb-lg-20 brz-fw-lg-900 brz-ff-montserrat brz-ls-lg-m_1_5 brz-lh-lg-1_3 brz-text-lg-center brz-fs-sm-60 brz-fs-xs-40 brz-fw-xs-700\"><span class=\"brz-cp-color2\">Why I Love Night Photography</span></p>"
+                                            "text": "<p class=\"brz-fw-xs-700 brz-fs-xs-40 brz-fs-sm-60 brz-text-lg-center brz-lh-lg-1_3 brz-ls-lg-m_1_5 brz-ff-montserrat brz-fw-lg-900 brz-mb-lg-20 brz-mt-lg-20 brz-fs-lg-94 brz-fw-sm-700 brz-mb-xs-10\"><span class=\"brz-cp-color2\">Why I Love Night Photography</span></p>"
                                         }
                                     }
                                 ]
@@ -237,6 +237,359 @@ module.exports = {
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--spacer"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Spacer",
+                                        "value": {
+                                            "_styles": [
+                                                "spacer"
+                                            ],
+                                            "tabletHeight": 20
+                                        }
+                                    }
+                                ],
+                                "showOnMobile": "off"
+                            }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--line"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Line",
+                                        "value": {
+                                            "_styles": [
+                                                "line"
+                                            ],
+                                            "width": 96,
+                                            "borderWidth": 1,
+                                            "borderTopWidth": 1,
+                                            "borderRightWidth": 1,
+                                            "borderBottomWidth": 1,
+                                            "borderLeftWidth": 1,
+                                            "tempBorderWidth": 1,
+                                            "tempBorderTopWidth": 1,
+                                            "tempBorderRightWidth": 1,
+                                            "tempBorderBottomWidth": 1,
+                                            "tempBorderLeftWidth": 1,
+                                            "borderColorHex": "#73777f",
+                                            "borderColorOpacity": 0.2,
+                                            "tempBorderColorOpacity": 0.2,
+                                            "borderColorPalette": "color7",
+                                            "tempBorderColorPalette": "color7"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Wrapper",
+                            "value": {
+                                "_styles": [
+                                    "wrapper",
+                                    "wrapper--spacer"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Spacer",
+                                        "value": {
+                                            "_styles": [
+                                                "spacer"
+                                            ],
+                                            "height": 30,
+                                            "tabletHeight": 20
+                                        }
+                                    }
+                                ],
+                                "showOnMobile": "off"
+                            }
+                        },
+                        {
+                            "type": "Row",
+                            "value": {
+                                "_styles": [
+                                    "row"
+                                ],
+                                "items": [
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-heading3\"><span class=\"brz-cp-color2\">The world looks different at night</span></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-mt-lg-10\"><span class=\"brz-cp-color7\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</span></p>"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "RichText",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "richText"
+                                                                    ],
+                                                                    "text": "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color7\" style=\"opacity: 1;\">C</span><span class=\"brz-cp-color7\">onsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span><span class=\"brz-cp-color7\" style=\"opacity: 1;\">&nbsp;</span></p>"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "marginTop": 0,
+                                                        "marginTopSuffix": "px",
+                                                        "margin": 0
+                                                    }
+                                                }
+                                            ],
+                                            "width": 67.5,
+                                            "paddingRight": 100,
+                                            "paddingRightSuffix": "px",
+                                            "tempPaddingRightSuffix": "px",
+                                            "paddingSuffix": "px",
+                                            "tempPaddingSuffix": "px",
+                                            "tempPaddingRight": 100
+                                        }
+                                    },
+                                    {
+                                        "type": "Column",
+                                        "value": {
+                                            "_styles": [
+                                                "column"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Wrapper",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "wrapper",
+                                                            "wrapper--spacer"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Spacer",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "spacer"
+                                                                    ],
+                                                                    "height": 80
+                                                                }
+                                                            }
+                                                        ],
+                                                        "showOnTablet": "off",
+                                                        "showOnMobile": "off"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Row",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "row",
+                                                            "hide-row-borders",
+                                                            "padding-0"
+                                                        ],
+                                                        "items": [
+                                                            {
+                                                                "type": "Column",
+                                                                "value": {
+                                                                    "_styles": [
+                                                                        "column"
+                                                                    ],
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "Wrapper",
+                                                                            "value": {
+                                                                                "_styles": [
+                                                                                    "wrapper",
+                                                                                    "wrapper--richText"
+                                                                                ],
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "RichText",
+                                                                                        "value": {
+                                                                                            "_styles": [
+                                                                                                "richText"
+                                                                                            ],
+                                                                                            "text": "<p class=\"brz-tp-button\"><span class=\"brz-cp-color7\" style=\"opacity: 0.52;\">TIPS &amp; TRICKS</span></p>"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "Wrapper",
+                                                                            "value": {
+                                                                                "_styles": [
+                                                                                    "wrapper",
+                                                                                    "wrapper--richText"
+                                                                                ],
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "RichText",
+                                                                                        "value": {
+                                                                                            "_styles": [
+                                                                                                "richText"
+                                                                                            ],
+                                                                                            "text": "<p class=\"brz-tp-subtitle\"><em class=\"brz-cp-color3\">If you live in a city, look around as you walk about at night. Look at the shadows cast by street lamps, headlights.</em></p>"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "width": 100,
+                                                                    "borderColorPalette": "color4",
+                                                                    "borderColorHex": "#66738d",
+                                                                    "borderColorOpacity": 0.17,
+                                                                    "borderWidth": 1,
+                                                                    "mobilePaddingRight": 15,
+                                                                    "mobilePaddingLeft": 15,
+                                                                    "tempBorderColorOpacity": 0.17,
+                                                                    "borderTopWidth": 1,
+                                                                    "borderRightWidth": 1,
+                                                                    "borderBottomWidth": 1,
+                                                                    "borderLeftWidth": 1,
+                                                                    "borderRadius": 4,
+                                                                    "borderTopLeftRadius": 4,
+                                                                    "borderTopRightRadius": 4,
+                                                                    "borderBottomRightRadius": 4,
+                                                                    "borderBottomLeftRadius": 4,
+                                                                    "tempBorderWidth": 4,
+                                                                    "tempBorderTopWidth": 4,
+                                                                    "tempBorderRightWidth": 4,
+                                                                    "tempBorderBottomWidth": 4,
+                                                                    "tempBorderLeftWidth": 4,
+                                                                    "tempBorderRadius": 0,
+                                                                    "tempBorderTopLeftRadius": 0,
+                                                                    "tempBorderTopRightRadius": 0,
+                                                                    "tempBorderBottomRightRadius": 0,
+                                                                    "tempBorderBottomLeftRadius": 0,
+                                                                    "bgColorOpacity": 0,
+                                                                    "verticalAlign": "center",
+                                                                    "marginType": "grouped",
+                                                                    "marginTop": 2,
+                                                                    "marginTopSuffix": "px",
+                                                                    "margin": 2,
+                                                                    "marginBottom": 2,
+                                                                    "marginBottomSuffix": "px",
+                                                                    "paddingType": "ungrouped",
+                                                                    "padding": 33,
+                                                                    "paddingSuffix": "px",
+                                                                    "paddingTop": 33,
+                                                                    "paddingRight": 45,
+                                                                    "paddingBottom": 30,
+                                                                    "paddingLeft": 41,
+                                                                    "marginSuffix": "px",
+                                                                    "marginRight": 2,
+                                                                    "marginLeft": 2,
+                                                                    "paddingTopSuffix": "px",
+                                                                    "paddingBottomSuffix": "px",
+                                                                    "paddingRightSuffix": "px",
+                                                                    "paddingLeftSuffix": "px",
+                                                                    "tempPaddingTopSuffix": "px",
+                                                                    "tempPaddingSuffix": "px",
+                                                                    "tempPaddingTop": 33,
+                                                                    "tempPaddingBottomSuffix": "px",
+                                                                    "tempPaddingBottom": 30,
+                                                                    "tabletPaddingTopSuffix": "px",
+                                                                    "tempTabletPaddingTopSuffix": "px",
+                                                                    "tabletPaddingSuffix": "px",
+                                                                    "tempTabletPaddingSuffix": "px",
+                                                                    "tabletPaddingTop": 15,
+                                                                    "tempTabletPaddingTop": 15,
+                                                                    "tabletPaddingBottomSuffix": "px",
+                                                                    "tempTabletPaddingBottomSuffix": "px",
+                                                                    "tabletPaddingBottom": 15,
+                                                                    "tempTabletPaddingBottom": 15,
+                                                                    "tabletPaddingRightSuffix": "px",
+                                                                    "tempTabletPaddingRightSuffix": "px",
+                                                                    "tabletPaddingRight": 25,
+                                                                    "tempTabletPaddingRight": 25,
+                                                                    "tabletPaddingLeftSuffix": "px",
+                                                                    "tempTabletPaddingLeftSuffix": "px",
+                                                                    "tabletPaddingLeft": 25,
+                                                                    "tempTabletPaddingLeft": 25,
+                                                                    "mobilePaddingSuffix": "px",
+                                                                    "mobilePaddingTopSuffix": "px",
+                                                                    "mobilePaddingRightSuffix": "px",
+                                                                    "mobilePaddingBottomSuffix": "px",
+                                                                    "mobilePaddingLeftSuffix": "px",
+                                                                    "tempMobilePaddingSuffix": "px",
+                                                                    "tempMobilePaddingTopSuffix": "px",
+                                                                    "tempMobilePaddingRightSuffix": "px",
+                                                                    "tempMobilePaddingBottomSuffix": "px",
+                                                                    "tempMobilePaddingLeftSuffix": "px",
+                                                                    "mobilePadding": 15,
+                                                                    "mobilePaddingTop": 15,
+                                                                    "mobilePaddingBottom": 15,
+                                                                    "tempMobilePadding": 15,
+                                                                    "tempMobilePaddingTop": 15,
+                                                                    "tempMobilePaddingRight": 15,
+                                                                    "tempMobilePaddingBottom": 15,
+                                                                    "tempMobilePaddingLeft": 15
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "width": 32.5
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ],
                     "paddingType": "ungrouped",
@@ -251,7 +604,17 @@ module.exports = {
                     "tempPaddingBottomSuffix": "px",
                     "paddingSuffix": "px",
                     "tempPaddingSuffix": "px",
-                    "tempPaddingBottom": 75
+                    "tempPaddingBottom": 75,
+                    "mobilePaddingRightSuffix": "px",
+                    "tempMobilePaddingRightSuffix": "px",
+                    "mobilePaddingSuffix": "px",
+                    "tempMobilePaddingSuffix": "px",
+                    "mobilePaddingRight": 15,
+                    "tempMobilePaddingRight": 15,
+                    "mobilePaddingLeftSuffix": "px",
+                    "tempMobilePaddingLeftSuffix": "px",
+                    "mobilePaddingLeft": 15,
+                    "tempMobilePaddingLeft": 15
                 }
             }
         ]

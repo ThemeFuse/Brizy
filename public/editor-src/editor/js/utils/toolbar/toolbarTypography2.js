@@ -63,7 +63,7 @@ export function toolbarTypography2FontStyle({
   device,
   state,
   disabled = false,
-  devices = "all"
+  devices = "all",
 }) {
   const fontStyleKey = defaultValueKey({
     key: capByPrefix(prefix, "fontStyle"),

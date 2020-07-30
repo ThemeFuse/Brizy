@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleBg(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthPercent"],
+      standart: ["cssStyleSizeWidth"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementProgressBarPropertyHoverTransition"
@@ -12,13 +12,13 @@ export function styleBg(v, vs, vd) {
     ".brz &&:hover.brz-progress-bar-style1": {
       standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
     },
-    ".brz &&.brz-progress-bar-style1:after:hover": {
+    ".brz &&:hover.brz-progress-bar-style1::after": {
       standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay": {
       standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
     },
-    ".brz &&.brz-progress-bar-style2 .brz-progress-bar-overlay:after:hover": {
+    ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay::after": {
       standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-progress-bar__wrapper": {

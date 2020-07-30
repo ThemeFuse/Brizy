@@ -10,13 +10,15 @@ export function getItems({ v, device }) {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
-      align: "start",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarPaddingFourFieldsPxSuffix({
               v,
@@ -39,7 +41,7 @@ export function getItems({ v, device }) {
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: []
         }
       ]

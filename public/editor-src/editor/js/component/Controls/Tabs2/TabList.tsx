@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback } from "react";
+import React, { FC, ReactElement } from "react";
 import classNames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
@@ -39,7 +39,7 @@ export const TabList: FC<Props> = ({
         key={index}
         title={title}
         className={className}
-        onClick={useCallback(() => onChange(value), [value])}
+        onClick={(): void => onChange(value)}
       >
         {icon && <EditorIcon icon={icon} />}
         <span className="brz-span">{label}</span>

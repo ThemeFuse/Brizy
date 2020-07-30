@@ -1,7 +1,9 @@
 import React from "react";
 import deepMerge from "deepmerge";
 import { insert, removeAt, replaceAt, setIn, getIn } from "timm";
+import { produce } from "immer";
 import Editor from "visual/global/Editor";
+import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import {
   pageDataDraftBlocksSelector,
@@ -10,6 +12,7 @@ import {
 } from "visual/redux/selectors";
 import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
+import ErrorBoundary from "visual/component/ErrorBoundary";
 import {
   stripSystemKeys,
   setIds,
@@ -17,15 +20,18 @@ import {
   getElementOfArrayLoop,
   getClosestParent,
   getParentWhichContainsStyleProperty,
-  insertItem
+  insertItem,
+  mapModels
 } from "visual/utils/models";
+import { symbolsToItems } from "visual/editorComponents/Menu";
+const menusConfig = Config.get("menuData");
 
 const emptyTarget = value => (Array.isArray(value) ? [] : {});
 const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
-  source.forEach(function(e, i) {
+  source.forEach(function (e, i) {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
       const shouldClone = cloneRequested && options.isMergeableObject(e);
@@ -248,12 +254,16 @@ export default class EditorArrayComponent extends EditorComponent {
     const itemOnChange = (itemValue, meta = {}) => {
       const { intent } = meta;
 
-      if (intent === "replace_all") {
-        this.replaceItem(itemIndex, itemValue, meta);
-      } else {
-        if (itemValue === null) {
+      switch (intent) {
+        case "replace_all": {
+          this.replaceItem(itemIndex, itemValue, meta);
+          break;
+        }
+        case "remove_all": {
           this.removeItem(itemIndex, meta);
-        } else {
+          break;
+        }
+        default: {
           this.updateItem(itemIndex, itemValue, meta);
         }
       }
@@ -261,16 +271,20 @@ export default class EditorArrayComponent extends EditorComponent {
 
     if (ItemComponent) {
       return (
-        <ItemComponent
-          {...itemProps}
+        <ErrorBoundary
           key={itemKey}
-          path={itemPath}
-          defaultValue={itemDefaultValue}
-          dbValue={itemDBValue}
-          reduxState={this.getReduxState()}
-          reduxDispatch={this.getReduxDispatch()}
-          onChange={itemOnChange}
-        />
+          onRemove={() => this.removeItem(itemIndex)}
+        >
+          <ItemComponent
+            {...itemProps}
+            path={itemPath}
+            defaultValue={itemDefaultValue}
+            dbValue={itemDBValue}
+            reduxState={this.getReduxState()}
+            reduxDispatch={this.getReduxDispatch()}
+            onChange={itemOnChange}
+          />
+        </ErrorBoundary>
       );
     } else {
       const NotFoundComponent = Editor.getNotFoundComponent();
@@ -433,7 +447,9 @@ export default class EditorArrayComponent extends EditorComponent {
   copy(index) {
     const dispatch = this.getReduxDispatch();
     const shortcodePath = [...this.getPath(), index];
-    const pageData = pageDataDraftBlocksSelector(this.getReduxState());
+    const pageData = attachMenu(
+      pageDataDraftBlocksSelector(this.getReduxState())
+    );
 
     dispatch(updateCopiedElement({ value: pageData, path: shortcodePath }));
   }
@@ -502,4 +518,23 @@ export default class EditorArrayComponent extends EditorComponent {
       this.updateItem(index, mergedValue.value);
     }
   }
+}
+
+function attachMenu(value) {
+  return mapModels(block => {
+    const { type, value } = block;
+
+    if (type === "Menu") {
+      const { menuSelected: dbMenuSelected, symbols = {} } = value;
+      const menuSelected = dbMenuSelected || menusConfig[0].id;
+      const menuConfig =
+        menusConfig.find(menu => menu.id === menuSelected) || {};
+
+      return produce(block, draft => {
+        draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
+      });
+    }
+
+    return block;
+  }, value);
 }

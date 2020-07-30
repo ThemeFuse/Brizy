@@ -4,6 +4,7 @@ import Thumbnail from "./Thumbnail";
 export default class ThumbnailGrid extends Component {
   static defaultProps = {
     columns: 4,
+    showSync: false,
     responsive: [
       {
         breakpoint: 1460,
@@ -51,8 +52,10 @@ export default class ThumbnailGrid extends Component {
   render() {
     const {
       data,
+      showSync,
       onThumbnailAdd,
       onThumbnailRemove,
+      onThumbnailSync,
       ThumbnailComponent
     } = this.props;
     const { currentColumns } = this.state;
@@ -66,11 +69,13 @@ export default class ThumbnailGrid extends Component {
       .reduce((acc, thumbnailData, index) => {
         const element = (
           <ThumbnailComponent
-            key={index}
+            key={thumbnailData.uid || index}
             animation={true}
+            showSync={showSync}
             data={thumbnailData}
             onAdd={onThumbnailAdd}
             onRemove={onThumbnailRemove}
+            onSync={onThumbnailSync}
           />
         );
         const columnIndex = index % currentColumns;

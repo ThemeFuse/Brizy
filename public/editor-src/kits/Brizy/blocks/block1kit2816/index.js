@@ -141,7 +141,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\">\"No matter if you've used a visual builder before, with Brizy you'll be a pro.\"</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\"><span>\"No matter if you've used a visual builder before, with this you'll be a pro.\"</span></span></p>"
                                                                 }
                                                             }
                                                         ]

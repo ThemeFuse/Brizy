@@ -43,8 +43,8 @@ export function disableAlreadyUsedRules(rules, rulesList) {
     } else {
       const { items } = newRuleList[ruleIndex];
       if (items && rule.entityValues.length) {
-        const itemIndex = items.findIndex(({ value: { globalBlockId } }) =>
-          rule.entityValues.includes(globalBlockId)
+        const itemIndex = items.findIndex(({ value: { _id } }) =>
+          rule.entityValues.includes(_id)
         );
         if (itemIndex !== -1) {
           newRuleList = setIn(

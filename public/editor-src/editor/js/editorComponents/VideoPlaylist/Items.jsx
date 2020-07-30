@@ -46,6 +46,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
 
     return {
       meta: this.props.meta,
+      active: this.props.currentIndex === itemIndex,
       toolbarExtend: this.makeToolbarPropsFromConfig2(cloneRemoveConfig),
       onActiveItem: () => {
         this.props.onActiveChange(itemIndex);

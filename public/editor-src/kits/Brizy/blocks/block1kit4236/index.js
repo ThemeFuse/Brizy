@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 80,
   title: "block1kit4236",
   
-  keywords: "header,logo,menu",
+  keywords: "header,logo,menu,pro",
   cat: [4590],
   type: 0,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionHeader",
@@ -702,7 +702,10 @@ module.exports = {
                                 "tabletPaddingLeftSuffix": "px"
                             }
                         }
-                    ]
+                    ],
+                    "tabsState": "tabNormal",
+                    "tabsCurrentElement": "tabCurrentElement",
+                    "tabsColor": "tabOverlay"
                 }
             }
         ],

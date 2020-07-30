@@ -12,6 +12,8 @@ export let getCurrentTooltip = () => {
   return stack[stack.length - 1];
 };
 
+export { TooltipItem } from "./TooltipItem";
+
 export default class Tooltip extends React.Component {
   static defaultProps = {
     className: "",

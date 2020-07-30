@@ -3,8 +3,8 @@ import { t } from "visual/utils/i18n";
 import { updateIntegration, createIntegrationList } from "../../api";
 import { Context } from "../../../common/GlobalApps/Context";
 import { RadioFields } from "../../../common/GlobalApps/StepsView";
-import { fakeRequest } from "../../../common/utils";
 import CreateList from "./CreateList";
+import { pendingRequest } from "visual/utils/api/editor";
 
 const getError = (type, app) => {
   if (type === "server") {
@@ -110,7 +110,7 @@ class List extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState({
       mode: "create",
@@ -126,7 +126,7 @@ class List extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState({
       prevLoading: false,
@@ -174,7 +174,7 @@ class List extends Component {
       }
     } else {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         nextLoading: false,
@@ -215,7 +215,7 @@ class List extends Component {
       }
     } else {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       onChangeNext();
     }
@@ -228,7 +228,7 @@ class List extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     this.context.onChangePrev();
   };

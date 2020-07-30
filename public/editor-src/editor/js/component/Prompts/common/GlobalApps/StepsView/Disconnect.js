@@ -43,12 +43,12 @@ class Disconnect extends Component {
         <div className="brz-ed-popup-integrations__connect-body">
           {error && this.renderError()}
           {nextLoading !== null && (
-            <Button type="red" loading={nextLoading} onClick={onNext}>
+            <Button color="red" loading={nextLoading} onClick={onNext}>
               {t("Disconnect")}
             </Button>
           )}
           {prevLoading !== null && (
-            <Button type="default" loading={prevLoading} onClick={onPrev}>
+            <Button color="default" loading={prevLoading} onClick={onPrev}>
               {t("Cancel")}
             </Button>
           )}

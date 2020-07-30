@@ -112,3 +112,19 @@ export const getAnimations = () => [
   // Rolling Exits
   // { value: "rollOut", title: t("RollOut") }
 ];
+
+export const getAnimationsTabs = () => [
+  { value: "none", title: t("None") },
+  { value: "flash", title: t("Flash") },
+  { value: "pulse", title: t("Pulse") },
+
+  // Fading Entrances
+  { value: "fadeIn", title: t("FadeIn") },
+  { value: "fadeInDown", title: t("FadeInDown") },
+  { value: "fadeInLeft", title: t("FadeInLeft") },
+  { value: "fadeInRight", title: t("FadeInRight") },
+  { value: "fadeInUp", title: t("FadeInUp") },
+
+  // Zooming Entrances
+  { value: "zoomIn", title: t("ZoomIn") }
+];

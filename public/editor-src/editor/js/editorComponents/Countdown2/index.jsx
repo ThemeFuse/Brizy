@@ -1,5 +1,5 @@
 import React from "react";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import _ from "underscore";
 import jQuery from "jquery";
 import classnames from "classnames";
@@ -20,6 +20,7 @@ import { css } from "visual/utils/cssStyle";
 import { getTime, formatDate } from "./utils";
 import BoxResizer from "visual/component/BoxResizer";
 import { capitalize } from "visual/utils/string";
+import { Wrapper } from "../tools/Wrapper";
 
 // lib
 import "./lib/jquery.countdown.js";
@@ -32,6 +33,8 @@ class Countdown2 extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   handleTextChange = (propertyName, value) => {
     this.patchValue({ [propertyName]: value });
@@ -214,35 +217,73 @@ class Countdown2 extends EditorComponent {
 
     const { timeZone, linkType, messageText, messageRedirect, actions } = v;
 
+    const resizerRestrictions = {
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div
-            ref={el => {
-              this.countdown = el;
-            }}
-            className={className}
-            data-end={this.endDate}
-            data-timezone={timeZone}
-            data-link-type={linkType}
-            data-redirect={messageRedirect}
-            data-message={messageText}
-            data-action={actions}
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: className,
+              attributes: {
+                "data-end": this.endDate,
+                "data-timezone": timeZone,
+                "data-link-type": linkType,
+                "data-redirect": messageRedirect,
+                "data-message": messageText,
+                "data-action": actions,
+                ref: el => {
+                  this.countdown = el;
+                }
+              }
+            })}
           >
             <BoxResizer
               points={resizerPoints}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
+              restrictions={resizerRestrictions}
             >
               {this.renderParts()}
               {actions === "showMessage" && (
                 <div className={classNameMessage}>{messageText}</div>
               )}
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

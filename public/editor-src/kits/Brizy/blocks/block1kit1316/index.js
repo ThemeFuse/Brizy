@@ -68,7 +68,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h2 class=\"brz-text-lg-center brz-tp-heading2\"><span class=\"brz-cp-color8\">Only&nbsp;</span><span class=\"brz-cp-color3\">passion</span><span class=\"brz-cp-color8\"> &amp;&nbsp;</span><span class=\"brz-cp-color3\">hard work</span><span class=\"brz-cp-color8\"> are keys of our success. Brizy is the result!</span></h2>"
+                                                                    "text": "<h2 class=\"brz-text-lg-center brz-tp-heading2\"><span class=\"brz-cp-color8\"><span>Only&nbsp;</span></span><span class=\"brz-cp-color3\">passion</span><span class=\"brz-cp-color8\"> &amp;&nbsp;</span><span class=\"brz-cp-color3\">hard work</span><span class=\"brz-cp-color8\"> are keys of our success. This is the result!</span></h2>"
                                                                 }
                                                             }
                                                         ]

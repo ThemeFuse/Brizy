@@ -5,9 +5,16 @@
     "media": "image",
     "hoverMedia": "image",
 
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgImageSrc": "",
+
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
@@ -21,6 +28,7 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
+    "bgMapZoomSuffix": null,
 
     "brightness": 100,
     "hue": 0,
@@ -29,7 +37,6 @@
 
     "hoverBgImageWidth": null,
     "hoverBgImageHeight": null,
-    "hoverBgImageSrc": null,
     "hoverBgPositionY": null,
     "hoverBgPositionX": null,
     "hoverBgPopulation": null,
@@ -44,7 +51,6 @@
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
-    "tabletBgImageSrc": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
     "tabletBgPopulation": null,
@@ -58,12 +64,12 @@
     "tabletBgAttachment": "none",
 
     "tabletBgMapZoom": null,
+    "tabletBgMapZoomSuffix": null,
 
     "mobileMedia": "image",
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
-    "mobileBgImageSrc": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
     "mobileBgPopulation": null,
@@ -76,7 +82,8 @@
 
     "mobileBgAttachment": "none",
 
-    "mobileBgMapZoom": null
+    "mobileBgMapZoom": null,
+    "mobileBgMapZoomSuffix": null
   },
 
   "toolbar": {
@@ -222,9 +229,11 @@
     "tempHoverBorderBottomLeftRadius": null,
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "containerType": "boxed",
     "containerSize": 100,
+    "containerSizeSuffix": null,
 
     "hoverContainerType": null,
     "hoverContainerSize": null,
@@ -317,6 +326,7 @@
 
     "tabletContainerType": null,
     "tabletContainerSize": null,
+    "tabletContainerSizeSuffix": null,
 
     "tabletBorderStyle": null,
 
@@ -436,6 +446,7 @@
 
     "mobileContainerType": null,
     "mobileContainerSize": null,
+    "mobileContainerSizeSuffix": null,
 
     "mobileBgColorType": null,
 

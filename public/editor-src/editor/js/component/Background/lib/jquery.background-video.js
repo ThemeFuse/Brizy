@@ -103,9 +103,18 @@ function Vimeo($iframe, settings) {
   window.addEventListener(
     "message",
     function(event) {
+      if (!event.origin.includes("vimeo")) return;
       var parsedData = JSON.parse(event.data);
+
+      if (parsedData.method === "ping" && !$iframe.attr("data-ready")) {
+        $iframe.attr("data-ready", "true");
+        sendMessage("addEventListener", "loaded");
+        sendMessage("addEventListener", "finish");
+      }
+
       switch (parsedData.event) {
         case "ready": {
+          $iframe.attr("data-ready", "true");
           sendMessage("addEventListener", "loaded");
           sendMessage("addEventListener", "finish");
           break;
@@ -133,6 +142,8 @@ function Vimeo($iframe, settings) {
     }.bind(this),
     false
   );
+
+  sendMessage("ping");
 
   return {
     mute: function() {

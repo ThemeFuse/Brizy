@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1433",
   thumbnailWidth: 600,
-  thumbnailHeight: 375,
+  thumbnailHeight: 354,
   title: "block1kit1433",
   
   keywords: "button,call to action,cover,header,hero,image background",
@@ -64,7 +64,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-text-lg-center brz-tp-heading1\"><span class=\"brz-cp-color2\">Easy to&nbsp;</span><strong class=\"brz-cp-color2\">Create</strong><span class=\"brz-cp-color2\"> with Brizy</span></h1>"
+                                            "text": "<h1 class=\"brz-tp-heading1 brz-text-lg-center\"><span class=\"brz-cp-color2\"><span>Easy to&nbsp;</span></span><strong class=\"brz-cp-color2\"><span>Create</span></strong><span class=\"brz-cp-color2\"><span> amazing websites</span></span></h1>"
                                         }
                                     }
                                 ],

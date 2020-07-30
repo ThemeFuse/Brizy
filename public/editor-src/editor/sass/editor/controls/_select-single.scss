@@ -8,13 +8,14 @@
 
     input {
       padding: 0;
+      flex: 1 1 10px;
     }
   }
 
   .brz-ed-control__multiSelect--tag {
     box-shadow: none;
     background: none;
-    margin: 0 10px 0 0;
+    margin: 0;
     padding: 0;
 
     & > .brz-icon-svg {

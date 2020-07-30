@@ -1,0 +1,9 @@
+// WOORating
+.brz-woorating > div > .brz-rating > .woocommerce-product-rating > .woocommerce-review-link {
+  cursor: default;
+
+  &:focus {
+    text-decoration: none;
+    outline: none;
+  }
+}

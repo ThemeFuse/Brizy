@@ -779,3 +779,146 @@ export function onChangeBorderColorFieldsSubMenu2({
         : v.mMenuBorderColorOpacity
   };
 }
+
+// Active SubMenu
+export function onChangeActiveColorHexSubMenu2({ v, hex, opacity, isChanged }) {
+  return {
+    activeSubMenuColorHex: hex,
+    activeSubMenuColorOpacity:
+      hex !== v.activeSubMenuColorHex && v.activeSubMenuColorOpacity === 0
+        ? v.tempActiveSubMenuColorOpacity
+        : opacity,
+    activeSubMenuColorPalette:
+      isChanged === "hex" ? "" : v.activeSubMenuColorPalette,
+
+    // MMenu + Hover Sync
+    activeMMenuColorHex:
+      v.activeSubMenuColorHex === v.activeMMenuColorHex
+        ? hex
+        : v.activeMMenuColorHex,
+
+    activeMMenuColorOpacity:
+      v.activeSubMenuColorOpacity === v.activeMMenuColorOpacity
+        ? opacity
+        : v.activeMMenuColorOpacity
+  };
+}
+
+export function onChangeActiveColorPaletteSubMenu2({ v, palette }) {
+  return {
+    activeSubMenuColorPalette: palette,
+    activeSubMenuColorOpacity:
+      v.activeSubMenuColorOpacity === 0
+        ? v.tempActiveSubMenuColorOpacity
+        : v.activeSubMenuColorOpacity,
+
+    // MMenu Sync
+    activeMMenuColorPalette:
+      v.activeSubMenuColorPalette === v.activeMMenuColorPalette
+        ? palette
+        : v.activeMMenuColorPalette
+  };
+}
+
+export function onChangeActiveColorFieldsSubMenu2({
+  v,
+  hex,
+  opacity,
+  isChanged
+}) {
+  return {
+    activeSubMenuColorPalette:
+      isChanged === "hex" ? "" : v.activeSubMenuColorPalette,
+    activeSubMenuColorHex: hex,
+    activeSubMenuColorOpacity: opacity,
+
+    // Sync MMenu
+    activeMMenuColorHex:
+      v.activeSubMenuColorHex === v.activeMMenuColorHex
+        ? hex
+        : v.activeMMenuColorHex,
+    activeMMenuColorOpacity:
+      v.activeSubMenuColorOpacity === v.activeMMenuColorOpacity
+        ? opacity
+        : v.activeMMenuColorOpacity
+  };
+}
+
+export function onChangeBgActiveColorHexSubMenu2({
+  v,
+  hex,
+  opacity,
+  isChanged
+}) {
+  return {
+    activeSubMenuBgColorHex: hex,
+    activeSubMenuBgColorOpacity:
+      hex !== v.activeSubMenuBgColorHex && v.activeSubMenuBgColorOpacity === 0
+        ? v.tempActiveSubMenuBgColorOpacity
+        : opacity,
+    activeSubMenuBgColorPalette:
+      isChanged === "hex" ? "" : v.activeSubMenuBgColorPalette
+  };
+}
+
+export function onChangeBgActiveColorPaletteSubMenu2({ v, palette }) {
+  return {
+    activeSubMenuBgColorPalette: palette,
+    activeSubMenuBgColorOpacity:
+      v.activeSubMenuBgColorOpacity === 0
+        ? v.tempActiveSubMenuBgColorOpacity
+        : v.activeSubMenuBgColorOpacity
+  };
+}
+
+export function onChangeBgActiveColorFieldsSubMenu2({
+  v,
+  hex,
+  opacity,
+  isChanged
+}) {
+  return {
+    activeSubMenuBgColorPalette:
+      isChanged === "hex" ? "" : v.activeSubMenuBgColorPalette,
+    activeSubMenuBgColorHex: hex,
+    activeSubMenuBgColorOpacity: opacity
+  };
+}
+
+// MMenu Current
+export function onChangeActiveColorHexMMenu2({ v, hex, opacity, isChanged }) {
+  return {
+    activeMMenuColorHex: hex,
+    activeMMenuColorOpacity:
+      hex !== v.activeMMenuColorHex && v.activeMMenuColorOpacity == 0
+        ? v.tempActiveMMenuHoverColorOpacity
+        : opacity,
+
+    activeMMenuColorPalette:
+      isChanged === "hex" ? "" : v.activeMMenuColorPalette
+  };
+}
+
+export function onChangeActiveColorPaletteMMenu2({ v, palette }) {
+  return {
+    activeMMenuColorPalette: palette,
+    activeMMenuColorOpacity:
+      v.activeMMenuColorOpacity === 0
+        ? v.tempActiveMMenuHoverColorOpacity
+        : v.activeMMenuColorOpacity
+  };
+}
+
+export function onChangeActiveColorFieldsMMenu2({
+  v,
+  hex,
+  opacity,
+  isChanged
+}) {
+  return {
+    activeMMenuColorPalette:
+      isChanged === "hex" ? "" : v.activeMMenuColorPalette,
+    activeMMenuColorHex: hex,
+    activeMMenuColorOpacity: opacity
+  };
+}

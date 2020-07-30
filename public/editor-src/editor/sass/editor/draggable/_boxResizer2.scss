@@ -1,0 +1,82 @@
+@import "../../variables";
+
+.brz-ed-inline-control__boxResizer__point {
+  $vOffset: 0;
+  $hOffset: 0;
+  $center: 50%;
+
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  opacity: 1;
+  visibility: visible;
+  background-color: $brand-primary;
+  z-index: 1031;
+
+  &:before {
+    content: "";
+    position: absolute;
+    padding: 12px;
+    top: $center;
+    left: $center;
+    transform: translate(-50%, -50%);
+  }
+
+  &--topLeft {
+    transform: translate(-5px, -5px);
+    cursor: nwse-resize;
+    top: $vOffset;
+    left: $hOffset;
+  }
+
+  &--topCenter {
+    top: $vOffset;
+    left: $center;
+    transform: translate(-50%, -5px);
+    cursor: ns-resize;
+  }
+
+  &--topRight {
+    transform: translate(5px, -5px);
+    top: $vOffset;
+    right: $hOffset;
+    cursor: nesw-resize;
+  }
+
+  &--centerLeft {
+    transform: translate(-50%, -5px);
+    top: $center;
+    left: $hOffset;
+    cursor: ew-resize;
+  }
+
+  &--centerRight {
+    transform: translate(50%, -5px);
+    top: $center;
+    right: $hOffset;
+    cursor: ew-resize;
+  }
+
+  &--bottomLeft {
+    transform: translate(-5px, 5px);
+    bottom: $vOffset;
+    left: $hOffset;
+    cursor: nesw-resize;
+  }
+
+  &--bottomCenter {
+    bottom: $vOffset;
+    left: $center;
+    transform: translate(-50%, 5px);
+    cursor: ns-resize;
+  }
+
+  &--bottomRight {
+    transform: translate(5px, 5px);
+    bottom: $vOffset;
+    right: $hOffset;
+    cursor: nwse-resize;
+  }
+}

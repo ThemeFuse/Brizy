@@ -31,7 +31,7 @@ class Option extends React.Component<Props> {
     return (
       <Component
         {...data}
-        className={classNames(data.className, className)}
+        className={classNames("brz-ed-option", data.className, className)}
         location={location}
         toolbar={toolbar}
       />
@@ -44,6 +44,7 @@ class Option extends React.Component<Props> {
     const {
       data: {
         label,
+        icon,
         display,
         helper,
         className: __className,
@@ -54,6 +55,7 @@ class Option extends React.Component<Props> {
     } = this.props;
 
     const className = classNames(
+      "brz-ed-option",
       `brz-ed-option-type__${type}`,
       _className,
       __className
@@ -63,6 +65,7 @@ class Option extends React.Component<Props> {
       <OptionWrapper
         className={className}
         label={label}
+        icon={icon}
         helper={helper?.content}
         helperPlacement={helper?.position}
         display={display}

@@ -1,6 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { t } from "visual/utils/i18n";
 
 export default menus => {
@@ -26,9 +27,11 @@ const getItems = menuList => ({ v, device }) => {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
-      icon: "nc-menu-3",
+      type: "popover-dev",
       position: 60,
+      config: {
+        icon: "nc-menu-3"
+      },
       options: [
         {
           id: "toggleMenu",
@@ -57,36 +60,44 @@ const getItems = menuList => ({ v, device }) => {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       roles: ["admin"],
-      icon: "nc-font",
-      size: "large",
-      title: t("Typography"),
       position: 70,
       options: [
         {
           id: "",
-          type: "typography-dev"
+          type: "typography-dev",
+          config: {
+            fontFamily: device === "desktop"
+          }
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      devices: "desktop",
-      title: t("Colors"),
-      size: "auto",
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        title: t("Colors"),
+        size: "auto",
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      roles: ["admin"],
+      position: 80,
+      devices: "desktop",
       options: [
         {
           id: "color",
-          type: "colorPicker-dev"
+          type: "colorPicker-dev",
+          states: [NORMAL, HOVER, ACTIVE]
         }
       ]
     },

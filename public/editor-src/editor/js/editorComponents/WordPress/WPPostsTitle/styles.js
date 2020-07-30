@@ -13,7 +13,9 @@ export function style(v, vs, vd) {
         "cssStyleContentAlign"
       ]
     },
-    ".brz &&:hover > .brz-a": {
+    // :not(.brz-btn) was added to win specificity battle
+    // with standard .brz-a styles
+    ".brz &&:hover > .brz-a:not(.brz-btn)": {
       standart: ["cssStyleColor"]
     }
   };

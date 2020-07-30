@@ -12,6 +12,7 @@ export function toolbarMargin({
   devices = "all",
   disabled = false,
   position = 60,
+  marginType,
   onChangeGrouped,
   onChangeUngrouped
 }) {
@@ -19,59 +20,25 @@ export function toolbarMargin({
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return {
-    id: dvk("margin"),
-    type: "multiPicker",
+    id: "margin",
+    type: "group-dev",
     position,
     devices,
     disabled,
-    picker: {
-      id: dvk("marginType"),
-      label: t("Margin"),
-      type: "radioGroup",
-      choices: [
-        {
-          value: "grouped",
-          icon: "nc-styling-all"
-        },
-        {
-          value: "ungrouped",
-          icon: "nc-styling-individual"
-        }
-      ],
-      value: dvv("marginType")
-    },
-    choices: {
-      ...toolbarMarginGrouped({
-        v,
-        device,
-        state,
-        onChange: onChangeGrouped
-      }),
-      ...toolbarMarginUngrouped({
-        v,
-        device,
-        state,
-        onChange: onChangeUngrouped
-      })
-    }
-  };
-}
-
-export function toolbarMarginGrouped({
-  v,
-  device,
-  state,
-  marginType,
-  onChange
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    grouped: [
+    options: [
+      {
+        id: "marginType",
+        label: t("Margin"),
+        type: "radioGroup-dev",
+        choices: [
+          { value: "grouped", icon: "nc-styling-all" },
+          { value: "ungrouped", icon: "nc-styling-individual" }
+        ]
+      },
       {
         id: dvk("margin"),
         type: "slider",
+        disabled: dvv("marginType") !== "grouped",
         slider: {
           min: -100,
           max: 100
@@ -82,14 +49,8 @@ export function toolbarMarginGrouped({
         suffix: {
           show: true,
           choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
+            { title: "px", value: "px" },
+            { title: "%", value: "%" }
           ]
         },
         value: {
@@ -98,26 +59,17 @@ export function toolbarMarginGrouped({
         },
         onChange: ({ value, suffix }) => {
           const values = {
-            ...{ v, device, state, marginType, onChange },
+            ...{ v, device, state, marginType, onChange: onChangeGrouped },
             ...{ value, suffix }
           };
           return saveOnChanges(values);
         }
-      }
-    ]
-  };
-}
-
-export function toolbarMarginUngrouped({ v, device, state, onChange }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    ungrouped: [
+      },
       {
         id: dvk("marginTop"),
         icon: "nc-styling-top",
         type: "slider",
+        disabled: dvv("marginType") !== "ungrouped",
         slider: {
           min: -100,
           max: 100
@@ -128,14 +80,8 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         suffix: {
           show: true,
           choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
+            { title: "px", value: "px" },
+            { title: "%", value: "%" }
           ]
         },
         value: {
@@ -144,7 +90,7 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         },
         onChange: ({ value, suffix }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, onChange: onChangeUngrouped },
             ...{
               current: "marginTop",
               value,
@@ -155,9 +101,10 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: defaultValueKey({ key: "marginRight", device, state }),
+        id: dvk("marginRight"),
         icon: "nc-styling-right",
         type: "slider",
+        disabled: dvv("marginType") !== "ungrouped",
         slider: {
           min: -100,
           max: 100
@@ -168,33 +115,17 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         suffix: {
           show: true,
           choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
+            { title: "px", value: "px" },
+            { title: "%", value: "%" }
           ]
         },
         value: {
-          value: defaultValueValue({
-            v,
-            key: "marginRight",
-            device,
-            state
-          }),
-          suffix: defaultValueValue({
-            v,
-            key: "marginRightSuffix",
-            device,
-            state
-          })
+          value: dvv("marginRight"),
+          suffix: dvv("marginRightSuffix")
         },
         onChange: ({ value, suffix }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, onChange: onChangeUngrouped },
             ...{
               current: "marginRight",
               value,
@@ -208,6 +139,7 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         id: dvk("marginBottom"),
         icon: "nc-styling-bottom",
         type: "slider",
+        disabled: dvv("marginType") !== "ungrouped",
         slider: {
           min: -100,
           max: 100
@@ -218,14 +150,8 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         suffix: {
           show: true,
           choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
+            { title: "px", value: "px" },
+            { title: "%", value: "%" }
           ]
         },
         value: {
@@ -234,7 +160,7 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         },
         onChange: ({ value, suffix }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, onChange: onChangeUngrouped },
             ...{
               current: "marginBottom",
               value,
@@ -245,9 +171,10 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         }
       },
       {
-        id: defaultValueKey({ key: "marginLeft", device, state }),
+        id: dvk("marginLeft"),
         icon: "nc-styling-left",
         type: "slider",
+        disabled: dvv("marginType") !== "ungrouped",
         slider: {
           min: -100,
           max: 100
@@ -258,28 +185,17 @@ export function toolbarMarginUngrouped({ v, device, state, onChange }) {
         suffix: {
           show: true,
           choices: [
-            {
-              title: "px",
-              value: "px"
-            },
-            {
-              title: "%",
-              value: "%"
-            }
+            { title: "px", value: "px" },
+            { title: "%", value: "%" }
           ]
         },
         value: {
-          value: defaultValueValue({ v, key: "marginLeft", device, state }),
-          suffix: defaultValueValue({
-            v,
-            key: "marginLeftSuffix",
-            device,
-            state
-          })
+          value: dvv("marginLeft"),
+          suffix: dvv("marginLeftSuffix")
         },
         onChange: ({ value, suffix }) => {
           const values = {
-            ...{ v, device, state, onChange },
+            ...{ v, device, state, onChange: onChangeUngrouped },
             ...{
               current: "marginLeft",
               value,

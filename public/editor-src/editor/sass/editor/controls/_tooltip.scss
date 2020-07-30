@@ -9,6 +9,7 @@
     top: 0;
     left: 0;
     z-index: z("tooltip-overlay");
+    font-family: $font-family-1;
   }
 
   // Size
@@ -72,6 +73,19 @@
   &--delay-2 {
     animation-delay: 1s;
   }
+
+  // Items
+  &__item {
+    position: relative;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    padding: 16px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  &__item:last-child {
+    border-bottom: transparent;
+  }
 }
 
 // Pro Uses for PromptBlocks | Fonts
@@ -95,4 +109,9 @@
     font-size: inherit;
     font-weight: 600;
   }
+}
+
+// Tooltip overlay Bottom Publish
+.brz-ed-tooltip__overlay-publish-button {
+  width: 162px;
 }

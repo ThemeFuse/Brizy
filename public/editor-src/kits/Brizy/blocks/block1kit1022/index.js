@@ -80,7 +80,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color6\" style=\"background-color: transparent;\">Brizy is a front-end page builder where what you see is what you get. We designed it so you can be in complete control.</span></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-paragraph\"><span class=\"brz-cp-color6\" style=\"background-color: transparent;\"><span>It is a front-end page builder where what you see is what you get. We designed it so you can be in complete control.</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -430,7 +430,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-xs-center brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color6\">No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it. It's easy with Brizy.</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color6\" style=\"background-color: transparent;\"><span>No matter if you've used a visual page builder before, with this you'll be a pro the second you start using it. It's easy with this.</span></span></p>"
                                                                 }
                                                             }
                                                         ]

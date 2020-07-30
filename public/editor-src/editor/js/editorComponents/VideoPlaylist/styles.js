@@ -44,6 +44,12 @@ export function styleContents(v, vs, vd) {
     ".brz && .brz-video-playlist-video-item:hover": {
       standart: ["cssStyleBgColor", "cssStyleElementVideoPlaylistBorderItem"]
     },
+    ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active": {
+      standart: [
+        "cssStyleElementVideoPlaylistItemActiveBg",
+        "cssStyleElementVideoPlaylistBorderItemActive"
+      ]
+    },
     ".brz &&:hover .brz-video-playlist-video-item": {
       standart: [
         "cssStylePaddingFourFields",
@@ -61,6 +67,9 @@ export function styleContents(v, vs, vd) {
         "cssStyleTypography2LineHeight"
       ]
     },
+    ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active .brz-video-playlist-title-video span:first-child": {
+      standart: ["cssStyleElementVideoPlaylistItemActiveColor"]
+    },
     ".brz &&:hover .brz-video-playlist-video-item .brz-video-playlist-title-video span:last-child": {
       standart: [
         "cssStyleCoverSubTitleColor",
@@ -70,6 +79,9 @@ export function styleContents(v, vs, vd) {
         "cssStyleElementVideoPlaylistSubTitleVideoTypography2FontWeight",
         "cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacing"
       ]
+    },
+    ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active .brz-video-playlist-title-video span:last-child": {
+      standart: ["cssStyleElementVideoPlaylistItemSubtitleActiveColor"]
     },
     ".brz &&:hover .brz-video-playlist-video-element": {
       standart: ["cssStyleElementVideoPlaylistImageSize"]

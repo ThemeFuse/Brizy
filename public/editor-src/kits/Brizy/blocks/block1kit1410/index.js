@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1410",
   thumbnailWidth: 600,
-  thumbnailHeight: 380,
+  thumbnailHeight: 369,
   title: "block1kit1410",
   
   keywords: "button,call to action,cover,header,image background,promo",
@@ -43,7 +43,7 @@ module.exports = {
                                             "_styles": [
                                                 "richText"
                                             ],
-                                            "text": "<h1 class=\"brz-text-lg-left brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-ls-lg-m_1_5 brz-ff-montserrat brz-fs-lg-80 brz-fw-300\"><strong style=\"opacity: 1;\" class=\"brz-cp-color8\">Creating</strong><span style=\"opacity: 1;\" class=\"brz-cp-color8\"> Websites Fast Only&nbsp;</span><strong style=\"opacity: 1;\" class=\"brz-cp-color8\">With Brizy</strong></h1>"
+                                            "text": "<h1 class=\"brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-montserrat brz-text-lg-left brz-lh-lg-1_3 brz-lh-xs-1_3 brz-fs-xs-34 brz-ls-lg-m_1_5 brz-fs-lg-80\"><span class=\"brz-cp-color8\"><span>Seize </span></span><strong class=\"brz-cp-color8\"><span><span>Cutting-edge </span></span></strong><span class=\"brz-cp-color8\"><span>Interfaces</span></span></h1>"
                                         }
                                     }
                                 ],

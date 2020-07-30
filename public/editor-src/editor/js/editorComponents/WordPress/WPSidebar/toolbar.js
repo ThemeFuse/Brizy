@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 export default sidebars => {
   const sidebarsList = sidebars.map(sidebar => ({
@@ -14,12 +13,12 @@ export default sidebars => {
   };
 };
 
-const getItemsForDesktop = sidebars => v => {
+const getItemsForDesktop = sidebars => () => {
   return [
     {
       id: "toolbarWPSidebar",
-      type: "popover",
-      icon: "nc-wp-shortcode",
+      type: "popover-dev",
+      config: { icon: "nc-wp-shortcode" },
       position: 90,
       options: [
         {
@@ -33,35 +32,19 @@ const getItemsForDesktop = sidebars => v => {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
+      type: "popover-dev",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider",
-          slider: {
+          type: "slider-dev",
+          config: {
             min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: v.width
-          },
-          onChange: ({ value: width }) => ({ width })
+            max: 100,
+            units: [{ title: "%", value: "%" }]
+          }
         },
         {
           id: "advancedSettings",
@@ -74,78 +57,46 @@ const getItemsForDesktop = sidebars => v => {
   ];
 };
 
-const getItemsForTablet = v => {
+const getItemsForTablet = () => {
   return [
     {
       id: "tabletToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
+      type: "popover-dev",
       roles: ["admin"],
       position: 110,
       options: [
         {
-          id: "tabletWidth",
+          id: "width",
           label: t("Width"),
-          type: "slider",
-          slider: {
+          type: "slider-dev",
+          config: {
             min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: tabletSyncOnChange(v, "width")
-          },
-          onChange: ({ value: tabletWidth }) => ({ tabletWidth })
+            max: 100,
+            units: [{ title: "%", value: "%" }]
+          }
         }
       ]
     }
   ];
 };
 
-const getItemsForMobile = v => {
+const getItemsForMobile = () => {
   return [
     {
       id: "mobileToolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
+      type: "popover-dev",
       roles: ["admin"],
       position: 110,
       options: [
         {
-          id: "mobileWidth",
+          id: "width",
           label: t("Width"),
-          type: "slider",
-          slider: {
+          type: "slider-dev",
+          config: {
             min: 1,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
-          },
-          value: {
-            value: mobileSyncOnChange(v, "width")
-          },
-          onChange: ({ value: mobileWidth }) => ({ mobileWidth })
+            max: 100,
+            units: [{ title: "%", value: "%" }]
+          }
         }
       ]
     }

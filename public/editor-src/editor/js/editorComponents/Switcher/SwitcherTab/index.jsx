@@ -3,8 +3,9 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Items from "./items";
 import defaultValue from "./defaultValue.json";
-import TextEditor from "visual/editorComponents/Text/Editor";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
+import Animation from "visual/component/Animation";
 
 class SwitcherTab extends EditorComponent {
   static get componentId() {
@@ -38,7 +39,7 @@ class SwitcherTab extends EditorComponent {
   }
 
   renderContent() {
-    const { meta, active } = this.props;
+    const { meta, active, animationClassName } = this.props;
     const className = classnames("brz-switcher__content--tab", {
       "brz-switcher__content--tab--active": active
     });
@@ -48,9 +49,13 @@ class SwitcherTab extends EditorComponent {
     });
 
     return (
-      <div className={className}>
+      <Animation
+        component={"div"}
+        componentProps={{ className }}
+        animationClass={animationClassName}
+      >
         <Items {...itemsProps} />
-      </div>
+      </Animation>
     );
   }
 

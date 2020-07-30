@@ -129,7 +129,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with Brizy!</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with our builder!</span></span></p>"
                                                                 }
                                                             }
                                                         ],
@@ -525,58 +525,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 92,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 92
                                                                 }
                                                             }
                                                         ],
@@ -604,28 +554,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -639,7 +567,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -673,7 +600,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -867,7 +793,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-text-lg-left brz-tp-paragraph\"><span style=\"background-color: transparent;\" class=\"brz-cp-color7\">Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with Brizy!</span></p>"
+                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left\"><span class=\"brz-cp-color7\" style=\"background-color: transparent;\"><span>Bring vibrance to your site by setting color &amp; transparency&nbsp;with our color overlays options.&nbsp;Simple, fast &amp; stylish only with our builder!</span></span></p>"
                                                                 }
                                                             }
                                                         ],

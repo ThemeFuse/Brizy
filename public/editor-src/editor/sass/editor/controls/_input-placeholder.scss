@@ -1,0 +1,57 @@
+.brz-input__placeholder {
+  position: relative;
+  display: block;
+  width: 283px;
+  margin: 0 auto 14px;
+
+  &:last-of-type {
+    margin-bottom: 37px;
+  }
+  &-icon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 20px;
+    color: $brand-primary;
+    cursor: pointer;
+    transform: translateY(-0.5em);
+  }
+  .brz-label {
+    display: block;
+  }
+  .brz-p {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    cursor: text;
+    transform: translateY(-50%);
+    text-transform: uppercase;
+    margin: 0;
+    opacity: 0;
+    transition: 0.2s linear opacity;
+  }
+  .brz-input {
+    width: 100%;
+    height: 46px;
+    border: none;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    outline: 0;
+  }
+  .brz-input:invalid ~ .brz-p {
+    opacity: 1;
+    z-index: 1;
+    transition: 0.2s linear opacity;
+  }
+  .brz-input:focus ~ .brz-p {
+    opacity: 0;
+    z-index: -1;
+    transition: 0.2s linear opacity;
+  }
+  .brz-span {
+    color: $brand-primary;
+    padding-left: 3px;
+  }
+}

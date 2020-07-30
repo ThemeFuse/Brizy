@@ -4,10 +4,10 @@ module.exports = {
   thumbnailHeight: 80,
   title: "block1kit4203",
   
-  keywords: "header,logo,menu",
+  keywords: "header,logo,menu,pro",
   cat: [4590],
   type: 1,
-  
+  pro: true,
   
   resolve: {
     "type": "SectionHeader",
@@ -667,7 +667,7 @@ module.exports = {
                     "tempBgColorOpacity": 1,
                     "bgColorHex": "#ffffff",
                     "bgColorPalette": "color2",
-                    "tabsColor": "",
+                    "tabsColor": "tabOverlay",
                     "tempBgColorPalette": "color2",
                     "borderRadius": 0,
                     "borderTopLeftRadius": 0,

@@ -481,3 +481,7 @@ export function cssStyleElementWPPostContentTypography2H6LetterSpacing({
     prefix: "h6"
   })}px;`;
 }
+
+export function cssStyleElementWPPostContentFontWeightInherit() {
+  return "font-weight: inherit;";
+}

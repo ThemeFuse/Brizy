@@ -1226,7 +1226,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\">Modern websites are complex beasts. With Brizy you can enjoy the building process!</span></p>"
+                                                                    "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>Modern websites are complex beasts. With this you can enjoy the building process!</span></span></p>"
                                                                 }
                                                             }
                                                         ],

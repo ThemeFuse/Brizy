@@ -1,7 +1,7 @@
 import React from "react";
 import { ToolbarItems, ToolbarItemsProps } from "../ToolbarItems";
 import { clamp } from "visual/utils/math";
-import { setPosition } from "./state";
+import { setPosition } from "../state";
 
 const SIDEBAR_WIDTH = 58;
 
@@ -51,6 +51,7 @@ export class PortalToolbarPositioner extends React.Component<
     const toolbar = this.toolbarItemsContainerRef.current;
     const arrow = this.toolbarItemsArrowRef.current;
     const window = node.ownerDocument.defaultView;
+    const viewportWidth = document.documentElement.clientWidth;
 
     // If there are no items do not reposition
     if (!toolbar) {
@@ -91,8 +92,7 @@ export class PortalToolbarPositioner extends React.Component<
     const toolbarOutsideIframe =
       node.ownerDocument.defaultView === window.parent;
     const toolbarMinLeft = toolbarOutsideIframe ? SIDEBAR_WIDTH : 0;
-    const toolbarMaxLeft =
-      document.documentElement.clientWidth - toolbarRect.width;
+    const toolbarMaxLeft = viewportWidth - toolbarRect.width;
     const toolbarClampedLeft = clamp(
       toolbarLeft,
       toolbarMinLeft,
@@ -117,6 +117,16 @@ export class PortalToolbarPositioner extends React.Component<
 
     // arrow css
     if (arrow) {
+      // this hides the arrow when it would have been positioned so close
+      // to the edge of the toolbar, that a visual gap between it and the toolbar
+      // would have been see because of the toolbar's border radius
+      // 23 is a magic number that was determined through experimentation
+      if (toolbarRect.width / 2 - Math.abs(arrowLeftShift) < 23) {
+        arrow.classList.add("brz-hidden");
+      } else {
+        arrow.classList.remove("brz-hidden");
+      }
+
       if (toolbarBelow) {
         arrow.classList.remove("brz-ed-arrow--top-center");
         arrow.classList.add("brz-ed-arrow--bottom-center");

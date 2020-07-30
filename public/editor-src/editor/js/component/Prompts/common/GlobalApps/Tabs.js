@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import { noop } from "underscore";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 
@@ -17,9 +18,12 @@ class Tabs extends Component {
   }
 
   static defaultProps = {
+    value: {},
+    opened: false,
     tabs: [],
     currentTab: "",
-    blockTabsWhenLoading: true
+    blockTabsWhenLoading: true,
+    onClose: noop
   };
 
   handleLoading = loading => {
@@ -132,8 +136,14 @@ class Tabs extends Component {
   }
 
   render() {
+    const { opened, onClose } = this.props;
+
     return (
-      <Fixed className="brz-ed-popup-integrations" onClose={this.props.onClose}>
+      <Fixed
+        className="brz-ed-popup-integrations"
+        opened={opened}
+        onClose={onClose}
+      >
         <div className="brz-ed-popup-wrapper">
           {this.renderHeader()}
           <div className="brz-ed-popup-content">

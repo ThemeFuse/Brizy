@@ -1,12 +1,10 @@
 import React from "react";
 import classnames from "classnames";
-import Config from "visual/global/Config";
 import ImageSetter from "./index.jsx";
 import EditorIcon from "visual/component/EditorIcon";
 import { getImageUid } from "visual/utils/api/editor";
 import { getImageFormat, preloadImage } from "visual/utils/image";
-
-const { pageAttachments } = Config.get("wp");
+import { imageAttachments } from "visual/utils/image/imageAttachments";
 
 export default class WPImageSetter extends ImageSetter {
   wpMediaFrame = null;
@@ -51,10 +49,9 @@ export default class WPImageSetter extends ImageSetter {
 
         getImageUid(attachment.get("id"))
           .then(r => {
-            const { x, y } = this.props;
-            // a little hacky because it mutates the config
-            pageAttachments.images[r.uid] = true;
+            imageAttachments.add(r.uid);
 
+            const { x, y } = this.props;
             const { url } = attachment.toJSON();
 
             // we use preloadImage function not attachment.get("width"), because

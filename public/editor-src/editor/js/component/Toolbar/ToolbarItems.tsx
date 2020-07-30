@@ -35,6 +35,10 @@ export class ToolbarItems extends React.Component<
     itemsRenderer: undefined
   };
 
+  containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+
+  arrowRef: React.RefObject<HTMLDivElement> = React.createRef();
+
   // api
   setItemsRenderer = (itemsRenderer: ToolbarItemsRenderer): void => {
     this.setState({ itemsRenderer }, this.props.onContentChange);
@@ -45,7 +49,7 @@ export class ToolbarItems extends React.Component<
   };
 
   renderItems = (items: ToolbarItemsItems): React.ReactElement => {
-    const { position } = this.props;
+    const { position, containerRef } = this.props;
 
     const toolbarItems = items.map((item, index) => (
       <ToolbarItem
@@ -53,6 +57,7 @@ export class ToolbarItems extends React.Component<
         data={item}
         toolbar={{
           ...this,
+          toolbarRef: containerRef ?? this.containerRef,
           toolbarCSSPosition: position,
           toolbarItemIndex: index + 1,
           toolbarItemsLength: items.length
@@ -86,7 +91,7 @@ export class ToolbarItems extends React.Component<
 
     return (
       <div
-        ref={containerRef}
+        ref={containerRef ?? this.containerRef}
         className="brz-ed-toolbar"
         onClick={onClick}
         onMouseEnter={onMouseEnter}
@@ -97,7 +102,7 @@ export class ToolbarItems extends React.Component<
           : this.renderItems(filteredItems)}
         {arrow && (
           <div
-            ref={arrowRef}
+            ref={arrowRef ?? this.arrowRef}
             className="brz-ed-arrow brz-ed-arrow--top-center brz-ed-toolbar__arrow"
           />
         )}

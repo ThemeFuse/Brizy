@@ -2,7 +2,8 @@ import React from "react";
 import { videoData } from "visual/utils/video";
 import {
   deviceStateValueByKey,
-  makeKeyByStateDevice
+  makeKeyByStateDevice,
+  validateKeyByProperty
 } from "visual/utils/onChange";
 import Background from "./Background";
 
@@ -65,15 +66,7 @@ export default function BackgroundContainer({
   className,
   children
 }) {
-  const {
-    bgVideo,
-    bgVideoLoop,
-    bgVideoStart,
-    bgMapZoom,
-    bgMapAddress,
-    shapeTopType,
-    shapeBottomType
-  } = value;
+  const { bgVideo, bgVideoLoop, bgVideoStart, bgMapZoom, bgMapAddress } = value;
   const currentMedia = deviceStateValueByKey(value, "media");
   const { media, opacity } = getMediaProps(value);
 
@@ -86,8 +79,8 @@ export default function BackgroundContainer({
     border: getBorder(value),
     boxShadow: getBoxShadow(value),
     parallax: getParallax(value, meta),
-    shapeTop: shapeTopType && shapeTopType !== "none",
-    shapeBottom: shapeBottomType && shapeBottomType !== "none"
+    shapeTop: validateKeyByProperty(value, "shapeTopType", "none"),
+    shapeBottom: validateKeyByProperty(value, "shapeBottomType", "none")
   };
 
   if (currentMedia === "video") {

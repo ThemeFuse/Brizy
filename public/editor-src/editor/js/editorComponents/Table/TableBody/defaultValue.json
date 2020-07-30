@@ -1,0 +1,222 @@
+{
+  "content": {
+    "items": []
+  },
+
+  "style": {
+    "className": "",
+    "customCSS": "",
+
+    "horizontalAlign": "left",
+
+    "iconSize": "small",
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": null,
+    "iconPosition": "left",
+    "iconSpacing": 10,
+    "iconSpacingSuffix": null,
+
+    "tabletIconSize": null,
+    "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
+    "tabletIconPosition": null,
+    "tabletIconSpacing": null,
+    "tabletIconSpacingSuffix": null,
+
+    "mobileIconSize": null,
+    "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null,
+    "mobileIconPosition": null,
+    "mobileIconSpacing": null,
+    "mobileIconSpacingSuffix": null,
+
+    "iconStrokeWidth": 1,
+
+    "iconSmallSize": 16,
+    "iconMediumSize": 24,
+    "iconLargeSize": 32,
+
+    "tabletIconSmallSize": 16,
+    "tabletIconMediumSize": 24,
+    "tabletIconLargeSize": 32,
+
+    "mobileIconSmallSize": 16,
+    "mobileIconMediumSize": 24,
+    "mobileIconLargeSize": 32,
+
+    "families": {
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 16,
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 2.4,
+    "typographyLetterSpacing": 0,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color8",
+
+    "activeColorHex": null,
+    "activeColorOpacity": null,
+    "activeColorPalette": null,
+
+    "tempActiveColorOpacity": null,
+    "tempActiveColorPalette": null,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#2B3039",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "activeBgColorHex": null,
+    "activeBgColorOpacity": null,
+    "activeBgColorPalette": null,
+
+    "tempActiveBgColorOpacity": null,
+    "tempActiveBgColorPalette": null,
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 0.1,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 0.1,
+    "tempBorderColorPalette": "",
+
+    "borderStyle": "solid",
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 1,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 30,
+    "borderTopLeftRadius": 30,
+    "borderTopRightRadius": 30,
+    "borderBottomRightRadius": 30,
+    "borderBottomLeftRadius": 30,
+
+    "tempBorderRadius": 30,
+    "tempBorderTopLeftRadius": 30,
+    "tempBorderTopRightRadius": 30,
+    "tempBorderBottomRightRadius": 30,
+    "tempBorderBottomLeftRadius": 30,
+
+    "paddingType": "ungrouped",
+    "tempPaddingType": "ungrouped",
+
+    "padding": 10,
+    "paddingTop": 10,
+    "paddingRight": 25,
+    "paddingBottom": 10,
+    "paddingLeft": 25,
+
+    "tempPadding": 10,
+    "tempPaddingTop": 10,
+    "tempPaddingRight": 25,
+    "tempPaddingBottom": 10,
+    "tempPaddingLeft": 25,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontFamilyType": null,
+    "tabletTypographyFontSize": null,
+    "tabletTypographyLineHeight": null,
+    "tabletTypographyLetterSpacing": null,
+    "tabletTypographyFontWeight": null,
+
+    "tabletPaddingType": "ungrouped",
+    "tempTabletPaddingType": "ungrouped",
+
+    "tabletPadding": 0,
+    "tabletPaddingTop": 0,
+    "tabletPaddingRight": 10,
+    "tabletPaddingBottom": 0,
+    "tabletPaddingLeft": 10,
+
+    "tempTabletPadding": 0,
+    "tempTabletPaddingTop": 0,
+    "tempTabletPaddingRight": 10,
+    "tempTabletPaddingBottom": 0,
+    "tempTabletPaddingLeft": 10,
+
+    "tabletPaddingSuffix": "px",
+    "tabletPaddingTopSuffix": "px",
+    "tabletPaddingRightSuffix": "px",
+    "tabletPaddingBottomSuffix": "px",
+    "tabletPaddingLeftSuffix": "px",
+
+    "tempTabletPaddingSuffix": "px",
+    "tempTabletPaddingTopSuffix": "px",
+    "tempTabletPaddingRightSuffix": "px",
+    "tempTabletPaddingBottomSuffix": "px",
+    "tempTabletPaddingLeftSuffix": "px",
+
+    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontFamilyType": null,
+    "mobileTypographyFontSize": null,
+    "mobileTypographyLineHeight": null,
+    "mobileTypographyLetterSpacing": null,
+    "mobileTypographyFontWeight": null,
+
+    "mobilePaddingType": "ungrouped",
+    "tempMobilePaddingType": "ungrouped",
+
+    "mobilePadding": 0,
+    "mobilePaddingTop": 0,
+    "mobilePaddingRight": 10,
+    "mobilePaddingBottom": 0,
+    "mobilePaddingLeft": 10,
+
+    "tempMobilePadding": 0,
+    "tempMobilePaddingTop": 0,
+    "tempMobilePaddingRight": 10,
+    "tempMobilePaddingBottom": 0,
+    "tempMobilePaddingLeft": 10,
+
+    "mobilePaddingSuffix": "px",
+    "mobilePaddingTopSuffix": "px",
+    "mobilePaddingRightSuffix": "px",
+    "mobilePaddingBottomSuffix": "px",
+    "mobilePaddingLeftSuffix": "px",
+
+    "tempMobilePaddingSuffix": "px",
+    "tempMobilePaddingTopSuffix": "px",
+    "tempMobilePaddingRightSuffix": "px",
+    "tempMobilePaddingBottomSuffix": "px",
+    "tempMobilePaddingLeftSuffix": "px"
+  }
+}

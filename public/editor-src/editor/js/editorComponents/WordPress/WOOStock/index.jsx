@@ -1,13 +1,13 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 
 export default class WOOStock extends EditorComponent {
   static get componentId() {
@@ -17,10 +17,10 @@ export default class WOOStock extends EditorComponent {
   static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
-    const { className } = v;
-    const classNameStyle = classnames(
-      "brz-woostock",
-      className,
+    const { className: className_ } = v;
+    const className = classnames(
+      "brz-woo-stock",
+      className_,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -32,12 +32,12 @@ export default class WOOStock extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <WPShortcode
-          name="brizy_woo_stock"
-          placeholderIcon="wp-shortcode"
-          placeholderContainerWidth={this.props.meta.desktopW}
-          className={classNameStyle}
-        />
+        <div className={className}>
+          <DynamicContentHelper
+            placeholder="{{brizy_woo_stock}}"
+            tagName="div"
+          />
+        </div>
       </Toolbar>
     );
   }

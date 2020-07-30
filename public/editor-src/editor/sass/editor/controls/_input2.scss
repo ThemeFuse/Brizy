@@ -41,6 +41,10 @@
   }
 
   // Size Styles
+  &--auto {
+    flex: 1 1 auto;
+  }
+
   &--large input {
     max-width: $control-lg-width;
   }

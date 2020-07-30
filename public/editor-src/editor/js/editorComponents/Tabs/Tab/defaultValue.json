@@ -6,24 +6,27 @@
     "labelText": "",
     "labelClassName": "",
 
+    "images": {
+      "bgImageSrc": "",
+      "tabletBgImageSrc": "",
+      "mobileBgImageSrc": ""
+    },
+
     "iconType": "",
     "iconName": "",
 
-    "bgImageSrc": "",
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgImageExtension": "",
 
-    "tabletBgImageSrc": "",
     "tabletBgPositionY": 50,
     "tabletBgPositionX": 50,
     "tabletBgImageWidth": 0,
     "tabletBgImageHeight": 0,
     "tabletBgImageExtension": "",
 
-    "mobileBgImageSrc": "",
     "mobileBgPositionY": 50,
     "mobileBgPositionX": 50,
     "mobileBgImageWidth": 0,

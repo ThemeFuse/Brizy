@@ -9,6 +9,7 @@ import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 class Twitter extends EditorComponent {
   static get componentId() {
@@ -16,6 +17,8 @@ class Twitter extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   renderForEdit(v, vs, vd) {
     const {
@@ -68,9 +71,9 @@ class Twitter extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <TwitterPlugin type={twitterType} data={data[twitterType]} />
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

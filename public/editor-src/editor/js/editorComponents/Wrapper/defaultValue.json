@@ -7,22 +7,67 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
+    "zIndexSuffix": null,
 
     "hoverZIndex": null,
+    "hoverZIndexSuffix": null,
 
     "showOnTablet": "on",
 
     "tabletZIndex": null,
+    "tabletZIndexSuffix": null,
 
     "showOnMobile": "on",
 
-    "mobileZIndex": null
+    "mobileZIndex": null,
+    "mobileZIndexSuffix": null
   },
 
   "style": {
     "className": "",
 
+    "customAttributes": "",
+    "customAttributesPopulation": null,
+
     "horizontalAlign": "center",
+
+    "width": 30,
+    "widthSuffix": "%",
+    "height": null,
+    "heightSuffix": "%",
+    "offsetX": 0,
+    "offsetXSuffix": "px",
+    "offsetXAlignment": "left",
+    "offsetY": 0,
+    "offsetYSuffix": "px",
+    "offsetYAlignment": "top",
+    "elementPosition": "relative",
+
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
+    "tabletHeight": null,
+    "tabletHeightSuffix": null,
+    "tabletElementWidthType": null,
+    "tabletOffsetX": null,
+    "tabletOffsetXSuffix": null,
+    "tabletOffsetXAlignment": null,
+    "tabletOffsetY": null,
+    "tabletOffsetYSuffix": null,
+    "tabletOffsetYAlignment": null,
+    "tabletElementPosition": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+    "mobileHeight": null,
+    "mobileHeightSuffix": null,
+    "mobileElementWidthType": null,
+    "mobileOffsetX": null,
+    "mobileOffsetXSuffix": null,
+    "mobileOffsetXAlignment": null,
+    "mobileOffsetY": null,
+    "mobileOffsetYSuffix": null,
+    "mobileOffsetYAlignment": null,
+    "mobileElementPosition": null,
 
     "paddingType": "grouped",
     "tempPaddingType": "grouped",
@@ -189,6 +234,18 @@
     "animationDuration": 1000,
     "animationDelay": 1000,
 
-    "tempAnimationName": "none"
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": "none",
+    "tabletAnimationDuration": 1000,
+    "tabletAnimationDelay": 1000,
+
+    "tempTabletAnimationName": "none",
+
+    "mobileAnimationName": "none",
+    "mobileAnimationDuration": 1000,
+    "mobileAnimationDelay": 1000,
+
+    "tempMobileAnimationName": "none"
   }
 }

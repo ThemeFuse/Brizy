@@ -1,82 +1,166 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarElementCounterStyles,
-  toolbarElementCounterStart,
-  toolbarElementCounterEnd
-} from "visual/utils/toolbar";
+import { toolbarElementCounterStyles } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device });
 
+  const richTextDC = getDynamicContentChoices("richText", true);
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
     dvv("colorPalette")
   );
 
+  const isRadial = v.type === "radial";
+  const isSimple = v.type === "simple";
+
   return [
     {
-      id: "toolbarCurrentShortcode",
-      type: "popover",
+      id: "toolbarCurrentElement",
+      type: "popover-dev",
       devices: "desktop",
-      icon: "nc-counter-outline",
-      title: t("Counter"),
+      config: {
+        icon: "nc-counter-outline",
+        title: t("Counter")
+      },
       position: 70,
       options: [
-        toolbarElementCounterStyles({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        }),
-        toolbarElementCounterStart({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal",
-          disabled: v.type !== "simple"
-        }),
-        toolbarElementCounterEnd({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        }),
         {
-          id: "strokeWidth",
-          label: t("Width"),
-          type: "slider-dev",
-          disabled: v.type === "simple" || v.type === "pie",
-          config: {
-            min: 1,
-            max: 32
-          }
-        },
-        {
-          id: "duration",
-          label: t("Duration"),
-          type: "slider-dev",
-          config: {
-            min: 0,
-            step: 0.2,
-            max: 10,
-            units: [{ value: "sec", title: "sec" }]
-          }
+          id: "tabsCurrentElement",
+          type: "tabs-dev",
+          tabs: [
+            {
+              id: "tabCurrentElementCounter",
+              label: t("Counter"),
+              options: [
+                toolbarElementCounterStyles({
+                  v,
+                  device,
+                  devices: "desktop",
+                  state: "normal"
+                }),
+                {
+                  id: "start",
+                  type: "number-dev",
+                  label: t("Start"),
+                  devices: "desktop",
+                  disabled: v.type !== "simple",
+                  config: {
+                    size: "short",
+                    min: -999999,
+                    max: 999999,
+                    spinner: false
+                  },
+                  population: richTextDC
+                },
+                {
+                  id: "end",
+                  type: "number-dev",
+                  label: t("End"),
+                  devices: "desktop",
+                  config: {
+                    size: "short",
+                    min: -999999,
+                    max: 999999,
+                    spinner: false
+                  },
+                  population: richTextDC
+                },
+                {
+                  id: "strokeWidth",
+                  label: t("Width"),
+                  type: "slider-dev",
+                  devices: "desktop",
+                  disabled: v.type === "simple" || v.type === "pie",
+                  config: {
+                    min: 1,
+                    max: 32
+                  }
+                },
+                {
+                  id: "duration",
+                  label: t("Duration"),
+                  type: "slider-dev",
+                  devices: "desktop",
+                  config: {
+                    min: 0,
+                    step: 0.2,
+                    max: 10,
+                    units: [{ value: "sec", title: "sec" }]
+                  }
+                }
+              ]
+            },
+            {
+              id: "tabCurrentElementAdvanced",
+              label: t("Advanced"),
+              options: [
+                {
+                  id: "prefixLabelRadial",
+                  label: t("Prefix"),
+                  type: "inputText-dev",
+                  placeholder: "Prefix",
+                  disabled: !isRadial,
+                  config: {
+                    size: "medium"
+                  },
+                  population: richTextDC
+                },
+                {
+                  id: "suffixLabelRadial",
+                  label: t("Suffix"),
+                  type: "inputText-dev",
+                  placeholder: "Suffix",
+                  disabled: !isRadial,
+                  config: {
+                    size: "medium"
+                  },
+                  population: richTextDC
+                },
+                {
+                  id: "prefixLabel",
+                  label: t("Prefix"),
+                  type: "inputText-dev",
+                  placeholder: "Prefix",
+                  disabled: !isSimple,
+                  config: {
+                    size: "medium"
+                  },
+                  population: richTextDC
+                },
+                {
+                  id: "suffixLabel",
+                  label: t("Suffix"),
+                  type: "inputText-dev",
+                  placeholder: "Suffix",
+                  disabled: !isSimple,
+                  config: {
+                    size: "medium"
+                  },
+                  population: richTextDC
+                }
+              ]
+            }
+          ]
         }
       ]
     },
     {
       id: "popoverTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       disabled: v.type === "empty" || v.type === "pie",
-      title: t("Typography"),
-      roles: ["admin"],
       position: 70,
       options: [
         {
@@ -90,21 +174,22 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabText",
@@ -148,10 +233,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 110,
       disabled: v.type === "simple",
       options: [
@@ -162,8 +248,11 @@ export function getItems({ v, device }) {
           disabled: v.type === "simple",
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("widthSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {

@@ -5,7 +5,7 @@ module.exports = {
   title: "popup1764",
   
   keywords: "",
-  cat: [1754],
+  cat: [1493],
   type: 0,
   pro: true,
   resolve: {
@@ -462,7 +462,7 @@ module.exports = {
         "tempBgColorOpacity": 0.94,
         "colorPalette": "color1",
         "colorOpacity": 1,
-        "popupId": "pmcipoilyxyxngmynjvnmdnkpszrfftcymdw",
+        "popupId": "zslhlffcqjfvaczlerujxuqhxpggiltwdkqc",
         "width": 800,
         "widthSuffix": "px",
         "tabsState": "",

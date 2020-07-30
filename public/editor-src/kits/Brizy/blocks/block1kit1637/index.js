@@ -1,7 +1,7 @@
 module.exports = {
   id: "block1kit1637",
   thumbnailWidth: 600,
-  thumbnailHeight: 306,
+  thumbnailHeight: 348,
   title: "block1kit1637",
   
   keywords: "button,cover,header,image background,image box,images,promo,slider,two columns",
@@ -95,7 +95,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h2 class=\"brz-text-lg-left brz-tp-heading2 brz-text-xs-center\"><span class=\"brz-cp-color8\">Easy with Brizy</span></h2>"
+                                                                    "text": "<h2 class=\"brz-text-lg-left brz-tp-heading2 brz-text-xs-center\"><span class=\"brz-cp-color8\"><span>Global Settings</span></span></h2>"
                                                                 }
                                                             }
                                                         ],
@@ -141,7 +141,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-mb-lg-20 brz-text-xs-center brz-tp-paragraph brz-mb-xs-15 brz-mb-sm-0\"><span class=\"brz-cp-color7\">With Brizy, you can create beautiful WordPress pages in minutes by adding pre-made design elements, called items to the page and then edit everything within. You can even start from scratch and build your own items. It's easy with Brizy.</span></p>"
+                                                                    "text": "<p class=\"brz-mb-sm-0 brz-mb-xs-15 brz-tp-paragraph brz-text-xs-center brz-mb-lg-20\"><span class=\"brz-cp-color7\"><span>Many of us have back problems, it is a very wide problem for people, ever since we started walking on our tow legs and raised our backs a large percent of human have suffered pain in the back from different reasons.</span></span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -333,7 +333,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-mb-xs-15 brz-tp-paragraph brz-text-xs-center brz-mb-lg-20 brz-mb-sm-0\"><span class=\"brz-cp-color7\">The bread &amp; butter of our platform are the pre-built design sections, called items. These can be added to your landing page in a couple of clicks and every text, image, icon or button that make up the Block. It's easy with Brizy.</span></p>"
+                                                                    "text": "<p class=\"brz-mb-sm-0 brz-mb-lg-20 brz-text-xs-center brz-tp-paragraph brz-mb-xs-15\"><span class=\"brz-cp-color7\"><span>The rules of travel have altered so much in the last few years, with strict regulation regarding air travel, questionable car searches that may vary in regulation from state to state. </span>When one door of happiness closes, another opens.</span></p>"
                                                                 }
                                                             }
                                                         ]
@@ -794,7 +794,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-mb-xs-15 brz-tp-paragraph brz-text-xs-center brz-mb-lg-20 brz-mb-sm-0\"><span class=\"brz-cp-color7\">Just click &amp; drag to create beautiful pages in a matter of minutes. No designer talent, developer wits or coding skills necessary. No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.&nbsp;</span></p>"
+                                                                    "text": "<p class=\"brz-mb-sm-0 brz-mb-lg-20 brz-text-xs-center brz-tp-paragraph brz-mb-xs-15\"><span class=\"brz-cp-color7\"><span>Every former smoker can tell you just how hard it is to stop smoking cigarettes. However, there are a range of stop smoking commodities that can assist you on your transition to a smoke-free lifestyle. </span>There are not many cities that have.</span></p>"
                                                                 }
                                                             }
                                                         ]

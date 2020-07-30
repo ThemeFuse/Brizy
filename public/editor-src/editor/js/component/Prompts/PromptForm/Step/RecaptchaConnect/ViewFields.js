@@ -3,6 +3,7 @@ import _ from "underscore";
 import { t } from "visual/utils/i18n";
 import Button from "../../../common/Button";
 import ScrollPane from "visual/component/ScrollPane";
+import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 
 class ViewFields extends Component {
   static defaultProps = {
@@ -67,24 +68,15 @@ class ViewFields extends Component {
       const { title, name, value } = key;
 
       return (
-        <label key={index} className="brz-ed-popup-integrations__connect-label">
-          <input
-            className="brz-input"
-            name={key}
-            type="text"
-            value={value}
-            required
-            onChange={e => {
-              onChange(e.target.value, name);
-            }}
-            onKeyDown={this.handleKeyDown}
-          />
-          <p className="brz-p">
-            <strong className="brz-strong">
-              {title} <span className="brz-span">({t("required")})</span>
-            </strong>
-          </p>
-        </label>
+        <InputPlaceholder
+          key={index}
+          title={title}
+          value={value}
+          required={true}
+          onChange={e => {
+            onChange(e.target.value, name);
+          }}
+        />
       );
     });
   }
@@ -142,12 +134,12 @@ class ViewFields extends Component {
             <div className="brz-ed-popup-integrations__connect-body">
               {this.renderItems()}
               {!validated ? (
-                <Button type="tail" loading={nextLoading} onClick={onRetry}>
+                <Button color="teal" loading={nextLoading} onClick={onRetry}>
                   {t("Try Again")}
                 </Button>
               ) : (
                 <Button
-                  type="tail"
+                  color="teal"
                   loading={nextLoading}
                   disabled={!confirmed}
                   onClick={onNext}
@@ -155,7 +147,7 @@ class ViewFields extends Component {
                   {t("Connect")}
                 </Button>
               )}
-              <Button type="default" loading={prevLoading} onClick={onPrev}>
+              <Button color="default" loading={prevLoading} onClick={onPrev}>
                 {t("Cancel")}
               </Button>
             </div>

@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
 import Scrollbars from "react-custom-scrollbars";
-import { fontSelector, stylesSelector } from "visual/redux/selectors";
+import { stylesSelector } from "visual/redux/selectors";
+import { fontSelector } from "visual/redux/selectors2";
 import ImageLoad from "../common/ImageLoad";
 import { templateThumbnailUrl } from "visual/utils/templates";
 import { assetUrl } from "visual/utils/asset";
@@ -49,6 +50,17 @@ class Details extends Component {
 
   thumbnailDetails = React.createRef();
 
+  hasStyleInProject() {
+    const {
+      projectStyles,
+      data: { styles }
+    } = this.props;
+
+    return projectStyles.find(({ id }) =>
+      styles.some(({ id: _id }) => _id === id)
+    );
+  }
+
   componentDidMount() {
     this.handleUpdateThumbnail();
 
@@ -83,21 +95,18 @@ class Details extends Component {
       onClose
     } = this.props;
     const { active: pageId, importStyles } = this.state;
-
     const page = await fetch(assetUrl(`templates/resolves/${pageId}.json`));
     const { blocks } = await page.json();
+    let templateFonts = getUsedModelsFonts({ models: blocks });
     let styles;
 
-    if (importStyles) {
-      const data = await fetch(assetUrl("templates/meta.json"));
-      const { templates } = await data.json();
+    if (!this.hasStyleInProject()) {
+      const meta = await fetch(assetUrl("templates/meta.json"));
+      const { templates } = await meta.json();
 
-      styles = templates.find(({ name }) => name === id).styles;
-    }
+      styles = templates.find(({ name }) => name === id)?.styles || [];
 
-    let templateFonts = getUsedModelsFonts({ models: blocks });
-
-    if (importStyles) {
+      // Check fonts
       const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
       const fonts = getUsedStylesFonts(fontStyles);
 
@@ -120,7 +129,6 @@ class Details extends Component {
   render() {
     const {
       HeaderSlotLeft,
-      projectStyles,
       data: { name: title, pages, styles, pro }
     } = this.props;
     const {
@@ -129,9 +137,7 @@ class Details extends Component {
       previewPointer,
       importStyles
     } = this.state;
-    const existingTemplate = projectStyles.find(({ id }) =>
-      styles.some(({ id: _id }) => _id === id)
-    );
+    const existingTemplate = this.hasStyleInProject();
     const currentPage = pages.find(({ id }) => id === active);
     const activeSrc = templateThumbnailUrl(currentPage);
     const renderSectionPage = pages.map((el, index) => {

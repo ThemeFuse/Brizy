@@ -3,10 +3,15 @@ import _ from "underscore";
 import classnames from "classnames";
 import produce from "immer";
 import EditorIcon from "visual/component/EditorIcon";
-import { Context, ContextIntegration } from "./Context";
+import { Context } from "./Context";
 import Steppers from "../Steppers";
 import AppList from "./StepsView/AppsList";
-import { AppData, BaseIntegrationProps, BaseIntegrationState } from "./type";
+import {
+  AppData,
+  BaseIntegrationContext,
+  BaseIntegrationProps,
+  BaseIntegrationState
+} from "./type";
 import { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
 
 type AppComponent = {
@@ -15,14 +20,11 @@ type AppComponent = {
 
 class BaseIntegration<
   TProps extends BaseIntegrationProps = BaseIntegrationProps,
-  TState extends BaseIntegrationState = BaseIntegrationState
+  TState extends BaseIntegrationState = BaseIntegrationState,
+  TContext extends BaseIntegrationContext = BaseIntegrationContext
 > extends Component<TProps, TState> {
   static defaultProps = {
     className: "",
-    value: {
-      formId: "",
-      formFields: []
-    },
     tab: {},
     stage: "",
     stages: [],
@@ -50,8 +52,7 @@ class BaseIntegration<
   appsComponent: AppComponent = {};
   proExceptions = false;
 
-  getContextValue(): ContextIntegration {
-    const { formId, formFields } = this.props.value;
+  getContextValue(): BaseIntegrationContext {
     const {
       connectedApp,
       connectedApps,
@@ -64,8 +65,6 @@ class BaseIntegration<
     return {
       app: data[connectedApp] || {},
       connectedApps,
-      formId,
-      formFields,
       stages,
       stage,
       oldStage,

@@ -33,22 +33,20 @@ export function styleShapeTopSvg({ v, device, state }) {
   );
 }
 
-export function styleShapeTopHeight({ v, device }) {
-  return defaultValueValue({ v, key: "shapeTopHeight", device });
+export function styleShapeTopHeight({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeTopHeight", device, state });
 }
 
-export function styleShapeTopHeightSuffix({ v, device }) {
-  return defaultValueValue({ v, key: "shapeTopHeightSuffix", device });
+export function styleShapeTopHeightSuffix({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeTopHeightSuffix", device, state });
 }
 
-export function styleShapeTopFlip({ v }) {
-  const { shapeTopHorizontal } = v;
-  return shapeTopHorizontal;
+export function styleShapeTopFlip({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeTopHorizontal", device, state });
 }
 
-export function styleShapeTopIndex({ v }) {
-  const { shapeTopIndex } = v;
-  return shapeTopIndex;
+export function styleShapeTopIndex({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeTopIndex", device, state });
 }
 
 export function styleShapeBottomType({ v, device, state }) {
@@ -79,20 +77,23 @@ export function styleShapeBottomSvg({ v, device, state }) {
   );
 }
 
-export function styleShapeBottomHeight({ v, device }) {
-  return defaultValueValue({ v, key: "shapeBottomHeight", device });
+export function styleShapeBottomHeight({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeBottomHeight", device, state });
 }
 
-export function styleShapeBottomHeightSuffix({ v, device }) {
-  return defaultValueValue({ v, key: "shapeBottomHeightSuffix", device });
+export function styleShapeBottomHeightSuffix({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "shapeBottomHeightSuffix",
+    device,
+    state
+  });
 }
 
-export function styleShapeBottomFlip({ v }) {
-  const { shapeBottomHorizontal } = v;
-  return shapeBottomHorizontal;
+export function styleShapeBottomFlip({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeBottomHorizontal", device, state });
 }
 
-export function styleShapeBottomIndex({ v }) {
-  const { shapeBottomIndex } = v;
-  return shapeBottomIndex;
+export function styleShapeBottomIndex({ v, device, state }) {
+  return defaultValueValue({ v, key: "shapeBottomIndex", device, state });
 }

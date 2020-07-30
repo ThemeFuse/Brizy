@@ -266,58 +266,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 90,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ],
@@ -347,28 +297,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -382,7 +310,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -416,7 +343,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -528,8 +454,6 @@ module.exports = {
                                             "className": "",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            
-                                            
                                             "borderWidthType": "grouped",
                                             "borderWidth": 0,
                                             "borderTopWidth": 0,
@@ -541,29 +465,7 @@ module.exports = {
                                             "tempBorderRightWidth": 4,
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderRadiusType": "grouped",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "bgColorType": "solid",
                                             "gradientActivePointer": "startPointer",
                                             "gradientStartPointer": 0,
@@ -571,40 +473,18 @@ module.exports = {
                                             "gradientType": "linear",
                                             "gradientLinearDegree": 90,
                                             "gradientRadialDegree": 90,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tempBgColorOpacity": 1,
                                             "tempBgColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "gradientColorHex": "#009900",
                                             "gradientColorOpacity": 1,
                                             "gradientColorPalette": "",
                                             "tempGradientColorOpacity": 1,
                                             "tempGradientColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderColorHex": "#66738d",
                                             "borderColorOpacity": 0,
                                             "borderColorPalette": "",
                                             "tempBorderColorOpacity": 1,
                                             "tempBorderColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "boxShadow": "",
                                             "tempBoxShadow": "on",
                                             "boxShadowColorHex": "#000000",
@@ -620,21 +500,6 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "hoverTransition": 50,
                                             "verticalAlign": "top",
                                             "paddingType": "ungrouped",
@@ -654,28 +519,6 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "marginType": "grouped",
                                             "marginSuffix": "px",
                                             "marginTopSuffix": "px",
@@ -687,68 +530,6 @@ module.exports = {
                                             "customID": "",
                                             "cssIDPopulation": "",
                                             "cssClassPopulation": "",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tabletPaddingType": "ungrouped",
                                             "tempTabletPaddingType": "ungrouped",
                                             "tabletPadding": 15,
@@ -782,65 +563,6 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 15,
@@ -929,58 +651,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 90,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ],
@@ -1010,28 +682,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -1045,7 +695,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -1079,7 +728,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -1191,8 +839,6 @@ module.exports = {
                                             "className": "",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            
-                                            
                                             "borderWidthType": "grouped",
                                             "borderWidth": 0,
                                             "borderTopWidth": 0,
@@ -1204,29 +850,7 @@ module.exports = {
                                             "tempBorderRightWidth": 4,
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderRadiusType": "grouped",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "bgColorType": "solid",
                                             "gradientActivePointer": "startPointer",
                                             "gradientStartPointer": 0,
@@ -1234,40 +858,18 @@ module.exports = {
                                             "gradientType": "linear",
                                             "gradientLinearDegree": 90,
                                             "gradientRadialDegree": 90,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tempBgColorOpacity": 1,
                                             "tempBgColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "gradientColorHex": "#009900",
                                             "gradientColorOpacity": 1,
                                             "gradientColorPalette": "",
                                             "tempGradientColorOpacity": 1,
                                             "tempGradientColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderColorHex": "#66738d",
                                             "borderColorOpacity": 0,
                                             "borderColorPalette": "",
                                             "tempBorderColorOpacity": 1,
                                             "tempBorderColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "boxShadow": "",
                                             "tempBoxShadow": "on",
                                             "boxShadowColorHex": "#000000",
@@ -1283,21 +885,6 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "hoverTransition": 50,
                                             "verticalAlign": "top",
                                             "paddingType": "ungrouped",
@@ -1317,28 +904,6 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "marginType": "grouped",
                                             "marginSuffix": "px",
                                             "marginTopSuffix": "px",
@@ -1350,68 +915,6 @@ module.exports = {
                                             "customID": "",
                                             "cssIDPopulation": "",
                                             "cssClassPopulation": "",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tabletPaddingType": "ungrouped",
                                             "tempTabletPaddingType": "ungrouped",
                                             "tabletPadding": 15,
@@ -1445,65 +948,6 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 15,
@@ -1604,58 +1048,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 90,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ],
@@ -1685,28 +1079,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -1720,7 +1092,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -1754,7 +1125,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -1861,8 +1231,6 @@ module.exports = {
                                             "className": "",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            
-                                            
                                             "borderWidthType": "grouped",
                                             "borderWidth": 0,
                                             "borderTopWidth": 0,
@@ -1874,34 +1242,12 @@ module.exports = {
                                             "tempBorderRightWidth": 4,
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderRadiusType": "grouped",
                                             "tempBorderRadius": 6,
                                             "tempBorderTopLeftRadius": 6,
                                             "tempBorderTopRightRadius": 6,
                                             "tempBorderBottomRightRadius": 6,
                                             "tempBorderBottomLeftRadius": 6,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "bgColorType": "solid",
                                             "gradientActivePointer": "startPointer",
                                             "gradientStartPointer": 0,
@@ -1909,40 +1255,18 @@ module.exports = {
                                             "gradientType": "linear",
                                             "gradientLinearDegree": 90,
                                             "gradientRadialDegree": 90,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tempBgColorOpacity": 1,
                                             "tempBgColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "gradientColorHex": "#009900",
                                             "gradientColorOpacity": 1,
                                             "gradientColorPalette": "",
                                             "tempGradientColorOpacity": 1,
                                             "tempGradientColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderColorHex": "#66738d",
                                             "borderColorOpacity": 0,
                                             "borderColorPalette": "",
                                             "tempBorderColorOpacity": 1,
                                             "tempBorderColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "boxShadow": "",
                                             "tempBoxShadow": "on",
                                             "boxShadowColorHex": "#000000",
@@ -1958,21 +1282,6 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "hoverTransition": 50,
                                             "verticalAlign": "top",
                                             "paddingType": "ungrouped",
@@ -1992,28 +1301,6 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "marginType": "grouped",
                                             "marginSuffix": "px",
                                             "marginTopSuffix": "px",
@@ -2025,68 +1312,6 @@ module.exports = {
                                             "customID": "",
                                             "cssIDPopulation": "",
                                             "cssClassPopulation": "",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tabletPaddingType": "ungrouped",
                                             "tempTabletPaddingType": "ungrouped",
                                             "tabletPadding": 15,
@@ -2120,65 +1345,6 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 15,
@@ -2267,58 +1433,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 90,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ],
@@ -2348,28 +1464,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -2383,7 +1477,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -2417,7 +1510,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -2524,8 +1616,6 @@ module.exports = {
                                             "className": "",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            
-                                            
                                             "borderWidthType": "grouped",
                                             "borderWidth": 0,
                                             "borderTopWidth": 0,
@@ -2537,34 +1627,12 @@ module.exports = {
                                             "tempBorderRightWidth": 4,
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderRadiusType": "grouped",
                                             "tempBorderRadius": 6,
                                             "tempBorderTopLeftRadius": 6,
                                             "tempBorderTopRightRadius": 6,
                                             "tempBorderBottomRightRadius": 6,
                                             "tempBorderBottomLeftRadius": 6,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "bgColorType": "solid",
                                             "gradientActivePointer": "startPointer",
                                             "gradientStartPointer": 0,
@@ -2572,40 +1640,18 @@ module.exports = {
                                             "gradientType": "linear",
                                             "gradientLinearDegree": 90,
                                             "gradientRadialDegree": 90,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tempBgColorOpacity": 1,
                                             "tempBgColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "gradientColorHex": "#009900",
                                             "gradientColorOpacity": 1,
                                             "gradientColorPalette": "",
                                             "tempGradientColorOpacity": 1,
                                             "tempGradientColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderColorHex": "#66738d",
                                             "borderColorOpacity": 0,
                                             "borderColorPalette": "",
                                             "tempBorderColorOpacity": 1,
                                             "tempBorderColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "boxShadow": "",
                                             "tempBoxShadow": "on",
                                             "boxShadowColorHex": "#000000",
@@ -2621,21 +1667,6 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "hoverTransition": 50,
                                             "verticalAlign": "top",
                                             "paddingType": "ungrouped",
@@ -2655,28 +1686,6 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "marginType": "grouped",
                                             "marginSuffix": "px",
                                             "marginTopSuffix": "px",
@@ -2688,68 +1697,6 @@ module.exports = {
                                             "customID": "",
                                             "cssIDPopulation": "",
                                             "cssClassPopulation": "",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tabletPaddingType": "ungrouped",
                                             "tempTabletPaddingType": "ungrouped",
                                             "tabletPadding": 15,
@@ -2783,65 +1730,6 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 15,
@@ -2930,58 +1818,8 @@ module.exports = {
                                                                     "tempBoxShadowSpread": 0,
                                                                     "tempBoxShadowVertical": 2,
                                                                     "tempBoxShadowHorizontal": 1,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
                                                                     "hoverTransition": 50,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    "mobileResize": 90,
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    
+                                                                    "mobileResize": 90
                                                                 }
                                                             }
                                                         ],
@@ -3011,28 +1849,6 @@ module.exports = {
                                                         "tempPaddingRightSuffix": "px",
                                                         "tempPaddingBottomSuffix": "px",
                                                         "tempPaddingLeftSuffix": "px",
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
                                                         "marginType": "ungrouped",
                                                         "margin": 0,
                                                         "marginRight": 0,
@@ -3046,7 +1862,6 @@ module.exports = {
                                                         "customID": "",
                                                         "cssIDPopulation": "",
                                                         "cssClassPopulation": "",
-                                                        
                                                         "tabletPaddingType": "grouped",
                                                         "tempTabletPaddingType": "grouped",
                                                         "tabletPadding": 0,
@@ -3080,7 +1895,6 @@ module.exports = {
                                                         "tabletMarginRightSuffix": "px",
                                                         "tabletMarginBottomSuffix": "px",
                                                         "tabletMarginLeftSuffix": "px",
-                                                        
                                                         "mobilePaddingType": "grouped",
                                                         "tempMobilePaddingType": "grouped",
                                                         "mobilePadding": 0,
@@ -3187,8 +2001,6 @@ module.exports = {
                                             "className": "",
                                             "borderStyle": "solid",
                                             "tempBorderStyle": "solid",
-                                            
-                                            
                                             "borderWidthType": "grouped",
                                             "borderWidth": 0,
                                             "borderTopWidth": 0,
@@ -3200,34 +2012,12 @@ module.exports = {
                                             "tempBorderRightWidth": 4,
                                             "tempBorderBottomWidth": 4,
                                             "tempBorderLeftWidth": 4,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderRadiusType": "grouped",
                                             "tempBorderRadius": 6,
                                             "tempBorderTopLeftRadius": 6,
                                             "tempBorderTopRightRadius": 6,
                                             "tempBorderBottomRightRadius": 6,
                                             "tempBorderBottomLeftRadius": 6,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "bgColorType": "solid",
                                             "gradientActivePointer": "startPointer",
                                             "gradientStartPointer": 0,
@@ -3235,40 +2025,18 @@ module.exports = {
                                             "gradientType": "linear",
                                             "gradientLinearDegree": 90,
                                             "gradientRadialDegree": 90,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tempBgColorOpacity": 1,
                                             "tempBgColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "gradientColorHex": "#009900",
                                             "gradientColorOpacity": 1,
                                             "gradientColorPalette": "",
                                             "tempGradientColorOpacity": 1,
                                             "tempGradientColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "borderColorHex": "#66738d",
                                             "borderColorOpacity": 0,
                                             "borderColorPalette": "",
                                             "tempBorderColorOpacity": 1,
                                             "tempBorderColorPalette": "",
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "boxShadow": "",
                                             "tempBoxShadow": "on",
                                             "boxShadowColorHex": "#000000",
@@ -3284,21 +2052,6 @@ module.exports = {
                                             "tempBoxShadowSpread": 0,
                                             "tempBoxShadowVertical": 2,
                                             "tempBoxShadowHorizontal": 1,
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "hoverTransition": 50,
                                             "verticalAlign": "top",
                                             "paddingType": "ungrouped",
@@ -3318,28 +2071,6 @@ module.exports = {
                                             "tempPaddingRightSuffix": "px",
                                             "tempPaddingBottomSuffix": "px",
                                             "tempPaddingLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "marginType": "grouped",
                                             "marginSuffix": "px",
                                             "marginTopSuffix": "px",
@@ -3351,68 +2082,6 @@ module.exports = {
                                             "customID": "",
                                             "cssIDPopulation": "",
                                             "cssClassPopulation": "",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "tabletPaddingType": "ungrouped",
                                             "tempTabletPaddingType": "ungrouped",
                                             "tabletPadding": 15,
@@ -3446,65 +2115,6 @@ module.exports = {
                                             "tabletMarginRightSuffix": "px",
                                             "tabletMarginBottomSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             "mobilePaddingType": "grouped",
                                             "tempMobilePaddingType": "grouped",
                                             "mobilePadding": 15,

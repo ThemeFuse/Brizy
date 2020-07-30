@@ -9,6 +9,7 @@ import defaultValue from "./defaultValue.json";
 import BoxResizer from "visual/component/BoxResizer";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -27,19 +28,57 @@ class Line extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
+    const restrictions = {
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      // Tablet
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      },
+      // Mobile
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
+      }
+    };
+
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <BoxResizer
               points={resizerPoints}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
+              restrictions={restrictions}
             >
               <hr className="brz-hr" />
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

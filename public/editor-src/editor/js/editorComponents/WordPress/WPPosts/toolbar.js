@@ -7,15 +7,17 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvkn("toolbarWPPosts"),
-      type: "popover",
-      icon: "nc-wp-shortcode",
+      id: "toolbarWPPosts",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-shortcode"
+      },
       devices: "desktop",
       position: 10,
       options: [
         {
           id: "WPPostsTabs",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "queryTab",
@@ -26,12 +28,10 @@ export function getItems({ v, device }) {
                   label: t("Post Type"),
                   type: "select-dev",
                   devices: "desktop",
-                  config: {
-                    choices: [
-                      { title: t("Post"), value: "post" },
-                      { title: t("Page"), value: "page" }
-                    ]
-                  }
+                  choices: [
+                    { title: t("Post"), value: "post" },
+                    { title: t("Page"), value: "page" }
+                  ]
                 },
                 toolbarElementWPPostsNumber({
                   v,
@@ -137,9 +137,8 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvkn("toolbarSettings"),
-      type: "popover",
-      icon: "nc-cog",
+      id: "toolbarSettings",
+      type: "popover-dev",
       roles: ["admin"],
       position: 110,
       options: [

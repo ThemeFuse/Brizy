@@ -1,16 +1,12 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarIconSize } from "visual/utils/toolbar";
-import {
-  toolbarElementTabsIconPosition,
-  toolbarElementTabsOrientation,
-  toolbarElementTabsStyle
-} from "visual/utils/toolbar/toolbarElementTabs";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { capitalize } from "visual/utils/string";
+import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device }) {
+  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ key, v, device });
 
   // Color
@@ -29,45 +25,65 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-tabs",
-      title: t("Tabs"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-tabs",
+        title: t("Tabs")
+      },
       position: 60,
       devices: "desktop",
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "currentShortcodeTab",
               label: t("Tab"),
               position: 10,
               options: [
-                toolbarElementTabsOrientation({ v, device, state }),
-                toolbarElementTabsStyle({ v, device, state }),
+                {
+                  id: "verticalMode",
+                  label: t("Orientation"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "on", icon: "nc-vertical-items" },
+                    { value: "off", icon: "nc-horizontal-items" }
+                  ]
+                },
+                {
+                  id: "navStyle",
+                  label: t("Style"),
+                  type: "radioGroup-dev",
+                  choices:
+                    v.verticalMode === "off"
+                      ? [
+                          { value: "style-1", icon: "nc-tabs-style-2" },
+                          { value: "style-2", icon: "nc-tabs-style-1" },
+                          { value: "style-3", icon: "nc-tabs-style-5" }
+                        ]
+                      : [
+                          { value: "style-1", icon: "nc-tabs-style-4" },
+                          { value: "style-2", icon: "nc-tabs-style-3" },
+                          { value: "style-3", icon: "nc-tabs-style-6" }
+                        ]
+                },
                 {
                   id: "action",
                   label: t("Activate Tab"),
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    {
-                      title: t("On Click"),
-                      value: "click"
-                    },
-                    {
-                      title: t("On Hover"),
-                      value: "hover"
-                    }
+                    { title: t("On Click"), value: "click" },
+                    { title: t("On Hover"), value: "hover" }
                   ]
                 },
                 {
                   id: "spacingAfter",
                   type: "slider-dev",
                   label: t("Content Gap"),
-                  disabled: navStyle === "style-1",
+                  disabled: navStyle !== "style-2",
                   devices: "desktop",
                   config: {
                     min: 0,
@@ -90,8 +106,54 @@ export function getItems({ v, device, state }) {
               id: "currentShortcodeIcon",
               label: t("Icon"),
               options: [
-                toolbarElementTabsIconPosition({ v, device, state }),
-                toolbarIconSize({ v, device, state }),
+                {
+                  id: "iconPosition",
+                  label: t("Position"),
+                  type: "radioGroup-dev",
+                  choices: [
+                    { value: "left", icon: "nc-align-left" },
+                    { value: "top", icon: "nc-align-top" },
+                    { value: "right", icon: "nc-align-right" },
+                    { value: "bottom", icon: "nc-align-bottom" }
+                  ]
+                },
+                {
+                  id: "groupIconSizesPicker",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: dvk("iconSize"),
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-16" },
+                        { value: "medium", icon: "nc-24" },
+                        { value: "large", icon: "nc-32" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: dvv("iconSize"),
+                      onChange: value => {
+                        return {
+                          [dvk("iconSize")]: value,
+                          [dvk("iconCustomSize")]:
+                            value !== "custom"
+                              ? dvv(`icon${capitalize(value)}Size`)
+                              : dvv("iconCustomSize")
+                        };
+                      }
+                    },
+                    {
+                      id: "iconCustomSize",
+                      type: "slider-dev",
+                      disabled: dvv("iconSize") !== "custom",
+                      config: {
+                        min: 8,
+                        max: 50,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                },
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
@@ -109,11 +171,12 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -127,32 +190,34 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      devices: "desktop",
-      position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 90,
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
+              id: "bg",
               label: t("Bg"),
               options: [
                 {
                   id: "bgColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -163,7 +228,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "color",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -174,7 +239,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "border",
                   type: "border-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -185,7 +250,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }
@@ -200,21 +265,10 @@ export function getItems({ v, device, state }) {
       disabled: isVerticalMode,
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" },
+        { icon: "nc-text-align-justify", title: t("Align"), value: "justify" }
       ]
     },
     {
@@ -224,16 +278,8 @@ export function getItems({ v, device, state }) {
       position: 90,
       disabled: !isVerticalMode,
       choices: [
-        {
-          icon: "nc-hrz-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-hrz-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-hrz-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-hrz-align-right", title: t("Align"), value: "right" }
       ]
     },
     {

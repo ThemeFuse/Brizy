@@ -204,7 +204,9 @@ module.exports = {
                                                                                     "Option 2"
                                                                                 ],
                                                                                 "placeholder": "Type your email address",
-                                                                                "width": 65
+                                                                                "width": 65,
+                                                                                "mobileWidth": 100,
+                                                                                "mobileWidthSuffix": ""
                                                                             }
                                                                         }
                                                                     ],
@@ -323,7 +325,8 @@ module.exports = {
                                                         "padding": 10,
                                                         "paddingRight": 10,
                                                         "paddingBottom": 10,
-                                                        "paddingLeft": 10
+                                                        "paddingLeft": 10,
+                                                        "mobileHorizontalAlign": "center"
                                                     }
                                                 }
                                             ],
@@ -339,6 +342,30 @@ module.exports = {
                                             "tabletMarginSuffix": "px",
                                             "tabletMarginLeftSuffix": "px",
                                             "tabletMarginLeft": 40
+                                        }
+                                    },
+                                    {
+                                        "type": "Wrapper",
+                                        "value": {
+                                            "_styles": [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                            ],
+                                            "items": [
+                                                {
+                                                    "type": "Spacer",
+                                                    "value": {
+                                                        "_styles": [
+                                                            "spacer"
+                                                        ],
+                                                        "height": 100,
+                                                        "heightSuffix": "",
+                                                        "tabletHeight": 50,
+                                                        "tabletHeightSuffix": ""
+                                                    }
+                                                }
+                                            ],
+                                            "showOnMobile": "off"
                                         }
                                     }
                                 ],
@@ -461,7 +488,7 @@ module.exports = {
         "bgColorHex": "#191b21",
         "bgColorOpacity": 0.9,
         "tempBgColorOpacity": 0.9,
-        "popupId": "dwknwqaeaofbqosagtdrvsbpagrfxapgnvai",
+        "popupId": "hdgsxxwvwdvxdyxffbnhwlbmqpsxqjmotivv",
         "tempBgColorPalette": "color6",
         "borderRadius": 0,
         "borderTopLeftRadius": 0,
@@ -486,7 +513,7 @@ module.exports = {
         "closeVerticalPosition": "22",
         "horizontalAlign": "center",
         "verticalAlign": "center",
-        "columnsHeightStyle": "custom",
+        "columnsHeightStyle": "auto",
         "columnsHeight": 422,
         "columnsHeightSuffix": "px",
         "popupRowVerticalAlign": "top",

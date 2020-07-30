@@ -72,7 +72,7 @@ export default function Video({ video, bgVideoLoop, bgVideoStart }) {
       className="brz-bg-video"
       data-type={dataType}
       data-key={video.key}
-      data-loop={settings.loop}
+      data-loop={bgVideoLoop}
       data-start={bgVideoStart}
     >
       <iframe

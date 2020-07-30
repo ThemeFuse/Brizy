@@ -5,11 +5,11 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover",
+      type: "popover-dev",
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "field",

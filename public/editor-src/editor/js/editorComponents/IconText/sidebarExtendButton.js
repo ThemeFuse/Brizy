@@ -7,7 +7,7 @@ export function getItems({ device, state }) {
   return [
     {
       id: "settingsTabs",
-      type: "tabs",
+      type: "tabs-dev",
       disabled: true
     },
     toolbarDisabledPadding({ device, state }),

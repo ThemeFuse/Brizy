@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fontSelector } from "visual/redux/selectors";
+import { fontSelector } from "visual/redux/selectors2";
 import { addFonts } from "visual/redux/actions2";
 import {
   getGoogleFontDetails,
@@ -8,7 +8,7 @@ import {
   getGroupFontsById
 } from "visual/utils/fonts";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
-import { fakeRequest } from "visual/component/Prompts/common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 import InputFields from "visual/component/Prompts/common/GlobalApps/StepsView/InputFields";
 import { t } from "visual/utils/i18n";
 
@@ -64,7 +64,7 @@ class GoogleConnect extends Component {
       error: null
     });
 
-    await fakeRequest();
+    await pendingRequest();
 
     if (font) {
       // Check if Fonts was added and removed with deleted: true
@@ -103,7 +103,7 @@ class GoogleConnect extends Component {
       prevLoading: true
     });
 
-    await fakeRequest();
+    await pendingRequest();
     this.context.onChangePrev();
   };
 

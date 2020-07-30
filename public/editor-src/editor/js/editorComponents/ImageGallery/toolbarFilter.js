@@ -1,13 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
-import { toolbarElementImageGalleryStyle } from "visual/utils/toolbar/toolbarElementImageGallery";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device, state });
+export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ key, v, device });
 
   // Color
@@ -22,18 +20,24 @@ export function getItems({ v, device, state }) {
 
   return [
     {
-      id: dvk("toolbarGallery"),
-      type: "popover",
-      icon: "nc-tags",
-      title: t("Tags"),
+      id: "toolbarGallery",
+      type: "popover-dev",
+      config: {
+        icon: "nc-tags",
+        title: t("Tags")
+      },
       position: 80,
       options: [
-        toolbarElementImageGalleryStyle({
-          v,
-          device,
-          state: "normal",
-          devices: "desktop"
-        }),
+        {
+          id: "filterStyle",
+          label: t("Style"),
+          type: "radioGroup-dev",
+          devices: "desktop",
+          choices: [
+            { value: "style-1", icon: "nc-tags-style-2" },
+            { value: "style-2", icon: "nc-tags-style-1" }
+          ]
+        },
         {
           id: "filterSpacing",
           type: "slider-dev",
@@ -57,12 +61,13 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvk("toolbarTypography"),
-      type: "popover",
-      icon: "nc-font",
-      size: device === "desktop" ? "large" : "auto",
-      title: t("Typography"),
-      roles: ["admin"],
+      id: "toolbarTypography",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
       position: 70,
       options: [
         {
@@ -76,25 +81,27 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      devices: "desktop",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      devices: "desktop",
+      position: 80,
+
       options: [
         {
           id: "tabsColor",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBg",
@@ -103,7 +110,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "filterBgColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -114,7 +121,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "filterColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -125,7 +132,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "filterBorder",
                   type: "border-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -136,7 +143,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "filterBoxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }
@@ -177,8 +184,8 @@ export function getItems({ v, device, state }) {
       title: t("Settings")
     },
     {
-      id: defaultValueKey({ key: "toolbarSettings", device }),
-      type: "popover",
+      id: "toolbarSettings",
+      type: "popover-dev",
       disabled: true,
       options: [
         toolbarDisabledAdvancedSettings({

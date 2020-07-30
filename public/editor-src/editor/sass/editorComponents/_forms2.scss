@@ -125,6 +125,19 @@
     }
   }
 
+  // Select | File Upload
+  &__field-select,
+  .brz-forms2__field-fileUpload {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: stretch;
+  }
+  &__select-current,
+  .brz-forms2__field-fileUpload .brz-label {
+    flex: 1;
+  }
+
   // button
   &__item-button {
     .brz-btn {
@@ -233,6 +246,7 @@
       border-radius: 0;
     }
     &-results__option {
+      margin: 0;
       padding: 12px 24px;
       font-size: 16px;
       height: 48px;
@@ -240,8 +254,13 @@
       cursor: pointer;
       background-color: inherit;
     }
+    .selection,
     &-container {
-      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+      flex: 1;
     }
     &-container,
     &-selection {
@@ -249,12 +268,12 @@
     }
     &-selection--multiple,
     &-selection--single {
-      height: 100%;
       border: none;
       background-color: transparent;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      flex: 1;
 
       .select2-selection__rendered {
         color: inherit;

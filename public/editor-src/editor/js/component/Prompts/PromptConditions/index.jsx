@@ -47,7 +47,7 @@ export default class PromptConditions extends Component {
   }
 
   render() {
-    const { options, onClose } = this.props;
+    const { options, opened, onClose } = this.props;
     const { activeTab } = this.state;
     const Item = items[activeTab];
 
@@ -57,7 +57,7 @@ export default class PromptConditions extends Component {
     );
 
     return (
-      <Fixed onClose={onClose}>
+      <Fixed opened={opened} onClose={onClose}>
         <div className="brz-ed-popup-wrapper">
           <div className="brz-ed-popup-header">
             <div className="brz-ed-popup-header__tabs">

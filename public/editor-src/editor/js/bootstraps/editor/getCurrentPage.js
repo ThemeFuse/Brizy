@@ -38,7 +38,7 @@ export const getCurrentPage = async () => {
     const configPageId = Config.get("page") && Config.get("page").id;
 
     return configPageId
-      ? pages.find(page => page.id === configPageId)
+      ? pages.find(page => page.id === Number(configPageId))
       : pages.find(page => page.is_index);
   }
 

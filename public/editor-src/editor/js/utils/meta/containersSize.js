@@ -1,3 +1,11 @@
+import { getStore } from "visual/redux/store";
+import { deviceModeSelector } from "visual/redux/selectors";
+import {
+  wInBoxedPage,
+  wInTabletPage,
+  wInMobilePage
+} from "visual/config/columns";
+
 import {
   styleBorderWidthGrouped,
   styleBorderWidthType,
@@ -121,6 +129,25 @@ export const getBorder = ({ v, device, state, type }) => {
       return 0;
     }
   }
+};
+
+export const getCurrentW = () => {
+  const deviceMode = deviceModeSelector(getStore().getState());
+  switch (deviceMode) {
+    case "tablet": {
+      return wInTabletPage;
+    }
+    case "mobile": {
+      return wInMobilePage;
+    }
+    default: {
+      return wInBoxedPage;
+    }
+  }
+};
+
+export const getCurrentH = () => {
+  return window.innerHeight;
 };
 
 export const getContainerW = ({

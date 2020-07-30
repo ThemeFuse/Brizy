@@ -8,9 +8,11 @@
     "taxonomy": "category",
     "taxonomyId": 1,
     "slidesToShow": 3,
+    "slidesToShowSuffix": null,
     "slidesToScroll": 1,
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
+    "sliderAutoPlaySpeedSuffix": null,
 
     "items": []
   },
@@ -19,9 +21,11 @@
     "className": "",
 
     "spacing": 0,
+    "spacingSuffix": null,
 
     "sliderArrows": "thin",
     "sliderArrowsSpacing": 30,
+    "sliderArrowsSpacingSuffix": null,
 
     "sliderArrowsColorHex": "#000000",
     "sliderArrowsColorOpacity": 1,
@@ -53,8 +57,13 @@
 
     "customCSS": "",
 
+    "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
+
     "tabletSlidesToShow": 2,
+    "tabletSlidesToShowSuffix": null,
     "tabletSliderArrowsSpacing": null,
+    "tabletSliderArrowsSpacingSuffix": null,
     "tabletSliderPaddingType": "ungrouped",
     "tabletSliderPadding": 0,
     "tabletSliderPaddingSuffix": "px",
@@ -67,7 +76,11 @@
     "tabletSliderPaddingLeft": 0,
     "tabletSliderPaddingLeftSuffix": "px",
 
+    "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
+
     "mobileSliderArrowsSpacing": null,
+    "mobileSliderArrowsSpacingSuffix": null,
     "mobileSliderPaddingType": "ungrouped",
     "mobileSliderPadding": 0,
     "mobileSliderPaddingSuffix": "px",

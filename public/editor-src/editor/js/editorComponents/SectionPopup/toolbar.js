@@ -10,7 +10,9 @@ import {
   toolbarBgColorHexField2,
   toolbarBgColor2,
   toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree
+  toolbarGradientRadialDegree,
+  toolbarElementSectionSaved,
+  toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
@@ -31,17 +33,13 @@ export function getItems({ v, device, component }) {
       devices: "desktop",
       position: 70,
       options: [
-        {
-          id: "makeItGlobal",
-          label: t("Make it Global"),
-          type: "switch",
-          value: component.props.meta.globalBlockId ? "on" : "off",
-          onChange: value => {
-            value === "on"
-              ? component.becomeGlobal()
-              : component.becomeNormal();
-          }
-        }
+        toolbarElementSectionGlobal({
+          device,
+          component,
+          blockType: "popup",
+          devices: "desktop",
+          state: "normal"
+        })
       ]
     },
     {
@@ -110,7 +108,6 @@ export function getItems({ v, device, component }) {
           id: dvk("tabsState"),
           tabsPosition: "left",
           type: "tabs",
-          value: dvv("tabsState"),
           tabs: [
             {
               id: dvk("tabNormal"),
@@ -340,18 +337,12 @@ export function getItems({ v, device, component }) {
         [dvk("tabsColor")]: !isOpen ? "" : dvv("tabsColor")
       })
     },
-    {
-      id: "makeItSaved",
-      type: "buttonTooltip",
-      icon: "nc-save-section",
-      position: 100,
-      title: t("Save"),
-      devices: "desktop",
-      tooltipContent: t("Saved"),
-      onChange: () => {
-        component.becomeSaved();
-      }
-    },
-
+    toolbarElementSectionSaved({
+      device,
+      component,
+      blockType: "popup",
+      state: "normal",
+      devices: "desktop"
+    })
   ];
 }

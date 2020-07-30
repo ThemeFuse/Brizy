@@ -12,6 +12,7 @@ export function toolbarPaddingFourFields({
   state,
   devices,
   position,
+  prefix = "",
   disabled = false
 }) {
   return toolbarPadding({
@@ -20,6 +21,7 @@ export function toolbarPaddingFourFields({
     state,
     devices,
     position,
+    prefix,
     disabled
   });
 }
@@ -41,12 +43,7 @@ export function toolbarPaddingFourFieldsPxSuffix({
     position,
     prefix,
     disabled,
-    suffixChoices: [
-      {
-        title: "px",
-        value: "px"
-      }
-    ]
+    suffixChoices: [{ title: "px", value: "px" }]
   });
 }
 
@@ -60,51 +57,38 @@ function toolbarPadding({
   position = 50,
   childs = ["paddingTop", "paddingRight", "paddingBottom", "paddingLeft"],
   suffixChoices = [
-    {
-      title: "px",
-      value: "px"
-    },
-    {
-      title: "%",
-      value: "%"
-    }
+    { title: "px", value: "px" },
+    { title: "%", value: "%" }
   ]
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
   const padding = capByPrefix(prefix, "padding");
   const paddingType = capByPrefix(padding, "type");
 
   return {
-    id: dvk(padding),
-    type: "multiPicker",
+    id: padding,
+    type: "group-dev",
     devices,
     position,
     disabled,
-    picker: {
-      id: dvk(paddingType),
-      label: t("Padding"),
-      type: "radioGroup",
-      choices: [
-        {
-          value: "grouped",
-          icon: "nc-styling-all"
-        },
-        {
-          value: "ungrouped",
-          icon: "nc-styling-individual"
-        }
-      ],
-      value: dvv(paddingType)
-    },
-    choices: {
-      ...toolbarPaddingGrouped({
+    options: [
+      {
+        id: paddingType,
+        label: t("Padding"),
+        type: "radioGroup-dev",
+        choices: [
+          { value: "grouped", icon: "nc-styling-all" },
+          { value: "ungrouped", icon: "nc-styling-individual" }
+        ]
+      },
+      toolbarPaddingGrouped({
         v,
         device,
         state,
         childs,
         suffixChoices,
         prefix,
+        disabled: dvv(paddingType) !== "grouped",
         onChange: ["onChangePaddingGrouped"]
       }),
       ...toolbarPaddingUngrouped({
@@ -114,9 +98,10 @@ function toolbarPadding({
         childs,
         suffixChoices,
         prefix,
+        disabled: dvv(paddingType) !== "ungrouped",
         onChange: ["onChangePaddingUngrouped"]
       })
-    }
+    ]
   };
 }
 
@@ -127,6 +112,7 @@ function toolbarPaddingGrouped({
   childs,
   suffixChoices,
   onChange,
+  disabled = false,
   prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -135,35 +121,32 @@ function toolbarPaddingGrouped({
   const paddingSuffix = capByPrefix(padding, "suffix");
 
   return {
-    grouped: [
-      {
-        id: dvk(padding),
-        type: "slider",
-        slider: {
-          min: 0,
-          max: 100
-        },
-        input: {
-          show: true,
-          min: 0
-        },
-        suffix: {
-          show: true,
-          choices: suffixChoices
-        },
-        value: {
-          value: dvv(padding),
-          suffix: dvv(paddingSuffix)
-        },
-        onChange: ({ value, suffix }, { sliderDragEnd }) => {
-          const values = {
-            ...{ v, device, state, childs, onChange, prefix },
-            ...{ value, suffix, sliderDragEnd }
-          };
-          return saveOnChanges(values);
-        }
-      }
-    ]
+    id: dvk(padding),
+    type: "slider",
+    disabled,
+    slider: {
+      min: 0,
+      max: 100
+    },
+    input: {
+      show: true,
+      min: 0
+    },
+    suffix: {
+      show: true,
+      choices: suffixChoices
+    },
+    value: {
+      value: dvv(padding),
+      suffix: dvv(paddingSuffix)
+    },
+    onChange: ({ value, suffix }, { sliderDragEnd }) => {
+      const values = {
+        ...{ v, device, state, childs, onChange, prefix },
+        ...{ value, suffix, sliderDragEnd }
+      };
+      return saveOnChanges(values);
+    }
   };
 }
 
@@ -174,6 +157,7 @@ function toolbarPaddingUngrouped({
   childs,
   suffixChoices,
   onChange,
+  disabled = false,
   prefix = ""
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -187,144 +171,146 @@ function toolbarPaddingUngrouped({
   const paddingLeft = capByPrefix(prefix, "paddingLeft");
   const paddingLeftSuffix = capByPrefix(paddingLeft, "suffix");
 
-  return {
-    ungrouped: [
-      {
-        id: dvk(paddingTop),
-        icon: "nc-styling-top",
-        type: "slider",
-        slider: {
-          min: 0,
-          max: 100
-        },
-        input: {
-          show: true,
-          min: 0
-        },
-        suffix: {
-          show: true,
-          choices: suffixChoices
-        },
-        value: {
-          value: dvv(paddingTop),
-          suffix: dvv(paddingTopSuffix)
-        },
-        onChange: ({ value, suffix }, { sliderDragEnd }) => {
-          const values = {
-            ...{ v, device, state, childs, onChange, prefix },
-            ...{
-              current: "paddingTop",
-              value,
-              suffix,
-              sliderDragEnd
-            }
-          };
-          return saveOnChanges(values);
-        }
+  return [
+    {
+      id: dvk(paddingTop),
+      icon: "nc-styling-top",
+      type: "slider",
+      disabled,
+      slider: {
+        min: 0,
+        max: 100
       },
-      childs.includes("paddingRight")
-        ? {
-            id: dvk(paddingRight),
-            icon: "nc-styling-right",
-            type: "slider",
-            slider: {
-              min: 0,
-              max: 100
-            },
-            input: {
-              show: true,
-              min: 0
-            },
-            suffix: {
-              show: true,
-              choices: suffixChoices
-            },
-            value: {
-              value: dvv(paddingRight),
-              suffix: dvv(paddingRightSuffix)
-            },
-            onChange: ({ value, suffix }, { sliderDragEnd }) => {
-              const values = {
-                ...{ v, device, state, childs, onChange, prefix },
-                ...{
-                  current: "paddingRight",
-                  value,
-                  suffix,
-                  sliderDragEnd
-                }
-              };
-              return saveOnChanges(values);
-            }
-          }
-        : {},
-      {
-        id: dvk(paddingBottom),
-        icon: "nc-styling-bottom",
-        type: "slider",
-        slider: {
-          min: 0,
-          max: 100
-        },
-        input: {
-          show: true,
-          min: 0
-        },
-        suffix: {
-          show: true,
-          choices: suffixChoices
-        },
-        value: {
-          value: dvv(paddingBottom),
-          suffix: dvv(paddingBottomSuffix)
-        },
-        onChange: ({ value, suffix }, { sliderDragEnd }) => {
-          const values = {
-            ...{ v, device, state, childs, onChange, prefix },
-            ...{
-              current: "paddingBottom",
-              value,
-              suffix,
-              sliderDragEnd
-            }
-          };
-          return saveOnChanges(values);
-        }
+      input: {
+        show: true,
+        min: 0
       },
-      childs.includes("paddingLeft")
-        ? {
-            id: dvk(paddingLeft),
-            icon: "nc-styling-left",
-            type: "slider",
-            slider: {
-              min: 0,
-              max: 100
-            },
-            input: {
-              show: true,
-              min: 0
-            },
-            suffix: {
-              show: true,
-              choices: suffixChoices
-            },
-            value: {
-              value: dvv(paddingLeft),
-              suffix: dvv(paddingLeftSuffix)
-            },
-            onChange: ({ value, suffix }, { sliderDragEnd }) => {
-              const values = {
-                ...{ v, device, state, childs, onChange, prefix },
-                ...{
-                  current: "paddingLeft",
-                  value,
-                  suffix,
-                  sliderDragEnd
-                }
-              };
-              return saveOnChanges(values);
-            }
+      suffix: {
+        show: true,
+        choices: suffixChoices
+      },
+      value: {
+        value: dvv(paddingTop),
+        suffix: dvv(paddingTopSuffix)
+      },
+      onChange: ({ value, suffix }, { sliderDragEnd }) => {
+        const values = {
+          ...{ v, device, state, childs, onChange, prefix },
+          ...{
+            current: "paddingTop",
+            value,
+            suffix,
+            sliderDragEnd
           }
-        : {}
-    ]
-  };
+        };
+        return saveOnChanges(values);
+      }
+    },
+    childs.includes("paddingRight")
+      ? {
+          id: dvk(paddingRight),
+          icon: "nc-styling-right",
+          type: "slider",
+          disabled,
+          slider: {
+            min: 0,
+            max: 100
+          },
+          input: {
+            show: true,
+            min: 0
+          },
+          suffix: {
+            show: true,
+            choices: suffixChoices
+          },
+          value: {
+            value: dvv(paddingRight),
+            suffix: dvv(paddingRightSuffix)
+          },
+          onChange: ({ value, suffix }, { sliderDragEnd }) => {
+            const values = {
+              ...{ v, device, state, childs, onChange, prefix },
+              ...{
+                current: "paddingRight",
+                value,
+                suffix,
+                sliderDragEnd
+              }
+            };
+            return saveOnChanges(values);
+          }
+        }
+      : {},
+    {
+      id: dvk(paddingBottom),
+      icon: "nc-styling-bottom",
+      type: "slider",
+      disabled,
+      slider: {
+        min: 0,
+        max: 100
+      },
+      input: {
+        show: true,
+        min: 0
+      },
+      suffix: {
+        show: true,
+        choices: suffixChoices
+      },
+      value: {
+        value: dvv(paddingBottom),
+        suffix: dvv(paddingBottomSuffix)
+      },
+      onChange: ({ value, suffix }, { sliderDragEnd }) => {
+        const values = {
+          ...{ v, device, state, childs, onChange, prefix },
+          ...{
+            current: "paddingBottom",
+            value,
+            suffix,
+            sliderDragEnd
+          }
+        };
+        return saveOnChanges(values);
+      }
+    },
+    childs.includes("paddingLeft")
+      ? {
+          id: dvk(paddingLeft),
+          icon: "nc-styling-left",
+          type: "slider",
+          disabled,
+          slider: {
+            min: 0,
+            max: 100
+          },
+          input: {
+            show: true,
+            min: 0
+          },
+          suffix: {
+            show: true,
+            choices: suffixChoices
+          },
+          value: {
+            value: dvv(paddingLeft),
+            suffix: dvv(paddingLeftSuffix)
+          },
+          onChange: ({ value, suffix }, { sliderDragEnd }) => {
+            const values = {
+              ...{ v, device, state, childs, onChange, prefix },
+              ...{
+                current: "paddingLeft",
+                value,
+                suffix,
+                sliderDragEnd
+              }
+            };
+            return saveOnChanges(values);
+          }
+        }
+      : {}
+  ];
 }

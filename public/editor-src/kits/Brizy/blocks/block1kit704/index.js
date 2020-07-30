@@ -87,7 +87,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<h5 class=\"brz-text-xs-center brz-text-lg-right brz-tp-heading5\"><span class=\"brz-cp-color2\">Easy with Brizy</span></h5>"
+                                                                    "text": "<h5 class=\"brz-tp-heading5 brz-text-lg-right brz-text-xs-center\"><span class=\"brz-cp-color2\"><span>User-friendly</span></span></h5>"
                                                                 }
                                                             }
                                                         ],
@@ -323,7 +323,7 @@ module.exports = {
                                                                     "_styles": [
                                                                         "richText"
                                                                     ],
-                                                                    "text": "<p class=\"brz-tp-paragraph brz-text-lg-left brz-text-xs-center\"><span class=\"brz-cp-color7\">Brizy is a front-end page builder where what you see is what you get. Just click, modify and watch the results. Cool right?</span></p>"
+                                                                    "text": "<p class=\"brz-text-xs-center brz-text-lg-left brz-tp-paragraph\"><span class=\"brz-cp-color7\"><span>This is a front-end page builder where what you see is what you get. Just click, modify and watch the results. Cool right?</span></span></p>"
                                                                 }
                                                             }
                                                         ]

@@ -1,6 +1,13 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { styleBgColor, styleBorderWidthGrouped } from "visual/utils/style2";
-import { styleBorderColor } from "visual/utils/style";
+import {
+  styleBgColor,
+  styleBorderWidthGrouped,
+  styleBorderColor
+} from "visual/utils/style2";
+import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
+import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
+import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
+import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 
 export function cssStyleElementTabsItemsBorderWidth({ v, device, state }) {
   return `border-width: ${styleBorderWidthGrouped({ v, device, state })}px;`;
@@ -10,9 +17,20 @@ export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const iconPosition = dvv("iconPosition");
   const iconSpacing = dvv("iconSpacing");
-  return iconPosition === "left"
-    ? `margin: 0 ${iconSpacing}px 0 0;`
-    : `margin: 0 0 0 ${iconSpacing}px;`;
+  switch (iconPosition) {
+    case "left": {
+      return `margin: 0 ${iconSpacing}px 0 0;`;
+    }
+    case "right": {
+      return `margin: 0 0 0 ${iconSpacing}px;`;
+    }
+    case "top": {
+      return `margin: 0 0 ${iconSpacing}px 0;`;
+    }
+    case "bottom": {
+      return `margin: ${iconSpacing}px 0 0 0;`;
+    }
+  }
 }
 
 export function cssStyleElementTabsBtnIconSize({ v, device, state }) {
@@ -108,8 +126,21 @@ export function cssStyleElementTabsEmptyContent({ v }) {
 
 export function cssStyleElementTabsBtnIconPosition({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
-  const iconPosition = dvv("iconPosition") === "left" ? "row" : "row-reverse";
-  return `flex-direction: ${iconPosition};`;
+  const iconPosition = dvv("iconPosition");
+  switch (iconPosition) {
+    case "left": {
+      return "flex-direction: row;";
+    }
+    case "right": {
+      return "flex-direction: row-reverse;";
+    }
+    case "top": {
+      return "flex-direction: column;";
+    }
+    case "bottom": {
+      return "flex-direction: column-reverse;";
+    }
+  }
 }
 
 export function cssStyleElementTabsBtnIconJustifyContent({ v, device, state }) {
@@ -148,4 +179,84 @@ export function cssStyleElementTabsSpacing({ v, device, state }) {
   return verticalMode === "off"
     ? `margin: 0 ${spacing}px 0 0;`
     : `margin: 0 0 ${spacing}px 0;`;
+}
+export function cssStyleElementTabsNavAlign({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const horizontalAlign = dvv("horizontalAlign");
+
+  const aligns = {
+    left: "flex-start",
+    center: "center",
+    right: "flex-end"
+  };
+
+  return horizontalAlign === "justify"
+    ? "flex-grow: 1;"
+    : `justify-content:${aligns[horizontalAlign]};`;
+}
+export function cssStyleElementTabsPadding({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const navStyle = dvv("navStyle");
+  if (navStyle !== "style-3") {
+    return cssStylePaddingFourFields({ v, device, state });
+  }
+  return "";
+}
+export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const verticalMode = dvv("verticalMode");
+  const verticalAlign = dvv("verticalAlign");
+  const color = styleBorderColor({ v, device, state });
+  let width = styleBorderWidthGrouped({ v, device, state });
+
+  if (verticalMode === "off") {
+    if (width === 0) {
+      width = 1;
+    }
+    return `content: ""; width: 100vw; height: ${width}px;  background-color: ${color}; position: absolute; top: auto; bottom: 0; z-index: 1;`;
+  } else if (verticalMode === "on") {
+    if (verticalAlign === "left") {
+      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: auto; right: 0; `;
+    } else if (verticalAlign === "right") {
+      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: 0; right: auto; `;
+    }
+  }
+}
+export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const verticalMode = dvv("verticalMode");
+  const verticalAlign = dvv("verticalAlign");
+  const color = styleBorderColor({ v, device, state, prefix: "active" });
+  const width = styleBorderWidthGrouped({ v, device, state, prefix: "active" });
+
+  if (verticalMode === "off") {
+    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; position: absolute; bottom: 0px; left: 0; z-index: 2;`;
+  } else if (verticalMode === "on") {
+    if (verticalAlign === "left") {
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; position: absolute; right: 0; left: auto; z-index: 2;`;
+    } else if (verticalAlign === "right") {
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; position: absolute; right: auto; left: 0; z-index: 2;`;
+    }
+  }
+}
+
+export function cssStyleElementTabsActiveColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "activeColor" });
+}
+
+export function cssStyleElementTabsActiveBgColor({ v, device, state }) {
+  return cssStyleBgColor({ v, device, state, prefix: "activeBg" });
+}
+
+export function cssStyleElementTabsActiveShadow({ v, device, state }) {
+  return cssStyleBoxShadow({ v, device, state, prefix: "active" });
+}
+
+export function cssStyleElementTabsActiveBorderColor({ v, device, state }) {
+  return `border-color: ${styleBorderColor({
+    v,
+    device,
+    state,
+    prefix: "active"
+  })};`;
 }

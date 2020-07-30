@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { getIntegrationAccountApiKey, createIntegrationAccount } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { Connect } from "../../common/GlobalApps/StepsView";
-import { fakeRequest } from "../../common/utils";
+import { pendingRequest } from "visual/utils/api/editor";
 
 const getMessage = (data, keys) => {
   const keysTitle = keys.map(el => el.title).join(" & ");
@@ -46,13 +46,19 @@ class ApiConnect extends Component {
       formId,
       app: { id, data: appData },
       onChange,
-      onChangeProgress
+      onChangeProgress,
+      onError
     } = context;
 
-    const { data } = await getIntegrationAccountApiKey({
+    let { status, data } = await getIntegrationAccountApiKey({
       id,
       formId
     });
+
+    if (!status || status >= 400) {
+      data = [];
+      onError("Something went wrong");
+    }
 
     onChange(id, { ...appData, accountApiKeys: data });
 
@@ -109,7 +115,7 @@ class ApiConnect extends Component {
       }
     } else {
       // Emitted fake request
-      await fakeRequest();
+      await pendingRequest();
 
       this.setState({
         error: t("Fields are empty"),
@@ -132,7 +138,7 @@ class ApiConnect extends Component {
     });
 
     // Emitted fake request
-    await fakeRequest();
+    await pendingRequest();
 
     onChangeProgress({ showProgress: true });
 

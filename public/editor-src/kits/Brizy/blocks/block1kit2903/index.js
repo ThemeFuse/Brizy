@@ -130,8 +130,8 @@ module.exports = {
                         }
                     ],
                     "paddingType": "ungrouped",
-                    "paddingTop": 15,
-                    "paddingBottom": 35,
+                    "paddingTop": 90,
+                    "paddingBottom": 90,
                     "padding": 75,
                     "bgColorHex": "#191b21",
                     "bgColorOpacity": 0.9,
@@ -197,8 +197,8 @@ module.exports = {
                         }
                     ],
                     "paddingType": "ungrouped",
-                    "paddingTop": 60,
-                    "paddingBottom": 60,
+                    "paddingTop": 90,
+                    "paddingBottom": 90,
                     "padding": 75,
                     "bgColorPalette": "color1",
                     "bgColorHex": "#191b21",

@@ -14,12 +14,6 @@ export function style(v, vs, vd) {
         "cssStyleElementFacebookCommentsPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-comments__skin-skin1 .brz-comments__name, && .brz-comments__skin-skin1 .brz-comments__date, && .brz-comments__skin-skin1 .brz-comments__reply": {
-      standart: ["cssStyleElementCommentsHeightNameDate"]
-    },
-    ".brz && .brz-comments__skin-skin1 .brz-comments__reply:before": {
-      standart: ["cssStyleElementCommentsDviderReplyHeight"]
-    },
     ".brz && .brz-comments__name:hover": {
       standart: [
         "cssStyleElementCommentsNameColor",
@@ -29,6 +23,13 @@ export function style(v, vs, vd) {
         "cssStyleElementCommentsNameFontWeight",
         "cssStyleElementCommentsNameLetterSpacing"
       ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+      ]
+    },
+    ".brz && .comment-form-rating > .stars:hover, .brz && .star-rating:hover, .brz && .comment-form-rating > .stars:hover": {
+      standart: ["cssStyleElementCommentsNameColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementFacebookCommentsPropertyHoverTransition"
@@ -109,7 +110,7 @@ export function style(v, vs, vd) {
     ".brz && .brz-logged-in-as a, && .nav-links a, && .comment-reply-link, && #cancel-comment-reply-link": {
       standart: ["cssStyleElementCommentsColorLink"]
     },
-    ".brz &&:hover .brz-comments-children": {
+    ".brz &&:hover .brz-comments.brz-parent .brz-comments": {
       standart: ["cssStyleElementCommentsChildMargin"]
     },
     ".brz && .brz-comment-reply-title, && .brz-comment-form-comment > label": {

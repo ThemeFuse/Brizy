@@ -1,9 +1,9 @@
 import produce from "immer";
 import { assetUrl } from "visual/utils/asset";
+import { pendingRequest } from "visual/utils/api/editor";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";
 import { AppData } from "../common/GlobalApps/type";
-import { fakeRequest } from "../common/utils";
 import * as AppsComponent from "./Apps";
 
 class Recaptcha extends BaseIntegration {
@@ -49,7 +49,7 @@ class Recaptcha extends BaseIntegration {
 
   handleConnectApp = async (appData: AppData): Promise<void> => {
     const appId = appData.id;
-    await fakeRequest();
+    await pendingRequest();
 
     this.setState(
       produce(draft => {

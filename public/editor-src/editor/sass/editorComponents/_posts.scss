@@ -1,7 +1,37 @@
 // Posts
 .brz-posts {
   width: 100%;
-  display: grid;
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__filter {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: inherit;
+    padding: 0;
+    flex-wrap: wrap;
+
+    &-wrapper {
+      width: 100%;
+      grid-column: 1 / -1;
+      justify-content: center;
+    }
+    &--style-2 {
+      width: fit-content;
+    }
+    &__item {
+      cursor: pointer;
+    }
+    &__item:first-child {
+      margin-left: 0 !important;
+    }
+    &__item:last-child {
+      margin-right: 0 !important;
+    }
+  }
 }
 
 // pagination all class is from WP
@@ -12,7 +42,7 @@
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    grid-column: 1 / -1;
+    grid-column: 1/-1;
     align-items: center;
     justify-content: center;
   }

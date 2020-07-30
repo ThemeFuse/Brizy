@@ -1,0 +1,57 @@
+// WOOStock
+.brz-wooproductmeta {
+  max-width: 100%;
+
+  &.brz-wooproductmeta {
+    width: fit-content;
+  }
+
+  & > div > .brz-metas {
+    display: flex;
+  }
+  &__container {
+    display: flex;
+    position: relative;
+
+    &.brz-wooproductmeta__container:first-child {
+      & > .brz-wooproductmeta__item.brz-wooproductmeta__item {
+        padding-top: 0;
+      }
+    }
+    &:last-child {
+      & > .brz-wooproductmeta__item.brz-wooproductmeta__item {
+        padding-bottom: 0;
+      }
+    }
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+
+    & .brz-a {
+      color: inherit !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &-value:not(:first-child) .brz-a {
+      padding-left: 5px;
+    }
+  }
+  &-table {
+    border-collapse: collapse;
+
+    & > div > .brz-metas {
+      display: table;
+
+      .brz-wooproductmeta__container {
+        display: table-row;
+      }
+      .brz-wooproductmeta__item {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+}

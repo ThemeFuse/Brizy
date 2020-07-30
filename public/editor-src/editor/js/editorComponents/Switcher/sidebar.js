@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import {
   toolbarBorderRadius,
+  toolbarEntranceAnimation,
   toolbarPaddingFourFieldsPxSuffix
 } from "visual/utils/toolbar";
 
@@ -22,6 +23,7 @@ export function getItems({ v, device }) {
       state: "normal",
       onChangeGrouped: ["onChangeBorderRadiusGrouped"],
       onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-    })
+    }),
+    toolbarEntranceAnimation({ v, device })
   ];
 }

@@ -1,9 +1,14 @@
 {
   "content": {
     "progressBarStyle": "style1",
+
     "text": "My skill",
-    "percentage": 80,
+    "textPopulation": "",
     "showText": "on",
+
+    "percentage": 80,
+    "percentageSuffix": "%",
+    "percentagePopulation": "",
     "showPercentage": "on"
   },
 
@@ -14,11 +19,17 @@
   "style": {
     "className": "",
 
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null,
+      "typographyFontFamily": "lato",
+      "tabletTypographyFontFamily": null,
+      "mobileTypographyFontFamily": null
+    },
+
     "fontStyle": "",
     "fontFamilyType": "google",
-    "families": {
-      "fontFamily": "roboto"
-    },
     "fontSize": 16,
     "fontWeight": 400,
     "lineHeight": 1.3,
@@ -26,9 +37,6 @@
 
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
-    "typographyFamilies": {
-      "typographyFontFamily": "roboto"
-    },
     "typographyFontSize": 16,
     "typographyFontWeight": 400,
     "typographyLineHeight": 1.3,
@@ -184,6 +192,7 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
+    "widthSuffix": "%",
 
     "paddingType": "ungrouped",
 
@@ -196,12 +205,10 @@
     "customCSS": "",
 
     "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
-    "tabletFamilies": {
-      "tabletFontFamily": null
-    },
     "tabletFontSize": 14,
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
@@ -209,9 +216,6 @@
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
-    "tabletTypographyFamilies": {
-      "tabletTypographyFontFamily": null
-    },
     "tabletTypographyFontSize": 16,
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1.3,
@@ -251,12 +255,10 @@
     "tempTabletBgColorPalette": null,
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
-    "mobileFamilies": {
-      "mobileFontFamily": null
-    },
     "mobileFontSize": 13,
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,
@@ -264,9 +266,6 @@
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
-    "mobileTypographyFamilies": {
-      "mobileTypographyFontFamily": null
-    },
     "mobileTypographyFontSize": 16,
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1.1,
@@ -305,6 +304,7 @@
     "tempMobileBorderBottomLeftRadius": null,
     "tempMobileBorderBottomRightRadius": null,
 
-    "mobileWidth": null
+    "mobileWidth": null,
+    "mobileWidthSuffix": null
   }
 }

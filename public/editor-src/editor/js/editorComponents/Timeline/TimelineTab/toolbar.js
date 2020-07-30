@@ -1,11 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export const getItems = ({ v, device }) => {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "bgColorHex", device }),
@@ -18,16 +16,18 @@ export const getItems = ({ v, device }) => {
 
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
-      type: "popover",
-      icon: "nc-timeline",
-      title: t("Timeline"),
+      id: "toolbarCurrentShortcode",
+      type: "popover-dev",
+      config: {
+        icon: "nc-timeline",
+        title: t("Timeline")
+      },
       position: 70,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -56,26 +56,29 @@ export const getItems = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
+        }
+      },
       roles: ["admin"],
       devices: "desktop",
       position: 90,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
-        }
-      },
       options: [
         {
           id: "color",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
+              id: "bg",
               label: t("Bg"),
               options: [
                 {
@@ -85,6 +88,7 @@ export const getItems = ({ v, device }) => {
               ]
             },
             {
+              id: "icon",
               label: t("Icon"),
               options: [
                 {
@@ -94,6 +98,7 @@ export const getItems = ({ v, device }) => {
               ]
             },
             {
+              id: "border",
               label: t("Border"),
               options: [
                 {
@@ -103,6 +108,7 @@ export const getItems = ({ v, device }) => {
               ]
             },
             {
+              id: "shadow",
               label: t("Shadow"),
               options: [
                 {

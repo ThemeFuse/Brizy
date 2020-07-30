@@ -5,11 +5,14 @@
 
   "style": {
     "width": 100,
+    "widthSuffix": null,
 
     "customCSS": "",
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
 
-    "mobileWidth": null
+    "mobileWidth": null,
+    "mobileWidthSuffix": null
   }
 }

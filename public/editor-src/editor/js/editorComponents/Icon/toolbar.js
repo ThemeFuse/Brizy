@@ -22,8 +22,11 @@ import {
   toolbarBorder2,
   toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
-export function getItemsForDesktop(v) {
+export function getItemsForDesktop(v, component) {
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const device = "desktop";
   const maxBorderRadius = Math.round(
     (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
@@ -37,15 +40,17 @@ export function getItemsForDesktop(v) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       position: 70,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -66,99 +71,81 @@ export function getItemsForDesktop(v) {
                   })
                 },
                 {
-                  type: "multiPicker",
-                  roles: ["admin"],
+                  id: "sizeGroup",
+                  type: "group-dev",
                   position: 60,
-                  picker: {
-                    id: "size",
-                    label: t("Size"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "small",
-                        icon: "nc-32"
-                      },
-                      {
-                        value: "medium",
-                        icon: "nc-48"
-                      },
-                      {
-                        value: "large",
-                        icon: "nc-64"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  options: [
+                    {
+                      id: "size",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-32" },
+                        { value: "medium", icon: "nc-48" },
+                        { value: "large", icon: "nc-64" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.size,
+                      onChange: size => {
+                        const borderRadius = Math.round(
+                          (v.borderRadius /
+                            Math.round(
+                              v[`${v.size}Size`] +
+                                v.padding * 2 +
+                                v.borderWidth * 2
+                            )) *
+                            Math.round(
+                              v[`${size}Size`] +
+                                v.padding * 2 +
+                                v.borderWidth * 2
+                            )
+                        );
+
+                        return {
+                          size,
+                          customSize:
+                            size !== "custom" ? v[`${size}Size`] : v.customSize,
+                          borderRadius:
+                            size !== "custom" ? borderRadius : v.borderRadius
+                        };
                       }
-                    ],
-                    value: v.size,
-                    onChange: size => {
-                      const borderRadius = Math.round(
-                        (v.borderRadius /
-                          Math.round(
-                            v[`${v.size}Size`] +
-                              v.padding * 2 +
-                              v.borderWidth * 2
-                          )) *
-                          Math.round(
-                            v[`${size}Size`] + v.padding * 2 + v.borderWidth * 2
-                          )
-                      );
+                    },
+                    {
+                      id: "customSize",
+                      type: "slider",
+                      disabled: v.size !== "custom",
+                      slider: {
+                        min: 14,
+                        max: 180
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.customSize
+                      },
+                      onChange: ({ value: customSize }) => {
+                        const borderRadius = Math.round(
+                          (v.borderRadius /
+                            Math.round(
+                              v.customSize + v.padding * 2 + v.borderWidth * 2
+                            )) *
+                            Math.round(
+                              customSize + v.padding * 2 + v.borderWidth * 2
+                            )
+                        );
 
-                      return {
-                        size,
-
-                        customSize:
-                          size !== "custom" ? v[`${size}Size`] : v.customSize,
-
-                        borderRadius:
-                          size !== "custom" ? borderRadius : v.borderRadius
-                      };
+                        return {
+                          customSize,
+                          borderRadius
+                        };
+                      }
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "customSize",
-                        type: "slider",
-                        slider: {
-                          min: 14,
-                          max: 180
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.customSize
-                        },
-                        onChange: ({ value: customSize }) => {
-                          const borderRadius = Math.round(
-                            (v.borderRadius /
-                              Math.round(
-                                v.customSize + v.padding * 2 + v.borderWidth * 2
-                              )) *
-                              Math.round(
-                                customSize + v.padding * 2 + v.borderWidth * 2
-                              )
-                          );
-
-                          return {
-                            customSize,
-                            borderRadius
-                          };
-                        }
-                      }
-                    ]
-                  }
+                  ]
                 }
               ]
             },
@@ -293,117 +280,107 @@ export function getItemsForDesktop(v) {
                   }
                 },
                 {
-                  type: "multiPicker",
-                  picker: {
-                    id: "borderRadiusType",
-                    label: t("Corner"),
-                    type: "radioGroup",
-                    choices: [
-                      {
-                        value: "square",
-                        icon: "nc-corners-square"
-                      },
-                      {
-                        value: "rounded",
-                        icon: "nc-corners-round"
-                      },
-                      {
-                        value: "custom",
-                        icon: "nc-more"
+                  id: "borderRadiusTypeGroup",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "borderRadiusType",
+                      label: t("Corner"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "square", icon: "nc-corners-square" },
+                        { value: "rounded", icon: "nc-corners-round" },
+                        { value: "custom", icon: "nc-more" }
+                      ],
+                      value: v.borderRadiusType,
+                      onChange: borderRadiusType => {
+                        return {
+                          borderRadiusType,
+
+                          tempBorderRadiusType:
+                            borderRadiusType !== ""
+                              ? borderRadiusType
+                              : v.tempBorderRadiusType,
+
+                          fillType:
+                            borderRadiusType !== ""
+                              ? v.tempFillType
+                              : v.fillType,
+
+                          borderRadius:
+                            borderRadiusType === "square"
+                              ? v.tempBorderRadius
+                              : borderRadiusType === "rounded"
+                              ? maxBorderRadius
+                              : v.borderRadius,
+
+                          borderWidth:
+                            borderRadiusType !== ""
+                              ? v.tempBorderWidth
+                              : v.borderWidth,
+
+                          borderColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempBorderColorOpacity
+                              : v.borderColorOpacity,
+
+                          borderColorPalette:
+                            borderRadiusType !== ""
+                              ? v.tempBorderColorPalette
+                              : v.borderColorPalette,
+
+                          bgColorOpacity:
+                            borderRadiusType !== "" &&
+                            v.tempFillType === "filled"
+                              ? v.tempBgColorOpacity
+                              : v.bgColorOpacity,
+
+                          bgColorPalette:
+                            borderRadiusType !== "" &&
+                            v.tempFillType === "filled"
+                              ? v.tempBgColorPalette
+                              : v.bgColorPalette,
+
+                          padding:
+                            borderRadiusType !== "" ? v.tempPadding : v.padding,
+
+                          // Hover
+                          hoverBgColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempHoverBgColorOpacity
+                              : v.hoverBgColorOpacity,
+
+                          hoverBorderColorOpacity:
+                            borderRadiusType !== ""
+                              ? v.tempHoverBorderColorOpacity
+                              : v.hoverBorderColorOpacity
+                        };
                       }
-                    ],
-                    value: v.borderRadiusType,
-                    onChange: borderRadiusType => {
-                      return {
-                        borderRadiusType,
-
-                        tempBorderRadiusType:
-                          borderRadiusType !== ""
-                            ? borderRadiusType
-                            : v.tempBorderRadiusType,
-
-                        fillType:
-                          borderRadiusType !== "" ? v.tempFillType : v.fillType,
-
-                        borderRadius:
-                          borderRadiusType === "square"
-                            ? v.tempBorderRadius
-                            : borderRadiusType === "rounded"
-                            ? maxBorderRadius
-                            : v.borderRadius,
-
-                        borderWidth:
-                          borderRadiusType !== ""
-                            ? v.tempBorderWidth
-                            : v.borderWidth,
-
-                        borderColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempBorderColorOpacity
-                            : v.borderColorOpacity,
-
-                        borderColorPalette:
-                          borderRadiusType !== ""
-                            ? v.tempBorderColorPalette
-                            : v.borderColorPalette,
-
-                        bgColorOpacity:
-                          borderRadiusType !== "" && v.tempFillType === "filled"
-                            ? v.tempBgColorOpacity
-                            : v.bgColorOpacity,
-
-                        bgColorPalette:
-                          borderRadiusType !== "" && v.tempFillType === "filled"
-                            ? v.tempBgColorPalette
-                            : v.bgColorPalette,
-
-                        padding:
-                          borderRadiusType !== "" ? v.tempPadding : v.padding,
-
-                        // Hover
-                        hoverBgColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempHoverBgColorOpacity
-                            : v.hoverBgColorOpacity,
-
-                        hoverBorderColorOpacity:
-                          borderRadiusType !== ""
-                            ? v.tempHoverBorderColorOpacity
-                            : v.hoverBorderColorOpacity
-                      };
+                    },
+                    {
+                      id: "borderRadius",
+                      type: "slider",
+                      disabled: v.borderRadiusType !== "custom",
+                      slider: {
+                        min: 0,
+                        max: maxBorderRadius
+                      },
+                      input: {
+                        show: true
+                      },
+                      suffix: {
+                        show: true,
+                        choices: [{ title: "px", value: "px" }]
+                      },
+                      value: {
+                        value: v.borderRadius
+                      },
+                      onChange: ({ value: borderRadius }) => ({
+                        borderRadius,
+                        tempBorderRadius: borderRadius
+                      })
                     }
-                  },
-                  choices: {
-                    custom: [
-                      {
-                        id: "borderRadius",
-                        type: "slider",
-                        slider: {
-                          min: 0,
-                          max: maxBorderRadius
-                        },
-                        input: {
-                          show: true
-                        },
-                        suffix: {
-                          show: true,
-                          choices: [
-                            {
-                              title: "px",
-                              value: "px"
-                            }
-                          ]
-                        },
-                        value: {
-                          value: v.borderRadius
-                        },
-                        onChange: ({ value: borderRadius }) => ({
-                          borderRadius,
-                          tempBorderRadius: borderRadius
-                        })
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   id: "padding",
@@ -418,12 +395,7 @@ export function getItemsForDesktop(v) {
                   },
                   suffix: {
                     show: true,
-                    choices: [
-                      {
-                        title: "px",
-                        value: "px"
-                      }
-                    ]
+                    choices: [{ title: "px", value: "px" }]
                   },
                   value: {
                     value: v.padding
@@ -485,12 +457,7 @@ export function getItemsForDesktop(v) {
                   },
                   suffix: {
                     show: true,
-                    choices: [
-                      {
-                        title: "px",
-                        value: "px"
-                      }
-                    ]
+                    choices: [{ title: "px", value: "px" }]
                   },
                   value: {
                     value: v.borderWidth
@@ -576,22 +543,23 @@ export function getItemsForDesktop(v) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      roles: ["admin"],
+      position: 80,
       options: [
         {
           id: "tabsState",
           tabsPosition: "left",
           type: "tabs",
-          value: v.tabsState,
           tabs: [
             {
               id: "tabNormal",
@@ -601,8 +569,7 @@ export function getItemsForDesktop(v) {
                 {
                   id: "tabsColor",
                   className: "",
-                  type: "tabs",
-                  value: v.tabsColor,
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: "tabText",
@@ -864,8 +831,7 @@ export function getItemsForDesktop(v) {
                 {
                   id: "tabsColor",
                   className: "",
-                  type: "tabs",
-                  value: v.tabsColor,
+                  type: "tabs-dev",
                   tabs: [
                     {
                       id: "tabText",
@@ -1127,24 +1093,24 @@ export function getItemsForDesktop(v) {
             }
           ]
         }
-      ],
-      onChange: (_, { isOpen }) => ({
-        tabsState: !isOpen ? "" : v.tabsState,
-        tabsColor: !isOpen ? "" : v.tabsColor
-      })
+      ]
     },
     {
       id: "toolbarLink",
-      type: "popover",
-      icon: "nc-link",
-      size: "medium",
-      title: t("Link"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-link",
+        size: "medium",
+        title: t("Link")
+      },
       position: 90,
       options: [
         {
           id: "linkType",
-          type: "tabs",
-          value: v.linkType,
+          type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "external",
@@ -1166,7 +1132,28 @@ export function getItemsForDesktop(v) {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v })]
+              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+            },
+            {
+              id: "popup",
+              label: t("Popup"),
+              options: [
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  label: t("Popup"),
+                  popupKey: `${component.getId()}_${v.linkPopup}`,
+                  value: {
+                    value: v.linkPopup,
+                    popups: v.popups
+                  },
+                  onChange: ({ value, popups }) => ({
+                    linkPopup: value,
+                    popups
+                  })
+                }
+              ]
             }
           ]
         }
@@ -1183,82 +1170,67 @@ export function getItemsForDesktop(v) {
   ];
 }
 
-export function getItemsForTablet(v) {
+export function getItemsForTablet(v, component) {
   return [
     {
       id: "tabletToolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          type: "multiPicker",
-          picker: {
-            id: "tabletSize",
-            label: t("Size"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "small",
-                icon: "nc-32"
-              },
-              {
-                value: "medium",
-                icon: "nc-48"
-              },
-              {
-                value: "large",
-                icon: "nc-64"
-              },
-              {
-                value: "custom",
-                icon: "nc-more"
-              }
-            ],
-            value: tabletSyncOnChange(v, "size"),
-            onChange: tabletSize => {
-              return {
-                tabletSize,
+          id: "tabletSizeGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "tabletSize",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-32" },
+                { value: "medium", icon: "nc-48" },
+                { value: "large", icon: "nc-64" },
+                { value: "custom", icon: "nc-more" }
+              ],
+              value: tabletSyncOnChange(v, "size"),
+              onChange: tabletSize => {
+                return {
+                  tabletSize,
 
-                tabletCustomSize:
-                  tabletSize !== "custom"
-                    ? v[`${tabletSize}Size`]
-                    : v.tabletCustomSize
-              };
-            }
-          },
-          choices: {
-            custom: [
-              {
-                id: "tabletCustomSize",
-                type: "slider",
-                slider: {
-                  min: 14,
-                  max: 180
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: tabletSyncOnChange(v, "customSize")
-                },
-                onChange: ({ value: tabletCustomSize }) => ({
-                  tabletCustomSize
-                })
+                  tabletCustomSize:
+                    tabletSize !== "custom"
+                      ? v[`${tabletSize}Size`]
+                      : v.tabletCustomSize
+                };
               }
-            ]
-          }
+            },
+            {
+              id: "tabletCustomSize",
+              type: "slider",
+              disabled: v.tabletSize !== "custom",
+              slider: {
+                min: 14,
+                max: 180
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: tabletSyncOnChange(v, "customSize")
+              },
+              onChange: ({ value: tabletCustomSize }) => ({
+                tabletCustomSize
+              })
+            }
+          ]
         },
         {
           id: "tabletPadding",
@@ -1273,12 +1245,7 @@ export function getItemsForTablet(v) {
           },
           suffix: {
             show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            choices: [{ title: "px", value: "px" }]
           },
           disabled: v.fillType === "default",
           value: {
@@ -1290,96 +1257,100 @@ export function getItemsForTablet(v) {
     },
     {
       id: "tabletToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       disabled: v.linkPopup === "",
       position: 80,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     },
     {
       id: "tabletToolbarSettings",
-      type: "popover",
+      type: "popover-dev",
       disabled: true
     }
   ];
 }
 
-export function getItemsForMobile(v) {
+export function getItemsForMobile(v, component) {
   return [
     {
       id: "mobileToolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-star",
-      title: t("Icon"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-star",
+        title: t("Icon")
+      },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          type: "multiPicker",
-          picker: {
-            id: "mobileSize",
-            label: t("Size"),
-            type: "radioGroup",
-            choices: [
-              {
-                value: "small",
-                icon: "nc-32"
-              },
-              {
-                value: "medium",
-                icon: "nc-48"
-              },
-              {
-                value: "large",
-                icon: "nc-64"
-              },
-              {
-                value: "custom",
-                icon: "nc-more"
-              }
-            ],
-            value: mobileSyncOnChange(v, "size"),
-            onChange: mobileSize => {
-              return {
-                mobileSize,
+          id: "mobileSizeGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "mobileSize",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-32" },
+                { value: "medium", icon: "nc-48" },
+                { value: "large", icon: "nc-64" },
+                { value: "custom", icon: "nc-more" }
+              ],
+              value: mobileSyncOnChange(v, "size"),
+              onChange: mobileSize => {
+                return {
+                  mobileSize,
 
-                mobileCustomSize:
-                  mobileSize !== "custom"
-                    ? v[`${mobileSize}Size`]
-                    : v.mobileCustomSize
-              };
-            }
-          },
-          choices: {
-            custom: [
-              {
-                id: "mobileCustomSize",
-                type: "slider",
-                slider: {
-                  min: 14,
-                  max: 180
-                },
-                input: {
-                  show: true
-                },
-                suffix: {
-                  show: true,
-                  choices: [
-                    {
-                      title: "px",
-                      value: "px"
-                    }
-                  ]
-                },
-                value: {
-                  value: mobileSyncOnChange(v, "customSize")
-                },
-                onChange: ({ value: mobileCustomSize }) => ({
-                  mobileCustomSize
-                })
+                  mobileCustomSize:
+                    mobileSize !== "custom"
+                      ? v[`${mobileSize}Size`]
+                      : v.mobileCustomSize
+                };
               }
-            ]
-          }
+            },
+            {
+              id: "mobileCustomSize",
+              type: "slider",
+              disabled: v.mobileSize !== "custom",
+              slider: {
+                min: 14,
+                max: 180
+              },
+              input: {
+                show: true
+              },
+              suffix: {
+                show: true,
+                choices: [{ title: "px", value: "px" }]
+              },
+              value: {
+                value: mobileSyncOnChange(v, "customSize")
+              },
+              onChange: ({ value: mobileCustomSize }) => ({
+                mobileCustomSize
+              })
+            }
+          ]
         },
         {
           id: "mobilePadding",
@@ -1394,12 +1365,7 @@ export function getItemsForMobile(v) {
           },
           suffix: {
             show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            choices: [{ title: "px", value: "px" }]
           },
           disabled: v.fillType === "default",
           value: {
@@ -1411,15 +1377,34 @@ export function getItemsForMobile(v) {
     },
     {
       id: "mobileToolbarLink",
-      type: "popover",
-      icon: "nc-link",
+      type: "popover-dev",
+      config: {
+        icon: "nc-link"
+      },
       disabled: v.linkPopup === "",
       position: 80,
-      options: []
+      options: [
+        {
+          id: "linkPopup",
+          type: "promptAddPopup",
+          label: t("Popup"),
+          disabled: v.linkType !== "popup" || v.linkPopup === "",
+          canDelete: false,
+          popupKey: `${component.getId()}_${v.linkPopup}`,
+          value: {
+            value: v.linkPopup,
+            popups: v.popups
+          },
+          onChange: ({ value, popups }) => ({
+            linkPopup: value,
+            popups
+          })
+        }
+      ]
     },
     {
       id: "mobileToolbarSettings",
-      type: "popover",
+      type: "popover-dev",
       disabled: true
     }
   ];

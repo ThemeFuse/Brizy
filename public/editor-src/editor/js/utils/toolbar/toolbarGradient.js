@@ -41,6 +41,7 @@ export function toolbarGradientType({
   v,
   device,
   state,
+  states,
   devices = "all",
   className,
   disabled
@@ -52,6 +53,7 @@ export function toolbarGradientType({
     id: dvk("gradientType"),
     type: "select",
     devices,
+    states,
     disabled,
     className,
     choices: [
@@ -72,6 +74,7 @@ export function toolbarGradientLinearDegree({
   v,
   device,
   state,
+  states,
   devices = "all",
   disabled
 }) {
@@ -83,6 +86,7 @@ export function toolbarGradientLinearDegree({
     type: "inputNumber",
     className: "brz-ed-grid__gradient__size",
     devices,
+    states,
     disabled,
     min: 0,
     max: 360,
@@ -94,6 +98,7 @@ export function toolbarGradientRadialDegree({
   v,
   device,
   state,
+  states,
   devices = "all",
   disabled
 }) {
@@ -105,6 +110,7 @@ export function toolbarGradientRadialDegree({
     type: "inputNumber",
     className: "brz-ed-grid__gradient__degree",
     devices,
+    states,
     disabled,
     min: 0,
     max: 1000,

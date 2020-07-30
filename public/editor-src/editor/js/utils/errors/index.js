@@ -43,6 +43,13 @@ export class GlobalBlocksError extends CustomError {
   }
 }
 
+export class SavedLayoutError extends CustomError {
+  constructor(message) {
+    super(message);
+    this.name = "SavedLayout";
+  }
+}
+
 // Error Codes
 
 // polling
