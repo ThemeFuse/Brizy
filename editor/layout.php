@@ -199,6 +199,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
 		$data['meta']        = $this->getMeta();
 		$data['cloudId']     = $this->getCloudId();
+		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media']       = $this->getMedia();
 
 		unset( $data['wp_post'] );
@@ -219,7 +220,6 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 			$this->setCloudAccountId( $storage_post['cloudAccountId'] );
 		}
 
-
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
 		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, true );
 	}
@@ -228,7 +228,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data = parent::convertToOptionValue();
 
 		$data['media']   = $this->getMedia();
-		$data['cloudId'] = $this->getCloudId();
+		$data['cloudId']        = $this->getCloudId();
+		$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
 		$data['synchronizable'] = $this->isSynchronizable();
 
