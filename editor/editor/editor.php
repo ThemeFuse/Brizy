@@ -876,7 +876,7 @@ class Brizy_Editor_Editor_Editor
      * @return array
      * @throws Exception
      */
-    public function getCloudInfo(): array
+    public function getCloudInfo()
     {
 
         // we 'allow' sync if you are not

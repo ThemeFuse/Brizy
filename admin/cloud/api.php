@@ -35,7 +35,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	 *
 	 * @param Brizy_Editor_Project $project
 	 */
-	public function __construct( Brizy_Editor_Project $project ) {
+	public function __construct( $project ) {
 
 		$this->project = $project;
 		$this->setClient( new Brizy_Admin_Cloud_Client( $project, new WP_Http() ) );
@@ -48,7 +48,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	 * @return Brizy_Admin_Cloud_Api
 	 * @throws Exception
 	 */
-	public static function _init( Brizy_Editor_Project $project ) {
+	public static function _init( $project ) {
 		static $instance;
 
 		if ( ! $instance ) {

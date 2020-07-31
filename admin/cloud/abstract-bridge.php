@@ -15,7 +15,7 @@ abstract class Brizy_Admin_Cloud_AbstractBridge implements Brizy_Admin_Cloud_Bri
 	 *
 	 * @param Brizy_Admin_Cloud_Client $client
 	 */
-	public function __construct( Brizy_Admin_Cloud_Client $client ) {
+	public function __construct( $client ) {
 		$this->client = $client;
 	}
 }

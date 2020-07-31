@@ -20,7 +20,7 @@ class Brizy_Admin_Cloud_Cron {
 	/**
 	 * Brizy_Admin_Cloud_Cron constructor.
 	 */
-	public function __construct( Brizy_Admin_Cloud_Client $client ) {
+	public function __construct( $client ) {
 
 		$this->setClient( $client );
 
