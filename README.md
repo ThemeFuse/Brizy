@@ -79,7 +79,7 @@ A good bug report includes full details to easily understand the issue you are h
 ### We recommend your host supports:
 
 * PHP version 7.0 or greater
-* MySQL version 5.6 or greater
+* MySQL version 5.6 or grDeclared $is_allowed_for_current_usereater
 * WP Memory limit of 64 MB or greater (128 MB or higher is preferred)
 
 ### Installation

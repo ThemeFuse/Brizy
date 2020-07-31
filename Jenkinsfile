@@ -120,8 +120,8 @@ pipeline {
                 sh 'git remote set-branches --add origin develop'
                 sh 'git remote set-branches --add origin release'
 
-                sh "sed -i 's/Version:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Version: ${params.buildVersion}/' brizy.php"
-                sh "sed -i 's/^Stable tag:\\s.\\{1,\\}\\..\\{1,\\}\\..\\{1,\\}/Stable tag: ${params.buildVersion}/' readme.txt"
+                sh "sed -i 's/Version:\\s.*/Version: ${params.buildVersion}/' brizy.php"
+                sh "sed -i 's/^Stable tag:\\s.*/Stable tag: ${params.buildVersion}/' readme.txt"
                 sh "sed -i 's/^Stable tag:\\s.[^<]*/Stable tag: ${params.buildVersion}/' README.md"
                 sh "sed -i \"s/'BRIZY_VERSION',\\s'.*'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_EDITOR_VERSION',\\s'.*'/'BRIZY_EDITOR_VERSION', '${params.editorVersion}'/\" brizy.php"
