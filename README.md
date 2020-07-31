@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.4.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.1<br>
+Stable tag: 2.0.2<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,7 +79,7 @@ A good bug report includes full details to easily understand the issue you are h
 ### We recommend your host supports:
 
 * PHP version 7.0 or greater
-* MySQL version 5.6 or greater
+* MySQL version 5.6 or grDeclared $is_allowed_for_current_usereater
 * WP Memory limit of 64 MB or greater (128 MB or higher is preferred)
 
 ### Installation
@@ -118,6 +118,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.0.2 - 2020-07-31 ###
+* Fixed: Plugin version
+
 ### 2.0.1 - 2020-07-31 ###
 * Fixed: Declared  property
 * Fixed: Removed code that does not work in older PHP version
@@ -134,6 +137,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
 * Improved: Re-written ## Changelog
+
+### 2.0.2 - 2020-07-31 ###
+* Fixed: Plugin version
 
 ### 2.0.1 - 2020-07-31 ###
 * Fixed: Declared  property

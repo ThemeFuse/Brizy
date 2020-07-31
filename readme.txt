@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 2.0
+Stable tag: 2.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,6 +139,9 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 2.0.2 - 2020-07-31 =
+* Fixed: Plugin version
+
 = 2.0.1 - 2020-07-31 =
 * Fixed: Declared  property
 * Fixed: Removed code that does not work in older PHP version
@@ -155,6 +158,9 @@ The progress you're making while building your page is always backed up in the c
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
 * Improved: Re-written == Changelog ==
+
+= 2.0.2 - 2020-07-31 =
+* Fixed: Plugin version
 
 = 2.0.1 - 2020-07-31 =
 * Fixed: Declared  property
