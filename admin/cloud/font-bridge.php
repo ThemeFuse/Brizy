@@ -15,7 +15,7 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 *
 	 * @param Brizy_Admin_Cloud_Client $client
 	 */
-	public function __construct( Brizy_Admin_Cloud_Client $client ) {
+	public function __construct(  $client ) {
 		parent::__construct( $client );
 
 		$this->fontManager = new Brizy_Admin_Fonts_Manager();

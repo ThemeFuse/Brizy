@@ -68,7 +68,7 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 *
 	 * @return Brizy_Admin_Cloud_MediaBridge
 	 */
-	public function setBlockId( $blockId ): Brizy_Admin_Cloud_MediaBridge {
+	public function setBlockId( $blockId ) {
 		$this->blockId = (int) $blockId;
 
 		return $this;

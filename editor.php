@@ -5,6 +5,8 @@
  */
 class Brizy_Editor {
 
+	private static $is_allowed_for_current_user = null;
+
 	private static $settings_key = 'post-types';
 
 	private static $instance;
