@@ -139,6 +139,11 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 2.0.1 - 2020-07-31 =
+* Fixed: Declared  property
+* Fixed: Removed code that does not work in older PHP version
+* Fixed: Deleted unnecessary files from all dependencies we use
+
 = 2.0 - 2020-07-30 =
 * New: Introduced working in Draft
 * New: Links to Support and Docs in left sidebar
@@ -149,7 +154,12 @@ The progress you're making while building your page is always backed up in the c
 * Improved: Enabled shape option on responsive for all Sections
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
-* Improved: Re-written == Changelog == extended the Image element (added fixed px size) 
+* Improved: Re-written == Changelog ==
+
+= 2.0.1 - 2020-07-31 =
+* Fixed: Declared  property
+* Fixed: Removed code that does not work in older PHP version
+* Fixed: Deleted unnecessary files from all dependencies we use extended the Image element (added fixed px size) 
 * Improved: Plugin loading 
 * Improved: Sent post directly in the get_the_content post content element
 * Improved: Increased the size limit of Image population to 5000px

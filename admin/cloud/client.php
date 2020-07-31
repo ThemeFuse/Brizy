@@ -29,7 +29,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @param Brizy_Editor_Project $project
 	 * @param WP_Http $http
 	 */
-	public function __construct( Brizy_Editor_Project $project, WP_Http $http ) {
+	public function __construct( $project, $http ) {
 		$this->brizyProject = $project;
 		$this->http         = $http;
 
@@ -321,7 +321,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createOrUpdateBlock( Brizy_Editor_Block $block ) {
+	public function createOrUpdateBlock( $block ) {
 
 		$cloudBlockData = array(
 			'container'   => $this->brizyProject->getCloudContainer(),
@@ -394,7 +394,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createOrUpdatePopup( Brizy_Editor_Popup $popup ) {
+	public function createOrUpdatePopup( $popup ) {
 
 		$cloudBlockData = array(
 			'container'   => $this->brizyProject->getCloudContainer(),
@@ -465,7 +465,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createOrUpdateLayout( Brizy_Editor_Layout $layout ) {
+	public function createOrUpdateLayout( $layout ) {
 
 		$cloudBlockData = array(
 			'container'   => $this->brizyProject->getCloudContainer(),
