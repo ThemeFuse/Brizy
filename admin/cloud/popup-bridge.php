@@ -30,12 +30,20 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$bridge = new Brizy_Admin_Cloud_MediaBridge( $this->client );
 		foreach ( $media->images as $uid ) {
-			$bridge->export( $uid );
+			try {
+				$bridge->export( $uid );
+			} catch (Exception $e) {
+				continue;
+			}
 		}
 
 		$bridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 		foreach ( $media->fonts as $fontUid ) {
-			$bridge->export( $fontUid );
+			try {
+				$bridge->export( $fontUid );
+			} catch (Exception $e) {
+				continue;
+			}
 		}
 
 		$this->client->createOrUpdatePopup( $layout );
