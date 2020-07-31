@@ -154,7 +154,7 @@ pipeline {
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/shortpixel/shortpixel-php/examples'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/enshrined/svg-sanitize/tests/'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./vendor/bagrinsergiu/brizy-migration-utils/tests/'
-                sh 'cd ' + params.brizySvnPath + '/trunk && ( find ./ -type d -name ".git" && find ./ -name ".gitignore" && find ./ -name ".gitmodules" && find ./ -name "*.md" && find ./ -name "composer.json" && find ./ -name "composer.lock" && find ./ -name ".travis.yml" && find ./ -name "phpunit.xml.dist" ) | xargs rm -rf'
+                sh 'cd ' + params.brizySvnPath + '/trunk && ( find ./ -type d -name ".git" && find ./ -name ".gitignore" && find ./ -name ".gitmodules" && find ./vendor -name "*.md" && find ./ -name "composer.json" && find ./ -name "composer.lock" && find ./ -name ".travis.yml" && find ./ -name "phpunit.xml.dist" ) | xargs rm -rf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && rm -rf ./*.sh'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -type d -name ".git"  | xargs rm -rf'
                 sh 'cd ' + params.brizySvnPath + '/trunk && find . -name ".gitignore" | xargs rm -rf'
