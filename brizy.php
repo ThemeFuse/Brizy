@@ -46,8 +46,9 @@ function brizy_load() {
 		return;
 	}
 
-	if (!session_id())
+	if (session_status() === PHP_SESSION_NONE) {
 		session_start();
+	}
 
 	$instance = Brizy_Editor::get();
 
