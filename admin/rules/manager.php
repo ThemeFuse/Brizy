@@ -26,12 +26,12 @@ class Brizy_Admin_Rules_Manager {
 		} elseif ( is_search() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'search';
-		} elseif ( is_front_page() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'front_page';
 		} elseif ( is_home() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'home_page';
+		} elseif ( is_front_page() ) {
+			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+			$entityType = 'front_page';
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
@@ -64,24 +64,24 @@ class Brizy_Admin_Rules_Manager {
 		$entityType   = null;
 		$entityValues = array();
 
-	/*	if ( is_404() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = '404';
-		} elseif ( is_author() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'author';
-		} elseif ( is_search() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'search';
-		} elseif ( is_front_page() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'front_page';
-		} elseif ( is_home() ) {
-			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
-			$entityType = 'home_page';
-		} else*/
+		/*	if ( is_404() ) {
+				$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+				$entityType = '404';
+			} elseif ( is_author() ) {
+				$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+				$entityType = 'author';
+			} elseif ( is_search() ) {
+				$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+				$entityType = 'search';
+			} elseif ( is_front_page() ) {
+				$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+				$entityType = 'front_page';
+			} elseif ( is_home() ) {
+				$applyFor   = Brizy_Admin_Rule::TEMPLATE;
+				$entityType = 'home_page';
+			} else*/
 
-	    if ( is_category() || is_tag() || is_tax() ) {
+		if ( is_category() || is_tag() || is_tax() ) {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
@@ -197,7 +197,7 @@ class Brizy_Admin_Rules_Manager {
 			$arrayRules[] = $rule->convertToOptionValue();
 		}
 
-		update_metadata( 'post', (int) $postId, 'brizy-rules', $arrayRules  );
+		update_metadata( 'post', (int) $postId, 'brizy-rules', $arrayRules );
 	}
 
 	/**
