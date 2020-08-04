@@ -51,7 +51,7 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$layoutObject = $this->client->createOrUpdateLayout( $layout );
 
-		$layout->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $layoutObject->uid );
+		$layout->setSynchronized( $this->getCurrentCloudAccountId(), $layoutObject->uid );
 
 		$layout->saveStorage();
 	}
@@ -98,7 +98,7 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 				$brizyPost->set_needs_compile( true );
 				$brizyPost->saveStorage();
 				$brizyPost->setDataVersion( 1 );
-				$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $layout['uid'] );
+				$brizyPost->setSynchronized( $this->getCurrentCloudAccountId(), $layout['uid'] );
 				$brizyPost->save();
 
 
@@ -138,8 +138,8 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 */
 	public function delete( $layout ) {
 
-		if ( $layout->getCloudId() ) {
-			$this->client->deleteLayout( $layout->getCloudId() );
+		if ( $layout->getCloudId($this->getCurrentCloudAccountId()) ) {
+			$this->client->deleteLayout( $layout->getCloudId($this->getCurrentCloudAccountId()) );
 		}
 	}
 }

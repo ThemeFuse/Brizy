@@ -18,4 +18,8 @@ abstract class Brizy_Admin_Cloud_AbstractBridge implements Brizy_Admin_Cloud_Bri
 	public function __construct( $client ) {
 		$this->client = $client;
 	}
+
+	public function getCurrentCloudAccountId() {
+		return $this->client->getBrizyProject()->getCloudAccountId();
+	}
 }

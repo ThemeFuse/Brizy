@@ -49,7 +49,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$cloudBlockObject = $this->client->createOrUpdateBlock( $block );
 
 		if ( $cloudBlockObject ) {
-			$block->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $cloudBlockObject->uid );
+			$block->setSynchronized( $this->getCurrentCloudAccountId(), $cloudBlockObject->uid );
 		}
 
 		$block->saveStorage();
@@ -96,7 +96,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 				$brizyPost->set_uses_editor( true );
 				$brizyPost->set_needs_compile( true );
 				$brizyPost->setDataVersion( 1 );
-				$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
+				$brizyPost->setSynchronized( $this->getCurrentCloudAccountId(), $block['id'] );
 				$brizyPost->save();
 
 
@@ -136,8 +136,8 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function delete( $block ) {
-		if ( $block->getCloudId() ) {
-			$this->client->deleteBlock( $block->getCloudId() );
+		if ( $block->getCloudId( $this->getCurrentCloudAccountId() ) ) {
+			$this->client->deleteBlock( $block->getCloudId( $this->getCurrentCloudAccountId() ) );
 		}
 	}
 }
