@@ -461,7 +461,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$block->set_needs_compile( true );
-			$block->setCloudUpdateRequired( true );
+			//$block->setCloudUpdateRequired( true );
 			$block->save();
 
 			do_action( 'brizy_saved_block_created', $block );

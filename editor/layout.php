@@ -247,3 +247,5 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	}
 
 }
+
+
