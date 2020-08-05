@@ -334,7 +334,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
 				}
 
-				if ( (int) $this->param( 'is_autosave' )[ $i ] ) {
+				if (  isset($this->param( 'is_autosave' )[ $i ]) && (int)$this->param( 'is_autosave' )[ $i ]===1 ) {
 					$block->save( 1 );
 				} else {
 
@@ -343,8 +343,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 					// position
 					$position = stripslashes( $this->param( 'position' )[ $i ] );
-					if ( $position ) {
-						$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( json_decode( $position ) ) ) );
+					if ( $position && ($positionObject = json_decode( $position ))) {
+						$block->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_object_vars( $positionObject ) ) );
 					}
 
 					// rules
