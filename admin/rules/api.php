@@ -419,7 +419,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$closureAuthor = function ( $v ) use ( $postTypeName ) {
 			return array(
-				'title'      => ucfirst( $v->data->user_nicename ) . ' ' . $postTypeName,
+				'title'      => ucfirst( $v->data->user_nicename ) ,
 				'value'      => 'author|' . $v->ID,
 				'groupValue' => 'author'
 			);
