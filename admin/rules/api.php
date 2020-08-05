@@ -433,14 +433,18 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			);
 		};
 
+		$exclude = ['simple','variable','grouped','external'];
+
 		foreach ( $taxonomies as $tax ) {
 			$groups[] = array(
 				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::POSTS,
-				'items' => array_map( $closureFromTerm, get_terms( [
+				'items' => array_map( $closureFromTerm, array_filter(get_terms( [
 					'taxonomy'   => $tax->name,
-					'hide_empty' => false
-				] ) )
+					'hide_empty' => false,
+				] ), function($term) use ($exclude) {
+					return in_array( $term->slug, $exclude ) ? false : true;
+				}) )
 			);
 
 			if ( $tax->hierarchical ) {
