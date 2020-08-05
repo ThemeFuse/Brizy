@@ -433,6 +433,8 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			);
 		};
 
+
+		// exclude woocomerce hidden tags
 		$exclude = ['simple','variable','grouped','external'];
 
 		foreach ( $taxonomies as $tax ) {
