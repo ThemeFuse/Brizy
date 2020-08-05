@@ -32,7 +32,8 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		foreach ( $media->images as $uid ) {
 			try {
 				$bridge->export( $uid );
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
+				Brizy_Logger::instance()->critical( 'Failed to export layout media: '.$e->getMessage(),[$e] );
 				continue;
 			}
 		}
@@ -41,7 +42,8 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		foreach ( $media->fonts as $fontUid ) {
 			try {
 				$bridge->export( $fontUid );
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
+				Brizy_Logger::instance()->critical( 'Failed to export layout font: '.$e->getMessage(),[$e] );
 				continue;
 			}
 		}
@@ -68,6 +70,7 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$layouts = $this->client->getLayouts( [ 'uid' => $layoutId ] );
 
 		if ( ! isset( $layouts[0] ) ) {
+			Brizy_Logger::instance()->critical( 'Failed to import: Unable to obtain the layout from cloud ' . $layoutId );
 			return;
 		}
 
@@ -109,7 +112,11 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$fontBridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 					if ( isset( $blockMedia->fonts ) ) {
 						foreach ( $blockMedia->fonts as $cloudFontUid ) {
-							$fontBridge->import( $cloudFontUid );
+							try {
+								$fontBridge->import( $cloudFontUid );
+							} catch ( Exception $e ) {
+
+							}
 						}
 					}
 
@@ -117,16 +124,19 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$mediaBridge->setBlockId( $post );
 					if ( isset( $blockMedia->images ) ) {
 						foreach ( $blockMedia->images as $mediaUid ) {
-							$mediaBridge->import( $mediaUid );
+							try {
+								$mediaBridge->import( $mediaUid );
+							} catch ( Exception $e ) {
+
+							}
 						}
 					}
 				}
-
 			}
 			$wpdb->query( 'COMMIT' );
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->critical( 'Importing layout ' . $layoutId . ' failed', [ $e ] );
+			Brizy_Logger::instance()->critical( 'Failed to import layout ' . $layoutId , [ $e ] );
 		}
 	}
 
@@ -138,8 +148,8 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 */
 	public function delete( $layout ) {
 
-		if ( $layout->getCloudId($this->getCurrentCloudAccountId()) ) {
-			$this->client->deleteLayout( $layout->getCloudId($this->getCurrentCloudAccountId()) );
+		if ( $layout->getCloudId( $this->getCurrentCloudAccountId() ) ) {
+			$this->client->deleteLayout( $layout->getCloudId( $this->getCurrentCloudAccountId() ) );
 		}
 	}
 }

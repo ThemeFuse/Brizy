@@ -76,7 +76,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyBlock = Brizy_Editor_Block::get( $blockId );
 
-		if ( $brizyBlock && $brizyBlock->isSavedBlock() ) {
+		if ( $brizyBlock && !$brizyBlock->isSavedBlock() && $brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
 			$updater = new Brizy_Admin_Cloud_BlockBridge( $this->client );
 			$updater->export( $brizyBlock );
 			return true;
@@ -88,7 +88,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyLayout = Brizy_Editor_Layout::get( $layoutId );
 
-		if ( $brizyLayout ) {
+		if ( $brizyLayout && !$brizyLayout->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
 			$updater = new Brizy_Admin_Cloud_LayoutBridge( $this->client );
 			$updater->export( $brizyLayout );
 			return true;
@@ -98,12 +98,10 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function getLayoutsForSync() {
 		global $wpdb;
 
-		$meta_key       = 'brizy-cloud-update-required';
 		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
 
 		$postIds = $wpdb->get_results(
 			"SELECT ID FROM {$wpdb->posts} p 
-					JOIN {$wpdb->postmeta} pm ON pm.post_id=p.ID and pm.meta_key='{$meta_key}' and pm.meta_value=1
 					WHERE p.post_type='{$savedBlockType}'
 					LIMIT 1" );
 
@@ -114,12 +112,10 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function getBlocksForSync() {
 		global $wpdb;
 
-		$meta_key       = 'brizy-cloud-update-required';
 		$savedBlockType = Brizy_Admin_Blocks_Main::CP_SAVED;
 
 		$postIds = $wpdb->get_results(
 			"SELECT ID FROM {$wpdb->posts} p 
-					JOIN {$wpdb->postmeta} pm ON pm.post_id=p.ID and pm.meta_key='{$meta_key}' and pm.meta_value=1
 					WHERE p.post_type='{$savedBlockType}'
 					LIMIT 1
 					"

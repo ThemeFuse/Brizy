@@ -30,7 +30,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			try {
 				$bridge->export( $uid );
 			} catch (Exception $e) {
-				continue;
+				Brizy_Logger::instance()->critical( 'Failed to export block media: '.$e->getMessage(),[$e] );
 			}
 		}
 
@@ -39,7 +39,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			try {
 				$bridge->export( $fontUid );
 			} catch (Exception $e) {
-				continue;
+				Brizy_Logger::instance()->critical( 'Failed to export block font: '.$e->getMessage(),[$e] );
 			}
 		}
 
@@ -67,6 +67,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ] );
 
 		if ( ! isset( $blocks[0] ) ) {
+			Brizy_Logger::instance()->critical( 'Failed to import: Unable to obtain the block from cloud ' . $blockId );
 			return;
 		}
 
@@ -99,7 +100,6 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 				$brizyPost->setSynchronized( $this->getCurrentCloudAccountId(), $block['id'] );
 				$brizyPost->save();
 
-
 				// import fonts
 				if ( isset( $block['media'] ) ) {
 					$blockMedia = json_decode( $block['media'] );
@@ -107,7 +107,11 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$fontBridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 					if ( isset( $blockMedia->fonts ) ) {
 						foreach ( $blockMedia->fonts as $cloudFontUid ) {
-							$fontBridge->import( $cloudFontUid );
+							try {
+								$fontBridge->import( $cloudFontUid );
+							} catch ( Exception $e ) {
+								Brizy_Logger::instance()->critical( 'Failed to import block media: '.$e->getMessage(),[$e] );
+							}
 						}
 					}
 
@@ -115,17 +119,20 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$mediaBridge->setBlockId( $post );
 					if ( isset( $blockMedia->images ) ) {
 						foreach ( $blockMedia->images as $mediaUid ) {
-							$mediaBridge->import( $mediaUid );
+							try {
+								$mediaBridge->import( $mediaUid );
+							} catch ( Exception $e ) {
+								Brizy_Logger::instance()->critical( 'Failed to import block media: '.$e->getMessage(),[$e] );
+							}
 						}
 					}
 				}
 			}
 
-
 			$wpdb->query( 'COMMIT' );
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->critical( 'Importing block ' . $blockId . ' failed', [ $e ] );
+			Brizy_Logger::instance()->critical( 'Failed to import block ' . $blockId , [ $e ] );
 		}
 	}
 
