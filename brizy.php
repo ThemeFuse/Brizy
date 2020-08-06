@@ -17,7 +17,6 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 	$_SERVER['HTTPS'] = 'on';
 }
 
-
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '2.0.2' );
@@ -42,12 +41,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
-
 		return;
-	}
-
-	if (session_status() === PHP_SESSION_NONE) {
-		session_start();
 	}
 
 	$instance = Brizy_Editor::get();
