@@ -44,6 +44,11 @@ class Brizy_Admin_Templates {
 	public function initializeActions() {
 		// do other stuff here
 		if ( is_admin() ) {
+
+			if (session_status() === PHP_SESSION_NONE) {
+				session_start();
+			}
+
 			add_filter( 'post_updated_messages', array( $this, 'filterTemplateMessages' ) );
 			add_action( 'add_meta_boxes', array( $this, 'registerTemplateMetaBox' ), 9 );
 			add_action( 'transition_post_status', array( $this, 'actionTransitionPostStatus' ), 10, 3 );

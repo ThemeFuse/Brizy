@@ -1,7 +1,9 @@
 import { roundTo } from "visual/utils/math";
 import { cssStyleFilter } from "./cssStyleFilter";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function cssStyleElementImageMaxWidthPreview({ device, props = {} }) {
+export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
+  const dvv = key => defaultValueValue({ v, key, device });
   const { width } = props.wrapperSizes[device];
 
   const containerWIdth = props.props.meta[`${device}W`];
@@ -9,7 +11,9 @@ export function cssStyleElementImageMaxWidthPreview({ device, props = {} }) {
   return (width === undefined || width === null) &&
     (containerWIdth === undefined || containerWIdth === null)
     ? ""
-    : `max-width: ${Math.round(Math.abs((width * 100) / containerWIdth))}%;`;
+    : dvv("widthSuffix") === "%"
+    ? `max-width: ${Math.round(Math.abs((width * 100) / containerWIdth))}%;`
+    : `max-width: ${dvv("width")}px;`;
 }
 
 export function cssStyleElementImageHeightPreview({ v, device, props = {} }) {

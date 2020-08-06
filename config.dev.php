@@ -30,6 +30,7 @@ class Brizy_Config {
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
+	const COMPILER_DOWNLOAD_URL = 'http://apache/wp-content/plugins/brizy/public/editor-build/dev';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'http://www.brizysites.com';
@@ -51,8 +52,7 @@ class Brizy_Config {
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://editor:3000/wp-compile'
-				// "http://localhost:5000/compile/v2"
+				'http://compiler:5000/compile/v3'
 			)
 		);
 	}

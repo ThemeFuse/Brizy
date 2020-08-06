@@ -145,9 +145,7 @@ export default class Menu extends EditorComponent {
       this.menuItemsCache = {};
     }
     if (this.menuItemsCache[menuSelected] === undefined) {
-      this.menuItemsCache[menuSelected] = createMenuItemsCache(
-        menuConfig.items
-      );
+      this.menuItemsCache[menuSelected] = normalizeMenuItems(menuConfig.items);
     }
 
     return {
@@ -516,7 +514,7 @@ const configKeys = [
   "current"
 ];
 
-function createMenuItemsCache(items) {
+export function normalizeMenuItems(items) {
   return setIds(
     mapModels(
       ({ type, value }) => ({

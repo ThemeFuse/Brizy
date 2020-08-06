@@ -1,6 +1,8 @@
 {
   "content": {
-    "imageSrc": "",
+    "images": {
+      "imageSrc": ""
+    },
     "imagePopulation": "",
     "imageWidth": 600,
     "imageHeight": 450,

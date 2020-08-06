@@ -92,7 +92,7 @@ abstract class Brizy_Admin_Rules_AbstractValidator implements Brizy_Admin_Rules_
 
 		$defaults = array(
 			'posts_per_page' => - 1,
-			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+			'post_status'    => array( 'publish', 'pending', 'draft', 'future', 'private', 'inherit' )
 		);
 
 		$r = wp_parse_args( $args, $defaults );

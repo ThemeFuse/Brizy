@@ -13,6 +13,11 @@ trait Brizy_Editor_Synchronizable {
 	protected $cloudAccountId;
 
 	/**
+	 * @var string[]
+	 */
+	protected $synchronizedWith = [];
+
+	/**
 	 * As our block class has two responsabilities :(
 	 * we are forced to devine this method to restrict the logic of this
 	 * trait only to instances that will return true
@@ -21,54 +26,82 @@ trait Brizy_Editor_Synchronizable {
 	 */
 	abstract protected function canBeSynchronized();
 
-	/**
-	 * @return array
-	 */
-	public function getCloudId() {
-		return $this->cloudId;
-	}
+//	/**
+//	 * @return array
+//	 */
+//	public function getCloudId() {
+//		return $this->cloudId;
+//	}
+//
+//	/**
+//	 * @param array $cloudId
+//	 *
+//	 * @return Brizy_Editor_Synchronizable
+//	 */
+//	protected function setCloudId( $cloudId ) {
+//		$this->cloudId = $cloudId;
+//
+//		return $this;
+//	}
+
+//	/**
+//	 * @param string $meta
+//	 *
+//	 * @return Brizy_Editor_Block
+//	 */
+//	public function setContainer( $container ) {
+//		update_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-container', $container );
+//	}
+//
+//	/**
+//	 * @return array|false|mixed|string|null
+//	 */
+//	public function getContainer() {
+//		return get_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-container', true );
+//	}
+//
+//
+//	/**
+//	 * @return array
+//	 */
+//	protected function getCloudAccountId() {
+//		return $this->cloudAccountId;
+//	}
+//
+//	/**
+//	 * @param array $cloudAccountId
+//	 *
+//	 * @return Brizy_Editor_Synchronizable
+//	 */
+//	protected function setCloudAccountId( $cloudAccountId ) {
+//		$this->cloudAccountId = $cloudAccountId;
+//
+//		return $this;
+//	}
 
 	/**
-	 * @param array $cloudId
+	 * @param $cloudAccountId
 	 *
-	 * @return Brizy_Editor_Synchronizable
+	 * @return string|null
 	 */
-	protected function setCloudId( $cloudId ) {
-		$this->cloudId = $cloudId;
+	public function getCloudId( $cloudAccountId ) {
+		if ( isset( $this->synchronizedWith[ $cloudAccountId ] ) ) {
+			return $this->synchronizedWith[ $cloudAccountId ];
+		}
 
-		return $this;
+		return null;
 	}
 
 	/**
-	 * @param string $meta
-	 *
-	 * @return Brizy_Editor_Block
+	 * Load synchronisation data
 	 */
-	public function setContainer( $container ) {
-		update_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-container', $container );
-	}
+	public function loadSynchronizationData() {
+		$key                    = 'brizy-cloud-synchronised-with';
+		$this->synchronizedWith = get_metadata( 'post', $this->getWpPostId(), $key, true );
 
-	public function getContainer() {
-		return get_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-container', true );
-	}
-
-
-	/**
-	 * @return array
-	 */
-	protected function getCloudAccountId() {
-		return $this->cloudAccountId;
-	}
-
-	/**
-	 * @param array $cloudAccountId
-	 *
-	 * @return Brizy_Editor_Synchronizable
-	 */
-	protected function setCloudAccountId( $cloudAccountId ) {
-		$this->cloudAccountId = $cloudAccountId;
-
-		return $this;
+		if ( ! is_array( $this->synchronizedWith ) ) {
+			$this->synchronizedWith = [];
+		}
 	}
 
 	/**
@@ -88,14 +121,14 @@ trait Brizy_Editor_Synchronizable {
 	 *
 	 * @return Brizy_Editor_Block
 	 */
-	public function setCloudUpdateRequired( $cloudUpdateRequired ) {
-
-		if ( $this->canBeSynchronized() ) {
-			update_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-update-required', (int) $cloudUpdateRequired ? true : false );
-		}
-
-		return $this;
-	}
+//	public function setCloudUpdateRequired( $cloudUpdateRequired ) {
+//
+//		if ( $this->canBeSynchronized() ) {
+//			update_metadata( 'post', $this->getWpPostId(), 'brizy-cloud-update-required', (int) $cloudUpdateRequired ? true : false );
+//		}
+//
+//		return $this;
+//	}
 
 	/**
 	 * @param $cloudAccountId
@@ -105,9 +138,10 @@ trait Brizy_Editor_Synchronizable {
 	 */
 	public function setSynchronized( $cloudAccountId, $cloudId ) {
 		if ( $this->canBeSynchronized() ) {
-			$this->setCloudUpdateRequired( false );
-			$this->setCloudId( $cloudId );
-			$this->setCloudAccountId( $cloudAccountId );
+			$key                                       = 'brizy-cloud-synchronised-with';
+			$this->synchronizedWith[ $cloudAccountId ] = $cloudId;
+			update_metadata( 'post', $this->getWpPostId(), $key, $this->synchronizedWith );
+			//$this->setCloudUpdateRequired( false );
 		}
 
 		return $this;
@@ -115,7 +149,7 @@ trait Brizy_Editor_Synchronizable {
 
 	public function isSynchronized( $cloudAccountId ) {
 		if ( $this->canBeSynchronized() ) {
-			return ! empty( $this->getCloudId() ) && $cloudAccountId === $this->getCloudAccountId();
+			return isset( $this->synchronizedWith[ $cloudAccountId ] );
 		}
 
 		return false;
@@ -128,9 +162,10 @@ trait Brizy_Editor_Synchronizable {
 	 *
 	 * @return bool
 	 */
-	public function isSynchronizable() {
+	public function isSynchronizable($cloudAccountId) {
 		if ( $this->canBeSynchronized() ) {
-			return metadata_exists( 'post', $this->getWpPostId(), 'brizy-cloud-update-required' );
+			return isset($this->synchronizedWith[ $cloudAccountId ]);
+			//return metadata_exists( 'post', $this->getWpPostId(), 'brizy-cloud-update-required' );
 		}
 
 		return false;

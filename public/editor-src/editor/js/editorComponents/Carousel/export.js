@@ -35,11 +35,16 @@ export default function($node) {
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
     $this.on("init", function() {
-      $node.find(".brz-icon-svg", _this).brzThemeIcon({ forceInit: true });
-    });
-
-    $this.on("breakpoint", function() {
-      $node.find(".brz-icon-svg", _this).brzThemeIcon();
+      // when preview is opening via mobile - slick init plugin - then destroy it
+      // and init again. this steps remove click lightbox event inside slider.
+      // So we should reinitialize lightbox manually
+      $this.find(".brz-image__lightbox").each(function() {
+        $(this).magnificPopup({
+          delegate: "a",
+          type: "image",
+          closeOnContentClick: true
+        });
+      });
     });
 
     const getArrow = makeArrow(_this);

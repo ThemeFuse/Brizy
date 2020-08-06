@@ -14,7 +14,7 @@ import * as Response from "./response";
 const apiUrl = Config.get("urls")?.api;
 const paginationData = {
   page: 1,
-  count: 200
+  count: 300
 };
 const hardcodedAjaxSettings = {
   xhrFields: {

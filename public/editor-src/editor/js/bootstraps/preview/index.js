@@ -11,7 +11,6 @@ if (!window.jQuery) {
     "backgroundVideo",
     "parallax",
     "brzSticky",
-    "brzThemeIcon",
     "countdown",
     "countdown2"
   ];

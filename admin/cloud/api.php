@@ -180,7 +180,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 400, 'Unauthorized' );
 			}
 
-			$merged = array_merge( $this->syncLayouts( true ), $this->syncBlocks( true ) );
+			$merged = array_merge( $this->syncLayouts(0, true ), $this->syncBlocks(0, true ) );
 
 			return $this->success( [ 'synchronized' => count( $merged ) ] );
 		} catch ( Exception $e ) {

@@ -30,7 +30,8 @@ class Brizy_Config {
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
-	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/'.BRIZY_EDITOR_VERSION;
+	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/' . BRIZY_EDITOR_VERSION;
+	const COMPILER_DOWNLOAD_URL = 'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
@@ -52,9 +53,9 @@ class Brizy_Config {
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler.brizy.io/compile/v2',
-				'http://compiler1.brizycompiler.run/compile/v2',
-				'http://compiler2.brizycompiler.run/compile/v2'
+				'http://compiler.brizy.io/compile/v3',
+				'http://compiler1.brizycompiler.run/compile/v3',
+				'http://compiler2.brizycompiler.run/compile/v3'
 			)
 		);
 	}

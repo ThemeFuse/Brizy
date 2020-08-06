@@ -909,7 +909,6 @@ export {
   cssStyleElementTableBtnIconPosition,
   cssStyleElementTableCustomFlexHorizontalAlign,
   cssStyleElementTableAsideWidth,
-  cssStyleElementTableAsideAllWidth,
   cssStyleElementTableEvenBgColor,
   cssStyleElementTableEvenColor,
   cssStyleTablePadding

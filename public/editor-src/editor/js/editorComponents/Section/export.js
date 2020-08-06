@@ -34,14 +34,6 @@ export default function($node) {
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
-    $this.on("init", function() {
-      $node.find(".brz-icon-svg", _this).brzThemeIcon({ forceInit: true });
-    });
-
-    $this.on("breakpoint", function() {
-      $node.find(".brz-icon-svg", _this).brzThemeIcon();
-    });
-
     const getArrow = makeArrow(_this);
 
     $this.slick({

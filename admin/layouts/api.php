@@ -116,7 +116,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$layout->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$layout->set_editor_data( $editorData );
 			$layout->set_needs_compile( true );
-			$layout->setCloudUpdateRequired( true );
+			//$layout->setCloudUpdateRequired( true );
 			$layout->setDataVersion( 1 );
 			$layout->save();
 

@@ -11,7 +11,6 @@ import Map from "./Map";
 import Embed from "./Embed";
 import Form2 from "./Form2";
 import IconText from "./IconText";
-import Table from "./Table";
 import Counter from "./Counter";
 import Countdown2 from "./Countdown2";
 import Tabs from "./Tabs";
@@ -40,7 +39,6 @@ export default {
     Counter,
     Countdown2,
     Tabs,
-    Table,
     ProgressBar,
     Accordion,
     MenuSimple

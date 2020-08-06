@@ -191,7 +191,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client {
 		$body = apply_filters( 'brizy_compiler_params', array(
 			'page_id'            => (int)$config['wp']['page'],
 			'free_version'       => BRIZY_EDITOR_VERSION,
-			'download_url'       => 'https://static.brizy.io/builds',
+			'free_url'           => Brizy_Config::COMPILER_DOWNLOAD_URL,
 			'config_json'        => json_encode( $config ),
 			'pages_json'         => json_encode( array(
 				array(

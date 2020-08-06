@@ -302,9 +302,7 @@ export const getCurrentRule = (
     if (IS_TEMPLATE) {
       group = TEMPLATES_GROUP_ID;
       type = TEMPLATE_TYPE;
-    }
-
-    if (ruleMatches && ruleMatches[0].entityType === POST_TYPE) {
+    } else if (ruleMatches && ruleMatches[0].entityType === POST_TYPE) {
       group = POST_GROUP_ID;
       type = POST_TYPE;
     }

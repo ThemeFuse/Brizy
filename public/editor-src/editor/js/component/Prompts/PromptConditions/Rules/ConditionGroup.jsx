@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "underscore";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { getRulesListIndexByRule } from "./utils";
@@ -33,19 +34,28 @@ class ConditionGroup extends React.Component {
     ));
   }
 
-  renderTypeOptions(options) {
-    const newOptions = [
-      {
-        title: "All",
-        value: ""
-      },
-      ...options
-    ];
-    return newOptions.map(({ title, value, disabled }) => (
-      <SelectItem key={`key-${value}`} value={value} disabled={disabled}>
-        {title || `No Title #${value}`}
-      </SelectItem>
-    ));
+  renderTypeOptions(items) {
+    return [{ title: "All", value: "" }, ...items].map((item, i) =>
+      !item.items ? (
+        renderSelectItem(item)
+      ) : (
+        <SelectOptgroup
+          key={i}
+          title={item.title}
+          items={item.items.map(renderSelectItem)}
+        >
+          <span className="brz-span">{item.title}</span>
+        </SelectOptgroup>
+      )
+    );
+
+    function renderSelectItem({ title, value }) {
+      return (
+        <SelectItem key={value} value={value}>
+          {title}
+        </SelectItem>
+      );
+    }
   }
 
   render() {

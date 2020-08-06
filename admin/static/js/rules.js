@@ -186,6 +186,36 @@ var actions = {
 
     resetRule: function () {
         return function (state) {
+            switch (state.templateType) {
+                case 'archive':
+                    defaultAppliedFor = RULE_TAXONOMY;
+                    defaultEntityType = 'category';
+                    break;
+
+                default:
+                    defaultAppliedFor = RULE_POSTS;
+                    defaultEntityType = 'post';
+                    break;
+            }
+
+            var defaultRule = {
+                type: RULE_TYPE_INCLUDE,
+                appliedFor: defaultAppliedFor,
+                entityType: defaultEntityType,
+                entityValues: []
+            };
+
+            return {errors: "", rule: defaultRule};
+        };
+    },
+    addFormErrors: function (errors) {
+        return function (state) {
+            return {errors: errors};
+        };
+    },
+
+    addRule: function (rule) {
+        return function (state) {
 
             switch (state.templateType) {
                 case 'archive':
@@ -206,20 +236,10 @@ var actions = {
                 entityValues: []
             };
 
-
-            return {errors: "", rule: defaultRule};
-        };
-    },
-    addFormErrors: function (errors) {
-        return function (state) {
-            return {errors: errors};
-        };
-    },
-
-    addRule: function (rule) {
-        return function (state) {
             return {
-                rules: {[state.templateType]: [...state.rules[state.templateType], rule]}
+                rules: {[state.templateType]: [...state.rules[state.templateType], rule]},
+                rule: defaultRule,
+                errors: ""
             };
         };
     },
@@ -238,12 +258,6 @@ var actions = {
         return function (state) {
             return {
                 templateType: type,
-                // rules: {
-                //     single: [],
-                //     archive: [],
-                //     single_product: [],
-                //     product_archive: [],
-                // }
             };
         };
     }
@@ -286,15 +300,15 @@ var RuleTypeField = function (params) {
                 {
                     name: params.name,
                     style: {width: "100px"},
-                    oncreate: function (element) {
-                        var el = jQuery(element);
-                        el.on("change", params.onChange);
-                        el.select2();
-                    },
-                    onremove: function (element, done) {
-                        jQuery(element).select2("destroy");
-                        done();
-                    },
+                    // oncreate: function (element) {
+                    //     var el = jQuery(element);
+                    //     el.on("change", function(e){ action.rule.setType(e.target.value); });
+                    //     el.select2();
+                    // },
+                    // onremove: function (element, done) {
+                    //     jQuery(element).select2("destroy");
+                    //     done();
+                    // },
                     onchange: function (e) {
                         action.rule.setType(e.target.value);
                     }
@@ -328,7 +342,6 @@ var BrzSelect2 = function (params) {
 
         var el = jQuery(element);
         el.on("change", params.onChange);
-        el.select2();
 
         if (typeof params.optionRequest === 'function') {
             const optionRequest = params.optionRequest();
@@ -339,15 +352,14 @@ var BrzSelect2 = function (params) {
                     options.forEach(function (option) {
                         el.append(option);
                     });
-                    el.trigger("change");
+                    el.select2();
                 });
             } else {
                 var options = params.convertResponseToOptions(optionRequest);
                 options.forEach(function (option) {
                     el.append(option);
                 });
-
-                el.trigger("change");
+                el.select2();
             }
         }
     };
@@ -365,7 +377,6 @@ var BrzSelect2 = function (params) {
             style: params.style,
             oncreate: oncreate,
             onremove: onremove,
-            onchange: params.onChange,
             name: params.name,
         },
         []
@@ -380,13 +391,13 @@ var RulePostsGroupSelectField = function (params) {
 
     var convertResponseToOptions = function (response) {
         var groups = [];
-        groups.push(new Option("All", '', false, value === ''));
+        groups.push(new Option("All", '', true, value === ''));
         response.data.forEach(function (group) {
-
             if (group.title === "") {
                 group.items.forEach(function (option) {
                     var optionValue = String(option.value);
-                    groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
+                    var selected = params.rule.entityValues.includes(optionValue);
+                    groups.push(new Option(option.title, optionValue, false, selected));
                 });
             } else {
                 var groupElement = document.createElement("OPTGROUP");
@@ -395,7 +406,8 @@ var RulePostsGroupSelectField = function (params) {
                 if (group.items.length > 0) {
                     group.items.forEach(function (option) {
                         var optionValue = String(option.value);
-                        groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                        var selected = params.rule.entityValues.includes(optionValue);
+                        groupElement.appendChild(new Option(option.title, optionValue, false, selected))
                     });
                     groups.push(groupElement);
                 }
@@ -528,10 +540,9 @@ var RuleApplyGroupField = function (params) {
                             type: params.type,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                if (e.target.value)
-                                    actions.rule.update({
-                                        entityValues: [e.target.value],
-                                    });
+                                actions.rule.update({
+                                    entityValues: e.target.value?[e.target.value]:[],
+                                });
                             }
                         })
                     ]));
@@ -546,10 +557,9 @@ var RuleApplyGroupField = function (params) {
                             taxonomy: entityType,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                if (e.target.value)
-                                    actions.rule.update({
-                                        entityValues: [e.target.value],
-                                    });
+                                actions.rule.update({
+                                    entityValues: e.target.value?[e.target.value]:[],
+                                });
                             }
                         })
                     ]));
@@ -709,6 +719,7 @@ var ruleView = function (state, actions) {
                     actions.removeRule(rule);
                 }
             }),
+
             state.templateType ? [
                     h(RuleForm, {
                         type: state.templateType,
@@ -725,18 +736,17 @@ var ruleView = function (state, actions) {
                                     if (rule.entityType !== state.rule.entityType) return;
                                     if (arr_diff(rule.entityValues, state.rule.entityValues).length > 0) return;
                                     throw 'This rule already exist';
-
                                 });
                             } catch (error) {
                                 actions.addFormErrors('This rule already exist');
                                 return;
                             }
-
                             api
                                 .validateRule(state.rule)
                                 .done(function () {
                                     actions.addRule(state.rule);
                                     actions.resetRule();
+
                                 })
                                 .fail(function (response) {
                                     if (response.responseJSON && response.responseJSON.data) {
@@ -748,7 +758,7 @@ var ruleView = function (state, actions) {
                                 });
                         }
                     })] :
-                [],
+                []
         ]
     );
 };
