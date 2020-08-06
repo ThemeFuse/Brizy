@@ -69,7 +69,7 @@ export default function($node) {
       }, 100);
 
       // Emit Tabs Changed
-      window.Brizy.emit("elements.tabs.changed", $navMobile.get(0));
+      window.Brizy.emit("elements.tabs.changed", $item.get(0));
     });
   });
 }

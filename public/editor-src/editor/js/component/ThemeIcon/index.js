@@ -7,8 +7,7 @@ export default class ThemeIcon extends React.Component {
   static defaultProps = {
     className: "",
     name: "",
-    type: "",
-    suffix: "nc_icon"
+    type: ""
   };
 
   state = {
@@ -18,24 +17,23 @@ export default class ThemeIcon extends React.Component {
   isUnmounted = false;
 
   componentDidMount() {
-    const { name, type, suffix } = this.props;
+    const { name, type } = this.props;
 
-    this.getSvg(type, name, suffix);
+    this.getSvg(type, name);
   }
 
-  componentWillReceiveProps({ name, type, suffix }) {
-    const { name: oldName, type: oldType, suffix: oldSuffix } = this.props;
+  componentWillReceiveProps({ name, type }) {
+    const { name: oldName, type: oldType } = this.props;
 
-    if (oldName !== name || oldType !== type || oldSuffix !== suffix) {
-      this.getSvg(type, name, suffix);
+    if (oldName !== name || oldType !== type) {
+      this.getSvg(type, name);
     }
   }
 
-  shouldComponentUpdate({ name, type, suffix, className }, { icon }) {
+  shouldComponentUpdate({ name, type, className }, { icon }) {
     const {
       name: oldName,
       type: oldType,
-      suffix: oldSuffix,
       className: oldClassName
     } = this.props;
     const { icon: oldIcon } = this.state;
@@ -44,7 +42,6 @@ export default class ThemeIcon extends React.Component {
       oldIcon !== icon ||
       oldName !== name ||
       oldType !== type ||
-      oldSuffix !== suffix ||
       oldClassName !== className
     );
   }
@@ -53,8 +50,8 @@ export default class ThemeIcon extends React.Component {
     this.isUnmounted = true;
   }
 
-  fetchIcon(type, name, suffix) {
-    const url = templateIconUrl(type, name, suffix);
+  fetchIcon(type, name) {
+    const url = templateIconUrl(type, name);
     const headers = new Headers({
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
     });
@@ -65,8 +62,8 @@ export default class ThemeIcon extends React.Component {
     }).then(res => res.text());
   }
 
-  async getSvg(type, name, suffix) {
-    const res = await this.fetchIcon(type, name, suffix);
+  async getSvg(type, name) {
+    const res = await this.fetchIcon(type, name);
 
     if (!this.isUnmounted) {
       this.setState({
@@ -90,11 +87,10 @@ export default class ThemeIcon extends React.Component {
   }
 
   renderForView() {
-    const { className: _className, type, name, suffix } = this.props;
+    const { className: _className, type, name } = this.props;
     const className = classnames("brz-icon-svg", _className);
-    const url = templateIconUrl(type, name, suffix);
 
-    return <svg className={className} data-href={url} />;
+    return <svg className={className} data-type={type} data-name={name} />;
   }
 
   render() {

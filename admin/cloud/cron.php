@@ -41,12 +41,12 @@ class Brizy_Admin_Cloud_Cron {
 
 	public function syncLayoutsAction() {
 		Brizy_Logger::instance()->debug('Sync layouts cron called');
-		return $this->syncLayouts();
+		return $this->syncLayouts(1);
 	}
 
 	public function syncBlocksAction() {
 		Brizy_Logger::instance()->debug('Sync blocks cron called');
-		return $this->syncBlocks();
+		return $this->syncBlocks(1);
 	}
 
 	public function addBrizyCloudCronSchedules( $schedules ) {

@@ -285,6 +285,7 @@ class Brizy_Admin_FormEntries {
 			if ( $field->name == 'g-recaptcha-response' ) {
 				unset( $fields[ $i ] );
 				$fields = array_values( $fields );
+				continue;
 			}
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.

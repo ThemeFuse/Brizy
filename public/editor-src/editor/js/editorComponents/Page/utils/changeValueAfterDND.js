@@ -8,7 +8,11 @@ import { updateGlobalBlock } from "visual/redux/actions2";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { mapModels, setIds } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
-import { itemsToSymbols, symbolsToItems } from "visual/editorComponents/Menu";
+import {
+  itemsToSymbols,
+  symbolsToItems,
+  normalizeMenuItems
+} from "visual/editorComponents/Menu";
 const menusConfig = Config.get("menuData");
 
 // timm helpers
@@ -38,9 +42,10 @@ function attachMenu(value) {
       const menuSelected = dbMenuSelected || menusConfig[0]?.id;
       const menuConfig =
         menusConfig.find(menu => menu.id === menuSelected) || {};
+      const items = normalizeMenuItems(menuConfig.items || []);
 
       return produce(block, draft => {
-        draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
+        draft.value.items = symbolsToItems(items, symbols);
       });
     }
 

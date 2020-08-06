@@ -122,7 +122,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			}
 
 			if ( in_array( 'synchronizable', $fields ) ) {
-				$global['synchronizable'] = $this->isSynchronizable();
+				$global['synchronizable'] = $this->isSynchronizable( Brizy_Editor_Project::get()->getCloudAccountId() );
 			}
 
 
@@ -273,10 +273,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$data['position'] = $this->getPosition()->jsonSerialize();
 		}
 
-		$data['meta']           = $this->getMeta();
-		$data['media']          = $this->getMedia();
-		$data['cloudId']        = $this->getCloudId();
-		$data['cloudAccountId'] = $this->getCloudAccountId();
+		$data['meta']  = $this->getMeta();
+		$data['media'] = $this->getMedia();
+		//$data['cloudId']        = $this->getCloudId();
+		//$data['cloudAccountId'] = $this->getCloudAccountId();
 		unset( $data['wp_post'] );
 
 		return $data;
@@ -292,12 +292,12 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$this->setRules( $ruleManager->getRules( $this->getWpPostId() ) );
 
-		if ( isset( $storage_post['cloudId'] ) ) {
-			$this->setCloudId( $storage_post['cloudId'] );
-		}
+		// load synchronisation data
+		$this->loadSynchronizationData();
 
-		if ( isset( $storage_post['cloudAccountId'] ) ) {
-			$this->setCloudAccountId( $storage_post['cloudAccountId'] );
+		// back compatibility with old sync data
+		if ( isset( $storage_post['cloudId'] ) && isset( $storage_post['cloudAccountId'] ) ) {
+			$this->setSynchronized( $storage_post['cloudAccountId'], $storage_post['cloudId'] );
 		}
 
 		$this->setPosition( Brizy_Editor_BlockPosition::createFromSerializedData( get_metadata( 'post', $this->getWpPostId(), self::BRIZY_POSITION, true ) ) );
@@ -324,13 +324,13 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$data['rules'][] = $rule->convertToOptionValue();
 		}
 
-		$data['cloudId']        = $this->getCloudId();
-		$data['cloudAccountId'] = $this->getCloudAccountId();
-		$data['media']          = $this->getMedia();
+		//$data['cloudId']        = $this->getCloudId();
+		//$data['cloudAccountId'] = $this->getCloudAccountId();
+		$data['media'] = $this->getMedia();
 
 		if ( $this->isSavedBlock() ) {
 			$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
-			$data['synchronizable'] = $this->isSynchronizable();
+			$data['synchronizable'] = $this->isSynchronizable( Brizy_Editor_Project::get()->getCloudAccountId() );
 		}
 
 		return $data;

@@ -726,6 +726,20 @@ function buildStats(done) {
   }
 }
 
+function zipIcons() {
+  const src = paths.editor + "/icons/**/*";
+  const dest = paths.build + "/editor";
+
+  return gulp
+    .src(src)
+    .pipe(
+      gulpPlugins.archiver("icons.zip", {
+        zlib: { level: 9 }
+      })
+    )
+    .pipe(gulp.dest(dest));
+}
+
 function watch() {
   const cssPath = paths.editor + "/**/*.scss";
 
@@ -799,6 +813,8 @@ exports.build = gulp.series.apply(undefined, [
         ])
       ]
     : []),
+
+  zipIcons,
 
   // build
   ...(IS_PRODUCTION && IS_EXPORT

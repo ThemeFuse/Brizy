@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
 import Prompts from "visual/component/Prompts";
 import Config from "visual/global/Config";
@@ -39,71 +40,12 @@ export const ConditionsComponent: React.FC<{
   type?: "block" | "popup";
   children: React.ReactElement;
 }> = ({ children, value, type = "block" }) => {
-  let options: Options = [];
-  switch (type) {
-    case "block": {
-      const state = getStore().getState();
-      const globalBlocks = globalBlocksSelector(state);
-      const { rules } = globalBlocks[value] as GlobalBlock;
-
-      options = [
-        {
-          id: "rules",
-          type: "rules",
-          icon: "nc-eye-17",
-          label: t("Conditions"),
-          title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
-          value: rules,
-          onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
-            getStore().dispatch(
-              updateGBRules({
-                data: {
-                  rules,
-                  id: value
-                },
-                meta
-              })
-            );
-          }
-        }
-      ];
-      break;
-    }
-    case "popup": {
-      options = [
-        {
-          id: "triggers",
-          type: "triggers",
-          icon: "nc-triggers",
-          label: t("Triggers"),
-          title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
-        }
-      ];
-
-      if (!IS_EXTERNAL_POPUP) {
-        options.push({
-          id: "rules",
-          type: "rules",
-          icon: "nc-eye-17",
-          label: t("Conditions"),
-          title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
-          asyncGetValue: getRulesList,
-          onChange: data => {
-            getStore().dispatch(updatePopupRules(data));
-          }
-        });
-      }
-      break;
-    }
-    default:
-      console.error("type should be given!!!");
-  }
   const handleMouseDown = (): void => {
     Prompts.open({
       prompt: "conditions",
       mode: "single",
       props: {
-        options
+        options: getOptions()
       }
     });
   };
@@ -115,6 +57,71 @@ export const ConditionsComponent: React.FC<{
   return React.cloneElement(React.Children.only(children), {
     onMouseDown: handleMouseDown
   });
+
+  function getOptions(): Options {
+    let options: Options = [];
+
+    switch (type) {
+      case "block": {
+        const state = getStore().getState();
+        const globalBlocks = globalBlocksSelector(state);
+        const { rules } = globalBlocks[value] as GlobalBlock;
+
+        options = [
+          {
+            id: "rules",
+            type: "rules",
+            icon: "nc-eye-17",
+            label: t("Conditions"),
+            title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
+            value: rules,
+            onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
+              getStore().dispatch(
+                updateGBRules({
+                  data: {
+                    rules,
+                    id: value
+                  },
+                  meta
+                })
+              );
+            }
+          }
+        ];
+        break;
+      }
+      case "popup": {
+        options = [
+          {
+            id: "triggers",
+            type: "triggers",
+            icon: "nc-triggers",
+            label: t("Triggers"),
+            title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
+          }
+        ];
+
+        if (!IS_EXTERNAL_POPUP) {
+          options.push({
+            id: "rules",
+            type: "rules",
+            icon: "nc-eye-17",
+            label: t("Conditions"),
+            title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
+            asyncGetValue: getRulesList,
+            onChange: data => {
+              getStore().dispatch(updatePopupRules(data));
+            }
+          });
+        }
+        break;
+      }
+      default:
+        console.error("type should be given!!!");
+    }
+
+    return options;
+  }
 };
 
 export default ConditionsComponent;

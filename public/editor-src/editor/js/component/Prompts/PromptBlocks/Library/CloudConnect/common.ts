@@ -43,6 +43,12 @@ export const useDisconnect = (): Disconnect => {
     }
   }, [loading]);
 
+  useEffect(() => {
+    if (isDisconnect) {
+      updateDisconnect(false);
+    }
+  }, [isDisconnect]);
+
   return { isDisconnect, error, loading, setDisconnect };
 };
 

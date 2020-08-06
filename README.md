@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.4.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.2<br>
+Stable tag: 2.0.3<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,6 +118,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.0.3 - 2020-08-06 ###
+* Fixed: Sync process bugs
+* Fixed: Allow to continue the sync process if there are block with deleted assets
+* Fixed: Recaptcha integration and leads saving
+* Fixed: Exclude rule bug
+* Fixed: Changed session status check
+* Fixed:  Short pixel key validation
+* Fixed:  Product tags filter in rule options
+* Fixed:  Some placeholder labels
+* Fixed: Button spacing
+* Fixed: Button color in Mobile menu
+* Fixed: Countdown element
+* Fixed: Import/Export images
+* Fixed: Icons many requests, CORS CDN
+
 ### 2.0.2 - 2020-07-31 ###
 * Fixed: Plugin version
 
@@ -137,6 +152,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Updated Google Fonts list
 * Improved: Added Animation options on all elements
 * Improved: Re-written ## Changelog
+
+### 2.0.3 - 2020-08-06 ###
+* Fixed: Sync process bugs
+* Fixed: Allow to continue the sync process if there are block with deleted assets
+* Fixed: Recaptcha integration and leads saving
+* Fixed: Exclude rule bug
+* Fixed: Changed session status check
+* Fixed:  Short pixel key validation
+* Fixed:  Product tags filter in rule options
+* Fixed:  Some placeholder labels
+* Fixed: Button spacing
+* Fixed: Button color in Mobile menu
+* Fixed: Countdown element
+* Fixed: Import/Export images
+* Fixed: Icons many requests, CORS CDN
 
 ### 2.0.2 - 2020-07-31 ###
 * Fixed: Plugin version

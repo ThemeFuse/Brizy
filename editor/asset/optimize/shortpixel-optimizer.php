@@ -32,8 +32,6 @@ class  Brizy_Editor_Asset_Optimize_ShortpixelOptimizer implements Brizy_Editor_A
 
 	public function validateConfig() {
 
-		return false;
-
 		if ( $this->apiKey == '' || is_null( $this->apiKey ) ) {
 			return false;
 		}

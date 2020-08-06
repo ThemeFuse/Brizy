@@ -138,7 +138,7 @@ $dropdown-arrow-size: 7px;
       display: block;
     }
     .brz-mm-navbar {
-      a,
+      a:not(.brz-btn),
       > * {
         color: inherit;
       }

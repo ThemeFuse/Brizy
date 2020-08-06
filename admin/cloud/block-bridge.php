@@ -27,12 +27,20 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		$bridge = new Brizy_Admin_Cloud_MediaBridge( $this->client );
 		foreach ( $media->images as $uid ) {
-			$bridge->export( $uid );
+			try {
+				$bridge->export( $uid );
+			} catch (Exception $e) {
+				Brizy_Logger::instance()->critical( 'Failed to export block media: '.$e->getMessage(),[$e] );
+			}
 		}
 
 		$bridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 		foreach ( $media->fonts as $fontUid ) {
-			$bridge->export( $fontUid );
+			try {
+				$bridge->export( $fontUid );
+			} catch (Exception $e) {
+				Brizy_Logger::instance()->critical( 'Failed to export block font: '.$e->getMessage(),[$e] );
+			}
 		}
 
 		$bridge = new Brizy_Admin_Cloud_ScreenshotBridge( $this->client );
@@ -41,7 +49,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$cloudBlockObject = $this->client->createOrUpdateBlock( $block );
 
 		if ( $cloudBlockObject ) {
-			$block->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $cloudBlockObject->uid );
+			$block->setSynchronized( $this->getCurrentCloudAccountId(), $cloudBlockObject->uid );
 		}
 
 		$block->saveStorage();
@@ -59,6 +67,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$blocks = $this->client->getBlocks( [ 'uid' => $blockId ] );
 
 		if ( ! isset( $blocks[0] ) ) {
+			Brizy_Logger::instance()->critical( 'Failed to import: Unable to obtain the block from cloud ' . $blockId );
 			return;
 		}
 
@@ -88,9 +97,8 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 				$brizyPost->set_uses_editor( true );
 				$brizyPost->set_needs_compile( true );
 				$brizyPost->setDataVersion( 1 );
-				$brizyPost->setSynchronized( $this->client->getBrizyProject()->getCloudAccountId(), $block['id'] );
+				$brizyPost->setSynchronized( $this->getCurrentCloudAccountId(), $block['id'] );
 				$brizyPost->save();
-
 
 				// import fonts
 				if ( isset( $block['media'] ) ) {
@@ -99,7 +107,11 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$fontBridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 					if ( isset( $blockMedia->fonts ) ) {
 						foreach ( $blockMedia->fonts as $cloudFontUid ) {
-							$fontBridge->import( $cloudFontUid );
+							try {
+								$fontBridge->import( $cloudFontUid );
+							} catch ( Exception $e ) {
+								Brizy_Logger::instance()->critical( 'Failed to import block media: '.$e->getMessage(),[$e] );
+							}
 						}
 					}
 
@@ -107,17 +119,20 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 					$mediaBridge->setBlockId( $post );
 					if ( isset( $blockMedia->images ) ) {
 						foreach ( $blockMedia->images as $mediaUid ) {
-							$mediaBridge->import( $mediaUid );
+							try {
+								$mediaBridge->import( $mediaUid );
+							} catch ( Exception $e ) {
+								Brizy_Logger::instance()->critical( 'Failed to import block media: '.$e->getMessage(),[$e] );
+							}
 						}
 					}
 				}
 			}
 
-
 			$wpdb->query( 'COMMIT' );
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
-			Brizy_Logger::instance()->critical( 'Importing block ' . $blockId . ' failed', [ $e ] );
+			Brizy_Logger::instance()->critical( 'Failed to import block ' . $blockId , [ $e ] );
 		}
 	}
 
@@ -128,8 +143,8 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function delete( $block ) {
-		if ( $block->getCloudId() ) {
-			$this->client->deleteBlock( $block->getCloudId() );
+		if ( $block->getCloudId( $this->getCurrentCloudAccountId() ) ) {
+			$this->client->deleteBlock( $block->getCloudId( $this->getCurrentCloudAccountId() ) );
 		}
 	}
 }

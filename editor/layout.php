@@ -98,7 +98,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		}
 
 		if ( in_array( 'synchronizable', $fields ) ) {
-			$global['synchronizable'] = $this->isSynchronizable();
+			$global['synchronizable'] = $this->isSynchronizable( Brizy_Editor_Project::get()->getCloudAccountId() );
 		}
 
 		if ( in_array( 'isCloudEntity', $fields ) ) {
@@ -198,9 +198,9 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
 		$data['meta']        = $this->getMeta();
-		$data['cloudId']     = $this->getCloudId();
-		$data['cloudAccountId'] = $this->getCloudAccountId();
-		$data['media']       = $this->getMedia();
+		//$data['cloudId']     = $this->getCloudId();
+		//$data['cloudAccountId'] = $this->getCloudAccountId();
+		$data['media'] = $this->getMedia();
 
 		unset( $data['wp_post'] );
 
@@ -212,12 +212,12 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$storage      = $this->getStorage();
 		$storage_post = $storage->get( self::BRIZY_POST, false );
 
-		if ( isset( $storage_post['cloudId'] ) ) {
-			$this->cloudId = $storage_post['cloudId'];
-		}
+		// load synchronisation data
+		$this->loadSynchronizationData();
 
-		if ( isset( $storage_post['cloudAccountId'] ) ) {
-			$this->setCloudAccountId( $storage_post['cloudAccountId'] );
+		// back compatibility with old sync data
+		if ( isset( $storage_post['cloudId'] ) && isset( $storage_post['cloudAccountId'] ) ) {
+			$this->setSynchronized( $storage_post['cloudAccountId'], $storage_post['cloudId'] );
 		}
 
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
@@ -227,11 +227,11 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	public function convertToOptionValue() {
 		$data = parent::convertToOptionValue();
 
-		$data['media']   = $this->getMedia();
-		$data['cloudId']        = $this->getCloudId();
-		$data['cloudAccountId'] = $this->getCloudAccountId();
+		$data['media'] = $this->getMedia();
+		//$data['cloudId']        = $this->getCloudId();
+		//$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
-		$data['synchronizable'] = $this->isSynchronizable();
+		$data['synchronizable'] = $this->isSynchronizable( Brizy_Editor_Project::get()->getCloudAccountId() );
 
 		return $data;
 	}
@@ -247,3 +247,5 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	}
 
 }
+
+
