@@ -26,8 +26,8 @@ trait Brizy_Admin_Cloud_SyncAware {
 		return $this;
 	}
 
-	protected function syncLayouts( $throwException = false ) {
-		$layoutIds    = $this->getLayoutsForSync();
+	protected function syncLayouts( $limit = 0, $throwException = false ) {
+		$layoutIds    = $this->getLayoutsForSync( $limit );
 		$synchronized = [];
 		foreach ( $layoutIds as $lId ) {
 			try {
@@ -37,7 +37,8 @@ trait Brizy_Admin_Cloud_SyncAware {
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->critical( 'Failed to sync layout',
 					[
-						'blockId' => $lId->ID
+						'blockId' => $lId->ID,
+						$e
 					] );
 
 				if ( $throwException ) {
@@ -49,8 +50,8 @@ trait Brizy_Admin_Cloud_SyncAware {
 		return $synchronized;
 	}
 
-	protected function syncBlocks( $throwException = false ) {
-		$postIds      = $this->getBlocksForSync();
+	protected function syncBlocks( $limit = 0, $throwException = false ) {
+		$postIds      = $this->getBlocksForSync( $limit );
 		$synchronized = [];
 		foreach ( $postIds as $block ) {
 			try {
@@ -76,9 +77,10 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyBlock = Brizy_Editor_Block::get( $blockId );
 
-		if ( $brizyBlock && !$brizyBlock->isSavedBlock() && $brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
+		if ( $brizyBlock && ! $brizyBlock->isSavedBlock() && $brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
 			$updater = new Brizy_Admin_Cloud_BlockBridge( $this->client );
 			$updater->export( $brizyBlock );
+
 			return true;
 		}
 
@@ -88,36 +90,48 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyLayout = Brizy_Editor_Layout::get( $layoutId );
 
-		if ( $brizyLayout && !$brizyLayout->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
+
+		if ( $brizyLayout && ! $brizyLayout->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
 			$updater = new Brizy_Admin_Cloud_LayoutBridge( $this->client );
 			$updater->export( $brizyLayout );
+
 			return true;
 		}
 	}
 
-	protected function getLayoutsForSync() {
+	protected function getLayoutsForSync( $limit = 0 ) {
 		global $wpdb;
 
 		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
 
+		$limitQuery = "";
+		if ( $limit !== 0 ) {
+			$limitQuery = " LIMIT " . ( (int) $limit );
+		}
+
 		$postIds = $wpdb->get_results(
 			"SELECT ID FROM {$wpdb->posts} p 
 					WHERE p.post_type='{$savedBlockType}'
-					LIMIT 1" );
+					{$limitQuery}" );
 
 		return $postIds;
 	}
 
 
-	protected function getBlocksForSync() {
+	protected function getBlocksForSync( $limit = 0 ) {
 		global $wpdb;
 
 		$savedBlockType = Brizy_Admin_Blocks_Main::CP_SAVED;
 
+		$limitQuery = "";
+		if ( $limit !== 0 ) {
+			$limitQuery = " LIMIT " . ( (int) $limit );
+		}
+
 		$postIds = $wpdb->get_results(
 			"SELECT ID FROM {$wpdb->posts} p 
 					WHERE p.post_type='{$savedBlockType}'
-					LIMIT 1
+					{$limitQuery}
 					"
 		);
 
