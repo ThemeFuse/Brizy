@@ -38,7 +38,7 @@ export function getItems({ v, device }) {
       devices: "responsive"
     }),
     {
-      id: "toolbarCurrentShortcode",
+      id: dvk("toolbarCurrentShortcode"),
       type: "popover-dev",
       options: [
         {

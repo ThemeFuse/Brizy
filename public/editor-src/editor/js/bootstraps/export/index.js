@@ -41,6 +41,7 @@ import changeRichText from "./transforms/changeRichText";
 import changeRichTextDCColor from "./transforms/changeRichTextDCColor";
 import extractPopups from "./transforms/extractPopups";
 import dynamicContent from "./transforms/dynamicContent";
+import replaceIcons from "./transforms/replaceIcons";
 
 import { items as googleFonts } from "visual/config/googleFonts.json";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
@@ -48,11 +49,12 @@ import { flatMap } from "visual/utils/array";
 
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
-export default function main({
+export default async function main({
   pageId,
   pages,
   project,
-  globalBlocks: globalBlocks_
+  globalBlocks: globalBlocks_,
+  buildPath
 }) {
   const page = pages
     .map(parsePage)
@@ -70,11 +72,12 @@ export default function main({
 
   return {
     meta: getPageMeta({ page }),
-    blocks: getPageBlocks({
+    blocks: await getPageBlocks({
       page,
       project,
       globalBlocks,
-      googleFonts
+      googleFonts,
+      buildPath
     })
   };
 }
@@ -87,7 +90,13 @@ function getPageMeta({ page }) {
   };
 }
 
-function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
+async function getPageBlocks({
+  page,
+  project: _project,
+  globalBlocks,
+  googleFonts,
+  buildPath
+}) {
   const store = createStore();
   const project = parseProject(_project);
   const { fonts, font: projectDefaultFont } = project.data;
@@ -216,6 +225,7 @@ function getPageBlocks({ page, project: _project, globalBlocks, googleFonts }) {
   addCustomCSS($pageHTML);
   changeRichText($pageHTML);
   extractPopups($pageHTML);
+  await replaceIcons($pageHTML, buildPath);
 
   const head = $pageHTML("head").html();
   const body = dynamicContent($pageHTML("body").html());

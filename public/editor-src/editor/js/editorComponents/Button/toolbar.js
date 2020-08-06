@@ -75,7 +75,7 @@ export function getItemsForDesktop(v, component) {
           type: "tabs-dev",
           tabs: [
             {
-              id: "currentShortcodeButtonTab",
+              id: "currentShortcodeTab",
               label: t("Button"),
               roles: ["admin"],
               options: [

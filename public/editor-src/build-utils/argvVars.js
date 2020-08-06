@@ -1,6 +1,6 @@
 const path = require("path");
 
-module.exports = function argv(argv) {
+module.exports = function(argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
   const TARGET = argv_.target || argv_.t || "node_local";

@@ -78,18 +78,6 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
   return `width: calc(100% / ${columns});`;
 }
 
-export function cssStyleElementTableAsideAllWidth({ v, device, state }) {
-  const aside = styleElementTableAside({ v, device, state });
-  const width = styleElementTableAsideWidth({ v, device, state });
-  const columns = styleElementTableColumns({ v, device, state });
-
-  if (aside === "on") {
-    return `width: calc(100% / ${columns} - ${width}px);`;
-  }
-
-  return `width: calc(100% / ${columns});`;
-}
-
 export function cssStyleElementTableEvenBgColor({ v, device, state }) {
   const bgColor = styleBgColor({ v, device, state, prefix: "activeBg" });
   return `background-color:  ${bgColor};`;

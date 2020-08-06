@@ -24,14 +24,8 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-table__head > .brz-table__tr > .brz-table__aside:first-child": {
       standart: ["cssStyleElementTableAsideWidth"]
     },
-    ".brz &&:hover .brz-table__head > .brz-table__tr > .brz-table__th": {
-      standart: ["cssStyleElementTableAsideAllWidth"]
-    },
     ".brz &&:hover .brz-table__body > .brz-table__tr > .brz-table__aside:first-child": {
       standart: ["cssStyleElementTableAsideWidth"]
-    },
-    ".brz &&:hover .brz-table__body > .brz-table__tr > .brz-table__th": {
-      standart: ["cssStyleElementTableAsideAllWidth"]
     }
   };
 

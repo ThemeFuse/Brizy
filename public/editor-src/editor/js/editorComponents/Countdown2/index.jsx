@@ -264,10 +264,10 @@ class Countdown2 extends EditorComponent {
                 "data-link-type": linkType,
                 "data-redirect": messageRedirect,
                 "data-message": messageText,
-                "data-action": actions,
-                ref: el => {
-                  this.countdown = el;
-                }
+                "data-action": actions
+              },
+              ref: el => {
+                this.countdown = el;
               }
             })}
           >
