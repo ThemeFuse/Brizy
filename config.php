@@ -53,9 +53,9 @@ class Brizy_Config {
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler.brizy.io/compile/v2',
-				'http://compiler1.brizycompiler.run/compile/v2',
-				'http://compiler2.brizycompiler.run/compile/v2'
+				'http://compiler.brizy.io/compile/v3',
+				'http://compiler1.brizycompiler.run/compile/v3',
+				'http://compiler2.brizycompiler.run/compile/v3'
 			)
 		);
 	}
