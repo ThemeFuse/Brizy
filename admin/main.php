@@ -308,6 +308,7 @@ class Brizy_Admin_Main {
 			'Brizy_Admin_Data',
 			array(
 				'url'           => admin_url( 'admin-ajax.php' ),
+				'prefix'        => Brizy_Editor::prefix(),
 				'pluginUrl'     => BRIZY_PLUGIN_URL,
 				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'            => get_the_ID(),
@@ -413,7 +414,7 @@ class Brizy_Admin_Main {
 				'post'           => $p,
 				'is_using_brizy' => $is_using_brizy,
 				'url'            => add_query_arg(
-					array( Brizy_Editor::prefix('-edit') => '' ),
+					array( Brizy_Editor::prefix( '-edit' ) => '' ),
 					get_permalink( get_the_ID() )
 				)
 			) );
@@ -492,7 +493,6 @@ class Brizy_Admin_Main {
 			Brizy_Admin_Flash::instance()->add_error( 'Failed to enable the editor for this post.' );
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}
-
 
 
 		try {

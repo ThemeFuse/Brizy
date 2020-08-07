@@ -6,6 +6,7 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { percentageToPixels } from "visual/utils/meta";
+import * as Str from "visual/utils/string/specs";
 import Items from "./items";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
@@ -302,13 +303,9 @@ export default class Cloneable extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
-    const {
-      customClassName,
-      customID,
-      cssIDPopulation,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { customClassName, cssClassPopulation, customAttributes } = v;
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
     const animationClassName = classnames(
       validateKeyByProperty(v, "animationName", "none") &&
@@ -358,7 +355,7 @@ export default class Cloneable extends EditorComponent {
               component={"div"}
               componentProps={{
                 ...parseCustomAttributes(customAttributes),
-                id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                id: cssIDPopulation ?? customID,
                 className: classnames(className, draggableClassName)
               }}
               animationClass={animationClassName}
@@ -382,14 +379,9 @@ export default class Cloneable extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      customClassName,
-      customID,
-      cssIDPopulation,
-      cssClassPopulation,
-      customAttributes
-    } = v;
-
+    const { customClassName, cssClassPopulation, customAttributes } = v;
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const { propsClassName } = this.props;
 
     const animationClassName = classnames(
@@ -414,7 +406,7 @@ export default class Cloneable extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      id: cssIDPopulation ?? customID,
       className
     };
 
