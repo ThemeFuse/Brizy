@@ -59,15 +59,11 @@ class Brizy_Admin_OptimizeImages {
 	public function render() {
 		$context = $this->getDefaultViewContext();
 		$tab     = $this->get_selected_tab();
-		switch ( $tab ) {
-			default:
-			case 'general':
-				echo $this->get_general_tab( $context );
-				break;
-			case 'settings':
-				echo $this->get_settings_tab( $context );
-				break;
 
+		if ( $tab == 'general' ) {
+			echo $this->get_general_tab( $context );
+		} else if ( $tab == 'settings' ) {
+			echo $this->get_settings_tab( $context );
 		}
 	}
 
@@ -162,14 +158,12 @@ class Brizy_Admin_OptimizeImages {
 
 	public function settings_submit() {
 
-		switch ( $_POST['tab'] ) {
-			case 'settings':
-				switch ( $_POST['optimizer'] ) {
-					case Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::ID:
-						$this->shortpixel_settings_submit();
-						break;
-				}
-				break;
+		if ( $_POST['tab'] !== 'settings' ) {
+			return;
+		}
+
+		if ( $_POST['optimizer'] === Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::ID ) {
+			$this->shortpixel_settings_submit();
 		}
 	}
 
@@ -207,10 +201,10 @@ class Brizy_Admin_OptimizeImages {
 	}
 
 	private function get_settings_tab( $context ) {
-		$settings                = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-		$context['submit_label'] = __( 'Save' );
-		$context['shortpixel_link'] = apply_filters('brizy_shortpixel_api_key_link','https://shortpixel.com/otp/af/QDDDRHB707903');
-		$context['settings']     = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
+		$settings                   = Brizy_Editor_Project::get()->getImageOptimizerSettings();
+		$context['submit_label']    = __( 'Save' );
+		$context['shortpixel_link'] = apply_filters( 'brizy_shortpixel_api_key_link', 'https://shortpixel.com/otp/af/QDDDRHB707903' );
+		$context['settings']        = isset( $settings['shortpixel'] ) ? $settings['shortpixel'] : array(
 			'API_KEY' => '',
 			"lossy"   => 1
 		);
@@ -244,7 +238,7 @@ class Brizy_Admin_OptimizeImages {
 		$time           = time();
 		$t              = null;
 		$attachmentUids = array();
-		$uniqueUrls = array_unique($matches[0]);
+		$uniqueUrls     = array_unique( $matches[0] );
 		foreach ( $uniqueUrls as $i => $url ) {
 
 			$parsed_url = parse_url( html_entity_decode( $url ) );
@@ -263,11 +257,11 @@ class Brizy_Admin_OptimizeImages {
 
 			//if ( strpos( $mediaUid, 'wp-' ) !== false ) {
 			$attachmentUids[] = array(
-				'url'        => $url,
-				'parsed_url' => $parsed_url,
+				'url'          => $url,
+				'parsed_url'   => $parsed_url,
 				'parsed_query' => $params,
-				'uid'        => $mediaUid,
-				'uidQuery'   => "'{$mediaUid}'"
+				'uid'          => $mediaUid,
+				'uidQuery'     => "'{$mediaUid}'"
 			);
 			//}
 		}
@@ -295,6 +289,7 @@ class Brizy_Admin_OptimizeImages {
 			foreach ( $attachmentIds as $row ) {
 				if ( $row->UID == $o['uid'] ) {
 					$o['attachmentID'] = $row->ID;
+
 					return $o;
 				}
 			}
