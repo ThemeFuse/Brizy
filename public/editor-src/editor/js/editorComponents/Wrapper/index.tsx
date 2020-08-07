@@ -324,8 +324,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   renderStatic({ v, vs, vd, extraAttr, className, ref }: Static): ReactElement {
     const { customAttributes } = v;
-    const customID = Str.mRead(v.customID);
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation);
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
     return (
       <Animation<"div">
@@ -336,7 +336,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         componentProps={{
           ...Attr.mRead(customAttributes),
           ...extraAttr,
-          id: cssIDPopulation === "" ? customID : cssIDPopulation
+          id: cssIDPopulation ?? customID
         }}
       >
         <ContextMenu
@@ -411,8 +411,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
     const { customAttributes } = v;
-    const customID = Str.mRead(v.customID);
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation);
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
     return (
       <Animation<"div">
@@ -421,7 +421,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         animationClass={this.getAnimationClassName(v, vs, vd)}
         componentProps={{
           ...Attr.mRead(customAttributes),
-          id: cssIDPopulation === "" ? customID : cssIDPopulation
+          id: cssIDPopulation ?? customID
         }}
       >
         {this.renderContent(v, vs, vd)}
