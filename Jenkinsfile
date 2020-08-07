@@ -125,6 +125,7 @@ pipeline {
                 sh "sed -i 's/^Stable tag:\\s.[^<]*/Stable tag: ${params.buildVersion}/' README.md"
                 sh "sed -i \"s/'BRIZY_VERSION',\\s'.*'/'BRIZY_VERSION', '${params.buildVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_EDITOR_VERSION',\\s'.*'/'BRIZY_EDITOR_VERSION', '${params.editorVersion}'/\" brizy.php"
+                sh "sed -i \"s/'BRIZY_SYNC_VERSION',\\s'.*'/'BRIZY_SYNC_VERSION', '${params.syncVersion}'/\" brizy.php"
                 sh "sed -i \"s/'BRIZY_EDITOR_VERSION',\\s'.[^)]*'/'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '${params.editorVersion}' /\" brizy.php"
                 sh "sed -i \"s/'BRIZY_DEVELOPMENT',.[^\\)]*/'BRIZY_DEVELOPMENT', false /\" brizy.php"
                 sh "sed -i \"s/'BRIZY_LOG',.[^\\)]*/'BRIZY_LOG', false /\" brizy.php"
