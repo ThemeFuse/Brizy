@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.4.2<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.4<br>
+Stable tag: 2.0.5<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.5 - 2020-08-07 ###
+* Fixed: Preview, clean empty id
+* Fixed: Conflict between Menu and Lottie
+* Fixed: Templates rules for white label enabled sites Fixed support URL-s filters
+* Fixed: Image optimization PHP version fix
 
 ### 2.0.4 - 2020-08-06 ###
 * Fixed: Support URL filters
