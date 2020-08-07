@@ -4,6 +4,7 @@ import classnames from "classnames";
 import { validateKeyByProperty } from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import * as Str from "visual/utils/string/specs";
 import CustomCSS from "visual/component/CustomCSS";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import Background from "visual/component/Background";
@@ -232,15 +233,15 @@ class Column extends EditorComponent {
       linkType,
       linkPopup,
       popups,
-      customID,
       customClassName,
-      cssIDPopulation,
       cssClassPopulation,
       customAttributes
     } = v;
     const {
       meta: { inGrid, posts }
     } = this.props;
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const isInnerRow = this.isInnerRow();
 
     const classNameColumn = classnames(
@@ -275,7 +276,7 @@ class Column extends EditorComponent {
                 componentProps={{
                   ...parseCustomAttributes(customAttributes),
                   ...sortableElementAtts,
-                  id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                  id: cssIDPopulation ?? customID,
                   className: classNameColumn
                 }}
               >
@@ -326,9 +327,7 @@ class Column extends EditorComponent {
       linkPopup,
       linkUpload,
       popups,
-      customID,
       customClassName,
-      cssIDPopulation,
       cssClassPopulation,
       customAttributes
     } = v;
@@ -339,7 +338,8 @@ class Column extends EditorComponent {
       popup: linkPopup,
       upload: linkUpload
     };
-
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const classNameColumn = classnames(
       "brz-columns",
       css(
@@ -361,7 +361,7 @@ class Column extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      id: cssIDPopulation ?? customID,
       className: classNameColumn
     };
 

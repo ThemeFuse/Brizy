@@ -57,12 +57,9 @@ class Brizy_Admin_OptimizeImages {
 	public function render() {
 		$context = $this->getDefaultViewContext();
 		$tab     = $this->get_selected_tab();
-		switch ( $tab ) {
-			default:
-			case 'settings':
-				echo $this->get_settings_tab( $context );
-				break;
 
+		if ( $tab == 'settings' ) {
+			echo $this->get_settings_tab( $context );
 		}
 	}
 
@@ -92,11 +89,8 @@ class Brizy_Admin_OptimizeImages {
 	}
 
 	public function settings_submit() {
-
-		switch ( $_POST['tab'] ) {
-			case 'settings':
-				$this->optimizer_settings_submit();
-				break;
+		if ( $_POST['tab'] === 'settings' ) {
+			$this->optimizer_settings_submit();
 		}
 	}
 

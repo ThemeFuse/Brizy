@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,43 +139,11 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
-= 2.0.4 - 2020-08-06 =
-* Fixed: Support URL filters
-
-= 2.0.3 - 2020-08-06 =
-* Fixed: Sync process bugs
-* Fixed: Allow to continue the sync process if there are block with deleted assets
-* Fixed: Recaptcha integration and leads saving
-* Fixed: Exclude rule bug
-* Fixed: Changed session status check
-* Fixed:  Short pixel key validation
-* Fixed:  Product tags filter in rule options
-* Fixed:  Some placeholder labels
-* Fixed: Button spacing
-* Fixed: Button color in Mobile menu
-* Fixed: Countdown element
-* Fixed: Import/Export images
-* Fixed: Icons many requests, CORS CDN
-
-= 2.0.2 - 2020-07-31 =
-* Fixed: Plugin version
-
-= 2.0.1 - 2020-07-31 =
-* Fixed: Declared  property
-* Fixed: Removed code that does not work in older PHP version
-* Fixed: Deleted unnecessary files from all dependencies we use
-
-= 2.0 - 2020-07-30 =
-* New: Introduced working in Draft
-* New: Links to Support and Docs in left sidebar
-* New: Brizy Sync functionality for blocks and layouts 
-* New: You can Clear or Save an entire layout
-* New: Absolute and Fixed positions for elements
-* Improved: Increased the size limit of Image population to 5000px
-* Improved: Enabled shape option on responsive for all Sections
-* Improved: Updated Google Fonts list
-* Improved: Added Animation options on all elements
-* Improved: Re-written == Changelog ==
+= 2.0.5 - 2020-08-07 =
+* Fixed: Preview, clean empty id
+* Fixed: Conflict between Menu and Lottie
+* Fixed: Templates rules for white label enabled sites Fixed support URL-s filters
+* Fixed: Image optimization PHP version fix
 
 = 2.0.4 - 2020-08-06 =
 * Fixed: Support URL filters
@@ -201,8 +169,8 @@ The progress you're making while building your page is always backed up in the c
 = 2.0.1 - 2020-07-31 =
 * Fixed: Declared  property
 * Fixed: Removed code that does not work in older PHP version
-* Fixed: Deleted unnecessary files from all dependencies we use extended the Image element (added fixed px size) 
-* Improved: Plugin loading 
+* Fixed: Deleted unnecessary files from all dependencies we use extended the Image element (added fixed px size)
+* Improved: Plugin loading
 * Improved: Sent post directly in the get_the_content post content element
 * Improved: Increased the size limit of Image population to 5000px
 * Improved: Enabled shape option on responsive for all Sections

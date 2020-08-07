@@ -13,6 +13,7 @@ import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { blocksDataSelector } from "visual/redux/selectors";
+import * as Str from "visual/utils/string/specs";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarExtendConfig from "./toolbarExtend";
@@ -214,17 +215,16 @@ class Row extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const {
       className,
-      customID,
       customClassName,
       showToolbar,
       linkType,
       linkPopup,
       popups,
-      cssIDPopulation,
       cssClassPopulation,
       customAttributes
     } = v;
-
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
@@ -272,7 +272,7 @@ class Row extends EditorComponent {
                 componentProps={{
                   ...parseCustomAttributes(customAttributes),
                   ...sortableElementAtts,
-                  id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                  id: cssIDPopulation ?? customID,
                   className: classNameRowContainer
                 }}
                 animationClass={animationClassName}
@@ -322,8 +322,6 @@ class Row extends EditorComponent {
       linkUpload,
       popups,
       customClassName,
-      customID,
-      cssIDPopulation,
       cssClassPopulation,
       customAttributes
     } = v;
@@ -334,7 +332,8 @@ class Row extends EditorComponent {
       popup: linkPopup,
       upload: linkUpload
     };
-
+    const customID = Str.mRead(v.customID) || undefined;
+    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const classNameRowContainer = classnames(
       "brz-row__container",
       className,
@@ -357,7 +356,7 @@ class Row extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      id: cssIDPopulation ?? customID,
       className: classNameRowContainer
     };
 
