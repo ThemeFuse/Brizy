@@ -70,7 +70,7 @@ class Brizy_Admin_Cloud {
 	 *
 	 * @return Brizy_Admin_Cloud
 	 */
-	public function setProject( Brizy_Editor_Project $project ): Brizy_Admin_Cloud {
+	public function setProject( Brizy_Editor_Project $project ) {
 		$this->project = $project;
 
 		return $this;
@@ -81,7 +81,7 @@ class Brizy_Admin_Cloud {
 	 *
 	 * @return Brizy_Admin_Cloud
 	 */
-	public function setCloudClient( Brizy_Admin_Cloud_Client $cloudClient ): Brizy_Admin_Cloud {
+	public function setCloudClient( Brizy_Admin_Cloud_Client $cloudClient ) {
 		$this->cloudClient = $cloudClient;
 
 		return $this;
@@ -92,7 +92,7 @@ class Brizy_Admin_Cloud {
 	 *
 	 * @return Brizy_Admin_Cloud
 	 */
-	public function setBlockBridge( Brizy_Admin_Cloud_BlockBridge $blockBridge ): Brizy_Admin_Cloud {
+	public function setBlockBridge( Brizy_Admin_Cloud_BlockBridge $blockBridge ){
 		$this->blockBridge = $blockBridge;
 
 		return $this;
@@ -103,7 +103,7 @@ class Brizy_Admin_Cloud {
 	 *
 	 * @return Brizy_Admin_Cloud
 	 */
-	public function setLayoutBridge( Brizy_Admin_Cloud_LayoutBridge $layoutBridge ): Brizy_Admin_Cloud {
+	public function setLayoutBridge( Brizy_Admin_Cloud_LayoutBridge $layoutBridge ) {
 		$this->layoutBridge = $layoutBridge;
 
 		return $this;

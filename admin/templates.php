@@ -142,6 +142,7 @@ class Brizy_Admin_Templates {
 				'id'           => get_the_ID(),
 				'templateType' => Brizy_Admin_Templates::getTemplateType( get_the_ID() ),
 				'labels'       => $templateGroups,
+				'prefix'        => Brizy_Editor::prefix(),
 			)
 		);
 	}
