@@ -19,8 +19,7 @@ class Brizy_Admin_Migrations_BlockPostTitleMigration implements Brizy_Admin_Migr
 	}
 
 	/**
-	 * @return int|mixed|WP_Error
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return mixed|void
 	 */
 	public function execute() {
 

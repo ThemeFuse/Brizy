@@ -29,14 +29,12 @@ class Brizy_Admin_Migrations_ScreenshotMigration implements Brizy_Admin_Migratio
 
 		global $wpdb;
 
-		try {
+		if ( ! class_exists( 'Brizy\BlockScreenshotContext' ) || ! class_exists( 'Brizy\BlockScreenshotTransformer' ) ) {
+			throw new Exception();
+		}
 
-			if ( ! class_exists( 'Brizy\BlockScreenshotContext' ) || ! class_exists( 'Brizy\BlockScreenshotTransformer' ) ) {
-				throw new Exception();
-			}
-
-			$entities = $wpdb->get_results(
-				"SELECT 
+		$entities = $wpdb->get_results(
+			"SELECT 
 							p.id as ID
 						FROM {$wpdb->posts} p
 						LEFT JOIN {$wpdb->posts} pp ON pp.id=p.post_parent
@@ -44,17 +42,15 @@ class Brizy_Admin_Migrations_ScreenshotMigration implements Brizy_Admin_Migratio
 						
 						" );
 
-			foreach ( $entities as $row ) {
-				if ( metadata_exists( 'post', $row->ID, Brizy_Editor_Block::BRIZY_META ) ) {
-					continue;
-				}
-				$this->migrateEntity( $row->ID );
+		foreach ( $entities as $row ) {
+			if ( metadata_exists( 'post', $row->ID, Brizy_Editor_Block::BRIZY_META ) ) {
+				continue;
 			}
-
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->critical( 'Filed migration Brizy_Admin_Migrations_ScreenshotMigration', [ $e ] );
-			throw new $e;
+			try {
+				$this->migrateEntity( $row->ID );
+			} catch ( Brizy_Editor_Exceptions_NotFound $e ) {
+				continue;
+			}
 		}
 	}
 
