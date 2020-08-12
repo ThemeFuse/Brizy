@@ -22,7 +22,7 @@ class Brizy_Content_PlaceholderExtractor
 
     private static function getPlaceholderRegexExpression()
     {
-        return "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*(?:'|\")(?:.[^\"']*|)(?:'|\")\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";;
+        return "/(?<placeholder>{{\s*(?<placeholderName>.+?)(?<attributes>(?:\s+)((?:\w+\s*=\s*(?:'|\"|\&quot;|\&apos;)(?:.[^\"']*|)(?:'|\"|\&quot;|\&apos;)\s*)*))?}}(?:(?<content>.*?){{\s*end_(\g{placeholderName})\s*}})?)/ims";;
     }
 
     public static function stripPlaceholders($content)
@@ -94,7 +94,7 @@ class Brizy_Content_PlaceholderExtractor
         $attrString = trim($attributeString);
         $attrMatches = array();
         $attributes = array();
-        preg_match_all("/(\w+)\s*=\s*'([^']*)'/mi", $attrString, $attrMatches);
+        preg_match_all("/(\w+)\s*=\s*(?<quote>:'|\"|\&quot;|\&apos;)(.*?)(\g{quote})/mi", $attrString, $attrMatches);
 
         if (isset($attrMatches[0]) && is_array($attrMatches[0])) {
             foreach ($attrMatches[1] as $i => $name) {
