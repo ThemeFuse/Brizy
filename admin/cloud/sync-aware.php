@@ -77,7 +77,7 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyBlock = Brizy_Editor_Block::get( $blockId );
 
-		if ( $brizyBlock && ! $brizyBlock->isSavedBlock() && $brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
+		if ( $brizyBlock &&  $brizyBlock->isSavedBlock() && !$brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
 			$updater = new Brizy_Admin_Cloud_BlockBridge( $this->client );
 			$updater->export( $brizyBlock );
 
