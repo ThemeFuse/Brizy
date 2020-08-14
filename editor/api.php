@@ -498,7 +498,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					$filter = $values[0];
 
 					if ( is_numeric( $filter ) ) {
-						$args['post__in'] = $filter;
+						$args['post__in'] = [ $filter ];
 					} else {
 						// $filter = in|category|12 OR in|genre|48 OR in|category|45 OR author|2
 						$explode = explode( '|', $filter );
