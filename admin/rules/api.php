@@ -536,7 +536,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 	private function getCustomPostsList( $groupValue, $templateType ) {
 		$postTypes = get_post_types( [ 'public' => true ], 'objects' );
-		$postTypes = array_diff_key( $postTypes, array_flip( [ 'attachment' ] ) );
+		$postTypes = array_diff_key( $postTypes, array_flip( [ 'attachment', 'elementor_library' ] ) );
 
 		return array_values( array_filter( $postTypes, function ( $type ) use ( $groupValue, $templateType ) {
 			$type->groupValue = $groupValue;
