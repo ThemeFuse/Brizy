@@ -94,11 +94,11 @@ class Brizy_Content_PlaceholderExtractor
         $attrString = trim($attributeString);
         $attrMatches = array();
         $attributes = array();
-        preg_match_all("/(\w+)\s*=\s*(?<quote>:'|\"|\&quot;|\&apos;)(.*?)(\g{quote})/mi", $attrString, $attrMatches);
+        preg_match_all("/(\w+)\s*=\s*(?<quote>'|\"|\&quot;|\&apos;)(.*?)(\g{quote})/mi", $attrString, $attrMatches);
 
         if (isset($attrMatches[0]) && is_array($attrMatches[0])) {
             foreach ($attrMatches[1] as $i => $name) {
-                $attributes[$name] = $attrMatches[2][$i];
+                $attributes[$name] = $attrMatches[3][$i];
             }
         }
 
