@@ -44,11 +44,6 @@ class Brizy_Admin_Templates {
 	public function initializeActions() {
 		// do other stuff here
 		if ( is_admin() ) {
-
-			if (session_status() === PHP_SESSION_NONE) {
-				session_start();
-			}
-
 			add_filter( 'post_updated_messages', array( $this, 'filterTemplateMessages' ) );
 			add_action( 'add_meta_boxes', array( $this, 'registerTemplateMetaBox' ), 9 );
 			add_action( 'transition_post_status', array( $this, 'actionTransitionPostStatus' ), 10, 3 );
@@ -443,6 +438,9 @@ class Brizy_Admin_Templates {
 	}
 
 
+
+
+
 	/**
 	 * @internal
 	 */
@@ -729,10 +727,23 @@ class Brizy_Admin_Templates {
 	}
 
 	public function save_template_rules_notices() {
-		if ( ! empty( $_SESSION['brizy_rules_admin_notices'] ) ) {
-			print  $_SESSION['brizy_rules_admin_notices'];
+
+		global $pagenow;
+
+		if ( $pagenow !== 'post.php' || get_post_type() !== Brizy_Admin_Templates::CP_TEMPLATE) {
+		    return;
 		}
-		unset ( $_SESSION['brizy_rules_admin_notices'] );
+
+		$post_id = get_the_ID();
+
+        if ( $error = get_transient( "editor_tpl_rule_errors_{$post_id}" ) ) {
+
+	        $prefix = ucfirst( Brizy_Editor::prefix() );
+
+	        echo '<div class="error"><p>' . $prefix . ': ' . $error . '</p></div>';
+
+	        delete_transient("editor_tpl_rule_errors_{$post_id}");
+        }
 	}
 
 	public function save_template_rules( $post_id ) {
@@ -793,7 +804,7 @@ class Brizy_Admin_Templates {
 			$ruleValidator = Brizy_Admin_Rules_ValidatorFactory::getValidator( $post_id );
 
 			if ( ! $ruleValidator ) {
-				$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>Brizy: Unable to get the rule validator for this post type.</p></div>';
+				$this->addError( $post_id, esc_html__( 'Unable to get the rule validator for this post type.', 'brizy' ) );
 			}
 
 			$ruleValidator->validateRulesForPostId( $rules, $post_id );
@@ -802,11 +813,15 @@ class Brizy_Admin_Templates {
 			$ruleManager->setRules( $post_id, $rules );
 
 		} catch ( Brizy_Editor_Exceptions_DataVersionMismatch $e ) {
-			$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>Brizy:Invalid data version.</p></div>';
+			$this->addError( $post_id, esc_html__( 'Invalid data version.', 'brizy' ) );
 		} catch ( Exception $e ) {
-			$_SESSION['brizy_rules_admin_notices'] = '<div class="error"><p>' . $e->getMessage() . '.</p></div>';
+			$this->addError( $post_id, $e->getMessage() );
 		}
 	}
+
+	public function addError( $post_id, $message ) {
+		set_transient( "editor_tpl_rule_errors_{$post_id}", $message, 45 );
+    }
 
 	/**
 	 * @param $id

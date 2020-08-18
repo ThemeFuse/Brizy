@@ -105,7 +105,7 @@ class Brizy_Editor {
 			Brizy_Admin_Rules_Api::_init();
 		}
 
-		if(!defined('WP_POST_REVISIONS') || (defined('WP_POST_REVISIONS') && WP_POST_REVISIONS!==false)) {
+		if ( ! defined( 'WP_POST_REVISIONS' ) || ( defined( 'WP_POST_REVISIONS' ) && WP_POST_REVISIONS !== false ) ) {
 			add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
 		}
 
@@ -139,10 +139,10 @@ class Brizy_Editor {
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
-            Brizy_Admin_OptimizeImages::_init();
+			Brizy_Admin_OptimizeImages::_init();
 			Brizy_Admin_Layouts_Main::_init();
-	        Brizy_Admin_Cloud::_init();
-        }
+			Brizy_Admin_Cloud::_init();
+		}
 
 		if ( ! wp_doing_ajax() && Brizy_Editor_Project::get()->getCloudToken() ) {
 			// do not run cron actions on ajax request
@@ -194,11 +194,11 @@ class Brizy_Editor {
 			}
 		}
 
-        if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-            if ( current_user_can( 'manage_options' ) ) {
-                add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
-            }
-        }
+		if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+			}
+		}
 
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
@@ -246,7 +246,7 @@ class Brizy_Editor {
 
 		$this->registerCustomPostTemplates();
 
-		if ( defined( 'BRIZY_PRO_VERSION' ) && class_exists('BrizyPro_Main') ) {
+		if ( defined( 'BRIZY_PRO_VERSION' ) && class_exists( 'BrizyPro_Main' ) ) {
 			$mainInstance = new BrizyPro_Main();
 			$mainInstance->registerCustomPosts();
 		}
@@ -311,14 +311,14 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
-            if ( Brizy_Editor::is_user_allowed() ) {
-                new Brizy_Editor_RestExtend();
-                new Brizy_Editor_API( $post );
-                new Brizy_Editor_BlockScreenshotApi( $post );
-                Brizy_Editor_Accounts_Api::_init();
-            }
+			if ( Brizy_Editor::is_user_allowed() ) {
+				new Brizy_Editor_RestExtend();
+				new Brizy_Editor_API( $post );
+				new Brizy_Editor_BlockScreenshotApi( $post );
+				Brizy_Editor_Accounts_Api::_init();
+			}
 
-            new Brizy_Editor_Forms_Api( $post );
+			new Brizy_Editor_Forms_Api( $post );
 
 			// for other apis
 			do_action( 'brizy_register_api_methods', $user, $post );
@@ -342,9 +342,13 @@ class Brizy_Editor {
 
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
-				Brizy_Admin_Settings::_init();
-
 				$this->initFeedback();
+			}
+
+			if ( is_network_admin() ) {
+				Brizy_Admin_NetworkSettings::_init();
+			} elseif ( is_admin() ) {
+				Brizy_Admin_Settings::_init();
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );

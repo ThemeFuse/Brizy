@@ -597,6 +597,7 @@ export {
 //Posts
 export {
   cssStyleElementPostsItemWidth,
+  cssStyleElementPostsItemSpacing,
   cssStyleElementPostsPaginationSpacing,
   cssStyleElementPostsPaginationLinksOff,
   cssStyleElementPostsPaginationFontFamily,

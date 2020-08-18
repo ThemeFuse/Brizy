@@ -283,7 +283,7 @@ class Login extends EditorComponent {
                 <input
                   type="hidden"
                   name="redirect_to"
-                  value={v.messageRedirect}
+                  value={v.messageRedirect === "" ? "/" : v.messageRedirect}
                 />
                 {this.renderLoginForm(v)}
               </form>
@@ -301,7 +301,7 @@ class Login extends EditorComponent {
                 <input
                   type="hidden"
                   name="redirect_to"
-                  value={v.messageRedirect}
+                  value={v.messageRedirect === "" ? "/" : v.messageRedirect}
                 />
                 {this.renderLoginForm(v)}
               </form>

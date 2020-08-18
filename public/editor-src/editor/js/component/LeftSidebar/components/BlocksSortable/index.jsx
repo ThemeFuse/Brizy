@@ -17,32 +17,35 @@ import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
+import { pageSelector } from "visual/redux/selectors2";
 
 const DragHandle = SortableHandle(({ item }) => (
   <BlockThumbnail blockData={item} />
 ));
 
-const SortableItem = SortableElement(({ item, globalBlocks, onRemove }) => {
-  if (item.type === "GlobalBlock") {
-    const { _id } = item.value;
+const SortableItem = SortableElement(
+  ({ item, globalBlocks, pageId, onRemove }) => {
+    if (item.type === "GlobalBlock") {
+      const { _id } = item.value;
 
-    if (!canUseConditionInPage(globalBlocks[_id])) {
-      return <div />;
+      if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+        return <div />;
+      }
     }
-  }
 
-  return (
-    <div className="brz-ed-sidebar-block-item">
-      <DragHandle item={item} />
-      <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
-        <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
+    return (
+      <div className="brz-ed-sidebar-block-item">
+        <DragHandle item={item} />
+        <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
+          <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 const SortableList = SortableContainer(
-  ({ isSorting, items, innerRef, globalBlocks, onItemRemove }) => {
+  ({ isSorting, items, innerRef, globalBlocks, pageId, onItemRemove }) => {
     const filteredItems = [];
 
     for (let i = 0; i < items.length; i++) {
@@ -57,6 +60,7 @@ const SortableList = SortableContainer(
           key={item.value._id}
           item={item}
           globalBlocks={globalBlocks}
+          pageId={pageId}
           index={i}
           onRemove={() => onItemRemove(i)}
         />
@@ -155,16 +159,18 @@ class DrawerComponent extends React.Component {
 
   render() {
     const { blocks, isSorting } = this.state;
+    const { pageId, globalBlocks } = this.props;
 
     return (
       <SortableList
         helperClass="brz-ed-sidebar-block-item-helper"
         isSorting={isSorting}
         items={blocks}
-        globalBlocks={this.props.globalBlocks}
+        globalBlocks={globalBlocks}
         distance={5}
         useDragHandle={true}
         innerRef={this.content}
+        pageId={pageId}
         contentWindow={this.getContentWindow}
         getContainer={this.getContainer}
         onSortStart={this.handleBeforeSortStart}
@@ -177,7 +183,8 @@ class DrawerComponent extends React.Component {
 
 const mapStateToProps = state => ({
   pageBlocks: pageBlocksAssembledSelector(state),
-  globalBlocks: globalBlocksSelector(state)
+  globalBlocks: globalBlocksSelector(state),
+  pageId: pageSelector(state).id
 });
 
 export const BlocksSortable = {

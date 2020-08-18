@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_151Wp_Texts {
+class Brizy_Public_EditorBuild_152Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -208,6 +208,7 @@ class Brizy_Public_EditorBuild_151Wp_Texts {
 			"Div" => __("Div", "brizy"),
 			"Dividers" => __("Dividers", "brizy"),
 			"Done" => __("Done", "brizy"),
+			"Done, your library was synced" => __("Done, your library was synced", "brizy"),
 			"Dots" => __("Dots", "brizy"),
 			"Draft" => __("Draft", "brizy"),
 			"Drag to reorder" => __("Drag to reorder", "brizy"),
@@ -654,7 +655,6 @@ class Brizy_Public_EditorBuild_151Wp_Texts {
 			"Subject" => __("Subject", "brizy"),
 			"Subtotal" => __("Subtotal", "brizy"),
 			"Success" => __("Success", "brizy"),
-			"Success sync" => __("Success sync", "brizy"),
 			"Suffix" => __("Suffix", "brizy"),
 			"Support & Docs" => __("Support & Docs", "brizy"),
 			"Swing" => __("Swing", "brizy"),

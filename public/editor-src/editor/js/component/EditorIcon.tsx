@@ -10,6 +10,8 @@ export type EditorIconProps = {
   onClick?: (e: MouseEvent<SVGElement>) => void;
 };
 
+const _PreviewIcon = (): null => null;
+
 const _EditorIcon: React.FC<EditorIconProps> = (props, ref) => {
   const {
     className: _className = "",
@@ -26,6 +28,6 @@ const _EditorIcon: React.FC<EditorIconProps> = (props, ref) => {
   );
 };
 
-export const EditorIcon = React.forwardRef(_EditorIcon);
+export const EditorIcon = IS_EDITOR ? React.forwardRef(_EditorIcon) : _PreviewIcon;
 
 export default EditorIcon;

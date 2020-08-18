@@ -162,9 +162,9 @@ trait Brizy_Editor_Synchronizable {
 	 *
 	 * @return bool
 	 */
-	public function isSynchronizable($cloudAccountId) {
+	public function isSynchronizable( $cloudAccountId ) {
 		if ( $this->canBeSynchronized() ) {
-			return isset($this->synchronizedWith[ $cloudAccountId ]);
+			return isset( $this->synchronizedWith[ $cloudAccountId ] );
 			//return metadata_exists( 'post', $this->getWpPostId(), 'brizy-cloud-update-required' );
 		}
 

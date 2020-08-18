@@ -65,7 +65,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H6LetterSpacing"
       ]
     },
-    ".brz &&:hover *:not(strong):not(b)": {
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):hover": {
       standart: [
         "cssStyleElementWPPostContentParagraphColor",
         "cssStyleElementWPPostContentTypography2ParagraphFontFamily",

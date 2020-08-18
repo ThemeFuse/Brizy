@@ -462,7 +462,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$groups[] = array(
-			'title' => 'Specific Post',
+			'title' => 'Specific '.$postTypeName,
 			'value' => Brizy_Admin_Rule::POSTS,
 			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type ) )
 		);
@@ -535,9 +535,10 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	private function getCustomPostsList( $groupValue, $templateType ) {
-        $wp_post_types = get_post_types( [ 'exclude_from_search' => false, 'show_in_nav_menus' => true ], 'objects' );
+		$postTypes = get_post_types( [ 'public' => true ], 'objects' );
+		$postTypes = array_diff_key( $postTypes, array_flip( [ 'attachment', 'elementor_library' ] ) );
 
-		return array_values( array_filter( $wp_post_types, function ( $type ) use ( $groupValue, $templateType ) {
+		return array_values( array_filter( $postTypes, function ( $type ) use ( $groupValue, $templateType ) {
 			$type->groupValue = $groupValue;
 			if ( $templateType == 'single_product' ) {
 				return $type->name == 'product' && $type->public && $type->show_ui;

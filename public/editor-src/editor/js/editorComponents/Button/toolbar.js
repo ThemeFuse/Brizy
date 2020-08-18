@@ -1579,7 +1579,7 @@ export function getItemsForTablet(v, component) {
               id: "tabletPaddingRL",
               label: t("Width"),
               type: "slider",
-              disabled: v.tabletSize !== "custom",
+              disabled: v.type === "submit" || v.tabletSize !== "custom",
               slider: {
                 min: 0,
                 max: 100
@@ -1842,7 +1842,7 @@ export function getItemsForMobile(v, component) {
               id: "mobilePaddingRL",
               label: t("Width"),
               type: "slider",
-              disabled: v.mobileSize !== "custom",
+              disabled: v.type === "submit" || v.mobileSize !== "custom",
               slider: {
                 min: 0,
                 max: 100
