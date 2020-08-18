@@ -81,7 +81,7 @@ export const useSync = (): Sync => {
             setLoading(false);
             updateSync(true);
 
-            ToastNotification.success(t("Success sync"), {
+            ToastNotification.success(t("Done, your library was synced"), {
               toastContainer: window.parent.document.body
             });
           }

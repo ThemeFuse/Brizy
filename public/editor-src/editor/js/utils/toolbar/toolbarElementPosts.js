@@ -97,13 +97,13 @@ export function toolbarElementPostsRows({ v, device, devices = "all", state }) {
     className: "brz-ed-option__slider--skin-dev",
     slider: {
       min: 1,
-      max: 10,
+      max: 15,
       step: 1
     },
     input: {
       show: true,
       min: 1,
-      max: 10,
+      max: 50,
       step: 1
     },
     value: {

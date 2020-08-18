@@ -3,7 +3,10 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz && .brz-posts__wrapper > .brz-posts__item": {
-      standart: ["cssStyleElementPostsItemWidth"]
+      standart: [
+        "cssStyleElementPostsItemWidth",
+        "cssStyleElementPostsItemSpacing"
+      ]
     },
 
     // filter

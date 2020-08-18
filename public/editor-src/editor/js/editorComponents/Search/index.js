@@ -4,7 +4,7 @@ import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import EditorIcon from "visual/component/EditorIcon";
+import ThemeIcon from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { css } from "visual/utils/cssStyle";
 import { styles } from "./styles";
@@ -52,7 +52,13 @@ export default class Search extends EditorComponent {
   }
 
   renderIcon() {
-    return <EditorIcon className="brz-search-icon__style1" icon="nc-search" />;
+    return (
+      <ThemeIcon
+        className="brz-search-icon__style1"
+        type="editor"
+        name="search"
+      />
+    );
   }
 
   renderForEdit(v, vs, vd) {

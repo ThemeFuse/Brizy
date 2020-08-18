@@ -72,11 +72,12 @@ function removeUnwantedNodes(node) {
     { type: "className", value: "brz-popup2__button-go-to-editor" },
     { type: "className", value: "brz-ed-icon-svg" },
     { type: "className", value: "brz-ed-slider__spinner" },
-    { type: "className", value: "brz-ed-portal__loading" }
+    { type: "className", value: "brz-ed-portal__loading" },
+    { type: "tagName", value: "script" }
   ];
 
   /* eslint-disable no-unused-vars */
-  selectors.forEach(({ type, value, canDelete = node => true }) => {
+  selectors.forEach(({ type, value, canDelete }) => {
     let nodes;
     /* eslint-enabled no-unused-vars */
     switch (type) {
@@ -84,12 +85,16 @@ function removeUnwantedNodes(node) {
         nodes = getElementsByClassName(node, value);
         break;
       }
+      case "tagName": {
+        nodes = getElementsByTagName(node, value);
+        break;
+      }
       default:
         throw new Error(`unsupported selector type ${type}`);
     }
 
     nodes.forEach(node => {
-      if (canDelete(node)) {
+      if (canDelete === undefined || canDelete(node)) {
         removeNode(node);
       }
     });

@@ -21,6 +21,12 @@ export function cssStyleElementPostsItemWidth({ v, device, state }) {
   return `width:${gridColumn > 1 ? 100 / gridColumn : 100}%;`;
 }
 
+export function cssStyleElementPostsItemSpacing({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+
+  return `padding: ${dvv("padding")}px;`;
+}
+
 // Pagination
 
 export function cssStyleElementPostsPaginationSpacing({ v, device, state }) {

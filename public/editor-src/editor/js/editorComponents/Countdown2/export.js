@@ -27,7 +27,7 @@ export default function() {
     var redirect = $this.attr("data-redirect");
     var actions = $this.attr("data-action");
     var leftPadWith0 = function(number) {
-      return ("0" + number).slice(-2);
+      return number >= 0 && number <= 9 ? "0" + number : number;
     };
 
     $this.countdown2({
