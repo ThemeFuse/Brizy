@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.5<br>
+Stable tag: 2.0.6<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,26 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.6 - 2020-08-18 ###
+* Fixed: Screenshots not working with Embed with scripts in it
+* Fixed: Memory issue that was causing a few projects to not work at preview
+* Fixed: Duplicate button not being shown for slider inside a global block
+* Fixed: Countdown not displaying properly bigger numbers
+* Fixed: PostContent css issue
+* Fixed: Some icons did not work at preview
+* Fixed: Site health loopback error
+* Fixed: Include elementor_library as post type in template conditions
+* Fixed: Show all public post types in the rules of the template
+* Fixed: Post demo content in the editor
+* Fixed: Fixed license page
+* Fixed: Apply the content filters for default template
+* Fixed: Dynamic content does not have a demo post
+* Fixed: Fixed the default rule when product template type is saved
+* Fixed: Updated the screenshot migration to contnue migration if the post is invalid (has no valid meta)
+* Fixed: Changed the reqex that extract the shortcodes to understand html encoded quotes
+* Fixed: Fixed cloud sync for restored databases
+* Fixed: Post Info and #author render the display_name of the user
 
 ### 2.0.5 - 2020-08-07 ###
 * Fixed: Preview, clean empty id
