@@ -52,12 +52,6 @@ class Brizy_Admin_Layouts_Main {
 				'supports'            => array( 'title', 'revisions', 'page-attributes' )
 			)
 		);
-
-		$labels = array(
-			'name' => _x( 'Layouts', 'brizy' ),
-		);
-
-
 	}
 
 	/**

@@ -28,7 +28,6 @@ function getToolbarArchives(v, device) {
         title: t("Archives")
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 80,
       options: [
         // haven't moved to options-dev because of custom onchange

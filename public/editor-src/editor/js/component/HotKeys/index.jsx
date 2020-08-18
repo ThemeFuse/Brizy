@@ -110,7 +110,7 @@ class HotKeys extends React.Component {
       if (currentActiveContainerValue && copiedElement.value) {
         const { value: currentCopiedContainerValue } = getClosestParent(
           copiedElement.path,
-          copiedElement.value,
+          attachMenu(copiedElement.value),
           ({ type }) => type === "Wrapper" || type === "Cloneable"
         );
 

@@ -42,7 +42,12 @@ export default function extractPopups($) {
         $popup.attr("data-brz-popup", newId);
 
         // append the popup to body to avoid problems with z-index
-        $("body").append($popup);
+        // this is done in such a weird way because we had a
+        // memory problem with our last code
+        //    $("body").append($popup));
+        // and this seems to fix it
+        $("body").append($.html(`[data-brz-popup=${newId}]`));
+        $popup.remove();
 
         if (isGlobal) {
           globalPopupsProcessed[popupId] = newId;

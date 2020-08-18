@@ -9,7 +9,10 @@ export default async function replaceIcons($, buildPath) {
   $(".brz-icon-svg").each(function() {
     const $this = $(this);
     const { type, name } = $this.data();
-    svgs.push({ type, name, node: $this });
+
+    if (type && name) {
+      svgs.push({ type, name, node: $this });
+    }
   });
 
   const pSvg = svgs.map(async ({ type, name, node }) => {

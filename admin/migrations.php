@@ -169,7 +169,7 @@ class Brizy_Admin_Migrations {
 				$wpdb->query( 'COMMIT' );
 			} catch ( Exception $e ) {
 				$wpdb->query( 'ROLLBACK' );
-				Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );
+				Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $migrationClass, $e->getTraceAsString() ] );
 				break;
 			}
 		}

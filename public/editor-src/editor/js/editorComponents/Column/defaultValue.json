@@ -1,11 +1,4 @@
 {
-  "//3": "La Box Shadow Color nu lucreaza corect ar trebui de adaugat in ca un key",
-  "//4": "La animation tot trebuei de uitata. In general in modulelemai noi trebuei de uitata la tot",
-  "//5": "Poate la tablet si mobile trebuei sa fie grouped:   \"tabletMarginType\": \"ungrouped\",",
-  "//6": "Valorile papaddign tablet si mobile sunt corecte ???? si de ce sunt diferite???",
-  "//7": "Valorile  margin tablet si mobile sunt corecte ???? si de ce sunt diferite???",
-  "//8": "  \"tempMobilePadding\": 10,  \"tempMobilePaddingRight\": 10,  \"tempMobilePaddingBottom\": 10,  \"tempMobilePaddingLeft\": 10, -- se foloseste in functia de desktop de a sybcroniza cu alte devices tablet sau mobile mai multe detalii se pot gasi in onChangeBgColorHexAndOpacityColumnAndRowSyncTablet  ",
-
   "content": {
     "width": 50,
     "tagName": "div",

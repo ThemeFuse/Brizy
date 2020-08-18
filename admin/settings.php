@@ -42,8 +42,6 @@ class Brizy_Admin_Settings {
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 9 );
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGetHelpLink' ), 20 );
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
-		} else {
-			add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ), 10 );
 		}
 
 		add_action( 'admin_head', array( $this, 'addClassToWpNavMenu' ) );
@@ -100,10 +98,13 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	function actionRegisterSubMenuSettingsPage() {
-		add_submenu_page( self::menu_slug(), __( 'Settings', 'brizy' ), __( 'Settings', 'brizy' ), 'manage_options', self::menu_slug(), array(
-			$this,
-			'render'
-		) );
+		add_submenu_page( self::menu_slug(),
+			__( 'Settings', 'brizy' ),
+			__( 'Settings', 'brizy' ),
+			'manage_options',
+			self::menu_slug(),
+			array( $this, 'render' )
+		);
 	}
 
 	/**
@@ -164,17 +165,17 @@ class Brizy_Admin_Settings {
 			],
 			[
 				'id'          => 'roles',
-				'label'       => __( 'Role Manager',  'brizy'  ),
+				'label'       => __( 'Role Manager', 'brizy' ),
 				'is_selected' => $selected_tab == 'roles',
 				'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=roles'
 			],
-            [
+			[
 				'id'          => 'maintenance',
-				'label'       => __( 'Maintenance Mode',  'brizy'  ),
+				'label'       => __( 'Maintenance Mode', 'brizy' ),
 				'is_selected' => $selected_tab == 'maintenance',
 				'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=maintenance'
 			]
-        ];
+		];
 
 		return apply_filters( 'brizy_settings_tabs', $tabs, $selected_tab );
 	}
@@ -350,7 +351,7 @@ class Brizy_Admin_Settings {
 	}
 
 	public function render_tabs() {
-        $tabs = $this->get_tabs();
+		$tabs = $this->get_tabs();
 		foreach ( $tabs as $tab ) {
 			$is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
 			?>

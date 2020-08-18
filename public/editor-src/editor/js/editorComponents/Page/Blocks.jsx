@@ -11,6 +11,8 @@ import HotKeys from "visual/component/HotKeys";
 import { hideToolbar } from "visual/component/Toolbar";
 import { addBlock, importTemplate } from "visual/redux/actions2";
 import { addGlobalBlock, removeBlock } from "visual/redux/actions2";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 
 import { stripSystemKeys, setIds } from "visual/utils/models";
@@ -70,6 +72,12 @@ class Blocks extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex) {
     const { blockId } = itemData;
+    let disabled = false;
+    if (itemData.type === "GlobalBlock") {
+      const blocksData = blocksDataSelector(getStore().getState());
+
+      disabled = blocksData[itemData.value._id]?.value?.slider === "off";
+    }
     const cloneRemoveConfig = {
       getItemsForDesktop: () => [
         {
@@ -78,7 +86,7 @@ class Blocks extends EditorArrayComponent {
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
-          disabled: itemData.type === "GlobalBlock",
+          disabled,
           onChange: () => {
             this.cloneItem(itemIndex);
           }

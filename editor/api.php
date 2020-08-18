@@ -437,7 +437,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$post = $this->getPostSample( $postId );
 
-			setup_postdata( $post );
+			if ( $post instanceof WP_Post ) {
+				setup_postdata( $post );
+			}
 
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
@@ -480,16 +482,42 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			switch ( $rule->getAppliedFor() ) {
 				case  Brizy_Admin_Rule::POSTS :
-					$args = array(
-						'post_type' => $rule->getEntityType(),
-					);
+					$args = [
+						'post_type'      => $rule->getEntityType(),
+						'posts_per_page' => 1
+					];
 
-					if ( count( $rule->getEntityValues() ) ) {
-						$args['post__in'] = $rule->getEntityValues();
+					$values = $rule->getEntityValues();
+
+					if ( empty( $values[0] ) ) {
+						// For All condition
+						$post = get_posts( $args );
+						return isset( $post[0] ) ? $post[0] : null;
 					}
-					$array = get_posts( $args );
 
-					return array_pop( $array );
+					$filter = $values[0];
+
+					if ( is_numeric( $filter ) ) {
+						$args['post__in'] = [ $filter ];
+					} else {
+						// $filter = in|category|12 OR in|genre|48 OR in|category|45 OR author|2
+						$explode = explode( '|', $filter );
+
+						if ( $explode[0] === 'in' ) {
+							$args['tax_query'] = [
+								[
+									'taxonomy' => $explode[1],
+									'terms'    => $explode[2],
+								]
+							];
+						} else {
+							$args['author'] = $explode[1];
+						}
+					}
+
+					$post = get_posts( $args );
+
+					return isset( $post[0] ) ? $post[0] : null;
 					break;
 				case Brizy_Admin_Rule::TAXONOMY :
 					$args = array(

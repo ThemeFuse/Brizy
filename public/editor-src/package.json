@@ -53,7 +53,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "select2": "^4.0.6-rc.1",
-    "slick-carousel": "^1.8.1",
+    "slick-carousel": "git+https://git@github.com/bagrinsergiu/slick.git#swipe",
     "timm": "^1.4.1",
     "tinycolor2": "1.4.1",
     "underscore": "^1.9.0",

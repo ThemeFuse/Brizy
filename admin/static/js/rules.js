@@ -22,6 +22,11 @@ switch (defaultTemplateType) {
         defaultEntityType = 'category';
         break;
 
+    case 'single_product':
+        defaultAppliedFor = RULE_POSTS;
+        defaultEntityType = 'product';
+        break;
+
     default:
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'post';
@@ -70,7 +75,7 @@ var api = {
             return apiCache.groupList[templateType];
 
         return apiCache.groupList[templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
-            action: Brizy_Admin_Rules.prefix+"_rule_group_list",
+            action: Brizy_Admin_Rules.prefix + "_rule_group_list",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules',
@@ -84,7 +89,7 @@ var api = {
             return apiCache.postGroupListPromise[postType + templateType];
 
         return apiCache.postGroupListPromise[postType + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
-            action: Brizy_Admin_Rules.prefix+"_rule_posts_group_list",
+            action: Brizy_Admin_Rules.prefix + "_rule_posts_group_list",
             postType: postType,
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
@@ -99,7 +104,7 @@ var api = {
             return apiCache.archiveGroupListPromise[taxonomy + templateType];
 
         return apiCache.archiveGroupListPromise[taxonomy + templateType] = jQuery.getJSON(Brizy_Admin_Rules.url, {
-            action: Brizy_Admin_Rules.prefix+"_rule_archive_group_list",
+            action: Brizy_Admin_Rules.prefix + "_rule_archive_group_list",
             taxonomy: taxonomy,
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
@@ -114,7 +119,7 @@ var api = {
             return apiCache.termList[taxonomy];
 
         return jQuery.getJSON(Brizy_Admin_Rules.url, {
-            action: Brizy_Admin_Rules.prefix+"_get_terms",
+            action: Brizy_Admin_Rules.prefix + "_get_terms",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
             taxonomy: taxonomy
@@ -126,7 +131,7 @@ var api = {
     validateRule: function (rule) {
 
         var url = new URL(Brizy_Admin_Rules.url);
-        url.searchParams.append('action', Brizy_Admin_Rules.prefix+'_validate_rule');
+        url.searchParams.append('action', Brizy_Admin_Rules.prefix + '_validate_rule');
         url.searchParams.append('hash', Brizy_Admin_Rules.hash);
         url.searchParams.append('post', Brizy_Admin_Rules.id);
         url.searchParams.append('version', Brizy_Admin_Data.editorVersion);
@@ -237,7 +242,7 @@ var actions = {
             };
 
             return {
-                rules: {[state.templateType]: [...state.rules[state.templateType], rule]},
+                rules: {[state.templateType]: [...state.rules[state.templateType] || [], rule]},
                 rule: defaultRule,
                 errors: ""
             };
@@ -541,7 +546,7 @@ var RuleApplyGroupField = function (params) {
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
                                 actions.rule.update({
-                                    entityValues: e.target.value?[e.target.value]:[],
+                                    entityValues: e.target.value ? [e.target.value] : [],
                                 });
                             }
                         })
@@ -558,7 +563,7 @@ var RuleApplyGroupField = function (params) {
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
                                 actions.rule.update({
-                                    entityValues: e.target.value?[e.target.value]:[],
+                                    entityValues: e.target.value ? [e.target.value] : [],
                                 });
                             }
                         })
@@ -658,7 +663,7 @@ var TemplateTypeSelect = function (params) {
                 h('span', {class: "date-time-text format-i18n"}, Brizy_Admin_Rules.labels.archive),
             ]),
             ...(Brizy_Admin_Rules.labels.single_product ?
-            [h('label', {}, [
+                [h('label', {}, [
                     h('input', {
                         type: 'radio',
                         name: 'brizy-template-type',

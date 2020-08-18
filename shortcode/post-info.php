@@ -31,7 +31,7 @@ class Brizy_Shortcode_PostInfo extends Brizy_Shortcode_PostField {
 
 		if ( $post ) {
 			$params             = array();
-			$params['author']   = get_the_author_meta( 'nickname', $post->post_author );
+			$params['author']   = get_the_author_meta( 'display_name', $post->post_author );
 			$params['date']     = get_the_date( '', $post );
 			$params['time']     = get_the_time( '', $post );
 			$params['comments'] = get_comment_count( $post->ID );

@@ -31,7 +31,7 @@ const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
-  source.forEach(function (e, i) {
+  source.forEach(function(e, i) {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
       const shouldClone = cloneRequested && options.isMergeableObject(e);
@@ -346,7 +346,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const { path, value } = copiedElementNoRefsSelector(getStore().getState());
 
     if (value) {
-      return getIn(value, path);
+      return getIn(attachMenu(value), path);
     }
 
     return null;
@@ -465,7 +465,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      copiedValue,
+      attachMenu(copiedValue),
       v.type === "Cloneable" || v.type === "Wrapper"
         ? ({ type }) => type === "Cloneable" || type === "Wrapper"
         : ({ type }) => type === v.type
@@ -504,7 +504,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      copiedValue,
+      attachMenu(copiedValue),
       ({ type }) => type === v.type
     );
 
