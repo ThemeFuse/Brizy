@@ -177,7 +177,7 @@ jQuery(document).ready(function ($) {
             var self = this;
             setTimeout(function () {
                 self.insertBrizyBtn();
-            }, 1);
+            }, 500);
         }
     };
 
@@ -223,7 +223,6 @@ jQuery(document).ready(function ($) {
         BrizyFeedbackDialog.init();
         BrizyMaintenance.init();
     } );
-
 });
 
 
