@@ -137,6 +137,24 @@
     color: red;
 }
 
+.brizy-template-rules .rules-container {
+    position: relative;
+}
+
+.brizy-template-rules .rules-container .lock-screen {
+    position: absolute;
+    top:0px;
+    left:0px;
+    bottom:0px;
+    right: 0px;
+    background: white;
+    opacity: 0.3;
+    text-align: center;
+    font-size: 3em;
+    padding-top: 1em;
+}
+
+
 .brizy-template-rules input[type="text"],
 .brizy-template-rules select {
     vertical-align: middle;
