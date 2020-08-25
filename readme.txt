@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,12 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.0.7 - 2020-08-25 =
+* Fixed: The white label support url
+* Fixed: Edit With Brizy is not displayed when using Gutenberg
+* Fixed: The creation of the uid when a revision is provided
+* Fixed: Mail template has only one value in all placeholders
 
 = 2.0.6 - 2020-08-18 =
 * Fixed: Screenshots not working with Embed with scripts in it
