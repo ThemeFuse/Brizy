@@ -275,17 +275,18 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function form_submit_data( $fields, $form ) {
 
-		$title = '';
-
 		foreach ( $fields as $i => $field ) {
-			if ( strtolower( $field->type ) == 'email' ) {
-				$title = $field->value;
-			}
-
 			if ( $field->name == 'g-recaptcha-response' ) {
 				unset( $fields[ $i ] );
 				$fields = array_values( $fields );
-				continue;
+				break;
+			}
+		}
+
+		$title = '';
+		foreach ( $fields as $i => $field ) {
+			if ( strtolower( $field->type ) == 'email' ) {
+				$title = $field->value;
 			}
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.

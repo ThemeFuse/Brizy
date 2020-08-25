@@ -152,7 +152,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Open our submenu link "Get Help" in a new tab.
-    $( '.brz-get-help-add-target-blank' ).parent().attr( 'target', '_blank' ).attr( 'href', 'https://support.brizy.io/hc/en-us' );
+     $( '#get-help,#go-pro' ).parent().attr( 'target', '_blank' );
 
     var BrizyGutenberg = {
 
@@ -177,7 +177,7 @@ jQuery(document).ready(function ($) {
             var self = this;
             setTimeout(function () {
                 self.insertBrizyBtn();
-            }, 1);
+            }, 500);
         }
     };
 
@@ -223,7 +223,6 @@ jQuery(document).ready(function ($) {
         BrizyFeedbackDialog.init();
         BrizyMaintenance.init();
     } );
-
 });
 
 
