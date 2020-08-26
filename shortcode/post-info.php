@@ -56,6 +56,13 @@ class Brizy_Shortcode_PostInfo extends Brizy_Shortcode_PostField {
 			return isset( $post[0] ) ? $post[0] : null;
 		}
 
+        if ( isset( $atts['post'] ) )
+            return parent::getPost( $atts );
+
+        if($context = Brizy_Content_ContextFactory::getGlobalContext()) {
+            return $context->getWpPost();
+        }
+
 		$post = get_post();
 
 		return $post ?: null;
