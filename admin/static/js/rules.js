@@ -21,12 +21,10 @@ switch (defaultTemplateType) {
         defaultAppliedFor = RULE_TAXONOMY;
         defaultEntityType = 'category';
         break;
-
     case 'single_product':
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'product';
         break;
-
     default:
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'post';
