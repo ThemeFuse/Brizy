@@ -23,7 +23,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 			new Brizy_Content_Placeholders_Simple( 'WP Language', 'brizy_dc_page_language', get_locale() ),
 			new Brizy_Content_Placeholders_Simple( 'Ajax Url', 'brizy_dc_ajax_url', admin_url( 'admin-ajax.php' ) ),
 			new Brizy_Content_Placeholders_Permalink(),
-            new Brizy_Content_Placeholders_Simple( '', 'editor_sidebars', function( $context, $contentPlaceholder ) {
+            new Brizy_Content_Placeholders_Simple( '', 'editor_sidebar', function( $context, $contentPlaceholder ) {
 
                 $attrs = $contentPlaceholder->getAttributes();
 
@@ -51,7 +51,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                 $attrs = $contentPlaceholder->getAttributes();
 
-                $post = $this->getPost( $attrs );
+	            $post = isset( $attrs['post'] ) ? get_post( $attrs['post'] ) : get_post();
 
                 if ( ! $post || ! isset( $attrs['property'] ) ) {
                     return '';
@@ -60,13 +60,11 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return $this->filterData( $attrs['property'], $post );
             } ),
 
-            new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function( $context, $contentPlaceholder ) {
-
-                $attrs = $contentPlaceholder->getAttributes();
+            new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function() {
 
                 $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
 
-                $post = $this->getPost( $attrs );
+	            $post = get_post();
 
                 if ( $post ) {
                     $params             = array();
@@ -103,36 +101,23 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             new Brizy_Content_Placeholders_Simple( '', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
-                $postId = $this->getPost( $contentPlaceholder->getAttributes() );
+                $atts = $contentPlaceholder->getAttributes();
 
-                return do_shortcode( '[product_page id="' . $postId . '"]' );
+                if ( empty( $atts['id'] ) ) {
+                    return '';
+                }
+
+                return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
             } ),
 		);
 	}
-
-    /**
-     * @param $atts
-     *
-     * @return array|WP_Post|null
-     */
-    private function getPost( $atts ) {
-
-        if ( isset( $atts['post'] ) ) {
-            return Brizy_Admin_Templates::getPostSample((int) $atts['post']);
-        } else {
-            $posts = get_posts();
-            $post  = isset( $posts[0] ) ? $posts[0] : null;
-        }
-
-        return $post;
-    }
 
     private function filterData( $property, $post ) {
         switch ( $property ) {
             case 'post_title':
                 return get_the_title( $post );
             case 'post_excerpt':
-                return $this->wp_trim_excerpt( $post->post_excerpt, $post );
+                return self::wp_trim_excerpt( $post->post_excerpt, $post );
             case 'post_content':
                 $GLOBALS['post'] = $post;
                 setup_postdata($post);
@@ -172,7 +157,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
      *
      * @return string
      */
-    private function wp_trim_excerpt( $text = '', $post = null ) {
+    public static function wp_trim_excerpt( $text = '', $post = null ) {
         $raw_excerpt = $text;
         if ( '' == $text ) {
             $post = get_post( $post );

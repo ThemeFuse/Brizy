@@ -149,7 +149,6 @@ class Brizy_Editor {
 			Brizy_Admin_Cloud_Cron::_init();
 		}
 
-		$this->loadShortcodes();
 		$this->initializeAssetLoaders();
 
 		$supported_post_types   = $this->supported_post_types();
@@ -325,15 +324,6 @@ class Brizy_Editor {
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
-	}
-
-	private function loadShortcodes() {
-		new Brizy_Shortcode_Sidebar();
-		new Brizy_Shortcode_Posts();
-		new Brizy_Shortcode_Navigation();
-		new Brizy_Shortcode_PostField();
-		new Brizy_Shortcode_PostInfo();
-		new Brizy_Shortcode_WooProductPageWrapper();
 	}
 
 	private function loadEditorAdminSettings() {
