@@ -402,7 +402,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-
+	/*
+	 * Used for elements like Woocommerce pages.
+	 */
 	public function shortcode_content() {
 		try {
 			$this->verifyNonce( self::nonce );
@@ -415,7 +417,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			global $post, $wp_query;
 
-			$post = $this->getPostSample( 509 );
+			$post = $this->getPostSample( 90 );
 
 			if ( $post instanceof WP_Post ) {
 				setup_postdata( $post );
@@ -423,7 +425,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			}
 
 			$this->success( array(
-				'shortcode' => apply_filters( 'brizy_content', $shortcode, Brizy_Editor_Project::get(), $post )
+				'shortcode' => do_shortcode(apply_filters( 'brizy_content', $shortcode, Brizy_Editor_Project::get(), $post ))
 			) );
 
 		} catch ( Exception $exception ) {

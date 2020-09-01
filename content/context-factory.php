@@ -1,7 +1,13 @@
 <?php
 
 
-class Brizy_Content_ContextFactory {
+class Brizy_Content_ContextFactory
+{
+
+	/**
+	 * @var Brizy_Content_Context
+	 */
+	static $globalContext = null;
 
 	/**
 	 * @param $project
@@ -11,14 +17,30 @@ class Brizy_Content_ContextFactory {
 	 *
 	 * @return Brizy_Content_Context
 	 */
-	static public function createContext(  $project, $brizy_post, $wp_post, $contentHtml, $isLoop = false ) {
-		$context = self::getContext( $project, $wp_post );
+	static public function createContext($project, $brizy_post, $wp_post, $contentHtml, $isLoop = false)
+	{
+		$context = self::getContext($project, $wp_post);
 
-		if ( $isLoop ) {
-			return apply_filters( 'brizy_loop_context_create', $context, $wp_post );
+		if ($isLoop) {
+			return apply_filters('brizy_loop_context_create', $context, $wp_post);
 		}
 
-		return apply_filters( 'brizy_context_create', $context, $wp_post );
+		return apply_filters('brizy_context_create', $context, $wp_post);
+	}
+
+	static public function getGlobalContext()
+	{
+		return self::$globalContext;
+	}
+
+	static public function makeContextGlobal(Brizy_Content_Context $context)
+	{
+		return self::$globalContext = $context;
+	}
+
+	static public function clearGlobalContext()
+	{
+		self::$globalContext = null;
 	}
 
 	/**
@@ -27,11 +49,12 @@ class Brizy_Content_ContextFactory {
 	 *
 	 * @return Brizy_Content_Context
 	 */
-	private static function getContext( $project, $wp_post ) {
-		$context = new Brizy_Content_Context( $project, null, $wp_post,null );
+	private static function getContext($project, $wp_post)
+	{
+		$context = new Brizy_Content_Context($project, null, $wp_post, null);
 
-		if ( $wp_post ) {
-			$context->setAuthor( $wp_post->post_author );
+		if ($wp_post) {
+			$context->setAuthor($wp_post->post_author);
 		}
 
 		return $context;
