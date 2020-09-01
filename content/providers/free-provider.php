@@ -51,7 +51,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                 $attrs = $contentPlaceholder->getAttributes();
 
-	            $post = isset( $attrs['post'] ) ? get_post( $attrs['post'] ) : get_post();
+	            $post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
 
                 if ( ! $post || ! isset( $attrs['property'] ) ) {
                     return '';
@@ -63,12 +63,11 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function() {
 
                 $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
-
-	            $post = get_post();
+                $post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
 
                 if ( $post ) {
                     $params             = array();
-                    $params['author']   = get_the_author_meta( 'nickname', $post->post_author );
+                    $params['author']   = get_the_author_meta( 'display_name', $post->post_author );
                     $params['date']     = get_the_date( '', $post );
                     $params['time']     = get_the_time( '', $post );
                     $params['comments'] = get_comment_count( $post->ID );
@@ -98,7 +97,11 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                 return $this->displayPosts( $posts, $extra_atts );
             } ),
-
+            /*
+             * Deprecated placeholder.
+             * It is for backward compatibilities.
+             * Now this element is under product pages and the placeholder for it is the default wp shortcode structure [product_page id="thePostID"].
+             */
             new Brizy_Content_Placeholders_Simple( '', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
                 $atts = $contentPlaceholder->getAttributes();
