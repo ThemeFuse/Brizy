@@ -407,6 +407,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	 */
 	public function shortcode_content() {
 		try {
+
 			$this->verifyNonce( self::nonce );
 
 			if ( isset( $_REQUEST['shortcode'] ) ) {
@@ -415,17 +416,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( 'Shortcode string not provided.', 500 );
 			}
 
-			global $post, $wp_query;
-
-			$post = $this->getPostSample( 90 );
-
-			if ( $post instanceof WP_Post ) {
-				setup_postdata( $post );
-				$wp_query->is_single = true;
-			}
+			$shortcode_content = do_shortcode( $shortcode );
 
 			$this->success( array(
-				'shortcode' => do_shortcode(apply_filters( 'brizy_content', $shortcode, Brizy_Editor_Project::get(), $post ))
+				'shortcode' => $shortcode_content
 			) );
 
 		} catch ( Exception $exception ) {
