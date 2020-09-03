@@ -450,7 +450,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
 				$placeholder = stripslashes($placeholder);
-				$contents[] = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+				$placeholderContent = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+				$contents[] = empty( $placeholderContent ) ? '<div class="placeholder-is-empty"></div>' : $placeholderContent;
 			}
 
 			$this->success( array(
