@@ -25,6 +25,10 @@ switch (defaultTemplateType) {
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'product';
         break;
+    case 'product_archive':
+        defaultAppliedFor = RULE_TAXONOMY;
+        defaultEntityType = 'product_cat';
+        break;
     default:
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'post';
