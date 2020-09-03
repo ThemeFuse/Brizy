@@ -40,6 +40,7 @@ var defaultRule = {
 };
 
 var state = {
+    locked: false,
     templateType: defaultTemplateType,
     rule: defaultRule,
     rules: {
@@ -154,10 +155,18 @@ var actions = {
 
     updateGroups: function (value) {
         return function (state) {
-            return {groups: value};
+            return {
+                groups: value,
+            };
         };
     },
-
+    setLocked: function (value) {
+        return function (state) {
+            return {
+                locked: value,
+            };
+        };
+    },
     rule: {
         update: function (rule) {
             return function (state) {
@@ -387,103 +396,107 @@ var BrzSelect2 = function (params) {
 };
 
 var RulePostsGroupSelectField = function (params) {
+    return function (state, actions) {
+        var appliedFor = params.rule.appliedFor;
+        var entityType = params.rule.entityType;
+        var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
 
-    var appliedFor = params.rule.appliedFor;
-    var entityType = params.rule.entityType;
-    var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
-
-    var convertResponseToOptions = function (response) {
-        var groups = [];
-        groups.push(new Option("All", '', true, value === ''));
-        response.data.forEach(function (group) {
-            if (group.title === "") {
-                group.items.forEach(function (option) {
-                    var optionValue = String(option.value);
-                    var selected = params.rule.entityValues.includes(optionValue);
-                    groups.push(new Option(option.title, optionValue, false, selected));
-                });
-            } else {
-                var groupElement = document.createElement("OPTGROUP");
-                groupElement.label = group.title;
-
-                if (group.items.length > 0) {
+        var convertResponseToOptions = function (response) {
+            var groups = [];
+            groups.push(new Option("All", '', true, value === ''));
+            response.data.forEach(function (group) {
+                if (group.title === "") {
                     group.items.forEach(function (option) {
                         var optionValue = String(option.value);
                         var selected = params.rule.entityValues.includes(optionValue);
-                        groupElement.appendChild(new Option(option.title, optionValue, false, selected))
+                        groups.push(new Option(option.title, optionValue, false, selected));
                     });
-                    groups.push(groupElement);
+                } else {
+                    var groupElement = document.createElement("OPTGROUP");
+                    groupElement.label = group.title;
+
+                    if (group.items.length > 0) {
+                        group.items.forEach(function (option) {
+                            var optionValue = String(option.value);
+                            var selected = params.rule.entityValues.includes(optionValue);
+                            groupElement.appendChild(new Option(option.title, optionValue, false, selected))
+                        });
+                        groups.push(groupElement);
+                    }
                 }
-            }
-        });
+            });
 
-        return groups;
-    };
+            return groups;
+        };
 
 
-    return h(
-        BrzSelect2,
-        {
-            id: "post-groups-" + entityType,
-            style: params.style ? params.style : {width: "200px"},
-            name: params.name,
-            optionRequest: function () {
-                return api.getPostsGroupList(entityType, params.type);
+        return h(
+            BrzSelect2,
+            {
+                id: "post-groups-" + entityType,
+                style: params.style ? params.style : {width: "200px"},
+                name: params.name,
+                optionRequest: function () {
+                    actions.setLocked(true);
+                    return api.getPostsGroupList(entityType, params.type).done(function(data) { actions.setLocked(false); return data; });
+                },
+                convertResponseToOptions: convertResponseToOptions,
+                onChange: params.onChange,
             },
-            convertResponseToOptions: convertResponseToOptions,
-            onChange: params.onChange,
-        },
-        []
-    );
+            []
+        );
+    }
 };
 
 var RuleArchiveGroupSelectField = function (params) {
+    return function (state, actions) {
+        var appliedFor = params.rule.appliedFor;
+        var taxonomy = params.rule.entityType;
+        var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
 
-    var appliedFor = params.rule.appliedFor;
-    var taxonomy = params.rule.entityType;
-    var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
+        var convertResponseToOptions = function (response) {
+            var groups = [];
+            groups.push(new Option("All", '', false, value === ''));
+            response.data.forEach(function (group) {
 
-    var convertResponseToOptions = function (response) {
-        var groups = [];
-        groups.push(new Option("All", '', false, value === ''));
-        response.data.forEach(function (group) {
-
-            if (group.title === "") {
-                group.items.forEach(function (option) {
-                    var optionValue = String(option.value);
-                    groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
-                });
-            } else {
-                var groupElement = document.createElement("OPTGROUP");
-                groupElement.label = group.title;
-
-                if (group.items.length > 0) {
+                if (group.title === "") {
                     group.items.forEach(function (option) {
                         var optionValue = String(option.value);
-                        groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                        groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
                     });
-                    groups.push(groupElement);
+                } else {
+                    var groupElement = document.createElement("OPTGROUP");
+                    groupElement.label = group.title;
+
+                    if (group.items.length > 0) {
+                        group.items.forEach(function (option) {
+                            var optionValue = String(option.value);
+                            groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                        });
+                        groups.push(groupElement);
+                    }
                 }
-            }
-        });
+            });
 
-        return groups;
-    };
+            return groups;
+        };
 
-    return h(
-        BrzSelect2,
-        {
-            id: "archive-groups-" + params.taxonomy,
-            style: params.style ? params.style : {width: "200px"},
-            name: params.name,
-            optionRequest: function () {
-                return api.getArchiveGroupList(taxonomy, params.type);
+        return h(
+            BrzSelect2,
+            {
+                id: "archive-groups-" + params.taxonomy,
+                style: params.style ? params.style : {width: "200px"},
+                name: params.name,
+                optionRequest: function () {
+                    actions.setLocked(true);
+                    return api.getArchiveGroupList(taxonomy, params.type).done(function(data) { actions.setLocked(false); return data; });
+                },
+                convertResponseToOptions: convertResponseToOptions,
+                onChange: params.onChange,
             },
-            convertResponseToOptions: convertResponseToOptions,
-            onChange: params.onChange,
-        },
-        []
-    );
+            []
+        );
+    }
 };
 
 var RuleApplyGroupField = function (params) {
@@ -689,10 +702,13 @@ var ruleView = function (state, actions) {
     return h(
         "div",
         {
+            class: "rules-container",
             oncreate: function () {
                 if (state.templateType != '')
+                    actions.setLocked(true);
                     api.getGroupList(state.templateType).done(function (response) {
                         actions.updateGroups(response.data)
+                        actions.setLocked(false);
                     });
             },
         },
@@ -705,11 +721,15 @@ var ruleView = function (state, actions) {
                             ? e.target.value
                             : null;
 
+                        actions.setLocked(true);
                         actions.setTemplateType(type);
                         api.getGroupList(type).done(function (response) {
                             actions.updateGroups(response.data);
-                            actions.rule.setAppliedFor(String(response.data[0].value));
-                            actions.rule.setEntityType(String(response.data[0].items[0].value));
+                            actions.rule.update({
+                                appliedFor: String(response.data[0].value),
+                                entityType: String(response.data[0].items[0].value),
+                            });
+                            actions.setLocked(false);
                         });
                     }
                 }, []
@@ -722,7 +742,6 @@ var ruleView = function (state, actions) {
                     actions.removeRule(rule);
                 }
             }),
-
             state.templateType ? [
                     h(RuleForm, {
                         type: state.templateType,
@@ -744,12 +763,10 @@ var ruleView = function (state, actions) {
                                 actions.addFormErrors('This rule already exist');
                                 return;
                             }
-                            api
-                                .validateRule(state.rule)
+                            api.validateRule(state.rule)
                                 .done(function () {
                                     actions.addRule(state.rule);
                                     actions.resetRule();
-
                                 })
                                 .fail(function (response) {
                                     if (response.responseJSON && response.responseJSON.data) {
@@ -761,7 +778,8 @@ var ruleView = function (state, actions) {
                                 });
                         }
                     })] :
-                []
+                [],
+            state.locked ? [h('div', {class: 'lock-screen'},"Loading..")] : [],
         ]
     );
 };

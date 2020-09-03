@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.6<br>
+Stable tag: 2.0.7<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.7 - 2020-08-25 ###
+* Fixed: The white label support url
+* Fixed: Edit With Brizy is not displayed when using Gutenberg
+* Fixed: The creation of the uid when a revision is provided
+* Fixed: Mail template has only one value in all placeholders
 
 ### 2.0.6 - 2020-08-18 ###
 * Fixed: Screenshots not working with Embed with scripts in it

@@ -21,14 +21,14 @@ class Brizy_Content_ContextFactory
 	{
 		$context = self::getContext($project, $wp_post);
 
-		if ($isLoop) {
-			return apply_filters('brizy_loop_context_create', $context, $wp_post);
-		}
+        if ($isLoop) {
+            return apply_filters('brizy_loop_context_create', $context, $wp_post);
+        }
 
-		return apply_filters('brizy_context_create', $context, $wp_post);
-	}
+        return apply_filters('brizy_context_create', $context, $wp_post);
+    }
 
-	static public function getGlobalContext()
+    static public function getGlobalContext()
 	{
 		return self::$globalContext;
 	}
@@ -53,10 +53,10 @@ class Brizy_Content_ContextFactory
 	{
 		$context = new Brizy_Content_Context($project, null, $wp_post, null);
 
-		if ($wp_post) {
-			$context->setAuthor($wp_post->post_author);
-		}
+        if ($wp_post) {
+            $context->setAuthor($wp_post->post_author);
+        }
 
-		return $context;
-	}
+        return $context;
+    }
 }
