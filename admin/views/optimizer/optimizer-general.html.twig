@@ -1,7 +1,7 @@
 {% extends "optimizer-base.html.twig" %}
 
 {% block tab_content %}
-    <script>
+    <script id="'test-shrot">
         (function ($) {
 
             var requestQueue = [];
@@ -24,7 +24,7 @@
                             // add request
                             console.log('Add new request');
                             requestQueue.push($.ajax({
-                                url: links[currentIndex],
+                                url: links[currentIndex].replace( /\&amp;/gi, '&' ),
                                 success: function (data) {
                                     updateUI();
                                 },
