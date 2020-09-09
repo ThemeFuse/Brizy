@@ -1,7 +1,7 @@
 {% extends "optimizer-base.html.twig" %}
 
 {% block tab_content %}
-    <script id="'test-shrot">
+    <script>
         (function ($) {
 
             var requestQueue = [];
@@ -100,7 +100,7 @@
         </div>
     {% endif %}
 
-    <div id="optimize-donotclose" style="display: none;">
+    <div id="optimize-donotclose" style="display:none;color:red;">
         <p><i> {{ __("Don't leave this page until the optimisation process is completed.") }}</i></p>
     </div>
 
