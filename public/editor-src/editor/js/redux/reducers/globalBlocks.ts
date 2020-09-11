@@ -249,7 +249,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         acc[key] = produce(block, draft => {
           draft.position = positions[key] || null;
           draft.dataVersion = draft.dataVersion + 1;
-          if (globalBlocksInPage[key]) {
+
+          const isPopup =
+            block.data.type === "SectionPopup" ||
+            block.data.type === "SectionPopup2";
+          if (globalBlocksInPage[key] || isPopup) {
             draft.status = "publish";
           }
         });

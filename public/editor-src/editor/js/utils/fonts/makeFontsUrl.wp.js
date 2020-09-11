@@ -15,8 +15,9 @@ export const makeSubsetGoogleFontsUrl = fonts => {
 // {siteUrl}?brizy-font=fontId:400|fontId:400,700
 export const makeUploadFontsUrl = fonts => {
   const fontsUrl = Config.get("urls").editorFonts;
+  const prefix = Config.get("prefix") ?? "brizy";
   const qs = objectToQueryString({
-    "brizy-font": fonts.reduce((acc, { id, weights }) => {
+    [`${prefix}-font`]: fonts.reduce((acc, { id, weights }) => {
       const _weights = weights.join();
 
       return acc === "" ? `${id}:${_weights}` : `${acc}|${id}:${_weights}`;

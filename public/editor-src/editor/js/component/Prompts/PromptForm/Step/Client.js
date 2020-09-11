@@ -31,9 +31,7 @@ class Client extends Component {
   }
 
   handleActive = active => {
-    this.setState({
-      active
-    });
+    this.setState({ active });
   };
 
   handleNext = async () => {

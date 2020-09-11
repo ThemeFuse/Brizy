@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import Switch from "visual/component/Controls/Switch";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -30,6 +30,30 @@ class InputFields extends Component {
     onNext: _.noop,
     onActive: _.noop
   };
+
+  renderHead() {
+    const { headTitle, headDescription } = this.props;
+    const needHead = headTitle && headDescription;
+
+    if (!needHead) {
+      return;
+    }
+
+    return (
+      <div className="brz-ed-popup-integrations-step__head">
+        {headTitle && (
+          <p className="brz-p">
+            <strong className="brz-strong">{headTitle}</strong>
+          </p>
+        )}
+        {headDescription && (
+          <p className="brz-p">
+            <strong className="brz-strong">{headDescription}</strong>
+          </p>
+        )}
+      </div>
+    );
+  }
 
   renderSelect({ name, value, choices }) {
     const options = choices.map(({ title, name }) => (
@@ -117,9 +141,7 @@ class InputFields extends Component {
             <p className="brz-p">
               {title}
               {required && (
-                <strong className="brz-strong brz--required">
-                  *
-                </strong>
+                <strong className="brz-strong brz--required">*</strong>
               )}
             </p>
             {helper && (
@@ -147,12 +169,13 @@ class InputFields extends Component {
     });
 
     return (
-      <ScrollPane
-        style={{ maxHeight: 255 }}
-        className="brz-ed-popup-integrations__scroll-pane"
+      <Scrollbars
+        autoHeight={true}
+        autoHeightMax="100%"
+        style={{ height: "auto" }}
       >
         {options}
-      </ScrollPane>
+      </Scrollbars>
     );
   }
 
@@ -166,8 +189,6 @@ class InputFields extends Component {
 
   render() {
     const {
-      headTitle,
-      headDescription,
       description,
       error,
       prevLoading,
@@ -178,20 +199,9 @@ class InputFields extends Component {
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__fields">
-        {error && this.renderError()}
-        <div className="brz-ed-popup-integrations-step__head">
-          {headTitle && (
-            <p className="brz-p">
-              <strong className="brz-strong">{headTitle}</strong>
-            </p>
-          )}
-          {headDescription && (
-            <p className="brz-p">
-              <strong className="brz-strong">{headDescription}</strong>
-            </p>
-          )}
-        </div>
+        {this.renderHead()}
         <div className="brz-ed-popup-integrations-step__body">
+          {error && this.renderError()}
           {this.renderOptions()}
           {description && (
             <p className="brz-p brz-ed-popup-integrations__description">

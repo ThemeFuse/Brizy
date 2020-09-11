@@ -217,6 +217,7 @@ async function getPageBlocks({
   }
 
   // transforms
+  await replaceIcons($pageHTML, buildPath);
   changeRichTextDCColor($pageHTML);
   addColorPaletteCSS($pageHTML);
   addFontStylesCSS($pageHTML);
@@ -225,7 +226,6 @@ async function getPageBlocks({
   addCustomCSS($pageHTML);
   changeRichText($pageHTML);
   extractPopups($pageHTML);
-  await replaceIcons($pageHTML, buildPath);
 
   const head = $pageHTML("head").html();
   const body = dynamicContent($pageHTML("body").html());

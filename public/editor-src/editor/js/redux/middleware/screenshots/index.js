@@ -222,7 +222,11 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
 
   // make screenshot
   {
-    const node = document.querySelector(`#${blockId}`);
+    // if 'blockId' starts from number - document.getElementById(_id) will throw an error.
+    // Because while they are valid in the HTML5 spec,
+    // they are not valid in CSS, which is what "query selector" means.
+    // document.querySelector(`id=['${_id}']`) - was added for that case
+    const node = document.querySelector(`[id='${blockId}']`);
 
     if (!blockIsInThePage(blockId, store) || !node) {
       return;
@@ -315,7 +319,7 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
       sourceBlockId = sourceBlock.value._id;
     }
 
-    const node = document.querySelector(`#${sourceBlockId}`);
+    const node = document.querySelector(`[id='${sourceBlockId}']`);
     if (!node) {
       return;
     }
@@ -409,7 +413,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 
   // make screenshot
   {
-    const node = document.querySelector(`#${popupDOMId}`);
+    const node = document.querySelector(`[id='${popupDOMId}']`);
     if (!node) {
       return;
     }
@@ -517,7 +521,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
   // make screenshot
   {
-    const node = document.querySelector(`#${popupDOMId}`);
+    const node = document.querySelector(`[id='${popupDOMId}']`);
     if (!node) {
       return;
     }

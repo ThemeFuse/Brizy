@@ -28,7 +28,11 @@ const SortableItem = SortableElement(
     if (item.type === "GlobalBlock") {
       const { _id } = item.value;
 
-      if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+      try {
+        if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+          return <div />;
+        }
+      } catch {
         return <div />;
       }
     }
