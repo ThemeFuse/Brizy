@@ -11,6 +11,7 @@ var RULE_BRIZY_TEMPLATE = "16";
 var POSTS_FROM_TAXONOMY = "32";
 var POSTS_FROM_CHILD_TAXONOMY = "64";
 var ANY_CHILD_TAXONOMY = "128";
+var WOO_PAGES = "256";
 
 var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
 var defaultAppliedFor = null;
@@ -26,8 +27,8 @@ switch (defaultTemplateType) {
         defaultEntityType = 'product';
         break;
     case 'product_archive':
-        defaultAppliedFor = RULE_TAXONOMY;
-        defaultEntityType = 'product_cat';
+        defaultAppliedFor = WOO_PAGES;
+        defaultEntityType = 'shop_page';
         break;
     default:
         defaultAppliedFor = RULE_POSTS;
@@ -58,7 +59,7 @@ var state = {
 };
 
 state.rules[state.templateType] = Brizy_Admin_Rules.rules;
-
+debugger;
 var apiCache = {
     groupList: null,
     postGroupListPromise: [],
