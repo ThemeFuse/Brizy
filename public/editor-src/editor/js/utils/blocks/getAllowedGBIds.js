@@ -141,7 +141,21 @@ export function pageSplitRules(rules = [], pageId) {
   };
 }
 
-export function canUseConditionInPage({ rules, data }, pageId) {
+export function canUseConditionInPage(globalBlock, pageId) {
+  if (!globalBlock) {
+    // Normally it should never happen.
+    // Some projects has globalBlock into pageJson and doesn't have it into globalBlocks
+    // and preview corrupts
+    if (IS_EDITOR) {
+      throw Error("GlobalBlock should exist");
+    } else {
+      // block will be ignored by compiler
+      return false;
+    }
+  }
+
+  const { rules, data } = globalBlock;
+
   if (isPopup(data)) {
     return true;
   }

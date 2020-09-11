@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
+import Scrollbars from "react-custom-scrollbars";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Button from "../../Button";
@@ -92,12 +92,13 @@ class SelectFields extends Component {
     );
 
     return (
-      <ScrollPane
-        style={{ maxHeight: 255 }}
-        className="brz-ed-popup-integrations__scroll-pane"
+      <Scrollbars
+        autoHeight={true}
+        autoHeightMax="100%"
+        style={{ height: "auto" }}
       >
         {options}
-      </ScrollPane>
+      </Scrollbars>
     );
   }
 
@@ -132,7 +133,6 @@ class SelectFields extends Component {
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__fields">
-        {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
             <strong className="brz-strong">{t("FORM FIELDS")}</strong>
@@ -144,6 +144,7 @@ class SelectFields extends Component {
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
+          {error && this.renderError()}
           {formFields.length ? this.renderOptions() : this.renderErrorEmpty()}
           <div className="brz-ed-popup-integrations-step__buttons">
             {prevLoading !== null && (

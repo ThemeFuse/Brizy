@@ -854,8 +854,14 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	public function getCloudInfo() {
+	    // the cloud will be always initialized with the exception when the white label is enabled
+	    // we wil return isSyncAllowed =  false just in case
+	    if ( !(class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled()) ) {
+		    return   array(
+			    'isSyncAllowed' => false,
+		    );
+	    }
 
-		// we 'allow' sync if you are not
 		$response = array(
 			'isSyncAllowed' => true,
 		);

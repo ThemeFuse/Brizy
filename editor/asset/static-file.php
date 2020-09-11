@@ -2,7 +2,7 @@
 
 abstract class Brizy_Editor_Asset_StaticFile {
 
-	protected function get_asset_content( $asset_source ) {
+	public static function get_asset_content( $asset_source ) {
 		$http        = new WP_Http();
 		$wp_response = null;
 		if ( is_string( $asset_source ) ) {

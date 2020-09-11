@@ -36,8 +36,8 @@ export function cssStyleElementButtonIconMargin({ v, device, state }) {
   return iconPosition === undefined || iconMargin === undefined
     ? ""
     : iconPosition === "left"
-    ? `margin-right:${iconMargin}px;`
-    : `margin-left:${iconMargin}px;`;
+    ? `margin-right:${iconMargin}px;margin-left:0;`
+    : `margin-left:${iconMargin}px;margin-right:0;`;
 }
 
 export function cssStyleElementIconStrokeWidth({ v, device, state }) {

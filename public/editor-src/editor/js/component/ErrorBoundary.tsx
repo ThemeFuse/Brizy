@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ErrorInfo, ReactNode } from "react";
+import React, { Component, CSSProperties, ErrorInfo, MouseEvent, ReactNode } from "react";
 import { noop } from "underscore";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
@@ -26,7 +26,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     this.setState({ error, errorInfo });
   }
 
-  handleRemoveClick = (): void => {
+  handleRemoveClick = (e: MouseEvent): void => {
+    e.preventDefault();
     this.props.onRemove();
   };
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPane from "visual/component/ScrollPane";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import { t } from "visual/utils/i18n";
@@ -55,9 +55,10 @@ class Account extends Component {
     ));
 
     return (
-      <ScrollPane
-        style={{ maxHeight: 205 }}
-        className="brz-ed-scroll-pane brz-ed-popup-integrations__scroll-pane"
+      <Scrollbars
+        autoHeight={true}
+        autoHeightMax="100%"
+        style={{ height: "auto" }}
       >
         <Radio
           className="brz-ed-popup-integrations-option__radio"
@@ -67,7 +68,7 @@ class Account extends Component {
         >
           {options}
         </Radio>
-      </ScrollPane>
+      </Scrollbars>
     );
   }
 
@@ -105,13 +106,13 @@ class Account extends Component {
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__account">
-        {(!hasAccounts || error) && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
             <strong className="brz-strong">{t("SELECT ACCOUNT")}</strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
+          {(!hasAccounts || error) && this.renderError()}
           {hasAccounts && this.renderOptions()}
           <div
             className="brz-ed-popup-integrations-new__option"

@@ -50,62 +50,48 @@ export default function($node) {
   $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
     var $this = $(this);
     var $videoData = $this.find(".brz-video-data");
-    var $videoWrapper = $this.find(".video-wrapper");
     var $coverElem = $this.find(".brz-video__cover");
-
-    var src = $videoData.attr("data-src");
     var population = $videoData.attr("data-population");
-    var controls = $videoData.attr("data-controls");
-    var branding = $videoData.attr("data-branding");
-    var intro = $videoData.attr("data-intro");
-    var start = $videoData.attr("data-start");
-    var end = $videoData.attr("data-end");
-
-    if (population) {
-      var options = {
-        autoplay: $coverElem.length ? 1 : 0,
-        suggestedVideo: 0,
-        controls: Number(controls === "true"),
-        branding: Number(branding === "true"),
-        intro: Number(intro === "true"),
-        start: Number(start),
-        end: Number(end)
-      };
-
-      src = getVideoPopulationUrl(population, options);
-    }
 
     if ($coverElem.length) {
-      $coverElem.click(insertVideoIframe);
+      $coverElem.click(insertVideoIframe.bind(null, $this));
     } else if (population) {
-      insertVideoIframe();
+      insertVideoIframe($this);
     }
+  });
 
-    function insertVideoIframe() {
-      var iframe = $("<iframe/>", {
-        class: "brz-iframe",
-        allowfullscreen: true,
-        allow: "autoplay",
-        src: src
-      });
+  $(document).on("brz.popup.show", function() {
+    $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
+      var $this = $(this);
+      var $coverElem = $this.find(".brz-video__cover");
 
-      $videoWrapper.html(iframe);
-    }
+      if (!$coverElem.length) {
+        insertVideoIframe($this);
+      }
+    });
   });
 
   // stopping all videos inside a popup that is closed(video can be set through embed code)
   $(document).on("brz.popup.close", function(e, popup) {
-    var $popup = $(popup);
+    const $popup = $(popup);
 
     $popup
-      .find(
-        ".brz-video .brz-iframe, .brz-custom-video video, .brz-embed-code iframe"
-      )
+      .find(".brz-video .brz-iframe, .brz-custom-video video")
       .each(function() {
-        var $this = $(this);
-
-        $this.replaceWith($this.get(0).outerHTML);
+        $(this).remove();
       });
+
+    // remove node if iframe was youtube or vimeo
+    $popup.find(".brz-embed-code iframe").each(function() {
+      const $this = $(this);
+      const src = $this.attr("src");
+      const { type } = getVideoData(src) || {};
+
+      if (type === "youtube" || type === "vimeo") {
+        const outerHTML = $this.get(0).outerHTML;
+        $(this).replaceWith(outerHTML);
+      }
+    });
   });
 
   // Function init click Play & Pause Button
@@ -154,6 +140,54 @@ export default function($node) {
 
       fullScreenObserver.change($video);
     });
+}
+
+function getVideoSrc($elem) {
+  var $videoData = $elem.find(".brz-video-data");
+  var $coverElem = $elem.find(".brz-video__cover");
+
+  var src = $videoData.attr("data-src");
+  var population = $videoData.attr("data-population");
+  var controls = $videoData.attr("data-controls");
+  var branding = $videoData.attr("data-branding");
+  var intro = $videoData.attr("data-intro");
+  var start = $videoData.attr("data-start");
+  var end = $videoData.attr("data-end");
+
+  if (population) {
+    var options = {
+      autoplay: $coverElem.length ? 1 : 0,
+      suggestedVideo: 0,
+      controls: Number(controls === "true"),
+      branding: Number(branding === "true"),
+      intro: Number(intro === "true"),
+      start: Number(start),
+      end: Number(end)
+    };
+
+    src = getVideoPopulationUrl(population, options);
+  }
+
+  return src;
+}
+
+function insertVideoIframe($elem) {
+  var $videoWrapper = $elem.find(".video-wrapper");
+  var $coverElem = $elem.find(".brz-video__cover");
+
+  var src = getVideoSrc($elem);
+
+  var iframe = $("<iframe/>", {
+    class: "brz-iframe",
+    allowfullscreen: true,
+    allow: "autoplay",
+    src: src
+  });
+
+  setTimeout(() => {
+    $videoWrapper.append(iframe);
+    $coverElem.remove();
+  }, 0);
 }
 
 function formatTime(time) {
