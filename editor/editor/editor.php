@@ -147,7 +147,7 @@ class Brizy_Editor_Editor_Editor {
 				'api'             => $this->getApiActions(),
 				'plugins'         => array(
 					'dummy'       => true,
-					'woocommerce' => $this->get_woocomerce_plugin_info(),
+					'woocommerce' => self::get_woocomerce_plugin_info(),
 				),
 				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
 				'l10n'            => $this->getTexts(),
@@ -208,7 +208,7 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @return array|null
 	 */
-	private function get_woocomerce_plugin_info() {
+	public static function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );
 		}

@@ -353,16 +353,29 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			);
 		}
 
+		if($templateType == 'product_archive') {
+			$wooPageItems  = $this->getWooPageList( Brizy_Admin_Rule::ARCHIVE, $templateType );
+			$groups[] =
+				$templateType == 'product_archive' && count( $wooPageItems ) && Brizy_Editor_Editor_Editor::get_woocomerce_plugin_info() ? array(
+					'title' => 'Pages',
+					'value' => Brizy_Admin_Rule::WOO_SHOP_PAGE,
+					'items' => $wooPageItems
+				) : null;
+		}
+
 		if ( $templateType == 'archive' || $templateType == 'product_archive' || $context == 'popup-rules' ) {
+
+
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE, $templateType ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY, $templateType ) );
-			$groups[]      =
+
+			$groups[] =
 				count( $taxonomyItems ) ? array(
 					'title' => 'Categories',
 					'value' => Brizy_Admin_Rule::TAXONOMY,
 					'items' => $taxonomyItems
 				) : null;
-			$groups[]      =
+			$groups[] =
 				count( $archiveItems ) ? array(
 					'title' => 'Archives',
 					'value' => Brizy_Admin_Rule::ARCHIVE,
@@ -419,7 +432,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$closureAuthor = function ( $v ) use ( $postTypeName ) {
 			return array(
-				'title'      => ucfirst( $v->data->user_nicename ) ,
+				'title'      => ucfirst( $v->data->user_nicename ),
 				'value'      => 'author|' . $v->ID,
 				'groupValue' => 'author'
 			);
@@ -435,18 +448,18 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 
 		// exclude woocomerce hidden tags
-		$exclude = ['simple','variable','grouped','external'];
+		$exclude = [ 'simple', 'variable', 'grouped', 'external' ];
 
 		foreach ( $taxonomies as $tax ) {
 			$groups[] = array(
 				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::POSTS,
-				'items' => array_map( $closureFromTerm, array_filter(get_terms( [
+				'items' => array_map( $closureFromTerm, array_filter( get_terms( [
 					'taxonomy'   => $tax->name,
 					'hide_empty' => false,
-				] ), function($term) use ($exclude) {
+				] ), function ( $term ) use ( $exclude ) {
 					return in_array( $term->slug, $exclude ) ? false : true;
-				}) )
+				} ) )
 			);
 
 			if ( $tax->hierarchical ) {
@@ -548,6 +561,16 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		} ) );
 	}
 
+	private function getWooPageList( $groupValue, $templateType ) {
+		return [
+			[
+				'title'      => 'Shop Page',
+				'value'      => 'shop_page',
+				'groupValue' => Brizy_Admin_Rule::WOO_SHOP_PAGE
+			]
+		];
+	}
+
 	private function getArchivesList( $groupValue, $templateType ) {
 		global $wp_post_types;
 
@@ -613,7 +636,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			) : null,
 		);
 
-		if ( ($context !== 'template-rules' && $templateType === 'single') || $context == 'popup-rules' ) {
+		if ( ( $context !== 'template-rules' && $templateType === 'single' ) || $context == 'popup-rules' ) {
 
 			$list[] = array(
 				'title'      => 'Brizy Templates',

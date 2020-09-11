@@ -12,6 +12,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const BRIZY_TEMPLATE = 16;
 	const POSTS_FROM_TAXONOMY = 32;
 	const POSTS_FROM_CHILD_TAXONOMY = 64;
+	const WOO_SHOP_PAGE = 256;
 
 	const ANY_CHILD_TAXONOMY = 128;
 
@@ -262,9 +263,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string[]
 	 */
 	public function getEntityValues() {
-		return is_null( $this->entityValues ) ? array() : array_map( function ( $id ) {
-			return $id;
-		}, $this->entityValues );
+		return $this->entityValues;
 	}
 
 	/**
@@ -278,7 +277,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			throw new InvalidArgumentException();
 		}
 
-		$this->entityValues = $entityValues;
+		$this->entityValues = array_values($entityValues);
 
 		return $this;
 	}

@@ -137,7 +137,7 @@ class Brizy_Admin_Templates {
 				'id'           => get_the_ID(),
 				'templateType' => Brizy_Admin_Templates::getTemplateType( get_the_ID() ),
 				'labels'       => $templateGroups,
-				'prefix'        => Brizy_Editor::prefix(),
+				'prefix'       => Brizy_Editor::prefix(),
 			)
 		);
 	}
@@ -438,9 +438,6 @@ class Brizy_Admin_Templates {
 	}
 
 
-
-
-
 	/**
 	 * @internal
 	 */
@@ -730,20 +727,20 @@ class Brizy_Admin_Templates {
 
 		global $pagenow;
 
-		if ( $pagenow !== 'post.php' || get_post_type() !== Brizy_Admin_Templates::CP_TEMPLATE) {
-		    return;
+		if ( $pagenow !== 'post.php' || get_post_type() !== Brizy_Admin_Templates::CP_TEMPLATE ) {
+			return;
 		}
 
 		$post_id = get_the_ID();
 
-        if ( $error = get_transient( "editor_tpl_rule_errors_{$post_id}" ) ) {
+		if ( $error = get_transient( "editor_tpl_rule_errors_{$post_id}" ) ) {
 
-	        $prefix = ucfirst( Brizy_Editor::prefix() );
+			$prefix = ucfirst( Brizy_Editor::prefix() );
 
-	        echo '<div class="error"><p>' . $prefix . ': ' . $error . '</p></div>';
+			echo '<div class="error"><p>' . $prefix . ': ' . $error . '</p></div>';
 
-	        delete_transient("editor_tpl_rule_errors_{$post_id}");
-        }
+			delete_transient( "editor_tpl_rule_errors_{$post_id}" );
+		}
 	}
 
 	public function save_template_rules( $post_id ) {
@@ -819,9 +816,10 @@ class Brizy_Admin_Templates {
 		}
 	}
 
+
 	public function addError( $post_id, $message ) {
 		set_transient( "editor_tpl_rule_errors_{$post_id}", $message, 45 );
-    }
+	}
 
 	/**
 	 * @param $id
@@ -839,6 +837,8 @@ class Brizy_Admin_Templates {
 	public static function setTemplateType( $id, $type ) {
 		update_post_meta( $id, self::TEMPLATE_TYPE_KEY, $type );
 	}
+
+
 }
 
 
