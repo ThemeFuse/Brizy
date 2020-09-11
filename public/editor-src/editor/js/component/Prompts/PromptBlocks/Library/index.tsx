@@ -31,6 +31,7 @@ import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { BlockCategory, PromptBlock, PromptBlockTemplate } from "../types";
 import Blocks from "./Blocks";
+import { getWhiteLabel } from "visual/utils/whiteLabel";
 
 type BlockTypes = "BLOCK" | "LAYOUT" | "POPUP";
 
@@ -317,6 +318,7 @@ class Library extends Component<
   render(): React.ReactElement {
     const { loading, blocks, types, search } = this.state;
     const { type, HeaderSlotLeft, showSearch } = this.props;
+    const hasWhiteLabel = getWhiteLabel();
 
     return (
       <Blocks
@@ -325,6 +327,7 @@ class Library extends Component<
         items={blocks}
         types={types}
         showSearch={showSearch}
+        showSync={!hasWhiteLabel}
         search={search}
         HeaderSlotLeft={HeaderSlotLeft}
         onSuccessSync={this.updateBlocks}

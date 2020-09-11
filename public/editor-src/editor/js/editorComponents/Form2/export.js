@@ -417,13 +417,12 @@ function resetFormValues($form) {
     elements.forEach((el, index) => {
       const $el = $(el);
 
-      if (el.type === "radio" && index === 0) {
-        $el.prop("checked", true).trigger("change");
+      if (el.type === "radio") {
+        $el.prop("checked", index === 0).trigger("change");
+      } else if (el.type === "checkbox") {
+        $el.prop("checked", false).trigger("change");
       } else {
-        $el
-          .val("")
-          .prop("checked", false)
-          .trigger("change");
+        $el.val("").trigger("change");
       }
     });
   });

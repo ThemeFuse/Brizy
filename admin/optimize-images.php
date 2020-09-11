@@ -115,7 +115,7 @@ class Brizy_Admin_OptimizeImages {
 
 		$context['urls']         = $urls;
 		$context['count']        = count( $urls );
-		$context['svgObject']    = file_get_contents( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
+		$context['svgObject']    = Brizy_Editor_Asset_StaticFile::get_asset_content( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
 		$context['svg']          = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
 		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
 		$context['submit_label'] = __( 'Optimize', 'brizy' );

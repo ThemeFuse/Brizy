@@ -150,11 +150,11 @@ class VideoPlaylist extends EditorComponent {
     });
 
     const content = coverImageSrc ? (
-      <aside className="brz-video-playlist-col brz-video-playlist-main brz-video-playlist-main__cover">
+      <div className="brz-video-playlist-col brz-video-playlist-main brz-video-playlist-main__cover">
         {this.renderCover(videoSrc)}
-      </aside>
+      </div>
     ) : videoSrc ? (
-      <aside className="brz-video-playlist-col brz-video-playlist-main">
+      <div className="brz-video-playlist-col brz-video-playlist-main">
         <div className="brz-video-playlist-main__content brz-p-relative brz-pointer-events-none">
           <iframe
             allowFullScreen={true}
@@ -162,13 +162,13 @@ class VideoPlaylist extends EditorComponent {
             src={videoSrc}
           />
         </div>
-      </aside>
+      </div>
     ) : (
-      <aside className="brz-video-playlist-col brz-video-playlist-main brz-video-playlist-main__placeholder">
+      <div className="brz-video-playlist-col brz-video-playlist-main brz-video-playlist-main__placeholder">
         <div className="brz-video-playlist-main__content brz-p-relative">
           <Placeholder icon="play" />
         </div>
-      </aside>
+      </div>
     );
 
     return (
@@ -182,9 +182,9 @@ class VideoPlaylist extends EditorComponent {
           >
             <div className="brz-video-playlist__container brz-ow-hidden brz-p-relative">
               {positionItem === "horizontal" && content}
-              <section className={classNameSidebar}>
+              <div className={classNameSidebar}>
                 <Items {...itemProps} onActiveChange={this.handleActive} />
-              </section>
+              </div>
               {positionItem === "vertical" && content}
             </div>
           </BoxResizer>
@@ -249,8 +249,8 @@ class VideoPlaylist extends EditorComponent {
 
     const content = (
       <>
-        <aside className={coverClassName}>{this.renderCover(videoSrc)}</aside>
-        <aside className={videoClassName}>
+        <div className={coverClassName}>{this.renderCover(videoSrc)}</div>
+        <div className={videoClassName}>
           <div className="brz-video-playlist-main__content brz-p-relative">
             <iframe
               className="brz-iframe"
@@ -259,12 +259,12 @@ class VideoPlaylist extends EditorComponent {
               src={videoSrc}
             />
           </div>
-        </aside>
-        <aside className={placeholderClassName}>
+        </div>
+        <div className={placeholderClassName}>
           <div className="brz-video-playlist-main__content brz-p-relative">
             <Placeholder icon="play" />
           </div>
-        </aside>
+        </div>
       </>
     );
 
@@ -272,9 +272,9 @@ class VideoPlaylist extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={classNameContent}>
           {positionItem === "horizontal" && content}
-          <section className={classNameSidebar}>
+          <div className={classNameSidebar}>
             <Items {...itemProps} onActiveChange={this.handleActive} />
-          </section>
+          </div>
           {positionItem === "vertical" && content}
         </div>
       </CustomCSS>

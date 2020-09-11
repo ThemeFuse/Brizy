@@ -111,11 +111,11 @@ export default {
   },
   "richText-title--dynamic": {
     text:
-      "<p class='brz-text-lg-center brz-tp-heading4'><span class='brz-cp-color2'><span data-population='brizy_dc_post_title'>#Post Title</span>&nbsp;</span></p>"
+      "<p class='brz-text-lg-center brz-tp-heading4'><span class='brz-cp-color2'><span class='text-population' data-population='brizy_dc_post_title'>#Post Title</span>&nbsp;</span></p>"
   },
   "richText-desc--dynamic": {
     text:
-      "<p class='brz-text-lg-center brz-tp-paragraph'><span class='brz-cp-color7'><span data-population='brizy_dc_post_excerpt'>#Post Excerpt</span></span></p>"
+      "<p class='brz-text-lg-center brz-tp-paragraph'><span class='brz-cp-color7'><span class='text-population' data-population='brizy_dc_post_excerpt'>#Post Excerpt</span></span></p>"
   },
   "wrapper--facebookComments": {
     showToolbar: "on"

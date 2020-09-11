@@ -33,21 +33,6 @@ $option-color: #626b70;
     margin-bottom: 26px;
   }
 
-  // ScrollPane
-  &__scroll-pane.brz-ed-scroll-pane {
-    > .brz-ed-tall-track {
-      right: 0;
-      width: 5px;
-
-      > .brz-ed-tall-thumb {
-        left: 0;
-        bottom: 0;
-        border-radius: 2px;
-        background-color: #cbcdcf;
-      }
-    }
-  }
-
   // Description
   &__description {
     font-size: 15px;
@@ -59,25 +44,6 @@ $option-color: #626b70;
   // Apps
   &__apps {
     margin: 22px 18px 0 24px;
-  }
-  &-apps__scroll-pane {
-    overflow: auto;
-  }
-  &-apps__scroll-pane.brz-ed-scroll-pane {
-    > .brz-ed-tall-track {
-      top: 15px !important;
-      right: 7px;
-      bottom: 15px !important;
-      width: 5px;
-      height: auto !important;
-
-      > .brz-ed-tall-thumb {
-        left: 0;
-        bottom: 0;
-        border-radius: 2px;
-        background-color: #cbcdcf;
-      }
-    }
   }
   &__app {
     max-width: 112px;
@@ -255,11 +221,9 @@ $option-color: #626b70;
       }
     }
   }
-  &__connect-auth {
-    .brz-ed-btn {
-      display: block;
-      margin: 0 auto 9px;
-    }
+  &__connect-auth .brz-ed-btn {
+    display: block;
+    margin: 0 auto 9px;
   }
 
   // Progress Breadcrumbs
@@ -335,6 +299,11 @@ $option-color: #626b70;
       height: auto;
       padding-top: 78px;
     }
+
+    // normalize step
+    + .brz-ed-popup-integrations-step {
+      max-height: calc(100% - 108px);
+    }
   }
 
   // Confirmation Email
@@ -343,6 +312,7 @@ $option-color: #626b70;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    margin-top: 21px;
   }
 
   // Steps - Account | List | Fields | Done
@@ -351,11 +321,24 @@ $option-color: #626b70;
     margin-right: 36px;
     margin-left: 36px;
     padding-top: 11px;
+    max-height: 100%;
   }
   &-step__head {
     font-size: 13px;
     color: #292e37;
     margin-bottom: 19px;
+
+    // normalize body height
+    // used for scroll
+    + .brz-ed-popup-integrations-step__body {
+      height: calc(100% - 38px);
+    }
+  }
+  &-step__body {
+    padding-bottom: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   &-step__buttons {
     display: flex;
@@ -416,15 +399,6 @@ $option-color: #626b70;
   }
 
   // Lists
-  &-step__lists {
-    .brz-ed-popup-integrations-new__option {
-      margin-bottom: 21px;
-    }
-  }
-  &-step__lists-create {
-    padding-top: 0;
-  }
-
   &__confirmation {
     .brz-control__select {
       width: 224px;
@@ -455,16 +429,14 @@ $option-color: #626b70;
   }
 
   // Fields
-  &-step__fields {
-    .brz-ed-popup-integrations-step__head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  &-step__fields .brz-ed-popup-integrations-step__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-      .brz-p:last-child {
-        max-width: 223px;
-        width: 100%;
-      }
+    .brz-p:last-child {
+      max-width: 223px;
+      width: 100%;
     }
   }
   &-fields__tooltip {
@@ -765,8 +737,13 @@ $option-color: #626b70;
   }
 
   // Email
-  .brz-ed-popup-integration-email__template-body .brz-textarea {
-    height: 130px;
-    max-height: 130px;
+  .brz-ed-popup-integration-email {
+    &__codemirror {
+      height: 145px;
+    }
+    &__template-body .brz-textarea {
+      height: 130px;
+      max-height: 130px;
+    }
   }
 }

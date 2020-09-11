@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.7<br>
+Stable tag: 2.0.8<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.8 - 2020-09-11 ###
+* Fixed: Video on Cover in Pop-up
+* Fixed: Make global to normal
+* Fixed: Embed element in Popup
+* Fixed: Icons in preivew
+* Fixed: Form radio and checkbox
+* Fixed: Responsive for prompt form integrations 
+* Fixed: Published Global Popup
+* Fixed: Button margin
+* Fixed: GlobalBlocks in preview
+* Fixed: Replaced some calls to file_get_contents with Brizy_Editor_Asset_StaticFile::get_asset_content
+* Fixed:  Shortpixel bug
+* Fixed:  Added global context for dynamic content
+* Fixed:  Fixed template rule form
 
 ### 2.0.7 - 2020-08-25 ###
 * Fixed: The white label support url
