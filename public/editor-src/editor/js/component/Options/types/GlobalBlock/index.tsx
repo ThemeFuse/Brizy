@@ -123,7 +123,11 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
       value: { _id }
     } = this.props;
 
-    const node: HTMLElement | null = document.querySelector(`#${_id}`);
+    // if '_id' starts from number - document.getElementById(_id) will throw an error.
+    // Because while they are valid in the HTML5 spec,
+    // they are not valid in CSS, which is what "query selector" means.
+    // document.querySelector(`id=['${_id}']`) - was added for that case
+    const node: HTMLElement | null = document.querySelector(`[id='${_id}']`);
     const loading = PortalLoading.render(node);
     const blockData = getBlockData(pageBlocks, _id);
 

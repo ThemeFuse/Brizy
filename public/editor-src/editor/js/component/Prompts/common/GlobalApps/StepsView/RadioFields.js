@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import classnames from "classnames";
+import Scrollbars from "react-custom-scrollbars";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import Button from "../../Button";
@@ -48,19 +47,7 @@ class RadioFields extends Component {
   }
 
   renderList() {
-    const {
-      active,
-      lists,
-      listsCreate,
-      hasConfirmation,
-      onActive
-    } = this.props;
-    const hasListToCreate = listsCreate && listsCreate.length > 0;
-    const className = classnames(
-      "brz-ed-popup-integrations__scroll-pane",
-      { "brz-ed-popup-integrations__scroll-pane--big": hasConfirmation },
-      { "brz-ed-popup-integrations__scroll-pane--small": !hasListToCreate }
-    );
+    const { active, lists, onActive } = this.props;
     const options = lists.map(({ name, id }) => {
       return (
         <RadioItem value={id} key={id}>
@@ -70,9 +57,10 @@ class RadioFields extends Component {
     });
 
     return (
-      <ScrollPane
-        style={{ maxHeight: hasConfirmation ? 203 : 255 }}
-        className={className}
+      <Scrollbars
+        autoHeight={true}
+        autoHeightMax="100%"
+        style={{ height: "auto" }}
       >
         <Radio
           className="brz-ed-popup-integrations-option__radio"
@@ -82,7 +70,7 @@ class RadioFields extends Component {
         >
           {options}
         </Radio>
-      </ScrollPane>
+      </Scrollbars>
     );
   }
 
@@ -154,13 +142,13 @@ class RadioFields extends Component {
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__lists">
-        {error && this.renderError()}
         <div className="brz-ed-popup-integrations-step__head">
           <p className="brz-p">
             <strong className="brz-strong">{t("SELECT LIST")}</strong>
           </p>
         </div>
         <div className="brz-ed-popup-integrations-step__body">
+          {error && this.renderError()}
           {hasLists && this.renderList()}
           {listPro && this.renderProList()}
           {hasListToCreate && this.renderCreateList()}

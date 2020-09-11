@@ -2,6 +2,16 @@
 .brz-counter {
   position: relative;
 
+  .brz-counter-figures {
+    text-align: center;
+    display: flex;
+
+    span {
+      word-break: normal;
+      white-space: pre;
+    }
+  }
+
   &-simple {
     width: auto !important;
   }
@@ -21,53 +31,43 @@
     height: auto;
   }
 
-  .brz-counter-figures {
+  .brz-counter-chart {
     text-align: center;
-    display: flex;
+    margin: 0 auto;
 
-    span {
-      word-break: normal;
-      white-space: pre;
-    }
-  }
-}
-
-.brz-counter-chart {
-  text-align: center;
-  margin: 0 auto;
-
-  svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-    background: yellowgreen;
-    border-radius: 50%;
-  }
-  &.brz-counter-chart-radial {
     svg {
-      background: transparent;
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      background: yellowgreen;
+      border-radius: 50%;
     }
-    .brz-counter-pie-chart {
-      fill: transparent;
+    &.brz-counter-chart-radial {
+      svg {
+        background: transparent;
+      }
+      .brz-counter-pie-chart {
+        fill: transparent;
+      }
     }
-  }
-  &.brz-counter-chart-empty {
-    svg {
-      background: transparent;
+    &.brz-counter-chart-empty {
+      svg {
+        background: transparent;
+      }
+      .brz-counter-pie-chart {
+        fill: transparent;
+      }
+      .brz-counter-pie-chart {
+        stroke-width: 32;
+      }
     }
-    .brz-counter-pie-chart {
-      fill: transparent;
-    }
-    .brz-counter-pie-chart {
-      stroke-width: 32;
-    }
-  }
-  &.brz-counter-chart-pie {
-    svg {
-      background: transparent;
-    }
-    .brz-counter-pie-chart {
-      stroke-width: 32;
+    &.brz-counter-chart-pie {
+      svg {
+        background: transparent;
+      }
+      .brz-counter-pie-chart {
+        stroke-width: 32;
+      }
     }
   }
 }

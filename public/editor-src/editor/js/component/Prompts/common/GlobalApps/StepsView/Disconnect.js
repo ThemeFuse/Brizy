@@ -33,6 +33,7 @@ class Disconnect extends Component {
       onNext,
       onPrev
     } = this.props;
+    const hasButtons = nextLoading !== null && prevLoading !== null;
 
     return (
       <div className="brz-ed-popup-integrations__connect">
@@ -42,15 +43,19 @@ class Disconnect extends Component {
         </div>
         <div className="brz-ed-popup-integrations__connect-body">
           {error && this.renderError()}
-          {nextLoading !== null && (
-            <Button color="red" loading={nextLoading} onClick={onNext}>
-              {t("Disconnect")}
-            </Button>
-          )}
-          {prevLoading !== null && (
-            <Button color="default" loading={prevLoading} onClick={onPrev}>
-              {t("Cancel")}
-            </Button>
+          {hasButtons && (
+            <div className="brz-ed-popup-integrations-step__buttons">
+              {nextLoading !== null && (
+                <Button color="red" loading={nextLoading} onClick={onNext}>
+                  {t("Disconnect")}
+                </Button>
+              )}
+              {prevLoading !== null && (
+                <Button color="default" loading={prevLoading} onClick={onPrev}>
+                  {t("Cancel")}
+                </Button>
+              )}
+            </div>
           )}
         </div>
       </div>

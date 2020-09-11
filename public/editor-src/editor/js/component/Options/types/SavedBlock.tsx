@@ -16,6 +16,7 @@ import { t } from "visual/utils/i18n";
 import { Block, SavedBlock } from "visual/types";
 import { ReduxState } from "visual/redux/types";
 import { extraFontStylesSelector } from "visual/redux/selectors2";
+import { getWhiteLabel } from "visual/utils/whiteLabel";
 
 type SavedBlockMapStateToProps = {
   isAuthorized: boolean;
@@ -167,7 +168,9 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
 
     this.setState({ loading: true });
 
-    if (this.props.isAuthorized) {
+    const hasWhiteLabel = getWhiteLabel();
+
+    if (hasWhiteLabel || this.props.isAuthorized) {
       await this.handleCreateSaveBlock();
     } else {
       const data: PromptsProps = {

@@ -5679,6 +5679,14 @@ img.mfp-img {
     color: transparent !important; }
   .brz .brz-counter {
     position: relative; }
+    .brz .brz-counter .brz-counter-figures {
+      text-align: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .brz .brz-counter .brz-counter-figures span {
+        word-break: normal;
+        white-space: pre; }
     .brz .brz-counter-simple {
       width: auto !important; }
     .brz .brz-counter-radial .brz-counter-figures {
@@ -5693,38 +5701,30 @@ img.mfp-img {
       display: none; }
     .brz .brz-counter .brz-ed-box__resizer {
       height: auto; }
-    .brz .brz-counter .brz-counter-figures {
+    .brz .brz-counter .brz-counter-chart {
       text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex; }
-      .brz .brz-counter .brz-counter-figures span {
-        word-break: normal;
-        white-space: pre; }
-  .brz .brz-counter-chart {
-    text-align: center;
-    margin: 0 auto; }
-    .brz .brz-counter-chart svg {
-      width: 100%;
-      height: 100%;
-      -webkit-transform: rotate(-90deg);
-              transform: rotate(-90deg);
-      background: yellowgreen;
-      border-radius: 50%; }
-    .brz .brz-counter-chart.brz-counter-chart-radial svg {
-      background: transparent; }
-    .brz .brz-counter-chart.brz-counter-chart-radial .brz-counter-pie-chart {
-      fill: transparent; }
-    .brz .brz-counter-chart.brz-counter-chart-empty svg {
-      background: transparent; }
-    .brz .brz-counter-chart.brz-counter-chart-empty .brz-counter-pie-chart {
-      fill: transparent; }
-    .brz .brz-counter-chart.brz-counter-chart-empty .brz-counter-pie-chart {
-      stroke-width: 32; }
-    .brz .brz-counter-chart.brz-counter-chart-pie svg {
-      background: transparent; }
-    .brz .brz-counter-chart.brz-counter-chart-pie .brz-counter-pie-chart {
-      stroke-width: 32; }
+      margin: 0 auto; }
+      .brz .brz-counter .brz-counter-chart svg {
+        width: 100%;
+        height: 100%;
+        -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+        background: yellowgreen;
+        border-radius: 50%; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-radial svg {
+        background: transparent; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-radial .brz-counter-pie-chart {
+        fill: transparent; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-empty svg {
+        background: transparent; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-empty .brz-counter-pie-chart {
+        fill: transparent; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-empty .brz-counter-pie-chart {
+        stroke-width: 32; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-pie svg {
+        background: transparent; }
+      .brz .brz-counter .brz-counter-chart.brz-counter-chart-pie .brz-counter-pie-chart {
+        stroke-width: 32; }
   .brz .brz-progress-bar__wrapper {
     overflow: hidden; }
   .brz .brz-progress-bar .brz-text__editor {
@@ -8463,7 +8463,8 @@ img.mfp-img {
         display: inline-flex;
         -webkit-box-align: center;
             -ms-flex-align: center;
-                align-items: center; }
+                align-items: center;
+        margin: 0; }
         .brz .brz-wp__breadcrumbs .brz-breadcrumbs .brz-li .brz-a {
           cursor: pointer;
           -webkit-transition-property: color;

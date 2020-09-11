@@ -44,13 +44,18 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 		$client = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
 		$url    = $client->getScreenshotUrl( $screenUID );
 
-		$result = $manager->saveScreenshot( $screenUID, 'saved', file_get_contents( $url ), null );
+		$image_content = Brizy_Editor_Asset_StaticFile::get_asset_content($url);
+
+		if(!$image_content) {
+			Brizy_Logger::instance()->error( 'Unable to obtain screenshot content. Probably the function file_get_contents is disabled or it does not work with external urls' );
+			return;
+		}
+
+		$result        = $manager->saveScreenshot( $screenUID, 'saved', $image_content, null );
 
 		if ( $result ) {
 			$screenPath = $manager->getScreenshot( $screenUID, $postID );
 			$this->send_file( $screenPath, $noCacheHeaders );
 		}
-
-		return;
 	}
 }

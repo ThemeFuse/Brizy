@@ -130,7 +130,7 @@ export default function($node) {
     const $popup = $(popup);
 
     $popup
-      .find(".brz-video-playlist .brz-iframe, .brz-embed-code iframe")
+      .find(".brz-video-playlist .brz-iframe")
       .each(function() {
         const $this = $(this);
         const src = $this.attr("src");

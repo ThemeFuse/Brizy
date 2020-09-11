@@ -70,7 +70,7 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 	private function downloadFileToTemporaryFile( $url ) {
 		$filePath = tempnam( sys_get_temp_dir(), basename( $url ) );
-		$content  = file_get_contents( $url );
+		$content  = Brizy_Editor_Asset_StaticFile::get_asset_content( $url );
 		$result   = file_put_contents( $filePath, $content );
 
 		if ( $result === false ) {

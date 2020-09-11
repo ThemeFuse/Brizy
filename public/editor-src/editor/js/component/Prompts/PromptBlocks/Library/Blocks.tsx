@@ -16,6 +16,7 @@ import { ApiBlockMetaWithType, BlocksThumbs, BlockThumbs } from "./index";
 type BlocksProps = {
   type: "normal" | "popup";
   showSearch: boolean;
+  showSync: boolean;
   search: string;
   loading: boolean;
   items: BlocksThumbs;
@@ -42,6 +43,7 @@ class Blocks extends Component<BlocksProps> {
   static defaultProps: BlocksProps = {
     type: "normal",
     showSearch: true,
+    showSync: true,
     search: "",
     loading: false,
     items: [],
@@ -171,6 +173,7 @@ class Blocks extends Component<BlocksProps> {
       items,
       types,
       showSearch,
+      showSync,
       HeaderSlotLeft,
       onSuccessSync
     } = this.props;
@@ -212,9 +215,12 @@ class Blocks extends Component<BlocksProps> {
                     }}
                   />
                 </SidebarOption>
-                <SidebarOption separator={true}>
-                  <CloudConnect onSuccessSync={onSuccessSync} />
-                </SidebarOption>
+
+                {showSync && (
+                  <SidebarOption separator={true}>
+                    <CloudConnect onSuccessSync={onSuccessSync} />
+                  </SidebarOption>
+                )}
               </Sidebar>
 
               {loading
