@@ -189,7 +189,7 @@ class Brizy_Editor_Forms_Api {
 			 * @var Brizy_Editor_Forms_Form $form ;
 			 */
 
-			$form = $manager->getForm( $_REQUEST['form_id'] );
+			$form = $manager->getForm( isset($_REQUEST['form_id'])?:null );
 
 			if ( ! $form ) {
 				$this->error( 404, "Form not found" );
