@@ -40,7 +40,9 @@ class Brizy_Editor_Forms_FormManager {
 	 * @return Brizy_Editor_Forms_Form
 	 */
 	public function getForm( $form_id ) {
-		return $this->forms[ $form_id ];
+		if ( $form_id && isset($this->forms[ $form_id ])) {
+			return $this->forms[ $form_id ];
+		}
 	}
 
 	/**
