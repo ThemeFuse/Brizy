@@ -153,9 +153,6 @@ class Brizy_Editor_Editor_Editor {
 				'l10n'            => $this->getTexts(),
 				'pageData'        => apply_filters( 'brizy_page_data', array() ),
 				'availableRoles'  => $this->roleList(),
-				'membership'      => [
-					'roles' => $this->getMembershipRoles()
-				]
 			),
 			'mode'            => $mode,
 			'applications'    => array(
@@ -876,23 +873,5 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		return $response;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getMembershipRoles() {
-	    $roles = get_posts( [ 'post_type' => Brizy_Admin_Membership_Membership::CP_ROLE, 'posts_per_page' => -1 ] );
-
-	    if ( ! $roles ) {
-	    	return [];
-	    }
-
-		return array_map( function( $role ) {
-			return [
-				'displayName' => $role->post_title,
-				'roleId'      => get_post_meta( $role->ID, 'role_id', true )
-			];
-	    }, $roles );
 	}
 }
