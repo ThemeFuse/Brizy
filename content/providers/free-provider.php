@@ -17,6 +17,27 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function getAllPlaceholders() {
 
 		return array(
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_role', function( $context, $contentPlaceholder ) {
+
+			    if ( ! is_user_logged_in() ) {
+			        return '';
+                }
+
+				$attrs = $contentPlaceholder->getAttributes();
+
+				if ( empty( $attrs['roles'] ) ) {
+				    return $contentPlaceholder->getContent();
+                }
+
+				$roles = explode( ',', $attrs['roles'] );
+				$user  = wp_get_current_user();
+
+				if ( array_intersect( $roles, (array) $user->roles ) || in_array( 'administrator', $user->roles ) ) {
+					return $contentPlaceholder->getContent();
+				}
+
+				return '';
+            } ),
 			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' ),
 			new Brizy_Content_Placeholders_ImageAltAttribute( 'Internal Alt Attributes', 'brizy_dc_image_alt' ),
 			new Brizy_Content_Placeholders_UniquePageUrl( 'Uniquer page url', 'brizy_dc_current_page_unique_url' ),
