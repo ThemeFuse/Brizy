@@ -12,13 +12,13 @@ class Brizy_Admin_Membership_Membership {
 	}
 
 	private function __construct() {
-		add_action( 'add_meta_boxes',                     [ $this, 'add_meta_boxes' ] );
 		add_action( 'enter_title_here',                   [ $this, 'enter_title_here' ] );
-		add_action( 'save_post',                          [ $this, 'save_post' ] );
+		add_action( 'transition_post_status',             [ $this, 'transition_post_status' ], 10, 3 );
 		add_filter( 'post_updated_messages',              [ $this, 'post_updated_messages' ] );
 		add_filter( 'post_row_actions',                   [ $this, 'post_row_actions' ], 10, 1 );
 		add_filter( 'bulk_actions-edit-' . self::CP_ROLE, [ $this, 'bulk_actions' ] );
 		add_filter( 'admin_enqueue_scripts',              [ $this, 'admin_enqueue_scripts' ] );
+		add_filter( 'admin_head',                         [ $this, 'admin_head' ] );
 		add_action( 'show_user_profile',                  [ $this, 'output_checklist' ] );
 		add_action( 'edit_user_profile',                  [ $this, 'output_checklist' ] );
 		add_action( 'user_new_form',                      [ $this, 'output_checklist' ] );
@@ -65,22 +65,6 @@ class Brizy_Admin_Membership_Membership {
 		);
 	}
 
-	public function add_meta_boxes() {
-		add_meta_box( 'metabox-role', esc_html__( 'Role Details', 'text-domain' ), [ $this, 'render_role_metabox' ], self::CP_ROLE, 'advanced', 'high' );
-	}
-
-	public function render_role_metabox( $post ) {
-
-		$role_id = get_post_meta( $post->ID, 'role_id', true );
-
-		echo
-			'<label for="editor-role-id" style="width:150px; display:inline-block;">' .
-				esc_html__( 'Role ID', 'brizy' ) .
-			'</label>
-			<input type="text" name="role_id" id="editor-role-id" value="' . esc_attr( $role_id ) . '" style="width:300px;"/>' .
-			wp_nonce_field( 'editor_save_role', 'editor_save_role' );
-	}
-
 	public function enter_title_here( $title ) {
 
 		if ( ! $this->is_screen_roles() ) {
@@ -101,36 +85,31 @@ class Brizy_Admin_Membership_Membership {
 		return ! ( empty( $screen->post_type ) || self::CP_ROLE !== $screen->post_type );
 	}
 
-	public function save_post( $post_id ) {
+	public function transition_post_status( $new_status, $old_status, $post ) {
 
-		if ( ! $this->is_screen_roles() ) {
+		if ( ! $this->can_update_roles() || $post->post_type !== self::CP_ROLE ) {
 			return;
 		}
 
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
+		$postID = $post->ID;
+
+		if ( $old_status == 'publish' && $new_status != 'publish' ) {
+			remove_role( get_post_meta( $postID, 'role_id', true ) );
 		}
 
-		if ( ! isset( $_POST['editor_save_role'] ) || ! wp_verify_nonce( $_POST['editor_save_role'], 'editor_save_role' ) ) {
-			return;
+		if ( $new_status === 'publish' ) {
+			$role_id         = get_post_meta( $postID, 'role_id', true );
+			$roleDisplayName = empty( $post->post_title ) ? 'Role #' . $postID : $post->post_title;
+
+			if ( ! $role_id ) {
+				$role_id = sanitize_title_with_dashes( $roleDisplayName ) . '-' . $postID;
+				update_post_meta( $postID, 'role_id', $role_id );
+			}
+
+			remove_role( $role_id );
+
+			add_role( $role_id, $roleDisplayName );
 		}
-
-		if ( ! current_user_can( 'edit_page', $post_id ) ) {
-			return;
-		}
-
-		$oldRoleId = get_post_meta( $post_id, 'role_id', true );
-
-		if ( $oldRoleId ) {
-			remove_role( $oldRoleId );
-		}
-
-		$roleDisplayName = get_the_title( $post_id );
-		$role_id         = sanitize_title_with_dashes( empty( $_POST['role_id'] ) ? $roleDisplayName : $_POST['role_id'] );
-
-		add_role( $role_id, $roleDisplayName );
-
-		update_post_meta( $post_id, 'role_id', $role_id );
 	}
 
 	public function post_updated_messages( $messages ) {
@@ -182,6 +161,15 @@ class Brizy_Admin_Membership_Membership {
             } );";
 
 		wp_add_inline_script( 'editor-add-roles-checklist', $script );
+	}
+
+	public function admin_head() {
+
+		if ( ! $this->is_screen_roles() ) {
+			return;
+		}
+
+		echo '<style>#minor-publishing{display:none;}</style>';
 	}
 
 	public function output_checklist( $user ) {
