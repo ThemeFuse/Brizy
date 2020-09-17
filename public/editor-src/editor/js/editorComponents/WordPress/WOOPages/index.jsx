@@ -30,6 +30,9 @@ class WOOPages extends EditorComponent {
       )
     );
 
+    const attributes =
+      v.shortcode === "brizy_product_page" ? { attributes: v.productID } : {};
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -44,6 +47,7 @@ class WOOPages extends EditorComponent {
             resizerMeta={this.props.meta}
             resizerValue={v}
             resizerOnChange={this.handleResizerChange}
+            {...attributes}
           />
         </CustomCSS>
       </Toolbar>

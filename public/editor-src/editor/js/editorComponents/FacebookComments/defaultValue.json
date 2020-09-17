@@ -1,6 +1,7 @@
 {
   "content": {
     "type": "facebook",
+    "review": "false",
 
     "numPosts": 10,
     "numPostsSuffix": null,

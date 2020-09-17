@@ -13,11 +13,12 @@ import {
 } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
-import { styleClassName, styleCSSVars } from "./styles";
+import { styleWrapperClassName, styleClassName, styleCSSVars } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import { defaultValueKey } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -169,7 +170,9 @@ class Icon extends EditorComponent {
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Wrapper
               {...this.makeWrapperProps({
-                className: "brz-icon__container",
+                className: IS_STORY
+                  ? styleWrapperClassName(v)
+                  : "brz-icon__container",
                 attributes: { style }
               })}
             >

@@ -1,17 +1,15 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import { toolbarBorderRadius } from "visual/utils/toolbar";
+import { IS_STORY } from "visual/utils/models";
 
 export const title = t("Progress");
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
-
   return [
     {
       id: "settingsTabs",
       type: "tabs-dev",
-      cofig: {
+      config: {
         align: "start"
       },
       devices: "desktop",
@@ -32,13 +30,14 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
+              disabled: IS_STORY,
               devices: "desktop",
               position: 100,
               type: "slider-dev",

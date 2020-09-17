@@ -39,3 +39,14 @@
     border-radius: inherit;
   }
 }
+
+// Only Story
+// Image
+.brz-image--story {
+  font-size: 0;
+
+  .brz-ed-border,
+  .brz-d-xs-flex {
+    display: inline-block;
+  }
+}

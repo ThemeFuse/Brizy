@@ -117,9 +117,17 @@ $font-size-max: 300;
     }
 
     .brz-fs-#{$device}-#{$i} {
-      $number: round($i * $number) + px;
+      $numberEditor: round($i * $number) + px;
 
-      font-size: $number !important;
+      font-size: $numberEditor !important;
+    }
+
+    .brz-story {
+      .brz-fs-#{$device}-#{$i} {
+        $numberStory: round($i * $number);
+
+        font-size: percentage($numberStory / 100) !important;
+      }
     }
   }
 }

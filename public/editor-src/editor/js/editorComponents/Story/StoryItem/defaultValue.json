@@ -1,0 +1,127 @@
+{
+  "content": {
+    "items": [],
+
+    "media": "image",
+
+    "bgImageWidth": 0,
+    "bgImageHeight": 0,
+    "bgImageSrc": "",
+    "bgPositionY": 50,
+    "bgPositionX": 50,
+    "bgPopulation": "",
+    "bgImageExtension": "",
+
+    "bgVideo": "",
+    "bgVideoLoop": "off",
+    "bgVideoStart": 0,
+
+    "bgMapAddress": "Wall Street",
+    "bgMapZoom": 15,
+    "bgMapZoomSuffix": null,
+
+    "brightness": 100,
+    "hue": 0,
+    "saturation": 100,
+    "contrast": 100
+  },
+
+  "style": {
+    "className": "",
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorType": "solid",
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "tempGradientColorOpacity": 1,
+    "tempGradientColorPalette": "",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "borderStyle": "solid",
+    "tempBorderStyle": "solid",
+    "borderWidthType": "grouped",
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "tempBorderWidth": 4,
+    "tempBorderTopWidth": 4,
+    "tempBorderRightWidth": 4,
+    "tempBorderBottomWidth": 4,
+    "tempBorderLeftWidth": 4,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "verticalAlign": "center",
+
+    "paddingType": "grouped",
+    "tempPaddingType": "grouped",
+
+    "padding": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+
+    "tempPadding": 0,
+    "tempPaddingTop": 0,
+    "tempPaddingRight": 0,
+    "tempPaddingBottom": 0,
+    "tempPaddingLeft": 0,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "tempPaddingSuffix": "px",
+    "tempPaddingTopSuffix": "px",
+    "tempPaddingRightSuffix": "px",
+    "tempPaddingBottomSuffix": "px",
+    "tempPaddingLeftSuffix": "px",
+
+    "containerClassName": "",
+
+    "customCSS": ""
+  }
+}

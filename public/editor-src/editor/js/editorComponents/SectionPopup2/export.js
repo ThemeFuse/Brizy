@@ -13,7 +13,7 @@ $.fn.popup = function() {
       if (!clickedOutSideToClose) {
         $this.addClass("brz-pointer-events-none");
         $this
-          .find(".brz-bg > .brz-bg-content .brz-container__wrap")
+          .find(".brz-popup2__inner > .brz-container__wrap")
           .addClass("brz-pointer-events-auto");
       }
 

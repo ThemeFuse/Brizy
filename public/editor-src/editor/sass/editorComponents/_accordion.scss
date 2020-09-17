@@ -42,7 +42,7 @@
       display: none;
     }
     & > .brz-accordion__content {
-      display: block;
+      display: flex;
 
       &:empty {
         min-height: 50px;

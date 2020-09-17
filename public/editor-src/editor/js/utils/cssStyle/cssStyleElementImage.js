@@ -1,6 +1,7 @@
 import { roundTo } from "visual/utils/math";
 import { cssStyleFilter } from "./cssStyleFilter";
 import { defaultValueValue } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
 
 export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
   const dvv = key => defaultValueValue({ v, key, device });
@@ -16,14 +17,10 @@ export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
     : `max-width: ${dvv("width")}px;`;
 }
 
-export function cssStyleElementImageHeightPreview({ v, device, props = {} }) {
+export function cssStyleElementImageHeightPreview({ device, props = {} }) {
   const { height } = props.wrapperSizes[device];
 
-  return height === undefined || height === null
-    ? ""
-    : !v.imageSrc && !v.imagePopulation
-    ? `height: ${height}px;`
-    : "height: auto;";
+  return height === undefined || height === null ? "" : "height: auto;";
 }
 
 export function cssStyleElementImageBorderRadius({ v, device, props = {} }) {
@@ -43,6 +40,12 @@ export function cssStyleElementImageBorderRadius({ v, device, props = {} }) {
 
 export function cssStyleElementImageMaxWidthEditor({ device, props = {} }) {
   const { width } = props[device];
+
+  if (IS_STORY) {
+    return width === undefined || width === null
+      ? ""
+      : `width: ${width}px; max-width: 100%;`;
+  }
 
   return width === undefined || width === null ? "" : `max-width: ${width}px;`;
 }

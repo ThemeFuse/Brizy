@@ -6,21 +6,21 @@ import ContainerBorderButton from "./ContainerBorderButton";
 
 export default class ContainerBorder extends React.Component {
   static propTypes = {
+    type: T.string,
     className: T.string,
     color: T.oneOf(["grey", "blue", "red"]),
-    showBorder: T.bool,
     borderStyle: T.oneOf(["none", "solid", "dotted"]),
     activeBorderStyle: T.oneOf(["none", "solid", "dotted"]),
-    showButton: T.bool,
     buttonPosition: T.oneOf(["topLeft", "topRight"]),
     renderButtonWrapper: T.func,
     activateOnContentClick: T.bool,
-    clickOutsideExceptions: T.arrayOf(T.string)
+    clickOutsideExceptions: T.arrayOf(T.string),
+    children: T.func
   };
 
   static defaultProps = {
-    showBorder: true,
-    showButton: false,
+    type: "element",
+    borderStyle: "none",
     buttonPosition: "topRight",
     activateOnContentClick: true,
     clickOutsideExceptions: [
@@ -108,21 +108,18 @@ export default class ContainerBorder extends React.Component {
   };
 
   handleActivationEvent = e => {
-    const { showButton, activateOnContentClick } = this.props;
+    const { activateOnContentClick } = this.props;
 
     if (e.brzContainerBorderHandled) {
       return;
     }
 
     let handled = false;
+    const button = this.buttonInnerRef.current;
 
-    if (showButton) {
-      const fromButton = this.buttonInnerRef.current.contains(e.target);
-
-      if (fromButton) {
-        this.setActive(true, true);
-        handled = true;
-      }
+    if (button && button.contains(e.target)) {
+      this.setActive(true, true);
+      handled = true;
     }
 
     if (!handled && activateOnContentClick) {
@@ -140,19 +137,19 @@ export default class ContainerBorder extends React.Component {
   };
 
   setActive(border, button = false) {
-    const { showBorder, showButton } = this.props;
+    const { type } = this.props;
 
-    if (showButton && this.isButtonActive !== button) {
+    if (this.isButtonActive !== button) {
       this.isButtonActive = button;
       this.buttonRef.current.setActive(button);
     }
 
-    if (showBorder && this.isBorderActive !== border) {
+    if (this.isBorderActive !== border) {
       this.isBorderActive = border;
       if (border) {
-        this.containerRef.current.classList.add("brz-ed-border--active");
+        this.containerRef.current.setAttribute("data-border--active", type);
       } else {
-        this.containerRef.current.classList.remove("brz-ed-border--active");
+        this.containerRef.current.removeAttribute("data-border--active");
       }
     }
   }
@@ -162,9 +159,10 @@ export default class ContainerBorder extends React.Component {
       this.isHovered = hover;
 
       if (hover) {
-        this.containerRef.current.classList.add("brz-ed-border--hovered");
+        const { type } = this.props;
+        this.containerRef.current.setAttribute("data-border--hovered", type);
       } else {
-        this.containerRef.current.classList.remove("brz-ed-border--hovered");
+        this.containerRef.current.removeAttribute("data-border--hovered");
       }
     }
   }
@@ -184,41 +182,35 @@ export default class ContainerBorder extends React.Component {
 
   render() {
     const {
-      className: className_,
+      type,
       color,
-      showBorder,
       borderStyle,
       activeBorderStyle,
-      showButton,
       renderButtonWrapper,
       children,
       clickOutsideExceptions
     } = this.props;
 
-    const className = classnames(
-      "brz-ed-border",
-      {
-        [`brz-ed-border--${color}`]: color
-      },
-      className_
-    );
-
     // button
-    let button;
-    if (showButton) {
-      button = renderButtonWrapper
-        ? renderButtonWrapper(this.renderButton)
-        : this.renderButton();
-    }
+    const button = renderButtonWrapper
+      ? renderButtonWrapper(this.renderButton)
+      : this.renderButton();
 
     // border
-    let border;
-    if (showBorder) {
-      const borderClassName = classnames("brz-ed-border__inner", {
-        [`brz-ed-border--${borderStyle}`]: borderStyle,
-        [`brz-ed-border--active-${activeBorderStyle}`]: activeBorderStyle
-      });
-      border = <div ref={this.innerBorderRef} className={borderClassName} />;
+    const borderClassName = classnames("brz-ed-border__inner", {
+      [`brz-ed-border--${borderStyle}`]: borderStyle,
+      [`brz-ed-border--active-${activeBorderStyle}`]: activeBorderStyle
+    });
+    const border = (
+      <div ref={this.innerBorderRef} className={borderClassName} />
+    );
+
+    let attr = {
+      "data-border": type
+    };
+
+    if (color) {
+      attr[`data-border--${color}`] = type;
     }
 
     return (
@@ -226,11 +218,12 @@ export default class ContainerBorder extends React.Component {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.handleClickOutside}
       >
-        <div ref={this.containerRef} className={className}>
-          {children}
-          {button}
-          {border}
-        </div>
+        {children({
+          ref: this.containerRef,
+          button,
+          border,
+          attr
+        })}
       </ClickOutside>
     );
   }

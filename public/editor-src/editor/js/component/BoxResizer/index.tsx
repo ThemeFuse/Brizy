@@ -2,11 +2,14 @@
 import React, { useCallback } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
+import { IS_STORY } from "visual/utils/models";
 import { Resizer } from "./Resizer";
 import {
   transformRestrictions,
   transformValue,
   resizerTransformPatch,
+  resizerTransformStory,
+  resizerTransformStoryPatch,
   transformAlign
 } from "./transforms";
 import { V, Meta, RestrictionMapping, Restrictions, Patch } from "./types";
@@ -42,10 +45,19 @@ const BoxResizer: React.FC<Props> = ({
   // we don't just send value because of responsive
   // when we change device mode, editor doesn't rerender
   // and old props were using
-  const getValue = useCallback((): RM => transformValue(value), [
+  const getValue = useCallback((): RM => {
+    let transformedValue = transformValue(resizerV);
+    if (IS_STORY) {
+      transformedValue = resizerTransformStory(transformedValue, value);
+    }
+
+    return transformedValue;
+  }, [
     resizerV.size,
     resizerV.width,
-    resizerV.height
+    resizerV.height,
+    value.offsetX,
+    value.offsetY
   ]);
 
   // add useCallback hook
@@ -60,8 +72,20 @@ const BoxResizer: React.FC<Props> = ({
   };
 
   const _onChange = useCallback(
-    ({ patch }: Patch): void =>
-      onChange(resizerTransformPatch(patch, startValue as RM, value)),
+    ({ patch, point, startRect }: Patch): void => {
+      let path = resizerTransformPatch(patch, startValue as RM, value);
+
+      if (IS_STORY) {
+        path = resizerTransformStoryPatch(
+          path,
+          startValue as RM,
+          point,
+          startRect
+        );
+      }
+
+      onChange(path);
+    },
     [onChange, startValue, value]
   );
 

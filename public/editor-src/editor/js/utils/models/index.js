@@ -10,15 +10,21 @@ import {
 } from "./styles";
 import { stripSystemKeys } from "./stripSystemKeys";
 import { insertItem } from "./insertItem";
+import { cloneItem } from "./cloneItem";
+import { insertItemsBatch } from "./insertItemsBatch";
 import {
   IS_PAGE,
   IS_TEMPLATE,
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
   IS_GLOBAL_POPUP,
+  IS_STORY,
+  IS_INTERNAL_STORY,
+  IS_EXTERNAL_STORY,
   isGlobalPopup,
   IS_WP
 } from "./modes";
+import { setOffsetsToElementFromWrapper } from "./setDataInElement";
 
 const isModel = obj => hasProps(["type", "value"], obj);
 
@@ -38,6 +44,9 @@ export {
   getParentWhichContainsStyleProperty,
   stripSystemKeys,
   insertItem,
+  insertItemsBatch,
+  cloneItem,
+  setOffsetsToElementFromWrapper,
   mapModels,
   isModel,
   IS_WP,
@@ -46,5 +55,8 @@ export {
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
   IS_GLOBAL_POPUP,
+  IS_STORY,
+  IS_INTERNAL_STORY,
+  IS_EXTERNAL_STORY,
   isGlobalPopup
 };

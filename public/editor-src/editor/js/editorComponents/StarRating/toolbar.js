@@ -302,7 +302,7 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

@@ -77,7 +77,7 @@ class AccordionItem extends EditorComponent {
     } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      className: "brz-accordion--sortable",
+      className: "brz-accordion--sortable brz-d-xs-flex brz-flex-xs-column",
       meta
     });
 
@@ -105,7 +105,10 @@ class AccordionItem extends EditorComponent {
           </Toolbar>
           <Animation
             component={"div"}
-            componentProps={{ className: "brz-accordion__content" }}
+            componentProps={{
+              className:
+                "brz-accordion__content brz-d-xs-flex brz-flex-xs-column"
+            }}
             animationClass={animationClassName}
           >
             <ItemItems {...itemsProps} />
@@ -128,7 +131,9 @@ class AccordionItem extends EditorComponent {
         </Toolbar>
         <Animation
           component={"div"}
-          componentProps={{ className: "brz-accordion__content" }}
+          componentProps={{
+            className: "brz-accordion__content brz-d-xs-flex brz-flex-xs-column"
+          }}
           animationClass={animationClassName}
         >
           <ItemItems {...itemsProps} />

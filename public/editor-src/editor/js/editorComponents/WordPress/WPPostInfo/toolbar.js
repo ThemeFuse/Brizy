@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: iconsColorHex } = getOptionColorHexByPalette(
@@ -98,7 +97,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabText"),
+              id: "tabText",
               label: t("Text"),
               devices: "desktop",
               options: [
@@ -110,7 +109,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("colorIcons"),
+              id: "colorIcons",
               label: t("Icons"),
               devices: "desktop",
               options: [
@@ -126,7 +125,7 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       icon: "nc-cog",

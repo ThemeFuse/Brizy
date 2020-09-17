@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
@@ -7,7 +7,6 @@ export default params => ({ getItems: getItems(params) });
 
 export const getItems = hasDiscount => ({ v, device }) => {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
@@ -19,15 +18,15 @@ export const getItems = hasDiscount => ({ v, device }) => {
       id: "toolbarWOOPrice",
       type: "popover-dev",
       config: {
-        title: t("WOOPrice"),
-        icon: "nc-woo-2"
+        icon: "nc-woo-price",
+        title: t("Product Price")
       },
       devices: "desktop",
       position: 60,
       disabled: !hasDiscount,
       options: [
         {
-          id: dvk("column"),
+          id: "column",
           label: t("Column"),
           type: "switch-dev",
           devices: "desktop"
@@ -59,13 +58,13 @@ export const getItems = hasDiscount => ({ v, device }) => {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabSale"),
+              id: "tabSale",
               label: t("Sale"),
-              disabled: !hasDiscount,
               options: [
                 {
                   id: "sale",
                   type: "typography-dev",
+                  disabled: !hasDiscount,
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -73,7 +72,7 @@ export const getItems = hasDiscount => ({ v, device }) => {
               ]
             },
             {
-              id: dvk("tabPrice"),
+              id: "tabPrice",
               label: t("Price"),
               options: [
                 {
@@ -109,7 +108,7 @@ export const getItems = hasDiscount => ({ v, device }) => {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("saleColor"),
+              id: "saleColor",
               label: t("Sale"),
               disabled: !hasDiscount,
               options: [
@@ -122,7 +121,7 @@ export const getItems = hasDiscount => ({ v, device }) => {
               ]
             },
             {
-              id: dvk("colorPrice"),
+              id: "colorPrice",
               label: t("Price"),
               options: [
                 {

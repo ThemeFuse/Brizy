@@ -6,6 +6,7 @@ import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import { t } from "visual/utils/i18n";
 import { hideToolbar } from "visual/component/Toolbar";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 
 export default class TimelineTabItems extends EditorArrayComponent {
   static get componentId() {
@@ -84,13 +85,23 @@ export default class TimelineTabItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
+    const { className } = this.props;
+
     if (IS_PREVIEW) {
-      return items;
+      return <div className={className}>{items}</div>;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.className}>{items}</div>
-    ) : null;
+    if (items.length === 0) {
+      return (
+        <div className={className}>
+          <SortableEmpty
+            path={this.getPath()}
+            type="column"
+            acceptElements={this.handleSortableAcceptElements}
+          />
+        </div>
+      );
+    }
 
     return (
       <Sortable
@@ -98,7 +109,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
         type="column"
         acceptElements={this.handleSortableAcceptElements}
       >
-        {sortableContent}
+        <div className={className}>{items}</div>
       </Sortable>
     );
   }

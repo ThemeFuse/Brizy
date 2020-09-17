@@ -38,7 +38,7 @@ class WPCustomShortcode extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <WPShortcode
             raw={v.shortcode}
-            placeholderIcon="wp-shortcode"
+            placeholderIcon="wp-custom-shortcode"
             className={classNameWP}
             height={45}
             resizerPoints={resizerPoints}

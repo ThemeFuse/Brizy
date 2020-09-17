@@ -1,0 +1,21 @@
+.brz-woo-rating {
+  width: 100%;
+  justify-content: inherit;
+  display: flex;
+
+  &.brz-disabled-rating-text {
+    .woocommerce-review-link {
+      display: none;
+    }
+  }
+
+  .woocommerce-product-rating {
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    .star-rating {
+      margin: 0;
+    }
+  }
+}

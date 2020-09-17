@@ -3,63 +3,59 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleRow(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      interval: IS_EDITOR
-        ? ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
-        : ["cssStyleVisible"],
-      standart: ["cssStyleMargin"]
-    }
-  };
-
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleBg(v, vs, vd) {
-  const bgInterval = [
-    "cssStyleSizeMaxWidthSize",
-    "cssStyleRowMinHeight",
-    "cssStyleDisplayFlex"
-  ];
-
-  if (IS_EDITOR) {
-    bgInterval.push("cssStyleVisible");
-  }
-
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleZIndex", "cssStyleFlexVerticalAlign"],
-      interval: bgInterval
-    },
-    ".brz &&:hover > .brz-bg-media": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
+      interval: ["cssStyleRowMinHeight", "cssStyleDisplayFlex"],
       standart: [
-        "cssStyleBgImage",
-        "cssStyleFilter",
-        "cssStyleBgImagePosition"
+        "cssStyleMargin",
+        "cssStyleZIndex",
+        "cssStyleFlexVerticalAlign"
+      ]
+    },
+    ".brz &&:hover > .brz-bg": {
+      standart: [
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+        "cssStyleBoxShadow",
+        "cssStyleSizeMaxWidthSize"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
+    ".brz &&:hover > .brz-bg > .brz-bg-image": {
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleBgMediaImage"
+      ],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    },
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-map": {
-      standart: ["cssStyleFilter", "cssStyleBgMap"]
+    ".brz &&:hover > .brz-bg > .brz-bg-map": {
+      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-video": {
-      standart: ["cssStyleFilter"],
+    ".brz &&:hover > .brz-bg > .brz-bg-video": {
+      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg-content": {
+    ".brz &&:hover > .brz-row": {
       standart: ["cssStyleBorderTransparentColor"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
-    ".brz &&:hover > .brz-bg-content > .brz-row": {
-      interval: ["cssStyleRowReverseColumn"]
+      interval: [
+        "cssStyleRowReverseColumn",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransition"
+      ]
     }
   };
+
+  if (IS_EDITOR) {
+    styles[".brz &&:hover"].interval.push(
+      "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+    );
+  } else {
+    styles[".brz &&:hover"].interval.push("cssStyleVisible|||preview");
+  }
 
   return renderStyles({ v, vs, vd, styles });
 }
@@ -67,7 +63,8 @@ export function styleBg(v, vs, vd) {
 export function styleContainer(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStylePaddingFourFields"]
+      standart: ["cssStylePaddingFourFields", "cssStyleSizeMaxWidthSize"],
+      interval: IS_EDITOR ? ["cssStyleVisible|||editor"] : []
     }
   };
 

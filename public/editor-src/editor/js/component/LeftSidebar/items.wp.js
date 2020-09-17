@@ -5,7 +5,7 @@ import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP, IS_TEMPLATE } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_TEMPLATE, IS_STORY } from "visual/utils/models";
 
 const urls = Config.get("urls");
 const proEnabled = Boolean(Config.get("pro"));
@@ -19,7 +19,7 @@ export default {
       icon: "nc-page",
       title: t("Page"),
       type: "popover",
-      disabled: IS_GLOBAL_POPUP,
+      disabled: IS_GLOBAL_POPUP || IS_STORY,
       options: [
         {
           type: "wpTemplate",

@@ -230,14 +230,14 @@ export function cssStyleElementWOOProductMetaValueColor({
   return color === undefined ? "" : `color:${color};`;
 }
 
-export function cssStyleElementWOOProductMetaDviders({ v, device, state }) {
+export function cssStyleElementWOOProductMetaDividers({ v, device, state }) {
   const type = styleElementWOOProductMetaType({
     v,
     device,
     state
   });
 
-  const color = styleColor({ v, device, state, prefix: "dvidersColor" });
+  const color = styleColor({ v, device, state, prefix: "dividersColor" });
 
   return color === undefined
     ? ""

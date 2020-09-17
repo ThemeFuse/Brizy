@@ -9,6 +9,7 @@ import {
   styleHoverTransition,
   styleHoverTransitionProperty
 } from "visual/utils/style";
+import { IS_STORY } from "visual/utils/models";
 
 import { cssStyleBoxShadowSuffixForGlamour } from "visual/utils/cssStyle";
 
@@ -63,9 +64,9 @@ export function styleClassName(v) {
         backgroundImage: "var(--hoverBackgroundGradient)"
       },
       ".brz-ed--desktop &": {
-        width: "var(--width)",
-        height: "var(--height)",
-        fontSize: "var(--fontSize)",
+        width: IS_STORY ? "100%" : "var(--width)",
+        height: IS_STORY ? "unset" : "var(--height)",
+        fontSize: IS_STORY ? "unset" : "var(--fontSize)",
         padding: "var(--padding)",
         borderRadius: "var(--borderRadius)",
         strokeWidth: "var(--strokeWidth)",
@@ -183,9 +184,9 @@ export function styleClassName(v) {
         }),
         borderWidth,
         borderStyle,
-        width: `${iconSize}px`,
-        height: `${iconSize}px`,
-        fontSize: `${customSize}px`,
+        width: IS_STORY ? "100%" : `${iconSize}px`,
+        height: IS_STORY ? "unset" : `${iconSize}px`,
+        fontSize: IS_STORY ? "unset" : `${customSize}px`,
         padding: `${padding}px`,
         borderRadius,
         strokeWidth,
@@ -195,49 +196,53 @@ export function styleClassName(v) {
         transitionProperty: styleHoverTransitionProperty()
       },
 
-      "@media (min-width: 991px)": {
-        ".brz &:hover": {
-          color: styleColor({ v, device: "desktop", state: "hover" }),
-          borderColor: styleBorderColor({
-            v,
-            device: "desktop",
-            state: "hover"
-          }),
-          backgroundColor: styleBgColor({
-            v,
-            device: "desktop",
-            state: "hover"
-          }),
-          backgroundImage: styleBgGradient({
-            v,
-            device: "desktop",
-            state: "hover"
-          }),
-          boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
-        }
-      },
+      ...(IS_STORY
+        ? {}
+        : {
+            "@media (min-width: 991px)": {
+              ".brz &:hover": {
+                color: styleColor({ v, device: "desktop", state: "hover" }),
+                borderColor: styleBorderColor({
+                  v,
+                  device: "desktop",
+                  state: "hover"
+                }),
+                backgroundColor: styleBgColor({
+                  v,
+                  device: "desktop",
+                  state: "hover"
+                }),
+                backgroundImage: styleBgGradient({
+                  v,
+                  device: "desktop",
+                  state: "hover"
+                }),
+                boxShadow: shadowDesktopHover !== "" ? shadowDesktopHover : null
+              }
+            },
 
-      "@media (max-width: 991px)": {
-        ".brz &": {
-          width: `${tabletIconSize}px`,
-          height: `${tabletIconSize}px`,
-          fontSize: `${tabletCustomSize}px`,
-          padding: `${tabletPadding}px`,
-          borderRadius: `${tabletBorderRadius}px`,
-          strokeWidth: tabletStrokeWidth
-        }
-      },
+            "@media (max-width: 991px)": {
+              ".brz &": {
+                width: `${tabletIconSize}px`,
+                height: `${tabletIconSize}px`,
+                fontSize: `${tabletCustomSize}px`,
+                padding: `${tabletPadding}px`,
+                borderRadius: `${tabletBorderRadius}px`,
+                strokeWidth: tabletStrokeWidth
+              }
+            },
 
-      "@media (max-width: 767px)": {
-        ".brz &": {
-          width: `${mobileIconSize}px`,
-          height: `${mobileIconSize}px`,
-          fontSize: `${mobileCustomSize}px`,
-          padding: `${mobilePadding}px`,
-          borderRadius: `${mobileBorderRadius}px`,
-          strokeWidth: mobileStrokeWidth
-        }
-      }
+            "@media (max-width: 767px)": {
+              ".brz &": {
+                width: `${mobileIconSize}px`,
+                height: `${mobileIconSize}px`,
+                fontSize: `${mobileCustomSize}px`,
+                padding: `${mobilePadding}px`,
+                borderRadius: `${mobileBorderRadius}px`,
+                strokeWidth: mobileStrokeWidth
+              }
+            }
+          })
     };
   }
 
@@ -380,4 +385,18 @@ export function styleCSSVars(v) {
     "--mobileBorderRadius": `${mobileBorderRadius}px`,
     "--mobileStrokeWidth": mobileStrokeWidth
   };
+}
+
+export function styleWrapperClassName(v) {
+  const { customSize } = v;
+
+  const glamorObj = {
+    ".brz &": {
+      width: `${customSize}%`
+    }
+  };
+
+  const glamorClassName = String(css(glamorObj));
+
+  return classnames("brz-icon__container", glamorClassName);
 }

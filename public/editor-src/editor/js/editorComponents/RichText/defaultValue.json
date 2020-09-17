@@ -2,18 +2,15 @@
   "content": {
     "text": "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>",
 
-    "popups": []
+    "popups": [],
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "style": {
     "customCSS": "",
     "width": 100,
-    "widthSuffix": "%",
-
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null
+    "widthSuffix": "%"
   }
 }

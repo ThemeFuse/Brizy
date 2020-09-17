@@ -16,6 +16,7 @@ class TableCol extends EditorComponent {
 
   renderForEdit() {
     const itemProps = this.makeSubcomponentProps({
+      className: "brz-d-xs-flex brz-flex-xs-column",
       bindWithKey: "items",
       meta: this.props.meta
     });

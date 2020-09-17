@@ -1,41 +1,101 @@
 import { t } from "visual/utils/i18n";
+import { hexToRgba } from "visual/utils/color";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { defaultValueValue } from "visual/utils/onChange";
+import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems() {
+export const getItems = ({ v, device, state }) => {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
+  );
+
   return [
     {
-      id: "toolbarWOOProductPage",
+      id: "toolbarTypography",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2"
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
       },
-      devices: "desktop",
-      position: 10,
+      position: 70,
       options: [
         {
-          id: "WOOAddToCartTabs",
+          id: "typography",
+          type: "typography-dev",
+          config: {
+            fontFamily: device === "desktop"
+          }
+        }
+      ]
+    },
+    {
+      id: "popoverColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+          }
+        }
+      },
+      devices: "desktop",
+      position: 90,
+      options: [
+        {
+          id: "tabsColor",
           type: "tabs-dev",
           tabs: [
             {
-              id: "queryTab",
-              label: t("Query"),
+              id: "tabBg",
+              label: t("Bg"),
               options: [
                 {
-                  id: "productID",
-                  label: t("Product"),
-                  type: "inputText-dev",
-                  placeholder: t("Product ID or SKU")
+                  id: "",
+                  type: "backgroundColor-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
             {
-              id: "layoutTab",
-              label: t("Layout"),
+              id: "buttonColorTab",
+              label: t("Text"),
               options: [
                 {
-                  id: "style",
-                  label: t("Style"),
-                  type: "inputText-dev",
-                  placeholder: t("Style Add to Cart")
+                  id: "buttonColor",
+                  type: "colorPicker-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabBorder",
+              label: t("Border"),
+              options: [
+                {
+                  id: "buttonBorder",
+                  type: "border-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "boxShadow",
+                  type: "boxShadow-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -58,7 +118,17 @@ export function getItems() {
           config: {
             min: 1,
             max: 100,
-            units: [{ value: "%", title: "%" }]
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "height",
+          label: t("Height"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
           }
         },
         {
@@ -71,4 +141,4 @@ export function getItems() {
       ]
     }
   ];
-}
+};

@@ -1,6 +1,6 @@
 .brz-popup {
-  > .brz-ed-border {
-    height: 100%;
+  &[data-border="popup"] {
+    position: fixed;
   }
   &__editor {
     display: none;

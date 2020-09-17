@@ -45,11 +45,12 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import PortalToolbar from "visual/component/Toolbar";
 import { css } from "visual/utils/cssStyle";
 import * as Str from "visual/utils/string/specs";
-import { styleWrapper, styleContainer, styleAnimation } from "./styles";
+import { styleWrapper, styleAnimation } from "./styles";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import Animation from "visual/component/Animation";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { WithClassName } from "visual/utils/options/attributes";
+import { attachRef } from "visual/utils/react";
 
 type Value = ElementModel & {
   items: ElementModel[];
@@ -68,7 +69,7 @@ type Static = WithClassName & {
   vs: Value;
   vd: Value;
   extraAttr?: {};
-  ref?: Ref<Element>;
+  ref?: Ref<unknown>;
 };
 
 const mNumber: MRead<number> = v => NumberSpec.read(v) ?? 0;
@@ -285,6 +286,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderContent(v: Value, vs: Value, vd: Value): ReactNode {
     const toolbarExtendFilter =
       v.showToolbar === "on" || currentUserRole() !== "admin"
@@ -310,15 +312,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     });
 
     return (
-      <div className={this.getContainerClassName(v, vs, vd)}>
-        {
-          // Since the EditorArrayComponent is still in JS,
-          // TS cannot read properly it's return type
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          <EditorArrayComponent {...itemsProps} />
-        }
-      </div>
+      // Since the EditorArrayComponent is still in JS,
+      // TS cannot read properly it's return type
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      <EditorArrayComponent {...itemsProps} />
     );
   }
 
@@ -328,45 +326,68 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
     return (
-      <Animation<"div">
-        ref={ref}
-        component="div"
-        className={classNames(this.getWrapperClassName(v, vs, vd), className)}
-        animationClass={this.getAnimationClassName(v, vs, vd)}
-        componentProps={{
-          ...Attr.mRead(customAttributes),
-          ...extraAttr,
-          id: cssIDPopulation ?? customID
-        }}
+      <ContainerBorder
+        type="wrapper"
+        color="grey"
+        borderStyle="dotted"
+        buttonPosition="topRight"
+        renderButtonWrapper={this.renderToolbar}
       >
-        <ContextMenu
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          {...this.makeContextMenuProps(contextMenuConfig)}
-          componentId={v?.items[0]?.type}
-        >
-          <Roles
-            allow={["admin"]}
-            fallbackRender={(): ReactNode => this.renderContent(v, vs, vd)}
+        {({
+          ref: containerBorderRef,
+          attr: containerBorderAttr,
+          button: ContainerBorderButton,
+          border: ContainerBorderBorder
+        }: {
+          ref: Ref<HTMLDivElement>;
+          button: ReactElement;
+          border: ReactElement;
+          attr: {};
+        }): ReactElement => (
+          <Animation<"div">
+            ref={(v: HTMLDivElement | null): void => {
+              attachRef(v, containerBorderRef);
+              attachRef(v, ref || null);
+            }}
+            component="div"
+            className={classNames(
+              this.getWrapperClassName(v, vs, vd),
+              className
+            )}
+            animationClass={this.getAnimationClassName(v, vs, vd)}
+            componentProps={{
+              ...Attr.mRead(customAttributes),
+              ...containerBorderAttr,
+              ...extraAttr,
+              id: cssIDPopulation ?? customID
+            }}
           >
-            <ContainerBorder
-              color="grey"
-              borderStyle="dotted"
-              showButton={v.showToolbar === "on"}
-              buttonPosition="topRight"
-              renderButtonWrapper={this.renderToolbar}
+            <ContextMenu
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              {...this.makeContextMenuProps(contextMenuConfig)}
+              componentId={v?.items[0]?.type}
             >
-              {v.showToolbar === "on" ? (
-                <_ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderContent(v, vs, vd)}
-                </_ToolbarExtend>
-              ) : (
-                this.renderContent(v, vs, vd)
-              )}
-            </ContainerBorder>
-          </Roles>
-        </ContextMenu>
-      </Animation>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={(): ReactNode => this.renderContent(v, vs, vd)}
+              >
+                {v.showToolbar === "on" ? (
+                  <>
+                    <_ToolbarExtend onEscape={this.handleToolbarEscape}>
+                      {this.renderContent(v, vs, vd)}
+                    </_ToolbarExtend>
+                    {ContainerBorderButton}
+                  </>
+                ) : (
+                  this.renderContent(v, vs, vd)
+                )}
+                {ContainerBorderBorder}
+              </Roles>
+            </ContextMenu>
+          </Animation>
+        )}
+      </ContainerBorder>
     );
   }
 
@@ -382,29 +403,31 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
     return (
       <SortableElement type="shortcode">
-        {(extraAttr): React.ReactElement => (
-          <Draggable
-            active={!isRelative}
-            onChange={this.handleDraggable}
-            hAlign={Position.getHAlign(dvv) ?? "left"}
-            vAlign={Position.getVAlign(dvv) ?? "top"}
-            xSuffix={Position.getHUnit(dvv) ?? "px"}
-            ySuffix={Position.getVUnit(dvv) ?? "px"}
-            getValue={(): {
-              x: number;
-              y: number;
-            } => ({
-              x: Position.getHOffset(dvv) ?? 0,
-              y: Position.getVOffset(dvv) ?? 0
-            })}
-          >
-            {(ref, className): ReactNode => {
-              return isRelative
-                ? this.renderStatic({ v, vs, vd, extraAttr })
-                : this.renderStatic({ v, vs, vd, className, ref });
-            }}
-          </Draggable>
-        )}
+        {(extraAttr): ReactElement => {
+          return (
+            <Draggable
+              active={!isRelative}
+              onChange={this.handleDraggable}
+              hAlign={Position.getHAlign(dvv) ?? "left"}
+              vAlign={Position.getVAlign(dvv) ?? "top"}
+              xSuffix={Position.getHUnit(dvv) ?? "px"}
+              ySuffix={Position.getVUnit(dvv) ?? "px"}
+              getValue={(): {
+                x: number;
+                y: number;
+              } => ({
+                x: Position.getHOffset(dvv) ?? 0,
+                y: Position.getVOffset(dvv) ?? 0
+              })}
+            >
+              {(ref, className): ReactNode =>
+                isRelative
+                  ? this.renderStatic({ v, vs, vd, extraAttr })
+                  : this.renderStatic({ v, vs, vd, className, ref })
+              }
+            </Draggable>
+          );
+        }}
       </SortableElement>
     );
   }
@@ -440,25 +463,6 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     return classNames(
       css(this.getComponentId(), this.getId(), styleWrapper(v, vs, vd)),
       "brz-wrapper",
-      _className
-    );
-  };
-
-  getContainerClassName = (v: Value, vs: Value, vd: Value): string => {
-    const { customClassName, cssClassPopulation } = v;
-
-    const _className =
-      cssClassPopulation === ""
-        ? Str.mRead(customClassName)
-        : Str.mRead(cssClassPopulation);
-
-    return classNames(
-      "brz-d-xs-flex",
-      css(
-        `${this.getComponentId()}-container,`,
-        `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
-      ),
       _className
     );
   };

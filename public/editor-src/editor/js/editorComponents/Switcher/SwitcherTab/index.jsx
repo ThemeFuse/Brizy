@@ -40,12 +40,15 @@ class SwitcherTab extends EditorComponent {
 
   renderContent() {
     const { meta, active, animationClassName } = this.props;
-    const className = classnames("brz-switcher__content--tab", {
-      "brz-switcher__content--tab--active": active
-    });
+    const className = classnames(
+      "brz-switcher__content--tab",
+      "brz-flex-xs-column",
+      { "brz-switcher__content--tab--active": active, }
+    );
     const itemsProps = this.makeSubcomponentProps({
       meta,
-      bindWithKey: "items"
+      bindWithKey: "items",
+      className: "brz-d-xs-flex brz-flex-xs-column"
     });
 
     return (

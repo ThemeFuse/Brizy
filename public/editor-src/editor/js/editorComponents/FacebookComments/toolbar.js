@@ -32,8 +32,8 @@ export function getItems({ v, device, state }) {
       id: "toolbarCurrentElement",
       type: "popover-dev",
       config: {
-        icon: "nc-comments",
-        title: t("Comments")
+        icon: v.review === "true" ? "nc-woo-review" : "nc-comments",
+        title: v.review === "true" ? t("Review") : t("Comments")
       },
       devices: "desktop",
       position: 70,
@@ -43,6 +43,7 @@ export function getItems({ v, device, state }) {
           type: "select-dev",
           label: t("Comments"),
           devices: "desktop",
+          disabled: v.review === "true",
           choices: choicesType
         },
         {

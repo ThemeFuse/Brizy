@@ -18,7 +18,7 @@ import {
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
-import { styleBg, styleContainer, styleContainerWrap } from "./styles";
+import { styleSection, styleContainer } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import {
@@ -111,10 +111,18 @@ export default class SectionHeaderItem extends EditorComponent {
     };
   }
 
-  getSectionClassName(v) {
+  getSectionClassName(v, vs, vd) {
     const { className } = v;
 
-    return classnames("brz-section__menu-item", className);
+    return classnames(
+      "brz-section__menu-item",
+      className,
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleSection(v, vs, vd)
+      )
+    );
   }
 
   renderToolbar() {
@@ -142,14 +150,7 @@ export default class SectionHeaderItem extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const classNameBg = classnames(
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
-      )
-    );
-    const classNameContainer = classnames(
+    const className = classnames(
       "brz-container",
       v.containerClassName,
       css(
@@ -158,27 +159,17 @@ export default class SectionHeaderItem extends EditorComponent {
         styleContainer(v, vs, vd)
       )
     );
-    const classNameContainerWrap = classnames(
-      "brz-container__wrap",
-      css(
-        `${this.constructor.componentId}-containerWrap`,
-        `${this.getId()}-containerWrap`,
-        styleContainerWrap(v, vs, vd)
-      )
-    );
 
     const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      className: classNameContainer,
-      meta
+      className,
+      meta,
+      bindWithKey: "items"
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
+      <Background value={v} meta={meta}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
-          <div className={classNameContainerWrap}>
-            <SectionHeaderItemItems {...itemsProps} />
-          </div>
+          <SectionHeaderItemItems {...itemsProps} />
         </PaddingResizer>
       </Background>
     );
@@ -186,28 +177,34 @@ export default class SectionHeaderItem extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={this.getSectionClassName(v)}>
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder showBorder={false} activateOnContentClick={false}>
-              {this.renderToolbar()}
-              <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                {this.renderItems(v, vs, vd)}
-              </ToolbarExtend>
-            </ContainerBorder>
-          </Roles>
-        </div>
-      </CustomCSS>
+      <ContainerBorder type="header__static" activateOnContentClick={false}>
+        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <div
+              ref={containerBorderRef}
+              {...containerBorderAttr}
+              className={this.getSectionClassName(v, vs, vd)}
+            >
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                {this.renderToolbar()}
+                <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                  {this.renderItems(v, vs, vd)}
+                </ToolbarExtend>
+              </Roles>
+            </div>
+          </CustomCSS>
+        )}
+      </ContainerBorder>
     );
   }
 
   renderForView(v, vs, vd) {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={this.getSectionClassName(v)}>
+        <div className={this.getSectionClassName(v, vs, vd)}>
           {this.renderItems(v, vs, vd)}
         </div>
       </CustomCSS>

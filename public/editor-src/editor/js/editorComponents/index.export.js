@@ -17,5 +17,6 @@ export { default as SectionPopup } from "./SectionPopup/export.js";
 export { default as SectionPopup2 } from "./SectionPopup2/export.js";
 export { default as Switcher } from "./Switcher/export.js";
 export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/export.js";
-export { default as WOOCart } from "./WordPress/WOOCart/export.js";
 export { default as Carousel } from "./Carousel/export";
+export { default as Story } from "./Story/export";
+export { default as StoryItem } from "./Story/StoryItem/export.js";

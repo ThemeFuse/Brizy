@@ -1,0 +1,87 @@
+module.exports = {
+  id: "StoryTemp5About",
+  thumbnailWidth: 680,
+  thumbnailHeight: 726,
+  title: "About",
+  keywords:
+    "about, about us, history, team, clients, advisors, business, corporate, financial",
+  cat: [0, 1],
+  pro: true,
+  resolve: {
+    blocks: [
+      {
+        type: "StoryItem",
+        value: {
+          _styles: ["story-item"],
+          items: [
+            {
+              type: "Wrapper",
+              value: {
+                _styles: ["wrapper", "wrapper--iconText"],
+                items: [
+                  {
+                    type: "IconText",
+                    value: {
+                      _styles: ["iconText"],
+                      items: [
+                        {
+                          type: "Icon",
+                          value: {
+                            _styles: ["icon", "iconText--icon"]
+                          }
+                        },
+                        {
+                          type: "Icon",
+                          value: {
+                            _styles: ["icon", "iconText--icon"]
+                          }
+                        },
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["text", "iconText--text"]
+                          }
+                        },
+                        {
+                          type: "Cloneable",
+                          value: {
+                            _styles: [
+                              "wrapper-clone",
+                              "iconText--wrapper-clone--button"
+                            ],
+                            items: [
+                              {
+                                type: "Button",
+                                value: {
+                                  _styles: ["button", "iconText--button"]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              type: "Wrapper",
+              value: {
+                _styles: ["wrapper", "wrapper--video"],
+                items: [
+                  {
+                    type: "Video",
+                    value: {
+                      _styles: ["video"]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+};

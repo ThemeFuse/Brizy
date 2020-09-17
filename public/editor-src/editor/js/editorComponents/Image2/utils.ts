@@ -1,6 +1,5 @@
-import { clamp } from "visual/utils/math";
+import { clamp, roundTo } from "visual/utils/math";
 import { ImageSize } from "./types";
-import { roundTo } from "visual/utils/math";
 
 type V = {
   imageWidth: number;
@@ -95,7 +94,7 @@ export const calcWrapperSizes = (v: V, cW: number): WrapperSizes => {
     height = (v.height * newcH) / 100;
   }
 
-  return { width: Math.round(width), height: Math.round(height) };
+  return { width: roundTo(width, 2), height: roundTo(height, 2) };
 };
 
 export const calcImageSizes = (
@@ -139,10 +138,10 @@ export const calcImageSizes = (
   const margin = calcImageMargin(sizes, isPreview);
 
   return {
-    width: Math.round(sizes.imgWidth),
-    height: Math.round(sizes.imgHeight),
-    marginLeft: Math.round(margin.left),
-    marginTop: Math.round(margin.top)
+    width: roundTo(sizes.imgWidth, 2),
+    height: roundTo(sizes.imgHeight, 2),
+    marginLeft: roundTo(margin.left, 2),
+    marginTop: roundTo(margin.top, 2)
   };
 };
 

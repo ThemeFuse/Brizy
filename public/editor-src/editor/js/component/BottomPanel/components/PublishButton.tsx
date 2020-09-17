@@ -17,7 +17,7 @@ import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import {
   createBlockScreenshot,
   createSavedLayout
-} from "visual/utils/api/editor/index-new";
+} from "visual/utils/api/editor";
 import { uuid } from "visual/utils/uuid";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};

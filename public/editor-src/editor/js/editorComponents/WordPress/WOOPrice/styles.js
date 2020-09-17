@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-price .price": {
+    ".brz &&:hover > div > .price": {
       standart: ["cssStyleElementWOOPriceColumn"]
     },
     ".brz &&:hover .woocommerce-Price-amount": {

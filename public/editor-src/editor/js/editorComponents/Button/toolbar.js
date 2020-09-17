@@ -5,7 +5,7 @@ import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import {
   defaultValueValue,
   tabletSyncOnChange,
@@ -29,8 +29,8 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItemsForDesktop(v, component) {
-  const inPopup = Boolean(component.props.meta.sectionPopup);
-  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const inPopup = Boolean(component.props.meta?.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const device = "desktop";
   // Typography
   const fontStyle = v.fontStyle;
@@ -83,6 +83,7 @@ export function getItemsForDesktop(v, component) {
                   id: "sizeGroup",
                   type: "group-dev",
                   position: 10,
+                  // disabled: IS_STORY,
                   options: [
                     {
                       id: "size",
@@ -302,34 +303,36 @@ export function getItemsForDesktop(v, component) {
                       paddingRL:
                         fillType === "default"
                           ? 0
-                          : fillType !== "default"
+                          : fillType !== "default" && !IS_STORY
                           ? v.tempPaddingRL
                           : v.paddingRL,
 
                       paddingRight:
                         fillType === "default"
                           ? 0
-                          : fillType !== "default"
+                          : fillType !== "default" && !IS_STORY
                           ? v.tempPaddingRight
                           : v.paddingRight,
 
                       paddingLeft:
                         fillType === "default"
                           ? 0
-                          : fillType !== "default"
+                          : fillType !== "default" && !IS_STORY
                           ? v.tempPaddingLeft
                           : v.paddingRight,
 
                       paddingTB:
-                        fillType !== "default" ? v.tempPaddingTB : v.paddingTB,
+                        fillType !== "default" && !IS_STORY
+                          ? v.tempPaddingTB
+                          : v.paddingTB,
 
                       paddingTop:
-                        fillType !== "default"
+                        fillType !== "default" && !IS_STORY
                           ? v.tempPaddingTop
                           : v.paddingTop,
 
                       paddingBottom:
-                        fillType !== "default"
+                        fillType !== "default" && !IS_STORY
                           ? v.tempPaddingBottom
                           : v.paddingBottom,
 
@@ -447,12 +450,12 @@ export function getItemsForDesktop(v, component) {
                               : v.tempBorderRadiusType,
 
                           paddingRight:
-                            borderRadiusType !== ""
+                            borderRadiusType !== "" && !IS_STORY
                               ? v.tempPaddingRight
                               : v.paddingRight,
 
                           paddingLeft:
-                            borderRadiusType !== ""
+                            borderRadiusType !== "" && !IS_STORY
                               ? v.tempPaddingLeft
                               : v.paddingRight,
 
@@ -512,7 +515,7 @@ export function getItemsForDesktop(v, component) {
                       disabled: v.borderRadiusType !== "custom",
                       slider: {
                         min: 0,
-                        max: maxBorderRadius
+                        max: IS_STORY ? 100 : maxBorderRadius
                       },
                       input: {
                         show: true
@@ -569,10 +572,14 @@ export function getItemsForDesktop(v, component) {
                           : v.tempBorderWidth,
 
                       paddingRight:
-                        borderWidth > 0 ? v.tempPaddingRight : v.paddingRight,
+                        borderWidth > 0 && !IS_STORY
+                          ? v.tempPaddingRight
+                          : v.paddingRight,
 
                       paddingLeft:
-                        borderWidth > 0 ? v.tempPaddingLeft : v.paddingRight,
+                        borderWidth > 0 && !IS_STORY
+                          ? v.tempPaddingLeft
+                          : v.paddingRight,
 
                       borderRadiusType:
                         borderWidth === 0 && v.bgColorOpacity === 0
@@ -1110,6 +1117,7 @@ export function getItemsForDesktop(v, component) {
                   id: "tabsColor",
                   className: "",
                   type: "tabs-dev",
+                  // disabled: IS_STORY,
                   tabs: [
                     {
                       id: "tabBg",
@@ -1403,7 +1411,9 @@ export function getItemsForDesktop(v, component) {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+              options: [
+                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+              ]
             },
             {
               id: "popup",
@@ -1411,7 +1421,7 @@ export function getItemsForDesktop(v, component) {
               options: [
                 {
                   id: "linkPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   type: "promptAddPopup",
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${v.linkPopup}`,

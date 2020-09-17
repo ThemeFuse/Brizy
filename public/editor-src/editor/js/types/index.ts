@@ -1,13 +1,5 @@
 // blocks
 
-import "react";
-
-declare module "react" {
-  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: "auto" | "eager" | "lazy";
-  }
-}
-
 export type BlockMetaType = "normal" | "popup";
 
 export type Block = {
@@ -137,3 +129,12 @@ export type Screenshot = {
   _thumbnailHeight: number;
   _thumbnailTime: number;
 };
+
+// Jquery libs
+
+declare global {
+  interface JQuery {
+    parallax(p: unknown): void;
+    backgroundVideo(b: unknown, c?: unknown): void;
+  }
+}

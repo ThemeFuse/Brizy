@@ -4,8 +4,13 @@ import EditorIcon from "visual/component/EditorIcon";
 import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { updateUI } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 function HiddenElementsToggle({ showHiddenElements, dispatch }) {
+  // ! write less hacky later
+  if (IS_STORY) {
+    return null;
+  }
   const icon = showHiddenElements ? "nc-eye-17" : "nc-eye-ban-18";
   const title = showHiddenElements
     ? t("Hide Hidden Elements")

@@ -4,7 +4,7 @@ import { encodeToString, capitalize } from "visual/utils/string";
 import { getFontStyles, getFontStyle } from "visual/utils/fonts";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
@@ -120,8 +120,8 @@ export default function(v, onChange) {
 }
 
 const getItems = (v, onChange) => ({ device, component }) => {
-  const inPopup = Boolean(component.props.meta.sectionPopup);
-  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const inPopup = Boolean(component.props.meta?.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const isPopulationBlock = v.population && v.population.display === "block";
 
   let disablePopup;
@@ -729,7 +729,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
               options: [
                 {
                   ...toolbarLinkAnchor({ v }),
-                  disabled: device !== "desktop" || IS_GLOBAL_POPUP,
+                  disabled: device !== "desktop" || IS_GLOBAL_POPUP || IS_STORY,
                   onChange: linkAnchor =>
                     onChange({
                       link: encodeToString({
@@ -782,7 +782,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
                     component,
                     canDelete: device === "desktop"
                   }),
-                  disabled: disablePopup,
+                  disabled: disablePopup || IS_STORY,
                   onChange: ({ value: linkPopup, popups }) =>
                     onChange({
                       link: encodeToString({
@@ -833,6 +833,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
           id: "marginTop",
           label: t("Gap Above"),
           type: "slider",
+          disabled: IS_STORY,
           slider: {
             min: 0,
             max: 100
@@ -842,12 +843,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
           },
           suffix: {
             show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            choices: [{ title: "px", value: "px" }]
           },
           value: {
             value: v.marginTop
@@ -859,6 +855,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
           id: "marginBottom",
           label: t("Gap Below"),
           type: "slider",
+          disabled: IS_STORY,
           slider: {
             min: 0,
             max: 100
@@ -868,12 +865,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
           },
           suffix: {
             show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            choices: [{ title: "px", value: "px" }]
           },
           value: {
             value: v.marginBottom
@@ -888,38 +880,14 @@ const getItems = (v, onChange) => ({ device, component }) => {
           className: "brz-control__select--small",
           disabled: isPopulationBlock,
           choices: [
-            {
-              title: t("P"),
-              value: "p"
-            },
-            {
-              title: t("H1"),
-              value: "h1"
-            },
-            {
-              title: t("H2"),
-              value: "h2"
-            },
-            {
-              title: t("H3"),
-              value: "h3"
-            },
-            {
-              title: t("H4"),
-              value: "h4"
-            },
-            {
-              title: t("H5"),
-              value: "h5"
-            },
-            {
-              title: t("H6"),
-              value: "h6"
-            },
-            {
-              title: t("PRE"),
-              value: "pre"
-            }
+            { title: t("P"), value: "p" },
+            { title: t("H1"), value: "h1" },
+            { title: t("H2"), value: "h2" },
+            { title: t("H3"), value: "h3" },
+            { title: t("H4"), value: "h4" },
+            { title: t("H5"), value: "h5" },
+            { title: t("H6"), value: "h6" },
+            { title: t("PRE"), value: "pre" }
           ],
           onChange: tagName => onChange(getBlockTag(tagName)),
           value: v.tagName

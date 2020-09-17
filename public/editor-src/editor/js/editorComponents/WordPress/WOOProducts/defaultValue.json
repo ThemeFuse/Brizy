@@ -1,6 +1,7 @@
 {
   "content": {
     "columns": 3,
+    "columnsSuffix": null,
     "limit": 6,
     "category": "",
     "orderBy": "name",

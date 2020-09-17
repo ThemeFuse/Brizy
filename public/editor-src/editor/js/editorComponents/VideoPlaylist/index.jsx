@@ -270,13 +270,13 @@ class VideoPlaylist extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={classNameContent}>
+        <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
           {positionItem === "horizontal" && content}
           <div className={classNameSidebar}>
             <Items {...itemProps} onActiveChange={this.handleActive} />
           </div>
           {positionItem === "vertical" && content}
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

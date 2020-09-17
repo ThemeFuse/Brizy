@@ -60,39 +60,38 @@ const getParallax = (v, meta = {}) => {
   return bgAttachment && bgAttachment === "animated" && !section.isSlider;
 };
 
-export default function BackgroundContainer({
-  value,
-  meta,
-  className,
-  children
-}) {
-  const { bgVideo, bgVideoLoop, bgVideoStart, bgMapZoom, bgMapAddress } = value;
-  const currentMedia = deviceStateValueByKey(value, "media");
-  const { media, opacity } = getMediaProps(value);
+const getMedia = v => {
+  const normalKeyValue = toNormal(v);
+  return makeKeyByStateDevice(v, "media").reduce(normalKeyValue, []);
+};
 
+const BackgroundContainer = ({ value, meta, children }) => {
+  const { media, opacity } = getMediaProps(value);
   let props = {
-    className,
     opacity,
-    children,
     image: media && getImage(value),
-    imageExtension: value.bgImageExtension,
-    border: getBorder(value),
-    boxShadow: getBoxShadow(value),
     parallax: getParallax(value, meta),
+    boxShadow: getBoxShadow(value),
+    border: getBorder(value),
     shapeTop: validateKeyByProperty(value, "shapeTopType", "none"),
     shapeBottom: validateKeyByProperty(value, "shapeBottomType", "none")
   };
+  const currentMedia = media && getMedia(value);
 
-  if (currentMedia === "video") {
-    props.video = media && videoData(bgVideo);
+  if (media && currentMedia.includes("video")) {
+    const { bgVideo, bgVideoLoop, bgVideoStart } = value;
+    props.video = videoData(bgVideo);
     props.bgVideoStart = bgVideoStart;
     props.bgVideoLoop = bgVideoLoop === "on";
   }
 
-  if (currentMedia === "map") {
-    props.map = media && bgMapAddress;
+  if (media && currentMedia.includes("map")) {
+    const { bgMapZoom, bgMapAddress } = value;
+    props.map = bgMapAddress;
     props.mapZoom = bgMapZoom;
   }
 
-  return <Background {...props} />;
-}
+  return <Background {...props}>{children}</Background>;
+};
+
+export default BackgroundContainer;

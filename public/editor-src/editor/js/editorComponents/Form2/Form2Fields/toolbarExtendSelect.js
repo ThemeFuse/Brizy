@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBorder2,
   toolbarBorderColorHexField2,
@@ -12,7 +12,6 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const { hex: selectBgColorHex } = getOptionColorHexByPalette(
     dvv("selectColorHex"),
@@ -53,7 +52,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabSelectBg"),
+              id: "tabSelectBg",
               label: t("Bg"),
               options: [
                 {
@@ -63,7 +62,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabSelectBorder"),
+              id: "tabSelectBorder",
               label: t("Border"),
               options: [
                 toolbarBorder2({
@@ -125,7 +124,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabSelectBoxShadow"),
+              id: "tabSelectBoxShadow",
               label: t("Shadow"),
               options: [
                 toolbarBoxShadow2({

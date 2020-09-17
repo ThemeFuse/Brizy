@@ -16,7 +16,7 @@ import {
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 import { isSVG, isGIF } from "./utils";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 export const getMaxHeight = (cW, v) => {
   const { imageWidth: iW, imageHeight: iH } = v;
@@ -134,7 +134,8 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
                   disabled:
                     inGallery ||
                     isSVG(v.imageExtension) ||
-                    isGIF(v.imageExtension),
+                    isGIF(v.imageExtension) ||
+                    IS_STORY,
                   devices: "desktop"
                 }
               ]
@@ -212,7 +213,8 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
           id: "linkType",
           type: "tabs-dev",
           config: {
-            saveTab: true
+            saveTab: true,
+            showSingle: true
           },
           tabs: [
             {
@@ -241,7 +243,9 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v, devices: "desktop" })]
+              options: [
+                toolbarLinkAnchor({ v, devices: "desktop", disabled: IS_STORY })
+              ]
             },
             {
               id: "popup",
@@ -251,9 +255,10 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
                   id: "linkPopup",
                   type: "promptAddPopup",
                   disabled:
-                    device === "desktop"
+                    IS_STORY ||
+                    (device === "desktop"
                       ? inPopup || inPopup2 || IS_GLOBAL_POPUP
-                      : v.linkType !== "popup" || v.linkPopup === "",
+                      : v.linkType !== "popup" || v.linkPopup === ""),
                   label: t("Popup"),
                   canDelete: device === "desktop",
                   popupKey: `${component.getId()}_${v.linkPopup}`,
@@ -281,7 +286,7 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
       },
       roles: ["admin"],
       position: 110,
-      disabled: inGallery,
+      disabled: inGallery || IS_STORY,
       options: [
         {
           id: "width",
@@ -318,6 +323,13 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
           icon: "nc-cog"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      icon: "nc-cog",
+      disabled: !IS_STORY,
+      position: 110
     }
   ];
 };

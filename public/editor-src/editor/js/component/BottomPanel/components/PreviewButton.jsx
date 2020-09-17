@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
-import { IS_INTERNAL_POPUP, IS_EXTERNAL_POPUP } from "visual/utils/models";
+import {
+  IS_INTERNAL_POPUP,
+  IS_EXTERNAL_POPUP,
+  IS_EXTERNAL_STORY
+} from "visual/utils/models";
 import { pageSlugSelector } from "visual/redux/selectors";
 
 function PreviewButtons({ pageSlug }) {
@@ -11,7 +15,16 @@ function PreviewButtons({ pageSlug }) {
   }
 
   const { pagePreview } = Config.get("urls");
-  const url = IS_INTERNAL_POPUP ? pagePreview : pagePreview + "/" + pageSlug;
+
+  let param = "";
+  if (process.env.NODE_ENV === "development" && IS_EXTERNAL_STORY) {
+    param = "/external_story";
+  }
+
+  const url =
+    IS_INTERNAL_POPUP || IS_EXTERNAL_STORY
+      ? pagePreview
+      : pagePreview + "/" + pageSlug + param;
 
   return (
     <li

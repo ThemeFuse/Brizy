@@ -1,4 +1,5 @@
 import { CSSValue } from "visual/utils/style2/types";
+import { IS_STORY } from "visual/utils/models";
 import {
   styleSizeWidth,
   styleSizeHeight,
@@ -21,6 +22,11 @@ export function cssStyleSizeWidthPx(d: CSSValue): string {
   const width = styleSizeWidth(d);
 
   return width === undefined ? "" : `width:${width}px;`;
+}
+export function cssStyleSizeWidthStoryOnly(d: CSSValue): string {
+  const width = styleSizeWidth(d);
+
+  return !IS_STORY || width === undefined ? "" : `width:${width}%;`;
 }
 
 export function cssStyleSizeMaxWidthPercent(d: CSSValue): string {

@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
-import { setIds, isGlobalPopup } from "visual/utils/models";
+import { setIds, isGlobalPopup, IS_STORY } from "visual/utils/models";
 import {
   getOptionColorHexByPalette,
   getAnimations,
@@ -65,6 +65,7 @@ global.Brizy = {
 
     setIds,
     isGlobalPopup,
+    IS_STORY,
 
     getAnimations,
     getDynamicContentChoices,

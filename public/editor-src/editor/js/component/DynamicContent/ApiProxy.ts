@@ -1,4 +1,4 @@
-import { getDynamicContent as apiGetDynamicContent } from "visual/utils/api/editor/index-new";
+import { getDynamicContent as apiGetDynamicContent } from "visual/utils/api/editor";
 import Config from "visual/global/Config";
 
 type Config = {

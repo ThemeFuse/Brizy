@@ -21,6 +21,7 @@ import { isSVG, isGIF } from "./utils";
 
 import ImageWrapper from "./Wrapper";
 import ImageContent from "./Image";
+import { IS_STORY } from "visual/utils/models";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -72,7 +73,7 @@ class Image extends EditorComponent {
     const { containerWidth: stateContainerWidth } = this.state;
 
     if (getStore().getState().ui.deviceMode === "desktop") {
-      const containerWidth = this.container.current.clientWidth;
+      const containerWidth = this.container.current.parentElement.clientWidth;
 
       if (containerWidth !== stateContainerWidth) {
         this.setState({ containerWidth });
@@ -304,8 +305,12 @@ class Image extends EditorComponent {
       gallery
     });
 
+    const linked = v.linkExternal !== "" || v.linkPopulation !== "";
+
     const parentClassName = classnames(
       "brz-image",
+      IS_STORY && "brz-image--story",
+      { "brz-story-linked": IS_STORY && linked },
       this.getLightboxClassName(),
       className
     );
@@ -332,7 +337,7 @@ class Image extends EditorComponent {
       <Fragment>
         <Wrapper
           {...this.makeWrapperProps({
-            className: parentClassName,
+            className: classnames(parentClassName, classNameContent),
             ref: this.container
           })}
         >
@@ -340,8 +345,17 @@ class Image extends EditorComponent {
             {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
           >
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <div className={classNameContent}>
-                <ImageWrapper
+              <ImageWrapper
+                v={v}
+                vs={vs}
+                vd={vd}
+                _id={this.getId()}
+                componentId={this.constructor.componentId}
+                wrapperSizes={wrapperSizes}
+                meta={meta}
+                onChange={this.handleChange}
+              >
+                <ImageContent
                   v={v}
                   vs={vs}
                   vd={vd}
@@ -349,23 +363,12 @@ class Image extends EditorComponent {
                   componentId={this.constructor.componentId}
                   wrapperSizes={wrapperSizes}
                   meta={meta}
-                  onChange={this.handleChange}
-                >
-                  <ImageContent
-                    v={v}
-                    vs={vs}
-                    vd={vd}
-                    _id={this.getId()}
-                    componentId={this.constructor.componentId}
-                    wrapperSizes={wrapperSizes}
-                    meta={meta}
-                  />
-                </ImageWrapper>
-              </div>
+                />
+              </ImageWrapper>
             </CustomCSS>
           </Toolbar>
-          {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
         </Wrapper>
+        {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
         {popups.length > 0 &&
           linkType === "popup" &&
           linkPopup !== "" &&
@@ -376,6 +379,8 @@ class Image extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { className, linkLightBox, linkPopup, popups } = v;
+    const isAbsoluteOrFixed =
+      v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -389,8 +394,12 @@ class Image extends EditorComponent {
       props: this.props
     };
 
+    const linked = v.linkExternal !== "" || v.linkPopulation !== "";
+
     const parentClassName = classnames(
       "brz-image",
+      { "brz-story-linked": IS_STORY && linked },
+      isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
       className,
       css(

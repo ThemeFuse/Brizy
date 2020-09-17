@@ -14,8 +14,15 @@ export type Config = WithSize & {
   scroll: number;
 };
 
+export type ChoicesSync = InputType[];
+
+export type ChoicesAsync = {
+  load: (value: Value[], abortSignal?: AbortSignal) => Promise<InputType[]>;
+  search: (search: string, abortSignal?: AbortSignal) => Promise<InputType[]>;
+};
+
 export type Props = P<Value[], { value: Value }> &
   WithConfig<Config> & {
-    choices: InputType[];
+    choices: ChoicesSync | ChoicesAsync;
     placeholder?: string;
   };

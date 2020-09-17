@@ -22,6 +22,10 @@ $btn-default-color: #fff;
   backface-visibility: hidden;
   text-decoration: none;
 
+  .brz-ed-box__resizer {
+    height: auto;
+  }
+
   &:hover,
   &:focus,
   &.focus {
@@ -33,8 +37,12 @@ $btn-default-color: #fff;
   .brz-span {
     display: block;
   }
-  .brz-icon-svg {
-    flex: 1 0 auto;
+
+  .brz-btn--story-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

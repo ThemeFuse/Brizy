@@ -22,15 +22,19 @@ import {
   toolbarBorder2,
   toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 export function getItemsForDesktop(v, component) {
-  const inPopup = Boolean(component.props.meta.sectionPopup);
-  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const inPopup = Boolean(component.props.meta?.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const device = "desktop";
-  const maxBorderRadius = Math.round(
-    (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
-  );
+  const maxBorderRadius = IS_STORY
+    ? Math.round(
+        (v.customSize * 7.67 + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
+      )
+    : Math.round(
+        (v.customSize + v.tempPadding * 2 + v.tempBorderWidth * 2) / 2
+      );
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "colorHex", device }),
@@ -74,6 +78,7 @@ export function getItemsForDesktop(v, component) {
                   id: "sizeGroup",
                   type: "group-dev",
                   position: 60,
+                  disabled: IS_STORY,
                   options: [
                     {
                       id: "size",
@@ -832,6 +837,7 @@ export function getItemsForDesktop(v, component) {
                   id: "tabsColor",
                   className: "",
                   type: "tabs-dev",
+                  disabled: IS_STORY,
                   tabs: [
                     {
                       id: "tabText",
@@ -1132,7 +1138,9 @@ export function getItemsForDesktop(v, component) {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+              options: [
+                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+              ]
             },
             {
               id: "popup",
@@ -1141,7 +1149,7 @@ export function getItemsForDesktop(v, component) {
                 {
                   id: "linkPopup",
                   type: "promptAddPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${v.linkPopup}`,
                   value: {

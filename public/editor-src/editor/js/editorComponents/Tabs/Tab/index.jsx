@@ -1,7 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Background from "visual/component/Background";
 import Toolbar from "visual/component/Toolbar";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -55,8 +54,9 @@ class Tab extends EditorComponent {
     const { active, meta, onChangeNav, animationClassName } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       meta,
+      animationClassName,
       bindWithKey: "items",
-      className: "brz-tab"
+      className: "brz-tab brz-d-xs-flex brz-flex-xs-column"
     });
     const className = classnames("brz-tabs__items", {
       "brz-tabs__items--active": active
@@ -64,6 +64,10 @@ class Tab extends EditorComponent {
     const labelClassName = classnames("brz-tabs__nav--mobile", {
       "brz-tabs__nav--mobile--active": active
     });
+    const contentClassName = classnames(
+      "brz-tabs__item--content",
+      customClassName
+    );
 
     return (
       <div className={className}>
@@ -77,16 +81,14 @@ class Tab extends EditorComponent {
             </div>
           </Toolbar>
         </div>
-        <div className="brz-tabs__item--content">
-          <Background key="content" className={customClassName} value={v}>
-            <Animation
-              component={"div"}
-              componentProps={{}}
-              animationClass={animationClassName}
-            >
-              <Items {...itemsProps} />
-            </Animation>
-          </Background>
+        <div className={contentClassName}>
+          <Animation
+            component={"div"}
+            componentProps={{ className: "brz-d-xs-flex brz-flex-xs-column" }}
+            animationClass={animationClassName}
+          >
+            <Items {...itemsProps} />
+          </Animation>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import {
@@ -14,7 +14,6 @@ import {
 export const title = t("Header");
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
@@ -202,7 +201,7 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           devices: "desktop",

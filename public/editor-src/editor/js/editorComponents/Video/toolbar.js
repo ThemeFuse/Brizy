@@ -10,6 +10,7 @@ import {
   toolbarElementVideoUpload,
   toolbarElementVideoPlaySize
 } from "visual/utils/toolbar";
+import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -183,6 +184,7 @@ export function getItems({ v, device }) {
                   id: "start",
                   type: "number-dev",
                   label: t("Start"),
+                  devices: "desktop",
                   helper: {
                     content: t("Specify a start time (in seconds)")
                   },
@@ -196,6 +198,7 @@ export function getItems({ v, device }) {
                   id: "end",
                   type: "number-dev",
                   label: t("End"),
+                  devices: "desktop",
                   helper: {
                     content: t("Specify an end time (in seconds)")
                   },
@@ -378,6 +381,7 @@ export function getItems({ v, device }) {
         title: t("Settings")
       },
       position: 110,
+      disabled: IS_STORY,
       options: [
         {
           id: "size",
@@ -400,6 +404,13 @@ export function getItems({ v, device }) {
           icon: "nc-cog"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      position: 110,
+      disabled: !IS_STORY,
+      icon: "nc-cog"
     }
   ];
 }

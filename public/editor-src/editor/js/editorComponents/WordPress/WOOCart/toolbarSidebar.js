@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { toolbarBorderRadius } from "visual/utils/toolbar";
@@ -7,12 +7,11 @@ import { toolbarBorderRadius } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
-    dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("titleColorHex"),
+    dvv("titleColorPalette")
   );
 
   return [
@@ -20,8 +19,8 @@ export function getItems({ v, device }) {
       id: "popoverCurrentElement",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2",
-        title: t("WOOCart")
+        icon: "nc-woo-cart",
+        title: t("Shop Cart")
       },
       position: 60,
       options: [
@@ -134,14 +133,14 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: "toolbarColor",
+      id: "toolbarColor2",
       type: "popover-dev",
       config: {
         size: "auto",
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: hexToRgba(colorHex, dvv("titleColorOpacity"))
           }
         }
       },
@@ -149,11 +148,11 @@ export function getItems({ v, device }) {
       devices: "desktop",
       options: [
         {
-          id: dvk("tabsToolbarColor"),
-          type: "tabs",
+          id: "tabsToolbarColor",
+          type: "tabs-dev",
           tabs: [
             {
-              id: dvk("titleColorTab"),
+              id: "titleColorTab",
               label: t("Title"),
               options: [
                 {
@@ -165,7 +164,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("costColorTab"),
+              id: "costColorTab",
               label: t("Price"),
               options: [
                 {
@@ -177,7 +176,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("subtotalColorTab"),
+              id: "subtotalColorTab",
               label: t("Sub."),
               options: [
                 {
@@ -189,7 +188,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("buttonColorTab"),
+              id: "buttonColorTab",
               label: t("Btn."),
               options: [
                 {
@@ -201,7 +200,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("buttonBgColorTab"),
+              id: "buttonBgColorTab",
               label: t("Bg Btn."),
               options: [
                 {
@@ -215,6 +214,96 @@ export function getItems({ v, device }) {
           ]
         }
       ]
+    },
+    {
+      id: "cartHorizontalAlign",
+      type: "toggle-dev",
+      disabled: dvv("sidebarWidth") >= 100 && dvv("sidebarWidthSuffix") === "%",
+      position: 90,
+      choices: [
+        { icon: "nc-hrz-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-hrz-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-hrz-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "cartVerticalAlign",
+      type: "toggle-dev",
+      disabled:
+        dvv("sidebarHeightStyle") === "fullHeight" ||
+        (dvv("sidebarHeight") >= 100 && dvv("sidebarHeightSuffix") === "vh"),
+      position: 110,
+      choices: [
+        { icon: "nc-ver-align-top", title: t("Align"), value: "top" },
+        { icon: "nc-ver-align-middle", title: t("Align"), value: "center" },
+        { icon: "nc-ver-align-bottom", title: t("Align"), value: "bottom" }
+      ]
+    },
+    {
+      id: "horizontalAlign",
+      type: "toggle-dev",
+      disabled: true
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      roles: ["admin"],
+      position: 110,
+      options: [
+        {
+          id: "sidebarWidth",
+          label: t("Width"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: dvv("sidebarWidthSuffix") === "px" ? 500 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
+          }
+        },
+        {
+          id: "groupHeight",
+          type: "group-dev",
+          position: 100,
+          options: [
+            {
+              id: "sidebarHeightStyle",
+              label: t("Height"),
+              type: "select-dev",
+              choices: [
+                { title: t("Auto"), value: "auto" },
+                { title: t("Custom"), value: "custom" },
+                { title: t("Full Height"), value: "fullHeight" }
+              ]
+            },
+            {
+              id: "sidebarHeight",
+              type: "slider-dev",
+              disabled: dvv("sidebarHeightStyle") !== "custom",
+              config: {
+                min: 20,
+                max: dvv("sidebarHeightSuffix") === "px" ? 500 : 100,
+                units: [
+                  { title: "px", value: "px" },
+                  { title: "%", value: "vh" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "duplicate",
+      type: "button",
+      disabled: true
+    },
+    {
+      id: "remove",
+      type: "button",
+      disabled: true
     }
   ];
 }

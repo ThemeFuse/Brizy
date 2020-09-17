@@ -124,7 +124,7 @@ class Items extends EditorArrayComponent {
 
   renderItemsContainer(items) {
     if (IS_PREVIEW) {
-      return items;
+      return <div className={this.props.containerClassName}>{items}</div>;
     }
 
     const sortableContent = items.length ? (

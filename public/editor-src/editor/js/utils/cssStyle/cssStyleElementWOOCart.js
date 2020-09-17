@@ -2,7 +2,14 @@ import {
   styleElementWOOCartSubtotalDisabled,
   styleElementWOOCartPurchasesDisabled,
   styleElementWOOCartButtonDirection,
-  styleElementWOOCartButtonSpacing
+  styleElementWOOCartButtonSpacing,
+  styleElementWOOCartSidebarHorizontalAlign,
+  styleElementWOOCartSidebarVerticalAlign,
+  styleElementWOOCartSidebarWidth,
+  styleElementWOOCartSidebarWidthSuffix,
+  styleElementWOOCartSidebarHeightStyle,
+  styleElementWOOCartSidebarHeight,
+  styleElementWOOCartSidebarHeightSuffix
 } from "visual/utils/style2";
 
 import {
@@ -320,4 +327,87 @@ export function cssStyleElementWOOCartButtonSpacing({ v, device, state }) {
 
 export function cssStyleElementWOOCartButtonBorderRadius({ v, device, state }) {
   return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementWOOCartSidebarHorizontalAlign({
+  v,
+  device,
+  state
+}) {
+  const align = {
+    left: "left: 0; margin-right: auto; margin-left: 0;",
+    center: "left: 0; right: 0; margin-left: auto; margin-right: auto;",
+    right: "right: 0; margin-right: 0; margin-left: auto;"
+  };
+
+  const horizontalAlign = styleElementWOOCartSidebarHorizontalAlign({
+    v,
+    device,
+    state
+  });
+
+  return horizontalAlign === undefined || horizontalAlign === null
+    ? ""
+    : align[horizontalAlign];
+}
+
+export function cssStyleElementWOOCartSidebarVerticalAlign({
+  v,
+  device,
+  state
+}) {
+  const align = {
+    top: "top: 0; margin-top: 0; margin-bottom: auto;",
+    center: "top: 0; bottom: 0; margin-top: auto; margin-bottom: auto;",
+    bottom: "bottom: 0; margin-top: auto; margin-bottom: 0;"
+  };
+
+  const verticalAlign = styleElementWOOCartSidebarVerticalAlign({
+    v,
+    device,
+    state
+  });
+
+  return verticalAlign === undefined || verticalAlign === null
+    ? ""
+    : align[verticalAlign];
+}
+
+export function cssStyleElementWOOCartSidebarWidth({ v, device, state }) {
+  const width = styleElementWOOCartSidebarWidth({ v, device, state });
+  const widthSuffix = styleElementWOOCartSidebarWidthSuffix({
+    v,
+    device,
+    state
+  });
+
+  return (width === undefined || width === null) &&
+    (widthSuffix === undefined || widthSuffix === null)
+    ? ""
+    : `width: ${width}${widthSuffix};`;
+}
+
+export function cssStyleElementWOOCartSidebarHeight({ v, device, state }) {
+  const heightStyle = styleElementWOOCartSidebarHeightStyle({
+    v,
+    device,
+    state
+  });
+  const height = styleElementWOOCartSidebarHeight({ v, device, state });
+  const heightSuffix = styleElementWOOCartSidebarHeightSuffix({
+    v,
+    device,
+    state
+  });
+
+  const heightType = {
+    auto: "auto",
+    custom: `${height}${heightSuffix}`,
+    fullHeight: "100vh"
+  };
+
+  return (height === undefined || height === null) &&
+    (heightSuffix === undefined || heightSuffix === null)
+    ? ""
+    : `height:${heightType[heightStyle]};`;
 }

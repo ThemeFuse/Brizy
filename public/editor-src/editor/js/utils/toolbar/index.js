@@ -88,7 +88,6 @@ export {
 
 // Disabled
 export {
-  toolbarDisabledMedia,
   toolbarDisabledAdvancedSettings,
   toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
@@ -156,12 +155,6 @@ export {
 
 // Element Login
 export { toolbarElementLoginSpacingPx } from "./toolbarElementLogin";
-
-// Element Icon Text
-export {
-  toolbarElementIconTextListDisabled,
-  toolbarElementIconDisabledSettings
-} from "./toolbarElementIconText";
 
 // Shape
 export {

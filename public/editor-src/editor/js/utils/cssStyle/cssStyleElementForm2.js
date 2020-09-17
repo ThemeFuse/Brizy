@@ -1,4 +1,5 @@
 import { defaultValueValue } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
 import {
   styleSizeWidth,
   styleSizeHeight,
@@ -75,7 +76,8 @@ export function cssStyleElementForm2Margin({ v, device, state }) {
   return paddingTop === undefined ||
     paddingRight === undefined ||
     paddingBottom === undefined ||
-    paddingLeft === undefined
+    paddingLeft === undefined ||
+    IS_STORY
     ? ""
     : `margin:-${paddingTop}px -${paddingRight / 2}px
        -${paddingBottom}px -${paddingLeft / 2}px;`;
@@ -98,6 +100,8 @@ export function cssStyleElementForm2Padding({ v, device, state }) {
     paddingBottom === undefined ||
     paddingLeft === undefined
     ? ""
+    : IS_STORY
+    ? `padding:0 0 ${paddingBottom}${paddingBottomSuffix} 0;`
     : `padding:${paddingTop}${paddingTopSuffix}
       ${paddingRight / 2}${paddingRightSuffix}
       ${paddingBottom}${paddingBottomSuffix}
@@ -264,4 +268,8 @@ function getBorderTopBottomWidth({ v, device, state, prefix = "" }) {
   }
 
   return borderTopWidth + borderBottomWidth;
+}
+
+export function cssStyleElementForm2StoryButtonHeight({ v }) {
+  return `content: ""; padding-top: ${v.submitHeight}%;`;
 }

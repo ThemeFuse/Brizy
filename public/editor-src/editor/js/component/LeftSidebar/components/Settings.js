@@ -5,19 +5,16 @@ import Link from "./Options/types/Link";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors2";
 import { t } from "visual/utils/i18n";
-import { IS_EXTERNAL_POPUP, IS_INTERNAL_POPUP } from "visual/utils/models";
+import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 const SettingComponent = () => {
   const [opened, setOpened] = useState(false);
   const siteUrl = Config.get("urls").site;
   const projectId = Config.get("project").id;
+  const mode = Config.get("mode");
   const id = pageSelector(getStore().getState()).id;
-  let mode = "page_id";
-  if (IS_INTERNAL_POPUP) {
-    mode = "internal_popup_id";
-  }
 
-  let iframeSrc = `${siteUrl}/projects/${projectId}/settings?${mode}=${id}`;
+  let iframeSrc = `${siteUrl}/projects/${projectId}/settings?${mode}_id=${id}`;
 
   return (
     <>

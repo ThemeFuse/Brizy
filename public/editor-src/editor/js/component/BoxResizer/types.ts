@@ -48,6 +48,11 @@ export type DimensionSuffixs = DimensionSuffix & {
   mobileSizeSuffix: DimensionSuffixVariants;
 };
 
+export type SimpleOffsets = {
+  offsetX: number;
+  offsetY: number;
+};
+
 export type Meta = { [k: string]: unknown };
 
 export type Aligns = "horizontalAlign" | "verticalAlign";
@@ -63,6 +68,19 @@ export type TransformRestrictions = (
 
 export type RestrictionMapping = Partial<Record<keyof Restriction, number>>;
 export type TransformValue = (value: V) => RestrictionMapping;
+
+// should V type be returned?
+export type TransformStory = (
+  transformV: RestrictionMapping,
+  sourceV: V
+) => RestrictionMapping & SimpleOffsets;
+
+export type TransformStoryPatch = (
+  patch: Partial<RestrictionsMapping>,
+  startValue: RestrictionMapping | (RestrictionMapping & SimpleOffsets),
+  point: Point,
+  startRect: DOMRect
+) => Partial<RestrictionsMapping> & Partial<SimpleOffsets>;
 
 export type RestrictionsMapping = Record<keyof Restrictions, number>;
 export type TransformPatch = (
@@ -86,4 +104,5 @@ export type Patch = {
   deltaX: number;
   deltaY: number;
   point: Point;
+  startRect: DOMRect;
 };

@@ -38,6 +38,8 @@ import { MValue } from "visual/utils/value";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
 import { ReduxState } from "visual/redux/types";
+import { attachRef } from "visual/utils/react";
+import * as GlobalState from "visual/global/StateMode";
 
 const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
   first.toUpperCase() +
@@ -51,7 +53,8 @@ type Model<M> = M & {
   tabsState?: State.State;
 };
 
-type DefaultValueProcessed = {
+type DefaultValueProcessed<T> = T & {
+  defaultValue: T;
   dynamicContentKeys: [string, string][];
 };
 
@@ -104,12 +107,12 @@ export type ToolbarExtend = {
   getItems: (device?: Responsive.ResponsiveMode) => OptionDefinition[];
   getSidebarItems: (device?: Responsive.ResponsiveMode) => OptionDefinition[];
   getSidebarTitle: () => string;
-  onBeforeOpen: () => void;
-  onBeforeClose: () => void;
-  onOpen: () => void;
-  onClose: () => void;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onBeforeOpen?: () => void;
+  onBeforeClose?: () => void;
+  onOpen?: () => void;
+  onClose?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 export type Props<M extends ElementModel, P> = WithClassName & {
@@ -156,27 +159,11 @@ export class EditorComponent<
 
   static experimentalDynamicContent = false;
 
-  _defaultValueProcessedCache?: DefaultValueProcessed;
+  _defaultValueProcessedCache?: DefaultValueProcessed<M>;
 
   _dynamicContentPending?: DynamicContentObjIncomplete;
 
   childToolbarExtend?: ToolbarExtend;
-
-  makeWrapperProps = (props: Partial<WrapperProps<P>>): WrapperProps<P> => {
-    const extend = this.props.wrapperExtend ?? ({} as WrapperProps<P>);
-    const className = classNames(extend.className, props.className);
-    const attributes = {
-      ...(extend.attributes || {}),
-      ...(props.attributes || {})
-    } as P;
-
-    return {
-      ...extend,
-      ...props,
-      className,
-      attributes
-    };
-  };
 
   // shouldComponentUpdate(nextProps) {
   //   return this.optionalSCU(nextProps);
@@ -274,13 +261,14 @@ export class EditorComponent<
       : newDefaultValue;
   }
 
-  getDefaultValueProcessed(): DefaultValueProcessed {
+  getDefaultValueProcessed(): DefaultValueProcessed<M> {
     if (this._defaultValueProcessedCache) {
       return this._defaultValueProcessedCache;
     }
 
     const defaultValue = this.getDefaultValue();
     this._defaultValueProcessedCache = {
+      defaultValue: defaultValue,
       dynamicContentKeys: Object.keys(defaultValue).reduce((acc, k) => {
         if (k.endsWith("Population")) {
           acc.push([k.replace("Population", ""), k]);
@@ -288,7 +276,7 @@ export class EditorComponent<
 
         return acc;
       }, [] as [string, string][])
-    };
+    } as DefaultValueProcessed<M>;
 
     return this._defaultValueProcessedCache;
   }
@@ -430,6 +418,36 @@ export class EditorComponent<
   selfDestruct(): void {
     this.props.onChange(null, { intent: "remove_all" });
   }
+
+  bindPatchValue = (patch: Partial<ElementModel>): void =>
+    this.patchValue(patch as Partial<Model<M>>);
+
+  makeWrapperProps = (props: Partial<WrapperProps<P>>): WrapperProps<P> => {
+    const extend = this.props.wrapperExtend ?? ({} as WrapperProps<P>);
+    const className = classNames(extend.className, props.className);
+    const attributes = {
+      ...(extend.attributes || {}),
+      ...(props.attributes || {})
+    } as P;
+
+    return {
+      ...extend,
+      ...props,
+      className,
+      attributes,
+      id: this.getId(),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      componentId: this.constructor.componentId,
+      ...this.getValue2(),
+      // ! is it ok to use here type assertion - as Partial<Model<M>> ?!
+      onChange: this.bindPatchValue,
+      ref: (v: HTMLElement | null): void => {
+        attachRef(v, extend.ref || null);
+        attachRef(v, props.ref || null);
+      }
+    };
+  };
 
   makeSubcomponentProps({
     bindWithKey,
@@ -710,7 +728,12 @@ export class EditorComponent<
 
       if (Responsive.empty === device) {
         // Apply state mode only in desktop device mode
-        option = bindStateToOption(state, stateOnChange, option);
+        option = bindStateToOption(
+          GlobalState.states,
+          state,
+          stateOnChange,
+          option
+        );
       }
 
       //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format

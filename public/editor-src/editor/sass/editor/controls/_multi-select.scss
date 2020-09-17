@@ -140,10 +140,17 @@
       border-bottom-color: transparent;
     }
 
-    &:hover,
+    &:hover:not(.brz-ed-control__multiSelect__option--disabled),
     &--active {
       transition: color 0.15s linear;
       color: $brand-primary;
+    }
+
+    &--disabled {
+      transition: none;
+      cursor: default;
+      color: $gray-light;
+      font-style: italic;
     }
   }
 

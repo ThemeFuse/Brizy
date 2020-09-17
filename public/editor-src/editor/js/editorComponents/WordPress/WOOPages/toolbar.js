@@ -1,15 +1,16 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device });
+export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
 
   return [
     {
       id: "toolbarWOOPages",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2"
+        icon: "nc-woo-pages",
+        title: t("Shop Pages")
       },
       devices: "desktop",
       position: 10,
@@ -23,11 +24,17 @@ export function getItems({ device }) {
             { title: t("Cart"), value: "woocommerce_cart" },
             { title: t("Checkout"), value: "woocommerce_checkout" },
             { title: t("My Account"), value: "woocommerce_my_account" },
-            {
-              title: t("Order Tracking"),
-              value: "woocommerce_order_tracking"
-            }
+            { title: t("Order Tracking"), value: "woocommerce_order_tracking" },
+            { title: t("Product"), value: "brizy_product_page" }
           ]
+        },
+        {
+          id: "productID",
+          label: t("Product ID"),
+          type: "inputText-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "brizy_product_page",
+          placeholder: t("Product ID or SKU")
         }
       ]
     },
@@ -45,12 +52,15 @@ export function getItems({ device }) {
           type: "slider-dev",
           config: {
             min: 1,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            max: dvv("widthSuffix") === "px" ? 1000 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

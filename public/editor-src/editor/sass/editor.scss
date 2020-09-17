@@ -34,9 +34,6 @@
 // Border Container
 @import "editor/border-container";
 
-// Background
-@import "editor/background";
-
 // Container Wrap
 @import "editor/container-wrap";
 
@@ -45,6 +42,9 @@
 
 // countdown2
 @import "editor/countdown2";
+
+// counter
+@import "editor/counter";
 
 // Device Mode
 @import "editor/device-mode";
@@ -130,11 +130,13 @@
 // Image
 @import "editor/image";
 
-// WOORating
-@import "editor/WOORating";
-
-// WOOCart
-@import "editor/WOOCart";
+@import "editor/woo-cart";
 
 // MenuSimple
 @import "editor/menu-simple";
+
+// WOO Gallery
+@import "editor/woo-gallery";
+
+// WOO Empty
+@import "editor/_placeholder-empty";

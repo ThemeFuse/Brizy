@@ -72,15 +72,54 @@ export default class ThemeIcon extends React.Component {
     }
   }
 
+  getSvgContent(svg) {
+    if (svg) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svg, "text/html");
+      const _svg = doc.body.firstChild || { innerHTML: null, attributes: {} };
+      const attrs = _svg.attributes;
+      const innerHtml = _svg.innerHTML;
+      let attr = {};
+
+      const attrsToTransform = {
+        "xmlns:xlink": "xmlnsXlink",
+        "xml:space": "xmlSpace"
+      };
+
+      for (let i = 0; i < attrs.length; i++) {
+        let { name, value } = attrs[i];
+
+        // transforms some attr to jsx attr
+        if (attrsToTransform[name]) {
+          name = attrsToTransform[name];
+        }
+
+        attr[name] = value;
+      }
+
+      return {
+        attr,
+        innerHtml
+      };
+    }
+
+    return {
+      innerHtml: null,
+      attr: {}
+    };
+  }
+
   renderForEdit() {
     const { className: _className } = this.props;
     const className = classnames("brz-icon-svg", _className);
+    const { innerHtml, attr } = this.getSvgContent(this.state.icon);
 
     return (
-      this.state.icon && (
+      innerHtml && (
         <svg
+          {...attr}
           className={className}
-          dangerouslySetInnerHTML={{ __html: this.state.icon }}
+          dangerouslySetInnerHTML={{ __html: innerHtml }}
         />
       )
     );

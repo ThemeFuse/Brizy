@@ -1,6 +1,7 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
@@ -82,23 +83,33 @@ class SectionItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
+    const { className } = this.props;
+
     if (IS_PREVIEW) {
-      return <div className={this.props.className}>{items}</div>;
+      return <div className={className}>{items}</div>;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.className}>{items}</div>
-    ) : null;
-
-    return (
-      <Sortable
-        path={this.getPath()}
-        type="section"
-        acceptElements={["row", "column", "shortcode", "addable"]}
-      >
-        {sortableContent}
-      </Sortable>
-    );
+    if (items.length) {
+      return (
+        <Sortable
+          path={this.getPath()}
+          type="section"
+          acceptElements={["row", "column", "shortcode", "addable"]}
+        >
+          <div className={className}>{items}</div>
+        </Sortable>
+      );
+    } else {
+      return (
+        <div className={className}>
+          <SortableEmpty
+            path={this.getPath()}
+            type="section"
+            acceptElements={["row", "column", "shortcode", "addable"]}
+          />
+        </div>
+      );
+    }
   }
 }
 

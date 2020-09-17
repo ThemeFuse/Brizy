@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Comments");
+export const title = ({ v }) =>
+  v.review === "true" ? t("Review") : t("Comments");
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>

@@ -154,9 +154,6 @@
 // breadcrumbs
 @import "editorComponents/breadcrumbs";
 
-// WOOSku
-@import "editorComponents/WOOSku";
-
 // Post info
 @import "editorComponents/postinfo";
 
@@ -169,26 +166,11 @@
 // Search
 @import "editorComponents/search";
 
-// WOOPrice
-@import "editorComponents/WOOPrice";
-
-// WOOAdditional
-@import "editorComponents/WOOAdditional";
-
 // comments
 @import "editorComponents/comments";
 
 // Image
 @import "editorComponents/image";
-
-// WOOProductMeta
-@import "editorComponents/WOOProductMeta";
-
-// WOORating
-@import "editorComponents/WOORating";
-
-// WOOCart
-@import "editorComponents/WOOCart";
 
 // MenuSimple
 @import "editorComponents/menu-simple";
@@ -196,7 +178,19 @@
 // Login
 @import "editorComponents/login";
 
+// Shape
+@import "editorComponents/shape";
+
 // wp
 @import "editorComponents/wp-post-content";
 @import "editorComponents/wp-post-excerpt";
 @import "editorComponents/woo-stock";
+@import "editorComponents/woo-sku";
+@import "editorComponents/woo-product-meta";
+@import "editorComponents/woo-price";
+@import "editorComponents/woo-attributes";
+@import "editorComponents/woo-cart";
+@import "editorComponents/woo-rating";
+@import "editorComponents/woo-gallery";
+@import "editorComponents/woo-add-to-cart";
+@import "editorComponents/woo-excerpt";

@@ -1,0 +1,29 @@
+.brz-woo-gallery {
+  .woocommerce-product-gallery {
+    margin: 0;
+    font-size: 1.3rem;
+    float: none !important;
+    width: 100%;
+    max-width: 100%;
+
+    img {
+      width: 100%;
+    }
+    .flex-viewport {
+      margin-bottom: 0;
+    }
+    .flex-control-thumbs {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        overflow: hidden;
+
+        &:last-child,
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

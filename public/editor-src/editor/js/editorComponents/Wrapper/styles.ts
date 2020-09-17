@@ -5,49 +5,42 @@ export function styleWrapper(
   v: ElementModel,
   vs: ElementModel,
   vd: ElementModel
-): string {
-  const styles = {
+): [string, string, string] {
+  const styles: {
+    [k: string]: {
+      interval?: string[];
+      standart?: string[];
+    };
+  } = {
     ".brz &&:hover": {
       interval: [
-        "cssStyleDisplayBlock",
+        "cssStyleDisplayFlex",
         "cssStyleVisibleMode|||preview",
-        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor",
+        "cssStyleVisibleEditorDisplayNoneOrFlex|||editor",
         "cssStyleZIndex",
         "cssStyleCustomPosition",
         "cssStyleCustomWidth",
         "cssStyleWrapperFixedFlex",
         "cssStyleOffset"
-      ]
-    },
-    ".brz && > .brz-ed-border": {
-      interval: ["cssStyleWrapperBorderFlex|||editor"]
-    }
-  };
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleContainer(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): string {
-  const styles = {
-    ".brz &&:hover": {
-      interval: ["cssStyleVisibleMode|||editor"],
+      ],
       standart: [
         "cssStylePaddingFourFields",
         "cssStyleMargin",
         "cssStyleFlexHorizontalAlign",
         "cssStylePositionMode",
-        "cssStyleWrapperContainerFlex"
+        "cssStyleWrapperContainerFlex",
+        "cssStyleWrapperBorderFlex"
       ]
-    },
-    ".brz &&:before": {
-      interval: ["cssStyleVisibleMode|||editor"]
     }
   };
+
+  if (IS_EDITOR) {
+    styles[
+      ".brz &&:hover > *:not(.brz-ed-border__inner):not(.brz-ed-border__button)"
+    ] = {
+      interval: ["cssStyleVisibleMode|||editor"]
+    };
+  }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
@@ -58,7 +51,7 @@ export function styleAnimation(
   v: ElementModel,
   vs: ElementModel,
   vd: ElementModel
-): string {
+): [string, string, string] {
   const styles = {
     ".brz &&:hover": {
       standart: [

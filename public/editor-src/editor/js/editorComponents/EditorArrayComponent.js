@@ -10,6 +10,7 @@ import {
   pageDataNoRefsSelector,
   copiedElementNoRefsSelector
 } from "visual/redux/selectors";
+import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
 import ErrorBoundary from "visual/component/ErrorBoundary";
@@ -20,7 +21,6 @@ import {
   getElementOfArrayLoop,
   getClosestParent,
   getParentWhichContainsStyleProperty,
-  insertItem,
   mapModels
 } from "visual/utils/models";
 import { symbolsToItems } from "visual/editorComponents/Menu";
@@ -51,30 +51,6 @@ export default class EditorArrayComponent extends EditorComponent {
     sliceStartIndex: 0,
     sliceEndIndex: Infinity
   };
-
-  /**
-   * @deprecated
-   */
-  static insertItem = insertItem;
-
-  static insertItemsBatch(items, itemIndex, itemsData) {
-    const updatedValue = itemsData.reduce((acc, itemData, index) => {
-      const itemDataStripped = stripSystemKeys(itemData);
-      const itemDataWithIds = setIds(itemDataStripped);
-
-      return insert(acc, itemIndex + index, itemDataWithIds);
-    }, items);
-
-    return updatedValue;
-  }
-
-  static cloneItem(items, itemIndex, toIndex = itemIndex + 1) {
-    if (!items[itemIndex]) {
-      throw new Error(`Can't clone invalid item at index ${itemIndex}`);
-    }
-
-    return EditorArrayComponent.insertItem(items, toIndex, items[itemIndex]);
-  }
 
   insertItem(itemIndex, itemData) {
     const itemDataStripped = stripSystemKeys(itemData);
@@ -153,7 +129,14 @@ export default class EditorArrayComponent extends EditorComponent {
       case "ctrl+D":
       case "cmd+D":
       case "right_cmd+D":
-        this.cloneItem(itemIndex);
+        if (v[itemIndex].type === "StoryWrapper") {
+          this.insertItem(
+            itemIndex + 1,
+            setOffsetsToElementFromWrapper(v[itemIndex])
+          );
+        } else {
+          this.cloneItem(itemIndex);
+        }
         return;
       case "alt+C":
       case "ctrl+C":
@@ -165,7 +148,26 @@ export default class EditorArrayComponent extends EditorComponent {
       case "ctrl+V":
       case "cmd+V":
       case "right_cmd+V":
-        this.paste(itemIndex);
+        if (v[itemIndex].type === "StoryWrapper") {
+          this.paste(itemIndex, sourceV => {
+            const { offsetX = 0, offsetY = 0 } = v[
+              itemIndex
+            ].value.items[0].value;
+            let newV = setIn(
+              sourceV,
+              ["value", "items", 0, "value", "offsetX"],
+              offsetX
+            );
+            newV = setIn(
+              newV,
+              ["value", "items", 0, "value", "offsetY"],
+              offsetY
+            );
+            return setOffsetsToElementFromWrapper(newV);
+          });
+        } else {
+          this.paste(itemIndex);
+        }
         return;
       case "alt+shift+V":
       case "ctrl+shift+V":
@@ -454,7 +456,8 @@ export default class EditorArrayComponent extends EditorComponent {
     dispatch(updateCopiedElement({ value: pageData, path: shortcodePath }));
   }
 
-  paste(index) {
+  // cb = v => v -> it's needed for cases when we want to change somehow final value
+  paste(index, cb = v => v) {
     const v = this.getValue()[index];
     const { path, value: copiedValue } = copiedElementNoRefsSelector(
       getStore().getState()
@@ -471,7 +474,7 @@ export default class EditorArrayComponent extends EditorComponent {
         : ({ type }) => type === v.type
     );
     if (value) {
-      this.insertItem(index + 1, value);
+      this.insertItem(index + 1, cb(value));
     }
   }
 

@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
@@ -12,7 +12,6 @@ import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -65,7 +64,7 @@ export function getItems({ v, device, component }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabText"),
+              id: "tabText",
               label: t("Text"),
               options: [
                 {
@@ -98,7 +97,7 @@ export function getItems({ v, device, component }) {
           },
           tabs: [
             {
-              id: dvk("external"),
+              id: "external",
               label: t("URL"),
               options: [
                 toolbarLinkExternal({
@@ -122,7 +121,7 @@ export function getItems({ v, device, component }) {
               ]
             },
             {
-              id: dvk("anchor"),
+              id: "anchor",
               label: t("Block"),
               options: [
                 toolbarLinkAnchor({
@@ -135,7 +134,7 @@ export function getItems({ v, device, component }) {
               ]
             },
             {
-              id: dvk("popup"),
+              id: "popup",
               label: t("Popup"),
               options: [
                 toolbarLinkPopup({
@@ -182,7 +181,7 @@ export function getItems({ v, device, component }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,

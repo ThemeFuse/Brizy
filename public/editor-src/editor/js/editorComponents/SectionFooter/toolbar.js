@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementSectionGlobal,
   toolbarBgImage,
@@ -24,7 +24,6 @@ import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
 
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
 
@@ -448,7 +447,7 @@ export function getItems({ v, device, component, state }) {
           ]
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),

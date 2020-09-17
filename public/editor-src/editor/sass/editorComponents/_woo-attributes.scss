@@ -1,0 +1,31 @@
+.brz-woo-attributes {
+  table {
+    border: 0;
+  }
+
+  // need to remove title from DOM
+  h2 {
+    display: none;
+  }
+
+  .woocommerce-product-attributes {
+    width: 100%;
+    margin: 0;
+
+    tr {
+      border-width: 0;
+      background-color: transparent;
+    }
+  }
+  .woocommerce-product-attributes-item__label,
+  .woocommerce-product-attributes-item__value {
+    width: 50%;
+    padding: 0;
+    font-style: normal;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

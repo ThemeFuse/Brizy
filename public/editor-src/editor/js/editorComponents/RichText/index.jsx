@@ -143,6 +143,7 @@ class RichText extends EditorComponent {
   getClassName(v, vs, vd) {
     return classNames(
       "brz-rich-text",
+      { "brz-story-linked": IS_STORY },
       v.className,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
@@ -235,34 +236,8 @@ class RichText extends EditorComponent {
 
     const restrictions = {
       width: {
-        px: {
-          min: 50,
-          max: 1000
-        },
         "%": {
-          min: 20,
-          max: 100
-        }
-      },
-      // Tablet
-      tabletWidth: {
-        px: {
-          min: 50,
-          max: 1000
-        },
-        "%": {
-          min: 20,
-          max: 100
-        }
-      },
-      // Mobile
-      mobileWidth: {
-        px: {
-          min: 50,
-          max: 1000
-        },
-        "%": {
-          min: 20,
+          min: 5,
           max: 100
         }
       }

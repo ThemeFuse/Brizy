@@ -1,17 +1,26 @@
 import { uuid } from "visual/utils/uuid";
 import { murmurhash2 } from "visual/utils/crypto";
 import * as onStyles from "visual/utils/cssStyle";
+import { IS_STORY } from "visual/utils/models";
 
-const devices = {
-  desktop: 1500,
-  tablet: 991,
-  mobile: 767
-};
+const devices = IS_STORY
+  ? {
+      desktop: 1500
+    }
+  : {
+      desktop: 1500,
+      tablet: 991,
+      mobile: 767
+    };
 
-const states = {
-  normal: "normal",
-  hover: "hover"
-};
+const states = IS_STORY
+  ? {
+      normal: "normal"
+    }
+  : {
+      normal: "normal",
+      hover: "hover"
+    };
 
 let legacyByDefault = {};
 
@@ -32,6 +41,7 @@ export function renderStyles({ v, vs, vd, styles, props }) {
     );
   }
 }
+
 function loopStyles({ v, vs, vd, styles, props }) {
   let outV = "";
   let outVS = "";
@@ -40,6 +50,7 @@ function loopStyles({ v, vs, vd, styles, props }) {
   let legacyVS = {};
   let legacyVD = {};
   let mode = "";
+
   /* eslint-disable no-unused-vars */
   Object.entries(devices).forEach(function([device, deviceValue]) {
     Object.entries(states).forEach(function([state, stateValue]) {
@@ -213,14 +224,16 @@ function cssOutput({ v, styles, legacy }) {
 
       if (gooutInterval !== "") {
         intervalCss =
-          devicesCounter === 0
-            ? `@media(min-width:${devicesArray[devicesCounter + 1][1]}px){`
-            : devicesCounter === devicesArray.length - 1
-            ? `@media(max-width:${deviceValue}px){`
-            : `@media(max-width:${
-                devicesArray[devicesCounter][1]
-              }px) and (min-width:${devicesArray[devicesCounter + 1][1] +
-                1}px){`;
+          devicesArray.length > 1 // asta e nevoie pentru stories pentru ca acolo e doar un singur device
+            ? devicesCounter === 0
+              ? `@media(min-width:${devicesArray[devicesCounter + 1][1]}px){`
+              : devicesCounter === devicesArray.length - 1
+              ? `@media(max-width:${deviceValue}px){`
+              : `@media(max-width:${
+                  devicesArray[devicesCounter][1]
+                }px) and (min-width:${devicesArray[devicesCounter + 1][1] +
+                  1}px){`
+            : "";
 
         goout += intervalCss + gooutInterval + (intervalCss !== "" ? "}" : "");
       }

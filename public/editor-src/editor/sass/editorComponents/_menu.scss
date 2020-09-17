@@ -337,7 +337,19 @@ $dropdown-arrow-size: 7px;
   width: 100%;
 }
 
-// Mega Menu in MMenu
+// Mega Menu
+.brz-mega-menu {
+  position: relative;
+
+  & > .brz-bg {
+    overflow: hidden;
+  }
+  & > .brz-container {
+    position: relative;
+  }
+}
+
+// MegaMenu MMenu
 .brz-mega-menu__mmenu {
   overflow: visible;
   padding: 0;

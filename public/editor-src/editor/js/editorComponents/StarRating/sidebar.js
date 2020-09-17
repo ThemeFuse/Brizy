@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
 
 export const title = t("Rating");
 
@@ -11,9 +11,7 @@ const helperHTML = `
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems() {
   return [
     {
       id: "settingsTabs",
@@ -23,13 +21,13 @@ export function getItems({ device }) {
       },
       tabs: [
         {
-          id: dvk("settingsStyling"),
+          id: "settingsStyling",
           label: t("Styling"),
           icon: "nc-styling",
           options: []
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [
@@ -46,6 +44,7 @@ export function getItems({ device }) {
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
+              disabled: IS_STORY,
               position: 70,
               devices: "desktop",
               type: "slider-dev",

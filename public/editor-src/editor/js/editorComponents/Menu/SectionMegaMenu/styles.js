@@ -8,28 +8,15 @@ export function styleSection(v, vs, vd) {
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
-    }
-  };
-
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleBg(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover": {
-      interval: [
-        "cssStyleVisibleMode|||editor",
-        "cssStyleSizeMaxWidthContainer"
-      ]
     },
-    ".brz &&:hover > .brz-bg-media": {
+    ".brz &&:hover > .brz-bg": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleSectionPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
+    ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
@@ -40,7 +27,7 @@ export function styleBg(v, vs, vd) {
         "cssStyleSectionPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
       interval: [
         "cssStyleHoverTransition",
@@ -58,13 +45,16 @@ export function styleBg(v, vs, vd) {
   return renderStyles({ v, vs, vd, styles });
 }
 
-export function styleContainerWrap(v, vs, vd) {
+export function styleContainer(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
+      interval: ["cssStyleVisibleMode|||editor"],
       standart: [
+        "cssStylePaddingFourFields",
+        "cssStylePaddingRightLeftForEditor",
         "cssStyleElementMegaMenuHeight",
-        "cssStyleFlexVerticalAlign",
-        "cssStyleDisplayFlex"
+        "cssStyleFlexColumnVerticalAlign",
+        "cssStyleBorderTransparentColor"
       ]
     }
   };

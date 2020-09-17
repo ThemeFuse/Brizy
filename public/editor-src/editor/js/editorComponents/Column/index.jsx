@@ -23,7 +23,7 @@ import ColumnResizer from "./components/ColumnResizer";
 import Link from "visual/component/Link";
 import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
-import { styleBg, styleColumn, styleAnimation } from "./styles";
+import { styleItems, styleColumn, styleAnimation } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { styleSizeWidth } from "visual/utils/style2";
@@ -174,21 +174,23 @@ class Column extends EditorComponent {
   }
 
   renderContent(v, vs, vd) {
-    const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      containerClassName: "brz-column__items",
-      meta: this.getMeta(v)
-    });
-    const classNameBg = classnames(
+    const className = classnames(
+      "brz-column__items",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
+        styleItems(v, vs, vd)
       )
     );
 
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      containerClassName: className,
+      meta: this.getMeta(v)
+    });
+
     return (
-      <Background className={classNameBg} value={v} meta={this.getMeta(v)}>
+      <Background value={v} meta={this.getMeta(v)}>
         <Items {...itemsProps} />
       </Background>
     );
@@ -246,8 +248,8 @@ class Column extends EditorComponent {
 
     const classNameColumn = classnames(
       "brz-columns",
-      { "brz-columns__posts": IS_EDITOR && posts },
-      { "brz-columns--empty": IS_EDITOR && items.length === 0 },
+      { "brz-columns__posts": posts },
+      { "brz-columns--empty": items.length === 0 },
       css(
         `${this.constructor.componentId}-column`,
         `${this.getId()}-column`,
@@ -268,44 +270,55 @@ class Column extends EditorComponent {
     return (
       <>
         <SortableElement type="column" useHandle={true}>
-          {sortableElementAtts => (
-            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <Animation
-                component={"div"}
-                animationClass={animationClassName}
-                componentProps={{
-                  ...parseCustomAttributes(customAttributes),
-                  ...sortableElementAtts,
-                  id: cssIDPopulation ?? customID,
-                  className: classNameColumn
-                }}
-              >
-                <Roles
-                  allow={["admin"]}
-                  fallbackRender={() => this.renderContent(v, vs, vd)}
-                >
-                  <ContextMenu
-                    {...this.makeContextMenuProps(contextMenuConfig)}
+          {sortableElementAttr => (
+            <ContainerBorder
+              type={posts ? "column__posts" : "column"}
+              ref={this.containerBorderRef}
+              color={isInnerRow && inGrid ? "red" : "blue"}
+              borderStyle="solid"
+              activateOnContentClick={false}
+              buttonPosition="topRight"
+              renderButtonWrapper={this.renderToolbar}
+            >
+              {({
+                ref: containerBorderRef,
+                attr: containerBorderAttr,
+                button: ContainerBorderButton,
+                border: ContainerBorderBorder
+              }) => (
+                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                  <Animation
+                    ref={containerBorderRef}
+                    component={"div"}
+                    animationClass={animationClassName}
+                    componentProps={{
+                      ...parseCustomAttributes(customAttributes),
+                      ...sortableElementAttr,
+                      ...containerBorderAttr,
+                      id: cssIDPopulation ?? customID,
+                      className: classNameColumn
+                    }}
                   >
-                    <ContainerBorder
-                      ref={this.containerBorderRef}
-                      color={isInnerRow && inGrid ? "red" : "blue"}
-                      borderStyle="solid"
-                      activateOnContentClick={false}
-                      showButton={true}
-                      buttonPosition="topRight"
-                      renderButtonWrapper={this.renderToolbar}
+                    <Roles
+                      allow={["admin"]}
+                      fallbackRender={() => this.renderContent(v, vs, vd)}
                     >
-                      {this.renderResizer("left")}
-                      {this.renderResizer("right")}
-                      <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                        {this.renderContent(v, vs, vd)}
-                      </ToolbarExtend>
-                    </ContainerBorder>
-                  </ContextMenu>
-                </Roles>
-              </Animation>
-            </CustomCSS>
+                      <ContextMenu
+                        {...this.makeContextMenuProps(contextMenuConfig)}
+                      >
+                        {this.renderResizer("left")}
+                        {this.renderResizer("right")}
+                        <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                          {this.renderContent(v, vs, vd)}
+                        </ToolbarExtend>
+                        {ContainerBorderButton}
+                        {ContainerBorderBorder}
+                      </ContextMenu>
+                    </Roles>
+                  </Animation>
+                </CustomCSS>
+              )}
+            </ContainerBorder>
           )}
         </SortableElement>
         {popups.length > 0 &&

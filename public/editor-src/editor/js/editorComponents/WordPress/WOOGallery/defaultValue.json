@@ -1,0 +1,389 @@
+{
+  "style": {
+    "customCSS": "",
+
+    "width": 100,
+    "widthSuffix": "%",
+
+    "spacing": 10,
+    "spacingSuffix": "px",
+
+    "betweenThumbnail": 10,
+    "betweenThumbnailSuffix": "px",
+
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
+
+    "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
+
+    "tabletBetweenThumbnail": null,
+    "tabletBetweenThumbnailSuffix": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+
+    "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
+
+    "mobileBetweenThumbnail": null,
+    "mobileBetweenThumbnailSuffix": null,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
+
+    "borderStyle": "solid",
+    "tempBorderStyle": "solid",
+    "hoverBorderStyle": null,
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "tempBorderWidth": 4,
+    "tempBorderTopWidth": 4,
+    "tempBorderRightWidth": 4,
+    "tempBorderBottomWidth": 4,
+    "tempBorderLeftWidth": 4,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "hoverBorderRadiusType": null,
+    "hoverBorderRadius": null,
+    "hoverBorderTopLeftRadius": null,
+    "hoverBorderTopRightRadius": null,
+    "hoverBorderBottomRightRadius": null,
+    "hoverBorderBottomLeftRadius": null,
+
+    "tempHoverBorderRadius": null,
+    "tempHoverBorderTopLeftRadius": null,
+    "tempHoverBorderTopRightRadius": null,
+    "tempHoverBorderBottomRightRadius": null,
+    "tempHoverBorderBottomLeftRadius": null,
+
+    "tabletBorderRadiusType": null,
+    "tabletBorderRadius": null,
+    "tabletBorderTopLeftRadius": null,
+    "tabletBorderTopRightRadius": null,
+    "tabletBorderBottomLeftRadius": null,
+    "tabletBorderBottomRightRadius": null,
+
+    "tempTabletBorderRadius": null,
+    "tempTabletBorderTopLeftRadius": null,
+    "tempTabletBorderTopRightRadius": null,
+    "tempTabletBorderBottomLeftRadius": null,
+    "tempTabletBorderBottomRightRadius": null,
+
+    "mobileBorderRadiusType": null,
+    "mobileBorderRadius": null,
+    "mobileBorderTopLeftRadius": null,
+    "mobileBorderTopRightRadius": null,
+    "mobileBorderBottomLeftRadius": null,
+    "mobileBorderBottomRightRadius": null,
+
+    "tempMobileBorderRadius": null,
+    "tempMobileBorderTopLeftRadius": null,
+    "tempMobileBorderTopRightRadius": null,
+    "tempMobileBorderBottomLeftRadius": null,
+    "tempMobileBorderBottomRightRadius": null,
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "thumbnailBorderStyle": "solid",
+    "tempThumbnailBorderStyle": "solid",
+    "hoverThumbnailBorderStyle": null,
+    "tempHoverThumbnailBorderStyle": null,
+
+    "thumbnailBorderWidthType": "grouped",
+    "thumbnailBorderWidth": 0,
+    "thumbnailBorderTopWidth": 0,
+    "thumbnailBorderRightWidth": 0,
+    "thumbnailBorderBottomWidth": 0,
+    "thumbnailBorderLeftWidth": 0,
+
+    "tempThumbnailBorderWidth": 4,
+    "tempThumbnailBorderTopWidth": 4,
+    "tempThumbnailBorderRightWidth": 4,
+    "tempThumbnailBorderBottomWidth": 4,
+    "tempThumbnailBorderLeftWidth": 4,
+
+    "hoverThumbnailBorderWidthType": null,
+    "hoverThumbnailBorderWidth": null,
+    "hoverThumbnailBorderTopWidth": null,
+    "hoverThumbnailBorderRightWidth": null,
+    "hoverThumbnailBorderBottomWidth": null,
+    "hoverThumbnailBorderLeftWidth": null,
+
+    "tempHoverThumbnailBorderWidth": null,
+    "tempHoverThumbnailBorderTopWidth": null,
+    "tempHoverThumbnailBorderRightWidth": null,
+    "tempHoverThumbnailBorderBottomWidth": null,
+    "tempHoverThumbnailBorderLeftWidth": null,
+
+    "thumbnailBorderRadiusType": "grouped",
+    "thumbnailBorderRadius": 0,
+    "thumbnailBorderTopLeftRadius": 0,
+    "thumbnailBorderTopRightRadius": 0,
+    "thumbnailBorderBottomRightRadius": 0,
+    "thumbnailBorderBottomLeftRadius": 0,
+
+    "tempThumbnailBorderRadius": 0,
+    "tempThumbnailBorderTopLeftRadius": 0,
+    "tempThumbnailBorderTopRightRadius": 0,
+    "tempThumbnailBorderBottomRightRadius": 0,
+    "tempThumbnailBorderBottomLeftRadius": 0,
+
+    "hoverThumbnailBorderRadiusType": null,
+    "hoverThumbnailBorderRadius": null,
+    "hoverThumbnailBorderTopLeftRadius": null,
+    "hoverThumbnailBorderTopRightRadius": null,
+    "hoverThumbnailBorderBottomRightRadius": null,
+    "hoverThumbnailBorderBottomLeftRadius": null,
+
+    "tempHoverThumbnailBorderRadius": null,
+    "tempHoverThumbnailBorderTopLeftRadius": null,
+    "tempHoverThumbnailBorderTopRightRadius": null,
+    "tempHoverThumbnailBorderBottomRightRadius": null,
+    "tempHoverThumbnailBorderBottomLeftRadius": null,
+
+    "tabletThumbnailBorderRadiusType": null,
+    "tabletThumbnailBorderRadius": null,
+    "tabletThumbnailBorderTopLeftRadius": null,
+    "tabletThumbnailBorderTopRightRadius": null,
+    "tabletThumbnailBorderBottomLeftRadius": null,
+    "tabletThumbnailBorderBottomRightRadius": null,
+
+    "tempTabletThumbnailBorderRadius": null,
+    "tempTabletThumbnailBorderTopLeftRadius": null,
+    "tempTabletThumbnailBorderTopRightRadius": null,
+    "tempTabletThumbnailBorderBottomLeftRadius": null,
+    "tempTabletThumbnailBorderBottomRightRadius": null,
+
+    "mobileThumbnailBorderRadiusType": null,
+    "mobileThumbnailBorderRadius": null,
+    "mobileThumbnailBorderTopLeftRadius": null,
+    "mobileThumbnailBorderTopRightRadius": null,
+    "mobileThumbnailBorderBottomLeftRadius": null,
+    "mobileThumbnailBorderBottomRightRadius": null,
+
+    "tempMobileThumbnailBorderRadius": null,
+    "tempMobileThumbnailBorderTopLeftRadius": null,
+    "tempMobileThumbnailBorderTopRightRadius": null,
+    "tempMobileThumbnailBorderBottomLeftRadius": null,
+    "tempMobileThumbnailBorderBottomRightRadius": null,
+
+    "thumbnailBorderColorHex": "#66738d",
+    "thumbnailBorderColorOpacity": 0,
+    "thumbnailBorderColorPalette": "",
+
+    "tempThumbnailBorderColorOpacity": 1,
+    "tempThumbnailBorderColorPalette": "",
+
+    "hoverThumbnailBorderColorHex": null,
+    "hoverThumbnailBorderColorOpacity": null,
+    "hoverThumbnailBorderColorPalette": null,
+
+    "tempHoverThumbnailBorderColorOpacity": null,
+    "tempHoverThumbnailBorderColorPalette": null,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
+
+    "tabletBoxShadow": null,
+
+    "tabletBoxShadowColorHex": null,
+    "tabletBoxShadowColorOpacity": null,
+    "tabletBoxShadowColorPalette": null,
+
+    "tempTabletBoxShadowColorPalette": null,
+    "tempTabletBoxShadowColorOpacity": null,
+
+    "tabletBoxShadowBlur": null,
+    "tabletBoxShadowSpread": null,
+    "tabletBoxShadowVertical": null,
+    "tabletBoxShadowHorizontal": null,
+
+    "tempTabletBoxShadowBlur": null,
+    "tempTabletBoxShadowSpread": null,
+    "tempTabletBoxShadowVertical": null,
+    "tempTabletBoxShadowHorizontal": null,
+
+    "mobileBoxShadow": null,
+
+    "mobileBoxShadowColorHex": null,
+    "mobileBoxShadowColorOpacity": null,
+    "mobileBoxShadowColorPalette": null,
+
+    "tempMobileBoxShadowColorPalette": null,
+    "tempMobileBoxShadowColorOpacity": null,
+
+    "mobileBoxShadowBlur": null,
+    "mobileBoxShadowSpread": null,
+    "mobileBoxShadowVertical": null,
+    "mobileBoxShadowHorizontal": null,
+
+    "tempMobileBoxShadowBlur": null,
+    "tempMobileBoxShadowSpread": null,
+    "tempMobileBoxShadowVertical": null,
+    "tempMobileBoxShadowHorizontal": null,
+
+    "thumbnailBoxShadow": "",
+
+    "tempThumbnailBoxShadow": "on",
+
+    "thumbnailBoxShadowColorHex": "#000000",
+    "thumbnailBoxShadowColorOpacity": 1,
+    "thumbnailBoxShadowColorPalette": "",
+
+    "tempThumbnailBoxShadowColorOpacity": 1,
+    "tempThumbnailBoxShadowColorPalette": "",
+
+    "thumbnailBoxShadowBlur": 0,
+    "thumbnailBoxShadowSpread": 0,
+    "thumbnailBoxShadowVertical": 0,
+    "thumbnailBoxShadowHorizontal": 0,
+
+    "tempThumbnailBoxShadowBlur": 4,
+    "tempThumbnailBoxShadowSpread": 0,
+    "tempThumbnailBoxShadowVertical": 2,
+    "tempThumbnailBoxShadowHorizontal": 1,
+
+    "hoverThumbnailBoxShadow": null,
+
+    "tempHoverThumbnailBoxShadow": null,
+
+    "hoverThumbnailBoxShadowColorHex": null,
+    "hoverThumbnailBoxShadowColorOpacity": null,
+    "hoverThumbnailBoxShadowColorPalette": null,
+
+    "tempHoverThumbnailBoxShadowColorPalette": null,
+    "tempHoverThumbnailBoxShadowColorOpacity": null,
+
+    "hoverThumbnailBoxShadowBlur": null,
+    "hoverThumbnailBoxShadowSpread": null,
+    "hoverThumbnailBoxShadowVertical": null,
+    "hoverThumbnailBoxShadowHorizontal": null,
+
+    "tempHoverThumbnailBoxShadowBlur": null,
+    "tempHoverThumbnailBoxShadowSpread": null,
+    "tempHoverThumbnailBoxShadowVertical": null,
+    "tempHoverThumbnailBoxShadowHorizontal": null,
+
+    "tabletThumbnailBoxShadow": null,
+
+    "tabletThumbnailBoxShadowColorHex": null,
+    "tabletThumbnailBoxShadowColorOpacity": null,
+    "tabletThumbnailBoxShadowColorPalette": null,
+
+    "tempTabletThumbnailBoxShadowColorPalette": null,
+    "tempTabletThumbnailBoxShadowColorOpacity": null,
+
+    "tabletThumbnailBoxShadowBlur": null,
+    "tabletThumbnailBoxShadowSpread": null,
+    "tabletThumbnailBoxShadowVertical": null,
+    "tabletThumbnailBoxShadowHorizontal": null,
+
+    "tempTabletThumbnailBoxShadowBlur": null,
+    "tempTabletThumbnailBoxShadowSpread": null,
+    "tempTabletThumbnailBoxShadowVertical": null,
+    "tempTabletThumbnailBoxShadowHorizontal": null,
+
+    "mobileThumbnailBoxShadow": null,
+
+    "mobileThumbnailBoxShadowColorHex": null,
+    "mobileThumbnailBoxShadowColorOpacity": null,
+    "mobileThumbnailBoxShadowColorPalette": null,
+
+    "tempMobileThumbnailBoxShadowColorPalette": null,
+    "tempMobileThumbnailBoxShadowColorOpacity": null,
+
+    "mobileThumbnailBoxShadowBlur": null,
+    "mobileThumbnailBoxShadowSpread": null,
+    "mobileThumbnailBoxShadowVertical": null,
+    "mobileThumbnailBoxShadowHorizontal": null,
+
+    "tempMobileThumbnailBoxShadowBlur": null,
+    "tempMobileThumbnailBoxShadowSpread": null,
+    "tempMobileThumbnailBoxShadowVertical": null,
+    "tempMobileThumbnailBoxShadowHorizontal": null
+  }
+}

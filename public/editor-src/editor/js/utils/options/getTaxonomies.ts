@@ -20,9 +20,9 @@ type PostTypes = {
   taxonomies?: [{ id: string; name: string }];
 };
 
-export const getTaxonomies = (): SelectChoices[] => {
-  const taxonomies: Taxonomies[] | undefined = Config.get("taxonomies");
-
+export const getTaxonomies = (
+  taxonomies: Taxonomies[] | undefined = Config.get("taxonomies")
+): SelectChoices[] => {
   if (!taxonomies) {
     return [{ title: "-", value: "" }];
   }
@@ -54,6 +54,24 @@ export const getTaxonomies = (): SelectChoices[] => {
   });
 };
 
+export const getTaxonomiesFilter = (type: string = ""): SelectChoices[] => {
+  const taxonomies: Taxonomies[] | undefined = Config.get("taxonomies").filter(
+    (item: Taxonomies) => {
+      const { name } = item;
+
+      if (type === "products") {
+        return name.indexOf("product") > -1;
+      }
+      if (type === "posts") {
+        return name.indexOf("product") < 0;
+      }
+      return item;
+    }
+  );
+
+  return getTaxonomies(taxonomies);
+};
+
 export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
   const postTypesTaxs: PostTypes[] | undefined = Config.get("postTypesTaxs");
 
@@ -81,18 +99,15 @@ export const getTaxonomiesMultiOptionsSub = (
       item =>
         item.taxonomies && item.taxonomies.length && item.name === taxonomies
     )
-    .reduce(
-      (acc, curr) => {
-        if (curr.taxonomies) {
-          const taxonomies = curr.taxonomies.map(item => ({
-            value: item.id,
-            title: item.name
-          }));
-          return acc.concat(taxonomies);
-        }
+    .reduce((acc, curr) => {
+      if (curr.taxonomies) {
+        const taxonomies = curr.taxonomies.map(item => ({
+          value: item.id,
+          title: item.name
+        }));
+        return acc.concat(taxonomies);
+      }
 
-        return acc;
-      },
-      [] as SelectChoices[]
-    );
+      return acc;
+    }, [] as SelectChoices[]);
 };

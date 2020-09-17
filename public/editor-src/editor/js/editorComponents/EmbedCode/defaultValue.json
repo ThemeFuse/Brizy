@@ -1,6 +1,8 @@
 {
   "content": {
-    "code": ""
+    "code": "",
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "toolbar": {
@@ -13,11 +15,9 @@
     "className": "",
 
     "borderStyle": "",
-
-    "hoverBorderStyle": null,
-
     "tempBorderStyle": "solid",
 
+    "hoverBorderStyle": null,
     "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",

@@ -82,9 +82,7 @@ export default class StarRating extends EditorComponent {
             {v.ratingStyle === "style1" && (
               <>
                 {label === "on" && labelText}
-                <div className="brz-starrating-container" title={rating}>
-                  {this.renderStars(v)}
-                </div>
+                {this.renderStars(v)}
                 {label === "on-right" && labelText}
               </>
             )}

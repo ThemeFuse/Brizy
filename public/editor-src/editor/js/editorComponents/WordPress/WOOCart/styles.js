@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&:hover .brz-woocart__dc": {
       standart: ["cssStyleBgColor", "cssStyleBorder", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
@@ -32,7 +32,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-woocart__icon:before": {
       standart: ["cssStyleElementWOOCartPurchasesDisabled"]
     },
-    ".brz &&.brz-purchases-plain:hover .brz-woocart__icon:before": {
+    ".brz &&.brz-woocart--plain:hover .brz-woocart__icon:before": {
       standart: [
         "cssStyleSizeSpacing",
         "cssStyleElementWOOCartPurchasesColor",
@@ -56,6 +56,14 @@ export function style(v, vs, vd) {
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementWOOCartTransitionProperty"
+      ]
+    },
+    ".brz && .brz-woocart__sidebar": {
+      standart: [
+        "cssStyleElementWOOCartSidebarWidth",
+        "cssStyleElementWOOCartSidebarHeight",
+        "cssStyleElementWOOCartSidebarHorizontalAlign",
+        "cssStyleElementWOOCartSidebarVerticalAlign"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a:hover": {

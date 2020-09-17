@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import { WPShortcode } from "visual/editorComponents/WordPress/common/WPShortcode";
 import { dataPeople } from "./dataPeople";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 
 class WPComments extends Component {
   static defaultProps = {
@@ -175,14 +175,12 @@ class WPComments extends Component {
 
   renderForView() {
     const { limit, skin, linkPage } = this.props;
-    const attributes = { limit, skin, linkPage };
 
     return (
-      <WPShortcode
-        className="brz-comments-parrent"
-        name="brizy_comments"
-        attributes={attributes}
-        placeholderIcon="wp-shortcode"
+      <DynamicContentHelper
+        placeholder={`{{editor_comments limit="${limit}" skin="${skin}" linkPage="${linkPage}"}}`}
+        tagName="div"
+        props={{ className: "brz-comments-parrent" }}
       />
     );
   }

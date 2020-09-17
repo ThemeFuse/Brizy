@@ -2,6 +2,11 @@ import { t } from "visual/utils/i18n";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
+
+const { isApproved } = Config.get("user");
+
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
@@ -18,7 +23,7 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         icon: "nc-iframe",
-        size: "large",
+        size: TARGET !== "WP" && !isApproved ? "medium" : "large",
         title: t("Embed")
       },
       devices: "desktop",
@@ -27,7 +32,7 @@ export function getItems({ v, device }) {
         {
           id: "code",
           type: "textarea-dev",
-          devices: "desktop",
+          disabled: TARGET === "WP" ? false : !isApproved,
           placeholder: t("Paste your code here...")
         }
       ]
@@ -84,6 +89,7 @@ export function getItems({ v, device }) {
         icon: "nc-cog",
         title: t("Settings")
       },
+      disabled: IS_STORY,
       position: 110,
       options: [
         {
@@ -107,6 +113,13 @@ export function getItems({ v, device }) {
           devices: "desktop"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      position: 110,
+      disabled: !IS_STORY,
+      icon: "nc-cog"
     }
   ];
 }

@@ -34,8 +34,8 @@ export const fromElementModel: GetModel<Value> = get => {
     palette2: Palette.read(get("gradientColorPalette")) ?? "",
     tempPalette2: Palette.read(get("tempGradientColorPalette")) ?? "",
     gradientType: GradientType.read(get("gradientType")) ?? "linear",
-    start: Math.toNonNegative("gradientStartPointer") ?? 0,
-    end: Math.toNonNegative("gradientFinishPointer") ?? 100,
+    start: Math.toNonNegative(get("gradientStartPointer")) ?? 0,
+    end: Math.toNonNegative(get("gradientFinishPointer")) ?? 100,
     active: GradientActivePointer.read(pointer) ?? "start",
     linearDegree: NumberSpec.read(get("gradientLinearDegree")) ?? 0,
     radialDegree: NumberSpec.read(get("gradientRadialDegree")) ?? 0

@@ -1,5 +1,6 @@
 import { toolbarBorderRadius } from "visual/utils/toolbar";
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 export const title = t("Countdown");
 
@@ -37,11 +38,12 @@ export function getItems({ v, device }) {
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: [
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
+              disabled: IS_STORY,
               devices: "desktop",
               position: 100,
               type: "slider-dev",

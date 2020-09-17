@@ -1,4 +1,11 @@
-import React, { CSSProperties, FC, forwardRef, MouseEventHandler } from "react";
+import React, {
+  CSSProperties,
+  forwardRef,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactElement,
+  Ref
+} from "react";
 import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
 import * as Str from "visual/utils/string/specs";
@@ -6,18 +13,20 @@ import { getAttr, getHref, getTarget } from "./utils";
 import { Type, empty as defaultType } from "./types/Type";
 import { Target, empty as defaultTarget } from "./types/Target";
 
-type Props = WithClassName & {
-  style?: CSSProperties;
-  target?: Target;
-  rel?: string;
-  href?: string;
-  type?: Type;
-  attr?: JSX.IntrinsicAttributes;
-};
+type Props = PropsWithChildren<
+  WithClassName & {
+    style?: CSSProperties;
+    target?: Target;
+    rel?: string;
+    href?: string;
+    type?: Type;
+    attr?: JSX.IntrinsicAttributes;
+  }
+>;
 
 const preventDefault: MouseEventHandler = (e): void => e.preventDefault();
 
-const _Link: FC<Props> = (
+const _Link = (
   {
     className,
     style,
@@ -27,9 +36,9 @@ const _Link: FC<Props> = (
     type = defaultType,
     href,
     attr = {}
-  },
-  ref
-) => {
+  }: Props,
+  ref: Ref<HTMLAnchorElement>
+): ReactElement => {
   const _className = classNames(
     "brz-a",
     { "brz-anchor": type === "anchor" },

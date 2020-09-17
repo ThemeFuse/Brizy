@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import Thumbnail from "./Thumbnail";
+import { IS_STORY } from "visual/utils/models";
 
 export default class ThumbnailGrid extends Component {
   static defaultProps = {
-    columns: 4,
+    columns: IS_STORY ? 5 : 4,
     showSync: false,
     responsive: [
       {
         breakpoint: 1460,
+        settings: {
+          columns: IS_STORY ? 4 : 3
+        }
+      },
+      {
+        breakpoint: 1200,
         settings: {
           columns: 3
         }

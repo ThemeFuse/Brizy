@@ -18,13 +18,7 @@ import {
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
-import {
-  styleSection,
-  styleBg,
-  styleContainer,
-  styleContainerWrap,
-  styleAnimation
-} from "./styles";
+import { styleSection, styleContainer, styleAnimation } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { getContainerW } from "visual/utils/meta";
@@ -140,14 +134,6 @@ class SectionFooter extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const classNameBg = classnames(
-      "brz-footer__bg",
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
-      )
-    );
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
@@ -157,14 +143,6 @@ class SectionFooter extends EditorComponent {
         styleContainer(v, vs, vd)
       )
     );
-    const classNameContainerWrap = classnames(
-      "brz-container__wrap",
-      css(
-        `${this.constructor.componentId}-containerWrap`,
-        `${this.getId()}-containerWrap`,
-        styleContainerWrap(v, vs, vd)
-      )
-    );
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: classNameContainer,
@@ -172,11 +150,9 @@ class SectionFooter extends EditorComponent {
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
+      <Background value={v} meta={meta}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
-          <div className={classNameContainerWrap}>
-            <SectionFooterItems {...itemsProps} />
-          </div>
+          <SectionFooterItems {...itemsProps} />
         </PaddingResizer>
       </Background>
     );
@@ -210,33 +186,39 @@ class SectionFooter extends EditorComponent {
         )
     );
 
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      "data-block-id": this.props.blockId,
-      id: this.getId(),
-      className: classNameSection
-    };
-
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Animation
-          component="footer"
-          componentProps={props}
-          animationClass={animationClassName}
-        >
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder showBorder={false} activateOnContentClick={false}>
-              {this.renderToolbar(v)}
-              <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                {this.renderItems(v, vs, vd)}
-              </ToolbarExtend>
-            </ContainerBorder>
-          </Roles>
-        </Animation>
-      </CustomCSS>
+      <ContainerBorder
+        type="footer"
+        showBorder={false}
+        activateOnContentClick={false}
+      >
+        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <Animation
+              ref={containerBorderRef}
+              component="footer"
+              componentProps={{
+                ...parseCustomAttributes(customAttributes),
+                ...containerBorderAttr,
+                "data-block-id": this.props.blockId,
+                id: this.getId(),
+                className: classNameSection
+              }}
+              animationClass={animationClassName}
+            >
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                {this.renderToolbar(v)}
+                <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                  {this.renderItems(v, vs, vd)}
+                </ToolbarExtend>
+              </Roles>
+            </Animation>
+          </CustomCSS>
+        )}
+      </ContainerBorder>
     );
   }
 
