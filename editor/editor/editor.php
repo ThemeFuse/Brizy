@@ -824,6 +824,8 @@ class Brizy_Editor_Editor_Editor {
 			'placeholderContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
 			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
 			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
+			'getTermsBy'                 => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
+			'getUsers'                   => $pref . Brizy_Editor_API::AJAX_GET_USERS,
 			'getPostObjects'             => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
 			'setFeaturedImage'           => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 			'setFeaturedImageFocalPoint' => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
