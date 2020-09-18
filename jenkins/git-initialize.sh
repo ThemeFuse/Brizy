@@ -7,5 +7,4 @@ git clean -fd
 
 echo -e "\nCheckout: $1"
 echo -e "-----------------------------------------------------------------------------"
-git stash
 git checkout $1

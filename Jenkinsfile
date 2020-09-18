@@ -101,7 +101,16 @@ pipeline {
      post {
          always {
              notifySlack(currentBuild.currentResult)
-             //cleanWs()
+             cleanWs()
+             dir("${env.WORKSPACE}@tmp") {
+               deleteDir()
+             }
+             dir("${env.WORKSPACE}@script") {
+               deleteDir()
+             }
+             dir("${env.WORKSPACE}@script@tmp") {
+               deleteDir()
+             }
          }
      }
 }
