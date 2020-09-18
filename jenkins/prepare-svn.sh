@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 SVN_PATH=$1
-ZIP_FILE_NAME=$2
 WORKSPACEE_PATH=$(pwd)
 
 # go in svn folder
@@ -14,7 +13,6 @@ svn cleanup && svn revert . -R && svn up
 rm -rf trunk/*
 echo -e "\nCreate new trunk"
 echo -e "-----------------------------------------------------------------------------"
-
 
 cp -a "${WORKSPACEE_PATH}/." ./trunk/
 cd trunk
@@ -31,6 +29,8 @@ echo -e "-----------------------------------------------------------------------
 
 find . -type f -name "*.dev.php" -delete
 rm -rf ./public/editor-src
+rm -rf ./.phpunit*
+rm -rf ./.env*
 rm -rf ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh .gitignore ./vendor/twig/twig/test
 rm -rf ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc
 rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf
@@ -48,13 +48,4 @@ rm -rf ./Jenkinsfile
 if svn st | grep "!" > /dev/null; then  svn st | grep "!" | cut -d! -f2 | xargs svn rm; fi
 if svn st | grep "?" > /dev/null; then  svn st | grep "?" | cut -d? -f2 | xargs svn add; fi
 
-cd ../
-
-
-# create the build archive
-rm -f *.zip
-rm -rf brizy && mkdir brizy
-cp -a ./trunk/. ./brizy/
-zip -r $ZIP_FILE_NAME brizy/ -x .git -x .idea -x .gitignore
-rm -rf ./brizy
 

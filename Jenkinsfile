@@ -39,13 +39,13 @@ pipeline {
 
         stage('Prepare Composer') {
             steps {
-                sh "./jenkins/composer.sh '${GITHUB_TOKEN}'"
+                sh "./jenkins/composer.sh $GITHUB_TOKEN"
             }
         }
 
-        stage('Prepare SVN and Create the Zip File') {
+        stage('Prepare SVN') {
             steps {
-                sh "./jenkins/prepare-svn.sh '${params.brizySvnPath}' '${zipFileName}'"
+                sh "./jenkins/prepare-svn.sh '${params.brizySvnPath}'"
             }
         }
 
@@ -57,6 +57,13 @@ pipeline {
                 sh "rm -rf changelog.txt changelog.md"
             }
         }
+
+        stage('Create the Zip File') {
+            steps {
+                sh "./jenkins/prepare-zip.sh '${params.brizySvnPath}' '${zipFileName}'"
+            }
+        }
+
 
         stage('Publish') {
             when {
