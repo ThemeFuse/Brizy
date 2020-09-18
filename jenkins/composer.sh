@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-$GITHUB_TOKEN=$1
+GITHUB_TOKEN=$1
 
 echo -e "\Add github token in composer $1"
 echo -e "-----------------------------------------------------------------------------"
