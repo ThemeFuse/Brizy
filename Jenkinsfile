@@ -101,7 +101,7 @@ pipeline {
      post {
          always {
              notifySlack(currentBuild.currentResult)
-             //cleanWs()
+             cleanWs()
          }
      }
 }

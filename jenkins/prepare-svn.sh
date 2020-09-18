@@ -14,7 +14,8 @@ svn cleanup && svn revert . -R && svn up
 rm -rf trunk/*
 echo -e "\nCreate new trunk"
 echo -e "-----------------------------------------------------------------------------"
-echo "${WORKSPACEE_PATH}/."
+
+
 cp -a "${WORKSPACEE_PATH}/." ./trunk/
 cd trunk
 
