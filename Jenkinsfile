@@ -39,7 +39,7 @@ pipeline {
 
         stage('Prepare Composer') {
             steps {
-                sh "./jenkins/composer.sh $GITHUB_TOKEN"
+                sh "./jenkins/composer.sh '${GITHUB_TOKEN}'"
             }
         }
 
