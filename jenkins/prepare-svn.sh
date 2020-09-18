@@ -30,8 +30,8 @@ echo -e "-----------------------------------------------------------------------
 find . -type f -name "*.dev.php" -delete
 rm -rf ./public/editor-src
 rm -rf ./.phpunit*
-rm -rf ./.env*
-rm -rf ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh .gitignore ./vendor/twig/twig/test
+rm -rf ./.env*  .idea
+rm -rf ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh ./vendor/twig/twig/test
 rm -rf ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc
 rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf
 rm -rf ./vendor/select2/select2/docs
