@@ -77,7 +77,10 @@ trait Brizy_Admin_Cloud_SyncAware {
 
 		$brizyBlock = Brizy_Editor_Block::get( $blockId );
 
-		if ( $brizyBlock &&  $brizyBlock->isSavedBlock() && !$brizyBlock->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
+		$cloud_account_id = $this->getClient()->getBrizyProject()->getCloudAccountId();
+		if ( $brizyBlock &&
+		     $brizyBlock->isSynchronizable( $cloud_account_id ) &&
+		     !$brizyBlock->isSynchronized( $cloud_account_id ) ) {
 			$updater = new Brizy_Admin_Cloud_BlockBridge( $this->client );
 			$updater->export( $brizyBlock );
 
@@ -89,9 +92,10 @@ trait Brizy_Admin_Cloud_SyncAware {
 	protected function syncLayout( $layoutId ) {
 
 		$brizyLayout = Brizy_Editor_Layout::get( $layoutId );
-
-
-		if ( $brizyLayout && ! $brizyLayout->isSynchronized( $this->getClient()->getBrizyProject()->getCloudAccountId() ) ) {
+		$cloud_account_id = $this->getClient()->getBrizyProject()->getCloudAccountId();
+		if ( $brizyLayout &&
+		     $brizyLayout->isSynchronizable( $cloud_account_id ) &&
+		     !$brizyLayout->isSynchronized( $cloud_account_id ) ) {
 			$updater = new Brizy_Admin_Cloud_LayoutBridge( $this->client );
 			$updater->export( $brizyLayout );
 

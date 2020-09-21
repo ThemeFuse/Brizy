@@ -90,4 +90,3 @@ function brizy_clean() {
 }
 
 new Brizy_Compatibilities_Init();
-
