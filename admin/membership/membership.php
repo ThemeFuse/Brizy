@@ -23,6 +23,14 @@ class Brizy_Admin_Membership_Membership {
 		add_action( 'edit_user_profile',                  [ $this, 'output_checklist' ] );
 		add_action( 'user_new_form',                      [ $this, 'output_checklist' ] );
 		add_action( 'profile_update',                     [ $this, 'profile_update' ] );
+
+		if ( is_multisite() ) {
+			add_action( 'after_signup_user',  [ $this, 'after_signup_user' ], 10, 4 );
+			add_action( 'wpmu_activate_user', [ $this, 'wpmu_activate_user' ], 10, 3 );
+			add_action( 'added_existing_user', [ $this, 'profile_update' ] );
+		} else {
+			add_action( 'user_register', [ $this, 'profile_update' ] );
+		}
 	}
 
 	static public function registerCustomPostRoles() {
@@ -156,7 +164,18 @@ class Brizy_Admin_Membership_Membership {
 
 		$script =
 			"jQuery( document ).ready( function( $ ) {
-                $( '.user-role-wrap td' ).html( $( '.editor-checklist-roles' ).html() );
+				var checklist = $( '.editor-checklist-roles' ).html(),
+					labelText = $( '.editor-checklist-roles' ).attr( 'data-label-text' );
+				
+                $( '.user-role-wrap th label' ).text( labelText );
+                $( '.user-role-wrap td' ).html( checklist );
+                
+                $( '#adduser-role' ).closest( '.form-field' ).find( 'th' ).text( labelText );
+                $( '#adduser-role' ).parent( 'td' ).html( checklist );
+                
+                $( '#role' ).closest( '.form-field' ).find( 'th' ).text( labelText );
+                $( '#role' ).hide().after( checklist );
+                
                 $( '.editor-checklist-roles' ).remove();
             } );";
 
@@ -178,8 +197,6 @@ class Brizy_Admin_Membership_Membership {
 			return;
 		}
 
-		wp_nonce_field( 'editor-user-profile', 'editor-user-profile-nonce' );
-
 		echo Brizy_Admin_View::render(
 			'membership/checklist',
 			[
@@ -197,22 +214,107 @@ class Brizy_Admin_Membership_Membership {
 	 */
 	public function profile_update( $user_id ) {
 
-		if ( ! isset( $_POST['editor-user-profile-nonce'] ) || ! wp_verify_nonce( $_POST['editor-user-profile-nonce'], 'editor-user-profile' ) ) {
+		if ( ! $this->can_update_roles() ) {
 			return;
 		}
+
+		$addNewUser    = isset( $_POST['_wpnonce_create-user'] ) ? wp_verify_nonce( $_POST['_wpnonce_create-user'], 'create-user' ) : false;
+		$createNewUser = isset( $_POST['_wpnonce_add-user'] ) ? wp_verify_nonce( $_POST['_wpnonce_add-user'], 'add-user' ) : false;
+		$editUser      = isset( $_POST['_wpnonce'] ) ? wp_verify_nonce( $_POST['_wpnonce'], "update-user_{$user_id}" ) : false;
+
+		if ( ! $addNewUser && ! $createNewUser && ! $editUser ) {
+			return;
+		}
+
+		$roles = isset( $_POST['editor_multiple_roles'] ) && is_array( $_POST['editor_multiple_roles'] ) ? $_POST['editor_multiple_roles'] : [];
+
+		$this->update_roles( $user_id, $roles );
+	}
+
+	/**
+	 * Add multiple roles in the $meta array in wp_signups db table
+	 *
+	 * @param $user
+	 * @param $user_email
+	 * @param $key
+	 * @param $meta
+	 *
+	 * @return void|WP_Error
+	 */
+	public function after_signup_user( $user, $user_email, $key, $meta ) {
 
 		if ( ! $this->can_update_roles() ) {
 			return;
 		}
 
-		$roles = ( isset( $_POST['editor_multiple_roles'] ) && is_array( $_POST['editor_multiple_roles'] ) ) ? $_POST['editor_multiple_roles'] : [];
+		$addNewUser    = isset( $_POST['_wpnonce_add-user'] ) ? wp_verify_nonce( $_POST['_wpnonce_add-user'], 'add-user' ) : false;
+		$createNewUser = isset( $_POST['_wpnonce_create-user'] ) ? wp_verify_nonce( $_POST['_wpnonce_create-user'], 'create-user' ) : false;
+
+		if ( ! $addNewUser && ! $createNewUser ) {
+			return;
+		}
+
+		global $wpdb;
+
+		// Get user signup
+		// Suppress errors in case the table doesn't exist
+		$suppress = $wpdb->suppress_errors();
+		$signup   = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->signups} WHERE user_email = %s", $user_email ) );
+		$wpdb->suppress_errors( $suppress );
+
+		if ( empty( $signup ) || is_wp_error( $signup ) ) {
+			return new WP_Error( 'editor_get_user_signups_failed' );
+		}
+
+		// Add multiple roles to a new array in meta var
+		$roles = isset( $_POST['editor_multiple_roles'] ) && is_array( $_POST['editor_multiple_roles'] ) ? $_POST['editor_multiple_roles'] : [];
+		$meta = maybe_unserialize( $meta );
+		$meta['editor_roles'] = $roles;
+		$meta = maybe_serialize( $meta );
+
+		// Update user signup with good meta
+		$where        = array( 'signup_id' => (int) $signup->signup_id );
+		$where_format = array( '%d' );
+		$formats      = array( '%s' );
+		$fields       = array( 'meta' => $meta );
+		$result       = $wpdb->update( $wpdb->signups, $fields, $where, $formats, $where_format );
+
+		// Check for errors
+		if ( empty( $result ) && ! empty( $wpdb->last_error ) ) {
+			return new WP_Error( 'editor_update_user_signups_failed' );
+		}
+	}
+
+	/**
+	 * Add multiple roles after user activation
+	 *
+	 * @param $user_id
+	 * @param $password
+	 * @param $meta
+	 */
+	public function wpmu_activate_user( $user_id, $password, $meta ) {
+		if ( ! empty( $meta['editor_roles'] ) ) {
+			$this->update_roles( $user_id, $meta['editor_roles'] );
+		}
+	}
+
+	/**
+	 * Erase the user's existing roles and replace them with the new array.
+	 *
+	 * @param integer $user_id The WordPress user ID.
+	 * @param array $roles The new array of roles for the user.
+	 *
+	 * @return bool
+	 */
+	public function update_roles( $user_id = 0, $roles = [] ) {
 
 		$roles = array_map( 'sanitize_key', (array) $roles );
 		$roles = array_filter( (array) $roles, 'get_role' );
-		$user  = get_user_by( 'id', (int) $user_id );
+
+		$user = get_user_by( 'id', (int) $user_id );
 
 		// Remove all editable roles
-		$editable       = get_editable_roles();
+		$editable = get_editable_roles();
 		$editable_roles = is_array( $editable ) ? array_keys( $editable ) : [];
 
 		foreach( $editable_roles as $role ) {
@@ -222,6 +324,8 @@ class Brizy_Admin_Membership_Membership {
 		foreach( $roles as $role ) {
 			$user->add_role( $role );
 		}
+
+		return true;
 	}
 
 	/**

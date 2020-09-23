@@ -9,14 +9,13 @@ $creating = isset( $_POST['createuser'] );
 $selected_roles = $creating && isset( $_POST['editor_multiple_roles'] ) ? wp_unslash( $_POST['editor_multiple_roles'] ) : '';
 ?>
 
-<div class="editor-checklist-roles" style="display:none;">
-	<?php foreach( $roles as $name => $label ) :
-		$input_uniq_id = uniqid(); ?>
-		<label for="editor-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>">
+<div class="editor-checklist-roles" style="display:none;" data-label-text="<?php echo esc_attr( __( 'Roles' ) ); ?>">
+	<?php foreach( $roles as $name => $label ) : ?>
+		<label >
 			<input
-				id="editor-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>"
 				type="checkbox"
 				name="editor_multiple_roles[]"
+                style="width:auto;"
 				value="<?php echo esc_attr( $name ); ?>"
 				<?php if ( ! is_null( $user_roles ) ) : // Edit user page
 					checked( in_array( $name, $user_roles ) );
