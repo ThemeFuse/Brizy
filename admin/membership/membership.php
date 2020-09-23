@@ -159,6 +159,10 @@ class Brizy_Admin_Membership_Membership {
 			return;
 		}
 
+		if ( ! $this->can_update_roles() ) {
+			return;
+		}
+
 		wp_register_script( 'editor-add-roles-checklist', '', [ 'jquery' ], '', true );
 		wp_enqueue_script( 'editor-add-roles-checklist' );
 
