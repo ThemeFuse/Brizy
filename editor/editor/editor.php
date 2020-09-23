@@ -58,7 +58,7 @@ class Brizy_Editor_Editor_Editor {
 	private function getMode( $postType ) {
 		switch ( $postType ) {
 			case Brizy_Admin_Stories_Main::CP_STORY:
-                return 'story';
+                return 'internal_story';
 			case Brizy_Admin_Templates::CP_TEMPLATE:
 				return 'template';
 			case Brizy_Admin_Popups_Main::CP_POPUP:
