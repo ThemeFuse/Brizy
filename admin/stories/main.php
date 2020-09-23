@@ -58,7 +58,7 @@ class Brizy_Admin_Stories_Main
                 'has_archive'         => false,
                 'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
                 'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
-                'show_ui'             => true,
+                'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
                 'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
                 'query_var'           => false,
                 'rewrite'             => array( 'slug' => self::CP_STORY ),
