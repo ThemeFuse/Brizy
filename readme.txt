@@ -139,6 +139,10 @@ The progress you're making while building your page is always backed up in the c
 
 == Changelog ==
 
+= 2.0.13 - 2020-09-23 =
+* Fixed: Ignore old blocks on sync
+* Fixed: Main editor page html syntax
+
 = 2.0.12 - 2020-09-16 =
 * Fixed: Form submission action bug
 
