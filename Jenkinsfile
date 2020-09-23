@@ -43,12 +43,6 @@ pipeline {
             }
         }
 
-        stage('Prepare SVN') {
-            steps {
-                sh "./jenkins/prepare-svn.sh '${params.brizySvnPath}'"
-            }
-        }
-
         stage('Prepare the build') {
             steps {
                 writeFile file: 'changelog.txt', text: "\n= ${params.buildVersion} - ${releaseDate} =\n"+params.changelog+"\n"
@@ -58,12 +52,17 @@ pipeline {
             }
         }
 
+        stage('Prepare SVN') {
+            steps {
+                sh "./jenkins/prepare-svn.sh '${params.brizySvnPath}'"
+            }
+        }
+
         stage('Create the Zip File') {
             steps {
                 sh "./jenkins/prepare-zip.sh '${params.brizySvnPath}' '${zipFileName}'"
             }
         }
-
 
         stage('Publish') {
             when {
@@ -75,7 +74,7 @@ pipeline {
             }
         }
 
-         stage('Git Merge') {
+        stage('Git Merge') {
             when {
                 expression { return params.gitMerge }
             }
