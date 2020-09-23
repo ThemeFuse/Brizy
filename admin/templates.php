@@ -222,22 +222,22 @@ class Brizy_Admin_Templates {
 
 	static public function registerCustomPostTemplate() {
 
-		$labels = array(
-			'name'               => _x( 'Templates', 'post type general name', 'brizy' ),
-			'singular_name'      => _x( 'Template', 'post type singular name', 'brizy' ),
-			'menu_name'          => _x( 'Templates', 'admin menu', 'brizy' ),
-			'name_admin_bar'     => _x( 'Template', 'add new on admin bar', 'brizy' ),
-			'add_new'            => _x( 'Add New', self::CP_TEMPLATE, 'brizy' ),
-			'add_new_item'       => __( 'Add New Template', 'brizy' ),
-			'new_item'           => __( 'New Template', 'brizy' ),
-			'edit_item'          => __( 'Edit Template', 'brizy' ),
-			'view_item'          => __( 'View Template', 'brizy' ),
-			'all_items'          => __( 'Templates', 'brizy' ),
-			'search_items'       => __( 'Search Templates', 'brizy' ),
-			'parent_item_colon'  => __( 'Parent Templates:', 'brizy' ),
-			'not_found'          => __( 'No Templates found.', 'brizy' ),
-			'not_found_in_trash' => __( 'No Templates found in Trash.', 'brizy' )
-		);
+        $labels = array(
+            'name'               => _x( 'Templates', 'post type general name', 'brizy' ),
+            'singular_name'      => _x( 'Template', 'post type singular name', 'brizy' ),
+            'menu_name'          => _x( 'Templates', 'admin menu', 'brizy' ),
+            'name_admin_bar'     => _x( 'Template', 'add new on admin bar', 'brizy' ),
+            'add_new'            => _x( 'Add New', self::CP_TEMPLATE, 'brizy' ),
+            'add_new_item'       => __( 'Add New Template', 'brizy' ),
+            'new_item'           => __( 'New Template', 'brizy' ),
+            'edit_item'          => __( 'Edit Template', 'brizy' ),
+            'view_item'          => __( 'View Template', 'brizy' ),
+            'all_items'          => __( 'Templates', 'brizy' ),
+            'search_items'       => __( 'Search Templates', 'brizy' ),
+            'parent_item_colon'  => __( 'Parent Templates:', 'brizy' ),
+            'not_found'          => __( 'No Templates found.', 'brizy' ),
+            'not_found_in_trash' => __( 'No Templates found in Trash.', 'brizy' )
+        );
 
 		register_post_type( self::CP_TEMPLATE,
 			array(

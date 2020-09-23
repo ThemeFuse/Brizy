@@ -124,8 +124,6 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			if ( in_array( 'synchronizable', $fields ) ) {
 				$global['synchronizable'] = $this->isSynchronizable( Brizy_Editor_Project::get()->getCloudAccountId() );
 			}
-
-
 		}
 
 		if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_GLOBAL ) {

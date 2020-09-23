@@ -59,7 +59,7 @@ var state = {
 };
 
 state.rules[state.templateType] = Brizy_Admin_Rules.rules;
-debugger;
+
 var apiCache = {
     groupList: null,
     postGroupListPromise: [],
