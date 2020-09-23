@@ -118,6 +118,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.0.13 - 2020-09-23 ###
+* Fixed: Ignore old blocks on sync
+* Fixed: Main editor page html syntax
+
 ### 2.0.12 - 2020-09-16 ###
 * Fixed: Form submission action bug
 

@@ -156,16 +156,15 @@ trait Brizy_Editor_Synchronizable {
 	}
 
 	/**
-	 * There are old blocks that must not be synchronized
+	 * We should allow only the new versions of blocks and layouts to be syncronized
 	 *
-	 * Only block that have meta key 'brizy-cloud-update-required'
+	 * @param $cloudAccountId
 	 *
 	 * @return bool
 	 */
 	public function isSynchronizable( $cloudAccountId ) {
 		if ( $this->canBeSynchronized() ) {
-			return isset( $this->synchronizedWith[ $cloudAccountId ] );
-			//return metadata_exists( 'post', $this->getWpPostId(), 'brizy-cloud-update-required' );
+			return metadata_exists( 'post', $this->getWpPostId(), 'brizy-media' );
 		}
 
 		return false;
