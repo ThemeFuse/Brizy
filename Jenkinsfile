@@ -3,14 +3,17 @@ def currentDate =  now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
 def buildTag = (!params.gitMerge)?"("+params.releaseBranch+")":"";
 def zipFileName = "BuildFree-"+params.buildVersion+"-RC"+buildTag+".zip"
 
-def today = new Date();
-def releaseDate = today.format( 'yyyy-MM-dd' );
-
 if(params.gitMerge) {
     zipFileName = "BuildFree-"+params.buildVersion+".zip"
 }
 
-env.BUILD_ZIP_PATH = params.brizySvnPath+"/"+zipFileName
+def zipFilePath = "/tmp/"+zipFileName
+
+def today = new Date();
+def releaseDate = today.format( 'yyyy-MM-dd' );
+
+env.BUILD_ZIP_PATH = zipFilePath
+env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
 pipeline {
     agent any
@@ -32,7 +35,7 @@ pipeline {
         stage('Initialize SCM') {
             steps {
                 sshagent (credentials: ['Git']) {
-                     sh "./jenkins/git-initialize.sh '${params.releaseBranch}'"
+                     sh "./jenkins/git-initialize.sh ${params.releaseBranch}"
                 }
             }
         }
@@ -52,53 +55,49 @@ pipeline {
             }
         }
 
-        stage('Prepare SVN') {
+        stage('Make a copy and clean the plugin') {
             steps {
-                sh "./jenkins/prepare-svn.sh '${params.brizySvnPath}'"
+               sh "./jenkins/clean-files.sh ${BUILD_FOLDER_PATH}"
             }
         }
 
         stage('Create the Zip File') {
             steps {
-                sh "./jenkins/prepare-zip.sh '${params.brizySvnPath}' '${zipFileName}'"
+                sh "./jenkins/prepare-zip.sh ${BUILD_FOLDER_PATH} \"$zipFilePath\""
             }
         }
 
-        stage('Publish') {
+        stage('Prepare SVN') {
             when {
                 expression { return params.svnCommit }
             }
             steps {
-                sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
-                sh "cd " + params.brizySvnPath + " && svn commit --non-interactive --trust-server-cert --username themefusecom --password '$SUBVERSION_TOKEN'  -m \"Version "+params.buildVersion+"\""
+                sh "./jenkins/prepare-svn.sh ${BUILD_FOLDER_PATH} ${params.brizySvnPath} ${params.buildVersion}"
             }
         }
 
-        stage('Git Merge') {
+        stage('Clean temporary folders') {
+            steps {
+                sh "rm -rf ${BUILD_FOLDER_PATH}"
+            }
+        }
+
+        stage('Publish SVN changes') {
+            when {
+                expression { return params.svnCommit }
+            }
+            steps {
+                 sh "cd " + params.brizySvnPath + " && svn commit --non-interactive --trust-server-cert --username themefusecom --password '$SUBVERSION_TOKEN'  -m \"Version "+params.buildVersion+"\""
+            }
+        }
+
+        stage('Publish GIT changes') {
             when {
                 expression { return params.gitMerge }
             }
             steps {
-                sh 'git add ./public/editor-build/'+params.editorVersion
-                sh 'git commit -a -m "Build '+params.buildVersion+'"'
-
                 sshagent (credentials: ['Git']) {
-                   sh 'git push origin '+params.releaseBranch
-                }
-
-                sh 'git checkout -t origin/master'
-                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in master" '+params.releaseBranch
-                sh 'git tag '+params.buildVersion
-
-                sshagent (credentials: ['Git']) {
-                    sh 'git push origin master'
-                }
-
-                sh 'git checkout -t origin/develop'
-                sh 'git merge --no-ff -m "Merge ['+params.releaseBranch+'] in develop" '+params.releaseBranch
-
-                sshagent (credentials: ['Git']) {
-                    sh 'git push origin master && git push origin develop && git push origin --tags && git push origin '+params.releaseBranch
+                    sh "./jenkins/git-publish.sh ${params.buildVersion} ${params.editorVersion} ${params.releaseBranch}"
                 }
             }
         }
