@@ -17,7 +17,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function getAllPlaceholders() {
 
 		return array(
-			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_role', function( $context, $contentPlaceholder ) {
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( $context, $contentPlaceholder ) {
 
 			    if ( ! is_user_logged_in() ) {
 			        return '';
