@@ -72,7 +72,13 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                sh "./jenkins/prepare-svn.sh ${BUILD_FOLDER_PATH} ${params.brizySvnPath}"
+                sh "./jenkins/prepare-svn.sh ${BUILD_FOLDER_PATH} ${params.brizySvnPath} ${params.buildVersion}"
+            }
+        }
+
+        stage('Clean temporary folders') {
+            steps {
+                sh "rm -rf ${BUILD_FOLDER_PATH}"
             }
         }
 
@@ -81,7 +87,6 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                 sh 'cd ' + params.brizySvnPath + ' && svn cp trunk tags/' + params.buildVersion
                  sh "cd " + params.brizySvnPath + " && svn commit --non-interactive --trust-server-cert --username themefusecom --password '$SUBVERSION_TOKEN'  -m \"Version "+params.buildVersion+"\""
             }
         }
