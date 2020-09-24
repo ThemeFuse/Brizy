@@ -63,7 +63,7 @@ pipeline {
 
         stage('Create the Zip File') {
             steps {
-                sh "./jenkins/prepare-zip.sh ${BUILD_FOLDER_PATH} ${zipFilePath}"
+                sh "./jenkins/prepare-zip.sh ${BUILD_FOLDER_PATH} \"$zipFilePath\""
             }
         }
 
@@ -180,7 +180,7 @@ def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
        withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
             sh '''
                 set +x
-                curl -F file=@BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
+                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
             '''
        }
      }
