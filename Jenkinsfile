@@ -35,7 +35,7 @@ pipeline {
         stage('Initialize SCM') {
             steps {
                 sshagent (credentials: ['Git']) {
-                     sh "./jenkins/git-initialize.sh '${params.releaseBranch}'"
+                     sh "./jenkins/git-initialize.sh ${params.releaseBranch}"
                 }
             }
         }
@@ -57,13 +57,13 @@ pipeline {
 
         stage('Make a copy and clean the plugin') {
             steps {
-               sh "./jenkins/clean-files.sh '${BUILD_FOLDER_PATH}'"
+               sh "./jenkins/clean-files.sh ${BUILD_FOLDER_PATH}"
             }
         }
 
         stage('Create the Zip File') {
             steps {
-                sh "./jenkins/prepare-zip.sh '${params.brizySvnPath}' '${zipFilePath}'"
+                sh "./jenkins/prepare-zip.sh ${BUILD_FOLDER_PATH} ${zipFilePath}"
             }
         }
 
@@ -72,7 +72,7 @@ pipeline {
                 expression { return params.svnCommit }
             }
             steps {
-                sh "./jenkins/prepare-svn.sh '${BUILD_FOLDER_PATH}' '${params.brizySvnPath}'"
+                sh "./jenkins/prepare-svn.sh ${BUILD_FOLDER_PATH} ${params.brizySvnPath}"
             }
         }
 
@@ -92,7 +92,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['Git']) {
-                    sh "./jenkins/git-publish.sh '${params.buildVersion}' '${params.editorVersion}' '${params.releaseBranch}'"
+                    sh "./jenkins/git-publish.sh ${params.buildVersion} ${params.editorVersion} ${params.releaseBranch}"
                 }
             }
         }
