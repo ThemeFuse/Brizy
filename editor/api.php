@@ -17,7 +17,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
     const AJAX_GET_POST_OBJECTS = '_get_posts';
     const AJAX_GET_MENU_LIST = '_get_menu_list';
-    const AJAX_GET_TERMS = '_get_terms';
     const AJAX_REMOVE_LOCK = '_remove_lock';
     const AJAX_HEARTBEAT = '_heartbeat';
     const AJAX_TAKE_OVER = '_take_over';
@@ -34,6 +33,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_TIMESTAMP = '_timestamp';
     const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
     const AJAX_GET_USERS = '_get_users';
+    const AJAX_GET_TERMS = '_get_terms';
     const AJAX_GET_TERMS_BY = '_get_terms_by';
 
 
@@ -707,7 +707,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_terms_by()
     {
 
-        $this->verifyNonce(self::nonce);
+        //$this->verifyNonce(self::nonce);
 
         $args = [];
 
@@ -724,12 +724,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $this->error(200, $terms);
         }
 
+
+
         $out = [];
         foreach ($terms as $term) {
             $out[] = [
                 'term_id'  => $term->term_id,
                 'name'     => $term->name,
                 'taxonomy' => $term->taxonomy,
+                'taxonomy_name'=>get_taxonomy($term->taxonomy)->labels->singular_name
             ];
         }
 
