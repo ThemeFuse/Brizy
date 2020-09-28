@@ -748,11 +748,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
         $this->verifyNonce(self::nonce);
 
-        $args = ['numberposts'=>-1];
+        $args = ['numberposts' => -1];
 
-        if($this->param('include')) {
+        if ($this->param('include')) {
             $args['post__in'] = $this->param('include');
-        } else if($this->param('search') && strlen($this->param('search'))>=3) {
+        } elseif ($this->param('search') && strlen($this->param('search')) >= 3) {
             $args['s'] = $this->param('search');
         } else {
             $this->success([]);
@@ -800,6 +800,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
         $users = get_users($args);
+
+        $users = array_map(
+            function (WP_User $user) {
+                $user->ID = (int)$user->ID;
+                return $user;
+            },
+            $users
+        );
 
         $this->success($users);
     }
