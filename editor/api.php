@@ -777,7 +777,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function get_users()
     {
-
         $this->verifyNonce(self::nonce);
 
         $args    = [];
@@ -802,7 +801,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         $users = get_users($args);
 
         $users = array_map(
-            function (WP_User $user) {
+            function ($user) {
                 $user->ID = (int)$user->ID;
                 return $user;
             },
