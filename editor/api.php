@@ -752,7 +752,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
         if ($this->param('include')) {
             $args['post__in'] = $this->param('include');
-        } elseif ($this->param('search') && strlen($this->param('search')) >= 3) {
+        } elseif ($this->param('search') /*&& strlen($this->param('search')) >= 3*/) {
             $args['s'] = $this->param('search');
         } else {
             $this->success([]);
