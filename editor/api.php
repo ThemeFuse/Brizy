@@ -16,6 +16,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
     const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
     const AJAX_GET_POST_OBJECTS = '_get_posts';
+    const AJAX_SEARCH_POST = '_search_posts';
     const AJAX_GET_MENU_LIST = '_get_menu_list';
     const AJAX_REMOVE_LOCK = '_remove_lock';
     const AJAX_HEARTBEAT = '_heartbeat';
@@ -84,6 +85,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p.self::AJAX_SHORTCODE_CONTENT, array($this, 'shortcode_content'));
         add_action($p.self::AJAX_PLACEHOLDER_CONTENT, array($this, 'placeholder_content'));
         add_action($p.self::AJAX_GET_POST_OBJECTS, array($this, 'get_post_objects'));
+        add_action($p.self::AJAX_SEARCH_POST, array($this, 'search_post'));
         add_action($p.self::AJAX_GET_MENU_LIST, array($this, 'get_menu_list'));
         add_action($p.self::AJAX_GET_TERMS, array($this, 'get_terms'));
         add_action($p.self::AJAX_GET_USERS, array($this, 'get_users'));
@@ -707,7 +709,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_terms_by()
     {
 
-        //$this->verifyNonce(self::nonce);
+        $this->verifyNonce(self::nonce);
 
         $args = [];
 
@@ -725,14 +727,48 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
 
-
         $out = [];
         foreach ($terms as $term) {
             $out[] = [
-                'term_id'  => $term->term_id,
-                'name'     => $term->name,
-                'taxonomy' => $term->taxonomy,
-                'taxonomy_name'=>get_taxonomy($term->taxonomy)->labels->singular_name
+                'term_id'       => $term->term_id,
+                'name'          => $term->name,
+                'taxonomy'      => $term->taxonomy,
+                'taxonomy_name' => get_taxonomy($term->taxonomy)->labels->singular_name,
+            ];
+        }
+
+        $this->success($out);
+    }
+
+    /**
+     * Used in posts filter element
+     */
+    public function search_post()
+    {
+
+        $this->verifyNonce(self::nonce);
+
+        $args = [];
+
+        if($this->param('include')) {
+            $args['post__in'] = $this->param('include');
+        } else if($this->param('search') && strlen($this->param('search'))>=3) {
+            $args['s'] = $this->param('search');
+        } else {
+            $this->success([]);
+        }
+
+        $posts = get_posts($args);
+
+        if (is_wp_error($posts)) {
+            $this->error(200, $posts);
+        }
+
+        $out = [];
+        foreach ($posts as $post) {
+            $out[] = [
+                'ID'    => $post->ID,
+                'title' => $post->post_title,
             ];
         }
 
