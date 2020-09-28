@@ -159,42 +159,46 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return $resized_image_path;
 	}
 
-//    private function crop_local_hq() {
-//	    $resized_image_path        = $this->getResizedMediaPath();
-//	    $hq_image_path_dir         = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
-//	    $hq_image_full_path        = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
-//	    $closure                   = function ( $t ) { return 100; };
-//
-//	    if ( file_exists( $hq_image_full_path ) ) {
-//	    	return $hq_image_full_path;
-//	    }
-//
-//	    add_filter( 'jpeg_quality', $closure );
-//
-//	    if ( ! file_exists( $hq_image_path_dir ) && ! @mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
-//		    throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $hq_image_path_dir ) );
-//	    }
-//
-//	    $cropper = new Brizy_Editor_Asset_Crop_Cropper();
-//
-//	    if ( ! $cropper->crop( $this->media_path, $hq_image_full_path, $this->filter ) ) {
-//		    throw new Exception( 'Failed to crop image with 100%.' );
-//	    }
-//
-//	    remove_filter( 'jpeg_quality', $closure );
-//
-//	    return $hq_image_full_path;
-//    }
+    private function crop_local_hq() {
+	    $resized_image_path        = $this->getResizedMediaPath();
+	    $hq_image_path_dir         = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
+	    $hq_image_full_path        = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
+	    $closure                   = function ( $t ) { return 100; };
 
-	public function optimize() {
+	    if ( file_exists( $hq_image_full_path ) ) {
+	    	return $hq_image_full_path;
+	    }
+
+	    add_filter( 'jpeg_quality', $closure );
+
+	    if ( ! file_exists( $hq_image_path_dir ) && ! @mkdir( $hq_image_path_dir, 0755, true ) && ! is_dir( $hq_image_path_dir ) ) {
+		    throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $hq_image_path_dir ) );
+	    }
+
+	    $cropper = new Brizy_Editor_Asset_Crop_Cropper();
+
+	    if ( ! $cropper->crop( $this->media_path, $hq_image_full_path, $this->filter ) ) {
+		    throw new Exception( 'Failed to crop image with 100%.' );
+	    }
+
+	    remove_filter( 'jpeg_quality', $closure );
+
+	    return $hq_image_full_path;
+    }
+
+	public function optimize( $optimize ) {
 		$optimized_image_full_path = $this->get_optimized_img_full_path();
 
 		if ( file_exists( $optimized_image_full_path ) ) {
 			return $optimized_image_full_path;
 		}
 
+		if ( ! $optimize && $this->is_shortpixel() ) {
+			throw new Exception('Images should be optimized from the admin.');
+		}
+
 		try {
-			$resized_image_path = $this->crop_local();
+			$resized_image_path = $optimize ? $this->crop_local_hq() : $this->crop_local();
 		} catch ( Exception $e ) {
 			return $this->media_path;
 		}
@@ -222,12 +226,21 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function get_optimized_img_full_path() {
 		$resized_image_path       = $this->getResizedMediaPath();
 		$pathinfo                 = pathinfo( $resized_image_path );
-		$optimized_image_path_dir = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'optimized';
-		return $optimized_image_path_dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.webp';
+		$optimizedFolder          = $this->is_shortpixel() ? 'shortpixel' : 'optimized';
+		$extension                = $this->is_shortpixel() ? $pathinfo['extension'] : 'webp';
+		$optimized_image_path_dir = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . $optimizedFolder;
+
+		return $optimized_image_path_dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.' . $extension;
 	}
 
 	public function have_optimizer() {
-		return $this->project->getImageOptimizerSettings( Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer::getId(), 'optimize' );
+
+		return ( $this->project->getImageOptimizerSettings( Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer::getId(), 'active' ) && $this->support_webp() ) ||
+		       $this->project->getImageOptimizerSettings( Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::getId(), 'active' );
+	}
+
+	public function is_shortpixel() {
+		return $this->project->getImageOptimizerSettings( Brizy_Editor_Asset_Optimize_ShortpixelOptimizer::getId(), 'active' );
 	}
 
 	public function support_webp() {

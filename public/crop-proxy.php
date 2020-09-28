@@ -5,6 +5,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	const ENDPOINT = '_media';
 	const ENDPOINT_FILTER = '_crop';
 	const ENDPOINT_POST = '_post';
+	const ENDPOINT_OPTIMIZE = '_optimize';
 
 	/**
 	 * @return string
@@ -13,7 +14,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 		return array(
 			Brizy_Editor::prefix( self::ENDPOINT ),
 			Brizy_Editor::prefix( self::ENDPOINT_FILTER ),
-			Brizy_Editor::prefix( self::ENDPOINT_POST )
+			Brizy_Editor::prefix( self::ENDPOINT_POST ),
+			Brizy_Editor::prefix( self::ENDPOINT_OPTIMIZE )
 		);
 	}
 
@@ -26,9 +28,10 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		$vars = $wp_query->query_vars;
 
-		$endpointKey         =  Brizy_Editor::prefix( self::ENDPOINT ) ;
-		$endpointFilterKey   =  Brizy_Editor::prefix( self::ENDPOINT_FILTER ) ;
-		$endpointPostKey     =  Brizy_Editor::prefix( self::ENDPOINT_POST ) ;
+		$endpointKey         =  Brizy_Editor::prefix( self::ENDPOINT );
+		$endpointFilterKey   =  Brizy_Editor::prefix( self::ENDPOINT_FILTER );
+		$endpointPostKey     =  Brizy_Editor::prefix( self::ENDPOINT_POST );
+		$endpointOptimizeKey =  Brizy_Editor::prefix( self::ENDPOINT_OPTIMIZE );
 
 		if ( ! isset( $vars[ $endpointFilterKey ] ) || ! is_string( $vars[ $endpointFilterKey ] ) || empty( $vars[ $endpointFilterKey ] ) ) {
 			return;
@@ -46,8 +49,9 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 				// Set artificially high because GD uses uncompressed images in memory.
 				wp_raise_memory_limit( 'image' );
 
+				$optimize              = (int) ( isset( $vars[ $endpointOptimizeKey ] ) ? $vars[ $endpointOptimizeKey ] : false );
 				$wp_get_post_parent_id = wp_is_post_revision( $vars[ $endpointPostKey ] ) ? wp_get_post_parent_id( $vars[ $endpointPostKey ] ) : $vars[ $endpointPostKey ];
-				$this->crop_local_asset( $vars[ $endpointKey ], html_entity_decode( $vars[ $endpointFilterKey ] ), (int) $wp_get_post_parent_id );
+				$this->crop_local_asset( $vars[ $endpointKey ], html_entity_decode( $vars[ $endpointFilterKey ] ), (int) $wp_get_post_parent_id, $optimize );
 
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
@@ -66,9 +70,11 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	 * @param $filter
 	 * @param $post_id
 	 *
+	 * @param $optimize
+	 *
 	 * @throws Exception
 	 */
-	private function crop_local_asset( $attachment_hash, $filter, $post_id ) {
+	private function crop_local_asset( $attachment_hash, $filter, $post_id, $optimize ) {
 		try {
 
 			$attachment = $this->getAttachment( $attachment_hash );
@@ -85,11 +91,10 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 			$media_cache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id, $media_path, $filter );
 
-			if ( $media_cache->have_optimizer() && $media_cache->support_webp() ) {
+			if ( $media_cache->have_optimizer() ) {
 				try {
-
 					try {
-						$crop_media_path = $media_cache->optimize();
+						$crop_media_path = $media_cache->optimize( $optimize );
 					} catch (\Exception $e) {
 						$crop_media_path = $media_cache->crop_local();
 					}
@@ -100,7 +105,6 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 				try {
 					$crop_media_path = $media_cache->crop_local();
-
 				} catch (\Exception $e) {
 					$crop_media_path = $media_path;
 				}
