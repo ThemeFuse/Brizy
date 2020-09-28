@@ -748,7 +748,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
         $this->verifyNonce(self::nonce);
 
-        $args = [];
+        $args = ['numberposts'=>-1];
 
         if($this->param('include')) {
             $args['post__in'] = $this->param('include');

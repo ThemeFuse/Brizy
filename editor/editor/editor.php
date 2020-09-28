@@ -856,7 +856,7 @@ class Brizy_Editor_Editor_Editor
             'getTermsBy'                 => $pref.Brizy_Editor_API::AJAX_GET_TERMS_BY,
             'getUsers'                   => $pref.Brizy_Editor_API::AJAX_GET_USERS,
             'getPostObjects'             => $pref.Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
-            'searchPosts'                 => $pref.Brizy_Editor_API::AJAX_SEARCH_POST, // ???
+            'searchPosts'                 => $pref.Brizy_Editor_API::AJAX_SEARCH_POST,
             'setFeaturedImage'           => $pref.Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
             'setFeaturedImageFocalPoint' => $pref.Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
             'removeFeaturedImage'        => $pref.Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
