@@ -36,7 +36,7 @@ class Brizy_Admin_Rules_Manager {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
-		} elseif ( is_shop() ) {
+		} elseif ( function_exists( 'is_shop' ) &&  is_shop() ) {
 			$applyFor = Brizy_Admin_Rule::WOO_SHOP_PAGE;
 			$entityType     = "shop_page";
 		} elseif ( is_archive() ) {
