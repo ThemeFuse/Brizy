@@ -425,8 +425,8 @@ class Brizy_Admin_Templates {
 
 				// insert the compiled head and content
 				add_filter( 'body_class', array( $this, 'bodyClassFrontend' ) );
-				add_action( 'wp_head', array( $this, 'insertPageHead' ) );
-				add_action( 'brizy_template_content', array( $this, 'insertPageContent' ), - 12000 );
+				add_action( 'wp_head', array( $this, 'insertTemplateHead') );
+				add_action( 'brizy_template_content', array( $this, 'insertTemplateContent'), - 12000 );
 				add_filter( 'the_content', array( $this, 'filterPageContent' ), - 12000 );
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_preview_assets' ), 9999 );
 			}
@@ -474,19 +474,18 @@ class Brizy_Admin_Templates {
 	/**
 	 *  Show the compiled page head content
 	 */
-	public function insertPageHead() {
+	public function insertTemplateHead() {
 
 		if ( ! self::getTemplate() ) {
 			return;
 		}
+
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = self::getTemplate()->getWpPost();
-
+        $post = null;
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
-
 
 		$compiled_page = self::getTemplate()->get_compiled_page();
 
@@ -505,7 +504,7 @@ class Brizy_Admin_Templates {
 	 * @return null|string|string[]
 	 * @throws Exception
 	 */
-	public function insertPageContent() {
+	public function insertTemplateContent() {
 
 		if ( ! self::getTemplate() ) {
 			return;
@@ -513,8 +512,7 @@ class Brizy_Admin_Templates {
 
 		$pid = Brizy_Editor::get()->currentPostId();
 
-		$post = self::getTemplate()->getWpPost();
-
+        $post = null;
 		if ( $pid ) {
 			$post = get_post( $pid );
 		}
