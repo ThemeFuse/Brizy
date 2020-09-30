@@ -74,12 +74,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	protected $plugin_version;
 
 	/**
-	 * @var Brizy_Editor_CompiledHtml
-	 */
-	static private $compiled_page;
-
-
-	/**
 	 * Brizy_Editor_Post2 constructor.
 	 *
 	 * @param $postId
@@ -284,23 +278,32 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	public function compile_page() {
 
 		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
-
 		$compiledData = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
-
 		$compiledData['pageHtml'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageHtml'] );
 
-		foreach ($compiledData['pageScripts'] as $i=>$script) {
-			$compiledData['pageScripts'][$i]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content']  );
+		foreach ($compiledData['pageScripts'] as $i=>$set) { //pro || free
+            foreach ($set as $k=>$scripts) { // groups
+                if($k=='libsSelectors') continue;
+                foreach ($scripts as $l=>$script) {
+                    $compiledData['pageScripts'][$i][$k][$l]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl($script['content']);
+                }
+
+            }
 		}
-		foreach ($compiledData['pageStyles'] as $i=>$style) {
-			$compiledData['pageStyles'][$i]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $style['content']  );
+		foreach ($compiledData['pageStyles'] as $i=>$set) {
+            foreach ($set as $k=>$styles) {
+                if($k=='libsSelectors') continue;
+                foreach ($styles as $l=>$style) {
+                    $compiledData['pageStyles'][$i][$k][$l]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl(
+                        $style['content']
+                    );
+                }
+            }
 		}
 
 		$this->set_compiled_html( $compiledData['pageHtml'] );
-
 		$this->set_compiled_html_head( null );
 		$this->set_compiled_html_body( null );
-
 		$this->set_needs_compile( false );
 		$this->set_compiler_version( BRIZY_EDITOR_VERSION );
 		$this->setCompiledScripts( $compiledData['pageScripts'] );
@@ -536,12 +539,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_CompiledHtml
 	 */
 	public function get_compiled_page() {
-
-		if ( self::$compiled_page ) {
-			return self::$compiled_page;
-		}
-
-		return new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
+		return new Brizy_Editor_CompiledHtml( $this );
 	}
 
 	public function isCompiledWithCurrentVersion() {
