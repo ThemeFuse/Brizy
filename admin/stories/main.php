@@ -75,9 +75,11 @@ class Brizy_Admin_Stories_Main
                 'show_in_rest'        => false,
                 'can_export'          => true,
                 'exclude_from_search' => true,
-                'supports'            => array('title', 'revisions'),
+                'supports'            => array( 'title', 'post_content', 'revisions' ),
             )
         );
+
+        remove_post_type_support( self::CP_STORY, 'page-attributes' );
 
         add_filter(
             'brizy_supported_post_types',
