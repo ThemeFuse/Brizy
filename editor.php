@@ -224,12 +224,17 @@ class Brizy_Editor {
 	public function revisionsToKeep( $num, $post ) {
 		try {
 			$revisionCount = apply_filters( 'brizy_revisions_max_count', BRIZY_MAX_REVISIONS_TO_KEEP );
+
+			if ( $revisionCount > $num ) {
+				return $num;
+			}
+
 			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
 				return $revisionCount;
 			}
 
 			if ( Brizy_Editor_Post::get( $post )->uses_editor() ) {
-				$num = $revisionCount;;
+				$num = $revisionCount;
 			}
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->debug( $e->getMessage(), array( $e ) );
