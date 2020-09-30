@@ -28,7 +28,14 @@ class Brizy_Admin_Stories_Main
 
     public function initialize()
     {
+        if (is_admin()) {
+            add_filter('post_updated_messages', array($this, 'filterMessages'));
+            add_action('admin_init', array($this, 'removeAttributeMetaBox'));
+        }
+    }
 
+    public function removeAttributeMetaBox() {
+        remove_meta_box('pageparentdiv',self::CP_STORY,'normal' );
     }
 
     static public function registerCustomPosts()
@@ -39,7 +46,7 @@ class Brizy_Admin_Stories_Main
             'singular_name'      => _x('Story', 'post type singular name', 'brizy'),
             'menu_name'          => _x('Stories', 'admin menu', 'brizy'),
             'name_admin_bar'     => _x('Story', 'add new on admin bar', 'brizy'),
-            'add_new'            => _x('Add New', self::CP_STORY, 'brizy'),
+            'add_new'            => _x('Add New Story', self::CP_STORY, 'brizy'),
             'add_new_item'       => __('Add New Story', 'brizy'),
             'new_item'           => __('New Story', 'brizy'),
             'edit_item'          => __('Edit Story', 'brizy'),
@@ -51,24 +58,24 @@ class Brizy_Admin_Stories_Main
             'not_found_in_trash' => __('No Stories found in Trash.', 'brizy'),
         );
 
-        register_post_type( self::CP_STORY,
+        register_post_type(
+            self::CP_STORY,
             array(
                 'labels'              => $labels,
                 'public'              => false,
                 'has_archive'         => false,
-                'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
+                'description'         => __bt('brizy', 'Brizy').' '.__('stories', 'brizy').'.',
                 'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
-                'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
+                'show_ui'             => defined('BRIZY_PRO_VERSION'),
                 'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
                 'query_var'           => false,
-                'rewrite'             => array( 'slug' => self::CP_STORY ),
+                'rewrite'             => array('slug' => self::CP_STORY),
                 'capability_type'     => 'page',
-                //'map_meta_cap'        => true,
                 'hierarchical'        => false,
                 'show_in_rest'        => false,
                 'can_export'          => true,
                 'exclude_from_search' => true,
-                'supports'            => array( 'title', 'revisions', 'page-attributes' )
+                'supports'            => array('title', 'revisions'),
             )
         );
 
@@ -80,6 +87,60 @@ class Brizy_Admin_Stories_Main
                 return $types;
             }
         );
+    }
+
+    /**
+     * @param $messages
+     *
+     * @return mixed
+     */
+    function filterMessages($messages)
+    {
+        $post             = get_post();
+        $post_type        = get_post_type($post);
+        $post_type_object = get_post_type_object($post_type);
+
+        $messages[self::CP_STORY] = array(
+            0  => '', // Unused. Messages start at index 1.
+            1  => __('Story updated.'),
+            2  => __('Custom field updated.'),
+            3  => __('Custom field deleted.'),
+            4  => __('Story updated.'),
+            /* translators: %s: date and time of the revision */
+            5  => isset($_GET['revision']) ? sprintf(
+                __('Story restored to revision from %s'),
+                wp_post_revision_title((int)$_GET['revision'], false)
+            ) : false,
+            6  => __('Story published.'),
+            7  => __('Story saved.'),
+            8  => __('Story submitted.'),
+            9  => sprintf(
+                __('Story scheduled for: <strong>%1$s</strong>.'),
+                // translators: Publish box date format, see http://php.net/date
+                date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date))
+            ),
+            10 => __('Story draft updated.'),
+        );
+
+        if ($post_type_object->publicly_queryable && self::CP_STORY === $post_type) {
+            $permalink = get_permalink($post->ID);
+
+            $view_link               = sprintf(' <a href="%s">%s</a>', esc_url($permalink), __('View Story'));
+            $messages[$post_type][1] .= $view_link;
+            $messages[$post_type][6] .= $view_link;
+            $messages[$post_type][9] .= $view_link;
+
+            $preview_permalink        = add_query_arg('preview', 'true', $permalink);
+            $preview_link             = sprintf(
+                ' <a target="_blank" href="%s">%s</a>',
+                esc_url($preview_permalink),
+                __('Preview Story')
+            );
+            $messages[$post_type][8]  .= $preview_link;
+            $messages[$post_type][10] .= $preview_link;
+        }
+
+        return $messages;
     }
 
 }

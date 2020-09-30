@@ -251,7 +251,6 @@ class Brizy_Admin_Templates {
 				'query_var'           => false,
 				'rewrite'             => array( 'slug' => 'brizy-template' ),
 				'capability_type'     => 'page',
-				//'map_meta_cap'        => true,
 				'hierarchical'        => false,
 				'show_in_rest'        => false,
 				'can_export'          => true,
