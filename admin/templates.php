@@ -886,12 +886,10 @@ class Brizy_Admin_Templates
 
     public function validate_template_rules($post_id, $data)
     {
-       $rules = $this->obtainRulesFromPostSubmit($post_id);
+        $rules = $this->obtainRulesFromPostSubmit($post_id);
 
         if (count($rules) == 0) {
-            $this->addError($post_id, __('You must add at least one rule.', 'brizy'));
-            header('Location: '.get_edit_post_link($post_id, 'redirect'));
-            exit;
+            return;
         }
 
         try {
@@ -905,10 +903,6 @@ class Brizy_Admin_Templates
             }
 
             $ruleValidator->validateRulesForPostId($rules, $post_id);
-
-            $ruleManager = new Brizy_Admin_Rules_Manager();
-            $ruleManager->setRules($post_id, $rules);
-
         } catch (Brizy_Editor_Exceptions_DataVersionMismatch $e) {
             $this->addError($post_id, esc_html__('Invalid data version.', 'brizy'));
             header('Location: '.get_edit_post_link($post_id, 'redirect'));
@@ -923,7 +917,7 @@ class Brizy_Admin_Templates
     public function save_template_rules($post_id)
     {
         try {
-            $rules = $this->obtainRulesFromPostSubmit($post_id);
+            $rules       = $this->obtainRulesFromPostSubmit($post_id);
             $ruleManager = new Brizy_Admin_Rules_Manager();
             $ruleManager->setRules($post_id, $rules);
         } catch (Brizy_Editor_Exceptions_DataVersionMismatch $e) {
