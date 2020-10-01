@@ -385,8 +385,6 @@ class Brizy_Public_Main
 
     public function templateInclude($atemplate)
     {
-        global $wp_scripts;
-
         $config_object = $this->getConfigObject();
 
         $iframe_url = add_query_arg(
@@ -415,11 +413,6 @@ class Brizy_Public_Main
             'styles'        => [$config_object->urls->assets."/editor/css/editor.css"],
             'scripts'       => [$config_object->urls->assets."/editor/js/polyfill.js"],
         );
-
-        if (isset($wp_scripts->registered['jquery-core'])) {
-            $depJquery = $wp_scripts->registered['jquery-core'];
-            array_unshift($context['scripts'], $depJquery->src);
-        }
 
         if (defined('BRIZY_DEVELOPMENT')) {
             $context['DEBUG'] = true;
