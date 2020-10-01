@@ -950,8 +950,6 @@ class Brizy_Admin_Templates
     {
         update_post_meta($id, self::TEMPLATE_TYPE_KEY, $type);
     }
-
-
 }
 
 
