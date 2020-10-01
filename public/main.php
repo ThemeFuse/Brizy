@@ -108,32 +108,38 @@ class Brizy_Public_Main
         $this->addTheContentFilters();
     }
 
-    public static function includeHeadAssets($content, Brizy_Editor_Post $post)
-    {
+    public static function libAggregator($libSet, $post, $callback) {
         // get assets list
         $assets = [];
-        $styles = $post->getCompiledStyles();
-        foreach ($styles['free']['genericStyles'] as $style) {
+        foreach ($libSet['generic'] as $style) {
             $assets[] = $style;
         }
 
-        $selectors = $styles['free']['libsSelectors'];
+        $selectors = $libSet['libsSelectors'];
 
-        $assets = array_merge(
-            $assets,
-            [
-                array_filter(
-                    $styles['free']['libsMap'],
-                    function ($lib) use ($selectors) {
-                        return count(array_intersect($lib['selectors'], $selectors)) > 0;
-                    }
-                )[0],
-            ]
+        $selectedLib = array_reduce(
+            $libSet['libsMap'],
+            function ($lib, $alib) use ($selectors) {
+                if ($lib) {
+                    return $lib;
+                }
+
+                return count(array_intersect($alib['selectors'], $selectors)) > 0 ? $alib : null;
+            }
         );
 
-        // get pro assets
+        if($selectedLib)
+            $assets[] = $selectedLib;
 
-        $assets = apply_filters('brizy_pro_head_assets', $assets, $post);
+        // get pro assets
+        $assets = $callback($assets, $post);
+
+        $assets = array_filter(
+            $assets,
+            function ($a) {
+                return ! is_null($a);
+            }
+        );
 
         // sort asset list by score
         usort(
@@ -147,6 +153,16 @@ class Brizy_Public_Main
             }
         );
 
+        return $assets;
+    }
+
+    public static function includeHeadAssets($content, Brizy_Editor_Post $post)
+    {
+        $styles = $post->getCompiledStyles();
+
+        $assets = self::libAggregator($styles['free'],$post,function($assets, $post){
+            return apply_filters('brizy_pro_head_assets', $assets, $post);
+        });
 
         // include asset list
         $content .= "<!-- BRIZY ASSETS -->\n";
@@ -160,42 +176,10 @@ class Brizy_Public_Main
 
     public static function includeBodyAssets($content, Brizy_Editor_Post $post)
     {
-        // get assets list
-        $assets  = [];
-        $scripts = $post->getCompiledScripts();
-        foreach ($scripts['free']['genericScripts'] as $script) {
-            $assets[] = $script;
-        }
-
-        $selectors = $scripts['free']['libsSelectors'];
-
-        $assets = array_merge(
-            $assets,
-            [
-                array_filter(
-                    $scripts['free']['libsMap'],
-                    function ($lib) use ($selectors) {
-                        return count(array_intersect($lib['selectors'], $selectors)) > 0;
-                    }
-                )[0],
-            ]
-        );
-
-        // get pro assets
-        $assets = apply_filters('brizy_pro_body_assets', $assets, $post);
-
-        // sort asset list by score
-        usort(
-            $assets,
-            function ($as1, $as2) {
-                if ($as1['score'] == $as2['score']) {
-                    return 0;
-                }
-
-                return ($as1['score'] < $as2['score']) ? -1 : 1;
-            }
-        );
-
+        $styles = $post->getCompiledScripts();
+        $assets = self::libAggregator($styles['free'],$post,function($assets, $post){
+            return apply_filters('brizy_pro_body_assets', $assets, $post);
+        });
 
         // include asset list
         $content .= "<!-- BRIZY ASSETS -->\n";
