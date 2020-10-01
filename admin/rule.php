@@ -218,7 +218,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setType( $type ) {
-		$this->type = $type;
+		$this->type = (int)$type;
 
 		return $this;
 	}
@@ -236,7 +236,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setAppliedFor( $appliedFor ) {
-		$this->appliedFor = $appliedFor;
+		$this->appliedFor = (int)$appliedFor;
 
 		return $this;
 	}
