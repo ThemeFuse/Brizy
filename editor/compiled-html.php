@@ -70,7 +70,6 @@ class Brizy_Editor_CompiledHtml
      */
     public function get_head()
     {
-
         $head_tag = $this->dom->get_head();
 
         $content = apply_filters('brizy_head_assets', $head_tag->get_content(), $this->post);
