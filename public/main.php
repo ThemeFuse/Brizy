@@ -116,15 +116,16 @@ class Brizy_Public_Main
         }
 
         $selectors = $libSet['libsSelectors'];
+        $selectorsCount = count($selectors);
 
         $selectedLib = array_reduce(
             $libSet['libsMap'],
-            function ($lib, $alib) use ($selectors) {
+            function ($lib, $alib) use ($selectors,$selectorsCount) {
                 if ($lib) {
                     return $lib;
                 }
 
-                return count(array_intersect($alib['selectors'], $selectors)) > 0 ? $alib : null;
+                return count(array_intersect($alib['selectors'], $selectors)) == $selectorsCount ? $alib : null;
             }
         );
 
@@ -176,8 +177,8 @@ class Brizy_Public_Main
 
     public static function includeBodyAssets($content, Brizy_Editor_Post $post)
     {
-        $styles = $post->getCompiledScripts();
-        $assets = self::libAggregator($styles['free'],$post,function($assets, $post){
+        $scripts = $post->getCompiledScripts();
+        $assets = self::libAggregator($scripts['free'],$post,function($assets, $post){
             return apply_filters('brizy_pro_body_assets', $assets, $post);
         });
 

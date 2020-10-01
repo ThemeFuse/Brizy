@@ -115,7 +115,20 @@ class Brizy_Admin_Popups_Main {
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public function insertPopupsHtml( $content, $project, $wpPost, $context = 'document' ) {
-		$popups = $this->getMatchingBrizyPopups();
+
+//	    $brizyPost = Brizy_Editor_Post::get($wpPost);
+//        $styles = $brizyPost->getCompiledStyles();
+//        $scripts = $brizyPost->getCompiledScripts();
+//s
+//        $styles = self::libAggregator($styles['free'],$brizyPost,function($assets, $post){
+//            return apply_filters('brizy_pro_head_assets', $assets, $post);
+//        });
+//
+//        $scripts = self::libAggregator($scripts['free'],$brizyPost,function($assets, $post){
+//            return apply_filters('brizy_pro_head_assets', $assets, $post);
+//        });
+
+	    $popups = $this->getMatchingBrizyPopups();
 
 		foreach ( $popups as $brizyPopup ) {
 			/**
