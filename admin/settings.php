@@ -44,7 +44,7 @@ class Brizy_Admin_Settings {
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
 		}
 
-		add_action( 'admin_head', array( $this, 'addClassToWpNavMenu' ) );
+		add_action( 'submenu_file', array( $this, 'submenu_file' ), 10, 2 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -66,12 +66,18 @@ class Brizy_Admin_Settings {
 
 	/**
 	 * Keep the tempate menu selected
+	 *
+	 * @param $submenu_file
+	 * @param $parent_file
 	 */
-	function addClassToWpNavMenu() {
-		global $parent_file, $submenu_file, $post_type;
-		if ( Brizy_Admin_Templates::CP_TEMPLATE == $post_type ) :
-			$submenu_file = 'edit.php?post_type=brizy_template';
-		endif;
+	function submenu_file( $submenu_file, $parent_file ) {
+		global $post_type, $pagenow;
+
+		if ( $parent_file !== Brizy_Admin_Settings::menu_slug() || $pagenow !== 'post-new.php' ) {
+			return $submenu_file;
+		}
+
+		return "edit.php?post_type={$post_type}";
 	}
 
 	/**

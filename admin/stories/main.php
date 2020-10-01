@@ -9,7 +9,7 @@
 class Brizy_Admin_Stories_Main
 {
 
-    const CP_STORY = 'brizy-story';
+    const CP_STORY = 'editor-story';
 
     /**
      * @return Brizy_Admin_Stories_Main
@@ -20,30 +20,27 @@ class Brizy_Admin_Stories_Main
 
         if ( ! $instance) {
             $instance = new self();
-            $instance->initialize();
         }
 
         return $instance;
     }
 
-    public function initialize()
-    {
-
+    public function __construct() {
+	    add_filter( 'post_updated_messages', [ $this, 'post_updated_messages' ] );
     }
 
     static public function registerCustomPosts()
     {
-
         $labels = array(
             'name'               => _x('Stories', 'post type general name', 'brizy'),
             'singular_name'      => _x('Story', 'post type singular name', 'brizy'),
             'menu_name'          => _x('Stories', 'admin menu', 'brizy'),
             'name_admin_bar'     => _x('Story', 'add new on admin bar', 'brizy'),
             'add_new'            => _x('Add New', self::CP_STORY, 'brizy'),
-            'add_new_item'       => __('Add New Template', 'brizy'),
-            'new_item'           => __('New Template', 'brizy'),
-            'edit_item'          => __('Edit Template', 'brizy'),
-            'view_item'          => __('View Template', 'brizy'),
+            'add_new_item'       => __('Add New Story', 'brizy'),
+            'new_item'           => __('New Story', 'brizy'),
+            'edit_item'          => __('Edit Story', 'brizy'),
+            'view_item'          => __('View Story', 'brizy'),
             'all_items'          => __('Stories', 'brizy'),
             'search_items'       => __('Search Stories', 'brizy'),
             'parent_item_colon'  => __('Parent Stories:', 'brizy'),
@@ -68,9 +65,11 @@ class Brizy_Admin_Stories_Main
                 'show_in_rest'        => false,
                 'can_export'          => true,
                 'exclude_from_search' => true,
-                'supports'            => array( 'title', 'revisions', 'page-attributes' )
+                'supports'            => array( 'title', 'post_content', 'revisions' ),
             )
         );
+
+	    remove_post_type_support( self::CP_STORY, 'page-attributes' );
 
         add_filter(
             'brizy_supported_post_types',
@@ -82,4 +81,19 @@ class Brizy_Admin_Stories_Main
         );
     }
 
+	public function post_updated_messages( $messages ) {
+
+		$messages[ self::CP_STORY ] = array(
+			0  => '',
+			1  => __( 'Story updated.', 'brizy' ),
+			2  => __( 'Custom field updated.', 'brizy' ),
+			3  => __( 'Custom field deleted.', 'brizy' ),
+			4  => __( 'Story updated.', 'brizy' ),
+			6  => __( 'Story published.', 'brizy' ),
+			7  => __( 'Story saved.', 'brizy' ),
+			8  => __( 'Story submitted.', 'brizy' ),
+		);
+
+		return $messages;
+	}
 }
