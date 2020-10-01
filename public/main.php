@@ -121,40 +121,47 @@ class Brizy_Public_Main
 
         $assets = array_merge(
             $assets,
-            [array_filter(
-                $styles['free']['libsMap'],
-                function ($lib) use ($selectors) {
-                    return count(array_intersect($lib['selectors'], $selectors)) > 0;
-                }
-            )[0]]
+            [
+                array_filter(
+                    $styles['free']['libsMap'],
+                    function ($lib) use ($selectors) {
+                        return count(array_intersect($lib['selectors'], $selectors)) > 0;
+                    }
+                )[0],
+            ]
         );
 
         // get pro assets
 
-        $assets = apply_filters('brizy_pro_head_assets',$assets,$post);
+        $assets = apply_filters('brizy_pro_head_assets', $assets, $post);
 
         // sort asset list by score
-        usort($assets, function($as1,$as2){
-            if($as1['score']==$as2['score'])
-                return 0;
+        usort(
+            $assets,
+            function ($as1, $as2) {
+                if ($as1['score'] == $as2['score']) {
+                    return 0;
+                }
 
-            return ($as1['score'] < $as2['score']) ? -1 : 1;
-        });
+                return ($as1['score'] < $as2['score']) ? -1 : 1;
+            }
+        );
 
 
         // include asset list
-        $content.="<!-- BRIZY ASSETS -->\n";
+        $content .= "<!-- BRIZY ASSETS -->\n";
         foreach ($assets as $style) {
-            $content.= $style['content'];
+            $content .= $style['content'];
         }
-        $content.="\n<!-- END BRIZY ASSETS -->";
+        $content .= "\n<!-- END BRIZY ASSETS -->";
+
         return $content;
     }
 
     public static function includeBodyAssets($content, Brizy_Editor_Post $post)
     {
         // get assets list
-        $assets = [];
+        $assets  = [];
         $scripts = $post->getCompiledScripts();
         foreach ($scripts['free']['genericScripts'] as $script) {
             $assets[] = $script;
@@ -164,32 +171,38 @@ class Brizy_Public_Main
 
         $assets = array_merge(
             $assets,
-            [array_filter(
-                $scripts['free']['libsMap'],
-                function ($lib) use ($selectors) {
-                    return count(array_intersect($lib['selectors'], $selectors)) > 0;
-                }
-            )[0]]
+            [
+                array_filter(
+                    $scripts['free']['libsMap'],
+                    function ($lib) use ($selectors) {
+                        return count(array_intersect($lib['selectors'], $selectors)) > 0;
+                    }
+                )[0],
+            ]
         );
 
         // get pro assets
-        $assets = apply_filters('brizy_pro_body_assets',$assets,$post);
+        $assets = apply_filters('brizy_pro_body_assets', $assets, $post);
 
         // sort asset list by score
-        usort($assets, function($as1,$as2){
-            if($as1['score']==$as2['score'])
-                return 0;
+        usort(
+            $assets,
+            function ($as1, $as2) {
+                if ($as1['score'] == $as2['score']) {
+                    return 0;
+                }
 
-            return ($as1['score'] < $as2['score']) ? -1 : 1;
-        });
+                return ($as1['score'] < $as2['score']) ? -1 : 1;
+            }
+        );
 
 
         // include asset list
-        $content.="<!-- BRIZY ASSETS -->\n";
+        $content .= "<!-- BRIZY ASSETS -->\n";
         foreach ($assets as $script) {
-            $content.= $script['content'];
+            $content .= $script['content'];
         }
-        $content.="\n<!-- END BRIZY ASSETS -->";
+        $content .= "\n<!-- END BRIZY ASSETS -->";
 
         return $content;
     }
@@ -372,6 +385,7 @@ class Brizy_Public_Main
 
     public function templateInclude($atemplate)
     {
+        global $wp_scripts;
 
         $config_object = $this->getConfigObject();
 
@@ -401,6 +415,11 @@ class Brizy_Public_Main
             'styles'        => [$config_object->urls->assets."/editor/css/editor.css"],
             'scripts'       => [$config_object->urls->assets."/editor/js/polyfill.js"],
         );
+
+        if (isset($wp_scripts->registered['jquery-core'])) {
+            $depJquery = $wp_scripts->registered['jquery-core'];
+            array_unshift($context['scripts'], $depJquery->src);
+        }
 
         if (defined('BRIZY_DEVELOPMENT')) {
             $context['DEBUG'] = true;
