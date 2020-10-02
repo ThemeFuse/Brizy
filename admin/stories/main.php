@@ -56,20 +56,19 @@ class Brizy_Admin_Stories_Main
             self::CP_STORY,
             array(
                 'labels'              => $labels,
-                'public'              => false,
+                'public'              => true,
                 'has_archive'         => false,
-                'description'         => __bt('brizy', 'Brizy').' '.__('stories', 'brizy').'.',
-                'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
-                'show_ui'             => defined('BRIZY_PRO_VERSION'),
+                'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
+                'publicly_queryable'  => true,
                 'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
                 'query_var'           => false,
-                'rewrite'             => array('slug' => self::CP_STORY),
+                'rewrite'             => [ 'slug' => self::CP_STORY ],
                 'capability_type'     => 'page',
                 'hierarchical'        => false,
                 'show_in_rest'        => false,
                 'can_export'          => true,
                 'exclude_from_search' => true,
-                'supports'            => array( 'title', 'post_content', 'revisions' ),
+                'supports'            => [ 'title', 'post_content', 'revisions' ],
             )
         );
 
