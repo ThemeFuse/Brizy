@@ -55,10 +55,7 @@ class Brizy_Editor_CompiledHtml
     {
 
         $body_tag = $this->dom->get_body();
-
-        $content = apply_filters('brizy_body_assets', $body_tag->get_content(), $this->post);
-
-        $content = $this->apply_processors($content);
+        $content = $this->apply_processors($body_tag->get_content());
 
         return $content;
     }
@@ -72,9 +69,7 @@ class Brizy_Editor_CompiledHtml
     {
         $head_tag = $this->dom->get_head();
 
-        $content = apply_filters('brizy_head_assets', $head_tag->get_content(), $this->post);
-
-        $content = $this->apply_processors($content);
+        $content = $this->apply_processors($head_tag->get_content());
 
         return $content;
     }
