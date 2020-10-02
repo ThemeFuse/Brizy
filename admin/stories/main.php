@@ -54,22 +54,16 @@ class Brizy_Admin_Stories_Main
 
         register_post_type(
             self::CP_STORY,
-            array(
-                'labels'              => $labels,
-                'public'              => true,
-                'has_archive'         => false,
-                'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
-                'publicly_queryable'  => true,
-                'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
-                'query_var'           => false,
-                'rewrite'             => [ 'slug' => self::CP_STORY ],
-                'capability_type'     => 'page',
-                'hierarchical'        => false,
-                'show_in_rest'        => false,
-                'can_export'          => true,
-                'exclude_from_search' => true,
-                'supports'            => [ 'title', 'post_content', 'revisions' ],
-            )
+            [
+	            'labels'              => $labels,
+	            'public'              => true,
+	            'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
+	            'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
+	            'rewrite'             => [ 'slug' => self::CP_STORY ],
+	            'capability_type'     => 'page',
+	            'exclude_from_search' => true,
+	            'supports'            => [ 'title', 'post_content', 'revisions' ],
+            ]
         );
 
         remove_post_type_support( self::CP_STORY, 'page-attributes' );
