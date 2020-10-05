@@ -97,18 +97,19 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                 return $this->displayPosts( $posts, $extra_atts );
             } ),
-            /*
-             * Deprecated placeholder.
-             * It is for backward compatibilities.
-             * Now this element is under product pages and the placeholder for it is the default wp shortcode structure [product_page id="thePostID"].
-             */
-            new Brizy_Content_Placeholders_Simple( '', 'editor_product_page', function( $context, $contentPlaceholder ) {
+
+            new Brizy_Content_Placeholders_Simple( 'Product Page', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
                 $atts = $contentPlaceholder->getAttributes();
 
-                if ( empty( $atts['id'] ) ) {
-                    return '';
-                }
+//	            if ( ! empty( $atts['id'] ) ) {
+//		            $product_data = get_post( $atts['id'] );
+//		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
+//	            }
+
+	            if ( empty( $atts['id'] ) && current_user_can( 'manage_options' ) ) {
+		            return __( 'Please set a valid product', 'brizy' );
+	            }
 
                 return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
             } ),
