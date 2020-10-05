@@ -78,8 +78,14 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 			try {
 
-				if ( $media_cache->have_optimizer() && $media_cache->support_webp() ) {
+				if ( $media_cache->have_optimizer() ) {
+
 					$crop_media_path = $media_cache->get_optimized_img_full_path();
+
+					if ( $media_cache->is_shortpixel() && ! file_exists( $crop_media_path ) ) {
+						$crop_media_path = $media_cache->getResizedMediaPath();
+					}
+
 				} else {
 					$crop_media_path = $media_cache->getResizedMediaPath();
 				}

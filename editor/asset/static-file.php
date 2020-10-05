@@ -94,7 +94,6 @@ abstract class Brizy_Editor_Asset_StaticFile {
 			return false;
 		}
 
-		update_post_meta( $attachment_id, 'brizy_external_media_name', $madia_name );
 		update_post_meta( $attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5( $attachment_id . time() ) );
 
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {

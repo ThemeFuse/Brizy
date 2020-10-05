@@ -1,0 +1,179 @@
+{% extends "optimizer-base.html.twig" %}
+
+{% block tab_content %}
+    <form method="post" novalidate="novalidate">
+        <input type="hidden" name="tab" value="shortpixel"/>
+        {{ nonce | raw }}
+        <table class="form-table" style="max-width: 900px;">
+            <tbody>
+            <tr class="user-display-name-wrap">
+                <th>
+                    <label for="display_name">{{ __( 'Enable Shortpixel Optimizer','brizy' ) }}</label>
+                </th>
+                <td>
+                    <input type="checkbox" name="active" value="1"{{ active ? ' checked' : '' }}>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="form-table" style="max-width: 900px;">
+            <tbody>
+            <tr class="user-display-name-wrap">
+                <th><label for="display_name">{{ __('Shortpixel API Key') }}</label></th>
+                <td>
+                    <input type="text" name="api_key" value="{{ settings['API_KEY'] }}" style="width: 230px;">
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ shortpixel_link }}" target="_blank">{{ __('Get an API key','brizy') }}</a>
+                </td>
+            </tr>
+            <tr class="user-display-name-wrap">
+                <th><label for="display_name">{{ __('Compression','brizy') }}</label></th>
+                <td>
+                    <p style="margin-bottom: 25px;">
+                        <label for="lossy">
+                            <input id="lossy" type="radio" name="lossy" value="1" {{ settings['lossy']==1?'checked':'' }}>
+                            <b>{{ __('Lossy') }}</b>: {{ __('creates the smallest optimised images you can get. If you want the best balance between optimisation and picture quality, go with this option. ') }}
+                        </label></p>
+                    <p style="margin-bottom: 25px;">
+                        <label for="glossy">
+                            <input id="glossy" type="radio" name="lossy" value="2" {{ settings['lossy']==2?'checked':'' }}>
+                            <b>{{ __('Glossy') }}</b>: {{ __('the best choice if you believe that a slight loss of page speed is an acceptable compromise for a top image quality.') }}
+                        </label>
+                    </p>
+                    <p style="margin-bottom: 25px;">
+                        <label for="lossless">
+                            <input id="lossless" type="radio" name="lossy" value="0" {{ settings['lossy']==0?'checked':'' }}>
+                            <b>{{ __('Lossless') }}</b>: {{ __('images are pixel-by-pixel identical with the originals. If you want your images to remain untouched with a small size reduction, go with this option.') }}
+                        </label></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="submit">
+            <button type="submit" id="submit" class="button button-primary">{{ __('Save','brizy') }}</button>
+        </p>
+    </form>
+
+    {% if active %}
+        <script>
+            (function ($) {
+
+                var requestQueue = [];
+                var maxRequestCount = 3;
+                var count = {{ count }} ;
+                var currentIndex = 0;
+                var failCount = 0;
+                var links = [
+                    {% for url in urls %}
+                    "{{ url | raw }}",
+                    {% endfor %}
+                ];
+
+                window.startOptimize = function () {
+                    currentIndex = 0;
+                    updateUI();
+                    if (links.length > 0) {
+                        const handle = setInterval(function () {
+                            if (requestQueue.length < maxRequestCount && links[currentIndex]) {
+                                // add request
+                                console.log('Add new request');
+                                requestQueue.push($.ajax({
+                                    url: links[currentIndex].replace( /\&amp;/gi, '&' ),
+                                    success: function (data) {
+                                        updateUI();
+                                    },
+                                    error: function () {
+                                        failCount++;
+                                        updateUI();
+                                    }
+                                }));
+
+                                currentIndex++;
+
+                            } else {
+                                console.log('Clear done requests');
+                                // check and remove done requests
+                                for (var i = 0; i < maxRequestCount; i++) {
+                                    if (requestQueue[i] && requestQueue[i].readyState == 4) {
+                                        requestQueue.splice(i, 1);
+                                    }
+                                }
+                            }
+
+                            if (!links[currentIndex]) {
+                                console.log('Clear Interval');
+                                updateUI();
+                                clearInterval(handle);
+                            }
+
+                        }, 500);
+                    }
+                };
+
+                function updateUI() {
+
+                    var progress = (currentIndex) + "/" + count;
+
+                    if (currentIndex < links.length) {
+                        $('#optimize-results').html('<p>Process: ' + progress + '' +
+                            '<svg class="brz-spinner"><use xlink:href="{{ svg }}"></svg>' +
+                            '</p>' +
+                            '<p>Failed: ' + failCount + '</p>');
+
+                        $('#optimize-donotclose').show();
+                        window.onbeforeunload = function (e) {
+                            return '';
+                        };
+                    } else {
+                        $('#optimize-results').html('<p>Process: ' + progress + '' +
+                            '</p>' +
+                            '<p>Failed: ' + failCount + '</p>');
+                        $('#optimize-donotclose').hide();
+                        jQuery('#optimize-submit').prop('disabled', false);
+                        window.onbeforeunload = undefined;
+                    }
+                }
+            })(jQuery);
+        </script>
+        <div id="optimize-results">
+            <p>{{ sprintf( __( 'There are <b>%d</b> images that can be optimized.','brizy' ) ,count) |raw }}</p>
+        </div>
+
+        <button type="submit" id="optimize-submit" class="button button-primary" onclick="startOptimize(); jQuery(this).prop('disabled',true);">
+            {{ __( 'Optimize', 'brizy' ) }}
+        </button>
+
+        <div id="optimize-donotclose" style="display:none;color:red;">
+            <p><i> {{ __( "Don't leave this page until the optimisation process is completed.", 'brizy' ) }}</i></p>
+        </div>
+
+        <style>
+            .brz-spinner {
+                margin-left: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                -webkit-animation-name: brz-pin;
+                animation-name: brz-spin;
+                -webkit-animation-duration: 1s;
+                animation-duration: 1s;
+                -webkit-animation-iteration-count: infinite;
+                animation-iteration-count: infinite;
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+            }
+
+            @keyframes brz-spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    {% endif %}
+
+{% endblock %}
