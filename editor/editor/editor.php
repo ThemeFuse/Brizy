@@ -58,7 +58,7 @@ class Brizy_Editor_Editor_Editor {
 	private function getMode( $postType ) {
 		switch ( $postType ) {
 			case Brizy_Admin_Stories_Main::CP_STORY:
-                return 'internal_story';
+				return 'internal_story';
 			case Brizy_Admin_Templates::CP_TEMPLATE:
 				return 'template';
 			case Brizy_Admin_Popups_Main::CP_POPUP:
@@ -123,10 +123,10 @@ class Brizy_Editor_Editor_Editor {
 				'changeTemplate'     => $change_template_url,
 				'upgradeToPro'       =>
 					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
-				,
+			,
 				'support'            =>
-					__bt('support-url',apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
-				),
+					__bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
+					),
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
 				'customFile'         => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
@@ -139,10 +139,10 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix'    => Brizy_Editor::prefix(),
-				'permalink'       => get_permalink( $wp_post_id ),
-				'page'            => $wp_post_id,
-				'ruleMatches'     => $this->getTemplateRuleMatches( $mode === 'template', $wp_post_id ),
+				'pluginPrefix' => Brizy_Editor::prefix(),
+				'permalink'    => get_permalink( $wp_post_id ),
+				'page'         => $wp_post_id,
+
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $this->post->get_templates(),
@@ -177,6 +177,9 @@ class Brizy_Editor_Editor_Editor {
 
 		$config = $this->addRecaptchaAccounts( $manager, $config );
 		$config = $this->addSocialAccounts( $manager, $config );
+
+
+		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id );
 
 		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
@@ -708,23 +711,34 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $brizy_public_editor_build_texts::get_editor_texts();
 	}
 
+	private function addTemplateFields( $config, $is_template, $wp_post_id ) {
+
+		$template_rules = [];
+		if ( $is_template ) {
+			$rule_manager   = new Brizy_Admin_Rules_Manager();
+			$template_rules = $rule_manager->getRules( $wp_post_id );
+			$config['template_type']     = $this->getTemplateType( $template_rules );
+		}
+
+		$config['wp']['ruleMatches'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
+
+		return $config;
+	}
+
 	/**
 	 * @param $isTemplate
-	 * @param $wp_post_id
-	 * @param array $ruleMatches
+	 * @param $wpPostId
+	 * @param $templateRules
 	 *
 	 * @return array
-	 * @throws Exception
 	 */
-	private function getTemplateRuleMatches( $isTemplate, $wp_post_id ) {
+	private function getTemplateRuleMatches( $isTemplate, $wpPostId, $templateRules ) {
 
 		$ruleMatches = array();
 
 		if ( $isTemplate ) {
-			$rule_manager   = new Brizy_Admin_Rules_Manager();
-			$template_rules = $rule_manager->getRules( $wp_post_id );
 
-			foreach ( $template_rules as $rule ) {
+			foreach ( $templateRules as $rule ) {
 				/**
 				 * @var Brizy_Admin_Rule $rule ;
 				 */
@@ -740,11 +754,50 @@ class Brizy_Editor_Editor_Editor {
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
 				'group'      => Brizy_Admin_Rule::POSTS,
 				'entityType' => $this->post->getWpPost()->post_type,
-				'values'     => array( $wp_post_id ),
+				'values'     => array( $wpPostId ),
 			);
 		}
 
 		return $ruleMatches;
+	}
+
+
+	/**
+	 *
+	 * @param $template_rules
+	 */
+	private function getTemplateType(  $template_rules ) {
+		foreach ( $template_rules as $rule ) {
+			// single mode
+			if ( in_array( $rule->getAppliedFor(), [ Brizy_Admin_Rule::POSTS, Brizy_Admin_Rule::TEMPLATE ] ) &&
+			     in_array( $rule->getEntityType(), [ 'page', 'post', '404', 'author', 'front_page' ] ) ) {
+				return 'single';
+			}
+
+
+			// product mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::POSTS &&
+			     $rule->getEntityType() == 'product' ) {
+				return 'product';
+			}
+
+			// archive mode
+			if ( in_array( $rule->getAppliedFor(), [
+					Brizy_Admin_Rule::TAXONOMY,
+					Brizy_Admin_Rule::TEMPLATE
+				] ) &&
+			     in_array( $rule->getEntityType(), [ 'category', 'post_tag', 'search', 'home_page' ] ) ) {
+				return 'archive';
+			}
+
+			// product archive mode
+			if ( in_array( $rule->getAppliedFor(), [ Brizy_Admin_Rule::ARCHIVE, Brizy_Admin_Rule::TAXONOMY, Brizy_Admin_Rule::WOO_SHOP_PAGE ] ) &&
+			     in_array( $rule->getEntityType(), [ 'product', 'product_cat', 'product_tag','shop_page' ] ) ) {
+				return 'product_archive';
+			}
+		}
+
+		return '';
 	}
 
 	/**
@@ -851,19 +904,18 @@ class Brizy_Editor_Editor_Editor {
 		);
 	}
 
-    /**
-     * @return array
-     * @throws Exception
-     */
-    public function getCloudInfo()
-    {
-	    // the cloud will be always initialized with the exception when the white label is enabled
-	    // we wil return isSyncAllowed =  false just in case
-	    if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-		    return array(
-			    'isSyncAllowed' => false,
-		    );
-	    }
+	/**
+	 * @return array
+	 * @throws Exception
+	 */
+	public function getCloudInfo() {
+		// the cloud will be always initialized with the exception when the white label is enabled
+		// we wil return isSyncAllowed =  false just in case
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			return array(
+				'isSyncAllowed' => false,
+			);
+		}
 
 
 		$response = array(

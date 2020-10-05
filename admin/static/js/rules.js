@@ -1,17 +1,15 @@
 var h = hyperapp.h;
 
-var RULE_TYPE_INCLUDE = "1";
-var RULE_TYPE_EXCLUDE = "2";
+var RULE_TYPE_INCLUDE = 1;
+var RULE_TYPE_EXCLUDE = 2;
 
-var RULE_POSTS = "1";
-var RULE_TAXONOMY = "2";
-var RULE_ARCHIVE = "4";
-var RULE_TEMPLATE = "8";
-var RULE_BRIZY_TEMPLATE = "16";
-var POSTS_FROM_TAXONOMY = "32";
-var POSTS_FROM_CHILD_TAXONOMY = "64";
-var ANY_CHILD_TAXONOMY = "128";
-var WOO_PAGES = "256";
+var RULE_POSTS = 1;
+var RULE_TAXONOMY = 2;
+var RULE_ARCHIVE = 4;
+var RULE_TEMPLATE = 8;
+var RULE_BRIZY_TEMPLATE = 16;
+var ANY_CHILD_TAXONOMY = 128;
+var WOO_PAGES = 256;
 
 var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
 var defaultAppliedFor = null;
@@ -459,6 +457,8 @@ var RuleArchiveGroupSelectField = function (params) {
         var taxonomy = params.rule.entityType;
         var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
 
+        console.log(params.rule);
+
         var convertResponseToOptions = function (response) {
             var groups = [];
             groups.push(new Option("All", '', false, value === ''));
@@ -467,6 +467,7 @@ var RuleArchiveGroupSelectField = function (params) {
                 if (group.title === "") {
                     group.items.forEach(function (option) {
                         var optionValue = String(option.value);
+                        console.log("1",params.rule.entityValues,optionValue)
                         groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
                     });
                 } else {
@@ -476,6 +477,7 @@ var RuleArchiveGroupSelectField = function (params) {
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
                             var optionValue = String(option.value);
+                            console.log("2",params.rule.entityValues,optionValue)
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
                         groups.push(groupElement);
@@ -538,7 +540,7 @@ var RuleApplyGroupField = function (params) {
             onchange: function (e) {
                 var values = e.target.value.split("|");
                 actions.rule.update({
-                    appliedFor: values[0],
+                    appliedFor: parseInt(values[0]),
                     entityType: values[1],
                     entityValues: []
                 });
