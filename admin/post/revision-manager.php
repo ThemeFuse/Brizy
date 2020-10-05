@@ -131,6 +131,25 @@ class Brizy_Admin_Post_RevisionManager {
 		}
 
 		$wpdb->query( $wpdb->prepare( $query, $params ) );
+
+		if ( $meta_key_count > 0 && false !== array_search( 'brizy', $monitor->getPostMetaKeys() ) ) {
+
+			$storage = Brizy_Editor_Storage_Post::instance( $revision );
+			$data    = $storage->get( Brizy_Editor_Post::BRIZY_POST );
+
+			$data['compiled_html']      = '';
+			$data['compiled_html_body'] = '';
+			$data['compiled_html_head'] = '';
+
+			$storage->set( Brizy_Editor_Post::BRIZY_POST, $data );
+
+			$wpdb->update(
+				$wpdb->posts,
+				[ 'post_content' => '<!-- version:' . time() . ' -->' ],
+				[ 'ID' => $revision ],
+                [ '%s' ]
+			);
+		}
 	}
 
 	private function cleanMetaData( $post, $revision, $monitor ) {

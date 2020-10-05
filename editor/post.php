@@ -204,29 +204,41 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	}
 
 
-	public function savePost() {
+	public function savePost( $createRevision = false ) {
 
-		$post_type        = $this->getWpPost()->post_type;
-		$post_type_object = get_post_type_object( $post_type );
-		$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-		$post_status      = $this->getWpPost()->post_status;
-
-		$brizy_compiled_page = $this->get_compiled_page();
+		$content = $this->get_compiled_page()->get_body() ? $this->get_compiled_page()->get_body() : '<div class="brz-root__container"></div>';
+		$content .= '<!-- version:' . time() . ' -->';
 
 		$this->deleteOldAutosaves( $this->getWpPostParentId() );
 
-		$params = array(
-			'ID'           => $this->getWpPostId(),
-			'post_content' => $brizy_compiled_page->get_body() ?: '<div class="brz-root__container"></div>'
-		);
+		if ( $createRevision ) {
 
-		$params['post_content'] .= "<!-- t:" . time() . " -->";
+			$post_type        = $this->getWpPost()->post_type;
+			$post_type_object = get_post_type_object( $post_type );
+			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
+			$post_status      = $this->getWpPost()->post_status;
 
-		if ( $can_publish ) {
-			$params['post_status'] = $post_status;
+			$params = [
+				'ID'           => $this->getWpPostId(),
+				'post_content' => $content
+			];
+
+			if ( $can_publish ) {
+				$params['post_status'] = $post_status;
+			}
+
+			wp_update_post( $params );
+
+		} else {
+			global $wpdb;
+
+			$wpdb->update(
+				$wpdb->posts,
+				[ 'post_content' => $content ],
+				[ 'ID' => $this->getWpPostId() ],
+				[ '%s' ]
+			);
 		}
-
-		wp_update_post( $params );
 
 		$this->createUid();
 	}

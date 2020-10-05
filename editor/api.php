@@ -392,7 +392,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			} else {
 				$this->post->setDataVersion( $dataVersion );
 				$this->post->save( 0 );
-				$this->post->savePost();
+				$this->post->savePost( true );
 			}
 
 			$this->success( $this->post->createResponse() );
