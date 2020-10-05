@@ -886,6 +886,10 @@ class Brizy_Admin_Templates
 
     public function validate_template_rules($post_id, $data)
     {
+        if(!isset($_REQUEST['brizy-template-type'])) {
+            return;
+        }
+
         $rules = $this->obtainRulesFromPostSubmit($post_id);
 
         if (count($rules) == 0) {
@@ -917,6 +921,10 @@ class Brizy_Admin_Templates
     public function save_template_rules($post_id)
     {
         try {
+	        if(!isset($_REQUEST['brizy-template-type'])) {
+		        return;
+	        }
+
             $rules       = $this->obtainRulesFromPostSubmit($post_id);
             $ruleManager = new Brizy_Admin_Rules_Manager();
             $ruleManager->setRules($post_id, $rules);
