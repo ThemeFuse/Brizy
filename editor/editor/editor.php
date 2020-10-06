@@ -715,9 +715,9 @@ class Brizy_Editor_Editor_Editor {
 
 		$template_rules = [];
 		if ( $is_template ) {
-			$rule_manager   = new Brizy_Admin_Rules_Manager();
-			$template_rules = $rule_manager->getRules( $wp_post_id );
-			$config['template_type']     = $this->getTemplateType( $template_rules );
+			$rule_manager            = new Brizy_Admin_Rules_Manager();
+			$template_rules          = $rule_manager->getRules( $wp_post_id );
+			$config['template_type'] = $this->getTemplateType( $template_rules );
 		}
 
 		$config['wp']['ruleMatches'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
@@ -766,33 +766,51 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @param $template_rules
 	 */
-	private function getTemplateType(  $template_rules ) {
+	private function getTemplateType( $template_rules ) {
 		foreach ( $template_rules as $rule ) {
+
+			if ( $rule->getType() != Brizy_Admin_Rule::TYPE_INCLUDE ) {
+				continue;
+			}
+
 			// single mode
-			if ( in_array( $rule->getAppliedFor(), [ Brizy_Admin_Rule::POSTS, Brizy_Admin_Rule::TEMPLATE ] ) &&
-			     in_array( $rule->getEntityType(), [ 'page', 'post', '404', 'author', 'front_page' ] ) ) {
-				return 'single';
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::POSTS ) {
+				if ( $rule->getEntityType() == 'product' ) {
+					return 'product';
+				} else {
+					return 'single';
+				}
 			}
 
 
-			// product mode
-			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::POSTS &&
-			     $rule->getEntityType() == 'product' ) {
-				return 'product';
+			// single mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
+				if ( in_array( $rule->getEntityType(), [ '404', 'author', 'front_page' ] ) ) {
+					return 'single';
+				}
+
+				if ( in_array( $rule->getEntityType(), [ 'search', 'home_page' ] ) ) {
+					return 'archive';
+				}
 			}
 
 			// archive mode
-			if ( in_array( $rule->getAppliedFor(), [
-					Brizy_Admin_Rule::TAXONOMY,
-					Brizy_Admin_Rule::TEMPLATE
-				] ) &&
-			     in_array( $rule->getEntityType(), [ 'category', 'post_tag', 'search', 'home_page' ] ) ) {
-				return 'archive';
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TAXONOMY ) {
+				if ( in_array( $rule->getEntityType(), [ 'product_cat', 'product_tag' ] ) ) {
+					return 'product_archive';
+				}
+				if ( in_array( $rule->getEntityType(), [ 'category', 'post_tag', ] ) ) {
+					return 'archive';
+				}
 			}
 
 			// product archive mode
-			if ( in_array( $rule->getAppliedFor(), [ Brizy_Admin_Rule::ARCHIVE, Brizy_Admin_Rule::TAXONOMY, Brizy_Admin_Rule::WOO_SHOP_PAGE ] ) &&
-			     in_array( $rule->getEntityType(), [ 'product', 'product_cat', 'product_tag','shop_page' ] ) ) {
+			if ( in_array( $rule->getAppliedFor(), [
+					Brizy_Admin_Rule::ARCHIVE,
+					Brizy_Admin_Rule::TAXONOMY,
+					Brizy_Admin_Rule::WOO_SHOP_PAGE
+				] ) &&
+			     in_array( $rule->getEntityType(), [ 'product', 'shop_page' ] ) ) {
 				return 'product_archive';
 			}
 		}
