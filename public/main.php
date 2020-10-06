@@ -179,10 +179,9 @@ class Brizy_Public_Main
             unset($assets[$key]);
         }
 
-        $assets = array_values($assets);
+
 
         // find libs and check if cannot be replace with a bigger lib to save requests
-
         $libsFoundKeys      = [];
         $libsSelectorsFound = [];
 
@@ -207,11 +206,12 @@ class Brizy_Public_Main
                     }
 
                     $assets[] = $alib;
+                    break;
                 }
             }
         }
 
-        return $assets;
+        return array_values($assets);
     }
 
     public static function sortAssets($assets)

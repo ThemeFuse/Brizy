@@ -278,27 +278,38 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	public function compile_page() {
 
 		Brizy_Logger::instance()->notice( 'Compile page', array( $this ) );
-		$compiledData = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
+		$compiledData             = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 		$compiledData['pageHtml'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageHtml'] );
 
-		foreach ($compiledData['pageScripts'] as $i=>$set) { //pro || free
-            foreach ($set as $k=>$scripts) { // groups
-                if($k=='libsSelectors' || $k=='main') continue;
-                foreach ($scripts as $l=>$script) {
-                    $compiledData['pageScripts'][$i][$k][$l]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl($script['content']);
-                }
+		foreach ( $compiledData['pageScripts'] as $i => $set ) { //pro || free
+			foreach ( $set as $k => $scripts ) { // groups
+				if ( $k == 'libsSelectors' ) {
+					continue;
+				}
+				if ( $k == 'main' ) {
+					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );
+				}
 
-            }
+				foreach ( $scripts as $l => $script ) {
+					$compiledData['pageScripts'][ $i ][ $k ][ $l ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content'] );
+				}
+
+			}
 		}
-		foreach ($compiledData['pageStyles'] as $i=>$set) {
-            foreach ($set as $k=>$styles) {
-                if($k=='libsSelectors' || $k=='main') continue;
-                foreach ($styles as $l=>$style) {
-                    $compiledData['pageStyles'][$i][$k][$l]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl(
-                        $style['content']
-                    );
-                }
-            }
+		foreach ( $compiledData['pageStyles'] as $i => $set ) {
+			foreach ( $set as $k => $styles ) {
+				if ( $k == 'libsSelectors' ) {
+					continue;
+				}
+				if ( $k == 'main' ) {
+					$compiledData['pageStyles'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content'] );
+				}
+				foreach ( $styles as $l => $style ) {
+					$compiledData['pageStyles'][ $i ][ $k ][ $l ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl(
+						$style['content']
+					);
+				}
+			}
 		}
 
 		$this->set_compiled_html( $compiledData['pageHtml'] );
