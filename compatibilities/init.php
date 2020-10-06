@@ -69,6 +69,10 @@ class Brizy_Compatibilities_Init {
         if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
             new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
         }
+
+        if ( defined( 'EM_POST_TYPE_LOCATION' ) ) {
+            new Brizy_Compatibilities_EventsManager();
+        }
 	}
 
 	private function is_plugin_active( $plugin_file ) {
