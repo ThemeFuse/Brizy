@@ -427,6 +427,7 @@ class Brizy_Admin_Settings {
 	 * @return array
 	 */
 	protected function post_types() {
+
 		$types = get_post_types( array( 'public' => true ), 'objects' );
 
 		$types = array_filter(
@@ -455,8 +456,7 @@ class Brizy_Admin_Settings {
 
 
 	private function filter_types( WP_Post_Type $type ) {
-
-		return ! in_array( $type->name, array( 'attachment', 'elementor_library' ) );
+		return ! in_array( $type->name, array( 'attachment', 'elementor_library', Brizy_Admin_Stories_Main::CP_STORY ) );
 	}
 
 	private function is_selected( $type ) {
