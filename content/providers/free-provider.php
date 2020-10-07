@@ -114,7 +114,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
             } ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_cart', function () {
+			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_default_cart', function () {
 				return do_shortcode( '[woocommerce_cart]' );
 			} ),
 
@@ -126,7 +126,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 				return do_shortcode( '[woocommerce_my_account]' );
 			} ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_woocommerce_order_tracking', function () {
+			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_order_tracking', function () {
 				return do_shortcode( '[woocommerce_order_tracking]' );
 			} )
 		);
