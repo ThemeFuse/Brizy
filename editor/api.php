@@ -22,6 +22,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_REMOVE_LOCK = '_remove_lock';
     const AJAX_HEARTBEAT = '_heartbeat';
     const AJAX_TAKE_OVER = '_take_over';
+	const AJAX_DOWNLOAD_MEDIA = '_download_media';
     const AJAX_JWT_TOKEN = '_multipass_create';
     const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
     const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
@@ -71,34 +72,34 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             return;
         }
 
-        $p = 'wp_ajax_'.Brizy_Editor::prefix();
-        add_action($p.self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
-        add_action($p.self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
-        add_action($p.self::AJAX_TAKE_OVER, array($this, 'takeOver'));
-        add_action($p.self::AJAX_GET, array($this, 'get_item'));
-        add_action($p.self::AJAX_GET_POST_INFO, array($this, 'get_post_info'));
-        add_action($p.self::AJAX_UPDATE, array($this, 'update_item'));
-        add_action($p.self::AJAX_GET_PROJECT, array($this, 'get_project'));
-        add_action($p.self::AJAX_SET_PROJECT, array($this, 'set_project'));
-        add_action($p.self::AJAX_LOCK_PROJECT, array($this, 'lock_project'));
-        add_action($p.self::AJAX_SIDEBARS, array($this, 'get_sidebars'));
-        add_action($p.self::AJAX_SHORTCODE_CONTENT, array($this, 'shortcode_content'));
-        add_action($p.self::AJAX_PLACEHOLDER_CONTENT, array($this, 'placeholder_content'));
-        add_action($p.self::AJAX_PLACEHOLDERS_CONTENT, array($this, 'placeholders_content'));
-        add_action($p.self::AJAX_GET_POST_OBJECTS, array($this, 'get_post_objects'));
-        add_action($p.self::AJAX_SEARCH_POST, array($this, 'search_post'));
-        add_action($p.self::AJAX_GET_MENU_LIST, array($this, 'get_menu_list'));
-        add_action($p.self::AJAX_GET_TERMS, array($this, 'get_terms'));
-        add_action($p.self::AJAX_GET_USERS, array($this, 'get_users'));
-        add_action($p.self::AJAX_GET_TERMS_BY, array($this, 'get_terms_by'));
-        add_action($p.self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
-        add_action($p.self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
-        add_action($p.self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
-        add_action($p.self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
-        add_action($p.self::AJAX_TIMESTAMP, array($this, 'timestamp'));
-        add_action($p.self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
-        add_action($p.self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
-        add_action($p.'nopriv_'.Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
+
+		$this->addAjaxAction( self::AJAX_REMOVE_LOCK, array( $this, 'removeProjectLock' ) );
+		$this->addAjaxAction( self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
+		$this->addAjaxAction( self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
+		$this->addAjaxAction( self::AJAX_GET, array( $this, 'get_item' ) );
+		$this->addAjaxAction( self::AJAX_GET_POST_INFO, array( $this, 'get_post_info' ) );
+		$this->addAjaxAction( self::AJAX_UPDATE, array( $this, 'update_item' ) );
+		$this->addAjaxAction( self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
+		$this->addAjaxAction( self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
+		$this->addAjaxAction( self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
+		$this->addAjaxAction( self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
+		$this->addAjaxAction( self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
+		$this->addAjaxAction( self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
+		$this->addAjaxAction( self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
+		$this->addAjaxAction( self::AJAX_SEARCH_POST, array( $this, 'search_post' ) );
+		$this->addAjaxAction( self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
+		$this->addAjaxAction( self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+		$this->addAjaxAction( self::AJAX_GET_USERS, array( $this, 'get_users' ) );
+		$this->addAjaxAction( self::AJAX_GET_TERMS_BY, array( $this, 'get_terms_by' ) );
+		$this->addAjaxAction( self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
+		$this->addAjaxAction( self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
+		$this->addAjaxAction( self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
+		$this->addAjaxAction( self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
+		$this->addAjaxAction( self::AJAX_SET_IMAGE_FOCAL_PT, array( $this, 'set_featured_image_focal_point' ) );
+		$this->addAjaxAction( self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
+		$this->addAjaxAction( self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
+		$this->addAjaxAction( self::AJAX_GET_POST_TAXONOMIES, array( $this, 'addPostTaxonomies' ) );
+		$this->addNoPrivAjaxAction( Brizy_Editor::prefix( self::AJAX_TIMESTAMP ), array( $this, 'timestamp' ) );
 
     }
 
@@ -605,7 +606,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                     if (empty($values[0])) {
                         // For All condition
                         $posts = get_posts($args);
-                    } else {
+
+						} else {
+
+
                         $filter = $values[0];
 
                         if (is_numeric($filter)) {

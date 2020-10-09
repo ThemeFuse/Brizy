@@ -28,6 +28,24 @@ class Brizy_Content_MainProcessor {
 		$this->processors[] = new Brizy_Editor_Asset_MediaProcessor();
 
 		$this->processors = apply_filters( 'brizy_content_processors', $this->processors, $context );
+
+		/* CODE BEFORE REBASE.
+		$urlBuilder    = new Brizy_Editor_UrlBuilder( $context->getProject(), $context->getWpPost() ? $context->getWpPost()->ID : null );
+		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $urlBuilder );
+		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $urlBuilder );
+
+		$this->processors[] = new Brizy_Editor_Asset_AssetProxyProcessor( $asset_storage );
+		$this->processors[] = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
+		$this->processors[] = new Brizy_Editor_Asset_SvgAssetProcessor(  );
+
+		$this->processors = apply_filters( 'brizy_content_processors', $this->processors, $context );
+
+		array_unshift( $this->processors,
+			new Brizy_Editor_Asset_DomainProcessor(),
+			new Brizy_Content_ShortcodeToPlaceholderProcessor(),
+			new Brizy_Content_DynamicContentProcessor()
+		);
+		 */
 	}
 
 	/**
