@@ -23,12 +23,7 @@ class Brizy_Content_MainProcessor {
 
 		$this->context = $context;
 
-		$this->processors[] = new Brizy_Content_ShortcodeToPlaceholderProcessor();
-		$this->processors[] = new Brizy_Editor_Asset_DomainProcessor();
-		$this->processors[] = new Brizy_Content_DynamicContentProcessor();
-
-		$post_id       = $context->getWpPost() ? $context->getWpPost()->ID : null;
-		$urlBuilder    = new Brizy_Editor_UrlBuilder( $context->getProject(), $post_id );
+		$urlBuilder    = new Brizy_Editor_UrlBuilder( $context->getProject(), $context->getWpPost() ? $context->getWpPost()->ID : null );
 		$asset_storage = new Brizy_Editor_Asset_AssetProxyStorage( $urlBuilder );
 		$media_storage = new Brizy_Editor_Asset_MediaProxyStorage( $urlBuilder );
 
@@ -37,6 +32,12 @@ class Brizy_Content_MainProcessor {
 		$this->processors[] = new Brizy_Editor_Asset_SvgAssetProcessor(  );
 
 		$this->processors = apply_filters( 'brizy_content_processors', $this->processors, $context );
+
+		array_unshift( $this->processors,
+			new Brizy_Editor_Asset_DomainProcessor(),
+			new Brizy_Content_ShortcodeToPlaceholderProcessor(),
+			new Brizy_Content_DynamicContentProcessor()
+		);
 	}
 
 	/**

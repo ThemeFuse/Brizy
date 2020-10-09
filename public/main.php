@@ -103,7 +103,7 @@ class Brizy_Public_Main
 			//add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
 			$this->plugin_live_composer_fixes();
 		}
-	$this->addTheContentFilters();
+		$this->addTheContentFilters();
     }
 
     public static function libAggregator($libSet, $post, $callback = null, $isPro = false)

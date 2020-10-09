@@ -5,7 +5,7 @@
 class Brizy_Compatibilities_Polylang {
 
 	public function __construct() {
-		add_action( 'brizy_post_loop_args', [ $this, 'post_loop_args' ] );
+		add_filter( 'brizy_post_loop_args', [ $this, 'post_loop_args' ] );
 	}
 
 	public function post_loop_args( $args ) {

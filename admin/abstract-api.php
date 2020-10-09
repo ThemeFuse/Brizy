@@ -38,6 +38,14 @@ abstract class Brizy_Admin_AbstractApi {
 		}
 	}
 
+	protected function addAjaxAction($action,$callable) {
+		add_action( 'wp_ajax_' . Brizy_Editor::prefix($action), $callable );
+	}
+
+	protected function addNoPrivAjaxAction($action,$callable) {
+		add_action( 'wp_ajax_nopriv_' . Brizy_Editor::prefix($action), $callable );
+	}
+
 	/**
 	 * @param $name
 	 *
