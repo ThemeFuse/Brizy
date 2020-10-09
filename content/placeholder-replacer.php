@@ -19,9 +19,12 @@ class Brizy_Content_PlaceholderReplacer {
 	 *
 	 * @param $context
 	 * @param $placeholderProvider
+	 * @param $extractor
 	 */
-	public function __construct( $context,   $placeholderProvider ) {
+	public function __construct( $context, $placeholderProvider, $extractor ) {
+		$this->context              = $context;
 		$this->placeholderProvider  = $placeholderProvider;
+		$this->placeholderExtractor = $extractor;
 	}
 
 	/**
@@ -31,15 +34,20 @@ class Brizy_Content_PlaceholderReplacer {
 	 *
 	 * @return string|string[]
 	 */
-	public function getContent( $placeholders, $content, $context= null) {
+	public function getContent( $content) {
 
 		$toReplace           = array();
 		$toReplaceWithValues = array();
+		list( $placeholders, $acontent ) = $this->placeholderExtractor->extract( $content );
 
-		if(!$context)
+		if(!$this->context)
 		{
-			$context = Brizy_Content_ContextFactory::createEmptyContext();
+			$this->context = Brizy_Content_ContextFactory::createEmptyContext();
 		}
+
+		// set the placeholders found at this level
+		$this->context->setPlaceholders($placeholders);
+
 
 		if ( $placeholders ) {
 			foreach ( $placeholders as $contentPlaceholder ) {
@@ -47,21 +55,26 @@ class Brizy_Content_PlaceholderReplacer {
 					$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
 					if ( $placeholder ) {
                         $toReplace[] = $contentPlaceholder->getUid();
-						$toReplaceWithValues[] = $placeholder->getValue( $context , $contentPlaceholder );
+						$toReplaceWithValues[] = $placeholder->getValue( $this->context , $contentPlaceholder );
 					} else {
                         $toReplace[] = $contentPlaceholder->getPlaceholder();
 						$toReplaceWithValues[] = '';
 					}
 
 				} catch ( Exception $e ) {
+
+					if (defined('WP_DEBUG') && true === WP_DEBUG) {
+						var_dump($e);
+					}
+
 					continue;
 				}
 			}
 		}
 
-		$content = str_replace( $toReplace, $toReplaceWithValues, $content );
+		$acontent = str_replace( $toReplace, $toReplaceWithValues, $acontent );
 
-		return $content;
+		return $acontent;
 	}
 
 }
