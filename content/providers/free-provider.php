@@ -5,7 +5,9 @@ use BrizyPlaceholders\ContentPlaceholder;
 class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_AbstractProvider {
 	public function __construct() {
 
-		$this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
+		$this->registerPlaceholder(
+
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 
 			$attrs = $contentPlaceholder->getAttributes();
 
