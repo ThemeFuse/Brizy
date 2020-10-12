@@ -652,7 +652,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		return $where;
 	}
 
-
 	public function get_menu_list() {
 		$this->success( wp_get_nav_menus( array( 'hide_empty' => true ) ), 200 );
 	}
