@@ -121,10 +121,10 @@ class Brizy_Editor_Editor_Editor {
 				'changeTemplate'     => $change_template_url,
 				'upgradeToPro'       =>
 					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
-				,
+			,
 				'support'            =>
-					__bt('support-url',apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
-				),
+					__bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
+					),
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
 				'customFile'         => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
@@ -137,22 +137,23 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix'    => Brizy_Editor::prefix(),
-				'permalink'       => get_permalink( $wp_post_id ),
-				'page'            => $wp_post_id,
-				'ruleMatches'     => $this->getTemplateRuleMatches( $mode === 'template', $wp_post_id ),
-				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
-				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
-				'templates'       => $this->post->get_templates(),
-				'api'             => $this->getApiActions(),
-				'plugins'         => array(
+				'pluginPrefix'     => Brizy_Editor::prefix(),
+				'permalink'        => get_permalink( $wp_post_id ),
+				'page'             => $wp_post_id,
+				'ruleMatches'      => $this->getTemplateRuleMatches( $mode === 'template', $wp_post_id ),
+				'featuredImage'    => $this->getThumbnailData( $wp_post_id ),
+				'pageAttachments'  => array( 'images' => $this->get_page_attachments() ),
+				'templates'        => $this->post->get_templates(),
+				'api'              => $this->getApiActions(),
+				'plugins'          => array(
 					'dummy'       => true,
 					'woocommerce' => $this->get_woocomerce_plugin_info(),
 				),
-				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
-				'l10n'            => $this->getTexts(),
-				'pageData'        => apply_filters( 'brizy_page_data', array() ),
-				'availableRoles'  => $this->roleList(),
+				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
+				'l10n'             => $this->getTexts(),
+				'pageData'         => apply_filters( 'brizy_page_data', array() ),
+				'availableRoles'   => $this->roleList(),
+				'usersCanRegister' => get_option( 'users_can_register' ),
 			),
 			'mode'            => $mode,
 			'applications'    => array(
