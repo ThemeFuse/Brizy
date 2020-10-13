@@ -126,6 +126,7 @@ class Video extends EditorComponent {
       return [
         videoDataElem,
         <iframe
+          loading="lazy"
           key="iframe"
           allowFullScreen={true}
           className="brz-iframe"

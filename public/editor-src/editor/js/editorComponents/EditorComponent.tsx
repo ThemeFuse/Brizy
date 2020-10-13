@@ -119,6 +119,7 @@ export type Props<M extends ElementModel, P> = WithClassName & {
   path: string[];
   reduxState: ReduxState;
   reduxDispatch: unknown;
+  meta: any;
   onChange: {
     (v: M | null, meta: OnChangeMeta<M>): void;
   };
@@ -173,6 +174,7 @@ export class EditorComponent<
     return {
       ...extend,
       ...props,
+      meta: this.props.meta,
       className,
       attributes
     };

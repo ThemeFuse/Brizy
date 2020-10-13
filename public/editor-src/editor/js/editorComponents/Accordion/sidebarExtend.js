@@ -28,6 +28,7 @@ export function getItems({ v, device }) {
     toolbarEntranceAnimation({
       v,
       device,
+      position: 70,
       choices: getAnimationsTabs()
     })
   ];

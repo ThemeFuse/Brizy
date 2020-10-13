@@ -14,7 +14,7 @@ export function toolbarBorderRadius({
   onChangeGrouped,
   onChangeUngrouped,
   prefix = "",
-  position = 60
+  position = 65
 }) {
   const borderRadiusType = capByPrefix(prefix, "borderRadiusType");
 

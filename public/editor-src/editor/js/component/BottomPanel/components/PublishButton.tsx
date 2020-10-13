@@ -5,6 +5,7 @@ import Config from "visual/global/Config";
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
+import { Roles } from "visual/component/Roles";
 import { ToastNotification } from "visual/component/Notifications";
 import { removeBlocks } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
@@ -148,13 +149,15 @@ class PublishButton extends Component<Props, State> {
     const { pageStatus } = this.props;
     const overlay: ReactElement = (
       <>
-        <TooltipItem
-          className="brz-ed-fixed-bottom-panel-popover__item"
-          onClick={this.handleClearPage}
-        >
-          <EditorIcon icon="nc-trash" />
-          <span className="brz-span">{t("Clear Layout")}</span>
-        </TooltipItem>
+        <Roles allow={["admin"]}>
+          <TooltipItem
+            className="brz-ed-fixed-bottom-panel-popover__item"
+            onClick={this.handleClearPage}
+          >
+            <EditorIcon icon="nc-trash" />
+            <span className="brz-span">{t("Clear Layout")}</span>
+          </TooltipItem>
+        </Roles>
         <TooltipItem
           className="brz-ed-fixed-bottom-panel-popover__item"
           onClick={this.handleSavePage}

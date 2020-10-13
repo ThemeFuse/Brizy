@@ -17,6 +17,9 @@
     /* change 'inherit' to a color value if you want to add a secondary color to Nucleo icons */
     fill: inherit;
   }
+  path {
+    transition: none;
+  }
 
   &.grid-16 {
     height: 16px;

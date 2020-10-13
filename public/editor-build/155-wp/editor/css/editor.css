@@ -720,9 +720,10 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .animated.slower{-webkit-animation-duration:3s;animation-duration:3s}
 @media (print),(prefers-reduced-motion:reduce){.brz .animated{-webkit-animation-duration:1ms!important;animation-duration:1ms!important;-webkit-transition-duration:1ms!important;transition-duration:1ms!important;-webkit-animation-iteration-count:1!important;animation-iteration-count:1!important}}.brz .brz-animated{opacity:0;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}
 .brz .brz-animated:not(.brz-animate){-webkit-animation-name:none;animation-name:none}
-.brz .brz-animated.brz-animate{opacity:1}
+.brz .brz-animated.brz-animate-opacity{opacity:1}
 .brz .brz-icon-svg{display:inline-block;width:1em;height:1em;stroke:none;max-width:none;position:relative;fill:currentColor;color:currentColor}
 .brz .brz-icon-svg use{fill:inherit}
+.brz .brz-icon-svg path{-webkit-transition:none;transition:none}
 .brz .brz-icon-svg.grid-16{height:16px;width:16px}
 .brz .brz-icon-svg.grid-24{height:24px;width:24px}
 .brz .brz-icon-svg.glyph{fill:currentColor;stroke:none}
@@ -858,7 +859,6 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-custom-video .brz-video-content:hover .brz-shortcode__placeholder .brz-icon-svg{cursor:pointer}
 .brz .brz-custom-video .brz-video-content .brz-shortcode__placeholder{-webkit-transition:all .6s ease;transition:all .6s ease}
 .brz .brz-custom-video .brz-video-content .brz-icon-svg{-webkit-transition:all .6s ease;transition:all .6s ease}
-.brz .brz-custom-video .brz-video-content .brz-video__cover-icon{z-index:9999}
 .brz .brz-custom-video.brz-video-on-controls-hidden .brz-shortcode__placeholder,.brz .brz-custom-video.brz-video-on-controls-hidden .brz-video__cover,.brz .brz-custom-video.brz-video-on-controls-hidden video{padding-bottom:50px}
 .brz .brz-custom-video.brz-video-off-controls-hidden{background:inherit;padding-bottom:0}
 .brz .brz-custom-video.brz-video-off-controls-hidden video{padding-bottom:0;background:inherit}
@@ -989,7 +989,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-progress-bar.brz-without-text .brz-progress-bar__percent{width:100%;text-align:right}
 .brz .brz-progress-bar-style1::after,.brz .brz-progress-bar-style2 .brz-progress-bar-overlay::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .brz .brz-progress-bar-style1,.brz .brz-progress-bar-style2 .brz-progress-bar-overlay{position:relative}
-.brz .brz-progress-bar-style2 .brz-progress-bar__percent{position:relative;display:inline-block;padding:4px 7px;margin-bottom:10px;text-align:center;z-index:99999}
+.brz .brz-progress-bar-style2 .brz-progress-bar__percent{position:relative;display:inline-block;padding:4px 7px;margin-bottom:10px;text-align:center}
 .brz .brz-shortcode__placeholder{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;height:100%;width:100%;background-color:#373e48;color:#151924}
 .brz .brz-shortcode__placeholder .brz-icon-svg{width:calc(16px + (.075 * 100%));height:calc(16px + (.075 * 100%))}
 .brz .brz-soundcloud{position:relative;font-size:0}
@@ -1554,6 +1554,7 @@ to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .brz .brz-posts__filter__item{cursor:pointer}
 .brz .brz-posts__filter__item:first-child{margin-left:0!important}
 .brz .brz-posts__filter__item:last-child{margin-right:0!important}
+.brz .brz-posts__item>.brz-columns{height:100%}
 .brz .brz-posts ul.page-numbers{margin:0;list-style:none;padding:0;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;grid-column:1/-1;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
 .brz .brz-posts ul.page-numbers>li{position:relative;margin-left:4px;margin-right:4px}
 .brz .brz-posts ul.page-numbers>li:first-child{margin-left:0}
@@ -5686,6 +5687,7 @@ body.brz::after,body.brz::before{display:none}
 .brz-ed .brz--space-right{margin-right:5px}
 .brz-ed .brz-icon-svg{display:inline-block;width:1em;height:1em;stroke:none;max-width:none;position:relative;fill:currentColor;color:currentColor}
 .brz-ed .brz-icon-svg use{fill:inherit}
+.brz-ed .brz-icon-svg path{-webkit-transition:none;transition:none}
 .brz-ed .brz-icon-svg.grid-16{height:16px;width:16px}
 .brz-ed .brz-icon-svg.grid-24{height:24px;width:24px}
 .brz-ed .brz-icon-svg.glyph{fill:currentColor;stroke:none}

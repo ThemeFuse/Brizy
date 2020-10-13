@@ -326,6 +326,8 @@ class Row extends EditorComponent {
       customAttributes
     } = v;
 
+    const { sectionPopup, sectionPopup2 } = this.props.meta;
+
     const linkHrefs = {
       anchor: linkAnchor,
       external: v[linkExternalType],
@@ -364,6 +366,7 @@ class Row extends EditorComponent {
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
+            iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
             component={tagName}
             componentProps={props}
             animationClass={animationClassName}

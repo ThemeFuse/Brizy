@@ -73,7 +73,8 @@ class AccordionItem extends EditorComponent {
       collapsible,
       visibleTag,
       tag,
-      animationClassName
+      animationClassName,
+      meta: { sectionPopup, sectionPopup2 }
     } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -104,6 +105,9 @@ class AccordionItem extends EditorComponent {
             </div>
           </Toolbar>
           <Animation
+            iterationCount={
+              IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+            }
             component={"div"}
             componentProps={{ className: "brz-accordion__content" }}
             animationClass={animationClassName}
@@ -127,6 +131,9 @@ class AccordionItem extends EditorComponent {
           </div>
         </Toolbar>
         <Animation
+          iterationCount={
+            IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+          }
           component={"div"}
           componentProps={{ className: "brz-accordion__content" }}
           animationClass={animationClassName}

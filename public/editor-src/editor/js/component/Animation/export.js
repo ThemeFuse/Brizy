@@ -8,8 +8,24 @@ export default function($node) {
       entries.map(function(entry) {
         if (entry.intersectionRatio > 0) {
           let target = entry.target;
+
+          const iterationCount =
+            Number(target.getAttribute("data-iteration-count")) || 1;
+
+          const iterationCompleted =
+            Number(target.getAttribute("data-iteration-completed")) || 1;
+
+          if (iterationCompleted >= iterationCount) {
+            observer.unobserve(target);
+          }
+
           target.classList.add("brz-animate");
-          observer.unobserve(target);
+          target.classList.add("brz-animate-opacity");
+
+          target.setAttribute(
+            "data-iteration-completed",
+            iterationCompleted + 1
+          );
         }
       });
     };
@@ -31,6 +47,10 @@ export default function($node) {
       $this.addClass("brz-initialized");
 
       observer.observe(this);
+    });
+
+    $animated.on("animationend", ({ target }) => {
+      target.classList.remove("brz-animate");
     });
   }
 }

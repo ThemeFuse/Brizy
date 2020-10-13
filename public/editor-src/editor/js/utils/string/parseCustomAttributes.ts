@@ -13,7 +13,7 @@ export function parseCustomAttributes(attributes: string): Attributes {
   }
 
   const res: Attributes = {};
-  const regex = /(\w+)[:=](["'])?(\w+)\2/g;
+  const regex = /([\w_-]+)[:=](["'])?([\w_-]+)\2/g;
   let match = regex.exec(attributes);
 
   while (match) {

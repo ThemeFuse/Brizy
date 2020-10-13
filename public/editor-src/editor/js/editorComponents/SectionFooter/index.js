@@ -249,6 +249,7 @@ class SectionFooter extends EditorComponent {
       customAttributes,
       tagName
     } = v;
+    const { sectionPopup, sectionPopup2 } = this.props.meta;
 
     const classNameSection = classnames(
       "brz-footer",
@@ -281,6 +282,7 @@ class SectionFooter extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
+          iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
           component={tagName}
           componentProps={props}
           animationClass={animationClassName}

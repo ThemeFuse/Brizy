@@ -5,8 +5,32 @@ import { MOBILE } from "visual/utils/responsiveMode";
 const getItems = (mode, isMMenu) => ({ v, device }) => {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const disabledOffset = isMMenu || (mode === "vertical" && device === MOBILE);
+  const disabledPlacement = isMMenu || mode === "vertical";
 
   return [
+    {
+      id: "megaMenuPlacement",
+      type: "toggle-dev",
+      position: 100,
+      disabled: disabledPlacement,
+      choices: [
+        {
+          icon: "nc-text-align-left",
+          title: t("Align"),
+          value: "bottom-start"
+        },
+        {
+          icon: "nc-text-align-center",
+          title: t("Align"),
+          value: "bottom"
+        },
+        {
+          icon: "nc-text-align-right",
+          title: t("Align"),
+          value: "bottom-end"
+        }
+      ]
+    },
     {
       id: "toolbarSettings",
       type: "popover-dev",
@@ -34,7 +58,7 @@ const getItems = (mode, isMMenu) => ({ v, device }) => {
         },
         {
           id: "megaMenuOffsetTop",
-          position: 20,
+          position: 30,
           label: t("Offset"),
           type: "slider-dev",
           disabled: disabledOffset,

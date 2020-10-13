@@ -202,6 +202,7 @@ export default class Section extends EditorComponent {
       cssClassPopulation,
       customAttributes
     } = v;
+    const { sectionPopup, sectionPopup2 } = this.props.meta;
 
     const classNameSection = classnames(
       "brz-section",
@@ -233,6 +234,7 @@ export default class Section extends EditorComponent {
 
     return (
       <Animation
+        iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={tagName}
         componentProps={props}
         animationClass={animationClassName}

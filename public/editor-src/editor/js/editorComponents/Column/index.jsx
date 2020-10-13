@@ -331,6 +331,7 @@ class Column extends EditorComponent {
       cssClassPopulation,
       customAttributes
     } = v;
+    const { sectionPopup, sectionPopup2 } = this.props.meta;
 
     const linkHrefs = {
       anchor: linkAnchor,
@@ -369,6 +370,7 @@ class Column extends EditorComponent {
       <>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Animation
+            iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
             component={tagName}
             componentProps={props}
             animationClass={animationClassName}
