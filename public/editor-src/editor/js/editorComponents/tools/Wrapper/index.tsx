@@ -30,6 +30,7 @@ export type Props<T extends {}> = WithClassName & {
   attributes?: T;
   animationClass?: string;
   ref?: Ref<Element>;
+  meta?: any;
   plugins?: Plugin[];
 };
 
@@ -40,6 +41,7 @@ export function WrapperComponent<T extends WithClassName & {}>(
     component,
     attributes = {} as T,
     animationClass,
+    meta: { sectionPopup, sectionPopup2 },
     plugins = []
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
@@ -49,6 +51,9 @@ export function WrapperComponent<T extends WithClassName & {}>(
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     <Animation<ComponentType<T>>
+      iterationCount={
+        IS_PREVIEW ?? (sectionPopup || sectionPopup2 ? Infinity : 1)
+      }
       component={component ?? "div"}
       componentProps={{ ...attributes, className }}
       animationClass={animationClass}

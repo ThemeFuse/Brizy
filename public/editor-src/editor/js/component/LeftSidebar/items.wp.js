@@ -35,7 +35,7 @@ export default {
     },
     {
       id: "popover",
-      icon: "nc-menu",
+      icon: "nc-back",
       title: t("More"),
       type: "popover",
       options: [

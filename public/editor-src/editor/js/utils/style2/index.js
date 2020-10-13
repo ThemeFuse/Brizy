@@ -353,7 +353,8 @@ export {
   styleElementMegaMenuOffsetTop,
   styleElementMegaMenuHeight,
   styleElementMegaMenuHeightStyle,
-  styleElementMegaMenuHeightSuffix
+  styleElementMegaMenuHeightSuffix,
+  styleElementMegaMenuPlacement
 } from "./styleElementMegaMenu";
 
 // Element Table

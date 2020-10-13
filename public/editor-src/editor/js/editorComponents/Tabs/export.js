@@ -65,7 +65,12 @@ export default function($node) {
       $item.children(".brz-tabs__nav--mobile").addClass(mobileActiveClassName);
 
       setTimeout(function() {
-        $("html, body").animate({ scrollTop: $navMobile.offset().top }, 200);
+        // normalize content if is outside of Viewport
+        const offsetTop = $navMobile.offset().top;
+
+        if (window.scrollY > offsetTop) {
+          $("html, body").animate({ scrollTop: offsetTop }, 200);
+        }
       }, 100);
 
       // Emit Tabs Changed

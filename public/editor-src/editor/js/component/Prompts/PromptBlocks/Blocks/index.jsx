@@ -5,6 +5,7 @@ import { projectSelector, stylesSelector } from "visual/redux/selectors";
 import { fontSelector } from "visual/redux/selectors2";
 import { importKit, updateCurrentKitId } from "visual/redux/actions";
 import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
+import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 import { assetUrl } from "visual/utils/asset";
 import {
   getUsedModelsFonts,
@@ -98,6 +99,7 @@ class BlocksContainer extends Component {
 
     const blocksData = blocks.map(block => ({
       ...block,
+      pro: IS_EXTERNAL_POPUP && block.blank === "blank" ? false : block.pro,
       thumbnailSrc: blockTemplateThumbnailUrl(block)
     }));
     const categoriesData = allCategoriesData.filter(

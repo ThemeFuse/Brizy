@@ -60,6 +60,8 @@ type Props = {
     desktopW: number;
     tabletW: number;
     mobileW: number;
+    sectionPopup?: boolean;
+    sectionPopup2?: boolean;
   };
 };
 
@@ -411,11 +413,13 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
     const { customAttributes } = v;
+    const { sectionPopup, sectionPopup2 } = this.props.meta;
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
     return (
       <Animation<"div">
+        iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
         className={this.getWrapperClassName(v, vs, vd)}
         animationClass={this.getAnimationClassName(v, vs, vd)}

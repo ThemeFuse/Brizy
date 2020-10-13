@@ -39,7 +39,12 @@ class SwitcherTab extends EditorComponent {
   }
 
   renderContent() {
-    const { meta, active, animationClassName } = this.props;
+    const {
+      meta,
+      active,
+      animationClassName,
+      meta: { sectionPopup, sectionPopup2 }
+    } = this.props;
     const className = classnames("brz-switcher__content--tab", {
       "brz-switcher__content--tab--active": active
     });
@@ -50,6 +55,9 @@ class SwitcherTab extends EditorComponent {
 
     return (
       <Animation
+        iterationCount={
+          IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+        }
         component={"div"}
         componentProps={{ className }}
         animationClass={animationClassName}

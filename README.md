@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.12<br>
+Stable tag: 2.0.14<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,20 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.14 - 2020-10-13
+* New: Audio element loop option
+* Improved: Video element will be lazy loaded in browsers that support it
+* Improved: Menu element icon
+* Fixed: Tab element scrollTop animation on mobile mode
+* Fixed: Clear Layout button visible for non admin users
+* Fixed: Custom Attributes option not accepting data attributes
+* Fixed: Animations in popups were not replayed after reopens
+* Fixed: Video Play button appearing over Popup
+* Fixed: Form element sometimes working improperly on failed submits
+* Fixed: Icons CSS issues caused by the Twenty Twenty theme
+* Fixed: Scroll on WP Media Gallery not working properly
+* Fixed: Removed regex matching for head and body. There are cases when we hit the backtrack limit configured in php.ini.
 
 ### 2.0.13 - 2020-09-23 ###
 * Fixed: Ignore old blocks on sync

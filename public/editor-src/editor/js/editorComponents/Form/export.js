@@ -98,6 +98,41 @@ function initForm($component) {
       });
     });
 
+    const handleDone = data => {
+      // check status in the data
+      const { success = undefined } = data || {};
+
+      if (success === false) {
+        handleError();
+      } else {
+        showFormMessage($this, getFormMessage("success", successMessage));
+
+        if (redirect !== "") {
+          window.location.replace(redirect);
+        }
+
+        // Reset Forms Fields Value
+        resetFormValues($this);
+      }
+    };
+
+    const handleError = () => {
+      $this.addClass("brz-form__send--fail");
+      showFormMessage($this, getFormMessage("error", errorMessage));
+    };
+
+    const handleAlways = () => {
+      // Regenerate recaptcha hash
+      if ($this.find(".brz-g-recaptcha").length) {
+        var recaptchaId = $this.data("recaptchaid");
+
+        global.grecaptcha.reset(recaptchaId);
+        global.grecaptcha.execute(recaptchaId);
+      }
+
+      $submit.removeClass("brz-blocked");
+    };
+
     $.ajax({
       type: "POST",
       url: url,
@@ -107,30 +142,9 @@ function initForm($component) {
         form_id: formId
       }
     })
-      .done(function() {
-        showFormMessage($this, getFormMessage("success", successMessage));
-        if (redirect !== "") {
-          window.location.replace(redirect);
-        }
-
-        // Reset Forms Fields Value
-        resetFormValues($this);
-      })
-      .fail(function() {
-        $this.addClass("brz-form__send--fail");
-        showFormMessage($this, getFormMessage("error", errorMessage));
-      })
-      .always(function() {
-        // Regenerate recaptcha hash
-        if ($this.find(".brz-g-recaptcha").length) {
-          var recaptchaId = $this.data("recaptchaid");
-
-          global.grecaptcha.reset(recaptchaId);
-          global.grecaptcha.execute(recaptchaId);
-        }
-
-        $submit.removeClass("brz-blocked");
-      });
+      .done(handleDone)
+      .fail(handleError)
+      .always(handleAlways);
   });
 }
 

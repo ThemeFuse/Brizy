@@ -11,7 +11,7 @@
     "urlPopulation": null,
 
     "autoPlay": "off",
-
+    "loop": "off",
     "showArtwork": "off",
 
     "coverImageSrc": "",

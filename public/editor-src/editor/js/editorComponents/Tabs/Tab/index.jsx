@@ -80,6 +80,11 @@ class Tab extends EditorComponent {
         <div className="brz-tabs__item--content">
           <Background key="content" className={customClassName} value={v}>
             <Animation
+              iterationCount={
+                IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
+                  ? Infinity
+                  : 1
+              }
               component={"div"}
               componentProps={{}}
               animationClass={animationClassName}
