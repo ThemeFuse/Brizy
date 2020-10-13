@@ -119,7 +119,7 @@ jQuery(document).ready(function ($) {
                                     },
                                     [
                                         el('svg', {class: 'brz-icon-svg'}, [
-                                            el('use', {'xlinkHref': Brizy_Admin_Data.pluginUrl + '/public/editor-build/editor/icons/icons.svg#nc-circle-remove'}),
+                                            el('use', {'xlinkHref': Brizy_Admin_Data.pluginUrl + '/editor/icons/icons.svg#nc-circle-remove'}),
                                         ]),
                                     ]),
                             ]),

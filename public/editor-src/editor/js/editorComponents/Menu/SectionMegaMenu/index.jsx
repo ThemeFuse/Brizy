@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import _ from "underscore";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -23,7 +24,8 @@ class SectionMegaMenu extends EditorComponent {
   }
 
   static defaultProps = {
-    meta: {}
+    meta: {},
+    rerender: {}
   };
 
   static defaultValue = defaultValue;
@@ -40,8 +42,14 @@ class SectionMegaMenu extends EditorComponent {
     this.mounted = true;
   }
 
+  shouldUpdateBecauseOfParent(nextProps) {
+    return !_.isEqual(this.props.rerender, nextProps.rerender);
+  }
+
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return (
+      this.optionalSCU(nextProps) || this.shouldUpdateBecauseOfParent(nextProps)
+    );
   }
 
   componentWillUnmount() {

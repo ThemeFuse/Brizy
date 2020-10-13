@@ -147,7 +147,7 @@
     "server": "node ./backend/server.js",
     "server:docker": "node ./backend/server.js -t WP --build-dir ../../../brizy-editor-build --build-dir-pro ../../../brizy-editor-pro-build",
     "server:docker:debug": "node --inspect=0.0.0.0:9222 ./backend/server.js -t WP --build-dir ../../../brizy-editor-build --build-dir-pro ../../../brizy-editor-pro-build",
-    "compiler": "cd ../../editor.compiler && PORT=5000 NODE_ENV=development node index.js",
+    "compiler": "NODE_ENV=development PORT=5000 npm start --prefix=../../editor.compiler",
     "build:github": "npm run build:brizy -- -t WP --build-dir ../editor-build",
     "lint": "eslint -c .eslintrc --ext .js --ext .jsx --ext .ts --ext .tsx ./editor/js",
     "test": "jest",

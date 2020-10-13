@@ -134,6 +134,7 @@ class Audio extends EditorComponent {
 
   renderCustom(v, vs, vd) {
     const {
+      loop,
       audio,
       showCurrentTime,
       showDurationTime,
@@ -240,7 +241,13 @@ class Audio extends EditorComponent {
           </div>
         )}
 
-        {IS_PREVIEW && <audio preload="none" src={audioFile} />}
+        {IS_PREVIEW && (
+          <audio
+            preload="none"
+            src={audioFile}
+            {...(loop === "on" ? { loop } : {})}
+          />
+        )}
       </div>
     );
   }

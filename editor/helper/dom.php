@@ -2,32 +2,29 @@
 
 class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 
+
 	/**
 	 * @return Brizy_Editor_Helper_DomTag
 	 */
 	public function get_head() {
-		$tags = $this->get_tags( "/(<head.*<\/head>)/is" );
+		$headPos    = strpos( $this->get_html(), "<head>" );
+		$headEndPos = strpos( $this->get_html(), "</head>" );
+		$headString = substr( $this->get_html(), $headPos, $headEndPos - $headPos + 7 );
 
-		if ( empty( $tags ) ) {
-			return new Brizy_Editor_Helper_DomTag('');
-		}
-
-		return $tags[0];
+		return new Brizy_Editor_Helper_DomTag( $headString );
 	}
 
 	/**
 	 * @return $this|Brizy_Editor_Helper_DomTag
 	 */
 	public function get_body() {
-		$tags = $this->get_tags( "/(<body.*<\/body>)/is" );
 
-		if ( empty( $tags ) ) {
-			return new Brizy_Editor_Helper_DomTag('');
-		}
+		$bodyPos    = strpos( $this->get_html(), "<body>" );
+		$bodyEndPos = strpos( $this->get_html(), "</body>" );
+		$bodyString = substr( $this->get_html(), $bodyPos, $bodyEndPos - $bodyPos + 7 );
 
-		return $tags[0];
+		return new Brizy_Editor_Helper_DomTag( $bodyString );
 	}
-
 
 	/**
 	 * Return the tag html

@@ -4362,7 +4362,7 @@ img.mfp-img {
     .brz .brz-animated:not(.brz-animate) {
       -webkit-animation-name: none;
               animation-name: none; }
-    .brz .brz-animated.brz-animate {
+    .brz .brz-animated.brz-animate-opacity {
       opacity: 1; }
   .brz .brz-icon-svg {
     display: inline-block;
@@ -4376,6 +4376,9 @@ img.mfp-img {
     .brz .brz-icon-svg use {
       /* change 'inherit' to a color value if you want to add a secondary color to Nucleo icons */
       fill: inherit; }
+    .brz .brz-icon-svg path {
+      -webkit-transition: none;
+      transition: none; }
     .brz .brz-icon-svg.grid-16 {
       height: 16px;
       width: 16px; }
@@ -5139,8 +5142,6 @@ img.mfp-img {
       .brz .brz-custom-video .brz-video-content .brz-icon-svg {
         -webkit-transition: all 0.6s ease;
         transition: all 0.6s ease; }
-      .brz .brz-custom-video .brz-video-content .brz-video__cover-icon {
-        z-index: 9999; }
   .brz .brz-custom-video.brz-video-on-controls-hidden .brz-video__cover,
   .brz .brz-custom-video.brz-video-on-controls-hidden .brz-shortcode__placeholder,
   .brz .brz-custom-video.brz-video-on-controls-hidden video {
@@ -5754,8 +5755,7 @@ img.mfp-img {
     display: inline-block;
     padding: 4px 7px;
     margin-bottom: 10px;
-    text-align: center;
-    z-index: 99999; }
+    text-align: center; }
   .brz .brz-shortcode__placeholder {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -8348,6 +8348,8 @@ img.mfp-img {
         margin-left: 0 !important; }
       .brz .brz-posts__filter__item:last-child {
         margin-right: 0 !important; }
+    .brz .brz-posts__item > .brz-columns {
+      height: 100%; }
   .brz .brz-posts ul.page-numbers {
     margin: 0;
     list-style: none;
@@ -18098,7 +18100,7 @@ img.mfp-img {
     .brz .brz-animated:not(.brz-animate) {
       -webkit-animation-name: none;
               animation-name: none; }
-    .brz .brz-animated.brz-animate {
+    .brz .brz-animated.brz-animate-opacity {
       opacity: 1; }
   .brz .admin-bar .wp-env .visual-sidebar {
     top: 32px;

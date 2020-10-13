@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 2.0.12
+Stable tag: 2.0.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,20 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.0.14 - 2020-10-13 =
+* New: Audio element loop option
+* Improved: Video element will be lazy loaded in browsers that support it
+* Improved: Menu element icon
+* Fixed: Tab element scrollTop animation on mobile mode
+* Fixed: Clear Layout button visible for non admin users
+* Fixed: Custom Attributes option not accepting data attributes
+* Fixed: Animations in popups were not replayed after reopens
+* Fixed: Video Play button appearing over Popup
+* Fixed: Form element sometimes working improperly on failed submits
+* Fixed: Icons CSS issues caused by the Twenty Twenty theme
+* Fixed: Scroll on WP Media Gallery not working properly
+* Fixed: Removed regex matching for head and body. There are cases when we hit the backtrack limit configured in php.ini.
 
 = 2.0.13 - 2020-09-23 =
 * Fixed: Ignore old blocks on sync

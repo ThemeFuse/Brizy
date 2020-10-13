@@ -28,6 +28,8 @@ export default class WPImageSetter extends ImageSetter {
       );
     }
 
+    const html = document.querySelector("html");
+
     if (!this.wpMediaFrame) {
       this.wpMediaFrame = wp.media({
         library: {
@@ -76,6 +78,14 @@ export default class WPImageSetter extends ImageSetter {
             console.error("failed to get attachment uid", e);
           });
       });
+      this.wpMediaFrame.on("close", () => {
+        html.classList.remove("brz-ow-hidden");
+      });
+    }
+
+    // block html scroll
+    if (html) {
+      html.classList.add("brz-ow-hidden");
     }
 
     this.wpMediaFrame.open();

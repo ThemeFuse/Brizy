@@ -382,7 +382,10 @@ export default class Cloneable extends EditorComponent {
     const { customClassName, cssClassPopulation, customAttributes } = v;
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
-    const { propsClassName } = this.props;
+    const {
+      propsClassName,
+      meta: { sectionPopup, sectionPopup2 }
+    } = this.props;
 
     const animationClassName = classnames(
       validateKeyByProperty(v, "animationName", "none") &&
@@ -412,6 +415,7 @@ export default class Cloneable extends EditorComponent {
 
     return (
       <Animation
+        iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
         componentProps={props}
         animationClass={animationClassName}

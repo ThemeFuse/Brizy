@@ -21,6 +21,7 @@ type Props<P extends CProps> = PropsWithChildren<
   WithClassName & {
     forwardedRef?: Ref<Element>;
     animationClass?: string;
+    iterationCount?: number;
     component: Component<P>;
     componentProps: P;
   }
@@ -96,7 +97,8 @@ class _Animation<
       "brz-observer__animation": hasAnimation,
       "brz-animated": hasAnimation,
       [animationClass]: isActive,
-      "brz-animate": isActive
+      "brz-animate": isActive,
+      "brz-animate-opacity": isActive
     });
 
     const props = {
@@ -115,6 +117,7 @@ class _Animation<
     const {
       component,
       animationClass = "",
+      iterationCount = 1,
       children,
       className: _className,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -124,6 +127,7 @@ class _Animation<
     const hasAnimation = this.hasAnimation();
     const props = {
       ...otherProps,
+      ...(hasAnimation ? { "data-iteration-count": iterationCount } : {}),
       className: classNames(_className, className, {
         "brz-animated": hasAnimation,
         [animationClass]: hasAnimation

@@ -119,7 +119,8 @@ export default function($node) {
 }
 
 const getPopperPlacement = (item, settings, device) => {
-  return settings.mods[device] === "horizontal" ? "bottom" : "left-start";
+  const { placement = {} } = settings;
+  return placement[device] ?? "bottom";
 };
 
 const getPopperModifiers = (item, settings, device) => {

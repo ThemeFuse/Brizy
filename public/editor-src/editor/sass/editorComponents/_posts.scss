@@ -32,6 +32,9 @@
       margin-right: 0 !important;
     }
   }
+  &__item > .brz-columns {
+    height: 100%;
+  }
 }
 
 // pagination all class is from WP

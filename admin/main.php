@@ -108,6 +108,7 @@ class Brizy_Admin_Main {
 			return $content;
 		}
 
+		$urlBuilder       = new Brizy_Editor_UrlBuilder();
 		$post             = get_post( $postId );
 		$post_type_object = get_post_type_object( $post->post_type );
 
@@ -126,9 +127,8 @@ class Brizy_Admin_Main {
 			'postId'            => $postId,
 			'edit_update_label' => __( 'Edit or Update Image' ),
 			'remove_label'      => $post_type_object->labels->remove_featured_image,
-			'pluginUrl'         => BRIZY_PLUGIN_URL
+			'pluginUrl'         => $urlBuilder->editor_build_url()
 		);
-
 
 		return $twigEngine->render( 'featured-image.html.twig', $params );
 	}
@@ -309,7 +309,7 @@ class Brizy_Admin_Main {
 			array(
 				'url'           => admin_url( 'admin-ajax.php' ),
 				'prefix'        => Brizy_Editor::prefix(),
-				'pluginUrl'     => BRIZY_PLUGIN_URL,
+				'pluginUrl'     => $urlBuilder->editor_build_url(),
 				'ruleApiHash'   => wp_create_nonce( Brizy_Admin_Rules_Api::nonce ),
 				'id'            => get_the_ID(),
 				'page'          => array(

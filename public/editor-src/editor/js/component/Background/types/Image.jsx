@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import classnames from "classnames";
 import jQuery from "jquery";
 import { getStore } from "visual/redux/store";
+import { IS_WP } from "visual/utils/models";
 import { useLayoutEffect } from "../utils";
 
 import "../lib/jquery.parallax.js";
@@ -18,7 +19,8 @@ const initParallax = node => {
     wheelIgnoreClass: [
       "brz-ed-container-plus",
       "brz-ed-container-whiteout-show",
-      "brz-content-show"
+      "brz-content-show",
+      ...(IS_WP ? ["media-modal"] : [])
     ]
   });
 };

@@ -10,11 +10,12 @@ import Toolbar from "visual/component/Toolbar";
 import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import ClickOutside from "visual/component/ClickOutside";
-import { MOBILE } from "visual/utils/responsiveMode";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { css } from "visual/utils/cssStyle";
 import {
   styleElementMegaMenuWidth,
-  styleElementMegaMenuWidthSuffix
+  styleElementMegaMenuWidthSuffix,
+  styleElementMegaMenuPlacement
 } from "visual/utils/style2";
 import { getStore } from "visual/redux/store";
 import MenuItemItems from "./items";
@@ -213,15 +214,19 @@ class MenuItem extends EditorComponent {
     const { mMenu, level, getParent, mods } = this.props;
     const { deviceMode: device } = getStore().getState().ui;
     const mode = getModeByDevice(mods, device);
+    const placement = styleElementMegaMenuPlacement({ v, device });
     const toolbarExtend = toolbarExtendFn(mode, Boolean(mMenu));
     const itemProps = this.makeSubcomponentProps({
       level,
       meta: this.getMeta(v),
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-        allowExtend: false
-      }),
       bindWithKey: "megaMenuItems",
-      megaMenu: true
+      megaMenu: true,
+      itemProps: {
+        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
+          allowExtend: false
+        }),
+        rerender: { placement }
+      }
     });
 
     // megaMenu without popper
@@ -266,13 +271,13 @@ class MenuItem extends EditorComponent {
     const props =
       mode === "vertical"
         ? {
-          placement: "left-start",
-          referenceElement: parentNode.querySelector(".brz-menu__ul")
-        }
+            placement: "left-start",
+            referenceElement: parentNode.querySelector(".brz-menu__ul")
+          }
         : {
-          placement: "bottom",
-          referenceElement: parentNode
-        };
+            placement,
+            referenceElement: parentNode
+          };
 
     return (
       <Popper {...props}>
@@ -320,15 +325,23 @@ class MenuItem extends EditorComponent {
       "brz-mega-menu__portal",
       css(this.constructor.componentId, this.getId(), styleMegaMenu(v, vs, vd))
     );
-    const dW = styleElementMegaMenuWidth({ v, device: "desktop" });
-    const dWS = styleElementMegaMenuWidthSuffix({ v, device: "desktop" });
-    const tW = styleElementMegaMenuWidth({ v, device: "tablet" });
-    const tWS = styleElementMegaMenuWidthSuffix({ v, device: "tablet" });
-    const mW = styleElementMegaMenuWidth({ v, device: "mobile" });
-    const mWS = styleElementMegaMenuWidthSuffix({ v, device: "mobile" });
+    const dW = styleElementMegaMenuWidth({ v, device: DESKTOP });
+    const dWS = styleElementMegaMenuWidthSuffix({ v, device: DESKTOP });
+    const tW = styleElementMegaMenuWidth({ v, device: TABLET });
+    const tWS = styleElementMegaMenuWidthSuffix({ v, device: TABLET });
+    const mW = styleElementMegaMenuWidth({ v, device: MOBILE });
+    const mWS = styleElementMegaMenuWidthSuffix({ v, device: MOBILE });
+    const dPlacement = styleElementMegaMenuPlacement({ v, device: DESKTOP });
+    const tPlacement = styleElementMegaMenuPlacement({ v, device: TABLET });
+    const mPlacement = styleElementMegaMenuPlacement({ v, device: MOBILE });
 
     const settings = {
       mods,
+      placement: {
+        desktop: mods[DESKTOP] === "horizontal" ? dPlacement : "left-start",
+        tablet: mods[TABLET] === "horizontal" ? tPlacement : "left-start",
+        mobile: mods[MOBILE] === "horizontal" ? mPlacement : "left-start"
+      },
       widths: {
         desktop: `${dW}${dWS}`,
         tablet: `${tW}${tWS}`,
@@ -395,9 +408,9 @@ class MenuItem extends EditorComponent {
       ".react-contexify",
       ...(TARGET === "WP"
         ? [
-          ".media-modal", // class of the WP media modal
-          ".media-modal-backdrop"
-        ]
+            ".media-modal", // class of the WP media modal
+            ".media-modal-backdrop"
+          ]
         : [])
     ];
 
