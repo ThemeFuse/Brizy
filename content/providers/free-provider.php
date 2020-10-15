@@ -114,19 +114,19 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
             } ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_default_cart', function () {
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
 				return do_shortcode( '[woocommerce_cart]' );
 			} ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_checkout', function () {
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_checkout', function () {
 				return do_shortcode( '[woocommerce_checkout]' );
 			} ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_my_account', function () {
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_my_account', function () {
 				return do_shortcode( '[woocommerce_my_account]' );
 			} ),
 
-			new BrizyPro_Content_Placeholders_SimpleProductAware( '', 'editor_product_order_tracking', function () {
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_order_tracking', function () {
 				return do_shortcode( '[woocommerce_order_tracking]' );
 			} )
 		);
