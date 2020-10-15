@@ -15,8 +15,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
 	const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
 	const AJAX_GET_POST_OBJECTS = '_get_posts';
+	const AJAX_SEARCH_POST = '_search_posts';
 	const AJAX_GET_MENU_LIST = '_get_menu_list';
-	const AJAX_GET_TERMS = '_get_terms';
 	const AJAX_REMOVE_LOCK = '_remove_lock';
 	const AJAX_HEARTBEAT = '_heartbeat';
 	const AJAX_TAKE_OVER = '_take_over';
@@ -32,6 +32,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_REMOVE_FEATURED_IMAGE = '_remove_featured_image';
 	const AJAX_TIMESTAMP = '_timestamp';
 	const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
+	const AJAX_GET_USERS = '_get_users';
+	const AJAX_GET_TERMS = '_get_terms';
+	const AJAX_GET_TERMS_BY = '_get_terms_by';
 
 
 	/**
@@ -78,8 +81,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		add_action( $p . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		add_action( $p . self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
 		add_action( $p . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
+		add_action( $p . self::AJAX_SEARCH_POST, array( $this, 'search_post' ) );
 		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
 		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
+		add_action( $p . self::AJAX_GET_USERS, array( $this, 'get_users' ) );
+		add_action( $p . self::AJAX_GET_TERMS_BY, array( $this, 'get_terms_by' ) );
 		add_action( $p . self::AJAX_DOWNLOAD_MEDIA, array( $this, 'download_media' ) );
 		add_action( $p . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
 		add_action( $p . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
@@ -92,7 +98,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getRequestNonce() {
-        return $this->param( 'hash' );
+		return $this->param( 'hash' );
 	}
 
 	public function lock_project() {
@@ -168,10 +174,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 		if ( $this->post && $this->post->uses_editor() ) {
 
-			update_post_meta( $this->post->getWpPostId(), 'brizy_attachment_focal_point', array(
-				'x' => $_REQUEST['pointX'],
-				'y' => $_REQUEST['pointY']
-			) );
+			update_post_meta(
+				$this->post->getWpPostId(),
+				'brizy_attachment_focal_point',
+				array(
+					'x' => $_REQUEST['pointX'],
+					'y' => $_REQUEST['pointY'],
+				)
+			);
 
 			$this->success( array() );
 		}
@@ -333,7 +343,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$postId        = (int) $this->param( 'post_id' );
 			$defaultFields = [ 'ID', 'post_title', 'post_content' ];
-			$post_fields   = array_intersect( (array)$this->param( 'fields' ), $defaultFields );
+			$post_fields   = array_intersect( (array) $this->param( 'fields' ), $defaultFields );
 
 			if ( count( $post_fields ) == 0 ) {
 				$post_fields = $defaultFields;
@@ -369,9 +379,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$data        = stripslashes( $this->param( 'data' ) );
 			$atemplate   = $this->param( 'template' );
 			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
-			$status = stripslashes( $this->param( 'status' ) );
+			$status      = stripslashes( $this->param( 'status' ) );
 
-			if ( ! in_array( $status, [ 'publish', 'draft','pending','private','future' ] ) ) {
+			if ( ! in_array( $status, [ 'publish', 'draft', 'pending', 'private', 'future' ] ) ) {
 				$this->error( 400, "Invalid post type" );
 			}
 
@@ -418,9 +428,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$shortcode_content = do_shortcode( $shortcode );
 
-			$this->success( array(
-				'shortcode' => $shortcode_content
-			) );
+			$this->success(
+				array(
+					'shortcode' => $shortcode_content,
+				)
+			);
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -432,7 +444,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 			$postId       = $this->param( 'post_id' );
-			$placeholders = $this->param( 'placeholders' ) ;
+			$placeholders = $this->param( 'placeholders' );
 
 			if ( ! $placeholders ) {
 				throw new Exception( 'Placeholder string not provided.', 400 );
@@ -449,14 +461,16 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
-				$placeholder = stripslashes($placeholder);
+				$placeholder        = stripslashes( $placeholder );
 				$placeholderContent = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
-				$contents[] = empty( $placeholderContent ) ? '<div class="placeholder-is-empty"></div>' : $placeholderContent;
+				$contents[]         = empty( $placeholderContent ) ? '<div class="placeholder-is-empty"></div>' : $placeholderContent;
 			}
 
-			$this->success( array(
-				'placeholders' => $contents
-			) );
+			$this->success(
+				array(
+					'placeholders' => $contents,
+				)
+			);
 
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
@@ -491,7 +505,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				case  Brizy_Admin_Rule::POSTS :
 					$args = [
 						'post_type'      => $rule->getEntityType(),
-						'posts_per_page' => 1
+						'posts_per_page' => 1,
 					];
 
 					$values = $rule->getEntityValues();
@@ -499,6 +513,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					if ( empty( $values[0] ) ) {
 						// For All condition
 						$post = get_posts( $args );
+
 						return isset( $post[0] ) ? $post[0] : null;
 					}
 
@@ -515,7 +530,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 								[
 									'taxonomy' => $explode[1],
 									'terms'    => $explode[2],
-								]
+								],
 							];
 						} else {
 							$args['author'] = $explode[1];
@@ -587,9 +602,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$excludePostType = $this->param( 'excludePostTypes' ) ? $this->param( 'excludePostTypes' ) : array();
 
 		if ( ! $postType ) {
-			$postType = array_keys( array_filter( $wp_post_types, function ( $type ) {
-				return ! in_array( $type->name, array( 'brizy_template' ) ) && $type->show_ui;
-			} ) );
+			$postType = array_keys(
+				array_filter(
+					$wp_post_types,
+					function ( $type ) {
+						return ! in_array( $type->name, array( 'brizy_template' ) ) && $type->show_ui;
+					}
+				)
+			);
 		}
 
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
@@ -632,13 +652,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		return $where;
 	}
 
-
 	public function get_menu_list() {
 		$this->success( wp_get_nav_menus( array( 'hide_empty' => true ) ), 200 );
 	}
 
 	/**
-	 * Used in woocomerce producs shortcode in editor
+	 * Used in woocomerce producs, block conditions
 	 */
 	public function get_terms() {
 
@@ -655,6 +674,137 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 			$this->error( 500, $e->getMessage() );
 		}
+	}
+
+	/**
+	 * Used in posts filter element
+	 */
+	public function get_terms_by() {
+
+		$this->verifyNonce( self::nonce );
+
+		$args = [];
+
+		foreach ( [ 'taxonomy', 'search', 'include' ] as $field ) {
+			$value = $this->param( $field );
+			if ( ! empty( $value ) ) {
+				$args[ $field ] = $value;
+			}
+		}
+
+		$terms = get_terms( $args );
+
+		if ( is_wp_error( $terms ) ) {
+			$this->error( 200, $terms );
+		}
+
+
+		$out = [];
+		foreach ( $terms as $term ) {
+			$out[] = [
+				'term_id'       => $term->term_id,
+				'name'          => $term->name,
+				'taxonomy'      => $term->taxonomy,
+				'taxonomy_name' => get_taxonomy( $term->taxonomy )->labels->singular_name,
+			];
+		}
+
+		$this->success( $out );
+	}
+
+	/**
+	 * Used in posts filter element
+	 */
+	public function search_post() {
+		$this->verifyNonce( self::nonce );
+		$args              = [ 'numberposts' => - 1 ];
+		$args['post_type'] = array_values(get_post_types( [ 'public' => true ] ));
+
+		// exclude attachments
+		if ( ( $key = array_search( 'attachment', $args['post_type'] ) ) !== false ) {
+			unset( $args['post_type'][ $key ] );
+		}
+
+		// se post types
+		if ( $requiredTypes = $this->param( 'post_type' ) ) {
+			if ( is_string( $requiredTypes ) ) {
+				$args['post_type'] = [ $requiredTypes ];
+			} else {
+				$args['post_type'] = $requiredTypes;
+			}
+		}
+
+		// exclude post types
+		if ( $excludeTypes = $this->param( 'exclude_post_type' ) ) {
+			if ( is_string( $excludeTypes ) ) {
+				if ( ( $key = array_search( $excludeTypes, $args['post_type'] ) ) !== false ) {
+					unset( $args['post_type'][ $key ] );
+				}
+			} else {
+				$args['post_type'] = array_diff( $args['post_type'], $excludeTypes );
+			}
+		}
+
+		// include posts by id
+		if ( $this->param( 'include' ) ) {
+			$args['post__in'] = $this->param( 'include' );
+		} elseif ( $this->param( 'search' ) /*&& strlen($this->param('search')) >= 3*/ ) {
+			$args['s'] = $this->param( 'search' );
+		} else {
+			$this->success( [] );
+		}
+
+		$posts = get_posts( $args );
+
+		if ( is_wp_error( $posts ) ) {
+			$this->error( 200, $posts );
+		}
+
+		$out = [];
+		foreach ( $posts as $post ) {
+			$out[] = [
+				'ID'    => $post->ID,
+				'title' => $post->post_title,
+			];
+		}
+
+		$this->success( $out );
+	}
+
+	public function get_users() {
+		$this->verifyNonce( self::nonce );
+
+		$args    = [];
+		$search  = $this->param( 'search' );
+		$include = $this->param( 'include' );
+
+		$args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+
+		if ( $this->param( 'roles' ) && is_array( $this->param( 'roles' ) ) ) {
+			$args['role__in'] = $this->param( 'roles' );
+		}
+
+		if ( ! empty( $search ) ) {
+			$args['search']         = '*' . $search . '*';
+			$args['search_columns'] = [ 'display_name' ];
+		}
+
+		if ( is_array( $include ) && ! empty( $include ) ) {
+			$args['include'] = $include;
+		}
+
+		$users = get_users( $args );
+
+		$users = array_map(
+			function ( $user ) {
+				$user->ID = (int) $user->ID;
+
+				return $user;
+			},
+			$users
+		);
+
+		$this->success( $users );
 	}
 
 	public function download_media() {
@@ -709,9 +859,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$uid = get_post_meta( $attachmentId, 'brizy_post_uid', true );
 
 			if ( ! $uid ) {
-				$file = get_attached_file( $attachmentId );
-				$path_parts = pathinfo($file);
-				$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
+				$file       = get_attached_file( $attachmentId );
+				$path_parts = pathinfo( $file );
+				$uid        = "wp-" . md5( $attachmentId . time() ) . '.' . $path_parts['extension'];
 				update_post_meta( $attachmentId, 'brizy_post_uid', $uid );
 			}
 
@@ -723,7 +873,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			return;
 		}
 	}
-
 
 	public function setTemplateType() {
 		try {
@@ -740,7 +889,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				Brizy_Admin_Templates::TYPE_SINGLE,
 				Brizy_Admin_Templates::TYPE_ARCHIVE,
 				Brizy_Admin_Templates::TYPE_SINGLE_PRODUCT,
-				Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE
+				Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE,
 			];
 
 			if ( ! in_array( $templateType, $allowedTypes, true ) ) {
@@ -764,9 +913,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
 
 		if ( ! $uid ) {
-			$file = get_attached_file( $attachmentId );
-			$path_parts = pathinfo($file);
-			$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
+			$file       = get_attached_file( $attachmentId );
+			$path_parts = pathinfo( $file );
+			$uid        = "wp-" . md5( $attachmentId . time() ) . '.' . $path_parts['extension'];
 			update_post_meta( $attachmentId, 'brizy_attachment_uid', $uid );
 		}
 

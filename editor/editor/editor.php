@@ -123,7 +123,9 @@ class Brizy_Editor_Editor_Editor {
 					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
 			,
 				'support'            =>
-					__bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
+					__bt(
+						'support-url',
+						apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
 					),
 				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
@@ -176,10 +178,33 @@ class Brizy_Editor_Editor_Editor {
 
 		$config = $this->addRecaptchaAccounts( $manager, $config );
 		$config = $this->addSocialAccounts( $manager, $config );
+		$config = $this->addWpPostTypes( $config );
 
 		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
 
+	/**
+	 * @param $config
+	 *
+	 * @return string[]|WP_Post_Type[]
+	 */
+	private function addWpPostTypes( $config ) {
+		$types = get_post_types( [ 'public' => true ] );
+		$result = [];
+		foreach ( $types as $type ) {
+			$typeObj = get_post_type_object( $type );
+			$typeDto = [
+				'name'=>$typeObj->name,
+				'label'=>$typeObj->label,
+			];
+			$result[] = $typeDto;
+
+		}
+
+		$config['wp']['post_types'] = $result;
+
+		return $config;
+	}
 
 	/**
 	 * @return object
@@ -463,10 +488,15 @@ class Brizy_Editor_Editor_Editor {
 				'description'   => $item->post_content,
 				'position'      => $item->menu_order,
 				'attrTitle'     => $item->post_excerpt,
-				'current'       => count( array_intersect( [
-						'current-menu-parent',
-						'current-menu-item'
-					], $item->classes ) ) > 0,
+				'current'       => count(
+					                   array_intersect(
+						                   [
+							                   'current-menu-parent',
+							                   'current-menu-item',
+						                   ],
+						                   $item->classes
+					                   )
+				                   ) > 0,
 				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
 				'classes'       => array_values( array_filter( $item->classes ) ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
@@ -824,7 +854,10 @@ class Brizy_Editor_Editor_Editor {
 			'placeholderContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
 			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
 			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
+			'getTermsBy'                 => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
+			'getUsers'                   => $pref . Brizy_Editor_API::AJAX_GET_USERS,
 			'getPostObjects'             => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
+			'searchPosts'                => $pref . Brizy_Editor_API::AJAX_SEARCH_POST,
 			'setFeaturedImage'           => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 			'setFeaturedImageFocalPoint' => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
 			'removeFeaturedImage'        => $pref . Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
@@ -855,13 +888,13 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	public function getCloudInfo() {
-	    // the cloud will be always initialized with the exception when the white label is enabled
-	    // we wil return isSyncAllowed =  false just in case
-	    if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-		    return array(
-			    'isSyncAllowed' => false,
-		    );
-	    }
+		// the cloud will be always initialized with the exception when the white label is enabled
+		// we wil return isSyncAllowed =  false just in case
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			return array(
+				'isSyncAllowed' => false,
+			);
+		}
 
 		$response = array(
 			'isSyncAllowed' => true,
