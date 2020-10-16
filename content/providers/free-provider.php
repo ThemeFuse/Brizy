@@ -111,7 +111,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		            return __( 'Please set a valid product', 'brizy' );
 	            }
 
-                return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
+                return do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
             } ),
 
 			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
