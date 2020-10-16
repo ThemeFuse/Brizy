@@ -131,7 +131,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     return '';
                 }
 
-                return do_shortcode( '[product_page id="' . $atts['post'] . '"]' );
+                return do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
             } ),
 		);
 	}
