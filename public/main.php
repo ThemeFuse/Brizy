@@ -196,10 +196,14 @@ class Brizy_Public_Main {
 				'roles'          => $current_user->roles
 			]
 		) );
+		$preview_js_deps = array_merge(
+			array( 'brizy-preview-polyfill' ),
+			apply_filters( 'brizy_preview_js_deps', array() )
+		);
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
 		wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
-		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'brizy-preview-polyfill' ), null, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", $preview_js_deps, null, true );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 		wp_add_inline_script( 'brizy-preview', 'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});', 'after' );
 
