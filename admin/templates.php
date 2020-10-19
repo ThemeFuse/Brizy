@@ -867,7 +867,7 @@ class Brizy_Admin_Templates
                 list($appliedFor, $entityType) = $values;
 
                 // ingnore invalid group value
-                if ( ! $appliedFor || ! $entityType) {
+                if ( ! $appliedFor ) {
                     continue;
                 }
 
