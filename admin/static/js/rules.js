@@ -558,7 +558,7 @@ var RuleApplyGroupField = function (params) {
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RulePostsGroupSelectField, {
                             id: params.type + appliedFor + value,
-                            key: params.type + appliedFor + value,
+                            //key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
@@ -575,7 +575,7 @@ var RuleApplyGroupField = function (params) {
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RuleArchiveGroupSelectField, {
                             id: params.type + appliedFor + value,
-                            key: params.type + appliedFor + value,
+                            //key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             taxonomy: entityType,
@@ -615,8 +615,7 @@ var RuleForm = function (params) {
 
 var RuleListItem = function (params) {
     var rule = params.rule;
-    var key = rule.type+rule.appliedType+rule.appliedFor+rule.entityValues.join('');
-    return h("div", {class: "rule", key: key}, [
+    return h("div", {class: "rule", key: params.index}, [
         h("span", {class: 'rule-fields'}, [
             h(RuleTypeField, {value: String(params.rule.type), name: 'brizy-' + params.type + '-rule-type[]'}),
             h(RuleApplyGroupField, {
@@ -647,6 +646,7 @@ var RuleList = function (params) {
     params.rules.forEach(function (rule, index) {
         elements.push(
             h(RuleListItem, {
+                index: index,
                 rule: rule,
                 groups: params.groups,
                 onDelete: params.onDelete,
