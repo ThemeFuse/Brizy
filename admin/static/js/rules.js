@@ -436,7 +436,7 @@ var RulePostsGroupSelectField = function (params) {
         return h(
             BrzSelect2,
             {
-                id: "post-groups-" + entityType,
+                id: "post-groups-" + entityType+'-'+params.type,
                 style: params.style ? params.style : {width: "200px"},
                 name: params.name,
                 optionRequest: function () {
@@ -553,12 +553,13 @@ var RuleApplyGroupField = function (params) {
             )
         ];
 
-        switch (appliedFor) {
+        switch (parseInt(appliedFor)) {
             case RULE_POSTS:
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RulePostsGroupSelectField, {
-                            id: appliedFor + value,
+                            id: params.type + appliedFor + value,
+                            key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
@@ -574,7 +575,8 @@ var RuleApplyGroupField = function (params) {
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RuleArchiveGroupSelectField, {
-                            id: appliedFor + value,
+                            id: params.type + appliedFor + value,
+                            key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             taxonomy: entityType,
