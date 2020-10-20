@@ -178,8 +178,16 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
      * @return string
      */
     public static function wp_trim_excerpt( $text = '', $post = null ) {
+        global $pages;
+
+        // not sure why this is null (this happens on author pages.. maybe there are more)
+        //
+        if(is_null($pages))
+            $pages = [];
+
         $raw_excerpt = $text;
         if ( '' == $text ) {
+
             $post = get_post( $post );
             $text = get_the_content( '', false, $post );
 
@@ -199,6 +207,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
              *
              */
             $excerpt_length = apply_filters( 'excerpt_length', 55 );
+
             /**
              * Filters the string in the "more" link displayed after a trimmed excerpt.
              *
