@@ -380,7 +380,10 @@ var BrzSelect2 = function (params) {
     };
 
     var onremove = function (element, done) {
-        jQuery(element).select2("destroy");
+        if(jQuery(element).data('select2'))
+        {
+            jQuery(element).select2("destroy");
+        }
         done();
     };
 
