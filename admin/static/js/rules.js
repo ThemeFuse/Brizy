@@ -460,8 +460,6 @@ var RuleArchiveGroupSelectField = function (params) {
         var taxonomy = params.rule.entityType;
         var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
 
-        console.log(params.rule);
-
         var convertResponseToOptions = function (response) {
             var groups = [];
             groups.push(new Option("All", '', false, value === ''));
@@ -470,7 +468,6 @@ var RuleArchiveGroupSelectField = function (params) {
                 if (group.title === "") {
                     group.items.forEach(function (option) {
                         var optionValue = String(option.value);
-                        console.log("1",params.rule.entityValues,optionValue)
                         groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
                     });
                 } else {
@@ -480,7 +477,6 @@ var RuleArchiveGroupSelectField = function (params) {
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
                             var optionValue = String(option.value);
-                            console.log("2",params.rule.entityValues,optionValue)
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
                         groups.push(groupElement);
