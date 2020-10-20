@@ -613,7 +613,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	public function geTemplateList( $context, $templateType ) {
 
 		$list = array(
-			$templateType === 'single' || $context == 'popup-rules' ? array(
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
 				'title'      => 'Author page',
 				'value'      => 'author',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
