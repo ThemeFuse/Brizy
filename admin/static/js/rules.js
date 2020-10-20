@@ -260,11 +260,11 @@ var actions = {
     },
     removeRule: function (rule) {
         return function (state) {
+            var rules = state.rules[state.templateType];
+            rules.splice(rules.indexOf(rule),1);
             return {
                 rules: {
-                    [state.templateType]: state.rules[state.templateType].filter(function (arule) {
-                        return arule != rule;
-                    })
+                    [state.templateType]: rules
                 }
             };
         };
@@ -613,7 +613,9 @@ var RuleForm = function (params) {
 };
 
 var RuleListItem = function (params) {
-    return h("div", {class: "rule", key: params.index}, [
+    var rule = params.rule;
+    var key = rule.type+rule.appliedType+rule.appliedFor+rule.entityValues.join('');
+    return h("div", {class: "rule", key: key}, [
         h("span", {class: 'rule-fields'}, [
             h(RuleTypeField, {value: String(params.rule.type), name: 'brizy-' + params.type + '-rule-type[]'}),
             h(RuleApplyGroupField, {
@@ -644,7 +646,6 @@ var RuleList = function (params) {
     params.rules.forEach(function (rule, index) {
         elements.push(
             h(RuleListItem, {
-                index: index,
                 rule: rule,
                 groups: params.groups,
                 onDelete: params.onDelete,
