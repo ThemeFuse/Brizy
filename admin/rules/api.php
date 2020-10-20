@@ -369,6 +369,15 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE, $templateType ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY, $templateType ) );
 
+			if($templateType==='product_archive') {
+				$archiveItems[] = array(
+					'title'      => 'Search page',
+					'value'      => 'search',
+					'groupValue' => Brizy_Admin_Rule::TEMPLATE
+				);
+			}
+
+
 			$groups[] =
 				count( $taxonomyItems ) ? array(
 					'title' => 'Categories',
