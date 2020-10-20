@@ -577,7 +577,6 @@ var RuleAuthorGroupSelectField = function (params) {
     }
 };
 
-
 var RuleApplyGroupField = function (params) {
     return function (state, actions) {
 
@@ -663,8 +662,7 @@ var RuleApplyGroupField = function (params) {
                 break;
 
             case RULE_TEMPLATE:
-                if (entityType === 'author')
-                {
+                if (entityType === 'author') {
                     elements.push(
                         h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                             h(RuleAuthorGroupSelectField, {
@@ -711,7 +709,9 @@ var RuleForm = function (params) {
 
 var RuleListItem = function (params) {
     var rule = params.rule;
-    return h("div", {class: "rule", key: params.index}, [
+    var key = 'list-' + rule.type + rule.appliedType + rule.appliedFor + rule.entityValues.join('') + params.index;
+    return h("div", {class: "rule", key: key}, [
+
         h("span", {class: 'rule-fields'}, [
             h(RuleTypeField, {value: String(params.rule.type), name: 'brizy-' + params.type + '-rule-type[]'}),
             h(RuleApplyGroupField, {
