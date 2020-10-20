@@ -13,6 +13,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	const RULE_GROUP_LIST = '_rule_group_list';
 	const RULE_POSTS_GROUP_LIST = '_rule_posts_group_list';
 	const RULE_ARCHIVE_GROUP_LIST = '_rule_archive_group_list';
+	const RULE_TEMPLATE_GROUP_LIST = '_rule_template_group_list';
 
 
 	/**
@@ -61,6 +62,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::RULE_GROUP_LIST, array( $this, 'getGroupList' ) );
 		add_action( $pref . self::RULE_POSTS_GROUP_LIST, array( $this, 'getPostsGroupsList' ) );
 		add_action( $pref . self::RULE_ARCHIVE_GROUP_LIST, array( $this, 'getArchiveGroupsList' ) );
+		add_action( $pref . self::RULE_TEMPLATE_GROUP_LIST, array( $this, 'getTemplateGroupsList' ) );
 	}
 
 	/**
@@ -554,6 +556,32 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		} ) );
 		wp_send_json_success( $groups, 200 );
 
+	}
+
+	public function getTemplateGroupsList() {
+		$context      = $this->param( 'context' );
+		$templateType = $this->param( 'templateType' );
+
+		$groups = [];
+
+		$closureAuthor  = function ( $v ) {
+			return array(
+				'title'      => $v->user_nicename,
+				'value'      => $v->ID,
+				'groupValue' => 'author'
+			);
+		};
+
+		$groups[] = array(
+			'title' => 'Specific Author' ,
+			'value' => Brizy_Admin_Rule::TEMPLATE,
+			'items' => array_map( $closureAuthor, get_users(['fields'=>['ID','user_nicename']]) )
+		);
+
+		$groups = array_values( array_filter( $groups, function ( $o ) {
+			return ! is_null( $o );
+		} ) );
+		wp_send_json_success( $groups, 200 );
 	}
 
 	private function getCustomPostsList( $groupValue, $templateType ) {
