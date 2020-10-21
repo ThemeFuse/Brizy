@@ -243,8 +243,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setAppliedFor( $appliedFor ) {
-		if($val = (int) $appliedFor)
-		{
+		if ( $val = (int) $appliedFor ) {
 			$this->appliedFor = $val;
 		}
 
@@ -311,14 +310,14 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		$weight = 0;
 
 		if ( $this->getAppliedFor() == self::TEMPLATE && $this->getEntityType() == 'front_page' ) {
-			$weight = 20;
+			$weight += 20;
 		}
 		if ( $this->getAppliedFor() == self::TEMPLATE ) {
-			$weight = 10;
+			$weight += 10;
 		}
 
-		if ( $this->getAppliedFor() == self::WOO_SHOP_PAGE ) {
-			$weight = 30;
+		if ( $this->getEntityType() === 'product' ) {
+			$weight += 30;
 		}
 
 		$values = array();
@@ -369,8 +368,8 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
-			isset( $data['type'] ) && !empty($data['type']) ? $data['type'] : null,
-			isset( $data['appliedFor'] ) && !empty($data['appliedFor']) ? $data['appliedFor'] : null,
+			isset( $data['type'] ) && ! empty( $data['type'] ) ? $data['type'] : null,
+			isset( $data['appliedFor'] ) && ! empty( $data['appliedFor'] ) ? $data['appliedFor'] : null,
 			isset( $data['entityType'] ) ? $data['entityType'] : null,
 			isset( $data['entityValues'] ) ? $data['entityValues'] : null
 		);
