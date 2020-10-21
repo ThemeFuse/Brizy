@@ -243,7 +243,10 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setAppliedFor( $appliedFor ) {
-		$this->appliedFor = (int) $appliedFor;
+		if($val = (int) $appliedFor)
+		{
+			$this->appliedFor = $val;
+		}
 
 		return $this;
 	}
@@ -362,8 +365,8 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
-			isset( $data['type'] ) ? $data['type'] : null,
-			isset( $data['appliedFor'] ) ? $data['appliedFor'] : null,
+			isset( $data['type'] ) && !empty($data['type']) ? $data['type'] : null,
+			isset( $data['appliedFor'] ) && !empty($data['appliedFor']) ? $data['appliedFor'] : null,
 			isset( $data['entityType'] ) ? $data['entityType'] : null,
 			isset( $data['entityValues'] ) ? $data['entityValues'] : null
 		);
