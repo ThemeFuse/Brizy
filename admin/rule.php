@@ -317,6 +317,10 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			$weight = 10;
 		}
 
+		if ( $this->getAppliedFor() == self::WOO_SHOP_PAGE ) {
+			$weight = 30;
+		}
+
 		$values = array();
 
 		if ( $this->getType() ) {
