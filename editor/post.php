@@ -287,7 +287,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );
+					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );                continue;
 				}
 
 				foreach ( $scripts as $l => $script ) {
@@ -303,6 +303,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 				}
 				if ( $k == 'main' ) {
 					$compiledData['pageStyles'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content'] );
+					continue;
 				}
 				foreach ( $styles as $l => $style ) {
 					$compiledData['pageStyles'][ $i ][ $k ][ $l ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl(
