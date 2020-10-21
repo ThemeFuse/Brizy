@@ -44,6 +44,10 @@ class Brizy_Public_Main {
 		return self::$instance = new self( $post );
 	}
 
+	static public function isInitialized() {
+		return is_object(self::$instance);
+	}
+
 	public function initialize_wordpress_editor() {
 
 		if ( $this->is_editing_page_without_editor() ) {
@@ -61,8 +65,6 @@ class Brizy_Public_Main {
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
-			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
-			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 
@@ -88,7 +90,6 @@ class Brizy_Public_Main {
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
-			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 
@@ -96,7 +97,6 @@ class Brizy_Public_Main {
 			add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
 			$this->plugin_live_composer_fixes();
 		}
-
 
 		$this->addTheContentFilters();
 	}

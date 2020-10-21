@@ -191,13 +191,17 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             $post = get_post( $post );
             $text = get_the_content( '', false, $post );
 
+
+
             $text = strip_shortcodes( $text );
             $text = excerpt_remove_blocks( $text );
 
             /** This filter is documented in wp-includes/post-template.php */
-            //$text = apply_filters( 'the_content', $text );
+            $text = apply_filters( 'the_content', $text );
             $text = str_replace( ']]>', ']]&gt;', $text );
-            $text = Brizy_Content_PlaceholderExtractor::stripPlaceholders( $text );
+
+
+
             /**
              * Filters the number of words in an excerpt.
              *

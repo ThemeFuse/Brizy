@@ -474,8 +474,8 @@ class Brizy_Admin_Templates
                 add_filter('body_class', array($this, 'bodyClassFrontend'));
                 add_action('wp_head', array($this, 'insertTemplateHead'));
                 add_action('brizy_template_content', array($this, 'insertTemplateContent'), -12000);
-                add_filter('the_content', array($this, 'filterPageContent'), -12000);
                 add_action('wp_enqueue_scripts', array($this, 'enqueue_preview_assets'), 9999);
+                $this->addTheContentFilters();
             }
 
         } catch (Exception $e) {
@@ -483,6 +483,14 @@ class Brizy_Admin_Templates
             Brizy_Logger::instance()->error($e->getMessage(), []);
         }
     }
+
+	public function addTheContentFilters() {
+		add_filter('the_content', array($this, 'filterPageContent'), -12000);
+	}
+
+	public function removeTheContentFilters() {
+		remove_filter('the_content', array($this, 'filterPageContent'), -12000);
+	}
 
 
     /**
