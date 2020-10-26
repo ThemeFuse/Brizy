@@ -46,8 +46,10 @@ class Brizy_Compatibilities_WPML {
 		if ( isset( $_REQUEST['trid'] ) && isset( $_REQUEST['lang'] ) && isset( $_REQUEST['source_lang'] ) ) {
 			if ( $wpml_post_translations && is_post_type_translated( $postType ) ) {
 				$originalTranslation = $wpml_post_translations->get_element_id( $_REQUEST['source_lang'], $_REQUEST['trid'] );
-				$originalBrizyPost   = Brizy_Editor_Post::get( (int) $originalTranslation );
-				$originalBrizyPost->duplicateTo( (int) $postId );
+				try {
+					$originalBrizyPost   = Brizy_Editor_Post::get( (int) $originalTranslation );
+					$originalBrizyPost->duplicateTo( (int) $postId );
+				} catch (Exception $e) {}
 			}
 		}
 	}
