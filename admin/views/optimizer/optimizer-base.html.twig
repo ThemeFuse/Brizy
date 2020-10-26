@@ -3,7 +3,8 @@
 
     <h2 class="nav-tab-wrapper">
         {% for tab in tab_list %}
-            <a href="{{ tab['href'] }}" class="nav-tab{{ tab['is_selected'] ? ' nav-tab-active' : '' }}">
+            {% set active_class = tab['is_selected'] ? 'nav-tab-active' : '' %}
+            <a href="{{ tab['href'] }}" class="nav-tab {{ active_class }}">
                 {{ tab['label'] }}
             </a>
         {% endfor %}
@@ -15,5 +16,3 @@
         {% endblock %}
     </div>
 </div>
-
-

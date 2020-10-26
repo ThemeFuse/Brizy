@@ -11,7 +11,7 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 	 * Brizy_Editor_Asset_Optimize_Optimizer constructor.
 	 */
 	public function __construct() {
-		$this->optimizers = [ 'Brizy_Editor_Asset_Optimize_BunnyCdnOptimizer', 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer' ];
+		$this->optimizers = array( 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer' );
 	}
 
 	/**
@@ -23,20 +23,13 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 	 */
 	private function optimizerLoop( $source, $target ) {
 		$settings = Brizy_Editor_Project::get()->getImageOptimizerSettings();
-
 		foreach ( $this->optimizers as $optimizerClass ) {
 			try {
-
-				$optimizerId = $optimizerClass::getId();
-
-				if ( empty( $settings[ $optimizerId ]['active'] ) ) {
-					continue;
-				}
-
 				/**
 				 * @var Brizy_Editor_Asset_Optimize_OptimizerInterface $optimizer
 				 */
-				$optimizer = new $optimizerClass( empty( $settings[ $optimizerId ] ) ? [] : $settings[ $optimizerId ] );
+				$settings  = isset( $settings[ $optimizerClass::getId() ] ) ? $settings[ $optimizerClass::getId() ] : null;
+				$optimizer = new $optimizerClass( $settings );
 
 				return $optimizer->optimize( $source, $target );
 

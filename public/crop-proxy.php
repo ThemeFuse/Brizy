@@ -4,8 +4,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 	const ENDPOINT = '_media';
 	const ENDPOINT_FILTER = '_crop';
-	const ENDPOINT_POST = '_post';
 	const ENDPOINT_OPTIMIZE = '_optimize';
+	const ENDPOINT_POST = '_post';
 
 	/**
 	 * @return string
@@ -28,10 +28,10 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		$vars = $wp_query->query_vars;
 
-		$endpointKey         =  Brizy_Editor::prefix( self::ENDPOINT );
-		$endpointFilterKey   =  Brizy_Editor::prefix( self::ENDPOINT_FILTER );
-		$endpointPostKey     =  Brizy_Editor::prefix( self::ENDPOINT_POST );
-		$endpointOptimizeKey =  Brizy_Editor::prefix( self::ENDPOINT_OPTIMIZE );
+		$endpointKey         =  Brizy_Editor::prefix( self::ENDPOINT ) ;
+		$endpointFilterKey   =  Brizy_Editor::prefix( self::ENDPOINT_FILTER ) ;
+		$endpointPostKey     =  Brizy_Editor::prefix( self::ENDPOINT_POST ) ;
+		$endpointOptimizeKey =  Brizy_Editor::prefix( self::ENDPOINT_OPTIMIZE ) ;
 
 		if ( ! isset( $vars[ $endpointFilterKey ] ) || ! is_string( $vars[ $endpointFilterKey ] ) || empty( $vars[ $endpointFilterKey ] ) ) {
 			return;
@@ -69,12 +69,11 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	 * @param $attachment_hash
 	 * @param $filter
 	 * @param $post_id
-	 *
-	 * @param $optimize
+	 * @param bool $optimize
 	 *
 	 * @throws Exception
 	 */
-	private function crop_local_asset( $attachment_hash, $filter, $post_id, $optimize ) {
+	private function crop_local_asset( $attachment_hash, $filter, $post_id, $optimize = false ) {
 		try {
 
 			$attachment = $this->getAttachment( $attachment_hash );
@@ -83,37 +82,12 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 				throw new Exception( 'Media not found' );
 			}
 
-			$media_path = get_attached_file( $attachment->ID );
+			$media_url = get_attached_file( $attachment->ID );
 
-			if ( ! file_exists( $media_path ) ) {
-				throw new Exception( "Image {$media_path} doesn't exists" );
-			}
+			$project = Brizy_Editor_Project::get();
 
-			$media_cache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id, $media_path, $filter );
-
-			if ( $media_cache->have_optimizer() ) {
-				try {
-					try {
-						$crop_media_path = $media_cache->optimize( $optimize );
-					} catch (\Exception $e) {
-						$crop_media_path = $media_cache->crop_local();
-					}
-				} catch (\Exception $e) {
-					$crop_media_path = $media_path;
-				}
-			} else {
-
-				try {
-					$crop_media_path = $media_cache->crop_local();
-				} catch (\Exception $e) {
-					$crop_media_path = $media_path;
-				}
-			}
-
-			if ( ! file_exists( $crop_media_path ) ) {
-				$crop_media_path = $media_path;
-			}
-
+			$media_cache     = new Brizy_Editor_CropCacheMedia( $project, $post_id );
+			$crop_media_path = $media_cache->crop_media( $media_url, $filter, true, $optimize );
 			$this->send_file( $crop_media_path );
 
 		} catch ( Exception $e ) {
