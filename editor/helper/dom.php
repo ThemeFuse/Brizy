@@ -19,7 +19,7 @@ class Brizy_Editor_Helper_Dom extends Brizy_Editor_Helper_DomTag {
 	 */
 	public function get_body() {
 
-		$bodyPos    = strpos( $this->get_html(), "<body>" );
+		$bodyPos    = strpos( $this->get_html(), "<body" );
 		$bodyEndPos = strpos( $this->get_html(), "</body>" );
 		$bodyString = substr( $this->get_html(), $bodyPos, $bodyEndPos - $bodyPos + 7 );
 
