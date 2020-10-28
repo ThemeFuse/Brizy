@@ -46,7 +46,78 @@ const FullScreenObserver = function() {
   };
 };
 
+function hideVideos($node) {
+  $node
+    .find(".brz-video .brz-iframe, .brz-custom-video video")
+    .each(function() {
+      $(this).remove();
+    });
+
+  // remove node if iframe was youtube or vimeo
+  $node.find(".brz-embed-code iframe").each(function() {
+    const $this = $(this);
+    const src = $this.attr("src");
+    const { type } = getVideoData(src) || {};
+
+    if (type === "youtube" || type === "vimeo") {
+      const outerHTML = $this.get(0).outerHTML;
+      $(this).replaceWith(outerHTML);
+    }
+  });
+}
+
+function showVideos($node) {
+  $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
+    var $this = $(this);
+    var $coverElem = $this.find(".brz-video__cover");
+
+    if (!$coverElem.length) {
+      insertVideoIframe($this);
+    }
+  });
+}
+
 export default function($node) {
+  // we don't use IntersectionObserver because without trackVisibility attribute
+  // it doesn't tell you whether the element is covered by any other page content
+  // or was modified by opacity, transform, filter...
+  // we don't use trackVisibility attribute because it's quite expensive to compute
+
+  // Need rearrange when changed some of elements [tabs, accordion, ... ]
+  [
+    "elements.tabs.changed",
+    "elements.accordion.changed",
+    "elements.switcher.changed"
+  ].forEach(id => {
+    window.Brizy.on(id, (node, options) => {
+      var hiddenTabs = options.tabs.filter(tab => tab !== options.active);
+
+      hideVideos($(hiddenTabs));
+      showVideos($(options.active));
+    });
+  });
+
+  ["elements.mmenu.panel.opened", "elements.mmenu.open"].forEach(id => {
+    window.Brizy.on(id, node => {
+      showVideos($(node));
+    });
+  });
+
+  ["elements.mmenu.panel.closed", "elements.mmenu.close"].forEach(id => {
+    window.Brizy.on(id, node => {
+      hideVideos($(node));
+    });
+  });
+
+  $(document).on("brz.popup.show", function(e, popup) {
+    showVideos($(popup));
+  });
+
+  // stopping all videos inside a popup that is closed(video can be set through embed code)
+  $(document).on("brz.popup.close", function(e, popup) {
+    hideVideos($(popup));
+  });
+
   $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
     var $this = $(this);
     var $videoData = $this.find(".brz-video-data");
@@ -58,40 +129,6 @@ export default function($node) {
     } else if (population) {
       insertVideoIframe($this);
     }
-  });
-
-  $(document).on("brz.popup.show", function() {
-    $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
-      var $this = $(this);
-      var $coverElem = $this.find(".brz-video__cover");
-
-      if (!$coverElem.length) {
-        insertVideoIframe($this);
-      }
-    });
-  });
-
-  // stopping all videos inside a popup that is closed(video can be set through embed code)
-  $(document).on("brz.popup.close", function(e, popup) {
-    const $popup = $(popup);
-
-    $popup
-      .find(".brz-video .brz-iframe, .brz-custom-video video")
-      .each(function() {
-        $(this).remove();
-      });
-
-    // remove node if iframe was youtube or vimeo
-    $popup.find(".brz-embed-code iframe").each(function() {
-      const $this = $(this);
-      const src = $this.attr("src");
-      const { type } = getVideoData(src) || {};
-
-      if (type === "youtube" || type === "vimeo") {
-        const outerHTML = $this.get(0).outerHTML;
-        $(this).replaceWith(outerHTML);
-      }
-    });
   });
 
   // Function init click Play & Pause Button
@@ -177,8 +214,11 @@ function insertVideoIframe($elem) {
 
   var src = getVideoSrc($elem);
 
+  // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
+  // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
+  // and breaks our code(video, map inside megamenu isn't showing as example)
   var iframe = $("<iframe/>", {
-    class: "brz-iframe",
+    class: "brz-iframe intrinsic-ignore",
     allowfullscreen: true,
     allow: "autoplay",
     src: src

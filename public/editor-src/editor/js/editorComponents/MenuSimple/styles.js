@@ -24,7 +24,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover .menu .menu-item:first-child > a": {
       standart: [...(IS_EDITOR ? ["cssStyleElementMenuSimpleActiveColor"] : [])]
     },
-    ".brz &&:hover .menu .menu-item:not(:last-child)": {
+    ".brz &&:hover .menu > .menu-item:not(:last-child)": {
       standart: ["cssStyleElementMenuSimpleItemPadding"]
     },
     ".brz &&:hover .brz-menu-simple__icon--bars": {

@@ -15,6 +15,7 @@ import { t } from "visual/utils/i18n";
 import { validateEmail } from "visual/component/Prompts/common/utils";
 import { recoveryEmail, signIn, checkCompatibility } from "./api";
 import { SignAuthorizationProps, AuthorizationField } from "./types";
+import { setAuthorized } from "visual/utils/user/getAuthorized";
 
 type SignInState = {
   loading: boolean;
@@ -120,6 +121,7 @@ class SignIn extends Component<SingInProps, SignInState> {
             throw r;
           } else {
             updateAuthorization("connected");
+            setAuthorized("connected");
 
             if (isWP) {
               checkCompatibility().then(r => {
@@ -172,6 +174,7 @@ class SignIn extends Component<SingInProps, SignInState> {
     this.setState({ prevLoading: false });
 
     updateAuthorization("pending");
+    setAuthorized("pending");
     onSkip && onSkip();
     onClose && onClose();
   };

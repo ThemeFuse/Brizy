@@ -123,13 +123,16 @@ class Video extends EditorComponent {
     } else if (videoPopulation) {
       return [videoDataElem, this.renderPlaceholder()];
     } else if (video) {
+      // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
+      // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
+      // and breaks our code(video, map inside megamenu isn't showing as example)
       return [
         videoDataElem,
         <iframe
           loading="lazy"
           key="iframe"
           allowFullScreen={true}
-          className="brz-iframe"
+          className="intrinsic-ignore brz-iframe"
           src={videoSrc}
         />
       ];
@@ -274,7 +277,7 @@ class Video extends EditorComponent {
             <video
               data-time-start={start}
               data-time-end={end}
-              className="brz-hidden"
+              className="brz-hidden intrinsic-ignore"
               preload="none"
               loop={loop === "on"}
               muted={muted === "on"}

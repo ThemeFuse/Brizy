@@ -105,7 +105,10 @@ class SoundCloud extends EditorComponent {
         style(v, vs, vd)
       )
     );
-    const wrapperClassName = classnames("brz-iframe", {
+    // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
+    // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
+    // and breaks our code(video, map inside megamenu isn't showing as example)
+    const wrapperClassName = classnames("brz-iframe", "intrinsic-ignore", {
       "brz-blocked": IS_EDITOR
     });
     let { url, autoPlay, showArtwork } = v;

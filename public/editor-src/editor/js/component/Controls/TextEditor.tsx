@@ -85,12 +85,6 @@ export class TextEditor extends Component<Props, State> {
       return;
     }
 
-    // prevent paste
-    if (holdsMeta && keyCode === keyCodes.V) {
-      e.preventDefault();
-      return;
-    }
-
     // prevent ctrl + {B,I,U}
     if (
       holdsMeta &&
@@ -124,6 +118,12 @@ export class TextEditor extends Component<Props, State> {
     this.contentRef.current?.classList.remove("brz-ed-dd-cancel");
   };
 
+  handlePaste = (e: React.ClipboardEvent): void => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text/plain");
+    document.execCommand("insertHTML", false, text);
+  }
+
   render(): React.ReactElement {
     const { tagName, value, className: className_ } = this.props as Props &
       DefaultProps;
@@ -140,6 +140,7 @@ export class TextEditor extends Component<Props, State> {
       dangerouslySetInnerHTML: { __html: value },
       onClick: this.handleClick,
       onKeyDown: this.handleKeyDown,
+      onPaste: this.handlePaste,
       onInput: this.handleInput,
       onBlur: this.handleBlur
     });

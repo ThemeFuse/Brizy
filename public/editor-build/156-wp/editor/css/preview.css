@@ -8755,7 +8755,9 @@ img.mfp-img {
     .brz .brz-comments-parrent {
       margin-bottom: -20px; }
       .brz .brz-comments-parrent > div {
-        width: 100%; }
+        width: 100% !important;
+        float: none !important;
+        padding: 0 !important; }
     .brz .brz-comments .comments-pagination {
       margin-bottom: 20px; }
       .brz .brz-comments .comments-pagination + .brz-comment-respond {

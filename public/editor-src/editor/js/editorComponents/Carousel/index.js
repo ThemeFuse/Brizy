@@ -39,6 +39,14 @@ class Carousel extends EditorComponent {
     return this.optionalSCU(nextProps);
   }
 
+  handleValueChange(value, meta) {
+    if (value.items.length === 0) {
+      this.selfDestruct();
+    } else {
+      super.handleValueChange(value, meta);
+    }
+  }
+
   getMeta(v) {
     const { meta } = this.props;
     const {

@@ -20,7 +20,10 @@ export default function($node) {
       }
 
       // Emit Accordion Changed
-      window.Brizy.emit("elements.accordion.changed", _this);
+      window.Brizy.emit("elements.accordion.changed", _this, {
+        active: $item.get(0),
+        tabs: $item.siblings().get()
+      });
     });
 
     $accordionFilter.on("click", function({ target }) {
