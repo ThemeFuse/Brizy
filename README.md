@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.0.14<br>
+Stable tag: 2.0.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,17 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.0.15 - 2020-10-28
+* Improved: PlainText editor (used in Button, Accordion, Tabs, etc) now accepts copy / paste
+* Improved: The Sync with Brizy Cloud Popup is now less annoying
+* Improved: Login element icon
+* Fixed: Screenshots were taking way too long to make for certain blocks
+* Fixed: Making a Saved block would sometimes fail because of the block id
+* Fixed: Carousel element would crash when dragging it's last slide out of it
+* Fixed: Images inside Menu element were having sizing issues
+* Fixed: MenuFree css issues
+* Fixed: Color toolbar option css issues
 
 ### 2.0.14 - 2020-10-13
 * New: Audio element loop option

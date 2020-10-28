@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 2.0.14
+Stable tag: 2.0.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,17 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.0.15 - 2020-10-28 =
+* Improved: PlainText editor (used in Button, Accordion, Tabs, etc) now accepts copy / paste
+* Improved: The Sync with Brizy Cloud Popup is now less annoying
+* Improved: Login element icon
+* Fixed: Screenshots were taking way too long to make for certain blocks
+* Fixed: Making a Saved block would sometimes fail because of the block id
+* Fixed: Carousel element would crash when dragging it's last slide out of it
+* Fixed: Images inside Menu element were having sizing issues
+* Fixed: MenuFree css issues
+* Fixed: Color toolbar option css issues
 
 = 2.0.14 - 2020-10-13 =
 * New: Audio element loop option
