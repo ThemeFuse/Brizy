@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_155Wp_Texts {
+class Brizy_Public_EditorBuild_156Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -166,9 +166,9 @@ class Brizy_Public_EditorBuild_155Wp_Texts {
 			"Could not Create Global Popup" => __("Could not Create Global Popup", "brizy"),
 			"Could not Create Saved Block" => __("Could not Create Saved Block", "brizy"),
 			"Could not Create Saved Popup" => __("Could not Create Saved Popup", "brizy"),
-			"Could not create Saved Layout" => __("Could not create Saved Layout", "brizy"),
 			"Could not find" => __("Could not find", "brizy"),
 			"Could not publish or save page" => __("Could not publish or save page", "brizy"),
+			"Could not save layout" => __("Could not save layout", "brizy"),
 			"Could not switch to draft" => __("Could not switch to draft", "brizy"),
 			"Count" => __("Count", "brizy"),
 			"Countdown" => __("Countdown", "brizy"),

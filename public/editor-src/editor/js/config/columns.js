@@ -12,3 +12,5 @@ export const wInMobilePage = 430; // mobile page
 export const minWinColumn = 760; // min w in column
 
 export const MIN_COL_WIDTH = 60;
+
+export const wInMMenu = 440; // mmenu drawer max width

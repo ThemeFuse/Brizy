@@ -12,6 +12,7 @@ import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
 import { SyncAllowed } from "visual/types";
 import { useDisconnect, useSync } from "./common";
+import { setAuthorized } from "visual/utils/user/getAuthorized";
 
 const handleConnect = (): void => {
   const data: PromptsProps = {
@@ -56,6 +57,7 @@ export const CloudConnectWP: React.FC<CloudConnectProps> = (
   useEffect(() => {
     if (isDisconnect) {
       updateAuthorization("disconnect");
+      setAuthorized("disconnect");
     }
   }, [isDisconnect]);
 

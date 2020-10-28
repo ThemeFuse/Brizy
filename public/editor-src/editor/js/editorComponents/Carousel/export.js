@@ -71,7 +71,8 @@ export default function($node) {
     const elements = [
       "elements.tabs.changed",
       "elements.accordion.changed",
-      "elements.switcher.changed"
+      "elements.switcher.changed",
+      "elements.mmenu.panel.opened"
     ];
 
     elements.forEach(id => {

@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import Input from "../common/Input";
 import Scroll from "../common/Scroll";
 import Showing from "../common/Showing";
@@ -14,8 +13,6 @@ import Cookie from "../common/Cookie";
 import OS from "../common/OS";
 import OtherPopups from "../common/OtherPopups";
 import SpecificPopup from "../common/SpecificPopup";
-
-const { availableRoles } = Config.get("wp");
 
 export default [
   {
@@ -84,7 +81,7 @@ export default [
     title: "Hide for logged in users",
     defaultValue: {
       value: "all",
-      user: availableRoles[0].role
+      user: undefined
     },
     duplicatesAmount: Infinity,
     Component: LoggedIn

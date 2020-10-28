@@ -116,11 +116,35 @@ class PublishButton extends Component<Props, State> {
 
     if (screenshotsSupported) {
       const node = document.querySelector("#brz-ed-page__blocks");
-      const { src, width, height } = await makeNodeScreenshot(node);
+      const { src, width, height } = await makeNodeScreenshot(node).catch(e => {
+        ToastNotification.error(t("Could not save layout"));
+        console.error(e);
+
+        return {
+          src: undefined,
+          width: undefined,
+          height: undefined
+        };
+      });
+
+      if (!src || typeof width !== "number" || typeof height !== "number") {
+        ToastNotification.error(t("Could not save layout"));
+        return;
+      }
+
       const { id } = await createBlockScreenshot({
         base64: src,
         blockType: "layout"
+      }).catch(e => {
+        ToastNotification.error(t("Could not save layout"));
+        console.error(e);
+        return { id: undefined };
       });
+
+      if (!id) {
+        ToastNotification.error(t("Could not save layout"));
+        return;
+      }
 
       meta._thumbnailSrc = id;
       meta._thumbnailWidth = width;
@@ -133,8 +157,8 @@ class PublishButton extends Component<Props, State> {
       data: pageData,
       dataVersion: 1,
       uid: uuid()
-    }).catch((e: Response) => {
-      ToastNotification.error(t("Could not create Saved Layout"));
+    }).catch(e => {
+      ToastNotification.error(t("Could not save layout"));
       console.error(e);
     });
 

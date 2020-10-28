@@ -64,6 +64,7 @@ export default {
 
 function getItems(v) {
   const { base } = Editor.getShortcodes();
+  const items = v.items;
   const { icon = "" } =
     base.find(
       ({
@@ -72,12 +73,12 @@ function getItems(v) {
             items: [{ type }]
           }
         }
-      }) => type === v.items[0].type
+      }) => type === items[0]?.type
     ) || {};
-  let title = translationsMap[v.items[0].type]; // TODO: See if we'll need icons & prop
+  let title = translationsMap[items[0]?.type]; // TODO: See if we'll need icons & prop
 
   if (typeof title === "function") {
-    title = title(v.items[0].value);
+    title = title(items[0]?.value);
   }
 
   return [

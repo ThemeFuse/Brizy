@@ -125,7 +125,9 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
     const screenshotsSupported: boolean = await browserSupports();
 
     if (screenshotsSupported) {
-      const node: HTMLElement | null = document.querySelector(`#${blockId}`);
+      // getElementById instead of querySelector was used deliberately
+      // because querySelector(`#{id}`) throws when using ids that start with a number
+      const node: HTMLElement | null = document.getElementById(blockId);
 
       if (node) {
         const { src, width, height } = await makeNodeScreenshot(node);

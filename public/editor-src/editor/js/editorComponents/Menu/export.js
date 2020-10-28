@@ -42,6 +42,24 @@ export default function($node) {
       slidingSubmenus: false,
       navbar: {
         title: mmenuTitle
+      },
+      hooks: {
+        "openPanel:after": panel => {
+          // Emit Menu panel opened
+          window.Brizy.emit("elements.mmenu.panel.opened", panel);
+        },
+        "closePanel:after": panel => {
+          // Emit Menu panel opened
+          window.Brizy.emit("elements.mmenu.panel.closed", panel);
+        },
+        "open:start": function() {
+          // Emit Menu panel opened
+          window.Brizy.emit("elements.mmenu.open", this.node.pnls);
+        },
+        "close:start": function() {
+          // Emit Menu panel opened
+          window.Brizy.emit("elements.mmenu.close", this.node.pnls);
+        }
       }
     };
 
