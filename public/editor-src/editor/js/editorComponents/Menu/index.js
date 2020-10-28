@@ -28,6 +28,7 @@ import { styleMenu, styleMenuContainer } from "./styles";
 import { t } from "visual/utils/i18n";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleElementMenuMode, styleElementMMenu } from "visual/utils/style2";
+import { wInMMenu } from "visual/config/columns";
 
 const IS_PRO = Config.get("pro");
 
@@ -46,6 +47,18 @@ export default class Menu extends EditorComponent {
   nodeRef = React.createRef();
 
   mMenu = null;
+
+  getMeta(v) {
+    const { meta } = this.props;
+    const mMenu = styleElementMMenu({ v, device: DESKTOP });
+    const tabletMMenu = styleElementMMenu({ v, device: TABLET });
+    const mobileMMenu = styleElementMMenu({ v, device: MOBILE });
+    const desktopW = mMenu === "on" ? wInMMenu : meta.desktopW;
+    const tabletW = tabletMMenu === "on" ? wInMMenu : meta.tabletW;
+    const mobileW = mobileMMenu === "on" ? wInMMenu : meta.mobileW;
+
+    return { ...meta, desktopW, tabletW, mobileW };
+  }
 
   getDeviceMode() {
     return getStore().getState().ui.deviceMode;
@@ -193,7 +206,7 @@ export default class Menu extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         mMenu: hasMMenu,
-        meta: this.props.meta,
+        meta: this.getMeta(v),
         mods: {
           [DESKTOP]: styleElementMenuMode({ v, device: DESKTOP }),
           [TABLET]: styleElementMenuMode({ v, device: TABLET }),

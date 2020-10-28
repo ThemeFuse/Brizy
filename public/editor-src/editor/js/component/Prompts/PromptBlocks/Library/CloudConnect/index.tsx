@@ -6,6 +6,7 @@ import { authorizedSelector } from "visual/redux/selectors2";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { useDisconnect } from "./common";
+import { setAuthorized } from "visual/utils/user/getAuthorized";
 
 const mapState = (state: ReduxState): { isAuthorized: boolean } => ({
   isAuthorized: authorizedSelector(state) === "connected"
@@ -26,6 +27,7 @@ export const CloudConnect: React.FC<CloudConnectProps> = (
   useEffect(() => {
     if (isDisconnect) {
       updateAuthorization("disconnect");
+      setAuthorized("disconnect");
     }
   }, [isDisconnect]);
 

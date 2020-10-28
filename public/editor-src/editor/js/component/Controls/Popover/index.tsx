@@ -38,9 +38,7 @@ export const Popover: FC<Props> = ({
 }) => {
   const _className = classNames("brz-ed-control__popover", className);
   const content = (
-    <div className="brz-d-xs-flex brz-flex-xs-wrap brz-ed-control__popover--content">
-      {children}
-    </div>
+    <div className="brz-ed-control__popover--content">{children}</div>
   );
 
   return (

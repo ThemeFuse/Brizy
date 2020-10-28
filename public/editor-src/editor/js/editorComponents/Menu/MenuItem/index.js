@@ -516,7 +516,10 @@ class MenuItem extends EditorComponent {
     const content = (
       <>
         {hasIcon && this.renderIcon(v)}
-        {title}
+        <span
+          className="brz-span"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
       </>
     );
 
