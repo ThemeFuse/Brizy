@@ -32,11 +32,12 @@ class MenuItemItems extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex, items) {
     const props = super.getItemProps(itemData, itemIndex, items);
-    let { level, mMenu, meta, getParent } = this.props;
+    let { level, toolbarExtend, mMenu, meta, getParent } = this.props;
 
     return {
       ...props,
       mMenu,
+      toolbarExtend,
       meta,
       getParent,
       level: ++level

@@ -22,7 +22,13 @@ onmessage = async e => {
   const r = await fetch(incomingUrl);
   const nodeString = await r.text();
 
-  const node = new DOMParser().parseFromString(nodeString, "text/html");
+  const node = new DOMParser().parseFromString(
+    // DOMParser lib has terrible performance
+    // when it tries to parse a string with a single long line
+    // so we clumsily split it into multiple to ease it's job
+    beautifyHTML(nodeString),
+    "text/html"
+  );
   const config = { assetUrl, siteUrl, proxyUrl };
 
   removeUnwantedNodes(node);
@@ -51,6 +57,12 @@ onmessage = async e => {
     url
   });
 };
+
+// splits html string into multiple lines
+// the goal is not to produce beautiful html, just to split
+function beautifyHTML(html) {
+  return html.replace(/(<\/[^>]+>)/g, "\n$1");
+}
 
 function removeUnwantedNodes(node) {
   const selectors = [
@@ -296,6 +308,14 @@ function makeSvgDataUri(nodeString, options) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}">${foreignObject}</svg>`;
 
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+
+function makeSvgDataUriDebug(nodeString, options) {
+  const { width, height } = options;
+  const foreignObject = `<foreignObject x="0" y="0" width="100%" height="100%" style="background-color: white;">${nodeString}</foreignObject>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}">${foreignObject}</svg>`;
+
+  return svg;
 }
 
 function fetchResource(url) {

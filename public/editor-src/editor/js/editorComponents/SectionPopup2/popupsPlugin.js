@@ -153,6 +153,18 @@ var lastVisit = Number(localStorage.getItem("brz-lastVisit")) || Date.now();
         });
       }
 
+      if (options.loggedIn) {
+        var roles = __CONFIG__.currentUser.roles;
+
+        var hideForUser = options.loggedIn.find(function(user) {
+          return user.value === "all" || roles.includes(user.user);
+        });
+
+        if (hideForUser) {
+          hidePopup();
+        }
+      }
+
       if (options.referrer) {
         options.referrer.forEach(function(item) {
           switch (item.value) {

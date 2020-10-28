@@ -33,6 +33,7 @@ import Editor from "visual/component/Editor";
 import { ToastNotification } from "visual/component/Notifications";
 import { getCurrentPage } from "./getCurrentPage";
 import "../registerEditorParts";
+import { getAuthorized } from "visual/utils/user/getAuthorized";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -105,9 +106,7 @@ const pageCurtain = window.parent.document.querySelector(
         projectStatus,
         globalBlocks,
         blocksThumbnailSizes,
-        authorized: Config.get("user").isAuthorized
-          ? "connected"
-          : "disconnected",
+        authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
         fonts: deepMerge(fonts, newFonts),
         page: currentPage

@@ -14,6 +14,7 @@ import { validateEmail } from "../common/utils";
 import { t } from "visual/utils/i18n";
 import { checkCompatibility, signUp } from "./api";
 import { SignAuthorizationProps, AuthorizationField } from "./types";
+import { setAuthorized } from "visual/utils/user/getAuthorized";
 
 const isWP = Boolean(Config.get("wp"));
 const fields: AuthorizationField[] = [
@@ -145,6 +146,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
             throw r;
           } else {
             updateAuthorization("connected");
+            setAuthorized("connected");
 
             if (isWP) {
               checkCompatibility().then(r => {

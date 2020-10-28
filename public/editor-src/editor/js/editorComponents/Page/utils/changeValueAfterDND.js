@@ -382,8 +382,16 @@ const moveColumns = (oldValue, from, to, newValue) => {
 
   // if row is empty, we should delete it
   if (sourceColumns.length <= 1) {
-    const sourceRowItemPath = from.itemPath.slice(0, -3);
-    const sourceRowContainerPath = from.itemPath.slice(0, -4);
+    let sourceRowItemPath = from.itemPath.slice(0, -3);
+    let sourceRowContainerPath = from.itemPath.slice(0, -4);
+
+    // if in wrapper has slider and slider is empty wee should delete wrapper
+    const element = getIn(oldValue, sourceRowItemPath);
+
+    if (element.type === "Carousel") {
+      sourceRowItemPath = sourceRowItemPath.slice(0, -3);
+      sourceRowContainerPath = sourceRowContainerPath.slice(0, -4);
+    }
 
     const newFrom = {
       ...from,

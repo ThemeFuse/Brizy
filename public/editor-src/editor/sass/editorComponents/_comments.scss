@@ -21,7 +21,9 @@
     margin-bottom: -20px;
 
     & > div {
-      width: 100%;
+      width: 100% !important;
+      float: none !important;
+      padding: 0 !important;
     }
   }
   .comments-pagination {

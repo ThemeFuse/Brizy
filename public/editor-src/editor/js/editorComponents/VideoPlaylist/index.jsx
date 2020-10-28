@@ -158,7 +158,7 @@ class VideoPlaylist extends EditorComponent {
         <div className="brz-video-playlist-main__content brz-p-relative brz-pointer-events-none">
           <iframe
             allowFullScreen={true}
-            className="brz-iframe"
+            className="brz-iframe intrinsic-ignore"
             src={videoSrc}
           />
         </div>
@@ -253,7 +253,7 @@ class VideoPlaylist extends EditorComponent {
         <div className={videoClassName}>
           <div className="brz-video-playlist-main__content brz-p-relative">
             <iframe
-              className="brz-iframe"
+              className="brz-iframe intrinsic-ignore"
               allowFullScreen={true}
               allow="autoplay"
               src={videoSrc}

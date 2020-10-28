@@ -6,7 +6,9 @@
   "style": {
     "className": "",
     "width": 100,
+
     "itemPadding": 15,
+    "itemPaddingSuffix": "px",
 
     "families": {
       "fontFamily": "lato"
@@ -42,6 +44,7 @@
 
     "tabletWidth": null,
     "tabletItemPadding": null,
+    "tabletItemPaddingSuffix": null,
     "tabletToggleMenu": "off",
 
     "tabletFontStyle": "",
@@ -52,6 +55,7 @@
 
     "mobileWidth": null,
     "mobileItemPadding": null,
+    "mobileItemPaddingSuffix": null,
     "mobileToggleMenu": "off",
 
     "mobileFontStyle": "",
