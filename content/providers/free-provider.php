@@ -137,29 +137,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             case 'post_title':
                 return get_the_title( $post );
             case 'post_excerpt':
-                return self::wp_trim_excerpt( $post->post_excerpt, $post );
+                return get_the_excerpt($post);
             case 'post_content':
-                $GLOBALS['post'] = $post;
-                setup_postdata($post);
-                // remove all brizy the_content fitlers
-                remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-                $brizyPost = Brizy_Editor_Post::get( $post );
-                Brizy_Public_Main::get( $brizyPost )->removeTheContentFilters();
-
-                // get the content
-                add_filter( 'the_content', 'wpautop' );
-                $content = get_the_content( null, null, $post );
-                $content = apply_filters( 'the_content', $content );
-                $content = str_replace( ']]>', ']]&gt;', $content );
-                remove_filter( 'the_content', 'wpautop' );
-
-                // add the filters back
-                add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-                Brizy_Public_Main::get($brizyPost)->addTheContentFilters();
-
-                wp_reset_postdata();
-
-                return $content;
+	            return get_the_content($post);
             case 'post_password':
                 return '';
             default:

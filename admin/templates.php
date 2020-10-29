@@ -596,7 +596,7 @@ class Brizy_Admin_Templates
             'body'
         );
 
-        echo do_shortcode($content);
+        echo apply_filters('the_content',$content);
     }
 
     /**
@@ -608,7 +608,7 @@ class Brizy_Admin_Templates
     public function filterPageContent($content)
     {
 
-        if ( ! self::getTemplate()) {
+        if ( ! self::getTemplate() || doing_filter('brizy_content')) {
             return $content;
         }
         $pid           = Brizy_Editor::get()->currentPostId();
