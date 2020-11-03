@@ -452,7 +452,7 @@ class Brizy_Editor_Editor_Editor {
 			$menu_data[] = $amenu;
 		}
 
-		return $menu_data;
+		return apply_filters( 'brizy_menu_data', $menu_data );
 	}
 
 	/**

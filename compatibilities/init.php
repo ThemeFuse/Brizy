@@ -69,6 +69,10 @@ class Brizy_Compatibilities_Init {
         if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
             new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
         }
+
+		if ( class_exists( 'TRP_Translate_Press' ) ) {
+			new Brizy_Compatibilities_TranslatePress();
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {
