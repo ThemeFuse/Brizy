@@ -101,7 +101,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             new Brizy_Content_Placeholders_Simple( 'Product Page', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
                 $atts = $contentPlaceholder->getAttributes();
-                $atts['id'] = 22;
+
 //	            if ( ! empty( $atts['id'] ) ) {
 //		            $product_data = get_post( $atts['id'] );
 //		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
