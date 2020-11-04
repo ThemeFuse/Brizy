@@ -101,7 +101,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             new Brizy_Content_Placeholders_Simple( 'Product Page', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
                 $atts = $contentPlaceholder->getAttributes();
-
+                $atts['id'] = 22;
 //	            if ( ! empty( $atts['id'] ) ) {
 //		            $product_data = get_post( $atts['id'] );
 //		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
@@ -111,7 +111,14 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		            return __( 'Please set a valid product', 'brizy' );
 	            }
 
-                return do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
+	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
+	            remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+
+	            $html = do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
+
+	            add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+
+	            return $html;
             } ),
 
 			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
