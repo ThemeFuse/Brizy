@@ -8,19 +8,12 @@
     > label {
       font-weight: 600;
     }
-    > .stars > span {
-      color: inherit;
-
-      > a {
-        color: inherit;
-      }
-    }
   }
 
   &-parrent {
     margin-bottom: -20px;
 
-    & > div {
+    > div {
       width: 100% !important;
       float: none !important;
       padding: 0 !important;
@@ -29,7 +22,7 @@
   .comments-pagination {
     margin-bottom: 20px;
 
-    & + .brz-comment-respond {
+    + .brz-comment-respond {
       margin-top: -10px;
     }
   }
@@ -42,22 +35,29 @@
     display: flex;
     flex-wrap: wrap;
 
-    & + .brz-comment-respond {
+    + .brz-comment-respond {
       margin-top: -20px;
     }
     .brz-comments-children {
       padding: 0;
     }
     .brz-comments__name {
-      & * {
+      * {
         color: inherit;
         font-size: inherit;
       }
     }
+    .brz-comments__right-side {
+      display: flex;
+      margin-right: 0;
+      margin-left: auto;
+      align-items: center;
+    }
+
     .brz-comments__date {
       position: relative;
 
-      & * {
+      * {
         color: #818a91;
         font-size: inherit;
       }
@@ -65,7 +65,7 @@
     .brz-comments__reply {
       line-height: inherit;
 
-      & * {
+      * {
         font-size: inherit;
       }
       .comment-reply-link {
@@ -91,7 +91,7 @@
         background-color: rgba(129, 138, 145, 0.15);
         display: block;
       }
-      & * {
+      * {
         margin: 10px 0;
         color: inherit;
         font-family: inherit;
@@ -119,10 +119,23 @@
       display: none;
     }
   }
+
+  .star-rating {
+    margin: 0;
+  }
+
   &__skin-skin1 {
-    .star-rating {
-      width: 100%;
-      margin-bottom: 20px;
+    &.review .brz-comments__date::before {
+      content: "";
+      width: 1px;
+      height: 77%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #818a91;
+      display: block;
+      margin: auto;
     }
     .brz-comments__logo .brz-img {
       border-radius: 50%;
@@ -146,8 +159,10 @@
         text-align: right;
         display: flex;
         align-items: center;
+        padding-left: 10px;
+        margin-left: 10px;
 
-        & * .brz-span {
+        * .brz-span {
           position: relative;
           right: -2px;
         }
@@ -226,12 +241,12 @@
         .brz-comments__date {
           width: 100%;
 
-          & * {
+          * {
             width: 75px;
             text-align: right;
             margin: auto;
 
-            & .brz-span {
+            .brz-span {
               position: relative;
               right: -2px;
             }
@@ -259,10 +274,6 @@
     }
   }
   &__skin-skin3 {
-    .star-rating {
-      width: 100%;
-      margin-bottom: 20px;
-    }
     .brz-comments__logo {
       margin-right: 25px;
 
@@ -270,6 +281,13 @@
         border-radius: 50%;
         object-fit: cover;
       }
+    }
+    &.review .brz-comments__date::after {
+      content: "";
+      height: 14px;
+      width: 1px;
+      background-color: #818a91;
+      margin: auto 10px;
     }
     .brz-comments__right-date {
       width: calc(100% - 48.5px);
@@ -290,24 +308,16 @@
         bottom: 0;
         left: 0;
       }
-      .brz-comments__name {
-        padding-right: 10px;
-      }
       .brz-comments__date {
-        padding-left: 10px;
         position: relative;
+        display: flex;
 
         &::before {
           content: "";
           height: 14px;
           width: 1px;
           background-color: #818a91;
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          margin: auto;
-          display: block;
+          margin: auto 10px;
         }
       }
       .brz-comments__text,
@@ -318,7 +328,7 @@
           font-family: inherit;
           font-size: inherit;
         }
-        & * {
+        * {
           display: contents;
         }
       }
@@ -333,9 +343,16 @@
     }
   }
   &__skin-skin4 {
-    .star-rating {
-      width: 100%;
-      margin-bottom: 20px;
+    &.review .brz-comments__date {
+      display: flex;
+
+      &::after {
+        content: "";
+        height: 14px;
+        width: 1px;
+        background-color: #818a91;
+        margin: auto 10px;
+      }
     }
     .brz-comments__right-date {
       width: 100% !important;
@@ -352,6 +369,11 @@
         align-items: flex-start;
         margin-bottom: 9px;
 
+        .brz-comments__left-side {
+          display: flex;
+          align-items: center;
+        }
+
         .brz-comments__name {
           margin-bottom: 5px;
         }
@@ -366,7 +388,7 @@
       .brz-comment-awaiting-moderation {
         width: 100%;
 
-        & * {
+        * {
           display: contents;
         }
       }
@@ -421,8 +443,7 @@
   width: 100%;
 
   .brz-comment-reply-title {
-    margin-top: 11px;
-    margin-bottom: 12px;
+    margin: 12px 0;
     color: #03080f;
     font-family: $font-family-1;
     font-size: 20px;
@@ -434,6 +455,45 @@
       padding-left: 5px;
       font-family: $font-family-1;
       font-size: 14px;
+    }
+  }
+  .brz--comment__form-reply-body {
+    .comment-form-rating .stars {
+      font-family: star;
+
+      a {
+        position: relative;
+        height: 1em;
+        width: 1em;
+        text-indent: -999em;
+        display: inline-block;
+        text-decoration: none;
+        box-shadow: none;
+      }
+      a::before {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1em;
+        height: 1em;
+        line-height: 1;
+        content: "\73";
+        text-indent: 0;
+      }
+
+      &:hover a::before {
+        content: "\53";
+      }
+      &.selected a::before {
+        content: "\53";
+      }
+      &.selected a.active ~ a::before {
+        content: "\73";
+      }
+      a:hover ~ a::before {
+        content: "\73";
+      }
     }
   }
   textarea[name="comment"] {
@@ -544,19 +604,17 @@ ul.brz-comments ul.brz-comments {
       }
     }
     &__skin-skin1 {
+      &.comment .brz-comments__date {
+        margin-left: 0;
+        padding-left: 0;
+      }
       .brz-comments__right-date {
         justify-content: flex-start;
 
         .brz-comments__name {
           width: 100%;
         }
-        .brz-comments__date {
-          margin-left: 0;
 
-          & * .brz-span {
-            display: inline;
-          }
-        }
         .brz-comment-awaiting-moderation {
           margin-top: 15px !important;
         }
@@ -566,11 +624,11 @@ ul.brz-comments ul.brz-comments {
       .brz-comments__right-date {
         flex-wrap: wrap;
 
-        & .brz-comments__name-date .brz-comments__date {
-          & * {
+        .brz-comments__name-date .brz-comments__date {
+          * {
             width: auto;
 
-            & .brz-span {
+            .brz-span {
               position: static;
               display: inline;
             }

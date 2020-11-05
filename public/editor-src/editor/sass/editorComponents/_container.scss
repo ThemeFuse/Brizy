@@ -8,6 +8,10 @@ $containers-width: map-get($container-max-widths, "lg");
   margin-right: auto;
   width: 100%;
 }
+.brz-container {
+  display: flex;
+  flex-direction: column;
+}
 .brz-container__wrap {
   display: flex;
   flex-wrap: wrap;

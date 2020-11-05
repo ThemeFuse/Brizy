@@ -1,8 +1,9 @@
+import { IS_STORY } from "visual/utils/models";
+
 import Text from "./Text";
 import Button from "./Button";
 import Icon from "./Icon";
-import Image from "./Image";
-// import Image2 from "./Image2";
+import Image from "./Image"; 
 import Audio from "./Audio";
 import Video from "./Video";
 import Spacer from "./Spacer";
@@ -21,28 +22,57 @@ import MenuSimple from "./MenuSimple";
 import Row from "./Row";
 import Columns from "./Columns";
 
+import StoryText from "./story/StoryText";
+import StoryMap from "./story/StoryMap";
+import StoryVideo from "./story/StoryVideo";
+import StoryProgressBar from "./story/StoryProgressBar";
+import StoryLine from "./story/StoryLine";
+import StoryCountdown2 from "./story/StoryCountdown2";
+import StoryCounter from "./story/StoryCounter";
+import StoryEmbed from "./story/StoryEmbed";
+import StoryIcon from "./story/StoryIcon";
+import StoryShape from "./story/StoryShape";
+import StoryImage from "./story/StoryImage";
+import StoryButton from "./story/StoryButton";
+import StoryForm2 from "./story/StoryForm2";
+
 export default {
-  base: [
-    Text,
-    Button,
-    Icon,
-    Image,
-    // Image2,
-    Audio,
-    Video,
-    Spacer,
-    Line,
-    Map,
-    Embed,
-    Form2,
-    IconText,
-    Counter,
-    Countdown2,
-    Tabs,
-    ProgressBar,
-    Accordion,
-    MenuSimple
-  ],
-  grid: [Row, Columns],
+  base: IS_STORY
+    ? [
+        StoryButton,
+        StoryImage,
+        StoryIcon,
+        StoryEmbed,
+        StoryText,
+        StoryMap,
+        StoryVideo,
+        StoryProgressBar,
+        StoryLine,
+        StoryCountdown2,
+        StoryCounter,
+        StoryShape,
+        StoryForm2
+      ]
+    : [
+        Text,
+        Button,
+        Icon,
+        Image, 
+        Audio,
+        Video,
+        Spacer,
+        Line,
+        Map,
+        Embed,
+        Form2,
+        IconText,
+        Counter,
+        Countdown2,
+        Tabs,
+        ProgressBar,
+        Accordion,
+        MenuSimple
+      ],
+  grid: IS_STORY ? [] : [Row, Columns],
   social: []
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { WPShortcodeInner } from "visual/editorComponents/WordPress/common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import { getMenus } from "visual/utils/api/editor/index";
 import toolbarConfigFn from "./toolbar";
@@ -9,6 +8,7 @@ import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 
 export default class MenuSimpleWP extends EditorComponent {
   static get componentId() {
@@ -35,8 +35,7 @@ export default class MenuSimpleWP extends EditorComponent {
     });
   }
 
-  renderForEdit(v , vs, vd) {
-
+  renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-menu-simple",
       css(
@@ -47,17 +46,12 @@ export default class MenuSimpleWP extends EditorComponent {
     );
 
     const { tabletToggleMenu, mobileToggleMenu } = v;
-    const attributes = {
-      name: v.menuName
-    };
     const toolbarConfig = toolbarConfigFn(this.state.menus);
 
     let content = (
-      <WPShortcodeInner
-        name="brizy_navigation"
-        attributes={attributes}
-        placeholderIcon="menu-3"
-        blocked={true}
+      <DynamicContentHelper
+        placeholder={`{{editor_navigation name="${v.menuName}"}}`}
+        tagName="div"
       />
     );
 
@@ -83,9 +77,7 @@ export default class MenuSimpleWP extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <div className={className}>
-          {content}
-        </div>
+        <div className={className}>{content}</div>
       </Toolbar>
     );
   }

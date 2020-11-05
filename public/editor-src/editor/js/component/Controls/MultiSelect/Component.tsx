@@ -4,7 +4,8 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  ComponentProps
+  ComponentProps,
+  KeyboardEvent
 } from "react";
 import classNames from "classnames";
 import { property } from "underscore";
@@ -26,20 +27,20 @@ type ItemInstance<T> = ReactElement<ItemProps<T>>;
 type TagInstance = ReactElement<ComponentProps<typeof Tag>>;
 
 export type Props<T> = WithClassName & {
-  placeholder?: string;
   children: ItemInstance<T>[];
   tags: TagInstance[];
-  inputValue: string;
-  editable?: boolean;
   size: "short" | "medium" | "large" | "full" | "auto";
-  onKeyDown: OnChange<string>;
-  onType: OnChange<string>;
   onSelect: OnChange<T>;
   scroll?: number;
   onOpen?: () => void;
+  editable?: boolean;
+  inputValue?: string;
+  placeholder?: string;
+  onType?: OnChange<string>;
+  onKeyDown?: OnChange<KeyboardEvent<HTMLInputElement>>;
 };
 
-const getEnviroment = (node: HTMLElement | null): Window => {
+const getEnvironment = (node: HTMLElement | null): Window => {
   return node?.ownerDocument?.defaultView || window;
 };
 
@@ -48,7 +49,7 @@ export function Component<T extends Literal>({
   placeholder = "",
   children,
   tags,
-  editable = true,
+  editable,
   size,
   onKeyDown,
   onType,
@@ -85,7 +86,7 @@ export function Component<T extends Literal>({
       {mount && (
         <Manager>
           <Downshift
-            environment={getEnviroment(containerRef.current)}
+            environment={getEnvironment(containerRef.current)}
             onChange={_onSelect}
             itemToString={(i?: ItemInstance<T>): string => Str.mRead(i?.key)}
           >
@@ -100,10 +101,7 @@ export function Component<T extends Literal>({
                   onOpen && onOpen();
                   openMenu();
                 }
-              };
-              const _onType = (v: string): void => {
-                onType(v);
-                triggerOpen();
+                inputRef.current?.focus();
               };
 
               return (
@@ -121,12 +119,15 @@ export function Component<T extends Literal>({
                             placeholder={placeholder}
                             ref={inputRef}
                             value={inputValue}
-                            size={inputValue.length || 1}
-                            onChange={({ target }): void =>
-                              _onType(target.value)
-                            }
-                            onKeyDown={({ key }): void => onKeyDown(key)}
-                            onFocus={(): void => triggerOpen()}
+                            size={inputValue?.length || 1}
+                            onChange={({ target }): void => {
+                              onType?.(target.value);
+                              triggerOpen();
+                            }}
+                            onKeyDown={onKeyDown}
+                            onFocus={(): void => {
+                              triggerOpen();
+                            }}
                             className="brz-input brz-ed-control__multiSelect--value"
                           />
                         )}
@@ -147,7 +148,11 @@ export function Component<T extends Literal>({
                         }
 
                         const items = children.map((item, i) => {
-                          const props = getItemProps({ item, key: i });
+                          const props = getItemProps({
+                            item,
+                            key: i,
+                            disabled: item.props.disabled
+                          });
                           return (
                             <SelectItem key={i} {...props} {...item.props} />
                           );

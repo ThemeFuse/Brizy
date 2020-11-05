@@ -9,12 +9,21 @@
 
   "style": {
     "width": 100,
+    "widthSuffix": null,
+
     "height": 165,
+    "heightSuffix": null,
 
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
+
     "tabletHeight": null,
+    "tabletHeightSuffix": null,
 
     "mobileWidth": null,
-    "mobileHeight": null
+    "mobileWidthSuffix": null,
+
+    "mobileHeight": null,
+    "mobileHeightSuffix": null
   }
 }

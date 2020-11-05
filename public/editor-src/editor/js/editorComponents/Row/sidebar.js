@@ -1,6 +1,5 @@
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarBorderRadius,
   toolbarPaddingFourFields,
@@ -11,8 +10,6 @@ import {
 export const title = t("Row");
 
 export function getItems({ v, device, component }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
@@ -36,7 +33,7 @@ export function getItems({ v, device, component }) {
       devices: "desktop",
       tabs: [
         {
-          id: dvk("settingsStyling"),
+          id: "settingsStyling",
           label: t("Styling"),
           icon: "nc-styling",
           options: [
@@ -71,7 +68,7 @@ export function getItems({ v, device, component }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [

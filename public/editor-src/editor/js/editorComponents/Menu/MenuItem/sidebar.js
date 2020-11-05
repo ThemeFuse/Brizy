@@ -16,7 +16,7 @@ export const getItemsSimple = level => ({ device, state }) => {
       ? [
           {
             id: "borderRadiusPicker",
-            type: "multiPicker",
+            type: "group-dev",
             devices: "desktop",
             disabled: true
           }
@@ -40,7 +40,7 @@ export const getItemsMMenu = _ => ({ device, state }) => {
   return [
     {
       id: "borderRadiusPicker",
-      type: "multiPicker",
+      type: "group-dev",
       devices: "desktop",
       disabled: true
     },

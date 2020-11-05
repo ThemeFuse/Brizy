@@ -1,0 +1,27 @@
+.brz-woocart__sidebar__product-name,
+.brz-woocart__sidebar-button,
+.brz-woocart__sidebar-remove {
+  pointer-events: none;
+}
+.brz-woocart__sidebar-toolbar {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-family: $font-family-1;
+  cursor: pointer;
+  transition: color 0.2s linear;
+  font-size: 16px;
+  z-index: 1061;
+
+  &:hover {
+    color: #3dbfe8;
+  }
+  &.brz-woo-cart-sidebar--open {
+    display: block;
+  }
+}

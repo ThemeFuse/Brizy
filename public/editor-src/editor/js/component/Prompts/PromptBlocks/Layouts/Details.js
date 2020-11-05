@@ -18,6 +18,7 @@ import {
 import { t } from "visual/utils/i18n";
 import { normalizeFonts } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
+import { IS_STORY } from "visual/utils/models";
 
 const IS_PRO = Config.get("pro");
 const urls = Config.get("urls");
@@ -77,6 +78,8 @@ class Details extends Component {
     window.removeEventListener("resize", this.handleUpdateThumbnail);
   }
 
+  getType = () => (IS_STORY ? "stories" : "templates");
+
   handleUpdateThumbnail = () => {
     this.setState({
       thumbnailHeight: this.thumbnailDetails.current.clientHeight
@@ -95,26 +98,29 @@ class Details extends Component {
       onClose
     } = this.props;
     const { active: pageId, importStyles } = this.state;
-    const page = await fetch(assetUrl(`templates/resolves/${pageId}.json`));
+    const type = this.getType();
+
+    const page = await fetch(assetUrl(`${type}/resolves/${pageId}.json`));
     const { blocks } = await page.json();
-    let templateFonts = getUsedModelsFonts({ models: blocks });
+    let modelFonts = getUsedModelsFonts({ models: blocks });
     let styles;
 
     if (!this.hasStyleInProject()) {
-      const meta = await fetch(assetUrl("templates/meta.json"));
-      const { templates } = await meta.json();
+      const data = await fetch(assetUrl(`${type}/meta.json`));
+      const dataObj = await data.json();
+      const blocks = dataObj[type];
 
-      styles = templates.find(({ name }) => name === id)?.styles || [];
+      styles = blocks.find(({ name }) => name === id).styles;
 
       // Check fonts
       const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
       const fonts = getUsedStylesFonts(fontStyles);
 
-      templateFonts.push(...fonts);
+      modelFonts.push(...fonts);
     }
 
     const fonts = await normalizeFonts(
-      getBlocksStylesFonts(templateFonts, usedFonts)
+      getBlocksStylesFonts(modelFonts, usedFonts)
     );
 
     onAddBlocks({
@@ -141,9 +147,13 @@ class Details extends Component {
     const currentPage = pages.find(({ id }) => id === active);
     const activeSrc = templateThumbnailUrl(currentPage);
     const renderSectionPage = pages.map((el, index) => {
-      const className = classnames("brz-ed-popup-two-details-page-select", {
-        "brz-ed-popup-two-details-page-select-active-block": el.id === active
-      });
+      const className = classnames(
+        "brz-ed-popup-two-details-page-select",
+        IS_STORY && "brz-ed-popup-two-details-page-select-stories",
+        {
+          "brz-ed-popup-two-details-page-select-active-block": el.id === active
+        }
+      );
       const pageSrc = templateThumbnailUrl(el);
 
       return (
@@ -164,12 +174,27 @@ class Details extends Component {
     const transition = currentPage.thumbnailHeight / TRANSITION_DELAY;
     const pageIsPro = !IS_PRO && pro;
 
+    const previewClassName = classnames(
+      "brz-ed-popup-two-details-preview",
+      IS_STORY && "brz-ed-popup-two-details-preview-stories"
+    );
+
+    const pagesBlockClassName = classnames(
+      "brz-ed-popup-two-details-right",
+      IS_STORY && "brz-ed-popup-two-details-right-stories"
+    );
+
+    const detailsBlockClassName = classnames(
+      "brz-ed-popup-two-body__content brz-ed-popup-two-blocks__grid brz-ed-popup-two-details",
+      IS_STORY && "brz-ed-popup-two-details-stories"
+    );
+
     return (
       <Fragment>
         <HeaderSlotLeft>
           <div className="brz-ed-popup-two-header__search brz-ed-popup-two-header__search--hidden" />
         </HeaderSlotLeft>
-        <div className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks__grid brz-ed-popup-two-details">
+        <div className={detailsBlockClassName}>
           <div className="brz-ed-popup-two-details-left">
             <div
               className="brz-ed-popup-two-details-back"
@@ -179,31 +204,45 @@ class Details extends Component {
                 icon="nc-arrow-left"
                 className="brz-ed-popup-two-details-back-icon"
               />
-              {t("Back to Layouts")}
+              {IS_STORY ? t("Back to Stories") : t("Back to Layouts")}
             </div>
             <div
               ref={this.thumbnailDetails}
-              className="brz-ed-popup-two-details-preview"
+              className={previewClassName}
               style={{
                 "--thumbnailHeight": `${thumbnailHeight}px`,
                 "--previewPointer": `${previewPointer}`
               }}
             >
-              <ImageLoad
-                className="brz-ed-popup-two-details-preview-img"
-                src={activeSrc}
-                style={{
-                  ...animationStyle,
-                  "--transitionPreview": `transform ${transition}s linear`
-                }}
-              />
+              {IS_STORY ? (
+                <ImageLoad
+                  className="brz-ed-popup-two-details-preview-img brz-ed-popup-two-details-preview-img-stories"
+                  src={activeSrc}
+                />
+              ) : (
+                <ImageLoad
+                  className="brz-ed-popup-two-details-preview-img"
+                  src={activeSrc}
+                  style={{
+                    ...animationStyle,
+                    "--transitionPreview": `transform ${transition}s linear`
+                  }}
+                />
+              )}
             </div>
           </div>
-          <div className="brz-ed-popup-two-details-right">
+          <div className={pagesBlockClassName}>
             <div className="brz-ed-popup-two-details-title">
               <h2 className="brz-ed-popup-two-details-title-name">{title}</h2>
               <div className="brz-ed-popup-two-details-title-count">
-                {pages.length} {pages.length > 1 ? t("layouts") : t("layout")}
+                {pages.length}{" "}
+                {pages.length > 1
+                  ? IS_STORY
+                    ? t("stories")
+                    : t("layouts")
+                  : IS_STORY
+                  ? t("story")
+                  : t("layout")}
               </div>
             </div>
 
@@ -228,7 +267,9 @@ class Details extends Component {
 
                   {pageIsPro ? (
                     <div className="brz-ed-popup-two-details-footer-radio-button brz-ed-popup-two-details-footer-radio-button--pro">
-                      {t("Upgrade to PRO to use this layout")}
+                      {IS_STORY
+                        ? t("Upgrade to PRO to use this story")
+                        : t("Upgrade to PRO to use this layout")}
                     </div>
                   ) : (
                     styles.length > 0 &&
@@ -265,7 +306,9 @@ class Details extends Component {
                     className="brz-ed-popup-two-details-footer-render-button"
                     onClick={this.handleThumbnailAdd}
                   >
-                    {t("Import This Layout")}
+                    {IS_STORY
+                      ? t("Import This Story")
+                      : t("Import This Layout")}
                   </div>
                 )}
               </div>

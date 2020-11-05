@@ -6,7 +6,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementWOOProductMetaType"]
     },
     ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container:not(:first-child)": {
-      standart: ["cssStyleElementWOOProductMetaDviders"]
+      standart: ["cssStyleElementWOOProductMetaDividers"]
     },
     ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container:not(:last-child)": {
       standart: ["cssStyleElementWOOProductMetaRightSpacingInline"]

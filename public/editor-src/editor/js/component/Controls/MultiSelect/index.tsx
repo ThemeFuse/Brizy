@@ -1,15 +1,15 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { uniq, initial, sortBy } from "underscore";
+import React, { ReactElement, useEffect, useState, KeyboardEvent } from "react";
+import { uniq, initial } from "underscore";
 import { WithClassName, WithSize } from "visual/utils/options/attributes";
 import { OnChange } from "visual/component/Options/Type";
 import { Tag } from "./Tag";
-import { apply, arrowFn } from "./utils";
+import { arrowFn } from "./utils";
 import { Component } from "./Component";
 import { SelectItem } from "./SelectItem";
 import { Props as ItemProps } from "./Item";
 import { Literal } from "visual/utils/types/Literal";
 
-type ItemType<T> = ReactElement<ItemProps<T>>;
+export type ItemType<T> = ReactElement<ItemProps<T>>;
 
 export type Props<T extends Literal> = WithClassName &
   WithSize & {
@@ -18,9 +18,10 @@ export type Props<T extends Literal> = WithClassName &
     value: T[];
     onChange: OnChange<T[]>;
     editable?: boolean;
+    inputValue?: string;
+    onInputChange?: (v: string) => void;
     scroll?: number;
     hideSelected?: boolean;
-    search: (s: string, t: T) => boolean;
     onOpen?: () => void;
   };
 
@@ -34,81 +35,80 @@ export function MultiSelect<T extends Literal>({
   size = "medium",
   placeholder = "",
   hideSelected = true,
-  search,
-  onOpen
+  onOpen,
+  inputValue,
+  onInputChange
 }: Props<T>): ReactElement {
-  const [filtered, setFiltered] = useState<ItemType<T>[]>([]);
   const [active, setActive] = useState<T | undefined>();
-  const [inputValue, setInputValue] = useState("");
   const isActive = (i: T): boolean => active === i || value.includes(i);
 
-  const filterByInput = (items: ItemType<T>[]): void => {
-    setFiltered(
-      items
-        .filter(({ props: { value } }) => search(inputValue, value))
-        .filter(({ props }) => !(hideSelected && value.includes(props.value)))
-    );
+  useEffect(() => {
+    if (active !== undefined) {
+      setActive(undefined);
+    }
+  }, [children]);
+
+  const onRemove: OnChange<T> = v => {
+    onChange(value.filter(i => i !== v));
   };
+  const tags = value.reduce((acc, v) => {
+    const item = children.find(c => c.props.value === v);
 
-  useEffect(() => setActive(undefined), [filtered]);
-  useEffect(() => apply(filterByInput, children), [
-    children,
-    inputValue,
-    value
-  ]);
+    if (item !== undefined) {
+      acc.push(
+        <Tag
+          key={item.props.value}
+          onRemove={(): void => onRemove(item.props.value)}
+        >
+          {item.props.children}
+        </Tag>
+      );
+    }
 
-  const onSelect = useCallback(
-    (i): void => {
-      onChange(uniq([...value, i]));
-    },
-    [value]
+    return acc;
+  }, [] as ReactElement[]);
+
+  const nonSelectedChildren = children.filter(
+    ({ props }) => !(hideSelected && value.includes(props.value))
   );
-  const onKeyDown: OnChange<string> = key => {
+
+  const onSelect = (i: T): void => {
+    onChange(uniq([...value, i]));
+    onInputChange?.("");
+  };
+  const onKeyDown: OnChange<KeyboardEvent> = e => {
+    const key = e.key;
     switch (key) {
-      case "Backspace":
-        if (!inputValue.length && value.length) {
-          onChange(initial(value));
+      case "ArrowDown":
+      case "ArrowUp": {
+        const filtered = nonSelectedChildren.filter(i => !i.props.disabled);
+
+        if (filtered.length > 0) {
+          const nextActive =
+            active !== undefined
+              ? arrowFn(key)(
+                  active,
+                  filtered.map(i => i.props.value)
+                )
+              : filtered[0].props.value;
+          setActive(nextActive);
+          e.preventDefault();
         }
         break;
+      }
       case "Enter":
         if (active !== undefined) {
           onChange(uniq([...value, active]));
-          setInputValue("");
+          onInputChange?.("");
         }
         break;
-      case "ArrowDown":
-      case "ArrowUp":
-        if (filtered.length) {
-          const fn = arrowFn(key);
-          const v =
-            active !== undefined
-              ? fn(
-                  active,
-                  filtered.map(({ props: { value } }) => value)
-                )
-              : filtered[0].props.value;
-          setActive(v);
+      case "Backspace":
+        if (!inputValue?.length && value.length) {
+          onChange(initial(value));
         }
         break;
     }
   };
-  const onRemove: OnChange<T> = v => {
-    onChange(value.filter(i => i !== v));
-  };
-
-  // Filter values by children and not vice-versa,
-  // in order to show items by the order they were selected
-  const tags = sortBy(
-    children.filter(c => value.includes(c.props.value)),
-    ({ props }) => value.findIndex(v => v === props.value)
-  ).map(
-    (item, i) => (
-      <Tag key={i} onRemove={(): void => onRemove(item.props.value)}>
-        {item.props.children}
-      </Tag>
-    ),
-    []
-  );
 
   return (
     <Component
@@ -118,14 +118,18 @@ export function MultiSelect<T extends Literal>({
       inputValue={inputValue}
       tags={tags}
       editable={editable}
+      scroll={scroll}
       onSelect={onSelect}
       onKeyDown={onKeyDown}
-      onType={setInputValue}
-      scroll={scroll}
+      onType={onInputChange}
       onOpen={onOpen}
     >
-      {filtered.map(({ props }, i) => (
-        <SelectItem {...props} key={i} active={isActive(props.value)} />
+      {nonSelectedChildren.map(({ props }) => (
+        <SelectItem
+          {...props}
+          active={isActive(props.value)}
+          key={props.value}
+        />
       ))}
     </Component>
   );

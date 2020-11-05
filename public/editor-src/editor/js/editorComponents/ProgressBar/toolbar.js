@@ -5,6 +5,7 @@ import {
 } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
+import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -79,6 +80,9 @@ export function getItems({ v, device }) {
         {
           id: "tabsTypography",
           type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabText",
@@ -115,10 +119,10 @@ export function getItems({ v, device }) {
                             iconOnly: true,
                             choices: richTextDC
                           },
+                          devices: "desktop",
                           disabled:
                             v.showText === "off" ||
-                            v.progressBarStyle === "style2",
-                          devices: "desktop"
+                            v.progressBarStyle === "style2"
                         }
                       ]
                     }
@@ -260,6 +264,7 @@ export function getItems({ v, device }) {
         title: t("Settings")
       },
       roles: ["admin"],
+      disabled: IS_STORY,
       position: 110,
       options: [
         {
@@ -284,6 +289,13 @@ export function getItems({ v, device }) {
           icon: "nc-cog"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      disabled: !IS_STORY,
+      position: 110,
+      icon: "nc-cog"
     }
   ];
 }

@@ -9,6 +9,7 @@ import {
   styleBgColor,
   styleElementCommentsSkin
 } from "visual/utils/style2";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { cssStyleBgColor } from "./cssStyleBgColor";
 
@@ -416,4 +417,31 @@ export function cssStyleElementCommentsChildMargin({
     styleElementCommentsSkin({ v, device, state }) === "skin3" ? 25 : 10;
 
   return `margin-left:${size + margin}px;`;
+}
+
+export function cssStyleElementCommentsStarsColor({
+  v,
+  device,
+  state,
+  prefix = "starsColor"
+}) {
+  const color = styleColor({ v, device, state, prefix });
+
+  return color === undefined ? "" : `color:${color};`;
+}
+
+export function cssStyleElementCommentsStarsBgColor({
+  v,
+  device,
+  state,
+  prefix = "starsBgColor"
+}) {
+  const color = styleColor({ v, device, state, prefix });
+
+  return color === undefined ? "" : `color:${color};`;
+}
+
+export function cssStyleElementCommentsStarsSize({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  return `font-size:${dvv("starsSize")}${dvv("starsSizeSuffix")};`;
 }

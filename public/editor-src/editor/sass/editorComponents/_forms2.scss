@@ -593,3 +593,19 @@
     }
   }
 }
+
+// story
+.brz-story {
+  .brz-form {
+    width: 100%;
+    margin: 0;
+
+    .brz-forms2__item-button {
+      padding-bottom: 0;
+
+      .brz-btn {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,5 +1,7 @@
 import produce from "immer";
+import { setIn } from "timm";
 import { objectTraverse2 } from "visual/utils/object";
+import { IS_STORY, insertItemsBatch } from "visual/utils/models";
 import { mapModels } from "visual/utils/models";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
@@ -16,6 +18,37 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     case "HYDRATE": {
       const { page, globalBlocks } = action.payload;
       const items = page.data?.items || [];
+
+      if (IS_STORY && items.length === 0) {
+        return {
+          ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr: {
+            type: "Story",
+            value: {
+              _styles: ["story"],
+              items: [
+                {
+                  type: "StoryItem",
+                  value: {
+                    _styles: ["story-item"],
+                    items: [],
+                    _id: "dfmwxzkwbiaezltvsxhdinhplvimzenkiqto"
+                  }
+                },
+                {
+                  type: "StoryItem",
+                  value: {
+                    _styles: ["story-item"],
+                    items: [],
+                    _id: "dfmwxzkwbieezltvsxhdinhplvimzenkiq1"
+                  }
+                }
+              ],
+              _id: "ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr"
+            },
+            blockId: "StoryDefault"
+          }
+        };
+      }
 
       // it's needed for legacy popups
       const pageBlocksData = items.reduce((acc, block) => {
@@ -55,6 +88,20 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
           });
         }
       );
+    }
+
+    case "IMPORT_STORY": {
+      const { blocks: storiesBlocks } = action.payload;
+      const { insertIndex } = action.meta;
+      const firstBlockId = blocksOrderSelector(allState)[0];
+
+      const newPageBlocks = insertItemsBatch(
+        state[firstBlockId].value.items,
+        insertIndex,
+        storiesBlocks
+      );
+
+      return setIn(state, [firstBlockId, "value", "items"], newPageBlocks);
     }
 
     case "ADD_BLOCK": {

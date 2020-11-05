@@ -1,0 +1,107 @@
+{
+  "content": {
+    "elementPosition": "fixed",
+
+    "offsetX": 25,
+    "offsetXSuffix": "%",
+    "offsetXAlignment": "left",
+
+    "offsetY": 41,
+    "offsetYSuffix": "%",
+    "offsetYAlignment": "top"
+  },
+
+  "style": {
+    "className": "",
+
+    "width": 50,
+    "widthSuffix": "%",
+
+    "height": 60,
+    "heightSuffix": "%",
+
+    "bgColorType": "solid",
+    "tempBgColorType": "gradient",
+
+    "bgColorHex": "#05CAB6",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "tempGradientColorOpacity": 1,
+    "tempGradientColorPalette": "",
+
+    "borderStyle": "solid",
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "tempBorderWidth": 4,
+    "tempBorderTopWidth": 4,
+    "tempBorderRightWidth": 4,
+    "tempBorderBottomWidth": 4,
+    "tempBorderLeftWidth": 4,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "boxShadow": "",
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "customCSS": ""
+  }
+}

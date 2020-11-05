@@ -5,6 +5,8 @@ import {
   wInTabletPage,
   wInMobilePage
 } from "visual/config/columns";
+import { IS_STORY } from "visual/utils/models";
+import { DW, DH } from "visual/editorComponents/Story/utils";
 
 import {
   styleBorderWidthGrouped,
@@ -132,6 +134,10 @@ export const getBorder = ({ v, device, state, type }) => {
 };
 
 export const getCurrentW = () => {
+  if (IS_STORY) {
+    return DW;
+  }
+
   const deviceMode = deviceModeSelector(getStore().getState());
   switch (deviceMode) {
     case "tablet": {
@@ -147,7 +153,7 @@ export const getCurrentW = () => {
 };
 
 export const getCurrentH = () => {
-  return window.innerHeight;
+  return IS_STORY ? DH : window.innerHeight;
 };
 
 export const getContainerW = ({

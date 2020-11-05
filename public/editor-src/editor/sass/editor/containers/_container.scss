@@ -16,27 +16,3 @@
 .brz-section {
   position: relative;
 }
-
-// Section uses for full-height
-.brz-section__content {
-  > .brz-ed-border {
-    width: 100%;
-  }
-  > .brz-ed-border,
-  > .brz-ed-border > .brz-bg,
-  > .brz-ed-border > .brz-bg > .brz-bg-content {
-    height: 100%;
-  }
-  > .brz-ed-border > .brz-bg > .brz-bg-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    flex-direction: column;
-  }
-}
-
-// Section Footer
-.brz-footer > .brz-ed-border > .brz-bg {
-  flex-wrap: wrap;
-  height: 100%;
-}

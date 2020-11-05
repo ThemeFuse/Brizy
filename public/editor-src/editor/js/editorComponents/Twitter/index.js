@@ -125,9 +125,9 @@ class Twitter extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={className}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
           <TwitterPlugin data={data[twitterType]} />
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

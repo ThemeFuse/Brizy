@@ -17,18 +17,13 @@ import {
 } from "visual/utils/onChange";
 import * as State from "visual/utils/stateMode";
 import * as Position from "visual/utils/position/element";
-import {
-  styleContainer,
-  styleItem,
-  styleWrap,
-  style,
-  styleAnimation
-} from "./styles";
+import { styleContainer, styleItem, style, styleAnimation } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { attachRef } from "visual/utils/react";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -268,23 +263,14 @@ export default class Cloneable extends EditorComponent {
       itemClassName
     );
 
-    const classNameWrapper = classnames(
-      "brz-wrapper-clone__wrap",
-      css(
-        `${this.constructor.componentId}-wrap`,
-        `${this.getId()}-wrap`,
-        styleWrap(v, vs, vd)
-      )
-    );
-
     const { minItems, maxItems, blockType } = v;
     const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
       blockType,
-      containerClassName: classNameContainer,
-      itemClassName: classNameItem,
       minItems,
       maxItems,
+      bindWithKey: "items",
+      containerClassName: classNameContainer,
+      itemClassName: classNameItem,
       meta: this.getMeta(v),
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
@@ -294,11 +280,7 @@ export default class Cloneable extends EditorComponent {
       onSortableEnd: this.handleSortableEnd
     });
 
-    return (
-      <div className={classNameWrapper}>
-        <Items {...itemsProps} />
-      </div>
-    );
+    return <Items {...itemsProps} />;
   }
 
   renderForEdit(v, vs, vd) {
@@ -334,6 +316,58 @@ export default class Cloneable extends EditorComponent {
       return defaultValueValue({ v, key, device, state });
     };
     const isRelative = Position.getPosition(dvv) === "relative";
+
+    if (showBorder) {
+      return (
+        <Draggable
+          active={!isRelative}
+          onChange={this.handleDraggable}
+          hAlign={Position.getHAlign(dvv) ?? "left"}
+          vAlign={Position.getVAlign(dvv) ?? "top"}
+          xSuffix={Position.getHUnit(dvv) ?? "px"}
+          ySuffix={Position.getVUnit(dvv) ?? "px"}
+          getValue={() => ({
+            x: Position.getHOffset(dvv) ?? 0,
+            y: Position.getVOffset(dvv) ?? 0
+          })}
+        >
+          {(ref, draggableClassName) => {
+            return (
+              <ContainerBorder
+                ref={this.containerBorder}
+                type="wrapper__clone"
+                color="grey"
+                borderStyle="dotted"
+              >
+                {({
+                  ref: containerBorderRef,
+                  attr: containerBorderAttr,
+                  border: ContainerBorderBorder
+                }) => (
+                  <Animation
+                    ref={v => {
+                      attachRef(v, containerBorderRef);
+                      attachRef(v, ref || null);
+                    }}
+                    component={"div"}
+                    componentProps={{
+                      ...parseCustomAttributes(customAttributes),
+                      ...containerBorderAttr,
+                      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+                      className: classnames(className, draggableClassName)
+                    }}
+                    animationClass={animationClassName}
+                  >
+                    {this.renderContent(v, vs, vd)}
+                    {ContainerBorderBorder}
+                  </Animation>
+                )}
+              </ContainerBorder>
+            );
+          }}
+        </Draggable>
+      );
+    }
 
     return (
       <Draggable

@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 export const title = t("Playlist");
@@ -13,8 +12,6 @@ const helperHTML = `
 </p>`;
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
-
   return [
     {
       id: "settingsTabs",
@@ -47,7 +44,7 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [

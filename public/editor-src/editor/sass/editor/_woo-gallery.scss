@@ -1,0 +1,21 @@
+.brz-woo-gallery {
+  .brz-blocked {
+    .flex-viewport {
+      height: fit-content !important;
+
+      .woocommerce-product-gallery__image:not(.flex-active-slide) {
+        display: none !important;
+      }
+    }
+    .woocommerce-product-gallery__wrapper {
+      width: 100% !important;
+    }
+    .flex-active-slide {
+      width: 100% !important;
+
+      & > img {
+        display: none !important;
+      }
+    }
+  }
+}

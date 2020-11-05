@@ -9,6 +9,7 @@ import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "../../tools/Wrapper";
 
 export default class WPPostContent extends EditorComponent {
   static get componentId() {
@@ -34,12 +35,13 @@ export default class WPPostContent extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <DynamicContentHelper
               placeholder="{{brizy_dc_post_content}}"
+              placeholderIcon="wp-content"
               tagName="div"
             />
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

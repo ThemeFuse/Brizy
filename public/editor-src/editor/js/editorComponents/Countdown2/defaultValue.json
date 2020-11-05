@@ -31,7 +31,10 @@
     "showDays": "on",
     "showHours": "on",
     "showMinutes": "on",
-    "showSeconds": "on"
+    "showSeconds": "on",
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "style": {

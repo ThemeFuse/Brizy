@@ -68,10 +68,10 @@ export function cssStyleBoxShadowSection({ v, device, state, prefix = "" }) {
     if (inBoth) {
       return `box-shadow:inset 0 ${vertical +
         diff}px ${blur}px -${blur}px ${color}, inset 0 -${vertical +
-        diff}px ${blur}px -${blur}px ${color};`;
+        diff}px ${blur}px -${blur}px ${color};display: block;`;
     } else {
       return `box-shadow:inset 0 ${vertical +
-        diff}px ${blur}px -${blur}px ${color}, inset 0 0 0 0 ${color};`;
+        diff}px ${blur}px -${blur}px ${color}, inset 0 0 0 0 ${color};display: block;`;
     }
   }
 }

@@ -18,7 +18,7 @@ export default function($node) {
     };
   };
 
-  $node.find(".brz-slick-slider").each(function() {
+  $node.find(".brz-slick-slider__section").each(function() {
     const _this = this;
     const $this = $(this);
     const data = $this.data();
@@ -51,7 +51,8 @@ export default function($node) {
       prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),
       autoplay: autoPlay,
       autoplaySpeed: autoPlaySpeed,
-      rtl: isRtl
+      rtl: isRtl,
+      rows: 0
     });
   });
 }

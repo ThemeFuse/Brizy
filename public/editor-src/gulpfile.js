@@ -52,6 +52,7 @@ const {
   VERSION,
   VERSION_PRO,
   NO_WATCH,
+  BUNDLE_ANALYZER,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -111,6 +112,7 @@ function editorJS(done) {
     IS_EXPORT,
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
+    BUNDLE_ANALYZER,
     NO_WATCH
   };
   const config = webpackConfigEditor(options);
@@ -397,6 +399,7 @@ function thumbsPreview() {
   const src = [
     paths.kits + "/*/blocks/*/Preview.jpg",
     paths.templates + "/*/**/Preview.jpg",
+    paths.stories + "/*/**/Preview.jpg",
     paths.popups + "/blocks/*/Preview.jpg"
   ];
   const dest = paths.build + "/thumbs";
@@ -528,6 +531,47 @@ function templatesData() {
 
   // resolves
   for (let template of templates.templates) {
+    for (let page of template.pages) {
+      const { id, resolve } = page;
+
+      rs.push(
+        new Vinyl({
+          path: `resolves/${id}.json`,
+          contents: Buffer.from(JSON.stringify(resolve))
+        })
+      );
+    }
+  }
+
+  // null signifies stream end
+  rs.push(null);
+
+  return rs.pipe(gulp.dest(dest));
+}
+
+function storiesData() {
+  const src = paths.stories + "/index.js";
+  const dest = paths.build + "/stories";
+  const stories = require(src);
+
+  let rs = new Readable({
+    objectMode: true
+  });
+
+  // meta
+  rs.push(
+    new Vinyl({
+      path: "meta.json",
+      contents: Buffer.from(
+        JSON.stringify(stories, (k, v) => {
+          return k === "resolve" ? undefined : v;
+        })
+      )
+    })
+  );
+
+  // resolves
+  for (let template of stories.stories) {
     for (let page of template.pages) {
       const { id, resolve } = page;
 
@@ -768,6 +812,9 @@ exports.build = gulp.series.apply(undefined, [
 
   // templates
   templatesData,
+
+  // stories
+  storiesData,
 
   // popups
   gulp.parallel.apply(undefined, [

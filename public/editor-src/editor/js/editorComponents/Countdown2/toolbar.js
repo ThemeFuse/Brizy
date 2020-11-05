@@ -7,6 +7,7 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -381,6 +382,7 @@ export function getItems({ v, device, state }) {
           id: "width",
           label: t("Width"),
           type: "slider-dev",
+          disabled: IS_STORY,
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -394,14 +396,16 @@ export function getItems({ v, device, state }) {
           id: "height",
           label: t("Height"),
           type: "slider-dev",
-          disabled: noBorder,
+          disabled: noBorder && !IS_STORY,
           config: {
-            min: dvv("heightSuffix") === "%" ? 10 : 50,
+            min: dvv("heightSuffix") === "%" ? 5 : 50,
             max: 300,
-            units: [
-              { value: "px", title: "px" },
-              { value: "%", title: "%" }
-            ]
+            units: IS_STORY
+              ? [{ value: "%", title: "%" }]
+              : [
+                  { value: "px", title: "px" },
+                  { value: "%", title: "%" }
+                ]
           }
         },
         {

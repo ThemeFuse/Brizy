@@ -6,9 +6,25 @@ import React, {
   ReactNode,
   Ref
 } from "react";
+import { identity } from "underscore";
+import classNames from "classnames";
 import Animation from "visual/component/Animation";
 import { WithClassName } from "visual/utils/options/attributes";
-import classNames from "classnames";
+import { ElementModel } from "visual/component/Elements/Types";
+import { Draggable } from "visual/editorComponents/tools/Draggable";
+import { hideToolbar } from "visual/component/Toolbar";
+import { MValue } from "visual/utils/value";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import * as Position from "visual/utils/position/element";
+import * as State from "visual/utils/stateMode";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { Literal } from "visual/utils/types/Literal";
+import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
+import { style } from "./styles";
+import { css } from "visual/utils/cssStyle";
+import { uuid } from "visual/utils/uuid";
+import { attachRef } from "visual/utils/react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Plugin<P extends {} = any> = [
@@ -16,23 +32,23 @@ export type Plugin<P extends {} = any> = [
   P
 ];
 
-const applyPlugins = (plugins: Plugin[], children: ReactNode): ReactNode => {
-  return plugins
-    .reverse()
-    .reduce(
-      (content, [Plugin, props]) => <Plugin {...props}>{content}</Plugin>,
-      children
-    );
-};
-
 export type Props<T extends {}> = WithClassName & {
   component?: ComponentType<T> | keyof JSX.IntrinsicElements;
   attributes?: T;
   animationClass?: string;
   ref?: Ref<Element>;
-  meta?: any;
+  meta: { sectionPopup?: boolean; sectionPopup2?: boolean };
   plugins?: Plugin[];
+  renderContent?: (children: React.ReactNode) => React.ReactNode;
+  v: ElementModel;
+  vs: ElementModel;
+  vd: ElementModel;
+  componentId: string;
+  id: string;
+  onChange: (patch: Partial<ElementModel>) => void;
 };
+
+const wrapperId = uuid(7);
 
 export function WrapperComponent<T extends WithClassName & {}>(
   {
@@ -41,12 +57,90 @@ export function WrapperComponent<T extends WithClassName & {}>(
     component,
     attributes = {} as T,
     animationClass,
-    meta: { sectionPopup, sectionPopup2 },
-    plugins = []
+    renderContent = identity,
+    v,
+    vs,
+    vd,
+    componentId,
+    id,
+    onChange,
+    meta: { sectionPopup, sectionPopup2 }
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
-  const className = classNames(_className, attributes?.className);
+  const isAbsoluteOrFixed =
+    v.elementPosition === "absolute" || v.elementPosition === "fixed";
+
+  const className = classNames(
+    _className,
+    attributes?.className,
+    isAbsoluteOrFixed &&
+      css(
+        `${componentId}-${id}-${wrapperId}`,
+        `${id}-${wrapperId}`,
+        style(v, vs, vd)
+      )
+  );
+
+  if (isAbsoluteOrFixed && IS_EDITOR) {
+    const state = State.mRead(v.tabsState);
+    const device = deviceModeSelector(getStore().getState());
+
+    const dvv = (key: string): MValue<Literal> => {
+      return defaultValueValue({ v, key, device, state });
+    };
+
+    const handleDraggable = ({ x, y }: DraggableV): void => {
+      const state = State.mRead(v.tabsState);
+      const device = deviceModeSelector(getStore().getState());
+
+      const dvk = (key: string, value: number): ElementModel => ({
+        [defaultValueKey({ key, device, state })]: value
+      });
+
+      onChange(Position.setHOffset(dvk, x, Position.setVOffset(dvk, y, {})));
+    };
+
+    return (
+      <Draggable
+        hAlign={Position.getHAlign(dvv) ?? "left"}
+        vAlign={Position.getVAlign(dvv) ?? "top"}
+        xSuffix={Position.getHUnit(dvv) ?? "px"}
+        ySuffix={Position.getVUnit(dvv) ?? "px"}
+        getValue={(): {
+          x: number;
+          y: number;
+        } => ({
+          x: Position.getHOffset(dvv) ?? 0,
+          y: Position.getVOffset(dvv) ?? 0
+        })}
+        onStart={hideToolbar}
+        onChange={handleDraggable}
+      >
+        {(dRef: Ref<HTMLElement>, dClassName?: string): ReactNode => {
+          return (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            <Animation<ComponentType<T>>
+              component={component ?? "div"}
+              componentProps={{
+                ...attributes,
+                className: classNames(className, dClassName)
+              }}
+              animationClass={animationClass}
+              ref={(r: HTMLElement | null): void => {
+                attachRef(r, dRef);
+                attachRef(r, ref);
+              }}
+            >
+              {renderContent(children)}
+            </Animation>
+          );
+        }}
+      </Draggable>
+    );
+  }
+
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -59,7 +153,7 @@ export function WrapperComponent<T extends WithClassName & {}>(
       animationClass={animationClass}
       ref={ref}
     >
-      {applyPlugins(plugins, children)}
+      {renderContent(children)}
     </Animation>
   );
 }

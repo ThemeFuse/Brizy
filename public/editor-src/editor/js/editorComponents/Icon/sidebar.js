@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 export const title = t("Icon");
 
@@ -20,6 +21,7 @@ export function getItems() {
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
+              disabled: IS_STORY,
               position: 100,
               type: "slider-dev",
               config: {

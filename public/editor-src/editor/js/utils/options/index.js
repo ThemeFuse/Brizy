@@ -6,6 +6,7 @@ export { getDynamicContentByPlaceholder } from "./getDynamicContentByPlaceholder
 export { getShapes } from "./getShapes";
 export {
   getTaxonomies,
+  getTaxonomiesFilter,
   getTaxonomiesMultiOptions,
   getTaxonomiesMultiOptionsSub
 } from "./getTaxonomies";

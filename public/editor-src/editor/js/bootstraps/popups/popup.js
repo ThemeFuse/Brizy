@@ -77,10 +77,10 @@
 
       function appendStylesheets(data) {
         var hostPreviewCSS = hostDocument.querySelector(
-          "link.brz-link-preview"
+          "link.brz-link-preview, link#brizy-preview-css"
         );
         var hostPreviewProCSS = hostDocument.querySelector(
-          "link.brz-link-preview-pro"
+          "link.brz-link-preview-pro, link#brizy-pro-preview-css"
         );
 
         var guestPreviewCSS = guestDocument.querySelector(
@@ -157,15 +157,17 @@
 
       function appendScripts(data) {
         var hostPolyfillJS = hostDocument.querySelector(
-          "script.brz-script-polyfill"
+          "script.brz-script-polyfill, script#brizy-preview-polyfill-js"
         );
         var guestPolyfillJS = guestDocument.querySelector(
           "script.brz-script-polyfill"
         );
-        var hostJS = hostDocument.querySelector("script.brz-script-preview");
+        var hostJS = hostDocument.querySelector(
+          "script.brz-script-preview, script#brizy-preview-js"
+        );
         var guestJS = guestDocument.querySelector("script.brz-script-preview");
         var hostProJS = hostDocument.querySelector(
-          "script.brz-script-preview-pro"
+          "script.brz-script-preview-pro, script#brizy-pro-preview-js"
         );
         var guestProJS = guestDocument.querySelector(
           "script.brz-script-preview-pro"

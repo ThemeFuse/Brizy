@@ -1,0 +1,40 @@
+{
+  "content": {
+    "items": [],
+
+    "showToolbar": "off",
+
+    "zIndex": 0,
+    "zIndexSuffix": null
+  },
+
+  "style": {
+    "className": "",
+
+    "elementPosition": "fixed",
+
+    "rotate": 0,
+    "rotateSuffix": "",
+
+    "customAttributes": "",
+    "customClassName": "",
+    "customID": "",
+
+    "cssIDPopulation": "",
+    "cssClassPopulation": "",
+
+    "margin": 0,
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0
+  },
+
+  "animation": {
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+
+    "tempAnimationName": "none"
+  }
+}

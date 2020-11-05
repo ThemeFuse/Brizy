@@ -1,16 +1,13 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarDisabledLink,
   toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
+      id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
         icon: "nc-star"
@@ -22,7 +19,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("currentShortcodeTab"),
+              id: "currentShortcodeTab",
               label: t("Icon"),
               options: [
                 {
@@ -49,16 +46,8 @@ export function getItems({ v, device }) {
       position: 90,
       devices: "desktop",
       choices: [
-        {
-          icon: "nc-hrz-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-hrz-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-hrz-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-hrz-align-right", title: t("Align"), value: "right" }
       ]
     },
     toolbarDisabledLink({

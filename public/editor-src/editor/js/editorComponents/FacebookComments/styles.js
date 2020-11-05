@@ -28,13 +28,6 @@ export function style(v, vs, vd) {
         "cssStyleElementFacebookCommentsPropertyHoverTransition"
       ]
     },
-    ".brz && .comment-form-rating > .stars:hover, .brz && .star-rating:hover, .brz && .comment-form-rating > .stars:hover": {
-      standart: ["cssStyleElementCommentsNameColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
-      ]
-    },
     ".brz &&:hover .brz-comments__date": {
       standart: [
         "cssStyleElementCommentsDateFontFamily",
@@ -115,6 +108,33 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-comment-reply-title, && .brz-comment-form-comment > label": {
       standart: ["cssStyleElementCommentsNameFontFamily"]
+    },
+    ".brz &&:hover .review .brz-comments__rating .star-rating": {
+      standart: [
+        "cssStyleElementCommentsStarsSize",
+        "cssStyleElementCommentsStarsColor"
+      ]
+    },
+    ".brz &&:hover .review .brz-comments__rating .star-rating:before": {
+      standart: ["cssStyleElementCommentsStarsBgColor"]
+    },
+    ".brz &&:hover .stars a": {
+      standart: [
+        "cssStyleElementCommentsStarsSize",
+        "cssStyleElementCommentsStarsBgColor"
+      ]
+    },
+    ".brz &&:hover .stars:hover a::before": {
+      standart: ["cssStyleElementCommentsStarsColor"]
+    },
+    ".brz &&:hover .stars a:hover": {
+      standart: ["cssStyleElementCommentsStarsColor"]
+    },
+    ".brz &&:hover .stars a:hover ~ a::before": {
+      standart: ["cssStyleElementCommentsStarsBgColor"]
+    },
+    ".brz &&:hover .stars a.active ~ a::before": {
+      standart: ["cssStyleElementCommentsStarsBgColor"]
     }
   };
 

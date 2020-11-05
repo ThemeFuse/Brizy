@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "nomal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "nomal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -17,7 +16,8 @@ export function getItems({ v, device }) {
       id: "toolbarWOOProductPage",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2"
+        icon: "nc-woo-meta",
+        title: t("Product Meta")
       },
       position: 20,
       options: [
@@ -79,7 +79,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabTypographyCategory"),
+              id: "tabTypographyCategory",
               label: t("Category"),
               options: [
                 {
@@ -92,7 +92,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyValue"),
+              id: "tabTypographyValue",
               label: t("Values"),
               options: [
                 {
@@ -150,11 +150,12 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: "tabDviders",
-              label: t("Dviders"),
+              id: "tabDividers",
+              label: t("Dividers"),
               options: [
                 {
-                  id: "dvidersColor",
+                  id: "dividersColor",
+                  disabled: v.elementType === "inline",
                   type: "colorPicker-dev",
                   devices: "desktop"
                 }
@@ -165,7 +166,7 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

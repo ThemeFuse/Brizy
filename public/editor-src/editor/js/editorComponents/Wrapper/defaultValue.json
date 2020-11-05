@@ -20,7 +20,17 @@
     "showOnMobile": "on",
 
     "mobileZIndex": null,
-    "mobileZIndexSuffix": null
+    "mobileZIndexSuffix": null,
+
+    "elementPosition": "relative",
+
+    "offsetX": 0,
+    "offsetXSuffix": "px",
+    "offsetXAlignment": "left",
+
+    "offsetY": 0,
+    "offsetYSuffix": "px",
+    "offsetYAlignment": "top"
   },
 
   "style": {
@@ -35,13 +45,6 @@
     "widthSuffix": "%",
     "height": null,
     "heightSuffix": "%",
-    "offsetX": 0,
-    "offsetXSuffix": "px",
-    "offsetXAlignment": "left",
-    "offsetY": 0,
-    "offsetYSuffix": "px",
-    "offsetYAlignment": "top",
-    "elementPosition": "relative",
 
     "tabletWidth": null,
     "tabletWidthSuffix": null,

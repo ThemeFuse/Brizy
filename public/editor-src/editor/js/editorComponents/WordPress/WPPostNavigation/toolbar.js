@@ -5,7 +5,7 @@ import {
   getTaxonomiesMultiOptions,
   getTaxonomiesMultiOptionsSub
 } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -13,7 +13,6 @@ const disabledTaxonomy = (arr, taxonomy = "") =>
   !arr.some(elem => taxonomy === elem);
 
 export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const wordpress = Boolean(Config.get("wp"));
@@ -253,7 +252,7 @@ export function getItems({ v, device, state }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

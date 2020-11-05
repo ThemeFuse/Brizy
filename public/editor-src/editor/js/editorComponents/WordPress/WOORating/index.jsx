@@ -1,28 +1,27 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
-import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "../../tools/Wrapper";
+import CustomCSS from "visual/component/CustomCSS";
 
-class WOORating extends EditorComponent {
+export default class WOORating extends EditorComponent {
   static get componentId() {
     return "WOORating";
   }
 
   static defaultValue = defaultValue;
 
-  state = {};
-
   renderForEdit(v, vs, vd) {
-    const attributes = {};
-
-    const classNameStyle = classnames(
-      "brz-woorating",
+    const className = classnames(
+      "brz-woo-rating",
+      { "brz-disabled-rating-text": v.text === "off" },
       v.className,
       css(
         `${this.constructor.componentId}`,
@@ -35,17 +34,17 @@ class WOORating extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <WPShortcode
-          blocked={false}
-          name='brizy_woo_field property="rating"'
-          attributes={attributes}
-          placeholderIcon="wp-shortcode"
-          placeholderContainerWidth={this.props.meta.desktopW}
-          className={classNameStyle}
-        />
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
+            <DynamicContentHelper
+              placeholder="{{editor_product_rating}}"
+              placeholderIcon="woo-rating"
+              tagName="div"
+              blocked={false}
+            />
+          </Wrapper>
+        </CustomCSS>
       </Toolbar>
     );
   }
 }
-
-export default WOORating;

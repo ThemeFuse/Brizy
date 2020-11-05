@@ -14,21 +14,10 @@ export function toolbarDisabledAdvancedSettings({
   };
 }
 
-export function toolbarDisabledToolbarSettings({ device, devices = "all" }) {
+export function toolbarDisabledToolbarSettings({ devices = "all" }) {
   return {
-    id: defaultValueKey({ key: "toolbarSettings", device }),
-    type: "popover",
-    devices,
-    disabled: true
-  };
-}
-
-export function toolbarDisabledMedia({ device, state, devices = "all" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-
-  return {
-    id: dvk("toolbarMedia"),
-    type: "popover",
+    id: "toolbarSettings",
+    type: "popover-dev",
     devices,
     disabled: true
   };
@@ -52,10 +41,10 @@ export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
   };
 }
 
-export function toolbarDisabledLink({ device, devices = "all" }) {
+export function toolbarDisabledLink({ devices = "all" }) {
   return {
-    id: defaultValueKey({ key: "toolbarLink", device }),
-    type: "popover",
+    id: "toolbarLink",
+    type: "popover-dev",
     devices,
     disabled: true
   };

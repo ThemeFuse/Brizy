@@ -12,6 +12,7 @@ import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import BoxResizer from "visual/component/BoxResizer";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -75,41 +76,23 @@ export default class Search extends EditorComponent {
     );
     const resizerRestrictions = {
       width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       }
     };
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <BoxResizer
               points={resizerPoints}
               restrictions={resizerRestrictions}
@@ -132,7 +115,7 @@ export default class Search extends EditorComponent {
                 {searchStyle === "classic" && this.renderButton()}
               </form>
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );
@@ -156,7 +139,7 @@ export default class Search extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={className}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
           <form
             className="brz-form brz-search-form"
             action={formAction}
@@ -170,7 +153,7 @@ export default class Search extends EditorComponent {
             />
             {searchStyle === "classic" && this.renderButton()}
           </form>
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

@@ -2,14 +2,21 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz && > div > .brz-rating > .woocommerce-product-rating > .star-rating:hover": {
+    ".brz && .star-rating:hover": {
       standart: ["cssStyleElementWOORatingSize", "cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementStarRatingPropertyHoverTransition"
       ]
     },
-    ".brz && > div > .brz-rating > .woocommerce-product-rating > .woocommerce-review-link:hover": {
+    ".brz && .star-rating:hover:before": {
+      standart: ["cssStyleElementWOORatingBgStarColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementStarRatingPropertyHoverTransition"
+      ]
+    },
+    ".brz && .woocommerce-review-link:hover": {
       standart: [
         "cssStyleElementWOORatingSpacing",
         "cssStyleElementWOORatingTextColor",

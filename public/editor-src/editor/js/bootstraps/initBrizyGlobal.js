@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
-import { setIds, isGlobalPopup } from "visual/utils/models";
+import { setIds, isGlobalPopup, IS_STORY } from "visual/utils/models";
 import {
   getOptionColorHexByPalette,
   getAnimations,
@@ -51,6 +51,12 @@ import {
   toolbarElementAudioIconSize
 } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import {
+  IS_SINGLE_TEMPLATE,
+  IS_ARCHIVE_TEMPLATE,
+  IS_PRODUCT_TEMPLATE,
+  IS_PRODUCT_ARCHIVE_TEMPLATE
+} from "visual/utils/env";
 
 global.Brizy = {
   config: Config,
@@ -65,6 +71,7 @@ global.Brizy = {
 
     setIds,
     isGlobalPopup,
+    IS_STORY,
 
     getAnimations,
     getDynamicContentChoices,
@@ -97,7 +104,12 @@ global.Brizy = {
     onChangeTypography,
     onChangeTypographyMobile,
     NORMAL,
-    HOVER
+    HOVER,
+
+    IS_SINGLE_TEMPLATE,
+    IS_ARCHIVE_TEMPLATE,
+    IS_PRODUCT_TEMPLATE,
+    IS_PRODUCT_ARCHIVE_TEMPLATE
   },
   toolbar: {
     toolbarColor2,

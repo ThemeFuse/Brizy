@@ -52,7 +52,6 @@ export {
 
 // ReverseColumns
 export {
-  styleReverseColumnsRow,
   styleReverseColumnsWrap,
   styleReverseColumnsJustify
 } from "./styleReverseColumns";
@@ -169,6 +168,12 @@ export {
 // Icon
 export { styleIconSpacing, styleIconSize } from "./styleIcon";
 
+// Element Row
+export {
+  styleReverseColumnsRow,
+  styleElementRowMedia
+} from "./styleElementRow";
+
 // Element Column
 export {
   styleElementColumnMinHeightType,
@@ -272,9 +277,10 @@ export {
 
 // Element WOOAdditionals
 export {
-  styleElementWOOAdditionalSpacing,
-  styleElementWOOAdditionalBorderWidth
-} from "./styleElementWOOAdditionals";
+  styleElementWOOAttributesSpacing,
+  styleElementWOOAttributesBetween,
+  styleElementWOOAttributesStyleBorder
+} from "./styleElementWOOAttributes";
 
 // Element Timeline
 export {
@@ -327,7 +333,15 @@ export {
   styleElementWOOCartSubtotalDisabled,
   styleElementWOOCartPurchasesDisabled,
   styleElementWOOCartButtonDirection,
-  styleElementWOOCartButtonSpacing
+  styleElementWOOCartButtonSpacing,
+  styleElementWOOCartSidebarHorizontalAlign,
+  styleElementWOOCartSidebarVerticalAlign,
+  styleElementWOOCartSidebarWidth,
+  styleElementWOOCartSidebarWidthSuffix,
+  styleElementWOOCartSidebarHeightStyle,
+  styleElementWOOCartSidebarHeight,
+  styleElementWOOCartSidebarHeightSuffix,
+  styleElementWOOCartPurchasesType
 } from "./styleElementWOOCart";
 
 // Element Menu
@@ -375,3 +389,9 @@ export {
   styleAnimationDuration,
   styleAnimationDelay
 } from "./styleAnimation";
+
+// WOOGallery
+export {
+  styleElementWOOGallerySpacing,
+  styleElementWOOGalleryBetweenThumbnail
+} from "./styleElementWOOGallery";

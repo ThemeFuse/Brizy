@@ -18,6 +18,9 @@
       "coverImageSrc": ""
     },
 
+    "offsetX": 0,
+    "offsetY": 0,
+
     "coverImageWidth": 0,
     "coverImageHeight": 0,
 

@@ -1,16 +1,13 @@
-import {
-  toolbarElementIconTextListDisabled,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
-export function getItems({ v, device, state }) {
+export function getItems({ device, state }) {
   return [
-    toolbarElementIconTextListDisabled({
-      v,
-      device,
+    {
+      id: "list",
+      type: "toggle",
       devices: "desktop",
-      state: "normal"
-    }),
+      disabled: true
+    },
     {
       id: "toolbarSettings",
       type: "popover-dev",

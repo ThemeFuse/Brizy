@@ -1,0 +1,38 @@
+.brz-woo-price {
+  min-height: fit-content !important;
+  display: flex;
+  justify-content: inherit;
+  width: 100%;
+
+  & > div {
+    font-size: 0;
+
+    & > .brz-price-none {
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+
+  .price {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    del {
+      opacity: 1 !important;
+
+      .amount {
+        display: block;
+      }
+    }
+    ins {
+      background: transparent;
+      text-decoration: none;
+
+      .amount {
+        display: block;
+      }
+    }
+  }
+}

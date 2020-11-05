@@ -1,6 +1,7 @@
 {
   "content": {
     "type": "facebook",
+    "review": "false",
 
     "numPosts": 10,
     "numPostsSuffix": null,
@@ -30,15 +31,15 @@
     "width": 100,
     "widthSuffix": null,
 
-    "logoSize": 67,
+    "logoSize": 67, 
     "logoSizeSuffix": null,
 
+    "starsSize": 15,
+    "starsSizeSuffix": "px",
+
     "borderStyle": "solid",
-
     "tempBorderStyle": "solid",
-
     "hoverBorderStyle": null,
-
     "tempHoverBorderStyle": null,
 
     "bgColorType": "solid",
@@ -160,6 +161,36 @@
     "tempHoverPostButtonColorOpacity": 1,
     "tempHoverPostButtonColorPalette": "color6",
 
+    "starsColorType": "solid",
+    "starsColorHex": "#ffe600",
+    "starsColorOpacity": 1,
+    "starsColorPalette": "",
+
+    "tempStarsColorOpacity": 1,
+    "tempStarsColorPalette": "",
+
+    "hoverStarsColorHex": null,
+    "hoverStarsColorOpacity": null,
+    "hoverStarsColorPalette": null,
+
+    "tempHoverStarsColorOpacity": null,
+    "tempHoverStarsColorPalette": null,
+
+    "starsBgColorType": "solid",
+    "starsBgColorHex": "#9e9e9e",
+    "starsBgColorOpacity": 1,
+    "starsBgColorPalette": "",
+
+    "tempStarsBgColorOpacity": 1,
+    "tempStarsBgColorPalette": "",
+
+    "hoverStarsBgColorHex": null,
+    "hoverStarsBgColorOpacity": null,
+    "hoverStarsBgColorPalette": null,
+
+    "tempHoverStarsBgColorOpacity": null,
+    "tempHoverStarsBgColorPalette": null,
+
     "postButtonBgColorType": "solid",
     "postButtonBgColorHex": "#3dbfe8",
     "postButtonBgColorOpacity": 1,
@@ -242,6 +273,9 @@
     "tabletLogoSize": null,
     "tabletLogoSizeSuffix": null,
 
+    "tabletStarsSize": null,
+    "tabletStarsSizeSuffix": null,
+
     "tabletDateSpacing": null,
 
     "tabletBoxShadow": null,
@@ -303,6 +337,9 @@
 
     "mobileLogoSize": null,
     "mobileLogoSizeSuffix": null,
+    
+    "mobileStarsSize": null,
+    "mobileStarsSizeSuffix": null,
 
     "mobileDateSpacing": null,
 

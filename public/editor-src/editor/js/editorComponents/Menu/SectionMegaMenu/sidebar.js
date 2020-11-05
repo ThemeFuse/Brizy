@@ -1,4 +1,3 @@
-import { defaultValueKey } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 import {
   toolbarBorderRadius,
@@ -9,8 +8,6 @@ import { getDynamicContentChoices } from "visual/utils/options";
 export const title = t("Mega Menu");
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
     { title: t("Header"), value: "header" },
@@ -25,14 +22,16 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: dvk("settingsTabs"),
-      type: "tabs",
-      align: "start",
+      id: "settingsTabs",
+      type: "tabs-dev",
+      config: {
+        align: "start"
+      },
       tabs: [
         {
-          id: dvk("settingsStyling"),
+          id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarPaddingFourFieldsPxSuffix({
               v,
@@ -55,7 +54,7 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           devices: "desktop",

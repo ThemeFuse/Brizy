@@ -305,7 +305,9 @@ function getPopulationTabs({ populationColor }, onChange) {
   return Object.entries(populationColor).reduce((acc, [key, headerValue]) => {
     const { hex: hexPalette } =
       getColorPaletteColor(headerValue.colorPalette) || {};
+
     acc.push({
+      id: translationsMap[key],
       label: translationsMap[key],
       options: [
         {
@@ -356,23 +358,9 @@ function getPopulationTabs({ populationColor }, onChange) {
 function getPopulationColorOptions({ populationColor }, onChange) {
   return [
     {
-      id: "color",
+      id: "colorTabs",
       type: "tabs-dev",
-      config: { position: "left" },
-      tabs: [
-        {
-          icon: "nc-circle",
-          title: t("Normal"),
-          options: [
-            {
-              id: "colorTabs",
-              className: "",
-              type: "tabs-dev",
-              tabs: getPopulationTabs({ populationColor }, onChange)
-            }
-          ]
-        }
-      ]
+      tabs: getPopulationTabs({ populationColor }, onChange)
     }
   ];
 }

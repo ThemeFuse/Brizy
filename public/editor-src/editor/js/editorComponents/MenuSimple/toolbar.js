@@ -1,6 +1,6 @@
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { t } from "visual/utils/i18n";
 
@@ -16,7 +16,6 @@ export default menus => {
 };
 
 const getItems = menuList => ({ v, device }) => {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -102,7 +101,7 @@ const getItems = menuList => ({ v, device }) => {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       icon: "nc-cog",

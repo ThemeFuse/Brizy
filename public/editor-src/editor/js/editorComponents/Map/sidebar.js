@@ -1,5 +1,6 @@
 import { toolbarBorderRadius } from "visual/utils/toolbar";
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 export const title = t("Map");
 
@@ -42,6 +43,7 @@ export function getItems({ v, device }) {
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
+              disabled: IS_STORY,
               devices: "desktop",
               position: 100,
               type: "slider-dev",

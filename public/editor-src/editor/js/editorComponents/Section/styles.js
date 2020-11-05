@@ -10,11 +10,11 @@ export function styleSection(v, vs, vd) {
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
     },
-    ".brz &&:hover .brz-container__wrap": {
-      interval: ["cssStyleVisibleMode|||editor", "cssStyleFlexVerticalAlign"]
-    },
     ".brz &&:hover .brz-section__content": {
-      standart: ["cssStyleSectionHeightStyle"]
+      standart: ["cssStyleSectionHeightStyle", "cssStyleDisplayFlex"]
+    },
+    ".brz &&:hover .brz-container": {
+      standart: ["cssStyleFlexColumnVerticalAlign"]
     },
     ".brz && > .slick-slider > .brz-slick-slider__dots:hover": {
       standart: ["cssStyleSectionColorDots"]
@@ -28,6 +28,12 @@ export function styleSection(v, vs, vd) {
     // Added offset for toolbar when uses marginTop in negative value
     styles[".brz &&:hover .brz-ed-collapsible"] = {
       standart: ["cssStyleSectionToolbarOffset"]
+    };
+    styles[".brz &&:hover .brz-container"].interval = [
+      "cssStyleVisibleMode|||editor"
+    ];
+    styles[".brz &&:hover .brz-section__content > .brz-bg"] = {
+      interval: ["cssStyleVisibleMode|||editor"]
     };
   }
 

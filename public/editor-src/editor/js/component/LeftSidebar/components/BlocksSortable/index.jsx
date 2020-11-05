@@ -15,7 +15,7 @@ import {
 import { canUseConditionInPage } from "visual/utils/blocks";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
 import { pageSelector } from "visual/redux/selectors2";
 
@@ -53,7 +53,7 @@ const SortableList = SortableContainer(
     const filteredItems = [];
 
     for (let i = 0; i < items.length; i++) {
-      let item = items[i];
+      const item = items[i];
 
       if (item.value._blockVisibility === "unlisted") {
         continue;
@@ -194,7 +194,7 @@ const mapStateToProps = state => ({
 export const BlocksSortable = {
   id: "blocksSortable",
   icon: "nc-reorder",
-  disabled: IS_GLOBAL_POPUP,
+  disabled: IS_GLOBAL_POPUP || IS_STORY,
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)
 };

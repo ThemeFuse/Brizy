@@ -72,6 +72,16 @@ export function getItems({ v, device }) {
             max: 100,
             units: [{ value: "%", title: "%" }]
           }
+        },
+        {
+          id: "submitHeight",
+          label: t("Height"),
+          type: "slider-dev",
+          config: {
+            min: 1,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
         }
       ]
     },

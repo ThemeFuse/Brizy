@@ -4,7 +4,10 @@
     "addressPopulation": null,
 
     "zoom": 15,
-    "zoomSuffix": null
+    "zoomSuffix": null,
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "toolbar": {

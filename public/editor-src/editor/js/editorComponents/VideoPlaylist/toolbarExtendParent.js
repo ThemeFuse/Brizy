@@ -1,13 +1,12 @@
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -139,7 +138,7 @@ export function getItems({ v, device }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

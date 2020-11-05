@@ -13,6 +13,8 @@ import {
   SimpleRestriction,
   TransformValue,
   TransformPatch,
+  TransformStory,
+  TransformStoryPatch,
   Meta,
   Aligns,
   DimensionSuffixs,
@@ -22,6 +24,12 @@ import {
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { MValue } from "visual/utils/value";
 import * as Str from "visual/utils/string/specs";
+import {
+  calcOffsetX,
+  calcOffsetY,
+  calcOffsetYBySize,
+  calcOffsetXBySize
+} from "./utils";
 
 const RESTRICTIONS = {
   desktop: {
@@ -240,4 +248,59 @@ export const resizerTransformPatch: TransformPatch = (
 
     return acc;
   }, {} as Partial<RestrictionsMapping>);
+};
+
+export const resizerTransformStory: TransformStory = (transformV, sourceV) => {
+  // there can't be tablet, mobile keys
+  return {
+    ...transformV,
+    offsetX: sourceV.offsetX as number,
+    offsetY: sourceV.offsetY as number
+  };
+};
+
+export const resizerTransformStoryPatch: TransformStoryPatch = (
+  patch,
+  startValue,
+  point,
+  startRect
+) => {
+  let value = {};
+  switch (point) {
+    case "bottomLeft":
+    case "centerLeft": {
+      value = {
+        offsetX: patch.size
+          ? calcOffsetXBySize(startValue, patch)
+          : calcOffsetX(startValue, patch)
+      };
+
+      break;
+    }
+    case "topRight":
+    case "topCenter": {
+      value = {
+        offsetY: patch.size
+          ? calcOffsetYBySize(startValue, patch, startRect)
+          : calcOffsetY(startValue, patch)
+      };
+
+      break;
+    }
+
+    case "topLeft": {
+      value = {
+        offsetX: patch.size
+          ? calcOffsetXBySize(startValue, patch)
+          : calcOffsetX(startValue, patch),
+        offsetY: patch.size
+          ? calcOffsetYBySize(startValue, patch, startRect)
+          : calcOffsetY(startValue, patch)
+      };
+
+      break;
+    }
+  }
+
+  return { ...patch, ...value };
 };

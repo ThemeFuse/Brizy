@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const WorkerPlugin = require("worker-plugin");
 const babelrc = require("./babelrc.config.all");
 
@@ -67,7 +69,10 @@ module.exports = (options = {}) => {
       }),
       new WorkerPlugin({
         globalObject: false
-      })
+      }),
+      ...(options.BUNDLE_ANALYZER === "editor"
+        ? [new BundleAnalyzerPlugin()]
+        : [])
     ],
     optimization: {
       splitChunks: {

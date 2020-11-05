@@ -18,8 +18,9 @@ import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import {
   createBlockScreenshot,
   createSavedLayout
-} from "visual/utils/api/editor/index-new";
+} from "visual/utils/api/editor";
 import { uuid } from "visual/utils/uuid";
+import { IS_STORY } from "visual/utils/models";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
@@ -173,7 +174,10 @@ class PublishButton extends Component<Props, State> {
     const { pageStatus } = this.props;
     const overlay: ReactElement = (
       <>
-        <Roles allow={["admin"]}>
+        {!IS_STORY ? (
+          <>
+            <Roles allow={["admin"]}>
+          <Roles allow={["admin"]}>
           <TooltipItem
             className="brz-ed-fixed-bottom-panel-popover__item"
             onClick={this.handleClearPage}
@@ -182,17 +186,23 @@ class PublishButton extends Component<Props, State> {
             <span className="brz-span">{t("Clear Layout")}</span>
           </TooltipItem>
         </Roles>
-        <TooltipItem
-          className="brz-ed-fixed-bottom-panel-popover__item"
-          onClick={this.handleSavePage}
-        >
-          {this.state.layoutLoading ? (
-            <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-          ) : (
-            <EditorIcon icon="nc-save-section" />
-          )}
-          <span className="brz-span">{t("Save Layout")}</span>
-        </TooltipItem>
+        </Roles>
+            <TooltipItem
+              className="brz-ed-fixed-bottom-panel-popover__item"
+              onClick={this.handleSavePage}
+            >
+              {this.state.layoutLoading ? (
+                <EditorIcon
+                  icon="nc-circle-02"
+                  className="brz-ed-animated--spin"
+                />
+              ) : (
+                <EditorIcon icon="nc-save-section" />
+              )}
+              <span className="brz-span">{t("Save Layout")}</span>
+            </TooltipItem>
+          </>
+        ) : null}
         {pageStatus === "publish" ? (
           <TooltipItem
             className="brz-ed-fixed-bottom-panel-popover__item"

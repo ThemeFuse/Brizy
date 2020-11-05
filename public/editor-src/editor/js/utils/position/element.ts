@@ -40,7 +40,7 @@ export const setHOffset: Setter = (set, v, m) => ({
   ...set("offsetX", v)
 });
 
-export const getHUnit: Getter<Unit> = get => readUnit(get("offsetXUnit"));
+export const getHUnit: Getter<Unit> = get => readUnit(get("offsetXSuffix"));
 
 export const getVOffset: Getter<number> = get =>
   NumberSpec.read(get("offsetY"));
@@ -50,4 +50,4 @@ export const setVOffset: Setter = (set, v, m) => ({
   ...set("offsetY", v)
 });
 
-export const getVUnit: Getter<Unit> = get => readUnit(get("offsetYUnit"));
+export const getVUnit: Getter<Unit> = get => readUnit(get("offsetYSuffix"));

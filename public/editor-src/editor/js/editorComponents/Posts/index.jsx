@@ -78,7 +78,9 @@ class Posts extends EditorComponent {
         style(v, vs, vd)
       )
     );
+
     const itemsProps = this.makeSubcomponentProps({
+      type,
       bindWithKey: "items",
       className,
       rowCount: gridRow,
@@ -102,7 +104,7 @@ class Posts extends EditorComponent {
         }
       ),
       loopAttributes: {
-        ...(type === "posts"
+        ...(type === "posts" || type === "products"
           ? {
               query: {
                 tax_query: {
@@ -116,6 +118,10 @@ class Posts extends EditorComponent {
                 order,
                 orderby: orderBy
               }
+            }
+          : type === "upsell"
+          ? {
+              count: gridRow * gridColumn
             }
           : {
               query: "",

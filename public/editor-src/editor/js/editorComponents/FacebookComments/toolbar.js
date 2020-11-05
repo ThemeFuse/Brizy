@@ -32,10 +32,9 @@ export function getItems({ v, device, state }) {
       id: "toolbarCurrentElement",
       type: "popover-dev",
       config: {
-        icon: "nc-comments",
-        title: t("Comments")
+        icon: v.review === "true" ? "nc-woo-review" : "nc-comments",
+        title: v.review === "true" ? t("Review") : t("Comments")
       },
-      devices: "desktop",
       position: 70,
       options: [
         {
@@ -43,6 +42,7 @@ export function getItems({ v, device, state }) {
           type: "select-dev",
           label: t("Comments"),
           devices: "desktop",
+          disabled: v.review === "true",
           choices: choicesType
         },
         {
@@ -91,6 +91,17 @@ export function getItems({ v, device, state }) {
           config: {
             min: 10,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "starsSize",
+          label: t("Stars Size"),
+          type: "slider-dev",
+          disabled: v.type !== "WPComments" || v.review !== "true",
+          config: {
+            min: 5,
+            max: 50,
             units: [{ value: "px", title: "px" }]
           }
         }
@@ -160,7 +171,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "reply",
                   type: "typography-dev",
-                  disabled: v.type !== "WPComments",
+                  disabled: v.type !== "WPComments" || v.review === "true",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -251,6 +262,30 @@ export function getItems({ v, device, state }) {
                   id: "postButtonBgColor",
                   type: "colorPicker-dev",
                   disabled: v.type !== "WPComments",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabReviewStarsColor",
+              label: t("Stars"),
+              options: [
+                {
+                  id: "starsColor",
+                  type: "colorPicker-dev",
+                  disabled: v.type !== "WPComments" || v.review !== "true",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabReviewStarsBgColor",
+              label: t("Stars Bg"),
+              options: [
+                {
+                  id: "starsBgColor",
+                  type: "colorPicker-dev",
+                  disabled: v.type !== "WPComments" || v.review !== "true",
                   states: [NORMAL, HOVER]
                 }
               ]

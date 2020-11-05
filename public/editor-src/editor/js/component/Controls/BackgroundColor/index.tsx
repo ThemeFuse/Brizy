@@ -104,7 +104,6 @@ export const BackgroundColor: FC<Props> = ({
           <>
             <Select2<GradientType>
               editable={false}
-              search={(s: string, v: GradientType): boolean => v.includes(s)}
               className={classNames(
                 "brz-ed-control__backgroundColor__gradientType",
                 `brz-ed-control__backgroundColor__gradientType--${value.gradientType}`

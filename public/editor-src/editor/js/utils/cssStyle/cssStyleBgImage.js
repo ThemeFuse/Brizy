@@ -3,7 +3,8 @@ import {
   styleExportBgImage,
   styleBgPositionX,
   styleBgPositionY,
-  styleBgAttachment
+  styleBgAttachment,
+  styleMediaBg
 } from "visual/utils/style2";
 
 export function cssStyleBgImage({ v, device, state }) {
@@ -12,6 +13,16 @@ export function cssStyleBgImage({ v, device, state }) {
     : styleExportBgImage({ v, device, state });
 
   return `background-image:${bgImage};`;
+}
+
+export function cssStyleBgMediaImage({ v, device }) {
+  const media = styleMediaBg({ v, device });
+
+  if (media === "image") {
+    return "display: block;";
+  }
+
+  return "display: none;";
 }
 
 export function cssStyleBgImagePosition({ v, device, state }) {

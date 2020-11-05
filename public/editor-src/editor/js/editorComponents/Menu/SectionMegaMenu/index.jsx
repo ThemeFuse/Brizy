@@ -15,7 +15,7 @@ import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import SectionMegaMenuItems from "./items";
-import { styleSection, styleBg, styleContainerWrap } from "./styles";
+import { styleSection, styleContainer } from "./styles";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 
 class SectionMegaMenu extends EditorComponent {
@@ -33,8 +33,6 @@ class SectionMegaMenu extends EditorComponent {
   static experimentalDynamicContent = true;
 
   mounted = false;
-
-  containerBorderRef = React.createRef();
 
   toolbarRef = React.createRef();
 
@@ -99,36 +97,24 @@ class SectionMegaMenu extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const classNameBg = classnames(
+    const className = classnames(
+      "brz-container",
+      v.containerClassName,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
-      )
-    );
-    const classNameContainer = classnames(
-      "brz-container",
-      v.containerClassName
-    );
-    const classNameContainerWrap = classnames(
-      "brz-container__wrap",
-      css(
-        `${this.constructor.componentId}-containerWrap`,
-        `${this.getId()}-containerWrap`,
-        styleContainerWrap(v, vs, vd)
+        styleContainer(v, vs, vd)
       )
     );
     const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
-      className: classNameContainer,
-      meta
+      className,
+      meta,
+      bindWithKey: "items"
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
-        <div className={classNameContainerWrap}>
-          <SectionMegaMenuItems {...itemsProps} />
-        </div>
+      <Background value={v} meta={meta}>
+        <SectionMegaMenuItems {...itemsProps} />
       </Background>
     );
   }
@@ -152,33 +138,43 @@ class SectionMegaMenu extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div
-          id={this.getId()}
-          className={classNameSection}
-          data-block-id={this.props.blockId}
-          {...parseCustomAttributes(customAttributes)}
-        >
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder
-              ref={this.containerBorderRef}
-              color="grey"
-              activeBorderStyle="dotted"
-              activateOnContentClick={false}
-              showButton={true}
-              buttonPosition="topLeft"
-              renderButtonWrapper={this.renderToolbar}
+      <ContainerBorder
+        type="mega__menu"
+        color="grey"
+        activeBorderStyle="dotted"
+        activateOnContentClick={false}
+        buttonPosition="topLeft"
+        renderButtonWrapper={this.renderToolbar}
+      >
+        {({
+          ref: containerBorderRef,
+          attr: containerBorderAttr,
+          button: ContainerBorderButton,
+          border: ContainerBorderBorder
+        }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <div
+              ref={containerBorderRef}
+              id={this.getId()}
+              className={classNameSection}
+              data-block-id={this.props.blockId}
+              {...parseCustomAttributes(customAttributes)}
+              {...containerBorderAttr}
             >
-              <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                {this.renderItems(v, vs, vd)}
-              </ToolbarExtend>
-            </ContainerBorder>
-          </Roles>
-        </div>
-      </CustomCSS>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                  {this.renderItems(v, vs, vd)}
+                </ToolbarExtend>
+                {ContainerBorderButton}
+                {ContainerBorderBorder}
+              </Roles>
+            </div>
+          </CustomCSS>
+        )}
+      </ContainerBorder>
     );
   }
 

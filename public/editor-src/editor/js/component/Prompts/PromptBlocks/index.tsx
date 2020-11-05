@@ -24,7 +24,7 @@ import {
   PromptBlock,
   PromptBlockTemplate
 } from "./types";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 type Tab = {
   id: PromptTabsId;
@@ -43,12 +43,10 @@ type TabComponentProps = {
   getParentNode?: () => HTMLElement | null;
 };
 
-const defaultActiveTab = "blocks";
-
 const TABS: Tab[] = [
   {
     id: "template",
-    title: t("Layouts"),
+    title: IS_STORY ? t("Stories") : t("Layouts"),
     icon: "nc-pages",
     renderTab(props): ReactElement {
       return <Layouts {...props} />;
@@ -82,6 +80,7 @@ const TABS: Tab[] = [
 
 class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   static defaultProps: PromptBlocksProps = {
+    activeTab: "blocks",
     type: "normal",
     opened: false,
 
@@ -108,7 +107,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   };
 
   state: PromptBlocksState = {
-    currentTab: defaultActiveTab
+    currentTab: this.props.activeTab || "blocks"
   };
 
   wrapper = React.createRef<HTMLDivElement>();
@@ -170,9 +169,10 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   handleClose = (): void => {
     if (this.mounted) {
-      this.setState({ currentTab: defaultActiveTab }, () => {
-        this.props.onClose && this.props.onClose();
-      });
+      this.props.onClose && this.props.onClose();
+      // this.setState({ currentTab: defaultActiveTab }, () => {
+      //   this.props.onClose && this.props.onClose();
+      // });
     }
   };
 

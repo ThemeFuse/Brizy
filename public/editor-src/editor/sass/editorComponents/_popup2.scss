@@ -20,25 +20,22 @@
   }
   .brz-container__wrap {
     position: relative;
+    margin: 0;
   }
   .brz-container__wrap .brz-container {
     height: 100%;
   }
   &__inner {
+    position: relative;
     height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-    & > .brz-bg-content {
+    & > .brz-container__wrap {
       max-height: 100%;
-      display: flex;
-      overflow-x: hidden;
-      overflow-y: auto;
-
-      & > .brz-container__wrap {
-        max-height: 100%;
-        margin: 0;
-        padding: 0;
-        min-width: 300px;
-      }
+      margin: 0;
+      padding: 0;
+      min-width: 300px;
     }
   }
   &__vertical-align {

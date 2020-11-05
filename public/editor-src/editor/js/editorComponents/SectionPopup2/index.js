@@ -35,7 +35,7 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import * as toolbarCloseConfig from "./toolbarClose";
 import * as sidebarCloseConfig from "./sidebarClose";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
+import { style, styleInner } from "./styles";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
 import {
@@ -88,7 +88,6 @@ class SectionPopup2 extends EditorComponent {
       isOpened && document.documentElement.classList.add("brz-ow-hidden");
       SectionPopup2.tmpGlobal = null;
 
-      this.popupRef = React.createRef();
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
@@ -212,19 +211,21 @@ class SectionPopup2 extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const { containerClassName } = v;
-
-    const classNameBg = classnames(
+    const { containerClassName, showCloseButtonAfter } = v;
+    const className = classnames(
+      "brz-popup2__close",
+      IS_PREVIEW && showCloseButtonAfter && "brz-hidden"
+    );
+    const innerClassName = classnames(
       "brz-popup2__inner",
       "brz-d-xs-flex",
       "brz-flex-xs-wrap",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd)
+        styleInner(v, vs, vd)
       )
     );
-
     const classNameContainer = classnames("brz-container", containerClassName);
 
     const itemsProps = this.makeSubcomponentProps({
@@ -239,36 +240,29 @@ class SectionPopup2 extends EditorComponent {
       }
     });
 
-    const className = classnames(
-      "brz-popup2__close",
-      IS_PREVIEW
-        ? {
-            "brz-hidden": v.showCloseButtonAfter
-          }
-        : {}
-    );
-
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
-        <SortableZIndex zindex={1}>
-          <div className="brz-container__wrap">
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarCloseConfig,
-                sidebarCloseConfig,
-                { allowExtend: false }
-              )}
-            >
-              <div className={className}>
-                <ThemeIcon name="close-popup" type="editor" />
-              </div>
-            </Toolbar>
+      <Background value={v} meta={meta}>
+        <div className={innerClassName}>
+          <SortableZIndex zindex={1}>
+            <div className="brz-container__wrap">
+              <Toolbar
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarCloseConfig,
+                  sidebarCloseConfig,
+                  { allowExtend: false }
+                )}
+              >
+                <div className={className}>
+                  <ThemeIcon name="close-popup" type="editor" />
+                </div>
+              </Toolbar>
 
-            <div className={classNameContainer}>
-              <EditorArrayComponent {...itemsProps} />
+              <div className={classNameContainer}>
+                <EditorArrayComponent {...itemsProps} />
+              </div>
             </div>
-          </div>
-        </SortableZIndex>
+          </SortableZIndex>
+        </div>
       </Background>
     );
   }
@@ -286,42 +280,51 @@ class SectionPopup2 extends EditorComponent {
       "brz-popup2__editor",
       { "brz-popup2--opened": this.state.isOpened },
       className,
-      customClassName
+      customClassName,
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
     );
 
     let content = (
-      <CustomCSS selectorName={id} css={v.customCSS}>
-        <div
-          id={id}
-          className={classNamePopup}
-          data-block-id={this.props.blockId}
-          {...parseCustomAttributes(customAttributes)}
-        >
-          {!IS_GLOBAL_POPUP && (
-            <button
-              className="brz-button brz-popup2__button-go-to-editor"
-              onClick={this.handleDropClick}
+      <ContainerBorder type="popup2" activateOnContentClick={false}>
+        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+          <CustomCSS selectorName={id} css={v.customCSS}>
+            <div
+              id={id}
+              className={classNamePopup}
+              data-block-id={this.props.blockId}
+              ref={containerBorderRef}
+              {...parseCustomAttributes(customAttributes)}
+              {...containerBorderAttr}
             >
-              <EditorIcon
-                icon="nc-arrow-left"
-                className="brz-popup2__icon-go-to-editor"
-              />
-              {t("Go Back")}
-            </button>
-          )}
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder showBorder={false} activateOnContentClick={false}>
-              {this.renderToolbar()}
-              <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                {this.renderItems(v, vs, vd)}
-              </ToolbarExtend>
-            </ContainerBorder>
-          </Roles>
-        </div>
-      </CustomCSS>
+              {!IS_GLOBAL_POPUP && (
+                <button
+                  className="brz-button brz-popup2__button-go-to-editor"
+                  onClick={this.handleDropClick}
+                >
+                  <EditorIcon
+                    icon="nc-arrow-left"
+                    className="brz-popup2__icon-go-to-editor"
+                  />
+                  {t("Go Back")}
+                </button>
+              )}
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                {this.renderToolbar()}
+                <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                  {this.renderItems(v, vs, vd)}
+                </ToolbarExtend>
+              </Roles>
+            </div>
+          </CustomCSS>
+        )}
+      </ContainerBorder>
     );
 
     if (!IS_GLOBAL_POPUP) {
@@ -402,7 +405,12 @@ class SectionPopup2 extends EditorComponent {
         "brz-conditions-external-popup": IS_EXTERNAL_POPUP
       },
       className,
-      customClassName
+      customClassName,
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
     );
 
     return (

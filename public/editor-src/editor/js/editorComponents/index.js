@@ -1,7 +1,10 @@
 import Page from "./Page";
 import PagePopup from "./PagePopup";
+import PageStory from "./PageStory";
 import Section from "./Section";
 import SectionItem from "./Section/SectionItem";
+import Story from "./Story";
+import StoryItem from "./Story/StoryItem";
 import Row from "./Row";
 import Column from "./Column";
 import Form from "./Form";
@@ -19,11 +22,13 @@ import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Audio from "./Audio";
 import Icon from "./Icon";
 import Image from "./Image2";
+import { StoryWrapper } from "./StoryWrapper";
 // import Image2 from "./Image2";
 import Line from "./Line";
 import Spacer from "./Spacer";
 import EmbedCode from "./EmbedCode";
 import Map from "./Map";
+import Shape from "./Shape";
 import Button from "./Button";
 import Counter from "./Counter";
 import SoundCloud from "./SoundCloud";
@@ -75,8 +80,11 @@ import Lottie from "./Lottie";
 export default {
   Page,
   PagePopup,
+  PageStory,
   Section,
   SectionItem,
+  Story,
+  StoryItem,
   SectionHeader,
   SectionHeaderItem,
   SectionHeaderStickyItem,
@@ -145,7 +153,9 @@ export default {
   FacebookPage,
   FacebookGroup,
   Twitter,
-  Lottie
+  Lottie,
+  StoryWrapper,
+  Shape
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

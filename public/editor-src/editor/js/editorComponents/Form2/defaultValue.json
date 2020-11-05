@@ -3,16 +3,24 @@
     "messageSuccess": "",
     "messageError": "",
     "messageRedirect": "",
-    "items": []
+    "items": [],
+
+    "offsetX": 0,
+    "offsetY": 0
   },
   "style": {
     "horizontalAlign": "left",
 
     "label": "off",
     "placeholder": "on",
+
     "width": 50,
+
     "submitWidth": 100,
-    "submitWidthSuffix": null,
+    "submitWidthSuffix": "%",
+
+    "submitHeight": 15,
+    "submitHeightSuffix": "%",
 
     "padding": 15,
     "paddingTop": 0,

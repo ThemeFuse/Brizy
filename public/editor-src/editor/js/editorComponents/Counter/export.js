@@ -2,82 +2,106 @@ import $ from "jquery";
 
 var elements = [];
 export default function($node) {
-  $node.find(".brz-counter").each(function() {
-    var $this = $(this);
-    elements.push({
-      elem: this,
-      start: $this.attr("data-start"),
-      end: $this.attr("data-end"),
-      duration: $this.attr("data-duration")
+  const isStory = $node.find(".brz-story").length > 0;
+
+  if (isStory) {
+    const $slider = $node.find(".brz-slick-slider");
+
+    $slider.on("afterChange init", function(e, slick) {
+      const { currentSlide, $slides } = slick;
+      const $currentSlide = $slides[currentSlide];
+
+      $($currentSlide)
+        .find(".brz-counter")
+        .each(function() {
+          var $this = $(this);
+
+          animate({
+            elem: this,
+            start: $this.attr("data-start"),
+            end: $this.attr("data-end"),
+            duration: $this.attr("data-duration")
+          });
+        });
+    });
+  } else {
+    $node.find(".brz-counter").each(function() {
+      var $this = $(this);
+      elements.push({
+        elem: this,
+        start: $this.attr("data-start"),
+        end: $this.attr("data-end"),
+        duration: $this.attr("data-duration")
+      });
+
+      $this.addClass("brz-initialized");
     });
 
-    $this.addClass("brz-initialized");
+    $(document).on("brz.popup.show", onScroll);
+    document.addEventListener("scroll", onScroll);
+    onScroll();
+  }
+}
+
+function formatNumber(number) {
+  var splitNum;
+  number = Math.abs(number);
+  number = number.toFixed(0);
+  splitNum = number.split(".");
+  splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return splitNum.join("-");
+}
+
+function isScrolledIntoView(el) {
+  var rect = el.getBoundingClientRect();
+  var elemTop = rect.top;
+  var elemBottom = rect.bottom;
+
+  var isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
+  return isVisible;
+}
+
+function animate(value) {
+  var $figures = $(value.elem).find(
+    ".brz-counter-figures .brz-counter-numbers"
+  );
+  var $chart = $(value.elem).find(".brz-counter-pie-chart");
+
+  var step = function(countNum) {
+    $figures.text(formatNumber(countNum));
+    $chart &&
+      $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
+  };
+
+  $({ countNum: Number(value.start) }).animate(
+    {
+      countNum: Number(value.end)
+    },
+    {
+      duration: Number(value.duration * 1000),
+      easing: "linear",
+
+      step: function() {
+        step(this.countNum);
+      },
+
+      complete: function() {
+        step(value.end);
+      }
+    }
+  );
+}
+
+function onScroll() {
+  elements = elements.filter(function(value) {
+    if (isScrolledIntoView(value.elem)) {
+      animate(value);
+      return false;
+    }
+    return true;
   });
 
-  const formatNumber = function(number) {
-    var splitNum;
-    number = Math.abs(number);
-    number = number.toFixed(0);
-    splitNum = number.split(".");
-    splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return splitNum.join("-");
-  };
-
-  var isScrolledIntoView = function(el) {
-    var rect = el.getBoundingClientRect();
-    var elemTop = rect.top;
-    var elemBottom = rect.bottom;
-
-    var isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
-    return isVisible;
-  };
-
-  var animate = function(value) {
-    var $figures = $(value.elem).find(
-      ".brz-counter-figures .brz-counter-numbers"
-    );
-    var $chart = $(value.elem).find(".brz-counter-pie-chart");
-
-    var step = function(countNum) {
-      $figures.text(formatNumber(countNum));
-      $chart &&
-        $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
-    };
-
-    $({ countNum: Number(value.start) }).animate(
-      {
-        countNum: Number(value.end)
-      },
-      {
-        duration: Number(value.duration * 1000),
-        easing: "linear",
-
-        step: function() {
-          step(this.countNum);
-        },
-
-        complete: function() {
-          step(value.end);
-        }
-      }
-    );
-  };
-
-  var onScroll = function() {
-    elements = elements.filter(function(value) {
-      if (isScrolledIntoView(value.elem)) {
-        animate(value);
-        return false;
-      }
-      return true;
-    });
-
-    if (!elements.length) {
-      document.removeEventListener("scroll", onScroll);
-    }
-  };
-
-  $(document).on("brz.popup.show", onScroll);
-  document.addEventListener("scroll", onScroll);
-  onScroll();
+  if (!elements.length) {
+    document.removeEventListener("scroll", onScroll);
+  }
 }

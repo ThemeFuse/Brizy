@@ -46,7 +46,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("currentShortcodeTab"),
+              id: "currentShortcodeTab",
               options: [
                 toolbarElementCloneableSpacing({
                   v,

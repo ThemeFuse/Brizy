@@ -85,6 +85,29 @@
   "style": {
     "className": "",
 
+    "width": 750,
+    "widthSuffix": "px",
+
+    "closeSize": "medium",
+    "closeCustomSize": 24,
+    "closeHorizontalPosition": 10,
+    "closeVerticalPosition": 10,
+
+    "tabletWidth": 90,
+    "tabletWidthSuffix": "%",
+    "tabletCloseHorizontalPosition": -20,
+    "tabletCloseVerticalPosition": 15,
+
+    "mobileWidth": 90,
+    "mobileWidthSuffix": "%",
+
+    "mobileCloseHorizontalPosition": 15,
+    "mobileCloseVerticalPosition": 15,
+    "mobileClosePosition": "inside",
+    "mobileCloseColorPalette": "color2",
+    "tempMobileCloseColorPalette": "color2",
+    "mobileCloseColorOpacity": 1,
+
     "borderWidthType": "grouped",
     "borderWidth": 0,
     "borderTopWidth": 0,
@@ -153,6 +176,7 @@
 
     "containerClassName": "",
     "containerSize": 100,
+    "containerSizeSuffix": "%",
 
     "customCSS": "",
 
@@ -191,6 +215,7 @@
 
     "tabletContainerType": null,
     "tabletContainerSize": null,
+    "tabletContainerSizeSuffix": null,
 
     "tabletBorderRadius": null,
     "tabletBorderTopLeftRadius": null,
@@ -230,6 +255,7 @@
 
     "mobileContainerType": null,
     "mobileContainerSize": null,
+    "mobileContainerSizeSuffix": null,
 
     "mobileBgColorType": null,
 

@@ -7,7 +7,7 @@
   bottom: 0;
   width: $sidebar-size;
   color: $sidebar-font-color;
-  z-index: z("sidebar");
+  z-index: z("sidebar") + 1;
   -webkit-font-smoothing: antialiased;
   user-select: none;
 

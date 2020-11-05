@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -29,7 +28,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabTypographyParagraph"),
+              id: "tabTypographyParagraph",
               label: t("P"),
               options: [
                 {
@@ -42,7 +41,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH1"),
+              id: "tabTypographyH1",
               label: t("H1"),
               options: [
                 {
@@ -55,7 +54,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH2"),
+              id: "tabTypographyH2",
               label: t("H2"),
               options: [
                 {
@@ -68,7 +67,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH3"),
+              id: "tabTypographyH3",
               label: t("H3"),
               options: [
                 {
@@ -81,7 +80,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH4"),
+              id: "tabTypographyH4",
               label: t("H4"),
               options: [
                 {
@@ -94,7 +93,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH5"),
+              id: "tabTypographyH5",
               label: t("H5"),
               options: [
                 {
@@ -107,7 +106,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
-              id: dvk("tabTypographyH6"),
+              id: "tabTypographyH6",
               label: t("H6"),
               options: [
                 {
@@ -233,7 +232,7 @@ export function getItems({ v, device }) {
       disabled: true
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,

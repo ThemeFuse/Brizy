@@ -79,6 +79,12 @@ export default {
     taxonomyId: "main_query",
     pagination: "on"
   },
+  "posts--archives-product": {
+    type: "archives-product",
+    taxonomy: "template",
+    taxonomyId: "main_query",
+    pagination: "on"
+  },
   "image--dynamic": {
     imagePopulation: "{{brizy_dc_img_featured_image}}"
   },
@@ -120,7 +126,227 @@ export default {
   "wrapper--facebookComments": {
     showToolbar: "on"
   },
-  "wrapper--WOOCart": {
+
+  // Story elements
+  "story-map": {
+    size: 90,
+    height: 70,
+    heightSuffix: "%",
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 31,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-progressBar": {
+    width: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 48,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-line": {
+    width: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 49,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-countdown2": {
+    width: 90,
+
+    height: 10,
+    heightSuffix: "%",
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 45,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-counter": {
+    width: 50,
+
+    elementPosition: "fixed",
+
+    offsetX: 39,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 45,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-embedCode": {
+    width: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 33,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-image": {
+    width: 90,
+    height: 70,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 36,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-starRating": {
+    elementPosition: "fixed",
+
+    offsetX: 33,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 49,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-icon": {
+    elementPosition: "fixed",
+
+    customSize: 20,
+
+    offsetX: 40,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 44,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top",
+
+    customSizeSuffix: "%",
+
+    hoverColorHex: null,
+    hoverColorOpacity: null,
+    hoverColorPalette: null,
+    tempHoverColorOpacity: null,
+    tempHoverColorPalette: null,
+
+    hoverGradientActivePointer: null,
+    hoverGradientStartPointer: null,
+    hoverGradientFinishPointer: null,
+    hoverGradientType: null,
+    hoverGradientLinearDegree: null,
+    hoverGradientRadialDegree: null,
+
+    hoverBgColorType: null,
+
+    hoverBgColorHex: null,
+    hoverBgColorOpacity: null,
+    hoverBgColorPalette: null,
+    tempHoverBgColorOpacity: null,
+    tempHoverBgColorPalette: null,
+
+    hoverGradientColorHex: null,
+    hoverGradientColorOpacity: null,
+    hoverGradientColorPalette: null,
+    tempHoverGradientColorOpacity: null,
+    tempHoverGradientColorPalette: null,
+
+    hoverBorderColorHex: null,
+    hoverBorderColorOpacity: null,
+    hoverBorderColorPalette: null,
+    tempHoverBorderColorOpacity: null,
+    tempHoverBorderColorPalette: null
+  },
+  "story-video": {
+    size: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 34,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-richText": {
+    width: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 46,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
+  "story-button": {
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingLeft: 0,
+
+    elementPosition: "fixed",
+
+    offsetX: 30,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 46,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top",
+
+    width: 40,
+    widthSuffix: "%",
+
+    height: 30,
+    heightSuffix: "%"
+  },
+  "wrapper--story-form2": {
     showToolbar: "on"
+  },
+  "story-form2": {
+    width: 80,
+    widthSuffix: "%",
+
+    elementPosition: "fixed",
+
+    offsetX: 10,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 20,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
   }
 };

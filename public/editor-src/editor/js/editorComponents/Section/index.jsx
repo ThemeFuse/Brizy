@@ -2,7 +2,6 @@ import React from "react";
 import classnames from "classnames";
 import { validateKeyByProperty } from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Animation from "visual/component/Animation";
 import {
   wInBoxedPage,
@@ -12,6 +11,7 @@ import {
 } from "visual/config/columns";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
+import { cloneItem } from "visual/utils/models";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleSection, styleAnimation } from "./styles";
@@ -81,7 +81,7 @@ export default class Section extends EditorComponent {
         super.handleValueChange(
           {
             ...value,
-            items: EditorArrayComponent.cloneItem(value.items, 0)
+            items: cloneItem(value.items, 0)
           },
           meta
         );
@@ -119,7 +119,6 @@ export default class Section extends EditorComponent {
       sliderAutoPlaySpeed,
       bindWithKey: "items",
       meta: this.getMeta(v),
-      className: "brz-section__items",
       sliderAutoPlay: sliderAutoPlay === "on",
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
