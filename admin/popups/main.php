@@ -161,7 +161,7 @@ class Brizy_Admin_Popups_Main {
 	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
 	 */
 	public function getPopupsAssets( $project, $wpPost, $context ) {
-		$assets = [];
+		$assetGroups = [];
 
 		$popups = $this->getMatchingBrizyPopups();
 
@@ -179,35 +179,45 @@ class Brizy_Admin_Popups_Main {
 			if ( $context == 'head' ) {
 				$styles = $brizyPopup->getCompiledStyles();
 
-				$libs = Brizy_Public_Main::libAggregator(
-					$styles['free'],
-					$brizyPopup,
-					function ( $assets, $post ) {
-						return apply_filters( 'brizy_pro_head_assets', $assets, $post );
-					}
-				);
+				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
 
-				foreach ( $libs as $anAsset ) {
-					$assets[] = $anAsset;
-				}
+//				$libs = Brizy_Public_Main::libAggregator(
+//					$styles['free'],
+//					$brizyPopup,
+//					function ( $assets, $post ) {
+//						return apply_filters( 'brizy_pro_head_assets', $assets, $post );
+//					}
+//				);
+//
+//				foreach ( $libs as $anAsset ) {
+//					$assets[] = $anAsset;
+//				}
 			}
 
 			if ( $context == 'body' ) {
-				$scripts = $brizyPopup->getCompiledScripts();
-				$libs    = Brizy_Public_Main::libAggregator(
-					$scripts['free'],
-					$brizyPopup,
-					function ( $assets, $post ) {
-						return apply_filters( 'brizy_pro_body_assets', $assets, $post );
-					}
-				);
-				foreach ( $libs as $anAsset ) {
-					$assets[] = $anAsset;
-				}
+
+				$assets = $brizyPopup->getCompiledScripts();
+
+				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
+				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
+
+
+//				$scripts = $brizyPopup->getCompiledScripts();
+//				$libs    = Brizy_Public_Main::libAggregator(
+//					$scripts['free'],
+//					$brizyPopup,
+//					function ( $assets, $post ) {
+//						return apply_filters( 'brizy_pro_body_assets', $assets, $post );
+//					}
+//				);
+//				foreach ( $libs as $anAsset ) {
+//					$assets[] = $anAsset;
+//				}
 			}
 		}
 
-		return $assets;
+		return $assetGroups;
 	}
 
 	private function insertHead( $target, $headContent ) {

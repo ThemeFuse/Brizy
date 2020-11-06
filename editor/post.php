@@ -287,7 +287,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );                continue;
+					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );
+					continue;
 				}
 
 				foreach ( $scripts as $l => $script ) {
