@@ -48,6 +48,8 @@ type UseResizerPoints = (
 const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
   const { gallery, desktopW, tabletW, mobileW } = meta;
   const { imageExtension } = v;
+  const isAbsoluteOrFixed =
+    v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
   let points = POINTS.default;
   if (gallery && gallery.inGallery) {
@@ -76,7 +78,7 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
       },
       "%": {
         min: 5,
-        max: 100
+        max: isAbsoluteOrFixed ? Infinity : 100
       }
     },
     tabletWidth: {

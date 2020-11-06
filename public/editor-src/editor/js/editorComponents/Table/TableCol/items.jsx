@@ -85,7 +85,7 @@ class TableColItems extends EditorArrayComponent {
 
   renderItemsContainer(items) {
     if (IS_PREVIEW) {
-      return items;
+      return <div className={this.props.className}>{items}</div>;
     }
 
     const sortableContent = items.length ? (

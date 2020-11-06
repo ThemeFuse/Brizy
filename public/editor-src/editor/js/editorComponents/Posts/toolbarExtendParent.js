@@ -18,6 +18,148 @@ export function getItems({ v, device }) {
   ];
 }
 
+function getIcon(type) {
+  switch (type) {
+    case "relatedProducts":
+      return "nc-woo-related-products";
+    case "upsell":
+      return "nc-woo-upsell";
+    case "products":
+      return "nc-woo-products";
+    case "categories":
+      return "nc-woo-categories";
+    default:
+      return "nc-wp-posts";
+  }
+}
+
+function getTitle(type) {
+  switch (type) {
+    case "relatedProducts":
+      return t("Related Products");
+    case "upsell":
+      return t("Upsell");
+    case "products":
+      return t("Products");
+    case "categories":
+      return t("Categories");
+    default:
+      return t("Posts");
+  }
+}
+
+function getLabel(type) {
+  switch (type) {
+    case "relatedProducts":
+      return t("Related");
+    case "upsell":
+      return t("Upsell");
+    case "products":
+      return t("Products");
+    case "categories":
+      return t("Categories");
+    default:
+      return t("Posts");
+  }
+}
+
+function getFilters(v, device) {
+  const { type } = v;
+
+  const filtersOptions = type => {
+    switch (type) {
+      case "posts":
+      case "products":
+        return [
+          toolbarElementPostsTaxonomy({
+            v,
+            device,
+            type,
+            devices: "desktop",
+            state: "normal"
+          }),
+          {
+            id: "orderBy",
+            type: "select-dev",
+            label: t("Filter By"),
+            devices: "desktop",
+            choices:
+              type === "posts"
+                ? [
+                    { title: t("ID"), value: "ID" },
+                    { title: t("Title"), value: "title" },
+                    { title: t("Date"), value: "date" },
+                    { title: t("Random"), value: "rand" },
+                    { title: t("Comment Count"), value: "comment_count" }
+                  ]
+                : [
+                    { title: t("Random"), value: "name" },
+                    { title: t("Title"), value: "title" },
+                    { title: t("Date"), value: "date" },
+                    { title: t("Rating"), value: "rating" },
+                    { title: t("Popularity"), value: "popularity" },
+                    { title: t("Menu Order"), value: "menu_order" },
+                    { title: t("Random"), value: "rand" },
+                    { title: t("ID"), value: "ID" }
+                  ]
+          },
+          {
+            id: "order",
+            type: "radioGroup-dev",
+            label: t("Order"),
+            devices: "desktop",
+            choices: [
+              { value: "ASC", icon: "nc-up" },
+              { value: "DESC", icon: "nc-down" }
+            ]
+          },
+          {
+            id: "filter",
+            type: "switch-dev",
+            label: t("Tags filter"),
+            devices: "desktop"
+          }
+        ];
+      case "categories":
+        return [
+          {
+            id: "orderBy",
+            type: "select-dev",
+            label: t("Filter By"),
+            devices: "desktop",
+            choices: [
+              { title: t("Name"), value: "name" },
+              { title: t("Slug"), value: "slug" },
+              { title: t("Description"), value: "description" },
+              { title: t("Count"), value: "count" }
+            ]
+          },
+          {
+            id: "order",
+            type: "radioGroup-dev",
+            label: t("Order"),
+            devices: "desktop",
+            choices: [
+              { value: "ASC", icon: "nc-up" },
+              { value: "DESC", icon: "nc-down" }
+            ]
+          }
+        ];
+
+      default:
+        return [];
+    }
+  };
+
+  return (
+    filtersOptions(type) !== [] && {
+      id: "filter",
+      label: t("Filter"),
+      options: filtersOptions(type)
+    }
+  );
+}
+
 function getToolbarArchives(v, device) {
   return [
     {
@@ -64,8 +206,8 @@ function getToolbarPosts(v, device) {
       id: "toolbarPosts",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-shortcode",
-        title: t("Posts")
+        icon: getIcon(v.type),
+        title: getTitle(v.type)
       },
       roles: ["admin"],
       position: 80,
@@ -75,7 +217,7 @@ function getToolbarPosts(v, device) {
           tabs: [
             {
               id: "posts",
-              label: t("Posts"),
+              label: t(getLabel(v.type)),
               options: [
                 // haven't moved to options-dev because of custom onchange
                 toolbarElementPostsColumns({
@@ -102,48 +244,7 @@ function getToolbarPosts(v, device) {
                 }
               ]
             },
-            {
-              id: "filter",
-              label: t("Filter"),
-              options: [
-                // haven't moved to options-dev because of custom onchange
-                toolbarElementPostsTaxonomy({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                {
-                  id: "orderBy",
-                  type: "select-dev",
-                  label: t("Filter By"),
-                  devices: "desktop",
-                  choices: [
-                    { title: t("ID"), value: "ID" },
-                    { title: t("Title"), value: "title" },
-                    { title: t("Date"), value: "date" },
-                    { title: t("Random"), value: "rand" },
-                    { title: t("Comment Count"), value: "comment_count" }
-                  ]
-                },
-                {
-                  id: "order",
-                  type: "radioGroup-dev",
-                  label: t("Order"),
-                  devices: "desktop",
-                  choices: [
-                    { value: "ASC", icon: "nc-up" },
-                    { value: "DESC", icon: "nc-down" }
-                  ]
-                },
-                {
-                  id: "filter",
-                  type: "switch-dev",
-                  label: t("Tags filter"),
-                  devices: "desktop"
-                }
-              ]
-            },
+            getFilters(v, device),
             {
               id: "navigation",
               label: t("Navigation"),
@@ -152,6 +253,7 @@ function getToolbarPosts(v, device) {
                   id: "groupPagination",
                   type: "group-dev",
                   devices: "desktop",
+                  disabled: v.type !== "posts" && v.type !== "products",
                   options: [
                     {
                       id: "pagination",

@@ -31,7 +31,7 @@ class ConditionChoices extends React.Component {
     const ruleMatch = {
       ...rules[index],
       entityType: type,
-      appliedFor: group === "" ? "" : Number(group),
+      appliedFor: group === "" || group === null ? null : Number(group),
       entityValues: []
     };
 

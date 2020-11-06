@@ -16,6 +16,7 @@ export type PromptBlockTemplate = {
 };
 
 export type PromptBlocksProps = {
+  activeTab?: PromptTabsId;
   type: BlockMetaType;
   opened?: boolean;
 

@@ -6,6 +6,8 @@
       "mobileFontFamily": null
     },
 
+    "customCSS": "",
+
     "fontStyle": "paragraph",
     "fontFamilyType": "google",
     "fontSize": 12,
@@ -13,12 +15,12 @@
     "lineHeight": 1.8,
     "letterSpacing": 3,
 
-    "colorHex": "#000000",
+    "colorHex": "#1C1C1C",
     "colorOpacity": 1,
-    "colorPalette": "color1",
+    "colorPalette": "color2",
 
     "tempColorOpacity": 1,
-    "tempColorPalette": "color1",
+    "tempColorPalette": "color2",
 
     "tabletFontStyle": "paragraph",
     "tabletFontFamilyType": null,

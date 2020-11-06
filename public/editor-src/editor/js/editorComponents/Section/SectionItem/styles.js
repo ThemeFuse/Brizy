@@ -1,28 +1,32 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
-export function styleBg(v, vs, vd, props) {
+export function style(v, vs, vd, props) {
   const styles = {
-    ".brz &&:hover > .brz-bg-media": {
+    ".brz &&:hover": {
+      standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
+    },
+    ".brz &&:hover > .brz-bg": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
+    ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
-        "cssStyleBgImagePosition"
+        "cssStyleBgImagePosition",
+        "cssStyleBgMediaImage"
       ],
       interval: ["cssStyleBgImageAttachment"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-map": {
-      standart: ["cssStyleFilter", "cssStyleBgMap"]
+    ".brz &&:hover > .brz-bg > .brz-bg-map": {
+      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-video": {
-      standart: ["cssStyleFilter"]
+    ".brz &&:hover > .brz-bg > .brz-bg-video": {
+      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-shape__top": {
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [
         "cssStyleShapeTopType",
         "cssStyleShapeTopHeight",
@@ -30,7 +34,7 @@ export function styleBg(v, vs, vd, props) {
         "cssStyleShapeTopIndex"
       ]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-shape__bottom": {
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom": {
       standart: [
         "cssStyleShapeBottomType",
         "cssStyleShapeBottomHeight",
@@ -38,20 +42,13 @@ export function styleBg(v, vs, vd, props) {
         "cssStyleShapeBottomIndex"
       ]
     },
-    ".brz &&:hover > .brz-bg-content": {
-      standart: [
-        "cssStylePaddingPreview",
-        "cssStylePaddingRightLeftForEditor",
-        "cssStyleDisplayFlex"
-      ]
-    },
-    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--top": {
+    ".brz &&:hover > .brz-ed-draggable__padding--top": {
       standart: [
         "cssStylePaddingTopForEditorResizer",
         "cssStyleSectionPaddingsForEditorResize"
       ]
     },
-    ".brz &&:hover > .brz-bg-content > .brz-ed-draggable__padding--bottom": {
+    ".brz &&:hover > .brz-ed-draggable__padding--bottom": {
       standart: [
         "cssStylePaddingBottomForEditorResizer",
         "cssStyleSectionPaddingsForEditorResize"
@@ -67,16 +64,6 @@ export function styleContainer(v, vs, vd) {
     ".brz &&:hover": {
       standart: ["cssStyleBorderTransparentColor"],
       interval: ["cssStyleSectionMaxWidth"]
-    }
-  };
-
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleContainerWrap(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover": {
-      interval: ["cssStyleSectionContainerType"]
     }
   };
 

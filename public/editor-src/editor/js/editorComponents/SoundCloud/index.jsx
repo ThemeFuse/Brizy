@@ -10,6 +10,7 @@ import * as sidebarConfig from "./sidebar";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
 import defaultValue from "./defaultValue.json";
+import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = [
   "topLeft",
@@ -38,60 +39,33 @@ class SoundCloud extends EditorComponent {
           min: 5,
           max: v.style === "basic" ? v.mediumHeight : v.largeHeight
         },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        "%": { min: 5, max: 100 }
       },
       width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       tabletHeight: {
         px: {
           min: 5,
           max: v.style === "basic" ? v.mediumHeight : v.largeHeight
         },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        "%": { min: 5, max: 100 }
       },
       tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       mobileHeight: {
         px: {
           min: 5,
           max: v.style === "basic" ? v.mediumHeight : v.largeHeight
         },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        "%": { min: 5, max: 100 }
       },
       mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       }
     };
   }
@@ -134,7 +108,7 @@ class SoundCloud extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             <BoxResizer
               points={resizerPoints}
               restrictions={this.getResizerRestrictions(v)}
@@ -144,7 +118,7 @@ class SoundCloud extends EditorComponent {
             >
               {content}
             </BoxResizer>
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

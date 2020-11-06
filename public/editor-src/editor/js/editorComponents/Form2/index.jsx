@@ -13,6 +13,11 @@ import * as sidebarExtendParent from "./sidebarExtendParent";
 import * as toolbarExtendFields from "./toolbarExtendFields";
 import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as sidebarExtendButton from "./sidebarExtendButton";
+import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import BoxResizer from "visual/component/BoxResizer";
+import { IS_STORY } from "visual/utils/models";
+
+const resizerPoints = ["centerLeft", "centerRight"];
 
 export default class Form2 extends EditorComponent {
   static get componentId() {
@@ -24,6 +29,8 @@ export default class Form2 extends EditorComponent {
   static defaultProps = {
     extendParentToolbar: noop
   };
+
+  handleResizerChange = patch => this.patchValue(patch);
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -73,8 +80,16 @@ export default class Form2 extends EditorComponent {
       }
     });
 
+    const className = classnames(
+      "brz-forms2",
+      "brz-forms2__item",
+      "brz-align-self-xs-end",
+      "brz-forms2__item-button",
+      { "brz-forms2-story": IS_STORY }
+    );
+
     return (
-      <div className="brz-forms2__item brz-align-self-xs-end brz-forms2__item-button">
+      <div className={className}>
         <EditorArrayComponent {...itemsProps} />
       </div>
     );
@@ -89,18 +104,41 @@ export default class Form2 extends EditorComponent {
         styleForm(v, vs, vd)
       )
     );
+
+    const restrictions = {
+      width: {
+        "%": { min: 5, max: 100 }
+      }
+    };
+
+    const formContent = (
+      <form
+        className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
+        noValidate
+        onSubmit={this.handleSubmit}
+      >
+        {this.renderFields(v)}
+        {this.renderButton(v)}
+      </form>
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={className}>
-          <form
-            className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
-            noValidate
-            onSubmit={this.handleSubmit}
-          >
-            {this.renderFields(v)}
-            {this.renderButton(v)}
-          </form>
-        </div>
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          {IS_STORY ? (
+            <BoxResizer
+              points={resizerPoints}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+              restrictions={restrictions}
+            >
+              {formContent}
+            </BoxResizer>
+          ) : (
+            formContent
+          )}
+        </Wrapper>
       </CustomCSS>
     );
   }
@@ -121,7 +159,12 @@ export default class Form2 extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={className} data-form-version="2">
+        <Wrapper
+          {...this.makeWrapperProps({
+            className,
+            attributes: { "data-form-version": "2" }
+          })}
+        >
           <form
             className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
             action={submitUrl}
@@ -139,10 +182,11 @@ export default class Form2 extends EditorComponent {
                 className="brz-g-recaptcha"
                 data-sitekey={recaptchaSiteKey}
                 data-size="invisible"
+                data-callback="brzFormV2Captcha"
               />
             )}
           </form>
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

@@ -88,7 +88,9 @@ class SwitcherTab extends EditorArrayComponent {
       return items;
     }
 
-    const sortableContent = items.length ? <div>{items}</div> : null;
+    const sortableContent = items.length ? (
+      <div className={this.props.className}>{items}</div>
+    ) : null;
 
     return (
       <Sortable

@@ -2,6 +2,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device });
@@ -44,6 +45,7 @@ export function getItems({ v, device }) {
         icon: "nc-cog",
         title: t("Settings")
       },
+      disabled: IS_STORY,
       position: 110,
       options: [
         {
@@ -67,6 +69,13 @@ export function getItems({ v, device }) {
           devices: "desktop"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      icon: "nc-cog",
+      disabled: !IS_STORY,
+      position: 110
     }
   ];
 }

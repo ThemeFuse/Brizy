@@ -8,8 +8,6 @@ class Brizy_Public_Main {
 	 * @var Brizy_Public_Main[]
 	 */
 	static $instance = null;
-	static $is_excerpt = false;
-	static $the_content_fitler_addded = false;
 
 	/**
 	 * @var Brizy_Editor_Post
@@ -37,11 +35,15 @@ class Brizy_Public_Main {
 			return self::$instance;
 		}
 
-		if(!$post) {
-			throw new Exception('Unable to create Brizy_Public_Main instance with null post');
+		if ( ! $post ) {
+			throw new Exception( 'Unable to create Brizy_Public_Main instance with null post' );
 		}
 
 		return self::$instance = new self( $post );
+	}
+
+	static public function isInitialized() {
+		return is_object( self::$instance );
 	}
 
 	public function initialize_wordpress_editor() {
@@ -61,11 +63,10 @@ class Brizy_Public_Main {
 		} elseif ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
 			add_action( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
-			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
-			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
-
+			add_filter( 'the_content', array( $this, '_filter_the_content' ), - 12000 );
+			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			$this->plugin_live_composer_fixes();
 
 			/*
@@ -88,17 +89,11 @@ class Brizy_Public_Main {
 			// insert the compiled head and content
 			add_filter( 'body_class', array( $this, 'body_class_frontend' ) );
 			add_action( 'wp_head', array( $this, 'insert_page_head' ) );
-			add_filter( 'the_content', array( $this, 'insert_page_content' ) );
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
-
-			add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
-			add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
+			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 12000 );
 			$this->plugin_live_composer_fixes();
 		}
-
-
-		$this->addTheContentFilters();
 	}
 
 	/**
@@ -143,16 +138,10 @@ class Brizy_Public_Main {
 
 		wp_enqueue_media();
 
-		$config_object = $this->getConfigObject();
-		$assets_url    = $config_object->urls->assets;
-		$editor_js_deps = array_merge(
-			array(
-				'brizy-editor-polyfill',
-				'brizy-editor-vendor'
-			),
-			apply_filters( 'brizy_editor_js_deps', array() )
-		);
-		$editor_js_config   = json_encode( $config_object );
+		$config_object    = $this->getConfigObject();
+		$assets_url       = $config_object->urls->assets;
+		$editor_js_deps   = apply_filters( 'brizy_editor_js_deps', [ 'brizy-editor-polyfill', 'brizy-editor-vendor' ] );
+		$editor_js_config = json_encode( $config_object );
 
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), null );
 		wp_register_script( 'brizy-editor-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
@@ -170,7 +159,7 @@ class Brizy_Public_Main {
 			'pluginVersion' => BRIZY_VERSION,
 		) );
 
-		if (BRIZY_DEVELOPMENT === true) {
+		if ( BRIZY_DEVELOPMENT === true ) {
 			wp_add_inline_script( 'brizy-editor', "window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;", 'before' );
 		}
 	}
@@ -199,7 +188,7 @@ class Brizy_Public_Main {
 
 		wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
 		wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
-		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", array( 'brizy-preview-polyfill' ), null, true );
+		wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", apply_filters( 'brizy_preview_js_deps', [ 'brizy-preview-polyfill' ] ), null, true );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
 		wp_add_inline_script( 'brizy-preview', 'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});', 'after' );
 
@@ -240,6 +229,7 @@ class Brizy_Public_Main {
 			Brizy_Config::BRIZY_TEMPLATE_FILE_NAME
 		) ) ) {
 			$urlBuilder = new Brizy_Editor_UrlBuilder();
+
 			return $urlBuilder->plugin_path( '/public/views/templates/' . $template_path );
 		}
 
@@ -251,7 +241,7 @@ class Brizy_Public_Main {
 		$config_object = $this->getConfigObject();
 
 		$iframe_url = add_query_arg(
-			array( Brizy_Editor::prefix('-edit-iframe') => '' ),
+			array( Brizy_Editor::prefix( '-edit-iframe' ) => '' ),
 			get_permalink( $this->post->getWpPostId() )
 		);
 
@@ -279,8 +269,8 @@ class Brizy_Public_Main {
 
 		$context = apply_filters( 'brizy_editor_page_context', $context );
 
-		if(!$context) {
-			throw new Exception('Invalid template context. Probably a bad filter implementation');
+		if ( ! $context ) {
+			throw new Exception( 'Invalid template context. Probably a bad filter implementation' );
 		}
 
 		echo Brizy_TwigEngine::instance( self::path( 'views' ) )
@@ -316,14 +306,14 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor() {
-		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix('-edit') ] ) && $this->post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit' ) ] ) && $this->post->uses_editor();
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function is_editing_page_with_editor_on_iframe() {
-		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix('-edit-iframe') ] ) && $this->post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && $this->post->uses_editor();
 	}
 
 	/**
@@ -337,7 +327,7 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public function is_view_page() {
-		return ! is_admin() && $this->post->uses_editor() && ! isset( $_GET[ Brizy_Editor::prefix('-edit-iframe') ] ) && ! isset( $_GET[ Brizy_Editor::prefix('-edit') ] );
+		return ! is_admin() && $this->post->uses_editor() && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] );
 	}
 
 	/**
@@ -349,7 +339,7 @@ class Brizy_Public_Main {
 	 */
 	function _filter_the_content( $content ) {
 
-		if ( is_main_query() ) {
+		if ( is_main_query() && ! doing_filter( 'brizy_content' ) ) {
 
 			try {
 
@@ -424,10 +414,6 @@ class Brizy_Public_Main {
 			return $content;
 		}
 
-		if ( self::$is_excerpt ) {
-			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' );
-		}
-
 		if ( ! $this->post->get_compiled_html() ) {
 			$compiled_html_body = $this->post->get_compiled_html_body();
 			$content            = Brizy_SiteUrlReplacer::restoreSiteUrl( $compiled_html_body );
@@ -492,59 +478,11 @@ class Brizy_Public_Main {
 		}
 	}
 
-	public function start_excerpt( $content ) {
-		self::$is_excerpt = true;
-
-		return $content;
-	}
-
-	public function end_excerpt( $content ) {
-		self::$is_excerpt = false;
-
-		return $content;
-	}
-
 	private function plugin_live_composer_fixes() {
 		// Conflict with Live Composer builder when it has set a template for single post.
 		remove_filter( 'the_content', 'dslc_filter_content', 101 );
 		// Remove button "Edit Template" from single when it is builded with brizy.
 		remove_filter( 'wp_footer', array( 'DSLC_EditorInterface', 'show_lc_button_on_front' ) );
-	}
-
-	public function addTheContentFilters() {
-
-		if ( self::$the_content_fitler_addded ) {
-			return;
-		}
-
-		if ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
-			add_filter( 'the_content', array( $this, '_filter_the_content' ) );
-			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
-		} elseif ( $this->is_view_page() ) {
-			if ( ! post_password_required( $this->post->getWpPost() ) ) {
-				add_filter( 'the_content', array( $this, 'insert_page_content' ) );
-			}
-		}
-
-		self::$the_content_fitler_addded = true;
-	}
-
-	public function removeTheContentFilters() {
-
-		if ( ! self::$the_content_fitler_addded ) {
-			return;
-		}
-
-		if ( $this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed() ) {
-			remove_filter( 'the_content', array( $this, '_filter_the_content' ) );
-			remove_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
-		} elseif ( $this->is_view_page() ) {
-			if ( ! post_password_required( $this->post->getWpPost() ) ) {
-				remove_filter( 'the_content', array( $this, 'insert_page_content' ) );
-			}
-		}
-
-		self::$the_content_fitler_addded = false;
 	}
 
 }

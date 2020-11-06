@@ -2,7 +2,6 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -10,6 +9,8 @@ import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "../../tools/Wrapper";
 
 class WPPostNavigation extends EditorComponent {
   static get componentId() {
@@ -57,7 +58,7 @@ class WPPostNavigation extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
             {showTitle === "on" && (
               <div className="brz-navigation-title">
                 <TextEditor
@@ -94,7 +95,7 @@ class WPPostNavigation extends EditorComponent {
                 </div>
               </div>
             )}
-          </div>
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );
@@ -117,15 +118,21 @@ class WPPostNavigation extends EditorComponent {
       ...(showTitle === "on" && { titlePrevious: previous, titleNext: next })
     };
 
+    const attributesStr = Object.keys(attributes)
+      .map(k => String(attributes[k]) && `${k}="${attributes[k]}"`)
+      .join(" ");
+
+    const placeholder = `{{editor_post_navigation ${attributesStr}}}`;
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={className}>
-          <WPShortcode
-            name="brizy_post_navigation"
-            attributes={attributes}
-            placeholderIcon="wp-shortcode"
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          <DynamicContentHelper
+            placeholder={placeholder}
+            tagName="div"
+            props={{ className }}
           />
-        </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

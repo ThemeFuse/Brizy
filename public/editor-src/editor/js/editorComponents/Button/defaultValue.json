@@ -8,7 +8,10 @@
     "iconName": "tail-right",
     "iconType": "glyph",
 
-    "popups": []
+    "popups": [],
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "toolbar": {
@@ -31,6 +34,12 @@
 
   "style": {
     "className": "",
+
+    "width": null,
+    "widthSuffix": null,
+
+    "height": null,
+    "heightSuffix": null,
 
     "iconSize": "small",
     "iconCustomSize": 16,

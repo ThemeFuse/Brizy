@@ -1,3 +1,5 @@
+import { IS_STORY } from "visual/utils/models";
+
 export function onChangeElementButtonBorderColorHex2({
   v,
   hex,
@@ -22,32 +24,36 @@ export function onChangeElementButtonBorderColorHex2({
     paddingRL:
       opacity === 0 && v.bgColorOpacity === 0
         ? 0
-        : opacity > 0
+        : opacity > 0 && !IS_STORY
         ? v.tempPaddingRL
         : v.paddingRL,
 
     paddingRight:
       opacity === 0 && v.bgColorOpacity === 0
         ? 0
-        : opacity > 0
+        : opacity > 0 && !IS_STORY
         ? v.tempPaddingRight
         : v.paddingRight,
 
     paddingLeft:
       opacity === 0 && v.bgColorOpacity === 0
         ? 0
-        : opacity > 0
+        : opacity > 0 && !IS_STORY
         ? v.tempPaddingLeft
         : v.paddingRight,
 
     paddingTB:
-      opacity === 0 && v.bgColorOpacity === 0 ? v.tempPaddingTB : v.paddingTB,
+      opacity === 0 && v.bgColorOpacity === 0 && !IS_STORY
+        ? v.tempPaddingTB
+        : v.paddingTB,
 
     paddingTop:
-      opacity === 0 && v.bgColorOpacity === 0 ? v.tempPaddingTop : v.paddingTop,
+      opacity === 0 && v.bgColorOpacity === 0 && !IS_STORY
+        ? v.tempPaddingTop
+        : v.paddingTop,
 
     paddingBottom:
-      opacity === 0 && v.bgColorOpacity === 0
+      opacity === 0 && v.bgColorOpacity === 0 && !IS_STORY
         ? v.tempPaddingBottom
         : v.paddingBottom,
 

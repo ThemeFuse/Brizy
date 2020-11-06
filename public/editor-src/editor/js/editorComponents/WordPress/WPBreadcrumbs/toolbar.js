@@ -1,12 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { NORMAL, HOVER, ACTIVE } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -19,8 +18,8 @@ export function getItems({ v, device }) {
       id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-shortcode",
-        title: t("Breadcrumbs")
+        icon: "nc-wp-breadcrumbs",
+        title: t("Product Breadcrumbs")
       },
       position: 60,
       options: [
@@ -76,32 +75,20 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabLinks"),
+              id: "tabLinks",
               label: t("Links"),
               devices: "desktop",
               options: [
                 {
                   id: "color",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER],
+                  states: [NORMAL, HOVER, ACTIVE],
                   devices: "desktop"
                 }
               ]
             },
             {
-              id: dvk("colorActive"),
-              label: t("Active"),
-              devices: "desktop",
-              options: [
-                {
-                  id: "activeColor",
-                  type: "colorPicker-dev",
-                  devices: "desktop"
-                }
-              ]
-            },
-            {
-              id: dvk("colorArrows"),
+              id: "colorArrows",
               label: t("Arrows"),
               devices: "desktop",
               options: [
@@ -117,7 +104,7 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

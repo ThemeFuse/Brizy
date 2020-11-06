@@ -6,7 +6,7 @@ export default function($node) {
   const $parallax = $node.find(".brz-bg-image-parallax");
 
   if ($parallax.length > 0) {
-    const $parallaxContainers = $parallax.closest(".brz-bg-media");
+    const $parallaxContainers = $parallax.closest(".brz-bg");
 
     $parallaxContainers.parallax({
       bgClass: "brz-bg-image-parallax"

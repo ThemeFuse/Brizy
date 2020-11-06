@@ -67,7 +67,7 @@ export function getItems({ v, device }) {
                   disabled: isRelative,
                   config: {
                     min: 0,
-                    max: dvv("widthSuffix") === "px" ? 1200 : 300,
+                    max: dvv("widthSuffix") === "px" ? 1200 : 100,
                     units: [
                       { value: "px", title: "px" },
                       { value: "%", title: "%" }
@@ -89,8 +89,8 @@ export function getItems({ v, device }) {
                   type: "slider-dev",
                   disabled: isRelative,
                   config: {
-                    min: dvv("offsetXSuffix") === "px" ? -1200 : -200,
-                    max: dvv("offsetXSuffix") === "px" ? 1200 : 200,
+                    min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
+                    max: dvv("offsetXSuffix") === "px" ? 1200 : 100,
                     units: [
                       { value: "px", title: "px" },
                       { value: "%", title: "%" }
@@ -112,12 +112,9 @@ export function getItems({ v, device }) {
                   type: "slider-dev",
                   disabled: isRelative,
                   config: {
-                    min: dvv("offsetYSuffix") === "px" ? -1200 : -200,
-                    max: dvv("offsetYSuffix") === "px" ? 1200 : 200,
-                    units: [
-                      { value: "px", title: "px" },
-                      { value: "%", title: "%" }
-                    ]
+                    min: -1200,
+                    max: 1200,
+                    units: [{ value: "px", title: "px" }]
                   }
                 }
               ]
@@ -247,7 +244,7 @@ export function getItems({ v, device }) {
           disabled: isRelative,
           config: {
             min: 0,
-            max: dvv("widthSuffix") === "px" ? 1200 : 300,
+            max: dvv("widthSuffix") === "px" ? 1200 : 100,
             units: [
               { value: "px", title: "px" },
               { value: "%", title: "%" }
@@ -269,8 +266,8 @@ export function getItems({ v, device }) {
           type: "slider-dev",
           disabled: isRelative,
           config: {
-            min: dvv("offsetXSuffix") === "px" ? -1200 : -200,
-            max: dvv("offsetXSuffix") === "px" ? 1200 : 200,
+            min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
+            max: dvv("offsetXSuffix") === "px" ? 1200 : 100,
             units: [
               { value: "px", title: "px" },
               { value: "%", title: "%" }
@@ -292,12 +289,9 @@ export function getItems({ v, device }) {
           type: "slider-dev",
           disabled: isRelative,
           config: {
-            min: dvv("offsetYSuffix") === "px" ? -1200 : -200,
-            max: dvv("offsetYSuffix") === "px" ? 1200 : 200,
-            units: [
-              { value: "px", title: "px" },
-              { value: "%", title: "%" }
-            ]
+            min: -1200,
+            max: 1200,
+            units: [{ value: "px", title: "px" }]
           }
         }
       ]

@@ -66,18 +66,16 @@ class ColumnResizer extends Component {
     );
 
     return (
-      <>
-        <DraggableDiv
-          className={className}
-          draggingCursor="col-resize"
-          onDragStart={this.handleDragStart}
-          onDrag={this.handleDrag}
-          onDragEnd={this.handleDragEnd}
-        >
-          <div className="brz-ed-draggable__column--item" />
-          {this.state.resize && this.renderPopover()}
-        </DraggableDiv>
-      </>
+      <DraggableDiv
+        className={className}
+        draggingCursor="col-resize"
+        onDragStart={this.handleDragStart}
+        onDrag={this.handleDrag}
+        onDragEnd={this.handleDragEnd}
+      >
+        <div className="brz-ed-draggable__column--item" />
+        {this.state.resize && this.renderPopover()}
+      </DraggableDiv>
     );
   }
 }

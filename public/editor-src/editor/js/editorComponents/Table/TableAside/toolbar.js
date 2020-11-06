@@ -1,12 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems({ v }) {
   return [
     {
-      id: dvk("toolbarCurrentShortcode"),
+      id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
         icon: "nc-star"

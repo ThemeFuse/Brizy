@@ -14,7 +14,7 @@ export function cssStyleBgColor({ v, device, state, prefix = "bg" }) {
   });
 
   return bgColor === undefined || bgGradient !== "none"
-    ? ""
+    ? "background-color:transparent;"
     : `background-color:${bgColor};`;
 }
 

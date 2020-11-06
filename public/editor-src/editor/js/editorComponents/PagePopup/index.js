@@ -1,5 +1,5 @@
 import React from "react";
-import UIState from "visual/global/UIState";
+import Prompts from "visual/component/Prompts";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { FirstPopupBlockAdder } from "visual/component/BlockAdders";
@@ -14,7 +14,6 @@ import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import defaultValue from "./defaultValue.json";
 import { uuid } from "visual/utils/uuid";
 import { stripSystemKeys, setIds } from "visual/utils/models";
-import { t } from "visual/utils/i18n";
 
 class PagePopup extends EditorComponent {
   static get componentId() {
@@ -52,37 +51,6 @@ class PagePopup extends EditorComponent {
     UIEvents.off("dnd.sort", this.handleDNDSort);
   }
 
-  getPromptData() {
-    return {
-      prompt: "blocks",
-      tabs: {
-        templates: false
-      },
-      tabProps: {
-        blocks: {
-          title: t("Popups"),
-          showType: false,
-          type: "popup",
-          onAddBlocks: this.handleBlocksAdd
-        },
-        saved: {
-          title: t("Saved Popups"),
-          showSearch: false,
-          type: "popup",
-          blocksFilter: this.blocksFilter,
-          onAddBlocks: this.handleBlocksAdd
-        },
-        global: {
-          title: t("Global Popups"),
-          showSearch: false,
-          type: "popup",
-          blocksFilter: this.blocksFilter,
-          onAddBlocks: this.handleBlocksAdd
-        }
-      }
-    };
-  }
-
   handleClose = () => {
     this.patchValue({
       items: []
@@ -113,7 +81,20 @@ class PagePopup extends EditorComponent {
   };
 
   handlePromptOpen = () => {
-    UIState.set("prompt", this.getPromptData());
+    const data = {
+      prompt: "blocks",
+      mode: "single",
+      props: {
+        type: "popup",
+        showTemplate: false,
+        blocksType: false,
+        globalSearch: false,
+        onChangeBlocks: this.handleBlocksAdd,
+        onChangeGlobal: this.handleBlocksAdd,
+        onChangeSaved: this.handleAddSavedBlock
+      }
+    };
+    Prompts.open(data);
   };
 
   renderItems() {
@@ -139,7 +120,6 @@ class PagePopup extends EditorComponent {
         <React.Fragment>
           <FirstPopupBlockAdder
             insertIndex={0}
-            promptData={this.getPromptData()}
             onAddBlock={this.handleBlocksAdd}
           />
           <HotKeys

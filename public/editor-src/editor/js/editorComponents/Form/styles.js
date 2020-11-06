@@ -7,6 +7,9 @@ export function styleClassName(v) {
 
   if (IS_EDITOR) {
     glamorObj = {
+      ".brz &.brz-forms .brz-btn": {
+        display: "inline-flex"
+      },
       ".brz-ed--desktop &": {
         textAlign: "var(--horizontalAlign)"
       },
@@ -23,6 +26,9 @@ export function styleClassName(v) {
     glamorObj = {
       textAlign: horizontalAlign,
 
+      ".brz &.brz-forms .brz-btn": {
+        display: "inline-flex"
+      },
       "@media (max-width: 991px)": {
         textAlign: tabletSyncOnChange(v, "horizontalAlign")
       },

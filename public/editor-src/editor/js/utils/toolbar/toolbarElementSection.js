@@ -47,6 +47,7 @@ export function toolbarElementSectionSaved({
   state,
   blockType,
   position = 90,
+  disabled = false,
   devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -58,6 +59,7 @@ export function toolbarElementSectionSaved({
     id: dvk("makeItSaved"),
     type: "savedBlock",
     icon: "nc-save-section",
+    disabled,
     title: t("Save"),
     tooltipContent: t("Saved"),
     value: { blockId: component.getId() }

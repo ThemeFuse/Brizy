@@ -5,22 +5,25 @@ import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device }),
-    defaultValueValue({ v, key: "bgColorPalette", device })
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
   );
   const { hex: colorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "colorHex", device }),
-    defaultValueValue({ v, key: "colorPalette", device })
+    dvv("colorHex"),
+    dvv("colorPalette")
   );
 
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-form-left",
-      title: t("Field"),
+      type: "popover-dev",
+      config: {
+        icon: "nc-form-left",
+        title: t("Field")
+      },
       position: 60,
       options: [
         toolbarElementForm2SpacingPx({
@@ -32,11 +35,12 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover",
-      icon: "nc-font",
-      title: t("Typography"),
-      size: device === "desktop" ? "large" : "auto",
-      roles: ["admin"],
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        title: t("Typography"),
+        size: device === "desktop" ? "large" : "auto"
+      },
       position: 70,
       options: [
         {
@@ -50,25 +54,27 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover",
-      size: "auto",
-      title: t("Colors"),
-      roles: ["admin"],
-      position: 80,
-      icon: {
-        style: {
-          backgroundColor:
-            v.bgColorOpacity > 0
-              ? hexToRgba(bgColorHex, v.bgColorOpacity)
-              : hexToRgba(colorHex, v.colorOpacity)
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor:
+              v.bgColorOpacity > 0
+                ? hexToRgba(bgColorHex, v.bgColorOpacity)
+                : hexToRgba(colorHex, v.colorOpacity)
+          }
         }
       },
+      position: 80,
       options: [
         {
           id: "color",
           type: "tabs-dev",
           tabs: [
             {
+              id: "bgColor",
               label: t("Background"),
               options: [
                 {
@@ -79,6 +85,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
+              id: "labelColor",
               label: t("Label"),
               options: [
                 {
@@ -89,6 +96,7 @@ export function getItems({ v, device }) {
               ]
             },
             {
+              id: "borderColor",
               label: t("Border"),
               options: [
                 {

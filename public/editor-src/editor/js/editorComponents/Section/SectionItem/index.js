@@ -12,7 +12,7 @@ import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
-import { styleBg, styleContainer, styleContainerWrap } from "./styles";
+import { style, styleContainer } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import {
@@ -56,18 +56,6 @@ class SectionItem extends EditorComponent {
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  handleToolbarClose = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    this.patchValue({
-      tabsState: "tabNormal",
-      tabsCurrentElement: "tabCurrentElement",
-      tabsColor: "tabOverlay"
-    });
-  };
 
   handleToolbarEscape = () => {
     this.collapsibleToolbarRef.current.open();
@@ -127,13 +115,6 @@ class SectionItem extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const classNameBg = classnames(
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        styleBg(v, vs, vd, this.props)
-      )
-    );
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
@@ -143,14 +124,6 @@ class SectionItem extends EditorComponent {
         styleContainer(v, vs, vd)
       )
     );
-    const classNameContainerWrap = classnames(
-      "brz-container__wrap",
-      css(
-        `${this.constructor.componentId}-containerWrap`,
-        `${this.getId()}-containerWrap`,
-        styleContainerWrap(v, vs, vd)
-      )
-    );
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: classNameContainer,
@@ -158,53 +131,67 @@ class SectionItem extends EditorComponent {
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
+      <Background value={v} meta={meta}>
         <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
-          <div className={classNameContainerWrap}>
-            <Items {...itemsProps} />
-          </div>
+          <Items {...itemsProps} />
         </PaddingResizer>
       </Background>
     );
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, containerType } = v;
+    const { className, containerType, customCSS } = v;
     const classNameSectionContent = classnames(
       "brz-section__content",
       `brz-section--${containerType}`,
-      className
+      className,
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        style(v, vs, vd, this.props)
+      )
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={classNameSectionContent}>
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder showBorder={false} activateOnContentClick={false}>
-              {this.renderToolbar()}
-              <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                {this.renderItems(v, vs, vd)}
-              </ToolbarExtend>
-            </ContainerBorder>
-          </Roles>
-        </div>
-      </CustomCSS>
+      <ContainerBorder type="section__item" activateOnContentClick={false}>
+        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            <div
+              {...containerBorderAttr}
+              ref={containerBorderRef}
+              className={classNameSectionContent}
+            >
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                {this.renderToolbar()}
+                <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                  {this.renderItems(v, vs, vd)}
+                </ToolbarExtend>
+              </Roles>
+            </div>
+          </CustomCSS>
+        )}
+      </ContainerBorder>
     );
   }
 
   renderForView(v, vs, vd) {
-    const { className, containerType } = v;
+    const { className, containerType, customCSS } = v;
     const classNameSectionContent = classnames(
       "brz-section__content",
       `brz-section--${containerType}`,
-      className
+      className,
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        style(v, vs, vd, this.props)
+      )
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={classNameSectionContent}>
           {this.renderItems(v, vs, vd)}
         </div>

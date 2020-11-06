@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
 export default taxonomies => {
   return {
@@ -7,15 +6,14 @@ export default taxonomies => {
   };
 };
 
-const getItems = taxonomies => ({ device }) => {
-  const dvk = key => defaultValueKey({ key, device });
-
+const getItems = taxonomies => () => {
   return [
     {
       id: "toolbarWOOProducts",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2"
+        icon: "nc-woo-products",
+        title: t("Shop Products")
       },
       devices: "desktop",
       position: 10,
@@ -25,24 +23,18 @@ const getItems = taxonomies => ({ device }) => {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("layoutTab"),
+              id: "layoutTab",
               label: t("Layout"),
               options: [
                 {
                   id: "columns",
                   label: t("Columns"),
-                  type: "select-dev",
-                  devices: "desktop",
-                  choices: [
-                    { title: "1", value: 1 },
-                    { title: "2", value: 2 },
-                    { title: "3", value: 3 },
-                    { title: "4", value: 4 },
-                    { title: "5", value: 5 },
-                    { title: "6", value: 6 }
-                  ],
+                  type: "slider-dev",
                   config: {
-                    size: "small"
+                    min: 1,
+                    max: 6,
+                    inputMin: 1,
+                    inputMax: 6
                   }
                 },
                 {
@@ -65,10 +57,16 @@ const getItems = taxonomies => ({ device }) => {
                   label: t("Categories"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: taxonomies.map(item => ({
-                    title: item.name,
-                    value: item.slug
-                  }))
+                  choices: [
+                    {
+                      title: t("All"),
+                      value: ""
+                    },
+                    ...taxonomies.map(item => ({
+                      title: item.name,
+                      value: item.slug
+                    }))
+                  ]
                 },
                 {
                   id: "orderBy",
@@ -76,6 +74,7 @@ const getItems = taxonomies => ({ device }) => {
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
+                    { title: t("Random"), value: "name" },
                     { title: t("Title"), value: "title" },
                     { title: t("Date"), value: "date" },
                     { title: t("Rating"), value: "rating" },
@@ -120,7 +119,7 @@ const getItems = taxonomies => ({ device }) => {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           devices: "desktop",
           label: t("More Settings"),

@@ -4,6 +4,7 @@
     "orderBy": "name",
     "order": "ASC",
     "columns": 4,
+    "columnsSuffix": null,
     "hideEmpty": 0,
     "parent": "",
     "ids": ""

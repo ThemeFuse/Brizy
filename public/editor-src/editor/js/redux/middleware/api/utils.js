@@ -3,6 +3,7 @@ import _ from "underscore";
 import {
   updateProject as apiUpdateProject,
   updatePage as apiUpdatePage,
+  updateExternalStories as apiUpdateExternalStories,
   updateInternalPopup as apiUpdateInternalPopup,
   updateExternalPopup as apiUpdateExternalPopup,
   createGlobalBlock as apiCreateGlobalBlock,
@@ -15,13 +16,20 @@ import {
   sendHeartBeat as apiSendHeartBeat
 } from "visual/utils/api/editor";
 import Config from "visual/global/Config";
-import { IS_PAGE, IS_INTERNAL_POPUP } from "visual/utils/models/modes";
+import {
+  IS_INTERNAL_STORY,
+  IS_EXTERNAL_STORY,
+  IS_PAGE,
+  IS_INTERNAL_POPUP
+} from "visual/utils/models/modes";
 
 const updateFn =
-  IS_PAGE || Config.get("wp")
+  IS_INTERNAL_STORY || IS_PAGE || Config.get("wp")
     ? apiUpdatePage
     : IS_INTERNAL_POPUP
     ? apiUpdateInternalPopup
+    : IS_EXTERNAL_STORY
+    ? apiUpdateExternalStories
     : apiUpdateExternalPopup;
 
 export {

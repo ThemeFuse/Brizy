@@ -6,8 +6,9 @@ import DataFilter from "../common/DataFilter";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import SearchInput from "../common/SearchInput";
 import ThumbnailGrid from "../common/ThumbnailGrid";
-import { LayoutThumbnail } from "../common/Thumbnail";
+import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
 import { templateThumbnailUrl } from "visual/utils/templates";
+import { IS_STORY } from "visual/utils/models";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import Details from "./Details";
@@ -35,14 +36,36 @@ export default class List extends Component {
   }
 
   async getData() {
-    const url = assetUrl("templates/meta.json");
+    const type = this.getType();
+
+    const url = assetUrl(`${type}/meta.json`);
     const data = await fetch(url);
 
     return await data.json();
   }
 
+  getType = () => (IS_STORY ? "stories" : "templates");
+
   handleThumbnailAdd = thumbnailData => {
     this.setState({ thumbnailData });
+  };
+
+  async getBlockResolve(id) {
+    const type = this.getType();
+    const r = await fetch(assetUrl(`${type}/resolves/${id}.json`));
+    return await r.json();
+  }
+
+  handleBlankThumbnailAdd = async thumbnailData => {
+    const { onAddBlocks, onClose } = this.props;
+    const blockData = await this.getBlockResolve(thumbnailData.id);
+    const resolve = { ...blockData, blockId: thumbnailData.id };
+
+    onAddBlocks({
+      blocks: [resolve],
+      fonts: []
+    });
+    onClose();
   };
 
   renderLoading() {
@@ -67,11 +90,26 @@ export default class List extends Component {
     );
   }
 
+  renderThumbnail = ({ data, ...props }) => {
+    if (IS_STORY && data.blank) {
+      return (
+        <Thumbnail
+          {...props}
+          data={data.pages[0]}
+          onAdd={this.handleBlankThumbnailAdd}
+        />
+      );
+    }
+
+    return <LayoutThumbnail data={data} {...props} />;
+  };
+
   renderList() {
     const { data } = this.state;
     const { showSidebar, showSearch, HeaderSlotLeft } = this.props;
-    const { templates } = data;
-    const thumbnails = templates.map(el => ({
+    const type = this.getType();
+    const blocks = data[type];
+    const thumbnails = blocks.map(el => ({
       ...el,
       ...el.pages[0],
       thumbnailSrc: templateThumbnailUrl(el.pages[0])
@@ -91,7 +129,7 @@ export default class List extends Component {
       category: "*",
       search: ""
     };
-    const blocksArr = templates;
+    const blocksArr = blocks;
     const countersSectionBlocks = {};
 
     for (let i = 0; i < blocksArr.length; i++) {
@@ -113,7 +151,9 @@ export default class List extends Component {
         id: "*",
         title: t("All Categories")
       }
-    ].concat(data.categories);
+    ]
+      .concat(data.categories)
+      .filter(({ hidden }) => hidden !== true);
 
     return (
       <DataFilter
@@ -151,7 +191,7 @@ export default class List extends Component {
                 {filteredThumbnails.length > 0 ? (
                   <ThumbnailGrid
                     data={filteredThumbnails}
-                    ThumbnailComponent={LayoutThumbnail}
+                    ThumbnailComponent={this.renderThumbnail}
                     onThumbnailAdd={this.handleThumbnailAdd}
                     onThumbnailRemove={this.handleThumbnailRemove}
                   />

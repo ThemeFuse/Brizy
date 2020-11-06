@@ -57,6 +57,8 @@ class Brizy_Editor_Editor_Editor {
 
 	private function getMode( $postType ) {
 		switch ( $postType ) {
+			case Brizy_Admin_Stories_Main::CP_STORY:
+				return 'internal_story';
 			case Brizy_Admin_Templates::CP_TEMPLATE:
 				return 'template';
 			case Brizy_Admin_Popups_Main::CP_POPUP:
@@ -142,19 +144,19 @@ class Brizy_Editor_Editor_Editor {
 				'pluginPrefix'     => Brizy_Editor::prefix(),
 				'permalink'        => get_permalink( $wp_post_id ),
 				'page'             => $wp_post_id,
-				'ruleMatches'      => $this->getTemplateRuleMatches( $mode === 'template', $wp_post_id ),
+
 				'featuredImage'    => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments'  => array( 'images' => $this->get_page_attachments() ),
 				'templates'        => $this->post->get_templates(),
 				'api'              => $this->getApiActions(),
 				'plugins'          => array(
 					'dummy'       => true,
-					'woocommerce' => $this->get_woocomerce_plugin_info(),
+					'woocommerce' => self::get_woocomerce_plugin_info(),
 				),
-				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
-				'l10n'             => $this->getTexts(),
-				'pageData'         => apply_filters( 'brizy_page_data', array() ),
-				'availableRoles'   => $this->roleList(),
+				'hasSidebars'     => count( $wp_registered_sidebars ) > 0,
+				'l10n'            => $this->getTexts(),
+				'pageData'        => apply_filters( 'brizy_page_data', array() ),
+				'availableRoles'  => $this->roleList(),
 				'usersCanRegister' => get_option( 'users_can_register' ),
 			),
 			'mode'            => $mode,
@@ -179,6 +181,9 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->addRecaptchaAccounts( $manager, $config );
 		$config = $this->addSocialAccounts( $manager, $config );
 		$config = $this->addWpPostTypes( $config );
+
+
+		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id );
 
 		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
 	}
@@ -234,7 +239,7 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @return array|null
 	 */
-	private function get_woocomerce_plugin_info() {
+	public static function get_woocomerce_plugin_info() {
 		if ( function_exists( 'wc' ) && defined( 'WC_PLUGIN_FILE' ) ) {
 			return array( 'version' => WooCommerce::instance()->version );
 		}
@@ -737,23 +742,34 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $brizy_public_editor_build_texts::get_editor_texts();
 	}
 
+	private function addTemplateFields( $config, $is_template, $wp_post_id ) {
+
+		$template_rules = [];
+		if ( $is_template ) {
+			$rule_manager            = new Brizy_Admin_Rules_Manager();
+			$template_rules          = $rule_manager->getRules( $wp_post_id );
+			$config['template_type'] = $this->getTemplateType( $template_rules );
+		}
+
+		$config['wp']['ruleMatches'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
+
+		return $config;
+	}
+
 	/**
 	 * @param $isTemplate
-	 * @param $wp_post_id
-	 * @param array $ruleMatches
+	 * @param $wpPostId
+	 * @param $templateRules
 	 *
 	 * @return array
-	 * @throws Exception
 	 */
-	private function getTemplateRuleMatches( $isTemplate, $wp_post_id ) {
+	private function getTemplateRuleMatches( $isTemplate, $wpPostId, $templateRules ) {
 
 		$ruleMatches = array();
 
 		if ( $isTemplate ) {
-			$rule_manager   = new Brizy_Admin_Rules_Manager();
-			$template_rules = $rule_manager->getRules( $wp_post_id );
 
-			foreach ( $template_rules as $rule ) {
+			foreach ( $templateRules as $rule ) {
 				/**
 				 * @var Brizy_Admin_Rule $rule ;
 				 */
@@ -769,11 +785,68 @@ class Brizy_Editor_Editor_Editor {
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
 				'group'      => Brizy_Admin_Rule::POSTS,
 				'entityType' => $this->post->getWpPost()->post_type,
-				'values'     => array( $wp_post_id ),
+				'values'     => array( $wpPostId ),
 			);
 		}
 
 		return $ruleMatches;
+	}
+
+
+	/**
+	 *
+	 * @param $template_rules
+	 */
+	private function getTemplateType( $template_rules ) {
+		foreach ( $template_rules as $rule ) {
+
+			if ( $rule->getType() != Brizy_Admin_Rule::TYPE_INCLUDE ) {
+				continue;
+			}
+
+			// single mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::POSTS ) {
+				if ( $rule->getEntityType() == 'product' ) {
+					return 'product';
+				} else {
+					return 'single';
+				}
+			}
+
+
+			// single mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
+				if ( in_array( $rule->getEntityType(), [ '404', 'author', 'front_page' ] ) ) {
+					return 'single';
+				}
+
+				if ( in_array( $rule->getEntityType(), [ 'search', 'home_page' ] ) ) {
+					return 'archive';
+				}
+			}
+
+			// archive mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TAXONOMY ) {
+				if ( in_array( $rule->getEntityType(), [ 'product_cat', 'product_tag' ] ) ) {
+					return 'product_archive';
+				}
+				if ( in_array( $rule->getEntityType(), [ 'category', 'post_tag', ] ) ) {
+					return 'archive';
+				}
+			}
+
+			// product archive mode
+			if ( in_array( $rule->getAppliedFor(), [
+					Brizy_Admin_Rule::ARCHIVE,
+					Brizy_Admin_Rule::TAXONOMY,
+					Brizy_Admin_Rule::WOO_SHOP_PAGE
+				] ) &&
+			     in_array( $rule->getEntityType(), [ 'product', 'shop_page' ] ) ) {
+				return 'product_archive';
+			}
+		}
+
+		return '';
 	}
 
 	/**
@@ -880,6 +953,7 @@ class Brizy_Editor_Editor_Editor {
 			'validateRecaptchaAccount'   => $pref . Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
 			'rulePostsGroupList'         => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
 			'ruleArchiveGroupList'       => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
+			'ruleTemplateGroupList'      => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
 		);
 	}
 

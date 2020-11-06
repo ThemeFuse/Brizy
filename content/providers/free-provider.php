@@ -118,21 +118,45 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                 return $this->displayPosts( $posts, $extra_atts );
             } ),
-            /*
-             * Deprecated placeholder.
-             * It is for backward compatibilities.
-             * Now this element is under product pages and the placeholder for it is the default wp shortcode structure [product_page id="thePostID"].
-             */
-            new Brizy_Content_Placeholders_Simple( '', 'editor_product_page', function( $context, $contentPlaceholder ) {
+
+            new Brizy_Content_Placeholders_Simple( 'Product Page', 'editor_product_page', function( $context, $contentPlaceholder ) {
 
                 $atts = $contentPlaceholder->getAttributes();
 
-                if ( empty( $atts['id'] ) ) {
-                    return '';
-                }
+//	            if ( ! empty( $atts['id'] ) ) {
+//		            $product_data = get_post( $atts['id'] );
+//		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
+//	            }
 
-                return do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
+	            if ( empty( $atts['id'] ) && current_user_can( 'manage_options' ) ) {
+		            return __( 'Please set a valid product', 'brizy' );
+	            }
+
+	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
+	            remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+
+	            $html = do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
+
+	            add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+
+	            return $html;
             } ),
+
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
+				return do_shortcode( '[woocommerce_cart]' );
+			} ),
+
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_checkout', function () {
+				return do_shortcode( '[woocommerce_checkout]' );
+			} ),
+
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_my_account', function () {
+				return do_shortcode( '[woocommerce_my_account]' );
+			} ),
+
+			new Brizy_Content_Placeholders_Simple( '', 'editor_product_order_tracking', function () {
+				return do_shortcode( '[woocommerce_order_tracking]' );
+			} )
 		);
 	}
 
@@ -141,29 +165,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             case 'post_title':
                 return get_the_title( $post );
             case 'post_excerpt':
-                return self::wp_trim_excerpt( $post->post_excerpt, $post );
+                return get_the_excerpt($post);
             case 'post_content':
-                $GLOBALS['post'] = $post;
-                setup_postdata($post);
-                // remove all brizy the_content fitlers
-                remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-                $brizyPost = Brizy_Editor_Post::get( $post );
-                Brizy_Public_Main::get( $brizyPost )->removeTheContentFilters();
-
-                // get the content
-                add_filter( 'the_content', 'wpautop' );
-                $content = get_the_content( null, null, $post );
-                $content = apply_filters( 'the_content', $content );
-                $content = str_replace( ']]>', ']]&gt;', $content );
-                remove_filter( 'the_content', 'wpautop' );
-
-                // add the filters back
-                add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], - 12000 );
-                Brizy_Public_Main::get($brizyPost)->addTheContentFilters();
-
-                wp_reset_postdata();
-
-                return $content;
+	            return get_the_content($post);
             case 'post_password':
                 return '';
             default:
@@ -182,18 +186,30 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
      * @return string
      */
     public static function wp_trim_excerpt( $text = '', $post = null ) {
+        global $pages;
+
+        // not sure why this is null (this happens on author pages.. maybe there are more)
+        //
+        if(is_null($pages))
+            $pages = [];
+
         $raw_excerpt = $text;
         if ( '' == $text ) {
+
             $post = get_post( $post );
             $text = get_the_content( '', false, $post );
+
+
 
             $text = strip_shortcodes( $text );
             $text = excerpt_remove_blocks( $text );
 
             /** This filter is documented in wp-includes/post-template.php */
-            //$text = apply_filters( 'the_content', $text );
+            $text = apply_filters( 'the_content', $text );
             $text = str_replace( ']]>', ']]&gt;', $text );
-            $text = Brizy_Content_PlaceholderExtractor::stripPlaceholders( $text );
+
+
+
             /**
              * Filters the number of words in an excerpt.
              *
@@ -203,6 +219,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
              *
              */
             $excerpt_length = apply_filters( 'excerpt_length', 55 );
+
             /**
              * Filters the string in the "more" link displayed after a trimmed excerpt.
              *

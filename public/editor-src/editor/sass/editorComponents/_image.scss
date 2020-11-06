@@ -20,6 +20,11 @@
   .brz-picture {
     outline: none;
   }
+
+  .brz-shortcode__placeholder {
+    top: 0;
+    position: absolute;
+  }
 }
 
 // Preview
@@ -59,6 +64,15 @@
       border-radius: inherit;
       transform: scale(1.01);
     }
+  }
+
+  // Only Story
+  // Image
+  .brz-image--story .brz-shortcode__placeholder .brz-icon-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 

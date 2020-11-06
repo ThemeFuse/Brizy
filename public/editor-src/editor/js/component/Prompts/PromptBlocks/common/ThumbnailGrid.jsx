@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import Thumbnail from "./Thumbnail";
+import { IS_STORY } from "visual/utils/models";
+import classnames from "classnames";
 
 export default class ThumbnailGrid extends Component {
   static defaultProps = {
-    columns: 4,
+    columns: IS_STORY ? 5 : 4,
     showSync: false,
     responsive: [
       {
         breakpoint: 1460,
+        settings: {
+          columns: IS_STORY ? 4 : 3
+        }
+      },
+      {
+        breakpoint: 1200,
         settings: {
           columns: 3
         }
@@ -65,6 +73,11 @@ export default class ThumbnailGrid extends Component {
       arr.push([]);
     }
 
+    const gridClassName = classnames(
+      "brz-ed-popup-two-blocks__grid__column",
+      IS_STORY && "brz-ed-popup-two-blocks__grid__column-stories"
+    );
+
     const columns = data
       .reduce((acc, thumbnailData, index) => {
         const element = (
@@ -87,7 +100,7 @@ export default class ThumbnailGrid extends Component {
       .map((column, index) => (
         <div
           key={index}
-          className="brz-ed-popup-two-blocks__grid__column"
+          className={gridClassName}
           style={{
             width: `${100 / currentColumns}%`,
             flexBasis: `${100 / currentColumns}%`

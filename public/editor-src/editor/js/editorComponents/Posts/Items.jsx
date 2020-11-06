@@ -103,36 +103,38 @@ class Items extends EditorArrayComponent {
   renderPaginationForEdit() {
     return (
       <Toolbar {...this.props.toolbarExtendPagination}>
-        <ul className="page-numbers">
-          <li>
-            <span className="page-numbers current">1</span>
-          </li>
-          <li>
-            <a className="page-numbers" href="#">
-              2
-            </a>
-          </li>
-          <li>
-            <a className="page-numbers" href="#">
-              3
-            </a>
-          </li>
-          <li>
-            <a className="page-numbers" href="#">
-              ...
-            </a>
-          </li>
-          <li>
-            <a className="page-numbers" href="#">
-              10
-            </a>
-          </li>
-          <li>
-            <a className="page-numbers" href="#">
-              11
-            </a>
-          </li>
-        </ul>
+        <div className="brz-posts__pagination">
+          <ul className="page-numbers">
+            <li>
+              <span className="page-numbers current">1</span>
+            </li>
+            <li>
+              <a className="page-numbers" href="#">
+                2
+              </a>
+            </li>
+            <li>
+              <a className="page-numbers" href="#">
+                3
+              </a>
+            </li>
+            <li>
+              <a className="page-numbers" href="#">
+                ...
+              </a>
+            </li>
+            <li>
+              <a className="page-numbers" href="#">
+                10
+              </a>
+            </li>
+            <li>
+              <a className="page-numbers" href="#">
+                11
+              </a>
+            </li>
+          </ul>
+        </div>
       </Toolbar>
     );
   }
@@ -165,6 +167,7 @@ class Items extends EditorArrayComponent {
 
   renderForView(v) {
     const {
+      type,
       className,
       style,
       showPagination,
@@ -174,14 +177,18 @@ class Items extends EditorArrayComponent {
     const item = v.map(this.renderItem);
     const filterClassName = `brz-posts__filter--${filterStyle}`;
     const filterItemClassName = `brz-posts__filter__item--${filterStyle}`;
+
+    const brizy_dc_name =
+      type === "upsell" ? "editor_product_upsells" : "brizy_dc_post_loop";
+
     return (
       <div className={className} style={style}>
         {showFilter &&
           `{{ brizy_dc_post_loop_tags ulClassName='${filterClassName}' liClassName='${filterItemClassName}' }}`}
         <div className="brz-posts__wrapper">
-          {`{{ brizy_dc_post_loop ${this.getLoopAttributesString()} }}`}
+          {`{{ ${brizy_dc_name} ${this.getLoopAttributesString()} }}`}
           {super.renderItemsContainer(item)}
-          {"{{end_brizy_dc_post_loop}}"}
+          {`{{end_${brizy_dc_name}}}`}
         </div>
         {showPagination &&
           `{{ brizy_dc_post_loop_pagination ${this.getLoopAttributesString()} }}`}

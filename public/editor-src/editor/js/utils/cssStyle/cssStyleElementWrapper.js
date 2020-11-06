@@ -26,7 +26,7 @@ export function cssStyleWrapperFixedFlex({ v, device, state }) {
     return "";
   }
 
-  return "display: flex; align-items: stretch;";
+  return "align-items: stretch;";
 }
 
 export function cssStyleWrapperBorderFlex({ v, device, state, mode }) {
@@ -45,4 +45,11 @@ export const cssStyleWrapperContainerFlex = ({ v, device, state }) => {
   const position = Position.read(dvv("elementPosition")) ?? "relative";
 
   return position === "relative" ? "" : "display: flex; width: 100%";
+};
+
+export const cssStyleWrapperContainerSize = ({ v, device, state }) => {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const position = Position.read(dvv("elementPosition")) ?? "relative";
+
+  return position === "relative" ? "" : "width: 100%";
 };

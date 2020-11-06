@@ -143,10 +143,7 @@ class Lottie extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
-              <LottieControl
-                {...lottieReactConfig}
-                key={`lottie-${String(loop)}`}
-              />
+              <LottieControl {...lottieReactConfig} key={`lottie-${loop}`} />
             </BoxResizer>
           </Wrapper>
         </Toolbar>

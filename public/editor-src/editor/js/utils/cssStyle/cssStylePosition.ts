@@ -70,6 +70,6 @@ export function cssStyleOffset(d: CSSValue): string {
     : {};
 
   return Object.entries({ ...vertical, ...horizontal })
-    .map(([k, v]) => (v ? `${k}: ${v}` : ""))
-    .join(";");
+    .map(([k, v]) => (v ? `${k}: ${v};` : ""))
+    .join("");
 }

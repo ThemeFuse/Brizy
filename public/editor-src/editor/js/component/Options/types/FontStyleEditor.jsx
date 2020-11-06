@@ -5,6 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorIcon from "visual/component/EditorIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { hideToolbar } from "visual/component/Toolbar/index";
+import { IS_STORY } from "visual/utils/models";
 import { getFontById } from "visual/utils/fonts";
 import { getWeightChoices } from "visual/utils/fonts";
 import { uuid } from "visual/utils/uuid";
@@ -204,6 +205,7 @@ class FontStyle extends React.Component {
                         options: [
                           {
                             type: "grid",
+                            disabled: IS_STORY,
                             className: "brz-ed-grid__typography",
                             columns: [
                               {
@@ -275,6 +277,7 @@ class FontStyle extends React.Component {
                         options: [
                           {
                             type: "grid",
+                            disabled: IS_STORY,
                             className: "brz-ed-grid__typography",
                             columns: [
                               {

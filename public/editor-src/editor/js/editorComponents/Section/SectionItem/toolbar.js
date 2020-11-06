@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
   toolbarBgVideoUrl,
@@ -21,7 +21,6 @@ import { NORMAL, HOVER } from "visual/utils/stateMode";
 export function getItems({ v, device, component, state }) {
   const dvv = key => defaultValueValue({ v, key, device });
   const dvvHover = key => defaultValueValue({ v, key, device, state });
-  const dvk = key => defaultValueKey({ key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvvHover("bgColorHex"),
@@ -45,7 +44,7 @@ export function getItems({ v, device, component, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabCurrentElement"),
+              id: "tabCurrentElement",
               label: t("Background"),
               options: [
                 {
@@ -163,7 +162,7 @@ export function getItems({ v, device, component, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabOverlay"),
+              id: "tabOverlay",
               label: t("Overlay"),
               options: [
                 toolbarBgColor2({
@@ -260,7 +259,7 @@ export function getItems({ v, device, component, state }) {
               ]
             },
             {
-              id: dvk("tabBorder"),
+              id: "tabBorder",
               label: t("Border"),
               options: [
                 toolbarBorder2({
@@ -341,31 +340,31 @@ export function getItems({ v, device, component, state }) {
       position: 110,
       options: [
         {
-          type: "multiPicker",
+          id: "containerTypeGroup",
+          type: "group-dev",
           position: 10,
           devices: "desktop",
-          picker: {
-            id: "containerType",
-            label: t("Width"),
-            type: "select-dev",
-            choices: [
-              { title: t("Boxed"), value: "boxed" },
-              { title: t("Full"), value: "fullWidth" }
-            ]
-          },
-          choices: {
-            boxed: [
-              {
-                id: "containerSize",
-                type: "slider-dev",
-                config: {
-                  min: 35,
-                  max: 100,
-                  units: [{ title: "%", value: "%" }]
-                }
+          options: [
+            {
+              id: "containerType",
+              label: t("Width"),
+              type: "select-dev",
+              choices: [
+                { title: t("Boxed"), value: "boxed" },
+                { title: t("Full"), value: "fullWidth" }
+              ]
+            },
+            {
+              id: "containerSize",
+              type: "slider-dev",
+              disabled: v.containerType !== "boxed",
+              config: {
+                min: 35,
+                max: 100,
+                units: [{ title: "%", value: "%" }]
               }
-            ]
-          }
+            }
+          ]
         },
         {
           id: "containerSize",
@@ -380,7 +379,7 @@ export function getItems({ v, device, component, state }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           devices: "desktop",
           sidebarLabel: t("More Settings"),

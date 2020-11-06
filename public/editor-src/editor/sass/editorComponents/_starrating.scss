@@ -1,12 +1,16 @@
 // --- StarRating
 .brz-starrating {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+  flex-wrap: nowrap;
 
   &-container{
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &-text {
+    display: flex;
     align-items: center;
   }
 

@@ -18,7 +18,7 @@ class Brizy_Admin_Settings {
 
 
 	public static function menu_slug() {
-		return 'brizy-settings';
+		return Brizy_Editor::prefix('-settings');
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Brizy_Admin_Settings {
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
 		}
 
-		add_action( 'admin_head', array( $this, 'addClassToWpNavMenu' ) );
+		add_action( 'submenu_file', array( $this, 'submenu_file' ), 10, 2 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
 		add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
@@ -66,12 +66,18 @@ class Brizy_Admin_Settings {
 
 	/**
 	 * Keep the tempate menu selected
+	 *
+	 * @param $submenu_file
+	 * @param $parent_file
 	 */
-	function addClassToWpNavMenu() {
-		global $parent_file, $submenu_file, $post_type;
-		if ( Brizy_Admin_Templates::CP_TEMPLATE == $post_type ) :
-			$submenu_file = 'edit.php?post_type=brizy_template';
-		endif;
+	function submenu_file( $submenu_file, $parent_file ) {
+		global $post_type, $pagenow;
+
+		if ( $parent_file !== Brizy_Admin_Settings::menu_slug() || $pagenow !== 'post-new.php' ) {
+			return $submenu_file;
+		}
+
+		return "edit.php?post_type={$post_type}";
 	}
 
 	/**
@@ -121,7 +127,7 @@ class Brizy_Admin_Settings {
         }
 
 		global $submenu;
-        $submenu['brizy-settings'][] = array( '<span id="get-help"></span>'.__( 'Go Help', 'brizy' ) , 'manage_options', __bt('support-url',apply_filters('brizy_support_url', Brizy_Config::SUPPORT_URL)) );
+        $submenu[self::menu_slug()][] = array( '<span id="get-help"></span>'.__( 'Go Help', 'brizy' ) , 'manage_options', __bt('support-url',apply_filters('brizy_support_url', Brizy_Config::SUPPORT_URL)) );
     }
 
 	/**
@@ -135,7 +141,7 @@ class Brizy_Admin_Settings {
 			return;
 		}
 
-        $submenu['brizy-settings'][] = array( '<span style="display:flex;color:#00b9eb;" id="go-pro">
+        $submenu[self::menu_slug()][] = array( '<span style="display:flex;color:#00b9eb;" id="go-pro">
                 <svg height="20" width="20">
                     <path d="M13,7 L12,7 L12,4.73333333 C12,2.6744 10.206,1 8,1 C5.794,1 4,2.6744 4,4.73333333 L4,7 L3,7 C2.448,7 2,7.41813333 2,7.93333333 L2,14.0666667 C2,14.5818667 2.448,15 3,15 L13,15 C13.552,15 14,14.5818667 14,14.0666667 L14,7.93333333 C14,7.41813333 13.552,7 13,7 Z M10,5 L12,5 L12,7 L10,7 L6,7 L6,5 C6,3.897 6.897,3 8,3 C9.103,3 10,3.897 10,5 Z" fill="#00b9eb" fill-rule="nonzero"/>
                 </svg>'.__( 'Go Pro', 'brizy' )."</span>" , 'manage_options', apply_filters('brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL) );
@@ -421,6 +427,7 @@ class Brizy_Admin_Settings {
 	 * @return array
 	 */
 	protected function post_types() {
+
 		$types = get_post_types( array( 'public' => true ), 'objects' );
 
 		$types = array_filter(
@@ -449,8 +456,7 @@ class Brizy_Admin_Settings {
 
 
 	private function filter_types( WP_Post_Type $type ) {
-
-		return ! in_array( $type->name, array( 'attachment', 'elementor_library' ) );
+		return ! in_array( $type->name, array( 'attachment', 'elementor_library', Brizy_Admin_Stories_Main::CP_STORY ) );
 	}
 
 	private function is_selected( $type ) {

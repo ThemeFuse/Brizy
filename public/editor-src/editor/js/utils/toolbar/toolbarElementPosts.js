@@ -1,11 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { getTaxonomies } from "visual/utils/options";
+import { getTaxonomiesFilter } from "visual/utils/options";
 
 export function toolbarElementPostsTaxonomy({
   v,
   device,
+  type,
   devices = "all",
+  disabled = false,
   state
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
@@ -16,8 +18,9 @@ export function toolbarElementPostsTaxonomy({
     label: t("Categories"),
     className: "brz-ed-option__select-taxonomy",
     type: "select",
+    disabled,
     devices,
-    choices: getTaxonomies(),
+    choices: getTaxonomiesFilter(type),
     value: `${dvv("taxonomy")}|${dvv("taxonomyId")}`,
 
     onChange: _taxonomy => {

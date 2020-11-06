@@ -1,13 +1,18 @@
 // Row
 .brz-row {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   text-align: left;
+  flex-basis: 100%;
+  max-width: 100%;
+  width: 100%;
 
   &__container {
     position: relative;
     text-align: center;
     font-size: 0;
+    justify-content: center;
 
     .brz-link-container {
       position: absolute;
@@ -16,11 +21,10 @@
       top: 0;
       left: 0;
     }
-  }
-  &__bg {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    font-size: initial;
+
+    // align by container
+    > .brz-bg {
+      left: auto;
+    }
   }
 }

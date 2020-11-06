@@ -23,12 +23,7 @@ import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import * as toolbarExtend from "./toolbarExtend";
-import {
-  styleCloseButton,
-  styleBg,
-  styleContainer,
-  styleContainerWrap
-} from "./styles";
+import { styleCloseButton, styleContainer, styleContainerWrap } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import {
@@ -68,7 +63,6 @@ class SectionPopup extends EditorComponent {
       };
 
       this.mounted = false;
-      this.popupRef = React.createRef();
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
@@ -172,17 +166,6 @@ class SectionPopup extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const classNameBg = classnames(
-      "brz-popup__inner",
-      "brz-d-xs-flex",
-      "brz-flex-xs-wrap",
-      "brz-align-items-xs-center",
-      css(
-        `${this.constructor.componentId}-Bg`,
-        `${this.getId()}-Bg`,
-        styleBg(v, vs, vd)
-      )
-    );
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
@@ -212,7 +195,7 @@ class SectionPopup extends EditorComponent {
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={meta}>
+      <Background value={v} meta={meta}>
         <SortableZIndex zindex={1}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
@@ -247,26 +230,30 @@ class SectionPopup extends EditorComponent {
     );
 
     return ReactDOM.createPortal(
-      <CustomCSS selectorName={id} css={v.customCSS}>
-        <div
-          id={id}
-          className={classNameClose}
-          data-block-id={this.props.blockId}
-        >
-          <div className="brz-popup__close" onClick={this.handleDropClick}>
-            <ThemeIcon name="close-popup" type="editor" />
-          </div>
-          <Roles
-            allow={["admin"]}
-            fallbackRender={() => this.renderItems(v, vs, vd)}
-          >
-            <ContainerBorder showBorder={false} activateOnContentClick={false}>
-              {this.renderToolbar()}
-              {this.renderItems(v, vs, vd)}
-            </ContainerBorder>
-          </Roles>
-        </div>
-      </CustomCSS>,
+      <ContainerBorder type="popup" activateOnContentClick={false}>
+        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+          <CustomCSS selectorName={id} css={v.customCSS}>
+            <div
+              ref={containerBorderRef}
+              id={id}
+              className={classNameClose}
+              data-block-id={this.props.blockId}
+              {...containerBorderAttr}
+            >
+              <div className="brz-popup__close" onClick={this.handleDropClick}>
+                <ThemeIcon name="close-popup" type="editor" />
+              </div>
+              <Roles
+                allow={["admin"]}
+                fallbackRender={() => this.renderItems(v, vs, vd)}
+              >
+                {this.renderToolbar()}
+                {this.renderItems(v, vs, vd)}
+              </Roles>
+            </div>
+          </CustomCSS>
+        )}
+      </ContainerBorder>,
       this.el
     );
   }

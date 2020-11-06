@@ -1,16 +1,15 @@
 var h = hyperapp.h;
 
-var RULE_TYPE_INCLUDE = "1";
-var RULE_TYPE_EXCLUDE = "2";
+var RULE_TYPE_INCLUDE = 1;
+var RULE_TYPE_EXCLUDE = 2;
 
-var RULE_POSTS = "1";
-var RULE_TAXONOMY = "2";
-var RULE_ARCHIVE = "4";
-var RULE_TEMPLATE = "8";
-var RULE_BRIZY_TEMPLATE = "16";
-var POSTS_FROM_TAXONOMY = "32";
-var POSTS_FROM_CHILD_TAXONOMY = "64";
-var ANY_CHILD_TAXONOMY = "128";
+var RULE_POSTS = 1;
+var RULE_TAXONOMY = 2;
+var RULE_ARCHIVE = 4;
+var RULE_TEMPLATE = 8;
+var RULE_BRIZY_TEMPLATE = 16;
+var ANY_CHILD_TAXONOMY = 128;
+var WOO_PAGES = 256;
 
 var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
 var defaultAppliedFor = null;
@@ -24,6 +23,10 @@ switch (defaultTemplateType) {
     case 'single_product':
         defaultAppliedFor = RULE_POSTS;
         defaultEntityType = 'product';
+        break;
+    case 'product_archive':
+        defaultAppliedFor = WOO_PAGES;
+        defaultEntityType = 'shop_page';
         break;
     default:
         defaultAppliedFor = RULE_POSTS;
@@ -59,6 +62,7 @@ var apiCache = {
     groupList: null,
     postGroupListPromise: [],
     archiveGroupListPromise: [],
+    templateGroupListPromise: [],
     postList: [],
     termList: []
 };
@@ -112,6 +116,18 @@ var api = {
         })
     },
 
+    getTemplateGroupList: function (templateType) {
+        if (apiCache.templateGroupListPromise[templateType + '-author'])
+            return apiCache.templateGroupListPromise[templateType + '-author'];
+
+        return apiCache.templateGroupListPromise[templateType + '-author'] = jQuery.getJSON(Brizy_Admin_Rules.url, {
+            action: Brizy_Admin_Rules.prefix + "_rule_template_group_list",
+            hash: Brizy_Admin_Rules.hash,
+            version: Brizy_Admin_Data.editorVersion,
+            context: 'template-rules',
+            templateType: templateType
+        })
+    },
 
     getTerms: function (taxonomy) {
         if (apiCache.termList[taxonomy])
@@ -257,11 +273,11 @@ var actions = {
     },
     removeRule: function (rule) {
         return function (state) {
+            var rules = state.rules[state.templateType];
+            rules.splice(rules.indexOf(rule), 1);
             return {
                 rules: {
-                    [state.templateType]: state.rules[state.templateType].filter(function (arule) {
-                        return arule != rule;
-                    })
+                    [state.templateType]: rules
                 }
             };
         };
@@ -377,7 +393,9 @@ var BrzSelect2 = function (params) {
     };
 
     var onremove = function (element, done) {
-        jQuery(element).select2("destroy");
+        if (jQuery(element).data('select2')) {
+            jQuery(element).select2("destroy");
+        }
         done();
     };
 
@@ -433,12 +451,15 @@ var RulePostsGroupSelectField = function (params) {
         return h(
             BrzSelect2,
             {
-                id: "post-groups-" + entityType,
+                id: "post-groups-" + entityType + '-' + params.type,
                 style: params.style ? params.style : {width: "200px"},
                 name: params.name,
                 optionRequest: function () {
                     actions.setLocked(true);
-                    return api.getPostsGroupList(entityType, params.type).done(function(data) { actions.setLocked(false); return data; });
+                    return api.getPostsGroupList(entityType, params.type).done(function (data) {
+                        actions.setLocked(false);
+                        return data;
+                    });
                 },
                 convertResponseToOptions: convertResponseToOptions,
                 onChange: params.onChange,
@@ -489,7 +510,64 @@ var RuleArchiveGroupSelectField = function (params) {
                 name: params.name,
                 optionRequest: function () {
                     actions.setLocked(true);
-                    return api.getArchiveGroupList(taxonomy, params.type).done(function(data) { actions.setLocked(false); return data; });
+                    return api.getArchiveGroupList(taxonomy, params.type).done(function (data) {
+                        actions.setLocked(false);
+                        return data;
+                    });
+                },
+                convertResponseToOptions: convertResponseToOptions,
+                onChange: params.onChange,
+            },
+            []
+        );
+    }
+};
+
+var RuleAuthorGroupSelectField = function (params) {
+    return function (state, actions) {
+        var appliedFor = params.rule.appliedFor;
+        var taxonomy = params.rule.entityType;
+        var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
+
+        var convertResponseToOptions = function (response) {
+            var groups = [];
+            groups.push(new Option("All", '', false, value === ''));
+            response.data.forEach(function (group) {
+
+                if (group.title === "") {
+                    group.items.forEach(function (option) {
+                        var optionValue = String(option.value);
+                        groups.push(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)));
+                    });
+                } else {
+                    var groupElement = document.createElement("OPTGROUP");
+                    groupElement.label = group.title;
+
+                    if (group.items.length > 0) {
+                        group.items.forEach(function (option) {
+                            var optionValue = String(option.value);
+                            groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
+                        });
+                        groups.push(groupElement);
+                    }
+                }
+            });
+
+            return groups;
+        };
+
+        return h(
+            BrzSelect2,
+            {
+                id: "archive-groups-author",
+                style: params.style ? params.style : {width: "200px"},
+                name: params.name,
+                optionRequest: function () {
+                    actions.setLocked(true);
+                    return api.getTemplateGroupList(params.type).done(function (data) {
+                        actions.setLocked(false);
+                        return data;
+                    });
                 },
                 convertResponseToOptions: convertResponseToOptions,
                 onChange: params.onChange,
@@ -533,7 +611,7 @@ var RuleApplyGroupField = function (params) {
             onchange: function (e) {
                 var values = e.target.value.split("|");
                 actions.rule.update({
-                    appliedFor: values[0],
+                    appliedFor: parseInt(values[0]),
                     entityType: values[1],
                     entityValues: []
                 });
@@ -546,12 +624,13 @@ var RuleApplyGroupField = function (params) {
             )
         ];
 
-        switch (appliedFor) {
+        switch (parseInt(appliedFor)) {
             case RULE_POSTS:
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RulePostsGroupSelectField, {
-                            id: appliedFor + value,
+                            id: params.type + appliedFor + value,
+                            key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
@@ -567,7 +646,8 @@ var RuleApplyGroupField = function (params) {
                 elements.push(
                     h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
                         h(RuleArchiveGroupSelectField, {
-                            id: appliedFor + value,
+                            id: params.type + appliedFor + value,
+                            key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
                             taxonomy: entityType,
@@ -580,6 +660,28 @@ var RuleApplyGroupField = function (params) {
                         })
                     ]));
                 break;
+
+            case RULE_TEMPLATE:
+                if (entityType === 'author') {
+                    elements.push(
+                        h("span", {class: "brizy-rule-select brizy-rule-select2"}, [
+                            h(RuleAuthorGroupSelectField, {
+                                id: params.type + appliedFor + value,
+                                key: params.type + appliedFor + value,
+                                rule: params.rule,
+                                type: params.type,
+                                name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
+                                onChange: function (e) {
+                                    actions.rule.update({
+                                        entityValues: e.target.value ? [e.target.value] : [],
+                                    });
+                                }
+                            })
+                        ]));
+                }
+                break;
+
+
         }
         return h("span", {}, elements);
     };
@@ -606,7 +708,10 @@ var RuleForm = function (params) {
 };
 
 var RuleListItem = function (params) {
-    return h("div", {class: "rule", key: params.index}, [
+    var rule = params.rule;
+    var key = 'list-' + rule.type + rule.appliedType + rule.appliedFor + rule.entityValues.join('') + params.index;
+    return h("div", {class: "rule", key: key}, [
+
         h("span", {class: 'rule-fields'}, [
             h(RuleTypeField, {value: String(params.rule.type), name: 'brizy-' + params.type + '-rule-type[]'}),
             h(RuleApplyGroupField, {
@@ -706,10 +811,10 @@ var ruleView = function (state, actions) {
             oncreate: function () {
                 if (state.templateType != '')
                     actions.setLocked(true);
-                    api.getGroupList(state.templateType).done(function (response) {
-                        actions.updateGroups(response.data)
-                        actions.setLocked(false);
-                    });
+                api.getGroupList(state.templateType).done(function (response) {
+                    actions.updateGroups(response.data)
+                    actions.setLocked(false);
+                });
             },
         },
         [
@@ -779,7 +884,7 @@ var ruleView = function (state, actions) {
                         }
                     })] :
                 [],
-            state.locked ? [h('div', {class: 'lock-screen'},"Loading..")] : [],
+            state.locked ? [h('div', {class: 'lock-screen'}, "Loading..")] : [],
         ]
     );
 };

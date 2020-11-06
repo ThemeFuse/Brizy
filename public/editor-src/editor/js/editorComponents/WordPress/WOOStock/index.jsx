@@ -8,6 +8,8 @@ import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "../../tools/Wrapper";
+import CustomCSS from "visual/component/CustomCSS";
 
 export default class WOOStock extends EditorComponent {
   static get componentId() {
@@ -32,12 +34,15 @@ export default class WOOStock extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <div className={className}>
-          <DynamicContentHelper
-            placeholder="{{brizy_woo_stock}}"
-            tagName="div"
-          />
-        </div>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <Wrapper {...this.makeWrapperProps({ className })}>
+            <DynamicContentHelper
+              placeholder="{{editor_product_stock}}"
+              placeholderIcon="woo-stock"
+              tagName="div"
+            />
+          </Wrapper>
+        </CustomCSS>
       </Toolbar>
     );
   }

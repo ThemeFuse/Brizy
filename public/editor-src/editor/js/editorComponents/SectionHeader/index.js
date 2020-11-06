@@ -255,7 +255,7 @@ export default class SectionHeader extends EditorComponent {
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic({ v })}
           </ToolbarExtend>
-          <ResizeAware onResize={this.handleUpdateHeight} />
+          {IS_EDITOR && <ResizeAware onResize={this.handleUpdateHeight} />}
         </div>
       </SortableZIndex>
     );

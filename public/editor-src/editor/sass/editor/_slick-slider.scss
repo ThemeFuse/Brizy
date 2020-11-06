@@ -1,13 +1,6 @@
 .brz-slick-slider {
-  // Border Container
-  // Inner 1, Inner 2
-  .brz-ed-border {
-    &__inner-1,
-    &__inner-2 {
-      &:after,
-      &:before {
-        z-index: auto;
-      }
-    }
+  .slick-slide > div,
+  .brz-section__content {
+    height: 100%;
   }
 }

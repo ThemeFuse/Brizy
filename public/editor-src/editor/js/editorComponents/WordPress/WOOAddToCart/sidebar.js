@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
-
-export const title = t("Woo Add To Cart");
+import { toolbarBorderRadius } from "visual/utils/toolbar";
+export const title = t("Add To Cart");
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>
@@ -10,7 +10,7 @@ const helperHTML = `
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
 
-export function getItems() {
+export function getItems({ v, device }) {
   return [
     {
       id: "settingsTabs",
@@ -24,7 +24,18 @@ export function getItems() {
           id: "settingsStyling",
           label: t("Styling"),
           icon: "nc-styling",
-          options: []
+          options: [
+            toolbarBorderRadius({
+              v,
+              device,
+              prefix: "button",
+              state: "normal",
+              devices: "desktop",
+              position: 70,
+              onChangeGrouped: ["onChangeBorderRadiusGrouped"],
+              onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
+            })
+          ]
         },
         {
           id: "moreSettingsAdvanced",

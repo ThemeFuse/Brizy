@@ -85,17 +85,14 @@
   .brz-icon-svg {
     backface-visibility: hidden;
   }
-  .brz-bg-media {
+  .brz-bg {
     width: calc(100% + 1px);
   }
-  .brz-bg-color,
-  .brz-bg-content {
+  .brz-bg-color {
     transform: translateZ(0);
   }
   .slick-slide > div,
-  .brz-section__items,
   .brz-section__content {
-    height: 100%;
     outline: none;
   }
 

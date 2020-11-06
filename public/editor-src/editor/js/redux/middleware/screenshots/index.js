@@ -4,7 +4,7 @@ import { findDeep } from "visual/utils/object";
 import {
   createBlockScreenshot as apiCreateBlockScreenshot,
   updateBlockScreenshot as apiUpdateBlockScreenshot
-} from "visual/utils/api/editor/index-new";
+} from "visual/utils/api/editor";
 import {
   EDITOR_RENDERED,
   UPDATE_UI,

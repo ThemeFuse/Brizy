@@ -9,9 +9,6 @@ $helperSize: 30px;
   * {
     pointer-events: none;
   }
-  .brz-ed-draggable {
-    display: none;
-  }
   .sortable-hovered:not(.brz-ed-border__sortable):not(.brz-ed-container-trigger) {
     position: relative;
   }
@@ -31,23 +28,21 @@ $helperSize: 30px;
     *:not(.brz-ed-border) {
       visibility: hidden !important;
     }
-    > .brz-ed-border {
-      &.brz-ed-border--grey > .brz-ed-border__inner {
-        border-color: $by-block-border-grey;
-      }
-      &.brz-ed-border--blue > .brz-ed-border__inner {
-        border-color: $by-block-border-blue;
-      }
-      &.brz-ed-border--red > .brz-ed-border__inner {
-        border-color: $by-block-border-red;
-      }
-      > .brz-ed-border__inner {
-        top: -1px;
-        bottom: -1px;
-        visibility: visible !important;
-      }
+    &[data-border--grey] > .brz-ed-border__inner {
+      border-color: $by-block-border-grey;
     }
-    &.brz-columns__posts > .brz-ed-border > .brz-ed-border__inner {
+    &[data-border--blue] > .brz-ed-border__inner {
+      border-color: $by-block-border-blue;
+    }
+    &[data-border--red] > .brz-ed-border__inner {
+      border-color: $by-block-border-red;
+    }
+    > .brz-ed-border__inner {
+      top: -1px;
+      bottom: -1px;
+      visibility: visible !important;
+    }
+    &[data-border="column__posts"] > .brz-ed-border__inner {
       top: -2px;
       bottom: -2px;
     }
@@ -68,26 +63,26 @@ $helperSize: 30px;
         position: absolute;
         left: 0;
         right: 0;
-        bottom: -1px;
+        bottom: -10px;
         background-color: $floating-button-grey;
         opacity: 0.3;
       }
       &:first-child:before,
       &.sortable-chosen + div:before {
-        top: -1px;
+        top: -10px;
         bottom: auto;
       }
     }
-    > .brz-columns:not(.brz-columns__posts) > .brz-ed-border {
-      &.brz-ed-border--grey > .brz-ed-border__inner {
+    > [data-border="column"] {
+      &[data-border--grey] > .brz-ed-border__inner {
         border-left-color: $by-block-border-grey;
         border-right-color: $by-block-border-grey;
       }
-      &.brz-ed-border--blue > .brz-ed-border__inner {
+      &[data-border--blue] > .brz-ed-border__inner {
         border-left-color: $by-block-border-blue;
         border-right-color: $by-block-border-blue;
       }
-      &.brz-ed-border--red > .brz-ed-border__inner {
+      &[data-border--red] > .brz-ed-border__inner {
         border-left-color: $by-block-border-red;
         border-right-color: $by-block-border-red;
       }
@@ -128,14 +123,14 @@ $helperSize: 30px;
     width: 2px;
     height: 100%;
   }
-  .sortable-hovered-left > .brz-ed-border {
-    &.brz-ed-border--grey > .brz-ed-border__inner {
+  .sortable-hovered-left {
+    &[data-border--grey] > .brz-ed-border__inner {
       border-left-color: $by-block-border-grey;
     }
-    &.brz-ed-border--blue > .brz-ed-border__inner {
+    &[data-border--blue] > .brz-ed-border__inner {
       border-left-color: $by-block-border-blue;
     }
-    &.brz-ed-border--red > .brz-ed-border__inner {
+    &[data-border--red] > .brz-ed-border__inner {
       border-left-color: $by-block-border-red;
     }
     > .brz-ed-border__inner {
@@ -147,14 +142,14 @@ $helperSize: 30px;
       left: -1px !important;
     }
   }
-  .sortable-hovered-right > .brz-ed-border {
-    &.brz-ed-border--grey > .brz-ed-border__inner {
+  .sortable-hovered-right {
+    &[data-border--grey] > .brz-ed-border__inner {
       border-right-color: $by-block-border-grey;
     }
-    &.brz-ed-border--blue > .brz-ed-border__inner {
+    &[data-border--blue] > .brz-ed-border__inner {
       border-right-color: $by-block-border-blue;
     }
-    &.brz-ed-border--red > .brz-ed-border__inner {
+    &[data-border--red] > .brz-ed-border__inner {
       border-right-color: $by-block-border-red;
     }
     > .brz-ed-border__inner {
@@ -189,7 +184,7 @@ $helperSize: 30px;
   .brz-ed-border__inner {
     opacity: 0.6;
   }
-  .brz-ed-border--grey {
+  [data-border--grey] {
     border-color: $by-block-border-grey;
   }
   .brz-ed-container-trigger {

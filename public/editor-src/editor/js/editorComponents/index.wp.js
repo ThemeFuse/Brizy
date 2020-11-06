@@ -6,7 +6,7 @@ import WPPostNavigation from "./WordPress/WPPostNavigation";
 import WOOProducts from "./WordPress/WOOProducts";
 import WOOProductPage from "./WordPress/WOOProductPage";
 import WOOCategories from "./WordPress/WOOCategories";
-// import WOOAddToCart from "./WordPress/WOOAddToCart";
+import WOOAddToCart from "./WordPress/WOOAddToCart";
 import WOOPages from "./WordPress/WOOPages";
 import Posts from "./Posts";
 import WPBreadcrumbs from "./WordPress/WPBreadcrumbs";
@@ -14,13 +14,15 @@ import WPPostsTitle from "./WordPress/WPPostsTitle";
 import WPPostExcerpt from "./WordPress/WPPostExcerpt";
 import WPPostContent from "./WordPress/WPPostContent";
 import WPPostInfo from "./WordPress/WPPostInfo";
-// import WOOSku from "./WordPress/WOOSku";
-// import WOOStock from "./WordPress/WOOStock";
-// import WOOPrice from "./WordPress/WOOPrice";
-// import WOOAdditional from "./WordPress/WOOAdditional";
-// import WOOProductMeta from "./WordPress/WOOProductMeta";
-// import WOORating from "./WordPress/WOORating";
-// import WOOCart from "./WordPress/WOOCart";
+import WOOSku from "./WordPress/WOOSku";
+import WOOStock from "./WordPress/WOOStock";
+import WOOPrice from "./WordPress/WOOPrice";
+import WOOAttributes from "./WordPress/WOOAttributes";
+import WOOProductMeta from "./WordPress/WOOProductMeta";
+import WOORating from "./WordPress/WOORating";
+import WOOCart from "./WordPress/WOOCart";
+import WOOExcerpt from "./WordPress/WOOExcerpt";
+import WOOGallery from "./WordPress/WOOGallery";
 
 import Search from "./Search";
 
@@ -43,14 +45,17 @@ export default {
         WOOProducts,
         WOOProductPage,
         WOOCategories,
-        WOOPages
-        // WOOCart
-        // WOOSku,
-        // WOOStock
-        // WOOPrice,
-        // WOOAdditional,
-        // WOOProductMeta
-        // WOORating
+        WOOPages,
+        WOOExcerpt,
+        WOOGallery,
+        WOOAddToCart,
+        WOOCart,
+        WOOSku,
+        WOOStock,
+        WOOPrice,
+        WOOAttributes,
+        WOOProductMeta,
+        WOORating
       }
     : {})
 };

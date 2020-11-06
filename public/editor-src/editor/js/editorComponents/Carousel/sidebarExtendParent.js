@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
 import {
   toolbarDisabledPadding,
@@ -17,7 +16,6 @@ const helperHTML = `
 </p>`;
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   return [
     toolbarDisabledPadding({
       device,
@@ -56,7 +54,7 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [

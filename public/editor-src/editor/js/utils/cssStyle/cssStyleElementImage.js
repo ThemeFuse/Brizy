@@ -2,6 +2,9 @@ import { roundTo } from "visual/utils/math";
 import { cssStyleFilter } from "./cssStyleFilter";
 import { defaultValueValue } from "visual/utils/onChange";
 
+const isAbsoluteOrFixed = v =>
+  v.elementPosition === "absolute" || v.elementPosition === "fixed";
+
 export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
   const dvv = key => defaultValueValue({ v, key, device });
   const { width } = props.wrapperSizes[device];
@@ -12,18 +15,16 @@ export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
     (containerWIdth === undefined || containerWIdth === null)
     ? ""
     : dvv("widthSuffix") === "%"
-    ? `max-width: ${Math.round(Math.abs((width * 100) / containerWIdth))}%;`
+    ? `${isAbsoluteOrFixed(v) ? "width" : "max-width"}: ${Math.round(
+        Math.abs((width * 100) / containerWIdth)
+      )}%;`
     : `max-width: ${dvv("width")}px;`;
 }
 
-export function cssStyleElementImageHeightPreview({ v, device, props = {} }) {
+export function cssStyleElementImageHeightPreview({ device, props = {} }) {
   const { height } = props.wrapperSizes[device];
 
-  return height === undefined || height === null
-    ? ""
-    : !v.imageSrc && !v.imagePopulation
-    ? `height: ${height}px;`
-    : "height: auto;";
+  return height === undefined || height === null ? "" : "height: auto;";
 }
 
 export function cssStyleElementImageBorderRadius({ v, device, props = {} }) {
@@ -41,10 +42,12 @@ export function cssStyleElementImageBorderRadius({ v, device, props = {} }) {
     : `border-radius: ${Math.min(borderRadius, maxBorderRadius)}px;`;
 }
 
-export function cssStyleElementImageMaxWidthEditor({ device, props = {} }) {
+export function cssStyleElementImageMaxWidthEditor({ v, device, props = {} }) {
   const { width } = props[device];
 
-  return width === undefined || width === null ? "" : `max-width: ${width}px;`;
+  return width === undefined || width === null
+    ? ""
+    : `${isAbsoluteOrFixed(v) ? "width" : "max-width"}: ${width}px;`;
 }
 
 export function cssStyleElementImageHeightEditor({ device, props = {} }) {

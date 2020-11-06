@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems() {
   return [
     {
       id: "settingsTabs",
@@ -13,7 +10,7 @@ export function getItems({ device }) {
       },
       tabs: [
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [

@@ -19,6 +19,7 @@ import * as toolbarAutorized from "visual/editorComponents/Login/toolbarAutorize
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { Wrapper } from "../tools/Wrapper";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 
 class Login extends EditorComponent {
@@ -268,46 +269,51 @@ class Login extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={className} data-islogged="{{editor_is_user_logged_in}}">
-          {IS_EDITOR ? (
-            type === "authorized" ? (
-              this.renderAuthorized(v)
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          <div
+            className={className}
+            data-islogged="{{editor_is_user_logged_in}}"
+          >
+            {IS_EDITOR ? (
+              type === "authorized" ? (
+                this.renderAuthorized(v)
+              ) : (
+                <form
+                  className="brz-form-login"
+                  noValidate
+                  onSubmit={this.handleSubmit}
+                  action="{{editor_login_url}}"
+                  method="post"
+                >
+                  <input
+                    type="hidden"
+                    name="redirect_to"
+                    value={v.messageRedirect === "" ? "/" : v.messageRedirect}
+                  />
+                  {this.renderLoginForm(v)}
+                </form>
+              )
             ) : (
-              <form
-                className="brz-form-login"
-                noValidate
-                onSubmit={this.handleSubmit}
-                action="{{editor_login_url}}"
-                method="post"
-              >
-                <input
-                  type="hidden"
-                  name="redirect_to"
-                  value={v.messageRedirect === "" ? "/" : v.messageRedirect}
-                />
-                {this.renderLoginForm(v)}
-              </form>
-            )
-          ) : (
-            <>
-              {this.renderAuthorized(v)}
-              <form
-                className="brz-form-login"
-                noValidate
-                onSubmit={this.handleSubmit}
-                action="{{editor_login_url}}"
-                method="post"
-              >
-                <input
-                  type="hidden"
-                  name="redirect_to"
-                  value={v.messageRedirect === "" ? "/" : v.messageRedirect}
-                />
-                {this.renderLoginForm(v)}
-              </form>
-            </>
-          )}
-        </div>
+              <>
+                {this.renderAuthorized(v)}
+                <form
+                  className="brz-form-login"
+                  noValidate
+                  onSubmit={this.handleSubmit}
+                  action="{{editor_login_url}}"
+                  method="post"
+                >
+                  <input
+                    type="hidden"
+                    name="redirect_to"
+                    value={v.messageRedirect === "" ? "/" : v.messageRedirect}
+                  />
+                  {this.renderLoginForm(v)}
+                </form>
+              </>
+            )}
+          </div>
+        </Wrapper>
       </CustomCSS>
     );
   }

@@ -20,24 +20,24 @@ const Content: React.FC<ImageProps> = props => {
   const showImageInPreview = IS_PREVIEW && (imagePopulation || imageSrc);
   const showImageInEditor = IS_EDITOR && !imagePopulation && imageSrc;
 
-  if (showImageInPreview || showImageInEditor) {
-    const pictureClassName = IS_EDITOR
-      ? "brz-picture"
-      : classnames(
-          "brz-picture",
-          "brz-d-block",
-          "brz-p-relative",
-          css(
-            // hard to explain, but because styles are generated from props in this case
-            // we can't rely on the usual way of using css(),
-            // so we trick it with a custom class for both default and custom classNames
-            // `${componentId}-picture`,
-            `${componentId}-${_id}-picture`,
-            `${_id}-picture`,
-            stylePicture(v, vs, vd, wrapperSizes) as Styles
-          )
-        );
+  const pictureClassName = IS_EDITOR
+    ? "brz-picture"
+    : classnames(
+        "brz-picture",
+        "brz-d-block",
+        "brz-p-relative",
+        css(
+          // hard to explain, but because styles are generated from props in this case
+          // we can't rely on the usual way of using css(),
+          // so we trick it with a custom class for both default and custom classNames
+          // `${componentId}-picture`,
+          `${componentId}-${_id}-picture`,
+          `${_id}-picture`,
+          stylePicture(v, vs, vd, wrapperSizes) as Styles
+        )
+      );
 
+  if (showImageInPreview || showImageInEditor) {
     const content =
       isSVG(imageExtension) || isGIF(imageExtension) ? (
         <SvgImage
@@ -56,7 +56,11 @@ const Content: React.FC<ImageProps> = props => {
     return <picture className={pictureClassName}>{content}</picture>;
   }
 
-  return <Placeholder imagePopulation={imagePopulation} />;
+  return (
+    <div className={pictureClassName}>
+      <Placeholder imagePopulation={imagePopulation} />
+    </div>
+  );
 };
 
 export default withLink(Content);

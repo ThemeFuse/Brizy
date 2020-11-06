@@ -1,39 +1,42 @@
 import $ from "jquery";
 
-export default function() {
-  if ($(".brz-woocartblock").length > 0) {
-    $(".brz-woocartblock").click(function(e) {
-      if (!e.target.classList.contains("brz-woocart__sidebar-close")) {
-        $(this)
-          .find(".brz-woocart__sidebar")
-          .addClass("brz-woocart__sidebar-active");
-        $(this)
-          .siblings(".brz-woocart-background")
-          .addClass("brz-woocart-background-active");
-        $("body").css("overflow", "hidden");
-      }
-    });
+export default function($node) {
+  $node.find(".brz-woocart").click(function() {
+    const $wrapper = $(this).closest(".brz-woocart__wrapper");
 
-    $(".brz-woocart__sidebar-close").click(function() {
-      $(this)
-        .parent()
-        .removeClass("brz-woocart__sidebar-active");
-      $(this)
-        .parents(".brz-woocartblock")
-        .siblings(".brz-woocart-background")
-        .removeClass("brz-woocart-background-active");
-      $("body").css("overflow", "");
-    });
+    $wrapper
+      .find(".brz-woocart__sidebar")
+      .addClass("brz-woocart__sidebar--active");
+    $wrapper
+      .find(".brz-woocart__background")
+      .addClass("brz-woocart__background--active");
 
-    $(".brz-woocart-background").click(function(e) {
-      if (e.target.classList.contains("brz-woocart-background")) {
-        $(this).removeClass("brz-woocart-background-active");
-        $(this)
-          .siblings(".brz-woocartblock")
-          .find(".brz-woocart__sidebar")
-          .removeClass("brz-woocart__sidebar-active");
-        $("body").css("overflow", "");
-      }
-    });
-  }
+    $(document.body).addClass("brz-ow-hidden brz-woocart--opened");
+  });
+
+  $node.find(".brz-woocart__sidebar-close").click(function() {
+    const $wrapper = $(this).closest(".brz-woocart__wrapper");
+
+    $wrapper
+      .find(".brz-woocart__sidebar")
+      .removeClass("brz-woocart__sidebar--active");
+    $wrapper
+      .find(".brz-woocart__background")
+      .removeClass("brz-woocart__background--active");
+
+    $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
+  });
+
+  $node.find(".brz-woocart__background").click(function() {
+    const $wrapper = $(this).closest(".brz-woocart__wrapper");
+
+    $wrapper
+      .find(".brz-woocart__sidebar")
+      .removeClass("brz-woocart__sidebar--active");
+    $wrapper
+      .find(".brz-woocart__background")
+      .removeClass("brz-woocart__background--active");
+
+    $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
+  });
 }

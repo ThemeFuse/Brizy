@@ -18,8 +18,15 @@ export function style(v, vs, vd) {
       standart: ["cssStyleSizeHeightPercentOnly"]
     },
 
+    ".brz &&:hover > .brz-ed-box__resizer": {
+      standart: IS_EDITOR ? ["cssStyleElementMapPropertyPositionFixed"] : []
+    },
+
     ".brz &&:hover .brz-map-content": {
-      standart: ["cssStyleBorderRadius"],
+      standart: [
+        "cssStyleBorderRadius",
+        ...(IS_PREVIEW ? ["cssStyleElementMapPropertyPositionFixed"] : [])
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementMapPropertyHoverTransition"

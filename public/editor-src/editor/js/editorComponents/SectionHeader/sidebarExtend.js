@@ -1,10 +1,7 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems() {
   const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
@@ -17,7 +14,7 @@ export function getItems({ device }) {
       devices: "desktop",
       tabs: [
         {
-          id: dvk("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           devices: "desktop",

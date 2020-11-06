@@ -3,7 +3,7 @@ import {
   hasState,
   haveState
 } from "visual/utils/stateMode/editorComponent";
-import { empty, HOVER, NORMAL } from "visual/utils/stateMode/index";
+import { states, empty, HOVER, NORMAL } from "visual/utils/stateMode/index";
 
 describe("Testing `bindStateToOption` function", () => {
   const onChange = () => {};
@@ -22,6 +22,9 @@ describe("Testing `bindStateToOption` function", () => {
     {
       id: "tabsState",
       type: "stateMode",
+      config: {
+        states: states()
+      },
       value: state,
       options,
       onChange
@@ -40,7 +43,7 @@ describe("Testing `bindStateToOption` function", () => {
       ]
     };
 
-    expect(bindStateToOption(NORMAL, () => {}, option)).toBe(option);
+    expect(bindStateToOption(states(), NORMAL, () => {}, option)).toBe(option);
   });
 
   test("Wrap options in `stateMode` option type for `popover`", () => {
@@ -56,7 +59,9 @@ describe("Testing `bindStateToOption` function", () => {
       options: resultOptions
     };
 
-    expect(bindStateToOption(state, onChange, popover)).toEqual(resultPopover);
+    expect(bindStateToOption(states(), state, onChange, popover)).toEqual(
+      resultPopover
+    );
   });
 
   test("Wrap options in `stateMode` option type for `tabs`", () => {
@@ -71,7 +76,9 @@ describe("Testing `bindStateToOption` function", () => {
       tabs: [{ options: resultOptions }, { options: resultOptions }]
     };
 
-    expect(bindStateToOption(state, onChange, tabs)).toEqual(resultTabs);
+    expect(bindStateToOption(states(), state, onChange, tabs)).toEqual(
+      resultTabs
+    );
   });
 
   test("Always use `normal` state if provided state parameter is and invalid state", () => {
@@ -88,18 +95,21 @@ describe("Testing `bindStateToOption` function", () => {
         {
           id: "tabsState",
           type: "stateMode",
+          config: { states: states() },
           value: NORMAL,
           options: [{ type: "input" }],
           onChange
         }
       ]
     };
-    expect(bindStateToOption("test", onChange, option)).toEqual(result);
+    expect(bindStateToOption(states(), "test", onChange, option)).toEqual(
+      result
+    );
   });
 
   test("Handle empty and invalid options. Return same value back", () => {
     [undefined, null].map(v =>
-      expect(bindStateToOption(state, onChange, v)).toEqual(v)
+      expect(bindStateToOption(states(), state, onChange, v)).toEqual(v)
     );
   });
 
@@ -115,7 +125,9 @@ describe("Testing `bindStateToOption` function", () => {
       type: "tabs",
       tabs: []
     };
-    expect(bindStateToOption(state, onChange, option)).toEqual(result);
+    expect(bindStateToOption(states(), state, onChange, option)).toEqual(
+      result
+    );
   });
 });
 

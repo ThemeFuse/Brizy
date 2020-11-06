@@ -6,6 +6,7 @@ import {
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarElementCounterStyles } from "visual/utils/toolbar";
+import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -239,7 +240,7 @@ export function getItems({ v, device }) {
         title: t("Settings")
       },
       position: 110,
-      disabled: v.type === "simple",
+      disabled: v.type === "simple" || IS_STORY,
       options: [
         {
           id: "width",
@@ -268,7 +269,7 @@ export function getItems({ v, device }) {
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
-      disabled: v.type !== "simple",
+      disabled: v.type !== "simple" && !IS_STORY,
       title: t("Settings"),
       roles: ["admin"],
       icon: "nc-cog"

@@ -13,7 +13,7 @@
 
     "megaMenu": "off",
 
-    "megaMenuWidth": 100,
+    "megaMenuWidth": 80,
     "megaMenuWidthSuffix": "%",
     "megaMenuOffsetTop": 10,
     "megaMenuOffsetTopSuffix": null,

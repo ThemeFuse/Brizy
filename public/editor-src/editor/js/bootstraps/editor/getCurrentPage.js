@@ -1,5 +1,7 @@
 import Config from "visual/global/Config";
 import {
+  getExternalStories,
+  createExternalStory,
   getPages,
   getExternalPopups,
   getInternalPopup,
@@ -7,10 +9,18 @@ import {
   createPage
 } from "visual/utils/api/editor";
 import { PageError } from "visual/utils/errors";
-import { IS_PAGE, IS_EXTERNAL_POPUP } from "visual/utils/models";
+import {
+  IS_PAGE,
+  IS_EXTERNAL_POPUP,
+  IS_INTERNAL_STORY,
+  IS_EXTERNAL_STORY
+} from "visual/utils/models";
 
 export const getCurrentPage = async () => {
-  if (IS_PAGE || TARGET === "WP") {
+  const mode = Config.get("mode");
+  const configPageId = Config.get(mode)?.id;
+
+  if (IS_INTERNAL_STORY || IS_PAGE || TARGET === "WP") {
     const pages = await getPages();
 
     // create the index page when api returns no pages
@@ -34,8 +44,6 @@ export const getCurrentPage = async () => {
         throw new PageError(`Could not create index page ${e}`);
       }
     }
-
-    const configPageId = Config.get("page") && Config.get("page").id;
 
     return configPageId
       ? pages.find(page => page.id === Number(configPageId))
@@ -66,7 +74,30 @@ export const getCurrentPage = async () => {
     return popups[0];
   }
 
-  const { id } = Config.get(Config.get("mode"));
+  if (IS_EXTERNAL_STORY) {
+    const stories = await getExternalStories();
 
-  return getInternalPopup(id);
+    if (!stories.length) {
+      const storyData = {
+        project: Config.get("project").id,
+        data: null,
+        dataVersion: 1,
+        status: "draft"
+      };
+
+      const meta = { is_autosave: 0 };
+
+      try {
+        const page = await createExternalStory(storyData, meta);
+
+        return page;
+      } catch (e) {
+        throw new PageError(`Could not create external popup ${e}`);
+      }
+    }
+
+    return stories[0];
+  }
+
+  return getInternalPopup(configPageId);
 };

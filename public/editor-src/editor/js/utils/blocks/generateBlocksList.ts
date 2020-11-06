@@ -2,7 +2,7 @@ import { getAllowedGBIds } from "./getAllowedGBIds";
 import { ReduxState } from "visual/redux/types";
 import { Block, GlobalBlockPosition } from "visual/types";
 
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 const generateConditionBlocks = (
   ids: string[],
@@ -28,7 +28,7 @@ export const generateBlocksList = (
   globalBlocks: ReduxState["globalBlocks"],
   pageId: number
 ): string[] => {
-  if (IS_GLOBAL_POPUP) {
+  if (IS_GLOBAL_POPUP || IS_STORY) {
     return pageBlocksIds;
   }
 

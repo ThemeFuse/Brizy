@@ -13,11 +13,13 @@ module.exports = function(argv) {
   const BUILD_DIR_PRO = argv_["build-dir-pro"];
   const NO_WATCH = Boolean(argv_["no-watch"]);
   const PORT = argv_.port || 3000;
+  const BUNDLE_ANALYZER = argv_["bundle-analyzer"];
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
     kits: path.resolve(__dirname, "../kits"),
     templates: path.resolve(__dirname, "../templates"),
+    stories: path.resolve(__dirname, "../stories"),
     popups: path.resolve(__dirname, "../popups"),
     build: getBuildPath(),
     buildPro: getBuildProPath(),
@@ -35,6 +37,7 @@ module.exports = function(argv) {
     BUILD_DIR_PRO,
     NO_WATCH,
     PORT,
+    BUNDLE_ANALYZER,
     paths
   };
 

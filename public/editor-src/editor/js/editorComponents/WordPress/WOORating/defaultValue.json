@@ -12,9 +12,13 @@
   "style": {
     "customCSS": "",
 
+    "text": "on",
+
     "ratingSize": 15,
+    "ratingSizeSuffix": null,
 
     "spacing": 0,
+    "spacingSuffix": null,
 
     "families": {
       "typographyFontFamily": "lato",
@@ -36,6 +40,13 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
+    "bgStarColorHex": "#000000",
+    "bgStarColorOpacity": 1,
+    "bgStarColorPalette": "",
+
+    "tempBgStarColorOpacity": 1,
+    "tempBgStarColorPalette": "",
+
     "textColorHex": "#000000",
     "textColorOpacity": 1,
     "textColorPalette": "",
@@ -52,6 +63,13 @@
     "tempHoverColorOpacity": null,
     "tempHoverColorPalette": null,
 
+    "hoverBgStarColorHex": null,
+    "hoverBgStarColorOpacity": null,
+    "hoverBgStarColorPalette": null,
+
+    "tempHoverBgStarColorOpacity": null,
+    "tempHoverBgStarColorPalette": null,
+
     "hoverTextColorHex": null,
     "hoverTextColorOpacity": null,
     "hoverTextColorPalette": null,
@@ -60,8 +78,10 @@
     "tempHoverTextColorPalette": null,
 
     "tabletRatingSize": null,
+    "tabletRatingSizeSuffix": null,
 
     "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
@@ -71,8 +91,10 @@
     "tabletTypographyLetterSpacing": 0,
 
     "mobileRatingSize": null,
+    "mobileRatingSizeSuffix": null,
 
     "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,

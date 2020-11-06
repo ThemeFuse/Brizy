@@ -113,6 +113,7 @@ export default class Form extends EditorComponent {
                 className="brz-g-recaptcha"
                 data-sitekey={recaptchaSiteKey}
                 data-size="invisible"
+                data-callback="brzFormV1Captcha"
               />
             )}
           </form>

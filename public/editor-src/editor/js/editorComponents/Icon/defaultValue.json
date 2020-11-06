@@ -3,6 +3,9 @@
     "type": "glyph",
     "name": "favourite-31",
 
+    "offsetX": 0,
+    "offsetY": 0,
+
     "popups": []
   },
 
@@ -29,6 +32,7 @@
 
     "size": "medium",
     "customSize": 48,
+    "customSizeSuffix": "px",
     "smallSize": 32,
     "mediumSize": 48,
     "largeSize": 64,
@@ -199,6 +203,7 @@
 
     "tabletSize": null,
     "tabletCustomSize": null,
+    "tabletCustomSizeSuffix": null,
 
     "tabletPadding": null,
 
@@ -223,6 +228,7 @@
 
     "mobileSize": null,
     "mobileCustomSize": null,
+    "mobileCustomSizeSuffix": null,
 
     "mobilePadding": null,
     "tempMobilePadding": 20,

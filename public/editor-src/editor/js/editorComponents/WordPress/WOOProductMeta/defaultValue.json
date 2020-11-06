@@ -11,7 +11,10 @@
     "className": "",
 
     "topSpacing": 0,
+    "topSpacingSuffix": null,
+
     "rightSpacing": 10,
+    "rightSpacingSuffix": null,
 
     "families": {
       "categoryFontFamily": "lato",
@@ -50,16 +53,18 @@
     "tempValueColorOpacity": 1,
     "tempValueColorPalette": "color7",
 
-    "dvidersColorHex": "#000000",
-    "dvidersColorOpacity": 0.3,
-    "dvidersColorPalette": "color1",
+    "dividersColorHex": "#000000",
+    "dividersColorOpacity": 0.3,
+    "dividersColorPalette": "color1",
 
-    "tempDvidersColorOpacity": 0.3,
-    "tempDvidersColorPalette": "color1",
+    "tempDividersColorOpacity": 0.3,
+    "tempDividersColorPalette": "color1",
 
     "tabletTopSpacing": null,
+    "tabletTopSpacingSuffix": null,
+
     "tabletRightSpacing": null,
-    "tabletValueSpacing": null,
+    "tabletRightSpacingSuffix": null,
 
     "tabletCategoryFontStyle": "",
     "tabletCategoryFontFamilyType": null,
@@ -76,8 +81,10 @@
     "tabletValueLetterSpacing": 0,
 
     "mobileTopSpacing": null,
+    "mobileTopSpacingSuffix": null,
+
     "mobileRightSpacing": null,
-    "mobileValueSpacing": null,
+    "mobileRightSpacingSuffix": null,
 
     "mobileCategoryFontStyle": "",
     "mobileCategoryFontFamilyType": null,
@@ -92,8 +99,6 @@
     "mobileValueFontWeight": 300,
     "mobileValueLineHeight": 1.3,
     "mobileValueLetterSpacing": 0,
-
-    "style": "",
 
     "customCSS": ""
   }
