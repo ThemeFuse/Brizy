@@ -5,8 +5,11 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  background-color: #373e48;
-  color: #151924;
+  background-color: #ececec;
+
+  * {
+    color: #c7c8ca !important;
+  }
 
   .brz-icon-svg {
     width: calc(16px + (0.075 * 100%));

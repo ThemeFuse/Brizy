@@ -46,8 +46,7 @@ export function ColorPickerSelect<T extends Literal>(
           value={props.value.select}
           editable={false}
           onChange={onSelectChange}
-          size={"short"}
-          search={(): boolean => true}
+          size="short"
         >
           {props.children}
         </Select2>

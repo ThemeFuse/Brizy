@@ -109,19 +109,6 @@ class SectionItems extends EditorArrayComponent {
     };
   }
 
-  renderItemWrapper(item, itemKey) {
-    const { showSlider } = this.state;
-    const { className } = this.props;
-
-    return showSlider ? (
-      <div key={itemKey} className={className}>
-        {item}
-      </div>
-    ) : (
-      item
-    );
-  }
-
   renderItemsContainer(items) {
     const { showSlider } = this.state;
     let ret;
@@ -180,7 +167,7 @@ class SectionItems extends EditorArrayComponent {
 
         ret = (
           <div
-            className="brz-slick-slider"
+            className="brz-slick-slider brz-slick-slider__section"
             data-slides-to-show={1}
             data-slides-to-scroll={1}
             data-arrows={sliderArrows !== "none"}
@@ -205,7 +192,7 @@ class SectionItems extends EditorArrayComponent {
         );
       }
     } else {
-      ret = <div className={this.props.className}>{items}</div>;
+      ret = items;
     }
 
     return ret;

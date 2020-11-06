@@ -3,6 +3,9 @@
   &__wrapper {
     overflow: hidden;
   }
+  .brz-d-xs-flex {
+    width: 100%;
+  }
   .brz-text__editor {
     flex-grow: 1;
     white-space: nowrap;
@@ -26,6 +29,7 @@
   &-style1,
   &-style2 .brz-progress-bar-overlay {
     position: relative;
+    width: 100%;
   }
   &-style2 .brz-progress-bar__percent {
     position: relative;

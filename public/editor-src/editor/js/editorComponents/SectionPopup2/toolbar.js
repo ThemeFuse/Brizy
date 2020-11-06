@@ -2,7 +2,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
   toolbarGradientType,
@@ -15,7 +15,6 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const widthSuffix = dvv("widthSuffix");
 
@@ -356,7 +355,7 @@ export function getItems({ v, device, component }) {
           ]
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           devices: "desktop",
           label: t("More Settings"),

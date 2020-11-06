@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
   toolbarBgVideoUrl,
@@ -23,7 +23,6 @@ import {
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component, state }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state });
 
@@ -51,7 +50,7 @@ export function getItems({ v, device, component, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabMedia"),
+              id: "tabMedia",
               label: t("Background"),
               options: [
                 {
@@ -160,7 +159,7 @@ export function getItems({ v, device, component, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabOverlay"),
+              id: "tabOverlay",
               label: t("Overlay"),
               options: [
                 toolbarBgColor2({
@@ -262,7 +261,7 @@ export function getItems({ v, device, component, state }) {
               ]
             },
             {
-              id: dvk("tabBorder"),
+              id: "tabBorder",
               label: t("Border"),
               options: [
                 toolbarBorder2({
@@ -336,7 +335,7 @@ export function getItems({ v, device, component, state }) {
               ]
             },
             {
-              id: dvk("tabBoxShadow"),
+              id: "tabBoxShadow",
               label: t("Shadow"),
               options: [
                 {
@@ -374,7 +373,7 @@ export function getItems({ v, device, component, state }) {
           },
           tabs: [
             {
-              id: dvk("external"),
+              id: "external",
               label: t("URL"),
               options: [
                 toolbarImageLinkExternal({
@@ -398,7 +397,7 @@ export function getItems({ v, device, component, state }) {
               ]
             },
             {
-              id: dvk("anchor"),
+              id: "anchor",
               label: t("Block"),
               options: [
                 toolbarLinkAnchor({
@@ -410,7 +409,7 @@ export function getItems({ v, device, component, state }) {
               ]
             },
             {
-              id: dvk("popup"),
+              id: "popup",
               label: t("Popup"),
               options: [
                 toolbarLinkPopup({
@@ -448,7 +447,7 @@ export function getItems({ v, device, component, state }) {
           },
           tabs: [
             {
-              id: dvk("popup"),
+              id: "popup",
               label: t("Popup"),
               options: [
                 toolbarLinkPopup({
@@ -489,7 +488,7 @@ export function getItems({ v, device, component, state }) {
           }
         },
         {
-          type: dvk("multiPicker"),
+          type: "multiPicker",
           devices: "desktop",
           disabled: inPopup2 || IS_GLOBAL_POPUP,
           position: 90,
@@ -499,14 +498,8 @@ export function getItems({ v, device, component, state }) {
             type: "select-dev",
             devices: "desktop",
             choices: [
-              {
-                title: t("Auto"),
-                value: "auto"
-              },
-              {
-                title: t("Custom"),
-                value: "custom"
-              }
+              { title: t("Auto"), value: "auto" },
+              { title: t("Custom"), value: "custom" }
             ]
           },
           choices: {
@@ -537,7 +530,7 @@ export function getItems({ v, device, component, state }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           devices: "desktop",
           sidebarLabel: t("More Settings"),

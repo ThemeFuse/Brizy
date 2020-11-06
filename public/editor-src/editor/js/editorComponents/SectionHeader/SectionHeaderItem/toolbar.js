@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgImage,
   toolbarBgColor2,
@@ -20,7 +20,6 @@ import {
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -43,7 +42,7 @@ export function getItems({ v, device, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabCurrentElement"),
+              id: "tabCurrentElement",
               label: t("Image"),
               options: [
                 toolbarBgImage({
@@ -362,7 +361,7 @@ export function getItems({ v, device, state }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           devices: "desktop",
           sidebarLabel: t("More Settings"),

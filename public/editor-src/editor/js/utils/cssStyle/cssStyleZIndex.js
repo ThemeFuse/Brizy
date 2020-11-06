@@ -13,6 +13,12 @@ export function cssStyleZIndex({ v, device, state }) {
     : `z-index: ${zIndex + addZ};`;
 }
 
+export function cssStyleZIndexStory({ v, device, state }) {
+  const zIndex = styleZIndex({ v, device, state });
+
+  return `z-index: ${zIndex + 1};`;
+}
+
 export function cssStyleZIndexMode({ v, device, state, mode = "editor" }) {
   const zIndex = cssStyleZIndex({ v, device, state });
 

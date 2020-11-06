@@ -79,12 +79,4 @@ class Brizy_Config {
 			)
 		);
 	}
-
-	static public function getOptimizerConfig( $className ) {
-		switch ( $className ) {
-			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
-				return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
-		}
-	}
-
 }

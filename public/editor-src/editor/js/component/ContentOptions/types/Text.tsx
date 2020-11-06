@@ -28,12 +28,11 @@ export const TextWithDC: React.FC<Props> = ({
 }) => {
   const value = v[id] ?? "";
   const dcValue = v[`${id}Population`] ?? "";
-  const dcFallback = "";
-
-  const { status, data, error } = useDynamicContent(dcValue);
   const className = classnames(className_, `brz-${tagName}`);
 
-  switch (status) {
+  const dcState = useDynamicContent(dcValue);
+
+  switch (dcState.status) {
     case "empty":
       return (
         <TextEditor
@@ -44,9 +43,6 @@ export const TextWithDC: React.FC<Props> = ({
           onChange={(value: string): void => onChange({ [id]: value })}
         />
       );
-    case "idle":
-    case "waiting":
-      return React.createElement(tagName, { className }, dcValue);
     case "success":
       return React.createElement(tagName, {
         className,
@@ -54,14 +50,15 @@ export const TextWithDC: React.FC<Props> = ({
         // WordPress can send contents with encoded html entities
         // (e.g. Brizy&#8217;s Dynamic Content)
         // making us resort for dangerouslySetInnerHTML for now
-        dangerouslySetInnerHTML: { __html: data || dcFallback }
+        dangerouslySetInnerHTML: { __html: dcState.data || "" }
       });
-
     // not sure yet what to do here
     case "failed":
       if (process.env.NODE_ENV === "development") {
-        console.error(error);
+        console.error(dcState.error);
       }
+      return React.createElement(tagName, { className }, dcValue);
+    default:
       return React.createElement(tagName, { className }, dcValue);
   }
 };

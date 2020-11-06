@@ -19,6 +19,46 @@ const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
 import { Chart } from "./Chart";
 
+const resizerTransformValue = v => {
+  const {
+    width,
+    tabletWidth,
+    mobileWidth,
+    widthSuffix,
+    tabletWidthSuffix,
+    mobileWidthSuffix,
+    ...rest
+  } = v;
+
+  return {
+    size: width,
+    tabletSize: tabletWidth,
+    mobileSize: mobileWidth,
+    sizeSuffix: widthSuffix,
+    tabletSizeSuffix: tabletWidthSuffix,
+    mobileSizeSuffix: mobileWidthSuffix,
+    ...rest
+  };
+};
+const resizerTransformPatch = patch => {
+  if (patch.size) {
+    patch.width = patch.size;
+    delete patch.size;
+  }
+
+  if (patch.tabletSize) {
+    patch.tabletWidth = patch.tabletSize;
+    delete patch.tabletSize;
+  }
+
+  if (patch.mobileSize) {
+    patch.mobileWidth = patch.mobileSize;
+    delete patch.mobileSize;
+  }
+
+  return patch;
+};
+
 class Counter extends EditorComponent {
   static get componentId() {
     return "Counter";
@@ -84,15 +124,15 @@ class Counter extends EditorComponent {
     const suffixLabel = isSimple ? v.suffixLabel : v.suffixLabelRadial;
 
     const resizerRestrictions = {
-      width: {
+      size: {
         px: { min: 5, max: 1000 },
         "%": { min: 5, max: 100 }
       },
-      tabletWidth: {
+      tabletSize: {
         px: { min: 5, max: 1000 },
         "%": { min: 5, max: 100 }
       },
-      mobileWidth: {
+      mobileSize: {
         px: { min: 5, max: 1000 },
         "%": { min: 5, max: 100 }
       }
@@ -135,6 +175,14 @@ class Counter extends EditorComponent {
       return splitNum.join("-");
     };
 
+    const renderText = (
+      <div className={classNameNumber}>
+        {prefixLabel && <span>{`${prefixLabel} `}</span>}
+        <span className="brz-counter-numbers">{formatNumber(final)}</span>
+        {suffixLabel && <span>{` ${suffixLabel}`}</span>}
+      </div>
+    );
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -150,26 +198,27 @@ class Counter extends EditorComponent {
               }
             })}
           >
-            {type !== "simple" && (
+            {type !== "simple" ? (
               <BoxResizer
+                keepAspectRatio
                 points={resizerPoints}
                 restrictions={resizerRestrictions}
                 meta={this.props.meta}
-                value={v}
-                onChange={this.handleResizerChange}
+                value={resizerTransformValue(v)}
+                onChange={patch =>
+                  this.handleResizerChange(resizerTransformPatch(patch))
+                }
               >
                 <Chart
                   className={classNameChart}
                   type={type}
                   strokeW={v.strokeWidth}
                 />
+                {renderText}
               </BoxResizer>
+            ) : (
+              renderText
             )}
-            <div className={classNameNumber}>
-              {prefixLabel && <span>{`${prefixLabel} `}</span>}
-              <span className="brz-counter-numbers">{formatNumber(final)}</span>
-              {suffixLabel && <span>{` ${suffixLabel}`}</span>}
-            </div>
           </Wrapper>
         </CustomCSS>
       </Toolbar>

@@ -218,7 +218,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
             Brizy_Logger::instance()->critical(
                 'Unable to save entity. The data version is wrong.',
                 [
-                    'currentVersion' => $version,
+                    'post_id' => $this->getWpPostId(),
+				'currentVersion' => $version,
                     'newVersion'     => $this->dataVersion,
                 ]
             );

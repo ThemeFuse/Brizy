@@ -10,10 +10,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const ARCHIVE = 4;
 	const TEMPLATE = 8;
 	const BRIZY_TEMPLATE = 16;
-	const POSTS_FROM_TAXONOMY = 32;
-	const POSTS_FROM_CHILD_TAXONOMY = 64;
-
 	const ANY_CHILD_TAXONOMY = 128;
+
+	const WOO_SHOP_PAGE = 256;
 
 	/**
 	 * @var int
@@ -87,13 +86,16 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	public function isMatching( $applyFor, $entityType, $entityValues ) {
 
-		$ruleValues = array_filter( array(
-			$this->getAppliedFor(),
-			$this->getEntityType(),
-			$this->getEntityValues(),
-		), function ( $v ) {
-			return ! empty( $v );
-		} );
+		$ruleValues = array_filter(
+			array(
+				$this->getAppliedFor(),
+				$this->getEntityType(),
+				$this->getEntityValues(),
+			),
+			function ( $v ) {
+				return ! empty( $v );
+			}
+		);
 
 		$checkValues = array(
 			$applyFor,
@@ -113,8 +115,14 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			return true;
 		}
 
+		// check post author
+		if ( isset( $entity_values[0] ) && isset( $entityValues[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 2 ) {
+			if ( $values[0] === 'author' ) {
+				return get_post_field( 'post_author', $entityValues[0] ) == $values[1];
+			}
+		}
 		// check if post is in a term
-		if ( isset($entity_values[0]) && ( $values = explode( '|', $entity_values[0] ) ) &&  count( $values ) == 3 ) {
+		if ( isset( $entity_values[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 3 ) {
 
 			// POSTS
 			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
@@ -217,7 +225,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setType( $type ) {
-		$this->type = $type;
+		$this->type = (int) $type;
 
 		return $this;
 	}
@@ -235,7 +243,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return Brizy_Admin_Rule
 	 */
 	public function setAppliedFor( $appliedFor ) {
-		$this->appliedFor = $appliedFor;
+		if ( $val = (int) $appliedFor ) {
+			$this->appliedFor = $val;
+		}
 
 		return $this;
 	}
@@ -262,9 +272,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string[]
 	 */
 	public function getEntityValues() {
-		return is_null( $this->entityValues ) ? array() : array_map( function ( $id ) {
-			return $id;
-		}, $this->entityValues );
+		return $this->entityValues;
 	}
 
 	/**
@@ -278,7 +286,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			throw new InvalidArgumentException();
 		}
 
-		$this->entityValues = $entityValues;
+		$this->entityValues = array_values( $entityValues );
 
 		return $this;
 	}
@@ -302,10 +310,14 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		$weight = 0;
 
 		if ( $this->getAppliedFor() == self::TEMPLATE && $this->getEntityType() == 'front_page' ) {
-			$weight = 20;
+			$weight += 20;
 		}
 		if ( $this->getAppliedFor() == self::TEMPLATE ) {
-			$weight = 10;
+			$weight += 10;
+		}
+
+		if ( $this->getEntityType() === 'product' ) {
+			$weight += 30;
 		}
 
 		$values = array();
@@ -333,7 +345,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			$weight += 1;
 		}
 
-		if ( isset( $context['entityValues'] ) && $intersection = count( array_intersect( $context['entityValues'], $this->getEntityValues() ) ) ) {
+		if ( isset( $context['entityValues'] ) && $intersection = count(
+				array_intersect( $context['entityValues'], $this->getEntityValues() )
+			) ) {
 			$weight += $intersection;
 		}
 
@@ -354,8 +368,8 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 		return new self(
 			isset( $data['id'] ) ? $data['id'] : null,
-			isset( $data['type'] ) ? $data['type'] : null,
-			isset( $data['appliedFor'] ) ? $data['appliedFor'] : null,
+			isset( $data['type'] ) && ! empty( $data['type'] ) ? $data['type'] : null,
+			isset( $data['appliedFor'] ) && ! empty( $data['appliedFor'] ) ? $data['appliedFor'] : null,
 			isset( $data['entityType'] ) ? $data['entityType'] : null,
 			isset( $data['entityValues'] ) ? $data['entityValues'] : null
 		);

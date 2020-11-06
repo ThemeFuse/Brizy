@@ -29,3 +29,17 @@ export function cssStyleElementWOORatingSpacing({ v, device, state }) {
     state
   })}px;`;
 }
+
+export function cssStyleElementWOORatingBgStarColor({
+  v,
+  device,
+  state,
+  prefix = "bgStarColor"
+}) {
+  return `color: ${styleColor({
+    v,
+    device,
+    state,
+    prefix
+  })};`;
+}

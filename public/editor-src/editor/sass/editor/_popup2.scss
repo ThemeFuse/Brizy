@@ -1,7 +1,7 @@
 // Popup v2
 .brz-popup2 {
-  & > .brz-ed-border {
-    height: 100%;
+  &[data-border="popup2"] {
+    position: fixed;
   }
   &__button-go-to-editor {
     display: flex;
@@ -39,9 +39,4 @@
   .brz-ed-collapsible > .brz-ed-collapsible__icon {
     top: 34px;
   }
-}
-.brz-container__wrap > .brz-container > .brz-row__container > .brz-ed-border,
-.brz-container__wrap > .brz-container > .brz-row__container > .brz-ed-border > .brz-row__bg {
-  max-height: 100%;
-  height: 100%;
 }

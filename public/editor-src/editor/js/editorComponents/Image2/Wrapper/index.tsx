@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { clamp } from "visual/utils/math";
@@ -8,10 +9,12 @@ import { css } from "visual/utils/cssStyle";
 import { styleWrapper } from "../styles";
 
 import useResizerPoints from "./useResizerPoints";
-import { ImageProps, Styles } from "../types";
+import { ImageProps, V, Patch, Styles } from "../types";
 
 const Image: React.FC<ImageProps> = props => {
   const { v, vs, vd, _id, componentId, wrapperSizes, meta } = props;
+  const isAbsoluteOrFixed =
+    v.elementPosition === "absolute" || v.elementPosition === "fixed";
   const { points, restrictions } = useResizerPoints(props);
 
   const classNameWrapper = classnames(
@@ -48,12 +51,44 @@ const Image: React.FC<ImageProps> = props => {
       restrictions={restrictions}
       points={points}
       meta={meta}
-      value={value}
-      onChange={props.onChange}
+      value={resizerTransformValue(value)}
+      onChange={(patch: Patch): void =>
+        props.onChange(resizerTransformPatch(patch))
+      }
     >
       <div className={classNameWrapper}>{props.children}</div>
     </BoxResizer>
   );
+
+  // It's needed only for story. When we change height
+  function resizerTransformValue(value: V): V {
+    let newValue = {};
+    if (isAbsoluteOrFixed) {
+      const ratio = v.imageWidth / v.imageHeight;
+
+      newValue = {
+        height: value.height / ratio
+      };
+    }
+    return {
+      ...value,
+      ...newValue
+    };
+  }
+
+  function resizerTransformPatch(patch: Patch): Patch {
+    let newPatch = {};
+    if (isAbsoluteOrFixed) {
+      const ratio = v.imageWidth / v.imageHeight;
+
+      newPatch = {
+        offsetY: patch.offsetY || v.offsetY,
+        height: patch.height * ratio
+      };
+    }
+
+    return { ...patch, ...newPatch };
+  }
 };
 
 export default Image;

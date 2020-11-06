@@ -10,6 +10,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
 import { authorizedSelector } from "visual/redux/selectors2";
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 
 const MAX_CONTAINER_WIDTH = 292;
 
@@ -287,6 +288,7 @@ class Thumbnail extends Component {
     const isBlank = blank && blank === "blank";
     const className = classnames(
       "brz-ed-popup-two-block",
+      IS_STORY && "brz-ed-popup-two-block-stories",
       blockIsPro && "brz-ed-popup-two-block--pro",
       isLayout && "brz-ed-popup-two-block--layout",
       inactive && "inactive"
@@ -332,9 +334,14 @@ class Layout extends Component {
     } = this.props;
     const { thumbnailLoaded } = this.state;
 
+    const infoClassName = classnames(
+      "brz-ed-popup-two-block-info",
+      IS_STORY && "brz-ed-popup-two-block-info-stories"
+    );
+
     return (
       <div
-        className="brz-ed-popup-two-block-info"
+        className={infoClassName}
         style={thumbnailLoaded ? animationStyle : {}}
       >
         <Thumbnail
@@ -357,7 +364,14 @@ class Layout extends Component {
         <div className="brz-ed-popup-two-block-info-downline">
           <div className="brz-ed-popup-two-block-info-title">{name}</div>
           <div className="brz-ed-popup-two-block-info-title">
-            {pages.length} {pages.length > 1 ? t("layouts") : t("layout")}
+            {pages.length}{" "}
+            {pages.length > 1
+              ? IS_STORY
+                ? t("stories")
+                : t("layouts")
+              : IS_STORY
+              ? t("story")
+              : t("layout")}
           </div>
         </div>
       </div>

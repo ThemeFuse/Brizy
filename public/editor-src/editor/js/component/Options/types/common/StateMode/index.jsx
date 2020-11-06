@@ -16,7 +16,10 @@ export default class StateMode extends Component {
     location: T.string,
     toolbar: T.object,
     onChange: T.func,
-    value: T.string
+    value: T.string,
+    config: T.shape({
+      states: T.arrayOf(T.oneOf(states()))
+    })
   };
 
   static defaultProps = {
@@ -25,7 +28,8 @@ export default class StateMode extends Component {
     location: "",
     toolbar: "",
     value: State.toString(State.empty),
-    onChange: _.noop
+    onChange: _.noop,
+    config: {}
   };
 
   static shouldOptionBeFiltered({ options }) {
@@ -81,7 +85,8 @@ export default class StateMode extends Component {
   };
 
   render() {
-    const statesList = states().filter(this.haveState);
+    const _states = this.props?.config?.states ?? states();
+    const statesList = _states.filter(this.haveState);
 
     switch (statesList.length) {
       case 0:

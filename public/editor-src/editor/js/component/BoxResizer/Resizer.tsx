@@ -241,7 +241,7 @@ export class Resizer extends Component<Props, State> {
       return acc;
     }, {} as Patch["patch"]);
 
-    this.props.onChange({ patch, deltaX, deltaY, point });
+    this.props.onChange({ patch, deltaX, deltaY, point, startRect });
   }
 
   handleTopCenterDrag: DragHandler = dragInfo =>

@@ -1,15 +1,21 @@
 {
   "content": {
     "shortcode": "woocommerce_cart",
-    "currentUser": ""
+    "currentUser": "",
+    "productID": ""
   },
 
   "style": {
     "className": "",
 
     "width": 100,
+    "widthSuffix": "%",
+
     "tabletWidth": null,
+    "tabletSuffixWidth": null,
+
     "mobileWidth": null,
+    "mobileSuffixWidth": null,
 
     "customCSS": ""
   }

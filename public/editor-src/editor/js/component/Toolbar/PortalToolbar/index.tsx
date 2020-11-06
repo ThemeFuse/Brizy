@@ -12,6 +12,7 @@ import {
 } from "./PortalToolbarPositioner";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { monitor, ToolbarMonitorHandler } from "../monitor";
+import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
 import { OptionDefinition } from "visual/component/Options/Type";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
@@ -21,6 +22,8 @@ export type PortalToolbarProps = {
   getSidebarItems?: () => OptionDefinition[];
   getSidebarTitle?: () => string;
   manualControl?: boolean;
+  selector?: string;
+  selectorSearchStrategy?: "dom-tree" | "coordinates";
   onBeforeOpen?: () => void;
   onBeforeClose?: () => void;
   onOpen?: () => void;
@@ -30,6 +33,10 @@ export type PortalToolbarProps = {
 
 type PortalToolbarState = {
   opened: boolean;
+};
+
+type ToolbarClickEvent = Event & {
+  brzToolbarHandled?: boolean;
 };
 
 export default class PortalToolbar
@@ -51,11 +58,13 @@ export default class PortalToolbar
     opened: false
   };
 
-  node: Element | Text | null = null;
+  node: Element | null = null;
+
+  selectorNode: Element | null = null;
 
   componentDidMount(): void {
     // eslint-disable-next-line react/no-find-dom-node
-    this.node = ReactDOM.findDOMNode(this);
+    this.node = ReactDOM.findDOMNode(this) as Element | null;
 
     if (this.node === null) {
       return;
@@ -75,14 +84,48 @@ export default class PortalToolbar
     if (!this.props.manualControl) {
       this.node.addEventListener(
         "click",
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (event: any) => {
-          if (event.brzToolbarHandled || monitor.getActive() === this) {
+        event => {
+          if (
+            this.node === null ||
+            (event as ToolbarClickEvent).brzToolbarHandled
+          ) {
             return;
           }
-          event.brzToolbarHandled = true;
 
-          this.show();
+          if (this.props.selector === undefined) {
+            if (monitor.getActive() === this) {
+              return;
+            }
+
+            (event as ToolbarClickEvent).brzToolbarHandled = true;
+            this.show();
+          } else {
+            const search =
+              this.props.selectorSearchStrategy === "dom-tree"
+                ? selectorSearchDomTree
+                : selectorSearchCoordinates;
+            const target = search(
+              this.node,
+              this.props.selector,
+              event as MouseEvent
+            );
+
+            if (target) {
+              (event as ToolbarClickEvent).brzToolbarHandled = true;
+
+              if (this.state.opened === false) {
+                this.selectorNode = target;
+                this.show();
+              } else if (target !== this.selectorNode) {
+                this.hide(() => {
+                  this.selectorNode = target;
+                  this.show();
+                });
+              }
+            } else {
+              this.hide();
+            }
+          }
         },
         false
       );
@@ -92,6 +135,7 @@ export default class PortalToolbar
   componentWillUnmount(): void {
     monitor.unsetIfActive(this);
     this.node = null;
+    this.selectorNode = null;
   }
 
   handleClick = (e: React.MouseEvent<HTMLElement>): void => {
@@ -168,6 +212,7 @@ export default class PortalToolbar
 
       monitor.setActive(this);
       onBeforeOpen && onBeforeOpen();
+
       this.setState({ opened: true }, () => {
         onOpen && onOpen();
 
@@ -182,7 +227,7 @@ export default class PortalToolbar
     }
   }
 
-  hide(): void {
+  hide(cb?: () => void): void {
     if (this.state.opened) {
       const { onBeforeClose, onClose } = this.props;
 
@@ -196,6 +241,8 @@ export default class PortalToolbar
           });
           this.node.dispatchEvent(e);
         }
+
+        cb?.();
       });
     }
   }
@@ -256,7 +303,7 @@ export default class PortalToolbar
               {...contextProps}
               {...ownProps}
               items={items}
-              node={this.node}
+              node={this.selectorNode ?? this.node}
               onClick={this.handleClick}
               onMouseEnter={this.handleMouseEnter}
               onMouseLeave={this.handleMouseLeave}

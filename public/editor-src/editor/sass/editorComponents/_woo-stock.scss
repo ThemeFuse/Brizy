@@ -2,8 +2,9 @@
 .brz-woo-stock {
   display: flex;
   justify-content: inherit;
+  width: 100%;
 
-  .in-stock {
+  .stock {
     margin: 0;
   }
 }

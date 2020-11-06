@@ -15,6 +15,7 @@ import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { styleTabs, styleAnimation } from "./styles";
 import { validateKeyByProperty } from "visual/utils/onChange";
+import { Wrapper } from "../tools/Wrapper";
 
 export default class Tabs extends EditorComponent {
   static get componentId() {
@@ -152,14 +153,19 @@ export default class Tabs extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <div className={className} data-action={action}>
+          <Wrapper
+            {...this.makeWrapperProps({
+              className,
+              attributes: { "data-action": action }
+            })}
+          >
             <ul className={classNameNav}>
               <Items {...itemNavProps} />
             </ul>
             <div className={classNameContent}>
               <Items {...itemContentProps} />
             </div>
-          </div>
+          </Wrapper>
         </ContextMenu>
       </CustomCSS>
     );

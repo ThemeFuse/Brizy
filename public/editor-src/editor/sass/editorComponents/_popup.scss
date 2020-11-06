@@ -20,12 +20,22 @@
       font-size: 26px;
     }
   }
-
-  &__inner > .brz-bg-content {
+  & > .brz-container__wrap {
     max-height: 100%;
-    overflow: auto;
     padding-top: 70px;
     padding-bottom: 70px;
+  }
+  & .brz-container {
+    height: 100%;
+    justify-content: center;
+  }
+  & .brz-container > .brz-row__container {
+    max-height: 100%;
+  }
+  & .brz-container > .brz-row__container > .brz-row {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100%;
   }
 }
 

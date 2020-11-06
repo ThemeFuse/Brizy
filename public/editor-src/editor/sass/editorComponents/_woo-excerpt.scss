@@ -1,0 +1,20 @@
+.brz-wooexcerpt {
+  width: 100%;
+
+  .woocommerce-product-details__short-description {
+    * {
+      transition-property: color;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+    ul,
+    ol {
+      padding-left: 20px;
+    }
+    > *:not(:last-child) {
+      margin-bottom: 0.9rem;
+    }
+  }
+}

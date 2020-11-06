@@ -130,12 +130,13 @@ class Brizy_Editor {
 		$metaManager->addMonitor( new Brizy_Admin_Post_BrizyPostsMonitor() );
 		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
 
-
+		//Brizy_Editor_Asset_Cleaner::_init();
 		Brizy_Admin_Templates::_init();
 		Brizy_Admin_Popups_Main::_init();
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
+        //Brizy_Admin_Stories_Main::_init();
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
@@ -148,7 +149,6 @@ class Brizy_Editor {
 			}
 		}
 
-		$this->loadShortcodes();
 		$this->initializeAssetLoaders();
 
 		$supported_post_types   = $this->supported_post_types();
@@ -224,12 +224,17 @@ class Brizy_Editor {
 	public function revisionsToKeep( $num, $post ) {
 		try {
 			$revisionCount = apply_filters( 'brizy_revisions_max_count', BRIZY_MAX_REVISIONS_TO_KEEP );
+
+			if ( $revisionCount > $num ) {
+				return $num;
+			}
+
 			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
 				return $revisionCount;
 			}
 
 			if ( Brizy_Editor_Post::get( $post )->uses_editor() ) {
-				$num = $revisionCount;;
+				$num = $revisionCount;
 			}
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->debug( $e->getMessage(), array( $e ) );
@@ -273,8 +278,9 @@ class Brizy_Editor {
 		Brizy_Admin_Layouts_Main::registerCustomPosts();
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
-		Brizy_Admin_Popups_Main::registerCustomPosts();
-		Brizy_Admin_Blocks_Main::registerCustomPosts();
+        //Brizy_Admin_Stories_Main::registerCustomPosts();
+        Brizy_Admin_Popups_Main::registerCustomPosts();
+        Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}
 
@@ -324,15 +330,6 @@ class Brizy_Editor {
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 		}
-	}
-
-	private function loadShortcodes() {
-		new Brizy_Shortcode_Sidebar();
-		new Brizy_Shortcode_Posts();
-		new Brizy_Shortcode_Navigation();
-		new Brizy_Shortcode_PostField();
-		new Brizy_Shortcode_PostInfo();
-		new Brizy_Shortcode_WooProductPageWrapper();
 	}
 
 	private function loadEditorAdminSettings() {

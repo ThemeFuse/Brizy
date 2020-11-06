@@ -1,6 +1,21 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Posts");
+export const title = ({ v }) => {
+  switch (v.type) {
+    case "posts":
+      return t("Posts");
+    case "relatedProducts":
+      return t("Related Products");
+    case "upsell":
+      return t("Upsell");
+    case "products":
+      return t("Products");
+    case "categories":
+      return t("Categories");
+    default:
+      return t("Posts");
+  }
+};
 
 const helperCustomCSS = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>

@@ -18,7 +18,7 @@ const translationsMap = {
   Countdown: t("Countdown"),
   Countdown2: t("Countdown"),
   Tabs: t("Tabs"),
-  TimeLine: t("Timeline"),
+  Timeline: t("Timeline"),
   Switcher: t("Switcher"),
   Table: t("Table"),
   ProgressBar: t("Progress"),
@@ -27,35 +27,57 @@ const translationsMap = {
   Carousel: t("Carousel"),
   Row: t("Row"),
   Column: t("Column"),
-  WPSidebar: t("Sidebar"),
-  WPCustomShortcode: t("Shortcode"),
-  WPPostsTitle: v =>
-    v?.type === "woo" ? t("Woo Product Title") : t("Post Title"),
-  WPNavigation: t("Menu"),
-  WPPostExcerpt: t("Post Excerpt"),
-  WPPostNavigation: t("Post Navigation"),
-  Posts: t("Posts"),
+  Posts: v =>
+    v.type === "posts"
+      ? t("Posts")
+      : v.type === "upsell"
+      ? t("Upsell")
+      : v.type === "relatedProducts"
+      ? t("Related Products")
+      : v.type === "categories"
+      ? t("Categories")
+      : t("Products"),
   Archives: t("Archives"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
-  FacebookComments: t("Comments"),
+  FacebookComments: v => (v.review === "true" ? t("Review") : t("Comments")),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
   FacebookGroup: t("Facebook Group"),
-  WPBreadcrumbs: t("Breadcrumbs"),
-  WPPostInfo: t("Post Info"),
-  WPPostContent: t("Post Content"),
-  // WPPostInfo: t("Post info")
+  WPBreadcrumbs: v =>
+    v.type === "woo" ? t("Product Breadcrumbs") : t("Breadcrumbs"),
   Audio: t("Audio"),
   Twitter: t("Twitter"),
   Facebook: t("Facebook"),
-  WPComments: t("Comments"),
   Search: t("Search"),
-  WOOProductMeta: t("Product Meta"),
-  WOORating: t("WOORating"),
-  WOOCart: t("WOOCart"),
   Login: t("Login"),
-  Lottie: t("Lottie")
+  Lottie: t("Lottie"),
+  StarRating: t("Rating"),
+
+  // WP
+  WPSidebar: t("Sidebar"),
+  WPCustomShortcode: t("Shortcode"),
+  WPPostNavigation: t("Post Navigation"),
+  WPPostsTitle: v => (v?.type === "woo" ? t("Product Title") : t("Post Title")),
+  WPPostContent: v =>
+    v?.type === "woo" ? t("Product Content") : t("Post Content"),
+  WPPostExcerpt: t("Post Excerpt"),
+  WPNavigation: t("Menu"),
+  WPPostInfo: t("Post Info"),
+  WPComments: t("Comments"),
+  WOOExcerpt: t("Product Excerpt"),
+  WOOProductMeta: t("Product Meta"),
+  WOORating: t("Product Rating"),
+  WOOCart: t("Shop Cart"),
+  WOOAddToCart: t("Add To Cart"),
+  WOOPrice: t("Product Price"),
+  WOOStock: t("Product Stock"),
+  WOOSku: t("Product Sku"),
+  WOOGallery: t("Product Gallery"),
+  WOOAttributes: t("Product Attributes"),
+  WOOCategories: t("Shop Categories"),
+  WOOProducts: t("Shop Products"),
+  WOOPages: t("Shop Pages")
 };
 
 export default {
@@ -63,18 +85,20 @@ export default {
 };
 
 function getItems(v) {
-  const { base } = Editor.getShortcodes();
-  const items = v.items;
+  const shortcodes = Editor.getShortcodes();
+const items = v.items;
   const { icon = "" } =
-    base.find(
-      ({
-        resolve: {
-          value: {
-            items: [{ type }]
+    Object.values(shortcodes)
+      .flat()
+      .find(
+        ({
+          resolve: {
+            value: {
+              items: [{ type }]
+            }
           }
-        }
-      }) => type === items[0]?.type
-    ) || {};
+        }) => type === items[0]?.type
+      ) || {};
   let title = translationsMap[items[0]?.type]; // TODO: See if we'll need icons & prop
 
   if (typeof title === "function") {

@@ -17,7 +17,12 @@ export function cssStyleFlexHorizontalAlign({ v, device, state }) {
 }
 
 export function cssStyleContentAlign({ v, device, state }) {
- const contentAlign = styleAlignHorizontal({ v, device, state, prefix: "content" });
+  const contentAlign = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    prefix: "content"
+  });
 
   return contentAlign === undefined ? "" : `text-align:${contentAlign};`;
 }
@@ -31,4 +36,21 @@ export function cssStyleMarginAlign({ v, device, state, prefix = "" }) {
   const alignment = styleAlignHorizontal({ v, device, state, prefix });
 
   return alignment === undefined ? "" : aligns[alignment];
+}
+
+export function cssStyleFlexColumnVerticalAlign({ v, device, state }) {
+  const alignItems = styleAlignFlexVerticalAlign({ v, device, state });
+
+  return alignItems === undefined ? "" : `justify-content:${alignItems};`;
+}
+
+export function cssStyleExcerptAlign({ v, device, state }) {
+  const contentAlign = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    prefix: "excerpt"
+  });
+
+  return contentAlign === undefined ? "" : `text-align:${contentAlign};`;
 }

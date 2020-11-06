@@ -197,6 +197,10 @@ class Brizy_MaintenanceMode {
 	        $out = true;
         }
 
+	    if ( ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_AttachmentProxy::ENDPOINT ) ] ) ) {
+	        $out = true;
+        }
+
 		return $out;
 	}
 }

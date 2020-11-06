@@ -1,9 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
+export function getItems() {
   return [
     {
       id: "toolbarWOOProductPage",
@@ -39,7 +36,7 @@ export function getItems({ device }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

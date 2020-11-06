@@ -1,20 +1,10 @@
 .brz-bg {
-  position: relative;
-}
-.brz-bg-content {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-}
-
-// Media
-.brz-bg-media {
   overflow: hidden;
 }
-.brz-bg-media,
+.brz-bg,
+.brz-bg-color,
 .brz-bg-image,
 .brz-bg-video,
-.brz-bg-color,
 .brz-bg-map {
   position: absolute;
   top: 0;
@@ -22,39 +12,10 @@
   width: 100%;
   height: 100%;
 }
-
-// Image
 .brz-bg-image {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-&.brz-is-mobile {
-  & .brz-bg-media > .brz-bg-image {
-    background-attachment: scroll;
-  }
-}
-
-// Video & Map
-.brz-iframe.brz-bg-video__cover,
-.brz-iframe.brz-bg-map__cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  max-width: none;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-// Color
-.brz-bg-color {
-  opacity: 1;
-}
-
-// Shape
 .brz-bg-shape {
   width: 100%;
   height: 100px;
@@ -72,7 +33,6 @@
     transform: rotateX(180deg);
   }
 }
-
 .brz-bg-image-parallax {
   width: 100%;
   background-size: cover !important;
@@ -85,11 +45,16 @@
   transform-style: preserve-3d;
 }
 
-// Responsive
-@include media-breakpoint-down(sm) {
-  .brz-bg-video {
-    .brz-iframe {
-      display: none !important;
-    }
-  }
+// Video & Map
+.brz-iframe.brz-bg-video__cover,
+.brz-iframe.brz-bg-map__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  max-width: none;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

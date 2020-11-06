@@ -4,7 +4,7 @@ import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarDisabledAdvancedSettings,
   toolbarDisabledToolbarSettings
@@ -13,9 +13,6 @@ import {
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-  const dvkn = key => defaultValueKey({ key, device });
-
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "borderColorHex", device, state }),
     defaultValueValue({ v, key: "borderColorPalette", device, state })
@@ -57,22 +54,10 @@ export function getItems({ v, device, state }) {
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    {
-                      title: t("Button"),
-                      value: "button"
-                    },
-                    {
-                      title: t("Embed"),
-                      value: "embed"
-                    },
-                    {
-                      title: t("Page"),
-                      value: "page"
-                    },
-                    {
-                      title: t("Group"),
-                      value: "group"
-                    }
+                    { title: t("Button"), value: "button" },
+                    { title: t("Embed"), value: "embed" },
+                    { title: t("Page"), value: "page" },
+                    { title: t("Group"), value: "group" }
                   ]
                 },
                 {
@@ -82,14 +67,8 @@ export function getItems({ v, device, state }) {
                   disabled: v.facebookType !== "button",
                   devices: "desktop",
                   choices: [
-                    {
-                      title: t("Like"),
-                      value: "like"
-                    },
-                    {
-                      title: t("Recommend"),
-                      value: "recommend"
-                    }
+                    { title: t("Like"), value: "like" },
+                    { title: t("Recommend"), value: "recommend" }
                   ]
                 },
                 {
@@ -99,14 +78,8 @@ export function getItems({ v, device, state }) {
                   devices: "desktop",
                   disabled: v.facebookType !== "button",
                   choices: [
-                    {
-                      title: t("Button"),
-                      value: "button"
-                    },
-                    {
-                      title: t("Boxed"),
-                      value: "boxed"
-                    }
+                    { title: t("Button"), value: "button" },
+                    { title: t("Boxed"), value: "boxed" }
                   ]
                 },
                 {
@@ -116,14 +89,8 @@ export function getItems({ v, device, state }) {
                   disabled: v.facebookType !== "embed",
                   devices: "desktop",
                   choices: [
-                    {
-                      title: t("Post"),
-                      value: "post"
-                    },
-                    {
-                      title: t("Video"),
-                      value: "video"
-                    }
+                    { title: t("Post"), value: "post" },
+                    { title: t("Video"), value: "video" }
                   ]
                 },
                 {
@@ -161,18 +128,9 @@ export function getItems({ v, device, state }) {
                   devices: "desktop",
                   disabled: v.facebookType !== "page",
                   choices: [
-                    {
-                      title: t("Timeline"),
-                      value: "timeline"
-                    },
-                    {
-                      title: t("Events"),
-                      value: "events"
-                    },
-                    {
-                      title: t("Messages"),
-                      value: "messages"
-                    }
+                    { title: t("Timeline"), value: "timeline" },
+                    { title: t("Events"), value: "events" },
+                    { title: t("Messages"), value: "messages" }
                   ]
                 },
                 {
@@ -190,14 +148,8 @@ export function getItems({ v, device, state }) {
                   devices: "desktop",
                   disabled: v.facebookType !== "group",
                   choices: [
-                    {
-                      title: t("Light"),
-                      value: "light"
-                    },
-                    {
-                      title: t("Dark"),
-                      value: "dark"
-                    }
+                    { title: t("Light"), value: "light" },
+                    { title: t("Dark"), value: "dark" }
                   ]
                 }
               ]
@@ -380,14 +332,8 @@ export function getItems({ v, device, state }) {
           devices: "desktop",
           disabled: v.facebookType !== "button",
           choices: [
-            {
-              title: t("Current Page"),
-              value: "current"
-            },
-            {
-              title: t("Custom Page"),
-              value: "custom"
-            }
+            { title: t("Current Page"), value: "current" },
+            { title: t("Custom Page"), value: "custom" }
           ]
         },
         {
@@ -438,7 +384,7 @@ export function getItems({ v, device, state }) {
               }
             },
             {
-              id: dvk("advancedSettings"),
+              id: "advancedSettings",
               type: "advancedSettings",
               label: t("More Settings"),
               icon: "nc-cog"
@@ -448,10 +394,9 @@ export function getItems({ v, device, state }) {
       : toolbarDisabledToolbarSettings({ device, state: "normal" }),
     v.facebookType !== "group" && v.facebookType !== "page"
       ? {
-          id: dvkn("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
-          roles: ["admin"],
           position: 110,
           icon: "nc-cog"
         }

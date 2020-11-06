@@ -1,4 +1,8 @@
 {
+  "content": {
+    "type": "wp"
+  },
+
   "toolbar": {
     "tabsState": "",
     "tabsColor": ""

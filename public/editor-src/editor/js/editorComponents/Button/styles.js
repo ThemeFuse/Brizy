@@ -1,27 +1,58 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
-export function style(v, vs, vd) {
+export function style(v, vs, vd, hasSizing) {
   const styles = {
     ".brz &&.brz-btn:hover": {
       standart: [
+        "cssStyleDisplayFlex",
+        ...(IS_PREVIEW ? ["cssStyleElementButtonPropertyContentAlign"] : []),
         "cssStyleTypographyFontFamily",
         "cssStyleTypographyFontWeight",
         "cssStyleTypographyFontSize",
         "cssStyleTypographyLineHeight",
         "cssStyleTypographyLetterSpacing",
         "cssStyleColor",
-        "cssStyleBorder",
+        ...(hasSizing && IS_EDITOR && v.type !== "submit"
+          ? []
+          : ["cssStyleBorder"]),
+        "cssStyleElementButtonBorderRadius",
         "cssStyleBgColor",
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
-        "cssStyleElementButtonBorderRadius",
         "cssStylePaddingFourFields",
-        "cssStyleElementButtonIconPosition"
+        "cssStyleElementButtonIconPosition",
+        "cssStyleSizeWidth",
+        "cssStyleSizeHeightPxOnly"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementButtonPropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover:after": {
+      standart:
+        (hasSizing && IS_EDITOR) || v.type === "submit"
+          ? []
+          : ["cssStyleSizeHeightPercentOnly"]
+    },
+    ".brz &&:hover > .brz-ed-box__resizer": {
+      standart: IS_EDITOR
+        ? [
+            "cssStyleDisplayFlex",
+            "cssStyleElementButtonIconPosition",
+            "cssStyleElementButtonPropertyContentAlign"
+          ]
+        : []
+    },
+    ".brz &&:hover .brz-btn--story-container": {
+      standart: [
+        "cssStyleBorder",
+        "cssStyleElementButtonIconPosition",
+        "cssStyleElementButtonBorderRadius"
+      ]
+    },
+    ".brz &&:hover .brz-btn--story-container:after": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
     }
   };
 

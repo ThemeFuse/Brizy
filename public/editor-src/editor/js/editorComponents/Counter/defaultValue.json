@@ -19,7 +19,10 @@
     "prefixLabelRadialPopulation": null,
 
     "suffixLabelRadial": "%",
-    "suffixLabelRadial2Population": null
+    "suffixLabelRadial2Population": null,
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "toolbar": {

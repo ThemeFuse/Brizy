@@ -15,7 +15,6 @@
 
     "customCSS": "",
 
-
     "gridRow": 1,
     "gridRowSuffix": "",
     "gridColumn": 3,
@@ -27,7 +26,6 @@
     "mobileGridColumn": 1,
     "mobileGridColumnSuffix": "",
 
-
     "padding": 0,
     "paddingSuffix": "",
 
@@ -36,7 +34,6 @@
 
     "mobilePadding": null,
     "mobilePaddingSuffix": null,
-
 
     "families": {
       "paginationFontFamily": "noto_serif",
@@ -48,13 +45,10 @@
       "mobileFilterFontFamily": null
     },
 
-
     "pagination": "off",
-
 
     "paginationSpacing": 20,
     "paginationSpacingSuffix": "",
-
 
     "paginationFontStyle": "",
     "paginationFontFamilyType": "google",
@@ -77,7 +71,6 @@
     "mobilePaginationLineHeight": 1.5,
     "mobilePaginationLetterSpacing": 0,
 
-
     "paginationColorHex": "#ffffff",
     "paginationColorOpacity": 1,
     "paginationColorPalette": "color3",
@@ -91,7 +84,6 @@
 
     "tempHoverPaginationColorOpacity": null,
     "tempHoverPaginationColorPalette": null,
-
 
     "paginationBgColorHex": "#ffffff",
     "paginationBgColorOpacity": 1,
@@ -107,7 +99,6 @@
     "tempHoverPaginationBgColorOpacity": null,
     "tempHoverPaginationBgColorPalette": null,
 
-
     "paginationBorderColorHex": "#e5e5e5",
     "paginationBorderColorOpacity": 1,
     "paginationBorderColorPalette": "",
@@ -121,7 +112,6 @@
 
     "tempHoverPaginationBorderColorOpacity": null,
     "tempHoverPaginationBorderColorPalette": null,
-
 
     "paginationBorderStyle": "solid",
     "paginationBorderWidthType": "grouped",
@@ -153,7 +143,6 @@
     "tempHoverPaginationBorderBottomWidth": null,
     "tempHoverPaginationBorderLeftWidth": null,
 
-
     "paginationBorderRadiusType": "grouped",
     "paginationBorderRadius": 0,
     "paginationBorderTopLeftRadius": 0,
@@ -167,13 +156,11 @@
     "tempPaginationBorderBottomRightRadius": 0,
     "tempPaginationBorderBottomLeftRadius": 0,
 
-
     "filter": "off",
 
     "filterStyle": "style-1",
 
     "filterHorizontalAlign": "left",
-
 
     "filterSpacing": 3,
     "filterSpacingSuffix": "",
@@ -184,7 +171,6 @@
     "mobileFilterSpacing": null,
     "mobileFilterSpacingSuffix": null,
 
-
     "afterFilterSpacing": 20,
     "afterFilterSpacingSuffix": "",
 
@@ -193,7 +179,6 @@
 
     "mobileAfterFilterSpacing": null,
     "mobileAfterFilterSpacingSuffix": null,
-
 
     "filterFontStyle": "",
     "filterFontFamilyType": "google",
@@ -216,7 +201,6 @@
     "mobileFilterLineHeight": 1.5,
     "mobileFilterLetterSpacing": 0,
 
-
     "filterBgColorHex": "#ffffff",
     "filterBgColorOpacity": 1,
     "filterBgColorPalette": "",
@@ -238,7 +222,6 @@
     "tempActiveFilterBgColorPalette": null,
     "tempActiveFilterBgColorOpacity": null,
 
-
     "filterColorHex": "#73777f",
     "filterColorOpacity": 0.7,
     "filterColorPalette": "",
@@ -259,7 +242,6 @@
 
     "tempActiveFilterColorOpacity": null,
     "tempActiveFilterColorPalette": null,
-
 
     "filterBorderStyle": "solid",
     "filterBorderWidthType": "grouped",
@@ -306,7 +288,6 @@
     "tempActiveFilterBorderBottomWidth": null,
     "tempActiveFilterBorderLeftWidth": null,
 
-
     "filterBorderColorHex": "#dcdee1",
     "filterBorderColorOpacity": 1,
     "filterBorderColorPalette": "",
@@ -327,7 +308,6 @@
 
     "tempActiveFilterBorderColorOpacity": null,
     "tempActiveFilterBorderColorPalette": null,
-
 
     "filterBorderRadiusType": "grouped",
     "filterBorderRadius": 0,
@@ -368,7 +348,6 @@
     "tempMobileFilterBorderBottomRightRadius": null,
     "tempMobileFilterBorderBottomLeftRadius": null,
 
-
     "filterBoxShadow": "",
     "filterBoxShadowBlur": 0,
     "filterBoxShadowSpread": 0,
@@ -405,7 +384,6 @@
     "tempActiveFilterBoxShadowVertical": null,
     "tempActiveFilterBoxShadowHorizontal": null,
 
-
     "filterBoxShadowColorHex": "#000000",
     "filterBoxShadowColorOpacity": 1,
     "filterBoxShadowColorPalette": "",
@@ -426,7 +404,6 @@
 
     "tempActiveFilterBoxShadowColorPalette": null,
     "tempActiveFilterBoxShadowColorOpacity": null,
-
 
     "filterPaddingType": "grouped",
 

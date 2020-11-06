@@ -4,23 +4,14 @@ export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       interval: [
-        "cssStyleDisplayBlock",
+        "cssStyleDisplayFlex",
         "cssStyleVisibleMode|||preview",
-        "cssStyleVisibleEditorDisplayNoneOrBlock|||editor",
+        "cssStyleVisibleEditorDisplayNoneOrFlex|||editor",
         "cssStyleCustomPosition",
         "cssStyleCustomWidth",
         "cssStyleOffset"
-      ]
-    }
-  };
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleWrap(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleZIndex", "cssStylePositionMode", "cssStyleMargin"],
-      interval: ["cssStyleVisibleMode|||editor"]
+      ],
+      standart: ["cssStyleZIndex", "cssStylePositionMode", "cssStyleMargin"]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -36,6 +27,11 @@ export function styleContainer(v, vs, vd) {
       ]
     }
   };
+
+  if (IS_EDITOR) {
+    styles[".brz &&:hover"].interval = ["cssStyleVisibleMode|||editor"];
+  }
+
   return renderStyles({ v, vs, vd, styles });
 }
 

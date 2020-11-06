@@ -24,7 +24,7 @@ import { getContainerW } from "visual/utils/meta";
 import Items from "./Items";
 import { css } from "visual/utils/cssStyle";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { styleRow, styleBg, styleContainer, styleAnimation } from "./styles";
+import { styleRow, styleContainer, styleAnimation } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { styleSizeSize } from "visual/utils/style2";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -43,8 +43,6 @@ class Row extends EditorComponent {
   static experimentalDynamicContent = true;
 
   mounted = false;
-
-  containerBorderRef = React.createRef();
 
   toolbarRef = React.createRef();
 
@@ -135,17 +133,6 @@ class Row extends EditorComponent {
 
   renderContent(v, vs, vd) {
     const { className, mobileReverseColumns, tabletReverseColumns } = v;
-
-    const classNameBg = classnames(
-      "brz-flex-xs-wrap",
-      "brz-row__bg",
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
-      )
-    );
-
     const classNameContainer = classnames(
       "brz-row",
       { "brz-row--inner": this.isInnerRow() },
@@ -163,9 +150,7 @@ class Row extends EditorComponent {
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
         null,
-        {
-          allowExtend: false
-        }
+        { allowExtend: false }
       ),
       meta: this.getMeta(v),
       tabletReversed: tabletReverseColumns,
@@ -173,7 +158,7 @@ class Row extends EditorComponent {
     });
 
     return (
-      <Background className={classNameBg} value={v} meta={this.getMeta(v)}>
+      <Background value={v} meta={this.getMeta(v)}>
         <Items {...itemsProps} />
       </Background>
     );
@@ -265,40 +250,52 @@ class Row extends EditorComponent {
     return (
       <Fragment>
         <SortableElement type="row" useHandle={true}>
-          {sortableElementAtts => (
-            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <Animation
-                component={"div"}
-                componentProps={{
-                  ...parseCustomAttributes(customAttributes),
-                  ...sortableElementAtts,
-                  id: cssIDPopulation ?? customID,
-                  className: classNameRowContainer
-                }}
-                animationClass={animationClassName}
-              >
-                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                  <Roles
-                    allow={["admin"]}
-                    fallbackRender={() => this.renderContent(v, vs, vd)}
+          {sortableElementAttr => (
+            <ContainerBorder
+              type="row"
+              color="grey"
+              activeBorderStyle="dotted"
+              activateOnContentClick={false}
+              buttonPosition="topLeft"
+              renderButtonWrapper={this.renderToolbar}
+            >
+              {({
+                ref: containerBorderRef,
+                attr: containerBorderAttr,
+                button: ContainerBorderButton,
+                border: ContainerBorderBorder
+              }) => (
+                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                  <Animation
+                    ref={containerBorderRef}
+                    component={"div"}
+                    componentProps={{
+                      ...parseCustomAttributes(customAttributes),
+                      ...sortableElementAttr,
+                      ...containerBorderAttr,
+                      id: cssIDPopulation ?? customID,
+                      className: classNameRowContainer
+                    }}
+                    animationClass={animationClassName}
                   >
-                    <ContainerBorder
-                      ref={this.containerBorderRef}
-                      color="grey"
-                      activeBorderStyle="dotted"
-                      activateOnContentClick={false}
-                      showButton={true}
-                      buttonPosition="topLeft"
-                      renderButtonWrapper={this.renderToolbar}
+                    <ContextMenu
+                      {...this.makeContextMenuProps(contextMenuConfig)}
                     >
-                      <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                        {this.renderContent(v, vs, vd)}
-                      </ToolbarExtend>
-                    </ContainerBorder>
-                  </Roles>
-                </ContextMenu>
-              </Animation>
-            </CustomCSS>
+                      <Roles
+                        allow={["admin"]}
+                        fallbackRender={() => this.renderContent(v, vs, vd)}
+                      >
+                        <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                          {this.renderContent(v, vs, vd)}
+                        </ToolbarExtend>
+                        {ContainerBorderButton}
+                        {ContainerBorderBorder}
+                      </Roles>
+                    </ContextMenu>
+                  </Animation>
+                </CustomCSS>
+              )}
+            </ContainerBorder>
           )}
         </SortableElement>
         {popups.length > 0 &&

@@ -1,22 +1,27 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
-import { toolbarSizeContainerSize } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
-      id: defaultValueKey({ key: "toolbarSettings", device, state: "normal" }),
-      type: "popover",
-      icon: "nc-cog",
-      title: t("Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      cofnig: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       position: 100,
       options: [
-        toolbarSizeContainerSize({
-          v,
-          device,
-          state: "normal",
-          devices: "desktop"
-        })
+        {
+          id: "containerSize",
+          label: t("Width"),
+          type: "slider-dev",
+          position: 100,
+          config: {
+            min: 35,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
+          }
+        }
       ]
     }
   ];

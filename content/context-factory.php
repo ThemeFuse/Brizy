@@ -4,22 +4,22 @@
 class Brizy_Content_ContextFactory
 {
 
-    /**
-     * @var Brizy_Content_Context
-     */
-    static $globalContext = null;
+	/**
+	 * @var Brizy_Content_Context
+	 */
+	static $globalContext = null;
 
-    /**
-     * @param $project
-     * @param $brizy_post
-     * @param $wp_post
-     * @param $contentHtml
-     *
-     * @return Brizy_Content_Context
-     */
-    static public function createContext($project, $brizy_post, $wp_post, $contentHtml, $isLoop = false)
-    {
-        $context = self::getContext($project, $wp_post);
+	/**
+	 * @param $project
+	 * @param $brizy_post
+	 * @param $wp_post
+	 * @param $contentHtml
+	 *
+	 * @return Brizy_Content_Context
+	 */
+	static public function createContext($project, $brizy_post, $wp_post, $contentHtml, $isLoop = false)
+	{
+		$context = self::getContext($project, $wp_post);
 
         if ($isLoop) {
             return apply_filters('brizy_loop_context_create', $context, $wp_post);
@@ -29,29 +29,29 @@ class Brizy_Content_ContextFactory
     }
 
     static public function getGlobalContext()
-    {
-        return self::$globalContext;
-    }
+	{
+		return self::$globalContext;
+	}
 
-    static public function makeContextGlobal(Brizy_Content_Context $context)
-    {
-        return self::$globalContext = $context;
-    }
+	static public function makeContextGlobal(Brizy_Content_Context $context)
+	{
+		return self::$globalContext = $context;
+	}
 
-    static public function clearGlobalContext()
-    {
-        self::$globalContext = null;
-    }
+	static public function clearGlobalContext()
+	{
+		self::$globalContext = null;
+	}
 
-    /**
-     * @param $project
-     * @param $wp_post
-     *
-     * @return Brizy_Content_Context
-     */
-    private static function getContext($project, $wp_post)
-    {
-        $context = new Brizy_Content_Context($project, null, $wp_post, null);
+	/**
+	 * @param $project
+	 * @param $wp_post
+	 *
+	 * @return Brizy_Content_Context
+	 */
+	private static function getContext($project, $wp_post)
+	{
+		$context = new Brizy_Content_Context($project, null, $wp_post, null);
 
         if ($wp_post) {
             $context->setAuthor($wp_post->post_author);

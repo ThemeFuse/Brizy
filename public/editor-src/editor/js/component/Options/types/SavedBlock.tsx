@@ -9,7 +9,7 @@ import { ToastNotification } from "visual/component/Notifications";
 import {
   createBlockScreenshot,
   createSavedBlock
-} from "visual/utils/api/editor/index-new";
+} from "visual/utils/api/editor";
 import { findDeep } from "visual/utils/object";
 import { uuid } from "visual/utils/uuid";
 import { t } from "visual/utils/i18n";

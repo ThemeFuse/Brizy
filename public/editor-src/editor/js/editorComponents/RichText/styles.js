@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-ed-box__resizer": {
+    ".brz &&:hover": {
       standart: ["cssStyleSizeWidth"]
     }
   };

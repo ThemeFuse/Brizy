@@ -9,7 +9,10 @@
     "percentage": 80,
     "percentageSuffix": "%",
     "percentagePopulation": "",
-    "showPercentage": "on"
+    "showPercentage": "on",
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "toolbar": {

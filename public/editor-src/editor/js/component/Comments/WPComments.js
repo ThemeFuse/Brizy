@@ -1,23 +1,35 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import { WPShortcode } from "visual/editorComponents/WordPress/common/WPShortcode";
 import { dataPeople } from "./dataPeople";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 
 class WPComments extends Component {
   static defaultProps = {
     limit: 0,
     skin: "",
-    linkPage: ""
+    linkPage: "",
+    review: ""
   };
 
-  templateComment(item, skin) {
+  templateComment(item, skin, review) {
     const { name, photo, message, children } = item;
     const nameDateClassName = classnames({
       "brz-comments__name": skin === "skin1" || skin === "skin3",
       "brz-comments__name-date": skin === "skin2"
     });
 
-    if (skin === "skin4") {
+    const _review = review === "true";
+    const commentType = _review ? "review" : "comment";
+
+    const renderStars = _review && (
+      <div className="brz-comments__rating">
+        <div className="star-rating">
+          <span style={{ width: "60%" }} />
+        </div>
+      </div>
+    );
+
+    if (skin === "skin4")
       return (
         <>
           <div className="brz-ul brz-comments__right-date">
@@ -25,11 +37,14 @@ class WPComments extends Component {
               <span className="brz-span brz-comments__name">
                 <a href="#">{name}</a>
               </span>
-              <span className="brz-span brz-comments__date">
-                <a href="#">
-                  <span className="brz-span">23.09.2019, 14:35</span>
-                </a>
-              </span>
+              <div className="brz-comments__left-side">
+                <span className="brz-span brz-comments__date">
+                  <a href="#">
+                    <span className="brz-span">23.09.2019, 14:35</span>
+                  </a>
+                </span>
+                {renderStars}
+              </div>
             </div>
             <div className="brz-comments__logo">
               <a href="#">
@@ -39,20 +54,23 @@ class WPComments extends Component {
             <div className="brz-comments__text">
               <p>
                 {message}
-                <a className="comment-reply-link" href="#">
-                  Reply
-                </a>
+                {!_review && (
+                  <a className="comment-reply-link" href="#">
+                    Reply
+                  </a>
+                )}
               </p>
             </div>
           </div>
           {children && (
-            <div className="comment even depth-2 brz-comments brz-comments__skin-skin4 brz-parent">
-              {this.templateComment(children[0], skin)}
+            <div
+              className={`${commentType} even depth-2 brz-comments brz-comments__skin-skin4 brz-parent`}
+            >
+              {this.templateComment(children[0], skin, review)}
             </div>
           )}
         </>
       );
-    }
 
     return (
       <>
@@ -76,19 +94,34 @@ class WPComments extends Component {
                     <span className="brz-span">23.09.2019, 14:35</span>
                   </a>
                 </span>
+                {_review && skin === "skin2" && renderStars}
               </>
             )}
           </div>
 
-          {(skin === "skin1" || skin === "skin3") && (
-            <div className="brz-comments__date">
-              <a href="#">
-                <span className="brz-span">23.09.2019, 14:35</span>
-              </a>
+          {skin === "skin1" && (
+            <div className="brz-comments__right-side">
+              {renderStars}
+              <div className="brz-comments__date">
+                <a href="#">
+                  <span className="brz-span">23.09.2019, 14:35</span>
+                </a>
+              </div>
             </div>
           )}
 
-          {skin === "skin1" && (
+          {skin === "skin3" && (
+            <>
+              <div className="brz-comments__date">
+                <a href="#">
+                  <span className="brz-span">23.09.2019, 14:35</span>
+                </a>
+              </div>
+              {renderStars}
+            </>
+          )}
+
+          {skin === "skin1" && !_review && (
             <div className="brz-comments__reply">
               <a className="comment-reply-link" href="#">
                 Reply
@@ -98,14 +131,14 @@ class WPComments extends Component {
 
           <div className="brz-comment-awaiting-moderation">
             {message}
-            {skin === "skin3" && (
+            {skin === "skin3" && !_review && (
               <a className="comment-reply-link" href="#">
                 Reply
               </a>
             )}
           </div>
 
-          {skin === "skin2" && (
+          {skin === "skin2" && !_review && (
             <div className="brz-comments__reply">
               <a className="comment-reply-link" href="#">
                 Reply
@@ -116,9 +149,9 @@ class WPComments extends Component {
 
         {children && (
           <div
-            className={`comment even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
+            className={`${commentType} even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
           >
-            {this.templateComment(children[0], skin)}
+            {this.templateComment(children[0], skin, review)}
           </div>
         )}
       </>
@@ -126,8 +159,12 @@ class WPComments extends Component {
   }
 
   renderForEdit() {
-    const { skin } = this.props;
+    const { skin, review } = this.props;
     const comments = dataPeople[skin];
+
+    const commentType = review === "true" ? "review" : "comment";
+    const reviewText =
+      commentType === "review" ? "Add a review" : "Leave a comment";
 
     return (
       <div className="brz-comments-parrent">
@@ -137,16 +174,30 @@ class WPComments extends Component {
               {comments.map((item, key) => (
                 <div
                   key={key}
-                  className={`comment even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
+                  className={`${commentType} even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
                 >
-                  {this.templateComment(item, skin)}
+                  {this.templateComment(item, skin, review)}
                 </div>
               ))}
             </div>
             <div className="brz-comment-respond">
-              <h3 id="reply-title" className="brz-comment-reply-title">
-                Leave a comment
-              </h3>
+              <div className="brz--comment__form-reply-body">
+                <h3 id="reply-title" className="brz-comment-reply-title">
+                  {reviewText}
+                </h3>
+                {commentType === "review" && (
+                  <div className="comment-form-rating">
+                    <label>Your rating</label>
+                    <p className="stars selected">
+                      <a>1</a>
+                      <a>2</a>
+                      <a className="active">3</a>
+                      <a>4</a>
+                      <a>5</a>
+                    </p>
+                  </div>
+                )}
+              </div>
               <form className="brz-form brz--comment__form-reply-body">
                 <p className="brz-comment-form-comment">
                   <textarea
@@ -175,14 +226,12 @@ class WPComments extends Component {
 
   renderForView() {
     const { limit, skin, linkPage } = this.props;
-    const attributes = { limit, skin, linkPage };
 
     return (
-      <WPShortcode
-        className="brz-comments-parrent"
-        name="brizy_comments"
-        attributes={attributes}
-        placeholderIcon="wp-shortcode"
+      <DynamicContentHelper
+        placeholder={`{{editor_comments limit="${limit}" skin="${skin}" linkPage="${linkPage}"}}`}
+        tagName="div"
+        props={{ className: "brz-comments-parrent" }}
       />
     );
   }

@@ -1,7 +1,8 @@
 import {
   styleAlignHorizontal,
   styleBorderWidthUngrouped,
-  styleTypography2FontSize
+  styleTypography2FontSize,
+  styleBgColor
 } from "visual/utils/style2";
 import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
@@ -192,8 +193,10 @@ export function cssStyleElementAccordionActiveColor({ v, device }) {
   return cssStyleColor({ v, device, prefix: "activeColor" });
 }
 
-export function cssStyleElementAccordionActiveBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, prefix: "activeBg" });
+export function cssStyleElementAccordionActiveBgColor({ v, device, state }) {
+  const bgColor = styleBgColor({ v, device, state, prefix: "activeBg" });
+
+  return bgColor === undefined ? "" : `background-color:${bgColor};`;
 }
 
 export function cssStyleElementAccordionActiveBorder({ v, device }) {

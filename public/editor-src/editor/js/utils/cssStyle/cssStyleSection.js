@@ -20,8 +20,8 @@ export function cssStyleSectionMaxWidth({ v, device, state }) {
   const containerType = styleElementSectionContainerType({ v, device, state });
   const containerSize = styleElementSectionContainerSize({ v, device, state });
   return containerType === "boxed"
-    ? `max-width: ${containerSize}%;`
-    : "max-width: 100%;";
+    ? `max-width: 100%; width: calc((${containerSize} / 100 * 1170) * 1px);`
+    : "max-width: 100%; width: 100%;";
 }
 
 export function cssStyleSectionContainerType({ v }) {

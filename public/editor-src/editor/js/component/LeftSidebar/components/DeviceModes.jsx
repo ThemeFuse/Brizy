@@ -4,6 +4,7 @@ import UIEvents from "visual/global/UIEvents";
 import HotKeys from "visual/component/HotKeys";
 import { getStore } from "visual/redux/store";
 import { setDeviceMode } from "visual/redux/actions2";
+import { IS_STORY } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
 
 const getCurrentDeviceMode = () => getStore().getState().ui.deviceMode;
@@ -143,6 +144,7 @@ export const DeviceModes = {
   className: "brz-ed-sidebar__popover--deviceMode",
   options: [DeviceModeDesktop, DeviceModeTablet, DeviceModeMobile],
   render: DevicesRender,
+  disabled: IS_STORY,
   extraProps: () => {
     const icon =
       getCurrentDeviceMode() === "mobile"

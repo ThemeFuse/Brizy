@@ -8,13 +8,36 @@ import Link from "visual/component/Link";
 import { Text } from "visual/component/ContentOptions/types";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
-import { blocksDataSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { style, styleIcon } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
+import BoxResizer from "visual/component/BoxResizer";
+import { hasSizing } from "visual/editorComponents/Button/utils";
+import * as State from "visual/utils/stateMode";
+
+const resizerPoints = [
+  "topLeft",
+  "topCenter",
+  "topRight",
+  "centerLeft",
+  "centerRight",
+  "bottomLeft",
+  "bottomCenter",
+  "bottomRight"
+];
+
+const restrictions = {
+  width: {
+    "%": { min: 10, max: 100 }
+  },
+  height: {
+    "%": { min: 5, max: Infinity }
+  }
+};
 
 export default class Button extends EditorComponent {
   static get componentId() {
@@ -24,6 +47,8 @@ export default class Button extends EditorComponent {
   static defaultValue = defaultValue;
 
   static experimentalDynamicContent = true;
+
+  handleResizerChange = patch => this.patchValue(patch);
 
   handleTextChange = patch => this.patchValue(patch);
 
@@ -43,12 +68,14 @@ export default class Button extends EditorComponent {
   }
 
   renderSubmit(v, vs, vd, content) {
+    const state = State.mRead(v.tabsState);
+    const device = deviceModeSelector(getStore().getState());
     const className = classnames(
       "brz-btn",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd)
+        style(v, vs, vd, hasSizing(v, device, state))
       )
     );
 
@@ -60,12 +87,26 @@ export default class Button extends EditorComponent {
         component={componentType}
         attributes={this.props.attributes}
       >
-        {content}
+        {hasSizing(v, device, state) && v.type !== "submit" ? (
+          <BoxResizer
+            points={resizerPoints}
+            value={v}
+            onChange={this.handleResizerChange}
+            restrictions={restrictions}
+          >
+            {content}
+          </BoxResizer>
+        ) : (
+          content
+        )}
       </Wrapper>
     );
   }
 
   renderLink(v, vs, vd, content) {
+    const state = State.mRead(v.tabsState);
+    const device = deviceModeSelector(getStore().getState());
+
     const {
       linkType,
       linkAnchor,
@@ -82,7 +123,7 @@ export default class Button extends EditorComponent {
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd)
+        style(v, vs, vd, hasSizing(v, device, state))
       ),
       {
         "brz-popup2__action-close":
@@ -118,7 +159,18 @@ export default class Button extends EditorComponent {
         {...this.makeWrapperProps({ attributes: props })}
         component={Link}
       >
-        {content}
+        {hasSizing(v, device, state) ? (
+          <BoxResizer
+            points={resizerPoints}
+            value={v}
+            onChange={this.handleResizerChange}
+            restrictions={restrictions}
+          >
+            {content}
+          </BoxResizer>
+        ) : (
+          content
+        )}
       </Wrapper>
     );
   }
@@ -173,14 +225,23 @@ export default class Button extends EditorComponent {
       _vd.mobileFontStyle && `${_vd.mobileFontStyle}__fsMobile`
     ]);
 
+    const state = State.mRead(v.tabsState);
+    const device = deviceModeSelector(getStore().getState());
+
     const { type, iconName, iconType, linkType, linkPopup, popups } = v;
     const renderIcon = iconName && iconType;
-    const content = (
-      <>
-        {renderIcon && this.renderIcon(v, vs, vd)}
-        <Text id="text" v={v} onChange={this.handleTextChange} />
-      </>
-    );
+    const content =
+      hasSizing(v, device, state) && IS_EDITOR && v.type !== "submit" ? (
+        <div className="brz-btn--story-container">
+          {renderIcon && this.renderIcon(v, vs, vd)}
+          <Text id="text" v={v} onChange={this.handleTextChange} />
+        </div>
+      ) : (
+        <>
+          {renderIcon && this.renderIcon(v, vs, vd)}
+          <Text id="text" v={v} onChange={this.handleTextChange} />
+        </>
+      );
 
     return (
       <>

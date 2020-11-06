@@ -34,6 +34,7 @@ export default class TimelineTab extends EditorComponent {
       meta
     } = this.props;
     const itemProps = this.makeSubcomponentProps({
+      className: "brz-timeline__content brz-d-xs-flex brz-flex-xs-column",
       bindWithKey: "items",
       itemProps: { meta }
     });
@@ -59,9 +60,7 @@ export default class TimelineTab extends EditorComponent {
             <ThemeIcon name={name} type={type} />
           </div>
         </Toolbar>
-        <div className="brz-timeline__content">
-          <Items {...itemProps} />
-        </div>
+        <Items {...itemProps} />
       </div>
     );
   }

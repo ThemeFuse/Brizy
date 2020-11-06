@@ -2,13 +2,13 @@ import * as State from "visual/utils/stateMode/index";
 import { onEmpty, toArray } from "visual/utils/array";
 
 /**
- *
- * @param state
- * @param onChange
- * @param option
+ * @param {string[]} states
+ * @param {string} state
+ * @param {function} onChange
+ * @param {object} option
  * @return {object}
  */
-export const bindStateToOption = (state, onChange, option) => {
+export const bindStateToOption = (states, state, onChange, option) => {
   const { id, type } = option || {};
 
   if (id === "tabsState") {
@@ -26,6 +26,7 @@ export const bindStateToOption = (state, onChange, option) => {
             {
               id: "tabsState",
               type: "stateMode",
+              config: { states },
               options: tab.options ?? [],
               value: State.mRead(state),
               onChange
@@ -42,6 +43,7 @@ export const bindStateToOption = (state, onChange, option) => {
           {
             id: "tabsState",
             type: "stateMode",
+            config: { states },
             options: option.options ?? [],
             value: State.mRead(state),
             onChange

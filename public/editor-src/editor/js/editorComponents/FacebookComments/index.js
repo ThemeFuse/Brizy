@@ -80,7 +80,8 @@ class FacebookComments extends EditorComponent {
       targetUrl,
       href,
       disqusShortname,
-      skin
+      skin,
+      review
     } = v;
 
     const appData = this.getAppDataEditor();
@@ -100,7 +101,7 @@ class FacebookComments extends EditorComponent {
             targetUrl === "custom" && href !== "" ? href : appData.href
         }
       },
-      WPComments: { skin }
+      WPComments: { skin, review }
     };
 
     const className = classnames(
@@ -134,6 +135,7 @@ class FacebookComments extends EditorComponent {
       disqusShortname,
       skin
     } = v;
+
     const appData = this.getAppDataPreview();
     const data = {
       facebook: {

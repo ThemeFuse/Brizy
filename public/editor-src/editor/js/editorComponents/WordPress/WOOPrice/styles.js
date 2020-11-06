@@ -2,11 +2,9 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-price .price": {
-      standart: ["cssStyleElementWOOPriceColumn"]
-    },
-    ".brz &&:hover .woocommerce-Price-amount": {
+    ".brz &&:hover > div > .price": {
       standart: [
+        "cssStyleElementWOOPriceColumn",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -21,7 +19,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleElementWOOPriceSpacing"
+        "cssStyleElementWOOPriceSpacingLast"
       ]
     },
     ".brz &&:hover del": {
@@ -31,8 +29,15 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOPriceSaleLineHeight",
         "cssStyleElementWOOPriceSaleFontWeight",
         "cssStyleElementWOOPriceSaleLetterSpacing",
-        "cssStyleElementWOOPriceColorSale"
+        "cssStyleElementWOOPriceColorSale",
+        "cssStyleElementWOOPriceSpacingFirst"
       ]
+    },
+    ".brz &&:hover .amount:first-child": {
+      standart: ["cssStyleElementWOOPriceSpacingFirst"]
+    },
+    ".brz &&:hover .amount:nth-child(2)": {
+      standart: ["cssStyleElementWOOPriceSpacingLast"]
     }
   };
 

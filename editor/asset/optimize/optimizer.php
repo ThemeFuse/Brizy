@@ -26,13 +26,10 @@ class Brizy_Editor_Asset_Optimize_Optimizer {
 		foreach ( $this->optimizers as $optimizerClass ) {
 			try {
 				/**
-				 * @var Brizy_Editor_Asset_Optimize_OptimizerInterface $optimizer ;
+				 * @var Brizy_Editor_Asset_Optimize_OptimizerInterface $optimizer
 				 */
-				if ( $settings = $settings[ $optimizerClass::getId() ] ?? null ) {
-					$optimizer = new $optimizerClass( $settings );
-				} else {
-					$optimizer = new $optimizerClass( [] );
-				}
+				$settings  = isset( $settings[ $optimizerClass::getId() ] ) ? $settings[ $optimizerClass::getId() ] : null;
+				$optimizer = new $optimizerClass( $settings );
 
 				return $optimizer->optimize( $source, $target );
 

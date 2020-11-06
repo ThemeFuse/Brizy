@@ -79,16 +79,16 @@ export function style(v, vs, vd) {
     },
 
     // pagination
-    ".brz && ul.page-numbers": {
+    ".brz && .brz-posts__pagination ul.page-numbers": {
       standart: ["cssStyleElementPostsPaginationSpacing"]
     },
-    ".brz && ul.page-numbers a.page-numbers:hover": {
+    ".brz && .brz-posts__pagination ul.page-numbers a.page-numbers:hover": {
       standart: ["cssStyleElementPostsPaginationColor"]
     },
-    ".brz && ul.page-numbers span.page-numbers:hover": {
+    ".brz && .brz-posts__pagination ul.page-numbers span.page-numbers:hover": {
       standart: ["cssStyleElementPostsPaginationColor"]
     },
-    ".brz && ul.page-numbers .page-numbers": {
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers": {
       standart: [
         ...(IS_EDITOR ? ["cssStyleElementPostsPaginationLinksOff"] : []),
         "cssStyleElementPostsPaginationFontFamily",
@@ -98,7 +98,7 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsPaginationLetterSpacing"
       ]
     },
-    ".brz && ul.page-numbers .page-numbers.current:hover::before": {
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover::before": {
       standart: [
         "cssStyleElementPostsPaginationBgColor",
         "cssStyleElementPostsPaginationBorder",

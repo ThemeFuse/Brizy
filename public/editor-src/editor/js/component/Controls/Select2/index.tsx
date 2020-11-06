@@ -9,9 +9,9 @@ import { OnChange } from "visual/component/Options/Type";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
 
-type Props<T extends Literal> = Omit<Omit<MP<T>, "onChange">, "value"> & {
-  onChange: OnChange<T>;
+type Props<T extends Literal> = Omit<MP<T>, "value" | "onChange"> & {
   value: T;
+  onChange: OnChange<T>;
 };
 
 export function Select2<T extends Literal>({

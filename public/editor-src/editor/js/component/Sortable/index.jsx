@@ -5,8 +5,8 @@ import SortablePlugin from "./plugin";
 import UIEvents from "visual/global/UIEvents";
 import { hideToolbar } from "visual/component/Toolbar";
 import { rolesHOC } from "visual/component/Roles";
-import { updateUI } from "visual/redux/actions2";
 import { getStore } from "visual/redux/store";
+import { updateUI } from "visual/redux/actions2";
 
 const onSort = data => {
   const { from, to } = data;
@@ -49,9 +49,11 @@ class Sortable extends React.Component {
   static defaultProps = {
     path: [],
     type: "",
+    showLines: true,
     acceptElements: [],
     isGrid: false,
     blindZone: null,
+    dragOffset: null,
     disabled: false,
     onSort,
     onStart: _.noop,
@@ -63,6 +65,8 @@ class Sortable extends React.Component {
       acceptElements,
       isGrid,
       blindZone,
+      dragOffset,
+      showLines,
       onStart,
       onSort,
       onEnd
@@ -74,6 +78,8 @@ class Sortable extends React.Component {
       acceptElements,
       isGrid,
       blindZone,
+      dragOffset,
+      showLines,
       cancelClass: "brz-ed-dd-cancel",
       onBeforeStart(e) {
         const {
@@ -126,7 +132,11 @@ class Sortable extends React.Component {
           data-sortable-path={path.join(".")}
           data-sortable-disabled={disabled}
         >
-          <div className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space brz-ed-border--grey brz-ed-border--dotted" />
+          <div
+            className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space"
+            data-border--grey="true"
+            data-border--dotted="true"
+          />
           <div
             className="brz-ed-container-trigger brz-ed-container-trigger--small"
             onClick={this.handleEmptyClick}

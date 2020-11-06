@@ -8,7 +8,7 @@ import UIEvents from "visual/global/UIEvents";
 import EditorIcon from "visual/component/EditorIcon";
 import Sortable from "visual/component/Sortable";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
-import { setIds } from "visual/utils/models";
+import { setIds, IS_STORY } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
 import { updateDisabledElements } from "visual/redux/actions";
 import { disabledElementsSelector } from "visual/redux/selectors";
@@ -18,6 +18,10 @@ const sortableBlindZone = {
   right: 328,
   top: 0,
   bottom: Infinity
+};
+const sortableDragOffset = {
+  top: 0,
+  left: -48 // left sidebar width
 };
 
 class DrawerComponent extends Component {
@@ -76,6 +80,37 @@ class DrawerComponent extends Component {
     });
   };
 
+  handleClick = (shortcodes, elementIndex) => {
+    const { resolve } = shortcodes[elementIndex];
+    const itemData = setIds(resolve);
+
+    const slickContainer = document.querySelector(".slick-list .slick-active");
+    const sortableContainer = slickContainer.querySelector(
+      "[data-sortable-type='section']"
+    );
+
+    const containerPath = sortableContainer
+      .getAttribute("data-sortable-path")
+      .split(".");
+    const containerType = "section";
+    const itemIndex = slickContainer.getAttribute("data-index");
+    const toItemPath = [...containerPath, String(itemIndex)];
+
+    // notify React to actually change state accordingly
+    UIEvents.emit("dnd.sort", {
+      from: {
+        itemData,
+        itemType: "addable"
+      },
+      to: {
+        containerPath,
+        containerType,
+        itemIndex,
+        itemPath: toItemPath
+      }
+    });
+  };
+
   handleDisabledElementsChange = id => {
     const { disabledElements } = this.state;
     if (disabledElements[id]) {
@@ -125,8 +160,11 @@ class DrawerComponent extends Component {
     const { disabledElements } = this.state;
     const { isEditMode } = this.props;
 
-    return shortcodes.map(({ id, title, icon }) => {
+    return shortcodes.map(({ id, title, icon }, index) => {
       const iconElem = this.renderIcon(title, icon);
+      const clickFn = IS_STORY
+        ? () => this.handleClick(shortcodes, index)
+        : () => {};
 
       return isEditMode ? (
         <div
@@ -147,7 +185,9 @@ class DrawerComponent extends Component {
         </div>
       ) : (
         <SortableElement key={id} type="addable" subtype={id}>
-          <div className="brz-ed-sidebar__add-elements__item">{iconElem}</div>
+          <div className="brz-ed-sidebar__add-elements__item" onClick={clickFn}>
+            {iconElem}
+          </div>
         </SortableElement>
       );
     });
@@ -264,7 +304,9 @@ class Category extends React.Component {
     return (
       <Sortable
         type="addable"
+        showLines={!IS_STORY}
         blindZone={sortableBlindZone}
+        dragOffset={sortableDragOffset}
         onSort={this.handleChange}
       >
         {this.props.children}

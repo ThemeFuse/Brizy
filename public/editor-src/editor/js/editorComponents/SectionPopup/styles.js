@@ -4,21 +4,14 @@ export function styleCloseButton(v, vs, vd) {
   const styles = {
     ".brz && > .brz-popup__close:hover": {
       standart: ["cssStyleColor"]
-    }
-  };
-
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleBg(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover > .brz-bg-media": {
+    },
+    ".brz &&:hover > .brz-bg": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-image": {
+    ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
     },
-    ".brz &&:hover > .brz-bg-media > .brz-bg-color": {
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     }
   };

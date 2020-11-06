@@ -1,4 +1,4 @@
-import React, { Children, FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import classNames from "classnames";
 import {
   WithClassName,
@@ -18,7 +18,7 @@ export type Props = WithClassName &
     children: ReactElement<Tab.Props>[];
   };
 
-export const Tabs: FC<Props> = ({
+export const Tabs = ({
   className,
   showSingle,
   children,
@@ -26,16 +26,15 @@ export const Tabs: FC<Props> = ({
   onChange,
   align,
   position
-}) => {
+}: Props): ReactElement | null => {
   const _className = classNames("brz-ed-control__tabs-wrapper", className);
-  const tabs = Children.toArray(children);
 
-  if (tabs.length === 0) {
+  if (children.length === 0) {
     return null;
   }
 
-  const showTabs = tabs.length > 1 || (showSingle && tabs.length === 1);
-  const active = tabs.find(t => t.props.value === value) ?? tabs[0];
+  const showTabs = children.length > 1 || (showSingle && children.length === 1);
+  const active = children.find(t => t.props.value === value) ?? children[0];
   const activeTab = (
     <div
       className={classNames(
@@ -56,7 +55,7 @@ export const Tabs: FC<Props> = ({
         position={position}
         onChange={onChange}
       >
-        {tabs}
+        {children}
       </TabList>
       {activeTab}
     </div>

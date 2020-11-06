@@ -8,11 +8,20 @@ export function styleSection(v, vs, vd) {
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
-    },
-    ".brz &&:hover .brz-container__wrap": {
-      interval: ["cssStyleVisibleMode|||editor"]
     }
   };
+
+  if (IS_EDITOR) {
+    styles[".brz &&:hover .brz-container"] = {
+      interval: ["cssStyleVisibleMode|||editor"]
+    };
+    styles[".brz &&:hover > .brz-section__menu-item > .brz-bg"] = {
+      interval: ["cssStyleVisibleMode|||editor"]
+    };
+    styles[".brz &&:hover > .brz-section__header-sticky-item > .brz-bg"] = {
+      interval: ["cssStyleVisibleMode|||editor"]
+    };
+  }
 
   return renderStyles({ v, vs, vd, styles });
 }

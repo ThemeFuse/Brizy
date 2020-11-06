@@ -194,6 +194,7 @@ export type ReduxAction =
   | ActionFetchPageSuccess
   | ActionUpdateExtraFontStyles
   | ActionImportTemplate
+  | ActionImportStory
   | ActionAddBlock
   | ActionAddGlobalBlock
   | ActionDeleteGlobalBlock
@@ -209,6 +210,19 @@ export type ReduxAction =
 
 export type ActionImportTemplate = {
   type: "IMPORT_TEMPLATE";
+  payload: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<{ id: string }>;
+  };
+  meta: {
+    insertIndex: number;
+  };
+};
+
+export const IMPORT_STORY = "IMPORT_STORY";
+export type ActionImportStory = {
+  type: typeof IMPORT_STORY;
   payload: {
     blocks: Block[];
     fonts: FontsPayload;
@@ -535,6 +549,21 @@ export function reorderBlocks(payload: {
   return {
     type: "REORDER_BLOCKS",
     payload
+  };
+}
+
+export function importStory(
+  story: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<{ id: string }>;
+  },
+  meta = { insertIndex: 0 }
+): ActionImportStory {
+  return {
+    type: IMPORT_STORY,
+    payload: story,
+    meta
   };
 }
 

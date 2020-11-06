@@ -33,7 +33,7 @@ import {
   REMOVE_BLOCKS,
   ADD_GLOBAL_BLOCK
 } from "../actions";
-import { PUBLISH } from "../actions2";
+import { PUBLISH, IMPORT_STORY } from "../actions2";
 import { extraFontStyles } from "./extraFontStyles";
 import { ui } from "./ui";
 import { syncAllowed } from "./syncAllowed";
@@ -77,6 +77,7 @@ export function project(state = {}, action, fullState) {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE:
     case ADD_FONTS:
     case DELETE_FONTS: {
@@ -105,6 +106,7 @@ export function fonts(state = {}, action) {
 
       return { ...state, ...fonts };
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE:
     case IMPORT_KIT:
     case ADD_BLOCK:
@@ -137,6 +139,7 @@ export function styles(state = [], action) {
 
       return project.data.styles;
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE:
     case IMPORT_KIT: {
       const { styles } = action.payload;
@@ -162,6 +165,7 @@ export function currentStyleId(state = "", action) {
     case UPDATE_CURRENT_STYLE_ID: {
       return action.payload;
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE: {
       const { currentStyleId } = action.payload;
 
@@ -189,6 +193,7 @@ export function currentStyle(state = {}, action, fullState) {
 
       return fullState.styles.find(({ id }) => id === currentStyleId);
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE: {
       const { currentStyleId, styles } = action.payload;
 

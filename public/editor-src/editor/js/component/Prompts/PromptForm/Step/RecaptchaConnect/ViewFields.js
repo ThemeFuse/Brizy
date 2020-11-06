@@ -94,7 +94,7 @@ class ViewFields extends Component {
           />
           I have deselected "Verify the origins of reCAPTCHA solu-
           <br className="brz-br" />
-          tions and clicked "Save Changes" under "Key Settings >
+          tions and clicked "Save Changes" under "Key Settings &gt;
           <br className="brz-br" />
           Advanced Settings" in my Google reCAPTCHA page
         </label>

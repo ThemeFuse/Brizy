@@ -29,6 +29,7 @@ import { t } from "visual/utils/i18n";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleElementMenuMode, styleElementMMenu } from "visual/utils/style2";
 import { wInMMenu } from "visual/config/columns";
+import { Wrapper } from "../tools/Wrapper";
 
 const IS_PRO = Config.get("pro");
 
@@ -339,11 +340,16 @@ export default class Menu extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-            <div ref={this.nodeRef} className={className}>
+            <Wrapper
+              {...this.makeWrapperProps({
+                className,
+                ref: this.nodeRef
+              })}
+            >
               {this.hasMMenu()
                 ? this.renderMMenu(v, vs, vd)
                 : this.renderMenu(v, vs, vd)}
-            </div>
+            </Wrapper>
           </ContextMenu>
         </CustomCSS>
       </ClickOutside>

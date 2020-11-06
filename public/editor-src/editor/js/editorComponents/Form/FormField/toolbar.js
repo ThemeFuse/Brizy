@@ -13,9 +13,11 @@ export function getItems({ v }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover",
-      icon: "nc-form-left",
-      title: t("Field"),
+      type: "popover-dev",
+      config: {
+        title: t("Field"),
+        icon: "nc-form-left"
+      },
       position: 60,
       options: [
         {
@@ -40,12 +42,7 @@ export function getItems({ v }) {
           config: {
             min: 1,
             max: 100,
-            units: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
+            units: [{ title: "%", value: "%" }]
           }
         },
         {
@@ -56,12 +53,7 @@ export function getItems({ v }) {
           config: {
             min: 1,
             max: 300,
-            units: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            units: [{ title: "px", value: "px" }]
           }
         }
       ]

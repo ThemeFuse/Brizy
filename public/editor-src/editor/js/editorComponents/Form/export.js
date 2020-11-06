@@ -1,93 +1,244 @@
 import $ from "jquery";
 
 export default function($node) {
-  $node.find("[data-form-version='1']").each(function() {
-    initForm($(this));
-  });
+  const root = $node.get(0);
 
   // RECAPTCHA
-  const $recaptcha = $node.find(".brz-g-recaptcha");
+  const recaptcha = root.querySelectorAll(".brz-g-recaptcha");
 
-  if ($recaptcha.length) {
+  if (recaptcha.length) {
     // Load Script recaptcha
     loadReCAPTCHA();
 
-    // Render Recaptcha
-    global.brzOnloadRecaptchaCallback = function() {
-      $recaptcha.each(function(_, el) {
-        const $this = $(this);
-        const $form = $this.closest(".brz-form");
-        const data = $this.data();
-        const sitekey = data.sitekey;
-        const size = data.size;
-        const recaptchaId = global.grecaptcha.render(el, {
-          sitekey,
-          size
-        });
-        $form.attr("data-recaptchaId", recaptchaId);
+    // callback recaptcha
+    global.brzFormV1Captcha = token => {
+      const formActive = root.querySelector(
+        "[data-form-version='1'].brz-forms--pending"
+      );
 
-        // Generated hash recaptcha
-        global.grecaptcha.execute(recaptchaId);
+      if (formActive) {
+        const formData = getFormData(formActive);
+        const data = [
+          ...formData,
+          {
+            name: "g-recaptcha-response",
+            value: token
+          }
+        ];
+
+        handleSimpleSubmit(formActive, data).then(() => {
+          formActive.classList.remove("brz-forms--pending");
+
+          // need reset captchaId
+          const recaptcha = formActive.querySelector(".brz-g-recaptcha");
+          const recaptchaId = recaptcha.getAttribute("recaptchaId");
+          global.grecaptcha.reset(recaptchaId);
+        });
+      }
+    };
+
+    // render Recaptcha
+    global.brzOnloadRecaptchaCallback = function() {
+      recaptcha.forEach(node => {
+        const { sitekey, size, callback } = node.dataset;
+        const recaptchaId = global.grecaptcha.render(node, {
+          sitekey,
+          size,
+          callback
+        });
+
+        node.setAttribute("recaptchaId", recaptchaId);
       });
     };
   }
+
+  root.querySelectorAll("[data-form-version='1']").forEach(initForm);
 }
 
-// Forms
-function initForm($component) {
-  $component.on("blur", "form input, form textarea", function() {
-    validate.call(this);
+function validateFormItem(node) {
+  const value = node.value;
+  const isRequired = node.required;
+  const pattern = node.getAttribute("pattern") || "";
+  const patternTest = new RegExp(pattern).test(value);
+  const parentElem = this.closest(".brz-forms__item");
+  let result = true;
+
+  parentElem.classList.remove(
+    "brz-forms__item--error",
+    "brz-forms__item--error-pattern",
+    "brz-forms__item--error-required"
+  );
+
+  if (isRequired && (!value || !patternTest)) {
+    parentElem.classList.add(
+      "brz-forms__item--error",
+      "brz-forms__item--error-required"
+    );
+    result = false;
+  }
+
+  if (value.length && !patternTest) {
+    parentElem.classList.add(
+      "brz-form__item--error",
+      "brz-form__item--error-pattern"
+    );
+    result = false;
+  }
+
+  return result;
+}
+
+function validateForm(form) {
+  let isValid = true;
+  const elements = form.querySelectorAll(
+    "input[pattern], textarea[pattern], input[required], textarea[required]"
+  );
+
+  elements.forEach(element => {
+    if (!validateFormItem(element)) {
+      isValid = false;
+    }
   });
-  $component.on(
+
+  return isValid;
+}
+
+function initForm(form) {
+  const $form = $(form);
+
+  $form.on("blur", "form input, form textarea", function() {
+    validateFormItem(this);
+  });
+
+  $form.on(
     "click",
     "form .brz-control__select .brz-control__select-option",
     function() {
-      var input = $(this)
+      const input = $(this)
         .closest(".brz-control__select")
         .find("input")
         .get(0);
-      validate.call(input);
+      validateFormItem(input);
     }
   );
-  $component.on("submit", "form", function(event) {
-    event.preventDefault();
 
-    var $this = $(this);
-    var projectId = $this.attr("data-project-id");
-    var formId = $this.attr("data-form-id");
-    var url = $this.attr("action");
-    var successMessage = $this.attr("data-success");
-    var errorMessage = $this.attr("data-error");
-    var redirect = $this.attr("data-redirect");
+  const recaptcha = form.querySelector(".brz-g-recaptcha");
 
-    event.preventDefault();
-    clearFormMessages($this);
+  // if has recaptcha
+  // (1) need generate token
+  // (1.1) captcha is called global fn brzFormV1Captcha
+  // (2) need added the pending form selector .brz-forms--pending
+  // (2.1) this class is used in brzFormV1Captcha for find and generate formData
+  if (recaptcha) {
+    $form.on("submit", "form", function(event) {
+      event.preventDefault();
 
-    var $elements = $this.find(
-      "input[pattern], textarea[pattern], input[required], textarea[required]"
-    );
-    var submitForm = true;
-    $elements.each(function() {
-      if (!validate.call(this)) {
-        submitForm = false;
+      // validate form
+      const isValid = validateForm(form);
+
+      if (!isValid) {
+        return;
       }
+
+      // call recaptcha
+      // added pending class for form
+      form.classList.add("brz-forms--pending");
+      const recaptchaId = recaptcha.getAttribute("recaptchaId");
+      global.grecaptcha.execute(recaptchaId);
     });
+  } else {
+    $form.on("submit", "form", function(event) {
+      event.preventDefault();
 
-    if (!submitForm) {
-      return;
+      // validate form
+      const isValid = validateForm(form);
+
+      if (!isValid) {
+        return;
+      }
+
+      // create formData;
+      const data = getFormData(form);
+      handleSimpleSubmit(form, data);
+    });
+  }
+}
+
+function handleSimpleSubmit(form, data) {
+  // clear form messages
+  clearFormMessages(form);
+
+  // block submit button for repeat click
+  const submit = form.querySelector(".brz-btn");
+
+  submit.classList.add("brz-blocked");
+
+  const nodeForm = form.querySelector("form.brz-form");
+
+  if (!nodeForm) {
+    return;
+  }
+
+  const {
+    projectId,
+    formId,
+    success: successMessage,
+    error: errorMessage,
+    redirect
+  } = nodeForm.dataset;
+  const url = nodeForm.getAttribute("action");
+
+  const handleDone = data => {
+    // check status in the data
+    const { success = undefined } = data || {};
+
+    if (success === false) {
+      handleError();
+    } else {
+      showFormMessage(form, getFormMessage("success", successMessage));
+
+      if (redirect !== "") {
+        window.location.replace(redirect);
+      }
+
+      // Reset Forms Fields Value
+      resetFormValues(form);
     }
+  };
 
-    var data = [];
-    var $submit = $this.find(".brz-btn");
+  const handleError = () => {
+    form.classList.add("brz-form__send--fail");
+    showFormMessage(form, getFormMessage("error", errorMessage));
+  };
 
-    $submit.addClass("brz-blocked");
-    $this.find("input, textarea").each(function() {
-      var $elem = $(this);
-      var name = $elem.attr("name");
-      var type = $elem.attr("data-type");
-      var value = $elem.val();
-      var required = Boolean($elem.prop("required"));
-      var label = $elem.attr("data-label");
+  const handleAlways = () => {
+    submit.classList.remove("brz-blocked");
+  };
+
+  const callbacks = {
+    done: handleDone,
+    error: handleError,
+    always: handleAlways
+  };
+  const formData = {
+    data: JSON.stringify(data),
+    project_id: projectId,
+    form_id: formId
+  };
+
+  return sendForm(url, formData, callbacks);
+}
+
+function getFormData(form) {
+  const data = [];
+
+  form
+    .querySelectorAll(".brz-forms__fields input,  .brz-forms__fields textarea")
+    .forEach(element => {
+      const { type, label } = element.dataset;
+      const name = element.getAttribute("name");
+      const value = element.value;
+      const required = element.required;
 
       data.push({
         name: name,
@@ -98,83 +249,9 @@ function initForm($component) {
       });
     });
 
-    const handleDone = data => {
-      // check status in the data
-      const { success = undefined } = data || {};
-
-      if (success === false) {
-        handleError();
-      } else {
-        showFormMessage($this, getFormMessage("success", successMessage));
-
-        if (redirect !== "") {
-          window.location.replace(redirect);
-        }
-
-        // Reset Forms Fields Value
-        resetFormValues($this);
-      }
-    };
-
-    const handleError = () => {
-      $this.addClass("brz-form__send--fail");
-      showFormMessage($this, getFormMessage("error", errorMessage));
-    };
-
-    const handleAlways = () => {
-      // Regenerate recaptcha hash
-      if ($this.find(".brz-g-recaptcha").length) {
-        var recaptchaId = $this.data("recaptchaid");
-
-        global.grecaptcha.reset(recaptchaId);
-        global.grecaptcha.execute(recaptchaId);
-      }
-
-      $submit.removeClass("brz-blocked");
-    };
-
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: {
-        data: JSON.stringify(data),
-        project_id: projectId,
-        form_id: formId
-      }
-    })
-      .done(handleDone)
-      .fail(handleError)
-      .always(handleAlways);
-  });
+  return data;
 }
 
-function validate() {
-  const $this = $(this);
-  const $parentElem = $this.closest(".brz-forms__item");
-  const value = $this.val();
-  const isRequired = $this.prop("required");
-  const pattern = $this.attr("pattern");
-  const patternTest = new RegExp(pattern).test(value);
-  let result = true;
-
-  $parentElem.removeClass(
-    "brz-forms__item--error brz-forms__item--error-pattern brz-forms__item--error-required"
-  );
-
-  if (isRequired && (!value || !patternTest)) {
-    $parentElem.addClass(
-      "brz-forms__item--error brz-forms__item--error-required"
-    );
-    result = false;
-  }
-
-  if (value.length && !patternTest) {
-    $parentElem.addClass("brz-form__item--error brz-form__item--error-pattern");
-    result = false;
-  }
-
-  return result;
-}
 function getFormMessage(status, text) {
   const defaultTexts = {
     success: "Your email was sent successfully",
@@ -182,39 +259,61 @@ function getFormMessage(status, text) {
     empty: "Please check your entry and try again"
   };
   switch (status) {
-    case "success":
-      return (
-        "<div class='brz-forms__alert brz-forms__alert--success'>" +
-        (text || defaultTexts.success) +
-        "</div>"
-      );
-    case "error":
-      return (
-        "<div class='brz-forms__alert brz-forms__alert--error'>" +
-        (text || defaultTexts.error) +
-        "</div>"
-      );
+    case "success": {
+      const alert = document.createElement("div");
+      alert.className = "brz-forms__alert brz-forms__alert--success";
+      alert.innerHTML = text || defaultTexts.success;
+
+      return alert;
+    }
+    case "error": {
+      const alert = document.createElement("div");
+      alert.className = "brz-forms__alert brz-forms__alert--error";
+      alert.innerHTML = text || defaultTexts.error;
+
+      return alert;
+    }
   }
 }
-function clearFormMessages($form) {
-  $form
-    .parent()
-    .find(".brz-forms__alert")
-    .remove();
-  $form.removeClass(
-    "brz-forms__send--empty brz-forms__send--success brz-forms__send--fail"
+
+function clearFormMessages(form) {
+  const alert = form.querySelector(".brz-forms__alert");
+
+  if (alert) {
+    alert.remove();
+  }
+
+  form.classList.remove(
+    "brz-forms__send--empty",
+    "brz-forms__send--success",
+    "brz-forms__send--fail"
   );
 }
-function showFormMessage($form, message) {
-  $form.after(message);
+
+function showFormMessage(form, message) {
+  form.appendChild(message);
 }
-function resetFormValues($form) {
-  $form.find(".brz-forms__item").each(function() {
-    $(this)
-      .find("input, textarea, select")
-      .val("")
-      .trigger("change");
+
+function resetFormValues(form) {
+  form.querySelectorAll(".brz-forms__item").forEach(element => {
+    element.querySelectorAll("input, textarea, select").forEach(element => {
+      element.value = "";
+      element.dispatchEvent(new Event("change", { bubbles: true }));
+    });
   });
+}
+
+function sendForm(url, formData, cbs) {
+  const { done, error, always } = cbs;
+
+  return $.ajax({
+    type: "POST",
+    url: url,
+    data: formData
+  })
+    .done(done)
+    .fail(error)
+    .always(always);
 }
 
 // Recaptcha

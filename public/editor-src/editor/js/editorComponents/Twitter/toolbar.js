@@ -1,6 +1,5 @@
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementTwitter,
   toolbarDisabledToolbarSettings,
@@ -8,9 +7,6 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvkn = key => defaultValueKey({ key, device });
-
   const choicesTwitterType =
     v.twitter === "embed"
       ? [
@@ -165,7 +161,7 @@ export function getItems({ v, device, state }) {
               }
             },
             {
-              id: dvk("advancedSettings"),
+              id: "advancedSettings",
               type: "advancedSettings",
               label: t("More Settings"),
               icon: "nc-cog"
@@ -176,7 +172,7 @@ export function getItems({ v, device, state }) {
     v.twitterType === "embed"
       ? toolbarDisabledAdvancedSettings({ device })
       : {
-          id: dvkn("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           roles: ["admin"],

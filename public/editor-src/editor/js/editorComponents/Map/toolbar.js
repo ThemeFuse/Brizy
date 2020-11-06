@@ -3,6 +3,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -115,6 +116,7 @@ export function getItems({ v, device }) {
         title: t("Settings")
       },
       position: 110,
+      disabled: IS_STORY,
       options: [
         {
           id: "size",
@@ -151,6 +153,13 @@ export function getItems({ v, device }) {
           devices: "desktop"
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      icon: "nc-cog",
+      position: 110,
+      disabled: !IS_STORY
     }
   ];
 }

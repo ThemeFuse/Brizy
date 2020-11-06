@@ -13,12 +13,16 @@ import {
 } from "visual/component/Options/Type";
 import { Literal, read } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
-import { Props as P } from "visual/component/Options/types/dev/MultiSelect/types";
+import {
+  Props as P,
+  ChoicesSync
+} from "visual/component/Options/types/dev/MultiSelect/types";
 
 const wrap = (value: Literal): SimpleValue<Literal> => ({ value });
 
 type ItemInstance = ReactElement<ItemProps<Literal>>;
-export type Props = Exclude<P, "value" | "onChange"> & {
+export type Props = Exclude<P, "choices" | "value" | "onChange"> & {
+  choices: ChoicesSync;
   value: Literal;
   onChange: OnChange<SimpleValue<Literal>>;
 };
@@ -38,11 +42,6 @@ export const Select: FC<Props> & OptionType<Literal> = ({
       size={config?.size}
       value={value}
       editable={config?.search ?? false}
-      search={(s: string, v: Literal): boolean =>
-        !!choices
-          .filter(({ value }) => value == v)
-          .filter(({ title }) => title.includes(s)).length
-      }
     >
       {choices.map(
         ({ title, icon, value }, i): ItemInstance => (
@@ -56,6 +55,6 @@ export const Select: FC<Props> & OptionType<Literal> = ({
   );
 };
 
-const getModel: GetModel<Literal> = get => read(get("value")) || "";
+const getModel: GetModel<Literal> = get => read(get("value")) ?? "";
 
 Select.getModel = getModel;

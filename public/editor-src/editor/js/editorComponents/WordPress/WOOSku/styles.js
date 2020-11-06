@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-sku": {
+    ".brz &&:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleTypography2FontFamily",

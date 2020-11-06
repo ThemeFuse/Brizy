@@ -19,7 +19,10 @@
 
     "popups": [],
     "tags": "",
-    "alt": ""
+    "alt": "",
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "link": {

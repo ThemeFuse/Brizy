@@ -1,5 +1,7 @@
 {
   "style": {
+    "customCSS": "",
+
     "families": {
       "fontFamily": "lato",
       "tabletFontFamily": "lato",
@@ -11,24 +13,24 @@
 
     "fontStyle": "",
     "fontFamilyType": "google",
-    "fontSize": 12,
+    "fontSize": 20,
     "fontWeight": 700,
     "lineHeight": 1.3,
     "letterSpacing": 3,
 
     "saleFontStyle": "",
     "saleFontFamilyType": "google",
-    "saleFontSize": 12,
+    "saleFontSize": 20,
     "saleFontWeight": 700,
     "saleLineHeight": 1.3,
     "saleLetterSpacing": 3,
 
-    "colorHex": "#000000",
+    "colorHex": "#1C1C1C",
     "colorOpacity": 1,
-    "colorPalette": "color1",
+    "colorPalette": "color2",
 
     "tempColorOpacity": 1,
-    "tempColorPalette": "color1",
+    "tempColorPalette": "color2",
 
     "saleColorHex": "#000000",
     "saleColorOpacity": 1,
@@ -38,46 +40,47 @@
     "tempSaleColorPalette": "color1",
 
     "spacing": 0,
+    "spacingSuffix": "px",
 
     "column": "off",
-
-    "hoverSpacing": null,
 
     "hoverColumn": null,
 
     "tabletFontStyle": "",
     "tabletFontFamilyType": "google",
-    "tabletFontSize": 11,
+    "tabletFontSize": 15,
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
     "tabletLetterSpacing": 1,
 
     "tabletSaleFontStyle": "",
     "tabletSaleFontFamilyType": "google",
-    "tabletSaleFontSize": 12,
+    "tabletSaleFontSize": 15,
     "tabletSaleFontWeight": 700,
     "tabletSaleLineHeight": 1.8,
     "tabletSaleLetterSpacing": 1,
 
     "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
 
     "tabletColumn": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": "google",
-    "mobileFontSize": 11,
+    "mobileFontSize": 14,
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,
     "mobileLetterSpacing": 1,
 
     "mobileSaleFontStyle": "",
     "mobileSaleFontFamilyType": "google",
-    "mobileSaleFontSize": 12,
+    "mobileSaleFontSize": 14,
     "mobileSaleFontWeight": 700,
     "mobileSaleLineHeight": 1.8,
     "mobileSaleLetterSpacing": 1,
 
     "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
 
     "mobileColumn": null
   }

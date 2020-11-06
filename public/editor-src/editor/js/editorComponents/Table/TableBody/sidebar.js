@@ -8,12 +8,14 @@ export function getItems({ v, device }) {
     {
       id: "settingsTabs",
       type: "tabs-dev",
-      align: "start",
+      config: {
+        align: "start"
+      },
       tabs: [
         {
           id: "settingsStyling",
           label: t("Styling"),
-          tabIcon: "nc-styling",
+          icon: "nc-styling",
           options: [
             toolbarPaddingFourFieldsPxSuffix({
               v,
@@ -27,7 +29,7 @@ export function getItems({ v, device }) {
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          tabIcon: "nc-cog",
+          icon: "nc-cog",
           options: []
         }
       ]

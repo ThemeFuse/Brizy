@@ -1,14 +1,13 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ device }) {
-  const dvk = key => defaultValueKey({ key, device });
+export function getItems() {
   return [
     {
       id: "toolbarWOOCategories",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-2"
+        icon: "nc-woo-categories",
+        title: t("Shop Categories")
       },
       devices: "desktop",
       position: 10,
@@ -18,22 +17,19 @@ export function getItems({ device }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("layoutTab"),
+              id: "layoutTab",
               label: t("Layout"),
               options: [
                 {
                   id: "columns",
                   label: t("Columns"),
-                  type: "select-dev",
-                  devices: "desktop",
-                  choices: [
-                    { title: "1", value: 1 },
-                    { title: "2", value: 2 },
-                    { title: "3", value: 3 },
-                    { title: "4", value: 4 },
-                    { title: "5", value: 5 },
-                    { title: "6", value: 6 }
-                  ]
+                  type: "slider-dev",
+                  config: {
+                    min: 1,
+                    max: 6,
+                    inputMin: 1,
+                    inputMax: 6
+                  }
                 },
                 {
                   id: "number",
@@ -47,7 +43,7 @@ export function getItems({ device }) {
               ]
             },
             {
-              id: dvk("orderTab"),
+              id: "orderTab",
               label: t("Filter"),
               options: [
                 {
@@ -97,7 +93,7 @@ export function getItems({ device }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           label: t("More Settings"),
           icon: "nc-cog"

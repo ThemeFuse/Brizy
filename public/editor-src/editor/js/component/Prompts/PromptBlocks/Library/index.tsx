@@ -26,7 +26,7 @@ import {
   getSavedLayouts,
   getSavedLayoutById,
   deleteSavedLayout
-} from "visual/utils/api/editor/index-new";
+} from "visual/utils/api/editor";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { BlockCategory, PromptBlock, PromptBlockTemplate } from "../types";
@@ -169,7 +169,7 @@ class Library extends Component<
     const { extraFontStyles = [] } = block.meta || {};
     const blockFonts = getUsedModelsFonts({ models: block });
     const stylesFonts = getUsedStylesFonts(extraFontStyles);
-    const fonts: [] = await normalizeFonts(
+    const fonts: FontsPayload = await normalizeFonts(
       getBlocksStylesFonts([...blockFonts, ...stylesFonts], projectFonts)
     );
 

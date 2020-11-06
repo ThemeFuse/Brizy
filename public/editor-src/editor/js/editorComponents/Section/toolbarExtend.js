@@ -4,13 +4,12 @@ import {
   toolbarElementSectionSaved,
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const slider = dvv("slider");
 
   const sliderDotsChoices = [
@@ -51,7 +50,7 @@ export function getItems({ v, device, component }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: dvk("sliderOption1"),
+              id: "sliderOption1",
               label: t("Block"),
               devices: "desktop",
               options: [
@@ -93,30 +92,30 @@ export function getItems({ v, device, component }) {
             },
             slider === "on"
               ? {
-                  id: dvk("sliderOption2"),
+                  id: "sliderOption2",
                   label: t("Slider"),
                   options: [
                     {
-                      type: "multiPicker",
-                      picker: {
-                        id: "sliderAutoPlay",
-                        label: t("Auto Play"),
-                        type: "switch-dev"
-                      },
-                      choices: {
-                        on: [
-                          {
-                            id: "sliderAutoPlaySpeed",
-                            label: t("Speed"),
-                            type: "slider-dev",
-                            config: {
-                              min: 1,
-                              max: 6,
-                              units: [{ title: "s", value: "s" }]
-                            }
+                      id: "sliderAutoPlayGroup",
+                      type: "group-dev",
+                      options: [
+                        {
+                          id: "sliderAutoPlay",
+                          label: t("Auto Play"),
+                          type: "switch-dev"
+                        },
+                        {
+                          id: "sliderAutoPlaySpeed",
+                          label: t("Speed"),
+                          type: "slider-dev",
+                          disabled: dvv("sliderAutoPlay") !== "on",
+                          config: {
+                            min: 1,
+                            max: 6,
+                            units: [{ title: "s", value: "s" }]
                           }
-                        ]
-                      }
+                        }
+                      ]
                     },
                     {
                       id: "sliderDots",
@@ -154,7 +153,7 @@ export function getItems({ v, device, component }) {
               ? []
               : [
                   {
-                    id: dvk("dots"),
+                    id: "dots",
                     label: t("Dots"),
                     options: [
                       {
@@ -166,7 +165,7 @@ export function getItems({ v, device, component }) {
                     ]
                   },
                   {
-                    id: dvk("arrows"),
+                    id: "arrows",
                     label: t("Arrows"),
                     options: [
                       {
@@ -194,35 +193,34 @@ export function getItems({ v, device, component }) {
       options: [
         {
           id: "toolbarContainerTypeAndHeight",
-          type: "multiPicker",
+          type: "group-dev",
           devices: "desktop",
           position: 100,
-          picker: {
-            id: "fullHeight",
-            label: t("Height"),
-            type: "select-dev",
-            choices: [
-              { title: t("Auto"), value: "off" },
-              { title: t("Custom"), value: "custom" },
-              { title: t("Full Height"), value: "on" }
-            ]
-          },
-          choices: {
-            custom: [
-              {
-                id: "sectionHeight",
-                type: "slider-dev",
-                config: {
-                  min: 20,
-                  max: dvv("sectionHeightSuffix") === "px" ? 500 : 100,
-                  units: [
-                    { title: "px", value: "px" },
-                    { title: "%", value: "vh" }
-                  ]
-                }
+          options: [
+            {
+              id: "fullHeight",
+              label: t("Height"),
+              type: "select-dev",
+              choices: [
+                { title: t("Auto"), value: "off" },
+                { title: t("Custom"), value: "custom" },
+                { title: t("Full Height"), value: "on" }
+              ]
+            },
+            {
+              id: "sectionHeight",
+              type: "slider-dev",
+              disabled: v.fullHeight !== "custom",
+              config: {
+                min: 20,
+                max: dvv("sectionHeightSuffix") === "px" ? 500 : 100,
+                units: [
+                  { title: "px", value: "px" },
+                  { title: "%", value: "vh" }
+                ]
               }
-            ]
-          }
+            }
+          ]
         },
         {
           id: "verticalAlign",

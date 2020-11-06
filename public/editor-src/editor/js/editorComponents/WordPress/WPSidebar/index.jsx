@@ -1,7 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -10,8 +9,8 @@ import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { getSidebars } from "visual/utils/api/editor";
-
-const resizerPoints = ["centerLeft", "centerRight"];
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "../../tools/Wrapper";
 
 class WPSidebar extends EditorComponent {
   static get componentId() {
@@ -41,9 +40,6 @@ class WPSidebar extends EditorComponent {
     const { className } = v;
 
     const toolbarConfig = toolbarConfigFn(this.state.sidebars);
-    const attributes = {
-      id: v.sidebar
-    };
 
     const classNameWP = classnames(
       "brz-wp__sidebar",
@@ -60,17 +56,12 @@ class WPSidebar extends EditorComponent {
         {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <WPShortcode
-            name="brizy_sidebar"
-            attributes={attributes}
-            placeholderIcon="wp-shortcode"
-            placeholderContainerWidth={this.props.meta.desktopW}
-            className={classNameWP}
-            resizerPoints={resizerPoints}
-            resizerMeta={this.props.meta}
-            resizerValue={v}
-            resizerOnChange={this.handleResizerChange}
-          />
+          <Wrapper {...this.makeWrapperProps({ className: classNameWP })}>
+            <DynamicContentHelper
+              placeholder={`{{editor_sidebar id="${v.sidebar}"}}`}
+              tagName="div"
+            />
+          </Wrapper>
         </CustomCSS>
       </Toolbar>
     );

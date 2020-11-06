@@ -95,7 +95,7 @@ export function templateSplitRules(rules) {
       const { appliedFor, entityType, entityValues } = item;
       if (entityType === TEMPLATE_TYPE) return acc;
 
-      if (appliedFor === "") {
+      if (appliedFor === "" || appliedFor === null) {
         acc.level3.push(item);
       } else if (entityValues.length) {
         acc.level1.push(item);
@@ -131,7 +131,8 @@ export function pageSplitRules(rules = [], pageId) {
   );
 
   const level3 = rules.find(
-    ({ appliedFor, entityType }) => appliedFor === "" && entityType === ""
+    ({ appliedFor, entityType }) =>
+      (appliedFor === "" || appliedFor === null) && entityType === ""
   );
 
   return {

@@ -1,12 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -38,14 +37,8 @@ export function getItems({ v, device, state }) {
           type: "select-dev",
           devices: "desktop",
           choices: [
-            {
-              title: t("Light"),
-              value: "light"
-            },
-            {
-              title: t("Dark"),
-              value: "dark"
-            }
+            { title: t("Light"), value: "light" },
+            { title: t("Dark"), value: "dark" }
           ]
         },
         {
@@ -133,7 +126,7 @@ export function getItems({ v, device, state }) {
           }
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),

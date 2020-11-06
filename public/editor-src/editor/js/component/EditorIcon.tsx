@@ -1,4 +1,4 @@
-import React, { CSSProperties, MouseEvent } from "react";
+import React, { CSSProperties, MouseEvent, ReactElement, Ref } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import { editorIconUrl } from "visual/utils/icons";
@@ -12,7 +12,10 @@ export type EditorIconProps = {
 
 const _PreviewIcon = (): null => null;
 
-const _EditorIcon: React.FC<EditorIconProps> = (props, ref) => {
+const _EditorIcon = (
+  props: EditorIconProps,
+  ref: Ref<SVGSVGElement>
+): ReactElement => {
   const {
     className: _className = "",
     icon = "nc-circle-add",
@@ -28,6 +31,8 @@ const _EditorIcon: React.FC<EditorIconProps> = (props, ref) => {
   );
 };
 
-export const EditorIcon = IS_EDITOR ? React.forwardRef(_EditorIcon) : _PreviewIcon;
+export const EditorIcon = IS_EDITOR
+  ? React.forwardRef(_EditorIcon)
+  : _PreviewIcon;
 
 export default EditorIcon;

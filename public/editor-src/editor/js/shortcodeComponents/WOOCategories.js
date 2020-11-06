@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 export default {
   id: "WOOCategories",
   title: t("Categories"),
-  icon: "nc-woo-2",
+  icon: "nc-woo-categories",
   position: 20,
   resolve: {
     type: "Wrapper",

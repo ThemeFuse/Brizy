@@ -1,10 +1,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
-import {
-  default as Option,
-  GetModel,
-  OptionType
-} from "visual/component/Options/Type";
+import { GetModel, OptionType } from "visual/component/Options/Type";
+import * as Option from "visual/component/Options/Type";
 import {
   WithClassName,
   WithConfig,
@@ -44,11 +41,6 @@ export const InternalLink: Component = ({
       ),
     [onChange, items]
   );
-  const search = useCallback(
-    (s: string, i: number): boolean =>
-      items[i]?.title.toLowerCase().includes(s.toLowerCase()) ?? false,
-    [items]
-  );
   const loadPosts = (): void => {
     ref.current ||
       getPosts()
@@ -74,7 +66,6 @@ export const InternalLink: Component = ({
       onChange={_onChange}
       size={config?.size ?? "auto"}
       editable={true}
-      search={search}
       value={value?.id ?? 0}
       onOpen={loadPosts}
     >

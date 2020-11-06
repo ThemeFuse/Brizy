@@ -26,7 +26,11 @@ import {
   UPDATE_ERROR,
   HYDRATE
 } from "../../actions";
-import { PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../../actions2";
+import {
+  PUBLISH,
+  IMPORT_STORY,
+  UPDATE_EXTRA_FONT_STYLES
+} from "../../actions2";
 import {
   apiUpdateProject,
   debouncedApiUpdateProject,
@@ -138,6 +142,7 @@ function handleProject({ action, state, apiHandler }) {
       debouncedApiUpdateProject(project);
       break;
     }
+    case IMPORT_STORY:
     case IMPORT_TEMPLATE:
     case IMPORT_KIT:
     case UPDATE_CURRENT_KIT_ID: {

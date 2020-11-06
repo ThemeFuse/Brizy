@@ -79,9 +79,20 @@ export function cssStyleElementWOOPriceColumn({ v, device, state }) {
   return column === undefined ? "" : `flex-direction: ${column};`;
 }
 
-export function cssStyleElementWOOPriceSpacing({ v, device, state }) {
+export function cssStyleElementWOOPriceSpacingFirst({ v, device, state }) {
   const column = styleElementWOOPriceColumn({ v, device, state });
-  const spacing = styleElementWOOPriceSpacing({ v, device, state });
+  const spacing = styleElementWOOPriceSpacing({ v, device, state }) / 2;
+
+  return spacing === undefined
+    ? ""
+    : column === "on"
+    ? `margin: 0 0 ${spacing}px 0;`
+    : `margin: 0 ${spacing}px 0 0;`;
+}
+
+export function cssStyleElementWOOPriceSpacingLast({ v, device, state }) {
+  const column = styleElementWOOPriceColumn({ v, device, state });
+  const spacing = styleElementWOOPriceSpacing({ v, device, state }) / 2;
 
   return spacing === undefined
     ? ""

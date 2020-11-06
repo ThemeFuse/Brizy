@@ -392,7 +392,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			} else {
 				$this->post->setDataVersion( $dataVersion );
 				$this->post->save( 0 );
-				$this->post->savePost();
+				$this->post->savePost( true );
 			}
 
 			$this->success( $this->post->createResponse() );
@@ -402,9 +402,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-
+	/*
+	 * Used for elements like Woocommerce pages.
+	 */
 	public function shortcode_content() {
 		try {
+
 			$this->verifyNonce( self::nonce );
 
 			if ( isset( $_REQUEST['shortcode'] ) ) {
@@ -412,11 +415,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			} else {
 				throw new Exception( 'Shortcode string not provided.', 500 );
 			}
+
 			$shortcode_content = do_shortcode( $shortcode );
 
 			$this->success( array(
 				'shortcode' => $shortcode_content
 			) );
+
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -433,12 +438,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( 'Placeholder string not provided.', 400 );
 			}
 
-			global $post;
+			global $post, $wp_query;
 
 			$post = $this->getPostSample( $postId );
 
 			if ( $post instanceof WP_Post ) {
 				setup_postdata( $post );
+				$wp_query->is_single = true;
 			}
 
 			$contents = [];

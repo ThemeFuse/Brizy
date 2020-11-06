@@ -5,12 +5,11 @@ import {
   getTaxonomies
 } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { toolbarElementCarouselTaxonomy } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: sliderArrowsColorHex } = getOptionColorHexByPalette(
@@ -271,7 +270,7 @@ export function getItems({ v, device }) {
       disabled: true
     },
     {
-      id: dvk("advancedSettings"),
+      id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,

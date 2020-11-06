@@ -1,6 +1,6 @@
 import { insert, removeAt, replaceAt } from "timm";
 import { generateBlocksList } from "visual/utils/blocks";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
@@ -17,6 +17,10 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     case "HYDRATE": {
       const pageId = Number(action.payload.page.id);
       const items = action.payload.page.data?.items || [];
+
+      if (IS_STORY && items.length === 0) {
+        return ["ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr"];
+      }
 
       // it needs only for legacy models, when _id & globalBlock differed
       // only legacyBlocks have globalBlockId

@@ -4,7 +4,22 @@ import {
   toolbarPaddingFourFieldsPxSuffix
 } from "visual/utils/toolbar";
 
-export const title = t("Posts Tags");
+export const title = ({ v }) => {
+  switch (v.type) {
+    case "posts":
+      return t("Posts Tags");
+    case "relatedProducts":
+      return t("Related Products Tags");
+    case "upsell":
+      return t("Upsell Tags");
+    case "products":
+      return t("Products Tags");
+    case "categories":
+      return t("Categories Tags");
+    default:
+      return t("Posts Tags");
+  }
+};
 
 export function getItems({ v, device }) {
   return [
