@@ -221,10 +221,10 @@ class MenuItem extends EditorComponent {
       meta: this.getMeta(v),
       bindWithKey: "megaMenuItems",
       megaMenu: true,
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
+        allowExtend: false
+      }),
       itemProps: {
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-          allowExtend: false
-        }),
         rerender: { placement }
       }
     });
@@ -477,13 +477,14 @@ class MenuItem extends EditorComponent {
     const toolbarConfig = toolbarConfigFn(level, mMenu);
     const sidebarConfig = sidebarConfigFn(level, mMenu);
     const isMinimLevel = level < MAX_LEVEL_RENDER;
+    const isDropDown = v.megaMenu === "off";
 
     if (IS_PREVIEW) {
       return (
         <li className={styleMmMenuClassName(v, isMinimLevel)}>
           {this.renderLink(v, vs, vd, content)}
           {isMinimLevel &&
-            (v.megaMenu === "off"
+            (isDropDown
               ? this.renderDropDown(v, vs, vd)
               : this.renderMegaMenu(v, vs, vd))}
         </li>
@@ -502,8 +503,9 @@ class MenuItem extends EditorComponent {
         </Toolbar>
         {isMinimLevel && (
           <div>
-            {this.renderDropDown(v, vs, vd)}
-            {this.renderMegaMenu(v, vs, vd)}
+            {isDropDown
+              ? this.renderDropDown(v, vs, vd)
+              : this.renderMegaMenu(v, vs, vd)}
           </div>
         )}
       </li>

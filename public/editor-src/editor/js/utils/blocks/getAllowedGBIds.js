@@ -178,6 +178,6 @@ export function canUseConditionInPage(globalBlock, pageId) {
   return false;
 }
 
-function isIncludeCondition(condition) {
+export function isIncludeCondition(condition) {
   return condition.type === 1;
 }
