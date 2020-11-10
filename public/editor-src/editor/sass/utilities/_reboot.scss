@@ -274,6 +274,8 @@ svg:not(:root) {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  height: initial;
+  min-height: initial;
 }
 .brz-button,
 .brz-input {

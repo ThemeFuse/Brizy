@@ -81,8 +81,8 @@ const BackgroundContainer = ({ value, meta, children }) => {
   if (media && currentMedia.includes("video")) {
     const { bgVideo, bgVideoLoop, bgVideoStart } = value;
     props.video = videoData(bgVideo);
-    props.bgVideoStart = bgVideoStart;
-    props.bgVideoLoop = bgVideoLoop === "on";
+    props.videoStart = bgVideoStart;
+    props.videoLoop = bgVideoLoop === "on";
   }
 
   if (media && currentMedia.includes("map")) {

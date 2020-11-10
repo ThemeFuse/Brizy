@@ -14,10 +14,10 @@
 
     "text": "on",
 
-    "ratingSize": 15,
+    "ratingSize": 16,
     "ratingSizeSuffix": null,
 
-    "spacing": 0,
+    "spacing": 10,
     "spacingSuffix": null,
 
     "families": {
@@ -26,22 +26,22 @@
       "mobileTypographyFontFamily": null
     },
 
-    "typographyFontStyle": "",
+    "typographyFontStyle": "paragraph",
     "typographyFontFamilyType": "google",
     "typographyFontSize": 16,
     "typographyFontWeight": 400,
     "typographyLineHeight": 1.3,
     "typographyLetterSpacing": 0,
 
-    "colorHex": "#000000",
+    "colorHex": "#ffb900",
     "colorOpacity": 1,
     "colorPalette": "",
 
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "bgStarColorHex": "#000000",
-    "bgStarColorOpacity": 1,
+    "bgStarColorHex": "#ffb900",
+    "bgStarColorOpacity": 0.7,
     "bgStarColorPalette": "",
 
     "tempBgStarColorOpacity": 1,
@@ -49,7 +49,7 @@
 
     "textColorHex": "#000000",
     "textColorOpacity": 1,
-    "textColorPalette": "",
+    "textColorPalette": "color7",
 
     "tempTextColorOpacity": 1,
     "tempTextColorPalette": "",
@@ -83,7 +83,7 @@
     "tabletSpacing": null,
     "tabletSpacingSuffix": null,
 
-    "tabletTypographyFontStyle": "",
+    "tabletTypographyFontStyle": "paragraph",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 15,
     "tabletTypographyFontWeight": 400,
@@ -96,7 +96,7 @@
     "mobileSpacing": null,
     "mobileSpacingSuffix": null,
 
-    "mobileTypographyFontStyle": "",
+    "mobileTypographyFontStyle": "paragraph",
     "mobileTypographyFontFamilyType": null,
     "mobileTypographyFontSize": 15,
     "mobileTypographyFontWeight": 400,

@@ -40,7 +40,7 @@ export function getItemsSimple({ v, device }) {
       options: [
         {
           id: "borderRadiusType",
-          label: t("Corner dev"),
+          label: t("Corner"),
           type: "radioGroup-dev",
           choices: [
             { value: "grouped", icon: "nc-corners-all" },

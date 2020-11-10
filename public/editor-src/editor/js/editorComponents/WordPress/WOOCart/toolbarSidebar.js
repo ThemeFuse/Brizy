@@ -21,7 +21,9 @@ export function getItems({ v, device }) {
       type: "toggle-dev",
       disabled:
         dvv("sidebarHeightStyle") === "fullHeight" ||
-        (dvv("sidebarHeight") >= 100 && dvv("sidebarHeightSuffix") === "vh"),
+        (dvv("sidebarHeight") >= 100 &&
+          dvv("sidebarHeightSuffix") === "vh" &&
+          dvv("sidebarHeightStyle") !== "auto"),
       position: 110,
       choices: [
         { icon: "nc-ver-align-top", title: t("Align"), value: "top" },

@@ -93,7 +93,7 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-form{margin:0}
 .brz .brz-label{display:inline-block;margin-bottom:0;font-weight:400}
 .brz .brz-button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}
-.brz .brz-button,.brz .brz-input,.brz .brz-optgroup,.brz .brz-select,.brz .brz-textarea{padding:0;margin:0;font-family:inherit;font-size:inherit;line-height:inherit}
+.brz .brz-button,.brz .brz-input,.brz .brz-optgroup,.brz .brz-select,.brz .brz-textarea{padding:0;margin:0;font-family:inherit;font-size:inherit;line-height:inherit;height:initial;min-height:initial}
 .brz .brz-button,.brz .brz-input{overflow:visible}
 .brz .brz-button,.brz .brz-select{text-transform:none}
 .brz .brz-button{-webkit-appearance:button}
@@ -790,7 +790,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-container{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}
 .brz .brz-container__wrap{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}
 .brz .brz-row{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;text-align:left;-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%;width:100%}
-.brz .brz-row__container{position:relative;text-align:center;font-size:0;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
+.brz .brz-row__container{position:relative;text-align:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
 .brz .brz-row__container .brz-link-container{position:absolute;height:100%;width:100%;top:0;left:0}
 .brz .brz-row__container>.brz-bg{left:auto}
 .brz .brz-columns{display:-webkit-box;display:-ms-flexbox;display:flex;position:relative;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;min-height:1px;-ms-flex-preferred-size:100%;flex-basis:100%;will-change:flex,max-width}
@@ -1531,7 +1531,7 @@ to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .brz .brz-switcher__nav2--control--active:before{content:"";-webkit-transform:translateX(calc(-100% - 8px));transform:translateX(calc(-100% - 8px))}
 .brz .brz-switcher__nav2 span{margin:0 20px}
 .brz .brz-switcher--style2>.brz-switcher__nav2>span{cursor:pointer}
-.brz .brz-table{display:table;table-layout:fixed;margin:0}
+.brz .brz-table{display:table;table-layout:fixed;margin:0;font-size:initial}
 .brz .brz-table__th--btn{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
 .brz .brz-table__th .brz-span{margin:auto 0}
 .brz .brz-accordion{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}
@@ -2383,7 +2383,7 @@ body.brz::after,body.brz::before{display:none}
 .brz-ed .brz-form{margin:0}
 .brz-ed .brz-label{display:inline-block;margin-bottom:0;font-weight:400}
 .brz-ed .brz-button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}
-.brz-ed .brz-button,.brz-ed .brz-input,.brz-ed .brz-optgroup,.brz-ed .brz-select,.brz-ed .brz-textarea{padding:0;margin:0;font-family:inherit;font-size:inherit;line-height:inherit}
+.brz-ed .brz-button,.brz-ed .brz-input,.brz-ed .brz-optgroup,.brz-ed .brz-select,.brz-ed .brz-textarea{padding:0;margin:0;font-family:inherit;font-size:inherit;line-height:inherit;height:initial;min-height:initial}
 .brz-ed .brz-button,.brz-ed .brz-input{overflow:visible}
 .brz-ed .brz-button,.brz-ed .brz-select{text-transform:none}
 .brz-ed .brz-button{-webkit-appearance:button}
@@ -7576,7 +7576,7 @@ body.brz::after,body.brz::before{display:none}
 .brz-ed .brz-ed-control__input--medium{max-width:112px}
 .brz-ed .brz-ed-control__input--small{max-width:62px}
 .brz-ed .brz-ed-control__input--auto{max-width:100%}
-.brz-ed .brz-ed-control__input2 input{font-family:nunito,"Open Sans",Arial,sans-serif;font-size:13px;font-style:normal;font-weight:400;letter-spacing:0;background:#383e48 none;color:#fff;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;height:30px;text-indent:5px;padding:0 5px;border-radius:4px;border:0;outline:0;-webkit-box-shadow:none;box-shadow:none;text-shadow:none;text-align:left;margin-left:auto;width:100%}
+.brz-ed .brz-ed-control__input2 input{font-family:nunito,"Open Sans",Arial,sans-serif;font-size:13px;font-style:normal;font-weight:400;letter-spacing:0;background:#383e48 none;color:#fff;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;height:30px;text-indent:5px;padding:0 5px;border-radius:4px;border:0;outline:0;-webkit-box-shadow:none;box-shadow:none;text-shadow:none;text-align:left;margin-left:auto;width:100%;min-height:initial}
 .brz-ed .brz-ed-control__input2 input:active,.brz-ed .brz-ed-control__input2 input:focus{background-color:#383e48;color:#fff}
 .brz-ed .brz-ed-control__input2 input::-webkit-input-placeholder{color:rgba(234,241,255,.2);font-style:italic;font-size:1em}
 .brz-ed .brz-ed-control__input2 input:-moz-placeholder{color:rgba(234,241,255,.2);font-style:italic;font-size:1em}

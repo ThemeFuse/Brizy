@@ -442,6 +442,11 @@ function getFormData(form) {
     .querySelectorAll(".brz-forms2__item:not(.brz-forms2__item-button)")
     .forEach(node => {
       const elements = node.querySelectorAll("input, textarea, select");
+
+      if (elements.length === 0) {
+        return;
+      }
+
       let dataValue = {};
 
       // checkboxes & radio
