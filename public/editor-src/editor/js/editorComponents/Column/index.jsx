@@ -271,40 +271,38 @@ class Column extends EditorComponent {
       <>
         <SortableElement type="column" useHandle={true}>
           {sortableElementAttr => (
-            <ContainerBorder
-              type={posts ? "column__posts" : "column"}
-              ref={this.containerBorderRef}
-              color={isInnerRow && inGrid ? "red" : "blue"}
-              borderStyle="solid"
-              activateOnContentClick={false}
-              buttonPosition="topRight"
-              renderButtonWrapper={this.renderToolbar}
-            >
-              {({
-                ref: containerBorderRef,
-                attr: containerBorderAttr,
-                button: ContainerBorderButton,
-                border: ContainerBorderBorder
-              }) => (
-                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                  <Animation
-                    ref={containerBorderRef}
-                    component={"div"}
-                    animationClass={animationClassName}
-                    componentProps={{
-                      ...parseCustomAttributes(customAttributes),
-                      ...sortableElementAttr,
-                      ...containerBorderAttr,
-                      id: cssIDPopulation ?? customID,
-                      className: classNameColumn
-                    }}
-                  >
-                    <Roles
-                      allow={["admin"]}
-                      fallbackRender={() => this.renderContent(v, vs, vd)}
+            <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+              <ContainerBorder
+                type={posts ? "column__posts" : "column"}
+                ref={this.containerBorderRef}
+                color={isInnerRow && inGrid ? "red" : "blue"}
+                borderStyle="solid"
+                activateOnContentClick={false}
+                buttonPosition="topRight"
+                renderButtonWrapper={this.renderToolbar}
+              >
+                {({
+                  ref: containerBorderRef,
+                  attr: containerBorderAttr,
+                  button: ContainerBorderButton,
+                  border: ContainerBorderBorder
+                }) => (
+                  <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                    <Animation
+                      ref={containerBorderRef}
+                      component={"div"}
+                      animationClass={animationClassName}
+                      componentProps={{
+                        ...parseCustomAttributes(customAttributes),
+                        ...sortableElementAttr,
+                        ...containerBorderAttr,
+                        id: cssIDPopulation ?? customID,
+                        className: classNameColumn
+                      }}
                     >
-                      <ContextMenu
-                        {...this.makeContextMenuProps(contextMenuConfig)}
+                      <Roles
+                        allow={["admin"]}
+                        fallbackRender={() => this.renderContent(v, vs, vd)}
                       >
                         {this.renderResizer("left")}
                         {this.renderResizer("right")}
@@ -313,12 +311,12 @@ class Column extends EditorComponent {
                         </ToolbarExtend>
                         {ContainerBorderButton}
                         {ContainerBorderBorder}
-                      </ContextMenu>
-                    </Roles>
-                  </Animation>
-                </CustomCSS>
-              )}
-            </ContainerBorder>
+                      </Roles>
+                    </Animation>
+                  </CustomCSS>
+                )}
+              </ContainerBorder>
+            </ContextMenu>
           )}
         </SortableElement>
         {popups.length > 0 &&

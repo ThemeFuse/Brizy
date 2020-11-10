@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_157Wp_Texts {
+class Brizy_Public_EditorBuild_159Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -172,7 +172,6 @@ class Brizy_Public_EditorBuild_157Wp_Texts {
 			"Controls" => __("Controls", "brizy"),
 			"Copy" => __("Copy", "brizy"),
 			"Corner" => __("Corner", "brizy"),
-			"Corner dev" => __("Corner dev", "brizy"),
 			"Could not Create Global Block" => __("Could not Create Global Block", "brizy"),
 			"Could not Create Global Popup" => __("Could not Create Global Popup", "brizy"),
 			"Could not Create Saved Block" => __("Could not Create Saved Block", "brizy"),

@@ -2,7 +2,7 @@
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors2";
-import { pageSplitRules } from "../getAllowedGBIds";
+import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
 
 import { IS_TEMPLATE, IS_WP } from "visual/utils/models";
 import { GlobalBlock, GlobalBlockPosition } from "visual/types";
@@ -402,9 +402,17 @@ export const changeRule = (
     )
   };
 
-  const shouldAddRule = shouldAddIncludeCondition
-    ? IS_TEMPLATE || (!IS_TEMPLATE && !level2 && !level3)
-    : IS_TEMPLATE || (!IS_TEMPLATE && (level2 || level3));
+  let shouldAddRule = true;
+
+  if (!IS_TEMPLATE) {
+    const isLevel2IncludeCondition = level2 && isIncludeCondition(level2);
+    const isLevel3IncludeCondition = level3 && isIncludeCondition(level3);
+
+    shouldAddRule =
+      shouldAddIncludeCondition &&
+      !isLevel2IncludeCondition &&
+      !isLevel3IncludeCondition;
+  }
 
   if (shouldAddRule) {
     newGlobalBlock = {

@@ -570,7 +570,9 @@ img.mfp-img {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
-    line-height: inherit; }
+    line-height: inherit;
+    height: initial;
+    min-height: initial; }
   .brz .brz-button,
   .brz .brz-input {
     overflow: visible; }
@@ -4752,7 +4754,6 @@ img.mfp-img {
     .brz .brz-row__container {
       position: relative;
       text-align: center;
-      font-size: 0;
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center; }
@@ -8296,7 +8297,8 @@ b {
   .brz .brz-table {
     display: table;
     table-layout: fixed;
-    margin: 0; }
+    margin: 0;
+    font-size: initial; }
     .brz .brz-table__th--btn {
       display: -webkit-box;
       display: -ms-flexbox;

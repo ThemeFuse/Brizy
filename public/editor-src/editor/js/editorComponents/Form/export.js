@@ -60,8 +60,12 @@ function validateFormItem(node) {
   const isRequired = node.required;
   const pattern = node.getAttribute("pattern") || "";
   const patternTest = new RegExp(pattern).test(value);
-  const parentElem = this.closest(".brz-forms__item");
+  const parentElem = node.closest(".brz-forms__item");
   let result = true;
+
+  if (parentElem === null) {
+    return false;
+  }
 
   parentElem.classList.remove(
     "brz-forms__item--error",

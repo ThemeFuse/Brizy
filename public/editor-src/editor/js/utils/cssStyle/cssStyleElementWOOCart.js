@@ -358,10 +358,18 @@ export function cssStyleElementWOOCartSidebarVerticalAlign({
   device,
   state
 }) {
+  const heightStyle = styleElementWOOCartSidebarHeightStyle({
+    v,
+    device,
+    state
+  });
   const align = {
     top: "top: 0; margin-top: 0; margin-bottom: auto;",
-    center: "top: 0; bottom: 0; margin-top: auto; margin-bottom: auto;",
-    bottom: "bottom: 0; margin-top: auto; margin-bottom: 0;"
+    center:
+      heightStyle === "auto"
+        ? "top: 50%; margin-top: auto; margin-bottom: auto; transform: translate(0, -50%);"
+        : "top: 0; bottom: 0; margin-top: auto; margin-bottom: auto;",
+    bottom: "top: auto; bottom: 0; margin-top: auto; margin-bottom: 0;"
   };
 
   const verticalAlign = styleElementWOOCartSidebarVerticalAlign({
