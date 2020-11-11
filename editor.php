@@ -225,7 +225,8 @@ class Brizy_Editor {
 		try {
 			$revisionCount = apply_filters( 'brizy_revisions_max_count', BRIZY_MAX_REVISIONS_TO_KEEP );
 
-			if ( $revisionCount > $num ) {
+			// $num can be -1
+			if ( $revisionCount > $num && $num >= 0 ) {
 				return $num;
 			}
 
