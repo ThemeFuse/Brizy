@@ -49,6 +49,10 @@ class Brizy_Compatibilities_Init {
 		if ( function_exists( 'rank_math' ) ) {
 			new Brizy_Compatibilities_RankMathSEO();
 		}
+
+		if ( function_exists( 'WPNCEasyWP' ) ) {
+			new Brizy_Compatibilities_NcEasywp();
+		}
 	}
 
 	public function action_plugins_loaded() {
