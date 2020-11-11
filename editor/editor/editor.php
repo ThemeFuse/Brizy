@@ -63,6 +63,9 @@ class Brizy_Editor_Editor_Editor {
 				return 'template';
 			case Brizy_Admin_Popups_Main::CP_POPUP:
 				return 'internal_popup';
+			case 'product':
+			case 'product_variation':
+				return 'product';
 			default:
 				return 'page';
 		}
