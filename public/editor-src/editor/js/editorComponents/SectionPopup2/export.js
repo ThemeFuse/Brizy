@@ -33,6 +33,7 @@ $.fn.popup = function() {
 
       $this.addClass("brz-popup2--was-shown");
       $(document).trigger("brz.popup.show", [$this.get(0)]);
+      window.Brizy.emit("elements.popup.open", $this.get(0));
     },
     close() {
       $this.removeClass("brz-popup2--opened");
@@ -40,6 +41,7 @@ $.fn.popup = function() {
 
       // trigger an event so that other components could listen
       $(document).trigger("brz.popup.close", [$this.get(0)]);
+      window.Brizy.emit("elements.popup.close", $this.get(0));
     }
   };
 };

@@ -1,53 +1,5 @@
 import $ from "jquery";
 
-// Smooth scroll
-(function(window, document) {
-  function c(b, c, g, h) {
-    var o = function(b) {
-      !b && (b = h.event);
-      var c = {
-        originalEvent: b,
-        target: b.target || b.srcElement,
-        type: "wheel",
-        deltaMode: "MozMousePixelScroll" === b.type ? 0 : 1,
-        deltaX: 0,
-        deltaZ: 0,
-        notRealWheel: 1,
-        preventDefault: function() {
-          b.preventDefault ? b.preventDefault() : (b.returnValue = !1);
-        }
-      };
-      return (
-        "mousewheel" === event
-          ? ((c.deltaY = (-1 / 40) * b.wheelDelta),
-            b.wheelDeltaX && (c.deltaX = (-1 / 40) * b.wheelDeltaX))
-          : (c.deltaY = b.detail / 3),
-        g(c)
-      );
-    };
-    b[d](f + c, "wheel" === event ? g : o, h || !1);
-  }
-
-  var d,
-    event,
-    f = "";
-  window.addEventListener
-    ? (d = "addEventListener")
-    : ((d = "attachEvent"), (f = "on"));
-
-  event =
-    "onwheel" in document.createElement("div")
-      ? "wheel"
-      : "undefined" != typeof document.onmousewheel
-      ? "mousewheel"
-      : "DOMMouseScroll";
-
-  window.addWheelListener = function(window, document, d) {
-    c(window, event, document, d);
-    "DOMMouseScroll" === event && c(window, "MozMousePixelScroll", document, d);
-  };
-})(window, document);
-
 // Parallax
 (function($, window, document) {
   var pluginName = "parallax";
@@ -250,6 +202,13 @@ import $ from "jquery";
         height: "",
         transform: ""
       });
+    },
+    paused: function(paused) {
+      if (paused) {
+        this._detachEvents();
+      } else {
+        this._attachEvents();
+      }
     },
     e: function(a, b) {
       var e = this.isVariant();
