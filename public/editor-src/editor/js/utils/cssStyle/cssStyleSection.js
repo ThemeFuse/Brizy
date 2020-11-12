@@ -19,17 +19,12 @@ const validation = k => k !== undefined;
 export function cssStyleSectionMaxWidth({ v, device, state }) {
   const containerType = styleElementSectionContainerType({ v, device, state });
   const containerSize = styleElementSectionContainerSize({ v, device, state });
+
+  // used css var(--brz-section-container-width)
+  // improvement in the future & need for blocksy
   return containerType === "boxed"
-    ? `max-width: 100%; width: calc((${containerSize} / 100 * 1170) * 1px);`
+    ? `max-width: 100%; width: calc((${containerSize} / 100 * var(--brz-section-container-width, 1170)) * 1px);`
     : "max-width: 100%; width: 100%;";
-}
-
-export function cssStyleSectionContainerType({ v }) {
-  const containerType = styleElementSectionContainerType({ v });
-
-  return containerType === "fullWidth"
-    ? "max-width: 100%;"
-    : "max-width: 1170px;";
 }
 
 export function cssStyleSectionSliderHeight({ v }) {

@@ -9,11 +9,10 @@ export default function($node) {
     const popupId = this.getAttribute("href").slice(1); // without the `#`
 
     if (popupId) {
-      const $elem = $(`[data-brz-popup="${popupId}"]`);
+      const $popup = $(`[data-brz-popup="${popupId}"]`);
 
-      if ($elem.hasClass("brz-popup")) {
-        $(`[data-brz-popup="${popupId}"]`).addClass("brz-popup--opened");
-        $("html").addClass("brz-ow-hidden");
+      if ($popup.hasClass("brz-popup")) {
+        openPopup($popup.get(0));
       }
     }
   });
@@ -34,7 +33,7 @@ export default function($node) {
     const $closestPopup = $(anchor).closest(".brz-popup");
 
     if ($closestPopup.length > 0) {
-      closePopup($closestPopup);
+      closePopup($closestPopup.get(0));
     }
   });
 
@@ -44,5 +43,12 @@ export default function($node) {
 
     // trigger an event so that other components could listen
     $(document).trigger("brz.popup.close", [popup]);
+    window.Brizy.emit("elements.popup.close", popup);
+  }
+
+  function openPopup(popup) {
+    $(popup).addClass("brz-popup--opened");
+    $("html").addClass("brz-ow-hidden");
+    window.Brizy.emit("elements.popup.open", popup);
   }
 }

@@ -15,6 +15,47 @@ export default function($node) {
     $(window).on("resize", function() {
       $parallaxContainers.parallax("refresh");
     });
+
+    // when some of element popup, mmenu opened
+    // wee need stop parallax
+    const openedElements = ["elements.mmenu.open", "elements.popup.open"];
+    openedElements.forEach(id => {
+      window.Brizy.on(id, element => {
+        if (id === "elements.popup.open") {
+          // need to check scroll behance
+          const { scroll_page = "false" } = element.dataset;
+          const isScrolled = scroll_page === "true";
+
+          if (isScrolled) {
+            return;
+          }
+
+          $parallaxContainers.parallax("paused", true);
+        } else {
+          $parallaxContainers.parallax("paused", true);
+        }
+      });
+    });
+
+    // start parallaxes
+    const closedElements = ["elements.mmenu.close", "elements.popup.close"];
+    closedElements.forEach(id => {
+      window.Brizy.on(id, element => {
+        if (id === "elements.popup.close") {
+          // need to check scroll behance
+          const { scroll_page = "false" } = element.dataset;
+          const isScrolled = scroll_page === "true";
+
+          if (isScrolled) {
+            return;
+          }
+
+          $parallaxContainers.parallax("paused", false);
+        } else {
+          $parallaxContainers.parallax("paused", false);
+        }
+      });
+    });
   }
 
   $node.find(".brz-bg-video").each(function() {
