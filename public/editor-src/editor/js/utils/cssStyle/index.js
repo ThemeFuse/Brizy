@@ -349,7 +349,6 @@ export { cssStyleIconSpacing, cssStyleIconSize } from "./cssStyleIcon";
 // Element Section
 export {
   cssStyleSectionMaxWidth,
-  cssStyleSectionContainerType,
   cssStyleSectionSliderHeight,
   cssStyleSectionColorDots,
   cssStyleSectionColorArrows,
