@@ -7,12 +7,7 @@ import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
 import Notifications from "visual/component/Notifications";
 import { RightSidebar } from "visual/component/RightSidebar";
-import {
-  IS_PAGE,
-  IS_TEMPLATE,
-  IS_GLOBAL_POPUP,
-  IS_STORY
-} from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import EditorPopup from "./EditorPopup";
 import EditorStory from "./EditorStory";
 
@@ -33,9 +28,13 @@ class Editor extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {(IS_PAGE || IS_TEMPLATE) && <EditorPage />}
-        {IS_GLOBAL_POPUP && <EditorPopup />}
-        {IS_STORY && <EditorStory />}
+        {IS_STORY ? (
+          <EditorStory />
+        ) : IS_GLOBAL_POPUP ? (
+          <EditorPopup />
+        ) : (
+          <EditorPage />
+        )}
         <Portal node={this.parentWindowDocument.body}>
           <LeftSidebar />
         </Portal>

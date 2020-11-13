@@ -13,31 +13,31 @@ import WOOProducts2 from "./WOOProducts2";
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import { IS_STORY } from "visual/utils/models";
 
-import { IS_SINGLE_TEMPLATE } from "visual/utils/env";
+import {
+  IS_SINGLE_TEMPLATE,
+  IS_PRODUCT_TEMPLATE,
+  IS_PRODUCT_PAGE
+} from "visual/utils/env";
 
-const wordpressShortcodes = [
-  ...(hasSidebars() ? [WPSidebar] : []),
-  WPCustomShortcode
-];
+const wordpressShortcodes = IS_STORY
+  ? []
+  : [...(hasSidebars() ? [WPSidebar] : []), WPCustomShortcode];
+
+const woocommerceShortcodes =
+  !IS_STORY && pluginActivated("woocommerce")
+    ? [WOOProducts2, WOOCategories, WOOPages]
+    : [];
 
 export default {
   product: [],
+  ...((IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) && {
+    woocommerce: woocommerceShortcodes
+  }),
   archive: [],
-  ...(!IS_STORY && IS_SINGLE_TEMPLATE ? { wordpress: wordpressShortcodes } : {}),
+  ...(IS_SINGLE_TEMPLATE && { wordpress: wordpressShortcodes }),
   ...nonWP,
-  ...(IS_STORY || IS_SINGLE_TEMPLATE ? {} : { wordpress: wordpressShortcodes }),
-  woocommerce: IS_STORY
-    ? []
-    : [
-        ...(pluginActivated("woocommerce")
-          ? [
-              // WOOProducts,
-              WOOProducts2,
-              // WOOProductPage,
-              WOOCategories,
-              // WOOCategories2,
-              WOOPages
-            ]
-          : [])
-      ]
+  ...(!IS_SINGLE_TEMPLATE && { wordpress: wordpressShortcodes }),
+  ...(!(IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) && {
+    woocommerce: woocommerceShortcodes
+  })
 };
