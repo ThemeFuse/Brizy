@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
-            "version": "1.0.7",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "f0922a1f229b9494322682b409d1fdf8b000f24c"
+                "reference": "c7e9fbb735839b9cd69fcf0d192bd27401b20d49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/f0922a1f229b9494322682b409d1fdf8b000f24c",
-                "reference": "f0922a1f229b9494322682b409d1fdf8b000f24c",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/c7e9fbb735839b9cd69fcf0d192bd27401b20d49",
+                "reference": "c7e9fbb735839b9cd69fcf0d192bd27401b20d49",
                 "shasum": ""
             },
             "require": {
@@ -40,10 +40,10 @@
                 "brizy merge assets"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.7",
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.9",
                 "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
             },
-            "time": "2020-11-06T14:59:11+00:00"
+            "time": "2020-11-16T07:19:41+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -1044,16 +1044,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "1.4.4",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "6e076a124f7ee146f2487554a94b6a19a74887ba"
+                "reference": "f28d44c286812c714741478d968104c5e604a1d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/6e076a124f7ee146f2487554a94b6a19a74887ba",
-                "reference": "6e076a124f7ee146f2487554a94b6a19a74887ba",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/f28d44c286812c714741478d968104c5e604a1d4",
+                "reference": "f28d44c286812c714741478d968104c5e604a1d4",
                 "shasum": ""
             },
             "require": {
@@ -1084,11 +1084,6 @@
                 "Xdebug",
                 "performance"
             ],
-            "support": {
-                "irc": "irc://irc.freenode.org/composer",
-                "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/1.4.4"
-            },
             "funding": [
                 {
                     "url": "https://packagist.com",
@@ -1103,7 +1098,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T12:39:10+00:00"
+            "time": "2020-11-13T08:04:11+00:00"
         },
         {
             "name": "dg/mysql-dump",
@@ -1242,36 +1237,31 @@
         },
         {
             "name": "doctrine/instantiator",
-            "version": "dev-master",
+            "version": "1.5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "3e7a22aed197e9333cc929e7f6b4300bdae91fcc"
+                "reference": "6410c4b8352cb64218641457cef64997e6b784fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/3e7a22aed197e9333cc929e7f6b4300bdae91fcc",
-                "reference": "3e7a22aed197e9333cc929e7f6b4300bdae91fcc",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/6410c4b8352cb64218641457cef64997e6b784fb",
+                "reference": "6410c4b8352cb64218641457cef64997e6b784fb",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^6.0",
+                "doctrine/coding-standard": "^8.0",
                 "ext-pdo": "*",
                 "ext-phar": "*",
-                "phpbench/phpbench": "^0.13",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-shim": "^0.11",
-                "phpunit/phpunit": "^7.0"
+                "phpbench/phpbench": "^0.13 || 1.0.0-alpha2",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
@@ -1285,7 +1275,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
+                    "homepage": "https://ocramius.github.io/"
                 }
             ],
             "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
@@ -1294,7 +1284,21 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2020-06-15T18:51:04+00:00"
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finstantiator",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-11-10T19:05:51+00:00"
         },
         {
             "name": "facebook/webdriver",
@@ -2528,12 +2532,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "bb7f9166480a5acdb1e256deb61f3dc48e12b4a2"
+                "reference": "b165cb88318ae68e0f09e7ef539a9c07f24f6681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/bb7f9166480a5acdb1e256deb61f3dc48e12b4a2",
-                "reference": "bb7f9166480a5acdb1e256deb61f3dc48e12b4a2",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b165cb88318ae68e0f09e7ef539a9c07f24f6681",
+                "reference": "b165cb88318ae68e0f09e7ef539a9c07f24f6681",
                 "shasum": ""
             },
             "require": {
@@ -2583,7 +2587,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-10-31T18:39:14+00:00"
+            "time": "2020-11-06T14:40:24+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2909,12 +2913,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "00aba97fc36feabc8d94667eebd5d43959e60008"
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/00aba97fc36feabc8d94667eebd5d43959e60008",
-                "reference": "00aba97fc36feabc8d94667eebd5d43959e60008",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/776f831124e9c62e1a2c601ecc52e776d8bb7220",
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220",
                 "shasum": ""
             },
             "require": {
@@ -2949,17 +2953,13 @@
                 "object",
                 "object graph"
             ],
-            "support": {
-                "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.x"
-            },
             "funding": [
                 {
                     "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-01T09:35:15+00:00"
+            "time": "2020-11-13T09:40:50+00:00"
         },
         {
             "name": "nb/oxymel",
@@ -4618,16 +4618,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.8.2",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337"
+                "reference": "9ad6ce79c342fbd44df10ea95511a1b24dee5b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/590cfec960b77fd55e39b7d9246659e95dd6d337",
-                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9ad6ce79c342fbd44df10ea95511a1b24dee5b57",
+                "reference": "9ad6ce79c342fbd44df10ea95511a1b24dee5b57",
                 "shasum": ""
             },
             "require": {
@@ -4663,10 +4663,6 @@
                 "parser",
                 "validator"
             ],
-            "support": {
-                "issues": "https://github.com/Seldaek/jsonlint/issues",
-                "source": "https://github.com/Seldaek/jsonlint/tree/master"
-            },
             "funding": [
                 {
                     "url": "https://github.com/Seldaek",
@@ -4677,7 +4673,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-25T06:56:57+00:00"
+            "time": "2020-11-11T09:19:24+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -5243,12 +5239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "4326782dcccf8aa873b26999e36c6c71c8d3404b"
+                "reference": "bb92ba7f38b037e531908590a858a04d85c0e238"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/4326782dcccf8aa873b26999e36c6c71c8d3404b",
-                "reference": "4326782dcccf8aa873b26999e36c6c71c8d3404b",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bb92ba7f38b037e531908590a858a04d85c0e238",
+                "reference": "bb92ba7f38b037e531908590a858a04d85c0e238",
                 "shasum": ""
             },
             "require": {
@@ -5294,7 +5290,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-28T21:33:29+00:00"
+            "time": "2020-11-12T09:58:18+00:00"
         },
         {
             "name": "symfony/finder",
@@ -6077,12 +6073,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "6d2dc088bc7a7dd94a85edb5de61aa810b917a26"
+                "reference": "5d449c8a6bde5ce34ce3290db5e3efa063bfa48e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/6d2dc088bc7a7dd94a85edb5de61aa810b917a26",
-                "reference": "6d2dc088bc7a7dd94a85edb5de61aa810b917a26",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/5d449c8a6bde5ce34ce3290db5e3efa063bfa48e",
+                "reference": "5d449c8a6bde5ce34ce3290db5e3efa063bfa48e",
                 "shasum": ""
             },
             "require": {
@@ -6131,9 +6127,6 @@
                 "interoperability",
                 "standards"
             ],
-            "support": {
-                "source": "https://github.com/symfony/translation-contracts/tree/main"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6148,7 +6141,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-14T17:08:19+00:00"
+            "time": "2020-11-04T15:35:46+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -6156,12 +6149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "543cb4dbd45ed803f08a9a65f27fb149b5dd20c2"
+                "reference": "443c622d126ce0ac31f3fec97f6a713fd0ff6d6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/543cb4dbd45ed803f08a9a65f27fb149b5dd20c2",
-                "reference": "543cb4dbd45ed803f08a9a65f27fb149b5dd20c2",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/443c622d126ce0ac31f3fec97f6a713fd0ff6d6a",
+                "reference": "443c622d126ce0ac31f3fec97f6a713fd0ff6d6a",
                 "shasum": ""
             },
             "require": {
@@ -6202,9 +6195,6 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/yaml/tree/4.4"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6219,7 +6209,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T11:50:19+00:00"
+            "time": "2020-11-14T14:49:24+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -6273,23 +6263,23 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "1.5.3",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "25bcbf01678930251fd572891447d9e318a6e2b8"
+                "reference": "80953678b19901e5165c56752d087fc11526017c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/25bcbf01678930251fd572891447d9e318a6e2b8",
-                "reference": "25bcbf01678930251fd572891447d9e318a6e2b8",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/80953678b19901e5165c56752d087fc11526017c",
+                "reference": "80953678b19901e5165c56752d087fc11526017c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.0 || ~7.0"
+                "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
             },
             "suggest": {
                 "ext-intl": "Use Intl for transliterator_transliterate() support"
@@ -6317,10 +6307,6 @@
                 "clean",
                 "php"
             ],
-            "support": {
-                "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/master"
-            },
             "funding": [
                 {
                     "url": "https://www.paypal.me/moelleken",
@@ -6343,7 +6329,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-22T23:32:04+00:00"
+            "time": "2020-11-12T00:07:28+00:00"
         },
         {
             "name": "vria/nodiacritic",
@@ -8345,12 +8331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "fea0a965a625552429372b413bb6cfaa97bf5b8e"
+                "reference": "6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/fea0a965a625552429372b413bb6cfaa97bf5b8e",
-                "reference": "fea0a965a625552429372b413bb6cfaa97bf5b8e",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85",
+                "reference": "6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85",
                 "shasum": ""
             },
             "require": {
@@ -8403,7 +8389,7 @@
                 "cli",
                 "wordpress"
             ],
-            "time": "2020-11-05T07:08:54+00:00"
+            "time": "2020-11-12T06:36:52+00:00"
         },
         {
             "name": "wp-cli/wp-cli-bundle",
@@ -8480,23 +8466,23 @@
         },
         {
             "name": "wp-cli/wp-config-transformer",
-            "version": "v1.2.7",
+            "version": "v1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-config-transformer.git",
-                "reference": "bae1e975ed1277470e3dcc7fd0ef99c2d4f4c7a8"
+                "reference": "0bb2b9162c38ca72370380aea11dc06e431e13a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/bae1e975ed1277470e3dcc7fd0ef99c2d4f4c7a8",
-                "reference": "bae1e975ed1277470e3dcc7fd0ef99c2d4f4c7a8",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/0bb2b9162c38ca72370380aea11dc06e431e13a5",
+                "reference": "0bb2b9162c38ca72370380aea11dc06e431e13a5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.29"
             },
             "require-dev": {
-                "composer/composer": "^1.5.6",
+                "composer/composer": ">=1.5.6 <1.7.0 || ^1.7.1 || ^2.0.0",
                 "phpunit/phpunit": "^6.5.5 || ^7.0.0",
                 "wp-coding-standards/wpcs": "^0.14.0 || ^1.0.0 || ^2.0.0"
             },
@@ -8517,11 +8503,7 @@
                 }
             ],
             "description": "Programmatically edit a wp-config.php file.",
-            "support": {
-                "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
-                "source": "https://github.com/wp-cli/wp-config-transformer/tree/master"
-            },
-            "time": "2020-07-05T12:30:35+00:00"
+            "time": "2020-11-12T08:08:10+00:00"
         },
         {
             "name": "zordius/lightncandy",
