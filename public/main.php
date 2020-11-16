@@ -560,7 +560,7 @@ class Brizy_Public_Main
             return $content;
         }
 
-
+	    $project = Brizy_Editor_Project::get();
 
         if ( ! $this->post->get_compiled_html()) {
             $compiled_html_body = $this->post->get_compiled_html_body();
