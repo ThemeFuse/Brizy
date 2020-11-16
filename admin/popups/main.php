@@ -182,17 +182,6 @@ class Brizy_Admin_Popups_Main {
 				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
 				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
 
-//				$libs = Brizy_Public_Main::libAggregator(
-//					$styles['free'],
-//					$brizyPopup,
-//					function ( $assets, $post ) {
-//						return apply_filters( 'brizy_pro_head_assets', $assets, $post );
-//					}
-//				);
-//
-//				foreach ( $libs as $anAsset ) {
-//					$assets[] = $anAsset;
-//				}
 			}
 
 			if ( $context == 'body' ) {
@@ -200,20 +189,8 @@ class Brizy_Admin_Popups_Main {
 				$assets = $brizyPopup->getCompiledScripts();
 
 				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
-				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
+				$assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $brizyPopup);
 
-
-//				$scripts = $brizyPopup->getCompiledScripts();
-//				$libs    = Brizy_Public_Main::libAggregator(
-//					$scripts['free'],
-//					$brizyPopup,
-//					function ( $assets, $post ) {
-//						return apply_filters( 'brizy_pro_body_assets', $assets, $post );
-//					}
-//				);
-//				foreach ( $libs as $anAsset ) {
-//					$assets[] = $anAsset;
-//				}
 			}
 		}
 

@@ -519,7 +519,7 @@ class Brizy_Public_Main
 	    $popupMain         = Brizy_Admin_Popups_Main::_init();
         $params['content'] .= $popupMain->getPopupsHtml($project, $this->post, 'head');
 
-	    array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
+	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
 	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
 
 
@@ -579,9 +579,9 @@ class Brizy_Public_Main
 
 	    // add popups and popup assets
 	    $popupMain         = Brizy_Admin_Popups_Main::_init();
-	    $content .= $popupMain->getPopupsHtml($project, $this->post, 'head');
+	    $content .= $popupMain->getPopupsHtml($project, $this->post, 'body');
 
-	    array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'body'));
+	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'body'));
 	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
 
         // include content
