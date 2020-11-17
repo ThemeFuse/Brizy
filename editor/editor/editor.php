@@ -142,10 +142,10 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix' => Brizy_Editor::prefix(),
-				'permalink'    => get_permalink( $wp_post_id ),
-				'page'         => $wp_post_id,
-
+				'pluginPrefix'    => Brizy_Editor::prefix(),
+				'permalink'       => get_permalink( $wp_post_id ),
+				'page'            => $wp_post_id,
+				'post_type'       => get_post_type( $wp_post_id ),
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $this->post->get_templates(),
