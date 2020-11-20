@@ -94,8 +94,8 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 12000 );
 
-			add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
-			add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
+			//add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
+			//add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
 			$this->plugin_live_composer_fixes();
 		}
 	}
@@ -412,6 +412,10 @@ class Brizy_Public_Main {
 	public function insert_page_content( $content ) {
 
 		global $post;
+
+		if(doing_filter('brizy_dc_excerpt')) {
+		    return $content;
+        }
 
 		if ( false === strpos( $content, 'brz-root__container' ) ||
 		     ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
