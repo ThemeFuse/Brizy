@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "cbc09f7f0097d2aeb4adba03019fdafafaf1d896"
+                "reference": "734ff53ef6d5146b06232ea7dcc7530d2a43daac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/cbc09f7f0097d2aeb4adba03019fdafafaf1d896",
-                "reference": "cbc09f7f0097d2aeb4adba03019fdafafaf1d896",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/734ff53ef6d5146b06232ea7dcc7530d2a43daac",
+                "reference": "734ff53ef6d5146b06232ea7dcc7530d2a43daac",
                 "shasum": ""
             },
             "require": {
@@ -40,10 +40,10 @@
                 "brizy merge assets"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.10",
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.11",
                 "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
             },
-            "time": "2020-11-25T07:38:18+00:00"
+            "time": "2020-11-25T09:28:51+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -4907,12 +4907,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "95f70e6ff95947208a19d0aa85811a3d2460cb71"
+                "reference": "05240f0be359a76733a4c8a10ab7a15713f52769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/95f70e6ff95947208a19d0aa85811a3d2460cb71",
-                "reference": "95f70e6ff95947208a19d0aa85811a3d2460cb71",
+                "url": "https://api.github.com/repos/symfony/console/zipball/05240f0be359a76733a4c8a10ab7a15713f52769",
+                "reference": "05240f0be359a76733a4c8a10ab7a15713f52769",
                 "shasum": ""
             },
             "require": {
@@ -4985,7 +4985,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-05T09:51:39+00:00"
+            "time": "2020-11-25T00:21:23+00:00"
         },
         {
             "name": "symfony/css-selector",
