@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0103b470551d9e96b286a0d5110793c4",
+    "content-hash": "762abf107bed844598d63b2f55108205",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "c7e9fbb735839b9cd69fcf0d192bd27401b20d49"
+                "reference": "cbc09f7f0097d2aeb4adba03019fdafafaf1d896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/c7e9fbb735839b9cd69fcf0d192bd27401b20d49",
-                "reference": "c7e9fbb735839b9cd69fcf0d192bd27401b20d49",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/cbc09f7f0097d2aeb4adba03019fdafafaf1d896",
+                "reference": "cbc09f7f0097d2aeb4adba03019fdafafaf1d896",
                 "shasum": ""
             },
             "require": {
@@ -40,10 +40,10 @@
                 "brizy merge assets"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.9",
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.10",
                 "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
             },
-            "time": "2020-11-16T07:19:41+00:00"
+            "time": "2020-11-25T07:38:18+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -253,6 +253,61 @@
             "description": "Select2 is a jQuery based replacement for select boxes.",
             "homepage": "https://select2.org/",
             "time": "2020-05-02T22:37:21+00:00"
+        },
+        {
+            "name": "shortpixel/shortpixel-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/short-pixel-optimizer/shortpixel-php.git",
+                "reference": "8ddbdda375dc82c1f6623d3e9acc8ac7177fc6c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/short-pixel-optimizer/shortpixel-php/zipball/8ddbdda375dc82c1f6623d3e9acc8ac7177fc6c4",
+                "reference": "8ddbdda375dc82c1f6623d3e9acc8ac7177fc6c4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "lib-curl": ">=7.20.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "symfony/yaml": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/ShortPixel.php",
+                    "lib/ShortPixel/Exception.php"
+                ],
+                "psr-4": {
+                    "ShortPixel\\": "lib/ShortPixel/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Duduica",
+                    "email": "simon@shortpixel.com"
+                }
+            ],
+            "description": "ShortPixel PHP SDK. Read more at https://shortpixel.com/api-tools",
+            "homepage": "https://shortpixel.com/api",
+            "keywords": [
+                "api",
+                "compress",
+                "images",
+                "optimize",
+                "shortpixel"
+            ],
+            "time": "2020-07-02T09:32:42+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1371,12 +1426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-gettext/Gettext.git",
-                "reference": "e474f872f2c8636cf53fd283ec4ce1218f3d236a"
+                "reference": "57ff4fb16647e78e80a5909fe3c190f1c3110321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-gettext/Gettext/zipball/e474f872f2c8636cf53fd283ec4ce1218f3d236a",
-                "reference": "e474f872f2c8636cf53fd283ec4ce1218f3d236a",
+                "url": "https://api.github.com/repos/php-gettext/Gettext/zipball/57ff4fb16647e78e80a5909fe3c190f1c3110321",
+                "reference": "57ff4fb16647e78e80a5909fe3c190f1c3110321",
                 "shasum": ""
             },
             "require": {
@@ -1425,7 +1480,7 @@
                 "po",
                 "translation"
             ],
-            "time": "2019-12-02T10:21:14+00:00"
+            "time": "2020-11-18T22:35:49+00:00"
         },
         {
             "name": "gettext/languages",
@@ -2532,12 +2587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "b165cb88318ae68e0f09e7ef539a9c07f24f6681"
+                "reference": "fb2d8f931bb8b6659b46cf5b01c1783ca9e9e2d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/b165cb88318ae68e0f09e7ef539a9c07f24f6681",
-                "reference": "b165cb88318ae68e0f09e7ef539a9c07f24f6681",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/fb2d8f931bb8b6659b46cf5b01c1783ca9e9e2d1",
+                "reference": "fb2d8f931bb8b6659b46cf5b01c1783ca9e9e2d1",
                 "shasum": ""
             },
             "require": {
@@ -2587,7 +2642,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-11-06T14:40:24+00:00"
+            "time": "2020-11-21T14:39:21+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2657,16 +2712,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "2.6.16",
+            "version": "2.6.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "241ffdc6e953122fe4285e620798f17fb2739c23"
+                "reference": "00debfb08763ff2f0b8f8c2dee0e1962504bb7c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/241ffdc6e953122fe4285e620798f17fb2739c23",
-                "reference": "241ffdc6e953122fe4285e620798f17fb2739c23",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/00debfb08763ff2f0b8f8c2dee0e1962504bb7c7",
+                "reference": "00debfb08763ff2f0b8f8c2dee0e1962504bb7c7",
                 "shasum": ""
             },
             "require": {
@@ -2736,17 +2791,13 @@
                 "codeception",
                 "wordpress"
             ],
-            "support": {
-                "issues": "https://github.com/lucatume/wp-browser/issues",
-                "source": "https://github.com/lucatume/wp-browser/tree/2.6.16"
-            },
             "funding": [
                 {
                     "url": "https://github.com/lucatume",
                     "type": "github"
                 }
             ],
-            "time": "2020-10-26T15:15:29+00:00"
+            "time": "2020-11-17T12:36:00+00:00"
         },
         {
             "name": "mck89/peast",
@@ -5298,12 +5349,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "5b9106ae02b1c323f9743444881d7499c49a9853"
+                "reference": "9f1d1d883b79a91ef320c0c6e803494e042ef36e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/5b9106ae02b1c323f9743444881d7499c49a9853",
-                "reference": "5b9106ae02b1c323f9743444881d7499c49a9853",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/9f1d1d883b79a91ef320c0c6e803494e042ef36e",
+                "reference": "9f1d1d883b79a91ef320c0c6e803494e042ef36e",
                 "shasum": ""
             },
             "require": {
@@ -5348,7 +5399,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-01T19:04:13+00:00"
+            "time": "2020-11-17T19:45:34+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -6149,12 +6200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "443c622d126ce0ac31f3fec97f6a713fd0ff6d6a"
+                "reference": "b9ce672150e2544cb7919f10c06ddd5496d2e121"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/443c622d126ce0ac31f3fec97f6a713fd0ff6d6a",
-                "reference": "443c622d126ce0ac31f3fec97f6a713fd0ff6d6a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b9ce672150e2544cb7919f10c06ddd5496d2e121",
+                "reference": "b9ce672150e2544cb7919f10c06ddd5496d2e121",
                 "shasum": ""
             },
             "require": {
@@ -6209,7 +6260,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-14T14:49:24+00:00"
+            "time": "2020-11-18T08:28:38+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -8331,12 +8382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85"
+                "reference": "4e934d064699f3dc551aeeddd2d9c82a6a40b1f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85",
-                "reference": "6af36bfe39f5c867b16cfcdcb5aa80d9225d7b85",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/4e934d064699f3dc551aeeddd2d9c82a6a40b1f2",
+                "reference": "4e934d064699f3dc551aeeddd2d9c82a6a40b1f2",
                 "shasum": ""
             },
             "require": {
@@ -8389,7 +8440,7 @@
                 "cli",
                 "wordpress"
             ],
-            "time": "2020-11-12T06:36:52+00:00"
+            "time": "2020-11-19T14:16:38+00:00"
         },
         {
             "name": "wp-cli/wp-cli-bundle",
@@ -8561,6 +8612,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "shortpixel/shortpixel-php": 20,
         "squizlabs/php_codesniffer": 20
     },
     "prefer-stable": false,
