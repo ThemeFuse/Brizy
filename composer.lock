@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
-            "version": "1.0.12",
+            "version": "1.0.13",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "b2788a8a3c834b01ec81fae85003941606cfa03f"
+                "reference": "465aa440a5979a4863f079f329a6f75af3292336"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/b2788a8a3c834b01ec81fae85003941606cfa03f",
-                "reference": "b2788a8a3c834b01ec81fae85003941606cfa03f",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/465aa440a5979a4863f079f329a6f75af3292336",
+                "reference": "465aa440a5979a4863f079f329a6f75af3292336",
                 "shasum": ""
             },
             "require": {
@@ -40,10 +40,10 @@
                 "brizy merge assets"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.12",
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.13",
                 "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
             },
-            "time": "2020-11-25T09:56:35+00:00"
+            "time": "2020-11-25T10:10:50+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
