@@ -462,7 +462,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
 				$placeholder        = stripslashes( $placeholder );
-				$contents[] = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+				$contents[]  = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
 			}
 
 			$this->success(
@@ -470,7 +470,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					'placeholders' => $contents,
 				)
 			);
-
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -511,8 +510,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 					if ( empty( $values[0] ) ) {
 						// For All condition
-						$post = get_posts( $args );
+						$posts = get_posts( $args );
+$post = isset( $posts[0] ) ? $posts[0] : null;
 
+						if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+							return $post;
+						} else {
+							return null;
+						}
 						return isset( $post[0] ) ? $post[0] : null;
 					}
 
@@ -536,9 +541,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						}
 					}
 
-					$post = get_posts( $args );
+					$posts = get_posts( $args );
 
-					return isset( $post[0] ) ? $post[0] : null;
+					$post = isset( $posts[0] ) ? $posts[0] : null;
+
+					if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+						return $post;
+					} else {
+						return null;
+					}
 					break;
 				case Brizy_Admin_Rule::TAXONOMY :
 					$args = array(

@@ -121,20 +121,21 @@ class Brizy_Editor_Editor_Editor {
 				'pagePreview'        => $preview_post_link,
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
+				'assetsExternal'     => $this->urlBuilder->external_asset_url() . "",
 
 				// wp specific
 				'changeTemplate'     => $change_template_url,
 				'upgradeToPro'       =>
-					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL )
-			,
-				'support'            =>
+					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
+
+				'support'          =>
 					__bt(
 						'support-url',
 						apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
 					),
-				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
-				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
-				'customFile'         => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
+				'pluginSettings'   => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
+				'dashboardNavMenu' => admin_url( 'nav-menus.php' ),
+				'customFile'       => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 			),
 			'form'            => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
@@ -147,7 +148,7 @@ class Brizy_Editor_Editor_Editor {
 				'pluginPrefix'     => Brizy_Editor::prefix(),
 				'permalink'        => get_permalink( $wp_post_id ),
 				'page'             => $wp_post_id,
-
+'post_type'       => get_post_type( $wp_post_id ),
 				'featuredImage'    => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments'  => array( 'images' => $this->get_page_attachments() ),
 				'templates'        => $this->post->get_templates(),

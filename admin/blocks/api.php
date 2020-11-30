@@ -287,7 +287,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		//$this->verifyNonce( self::nonce );
 		try {
 
-			foreach ( $this->param( 'uid' ) as $i => $uid ) {
+			if ( ! $this->param( 'uid' ) ) {
+				$this->success( [] );
+			}
+
+			foreach ( (array)$this->param( 'uid' ) as $i => $uid ) {
 
 				if ( ! $this->param( 'uid' )[ $i ] ) {
 					$this->error( '400', 'Invalid uid' );
@@ -312,10 +316,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 			}
 
-
 			$blocks = [];
 
-			foreach ( $this->param( 'uid' ) as $i => $uid ) {
+			foreach ( (array)$this->param( 'uid' ) as $i => $uid ) {
 				$status = stripslashes( $this->param( 'status' )[ $i ] );
 
 				$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
@@ -369,7 +372,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$response[] = Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse();
 			}
 			$this->success( $response );
-
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );

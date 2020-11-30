@@ -14,6 +14,7 @@ class Brizy_Public_Main {
 	 */
 	private $post;
 
+	static $is_excerpt = false;
 
 	/**
 	 * Brizy_Public_Main constructor.
@@ -92,6 +93,9 @@ class Brizy_Public_Main {
 			add_action( 'admin_bar_menu', array( $this, 'toolbar_link' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_preview_assets' ), 9999 );
 			add_filter( 'the_content', array( $this, 'insert_page_content' ), - 12000 );
+
+			//add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
+			//add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
 			$this->plugin_live_composer_fixes();
 		}
 	}
@@ -409,9 +413,17 @@ class Brizy_Public_Main {
 
 		global $post;
 
+		if(doing_filter('brizy_dc_excerpt')) {
+		    return $content;
+        }
+
 		if ( false === strpos( $content, 'brz-root__container' ) ||
 		     ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
 			return $content;
+		}
+
+		if ( self::$is_excerpt ) {
+			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' );
 		}
 
 		if ( ! $this->post->get_compiled_html() ) {
@@ -485,4 +497,15 @@ class Brizy_Public_Main {
 		remove_filter( 'wp_footer', array( 'DSLC_EditorInterface', 'show_lc_button_on_front' ) );
 	}
 
+	public function start_excerpt( $content ) {
+		self::$is_excerpt = true;
+
+		return $content;
+	}
+
+	public function end_excerpt( $content ) {
+		self::$is_excerpt = false;
+
+		return $content;
+	}
 }
