@@ -810,12 +810,22 @@ class Brizy_Editor_Editor_Editor {
 
 			// product archive mode
 			if ( in_array( $rule->getAppliedFor(), [
-					Brizy_Admin_Rule::ARCHIVE,
-					Brizy_Admin_Rule::TAXONOMY,
-					Brizy_Admin_Rule::WOO_SHOP_PAGE
-				] ) &&
-			     in_array( $rule->getEntityType(), [ 'product', 'shop_page' ] ) ) {
-				return 'product_archive';
+				Brizy_Admin_Rule::ARCHIVE,
+				Brizy_Admin_Rule::DATE_ARCHIVE,
+				Brizy_Admin_Rule::DAY_ARCHIVE,
+				Brizy_Admin_Rule::MONTH_ARCHIVE,
+				Brizy_Admin_Rule::YEAR_ARCHIVE,
+				Brizy_Admin_Rule::TAXONOMY,
+				Brizy_Admin_Rule::WOO_SHOP_PAGE
+			] ) ) {
+				if ( $rule->getAppliedFor() == Brizy_Admin_Rule::WOO_SHOP_PAGE && in_array( $rule->getEntityType(), [
+						'product',
+						'shop_page'
+					] ) ) {
+					return 'product_archive';
+				} else {
+					return 'archive';
+				}
 			}
 		}
 

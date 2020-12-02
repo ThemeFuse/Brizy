@@ -28,7 +28,7 @@ class Brizy_Admin_Rules_Manager {
 		} elseif ( is_search() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'search';
-		} elseif ( is_front_page() ) {
+		} elseif ( is_front_page() && !is_home() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'front_page';
 		} elseif ( is_home() ) {
@@ -41,7 +41,27 @@ class Brizy_Admin_Rules_Manager {
 		} elseif ( function_exists( 'is_shop' ) &&  is_shop() ) {
 			$applyFor = Brizy_Admin_Rule::WOO_SHOP_PAGE;
 			$entityType     = "shop_page";
-		} elseif ( is_archive() ) {
+		} elseif ( is_day() ) {
+			$applyFor = Brizy_Admin_Rule::DAY_ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( is_month() ) {
+			$applyFor = Brizy_Admin_Rule::MONTH_ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( is_year() ) {
+			$applyFor = Brizy_Admin_Rule::YEAR_ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( is_date() ) {
+			$applyFor = Brizy_Admin_Rule::DATE_ARCHIVE;
+			if ( $wp_query->queried_object ) {
+				$entityType = $wp_query->queried_object->name;
+			}
+		} elseif ( is_archive() || isset($_REQUEST['post_type']) ) {
 			$applyFor = Brizy_Admin_Rule::ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$entityType = $wp_query->queried_object->name;
