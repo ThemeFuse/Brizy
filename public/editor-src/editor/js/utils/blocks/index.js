@@ -6,12 +6,10 @@ export { getAllowedGBIds, canUseConditionInPage } from "./getAllowedGBIds";
 export { isPopup } from "./isPopup";
 
 export {
-  getPageBlocks,
   getBlockAlignment,
   getSurroundedConditions,
-  formatSurroundedGlobalBlockByIndex,
-  blockMakeGlobal,
-  blockMakeDND,
   getCurrentRule,
   changeRule
 } from "./blocksConditions";
+
+export { getBlockDataUrl } from "./blockDataUrl";

@@ -163,19 +163,4 @@ module.exports = {
       mobileLetterSpacing: 3
     }
   ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Monoton",
-      category: "display",
-      variants: ["regular"],
-      subsets: ["latin"],
-      version: "v8",
-      lastModified: "2019-01-15",
-      files: {
-        regular:
-          "http://fonts.gstatic.com/s/monoton/v8/5h1aiZUrOngCibe4fkbBQ2S7FU8.ttf"
-      }
-    }
-  ]
 };

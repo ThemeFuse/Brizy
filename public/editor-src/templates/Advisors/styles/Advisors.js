@@ -162,58 +162,5 @@ module.exports = {
       mobileLineHeight: 1.8,
       mobileLetterSpacing: 3
     }
-  ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Quattrocento Sans",
-      category: "sans-serif",
-      variants: ["regular", "italic", "700", "700italic"],
-      subsets: ["latin-ext", "latin"],
-      version: "v11",
-      lastModified: "2019-01-15",
-      files: {
-        "700":
-          "http://fonts.gstatic.com/s/quattrocentosans/v11/va9Z4lja2NVIDdIAAoMR5MfuElaRB0RykmrWN33AiasJ.ttf",
-        regular:
-          "http://fonts.gstatic.com/s/quattrocentosans/v11/va9c4lja2NVIDdIAAoMR5MfuElaRB3zOvU7eHGHJ.ttf",
-        italic:
-          "http://fonts.gstatic.com/s/quattrocentosans/v11/va9a4lja2NVIDdIAAoMR5MfuElaRB0zMt0r8GXHJkLI.ttf",
-        "700italic":
-          "http://fonts.gstatic.com/s/quattrocentosans/v11/va9X4lja2NVIDdIAAoMR5MfuElaRB0zMj_bTPXnijLsJV7E.ttf"
-      }
-    },
-    {
-      kind: "webfonts#webfont",
-      family: "Reem Kufi",
-      category: "sans-serif",
-      variants: ["regular"],
-      subsets: ["arabic", "latin"],
-      version: "v6",
-      lastModified: "2019-01-10",
-      files: {
-        regular:
-          "http://fonts.gstatic.com/s/reemkufi/v6/2sDcZGJLip7W2J7v7wQDb2-4C7wFZQ.ttf"
-      }
-    },
-    {
-      kind: "webfonts#webfont",
-      family: "Arvo",
-      category: "serif",
-      variants: ["regular", "italic", "700", "700italic"],
-      subsets: ["latin"],
-      version: "v11",
-      lastModified: "2019-02-21",
-      files: {
-        "700":
-          "http://fonts.gstatic.com/s/arvo/v11/tDbM2oWUg0MKoZw1yLTA8vL7lAE.ttf",
-        regular:
-          "http://fonts.gstatic.com/s/arvo/v11/tDbD2oWUg0MKmSAa7Lzr7vs.ttf",
-        italic:
-          "http://fonts.gstatic.com/s/arvo/v11/tDbN2oWUg0MKqSIQ6J7u_vvijQ.ttf",
-        "700italic":
-          "http://fonts.gstatic.com/s/arvo/v11/tDbO2oWUg0MKqSIoVLHK9tD-hAHkGg.ttf"
-      }
-    }
   ]
 };

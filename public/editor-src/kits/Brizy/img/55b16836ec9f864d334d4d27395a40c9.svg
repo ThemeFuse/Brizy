@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="930px" viewBox="0 0 1920 930" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>BG</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BG">
+            <rect id="Mask" fill="#03056B" x="0" y="0" width="1920" height="930"></rect>
+            <path d="M0.00977457664,469.801883 C221.83913,519.049732 397.690365,652.22009 460.572682,845.751963 C469.598264,873.529847 476.010097,901.669653 479.927487,929.998587 L0,930 Z" id="Combined-Shape" fill="#21C9F2"></path>
+            <path d="M1293.68164,929.989437 C1432.90598,826.335705 1650.51235,801.741149 1860.29648,882.269731 C1880.83079,890.152116 1900.74686,898.833141 1920.00095,908.240546 L1920,930 Z" id="Combined-Shape" fill="#7703EF"></path>
+            <path d="M1295.13504,929.9919 C1387.14596,871.687461 1523.01386,860.696223 1654.56834,911.195257 C1669.34706,916.868278 1683.64699,923.154415 1697.43081,929.993032 Z" id="Combined-Shape" fill="#21C9F2"></path>
+            <path d="M0.00273276546,730.036098 C157.04312,756.212242 292.717424,826.213106 381.370211,929.994154 L-1.13686838e-13,930 Z" id="Combined-Shape" fill="#7703EF"></path>
+        </g>
+    </g>
+</svg>

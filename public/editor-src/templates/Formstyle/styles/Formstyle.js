@@ -203,5 +203,4 @@ module.exports = {
       mobileLetterSpacing: -0.5
     }
   ],
-  extraFonts: []
 };

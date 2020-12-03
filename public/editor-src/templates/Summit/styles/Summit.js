@@ -202,6 +202,5 @@ module.exports = {
       mobileLineHeight: 1.6,
       mobileLetterSpacing: 0
     }
-  ],
-  extraFonts: []
+  ]
 };

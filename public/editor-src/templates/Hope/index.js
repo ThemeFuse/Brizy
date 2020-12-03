@@ -3,7 +3,7 @@ const About = require("./pages/About");
 const Join = require("./pages/Join");
 const Press = require("./pages/Press");
 const Projects = require("./pages/Projects");
-const ProjectDetails = require("./pages/Projectdetails");
+const ProjectDetails = require("./pages/ProjectDetails");
 const Contact = require("./pages/Contact");
 const HopeStyles = require("./styles/Hope");
 

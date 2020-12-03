@@ -4,7 +4,7 @@ const Pricing = require("./pages/Pricing");
 const Services = require("./pages/Services");
 const Stories = require("./pages/Stories");
 const Workout = require("./pages/Workout");
-const WorkoutDetails = require("./pages/Workoutdetails");
+const WorkoutDetails = require("./pages/WorkoutDetails");
 const Contact = require("./pages/Contact");
 const InShapeStyles = require("./styles/InShape");
 

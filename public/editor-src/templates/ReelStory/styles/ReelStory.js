@@ -162,35 +162,5 @@ module.exports = {
       mobileLineHeight: 1.8,
       mobileLetterSpacing: 3
     }
-  ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Noto Sans",
-      category: "sans-serif",
-      variants: ["regular", "italic", "700", "700italic"],
-      subsets: [
-        "cyrillic-ext",
-        "latin-ext",
-        "cyrillic",
-        "vietnamese",
-        "greek",
-        "latin",
-        "devanagari",
-        "greek-ext"
-      ],
-      version: "v8",
-      lastModified: "2019-02-21",
-      files: {
-        "700":
-          "http://fonts.gstatic.com/s/notosans/v8/o-0NIpQlx3QUlC5A4PNjXhFlY9aA5Wl6PQ.ttf",
-        regular:
-          "http://fonts.gstatic.com/s/notosans/v8/o-0IIpQlx3QUlC5A4PNb4j5Ba_2c7A.ttf",
-        italic:
-          "http://fonts.gstatic.com/s/notosans/v8/o-0OIpQlx3QUlC5A4PNr4DRFSfiM7HBj.ttf",
-        "700italic":
-          "http://fonts.gstatic.com/s/notosans/v8/o-0TIpQlx3QUlC5A4PNr4Az5ZtyEx2xqPaif.ttf"
-      }
-    }
   ]
 };

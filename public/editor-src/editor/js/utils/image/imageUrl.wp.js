@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { downloadImageFromCloud } from "visual/utils/api/editor";
 import { objectToQueryString } from "visual/utils/url";
-import cloudImageUrl, { getFilter } from "./imageUrl.js";
+import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.js";
 import { imageAttachments } from "./imageAttachments";
 
 const siteUrl = Config.get("urls").site;
@@ -59,11 +59,27 @@ export default function imageUrl(
 }
 
 export function svgUrl(src) {
-  if (src) {
-    const { customFile } = Config.get("urls");
-
-    return `${customFile}${src}`;
+  if (!src) {
+    return null;
   }
 
-  return null;
+  if (IS_EDITOR) {
+    const imageDownloaded =
+      imageAttachments.has(src) || src.indexOf("wp-") === 0;
+
+    if (!imageDownloaded && !pendingRequests[src]) {
+      pendingRequests[src] = true;
+
+      downloadImageFromCloud(src).then(() => {
+        pendingRequests[src] = false;
+        imageAttachments.add(src);
+      });
+
+      return cloudSvgUrl(src);
+    }
+  }
+
+  const { customFile } = Config.get("urls");
+
+  return `${customFile}${src}`;
 }

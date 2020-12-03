@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="321px" viewBox="0 0 1920 321" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>Bg-footer</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M1920,-2.84217094e-14 L1920,320 L1505.29044,320.010516 C1448.31154,225.103147 1429.92558,113.918304 1445.56925,0.000878586961 L1920,-2.84217094e-14 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bg-footer">
+            <rect id="Mask" fill="#03056B" x="0" y="0" width="1920" height="320"></rect>
+            <path d="M0,91 C12.6666667,154.333333 45.3333333,212.333333 98,265 C118.978201,285.978201 141.331447,304.312084 165.059737,320.001651 L0,320 L0,91 Z" id="Combined-Shape" fill="#21C9F2"></path>
+            <path d="M1920,-5.68434189e-14 L1920,320 L1021.64755,320.009949 C950.679874,224.620582 909.751866,115.218619 908.498947,0.000533282597 L1920,-5.68434189e-14 Z" id="Combined-Shape" fill="#7703EF"></path>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Combined-Shape" fill="#21C9F2" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

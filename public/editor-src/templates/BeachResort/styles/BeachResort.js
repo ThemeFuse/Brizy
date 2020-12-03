@@ -162,20 +162,5 @@ module.exports = {
       mobileLineHeight: 1.8,
       mobileLetterSpacing: 3
     }
-  ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Marck Script",
-      category: "handwriting",
-      variants: ["regular"],
-      subsets: ["latin-ext", "cyrillic", "latin"],
-      version: "v9",
-      lastModified: "2019-01-15",
-      files: {
-        regular:
-          "http://fonts.gstatic.com/s/marckscript/v9/nwpTtK2oNgBA3Or78gapdwuCzyI-aMPF7Q.ttf"
-      }
-    }
   ]
 };
