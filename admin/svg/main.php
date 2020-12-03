@@ -28,17 +28,28 @@ class Brizy_Admin_Svg_Main {
 	 * BrizyPro_Admin_Popups constructor.
 	 */
 	public function __construct() {
-		if(Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false )) {
-			add_filter( 'upload_mimes', array( $this, 'addSvgMimeType' ) );
-			add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
-			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
-			add_filter( 'wp_handle_upload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
+		if ( Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false ) ) {
+			$this->enableSvgUpload();
 		}
+	}
+
+	public function enableSvgUpload() {
+		add_filter( 'upload_mimes', array( $this, 'addSvgMimeType' ) );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
+		add_filter( 'wp_handle_upload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
+	}
+
+	public function disableSvgUpload() {
+		remove_filter( 'upload_mimes', array( $this, 'addSvgMimeType' ) );
+		remove_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
+		remove_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
+		remove_filter( 'wp_handle_upload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
 	}
 
 	public function addSvgMimeType( $mime_types ) {
 
-		$mime_types['svg']   = self::SVG_MIME;
+		$mime_types['svg'] = self::SVG_MIME;
 
 		return $mime_types;
 	}

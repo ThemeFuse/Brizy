@@ -49,8 +49,22 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			throw new Exception( 'The block id is not set.' );
 		}
 
+		// enable svg upload
+		$svnUpload        = new Brizy_Admin_Svg_Main();
+		$svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
+
+		if ( ! $svnUploadEnabled ) {
+			$svnUpload->enableSvgUpload();
+		}
+
+
 		$media_cacher = new Brizy_Editor_CropCacheMedia( $this->client->getBrizyProject(), $this->blockId );
 		$media_cacher->download_original_image( $mediaUid, false );
+
+		// disabled it if was disabled before
+		if ( ! $svnUploadEnabled ) {
+			$svnUpload->disableSvgUpload();
+		}
 	}
 
 	/**
