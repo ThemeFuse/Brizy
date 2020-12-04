@@ -1,82 +1,90 @@
-<?php if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Direct access forbidden.' );
+<?php if ( ! defined('ABSPATH')) {
+    die('Direct access forbidden.');
 }
 
-class Brizy_Editor_CompiledHtml {
+class Brizy_Editor_CompiledHtml
+{
 
-	/**
-	 * @var Brizy_Editor_Helper_Dom
-	 */
-	private $dom;
+    /**
+     * @var Brizy_Editor_Helper_Dom
+     */
+    private $dom;
 
-	/**
-	 * @var Brizy_Editor_Content_ProcessorInterface[]
-	 */
-	private $processors = array();
+    /**
+     * @var Brizy_Editor_Entity
+     */
+    private $post;
 
-	/**
-	 * Brizy_Editor_CompiledHtml constructor.
-	 *
-	 * @param $html
-	 */
-	public function __construct( $html ) {
-		$this->dom = new Brizy_Editor_Helper_Dom( $html );
-	}
+    /**
+     * @var Brizy_Editor_Content_ProcessorInterface[]
+     */
+    private $processors = array();
 
-	/**
-	 * @param Brizy_Editor_Content_ProcessorInterface[] $processors
-	 */
-	public function setProcessors( $processors ) {
-		$this->processors = $processors;
-	}
+    /**
+     * Brizy_Editor_CompiledHtml constructor.
+     *
+     * @param $html
+     */
+    public function __construct($brizyPost)
+    {
+        $this->post = $brizyPost;
+        $this->dom  = new Brizy_Editor_Helper_Dom($brizyPost->get_compiled_html());
+    }
 
-	/**
-	 * @param Brizy_Editor_Asset_ProcessorInterface $asset_processor
-	 */
-	public function addAssetProcessor( $asset_processor ) {
-		$this->asset_processors[] = $asset_processor;
-	}
+    /**
+     * @param Brizy_Editor_Content_ProcessorInterface[] $processors
+     */
+    public function setProcessors($processors)
+    {
+        $this->processors = $processors;
+    }
+
+    /**
+     * @param Brizy_Editor_Asset_ProcessorInterface $asset_processor
+     */
+    public function addAssetProcessor($asset_processor)
+    {
+        $this->asset_processors[] = $asset_processor;
+    }
 
 
-	/**
-	 * @return string
-	 */
-	public function get_body() {
+    /**
+     * @return string
+     */
+    public function get_body()
+    {
 
-		$body_tag = $this->dom->get_body();
+        $body_tag = $this->dom->get_body();
+        $content = $this->apply_processors($body_tag->get_content());
 
-		$content = $body_tag->get_content();
+        return $content;
+    }
 
-		$content = $this->apply_processors( $content );
+    /**
+     * @param bool $include_parent_tag
+     *
+     * @return string
+     */
+    public function get_head()
+    {
+        $head_tag = $this->dom->get_head();
 
-		return $content;
-	}
+        $content = $this->apply_processors($head_tag->get_content());
 
-	/**
-	 * @param bool $include_parent_tag
-	 *
-	 * @return string
-	 */
-	public function get_head( $include_parent_tag = false ) {
+        return $content;
+    }
 
-		$head_tag = $this->dom->get_head();
+    private function apply_processors($content)
+    {
 
-		$content = $head_tag->get_content();
-		$content = $this->apply_processors( $content );
+        $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, get_bloginfo('charset'));
 
-		return $content;
-	}
+        $processors = apply_filters('brizy_apply_content_processors', $this->processors);
 
-	private function apply_processors( $content ) {
+        foreach ($processors as $processor) {
+            $content = $processor->process($content);
+        }
 
-		$content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) );
-
-		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
-
-		foreach ( $processors as $processor ) {
-			$content = $processor->process( $content );
-		}
-
-		return $content;
-	}
+        return $content;
+    }
 }

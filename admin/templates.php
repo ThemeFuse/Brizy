@@ -471,7 +471,8 @@ class Brizy_Admin_Templates
                 remove_filter('the_content', 'wpautop');
 
                 // insert the compiled head and content
-                add_filter('body_class', array($this, 'bodyClassFrontend'));
+	            //insert the compiled head and content
+				add_filter( 'body_class', array($this, 'bodyClassFrontend'));
                 add_action('wp_head', array($this, 'insertTemplateHead'));
                 add_action('brizy_template_content', array($this, 'insertTemplateContent'), -12000);
                 add_action('wp_enqueue_scripts', array($this, 'enqueue_preview_assets'), 9999);
@@ -529,9 +530,7 @@ class Brizy_Admin_Templates
         do_action('brizy_preview_enqueue_scripts');
     }
 
-
-    public function bodyClassFrontend($classes)
-    {
+	public function bodyClassFrontend( $classes ) {
 
         $classes[] = 'brz';
 
@@ -544,20 +543,55 @@ class Brizy_Admin_Templates
     public function insertTemplateHead()
     {
 
-        if ( ! self::getTemplate()) {
-            return;
+		if ( ! self::getTemplate() ) {
+			return;
+		}
+		$pid = Brizy_Editor::get()->currentPostId();
+        $project = Brizy_Editor_Project::get();
+		$template = self::getTemplate();
+		$post = $template->getWpPost();
+
+		if ( $pid ) {
+			$post = get_post( $pid );
+		}
+
+		$compiled_page = self::getTemplate()->get_compiled_page();
+		$templateHead  = $compiled_page->get_head();
+
+        // get all assets needed for this page
+        $scripts = $template->getCompiledStyles();
+
+        $assets = Brizy_Public_Main::libAggregator(
+            $scripts['free'],
+            $template,
+            function ($assets, $post) {
+                return apply_filters('brizy_pro_body_assets', $assets, $post);
+            }
+        );
+
+        // include popups
+        $popupMain = Brizy_Admin_Popups_Main::_init();
+        $templateHead   .= $popupMain->getPopupsHtml($project, $template, 'head');
+        $assets    = array_merge($assets, $popupMain->getPopupsAssets($project, $template, 'head'));
+        // include popup assets
+
+        $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['free']['libsMap'], false);
+
+        if (isset($scripts['pro'])) {
+            $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['pro']['libsMap'], true);
         }
 
-        $pid = Brizy_Editor::get()->currentPostId();
+        $assets = Brizy_Public_Main::sortAssets($assets);
 
-        $post = null;
-        if ($pid) {
-            $post = get_post($pid);
+        // include content
+        $templateHead .= "<!-- BRIZY ASSETS -->\n\n";
+        foreach ($assets as $script) {
+            $templateHead .= $script['content']."\n";
         }
+        $templateHead .= "\n\n<!-- END BRIZY ASSETS -->";
 
-        $compiled_page = self::getTemplate()->get_compiled_page();
 
-        $head = apply_filters('brizy_content', $compiled_page->get_head(), Brizy_Editor_Project::get(), $post, 'head');
+		$head         = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
         ?>
         <!-- BRIZY HEAD -->
         <?php echo $head; ?>
@@ -565,15 +599,13 @@ class Brizy_Admin_Templates
         <?php
     }
 
-
-    /**
-     * @param $content
-     *
-     * @return null|string|string[]
-     * @throws Exception
-     */
-    public function insertTemplateContent()
-    {
+	/**
+	 * @param $content
+	 *
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
+	public function insertTemplateContent() {
 
         if ( ! self::getTemplate()) {
             return;
@@ -581,16 +613,53 @@ class Brizy_Admin_Templates
 
         $pid = Brizy_Editor::get()->currentPostId();
 
-        $post = null;
-        if ($pid) {
-            $post = get_post($pid);
-        }
+        $project = Brizy_Editor_Project::get();
+        $template = self::getTemplate();
+        $post = $template->getWpPost();
+
+        if ( $pid ) {
+			$post = get_post( $pid );
+		}
 
         $compiled_page = self::getTemplate()->get_compiled_page();
 
-        $content = apply_filters(
+        $content = $compiled_page->get_body();
+
+        // get all assets needed for this page
+        $scripts = $template->getCompiledScripts();
+
+        $assets = Brizy_Public_Main::libAggregator(
+            $scripts['free'],
+            $template,
+            function ($assets, $post) {
+                return apply_filters('brizy_pro_body_assets', $assets, $post);
+            }
+        );
+
+        // include popups
+        $popupMain = Brizy_Admin_Popups_Main::_init();
+        $content   .= $popupMain->getPopupsHtml($project, $template, 'head');
+        $assets    = array_merge($assets, $popupMain->getPopupsAssets($project, $template, 'head'));
+        // include popup assets
+
+        $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['free']['libsMap'], false);
+
+        if (isset($scripts['pro'])) {
+            $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['pro']['libsMap'], true);
+        }
+
+        $assets = Brizy_Public_Main::sortAssets($assets);
+
+        // include content
+        $content .= "<!-- BRIZY ASSETS -->\n\n";
+        foreach ($assets as $script) {
+            $content .= $script['content']."\n";
+        }
+        $content .= "\n\n<!-- END BRIZY ASSETS -->";
+
+		$content = apply_filters(
             'brizy_content',
-            $compiled_page->get_body(),
+            $content,
             Brizy_Editor_Project::get(),
             $post,
             'body'
