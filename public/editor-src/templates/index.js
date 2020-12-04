@@ -39,6 +39,35 @@ const Supreme = require("./Supreme");
 const Formstyle = require("./Formstyle");
 const DesignLoft = require("./DesignLoft");
 const Summit = require("./Summit");
+const Fixit = require("./Fixit");
+const SmartLearning = require("./SmartLearning");
+const eBook = require("./eBook");
+const DigitalWork = require("./DigitalWork");
+const Moon = require("./Moon");
+const AppSide = require("./AppSide");
+const Agens = require("./Agens");
+const TheCore = require("./TheCore");
+const Kaufman = require("./Kaufman");
+const Cribs = require("./Cribs");
+const Pathfinder = require("./Pathfinder");
+const Spotless = require("./Spotless");
+const KidsPlay = require("./KidsPlay");
+const Homefeast = require("./Homefeast");
+const ThePractice = require("./ThePractice");
+const PearlDent = require("./PearlDent");
+const Agrikol = require("./Agrikol");
+const Azino = require("./Azino");
+const Avalon = require("./Avalon");
+const Ekstra = require("./Ekstra");
+const Bebio = require("./Bebio");
+const Krowd = require("./Krowd");
+const NaturalBeauty = require("./NaturalBeauty");
+const Yachter = require("./Yachter");
+const Politiko = require("./Politiko");
+const Oktane = require("./Oktane");
+const Refix = require("./Refix");
+const Uplyft = require("./Uplyft");
+const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
@@ -82,7 +111,35 @@ module.exports = {
     Supreme,
     Formstyle,
     DesignLoft,
-    Summit
+    Summit,
+    Fixit,
+    // SmartLearning,
+    // eBook,
+    // DigitalWork,
+    Moon,
+    AppSide,
+    // Agens,
+    TheCore,
+    Kaufman,
+    // Cribs,
+    Pathfinder,
+    // Spotless,
+    KidsPlay,
+    Homefeast,
+    ThePractice,
+    PearlDent,
+    Agrikol,
+    Azino,
+    Avalon,
+    Ekstra,
+    Bebio,
+    Krowd,
+    // NaturalBeauty,
+    Yachter,
+    Politiko,
+    Refix,
+    Uplyft,
+    Workspace
   ],
   categories: [
     { id: 1, title: "Business" },
@@ -99,6 +156,8 @@ module.exports = {
     { id: 12, title: "Health & Beauty" },
     { id: 13, title: "Sport" },
     { id: 14, title: "Personal" },
+    { id: 15, title: "Repair" },
+    { id: 16, title: "Children" },
     { id: 100, title: "Free" }
   ]
 };

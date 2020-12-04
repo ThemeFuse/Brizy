@@ -12,6 +12,7 @@ import { IS_STORY } from "visual/utils/models";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import Details from "./Details";
+import { getBlockDataUrl } from "visual/utils/blocks";
 
 export default class List extends Component {
   static defaultProps = {
@@ -52,7 +53,8 @@ export default class List extends Component {
 
   async getBlockResolve(id) {
     const type = this.getType();
-    const r = await fetch(assetUrl(`${type}/resolves/${id}.json`));
+    const url = getBlockDataUrl(type, id);
+    const r = await fetch(url);
     return await r.json();
   }
 

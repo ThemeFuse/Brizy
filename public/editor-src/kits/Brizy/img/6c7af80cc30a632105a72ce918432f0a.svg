@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="970px" height="364px" viewBox="0 0 970 364" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>OurMission</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Online-School" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="About" transform="translate(-475.000000, -1853.000000)">
+            <g id="OurMission" transform="translate(374.000000, 1840.000000)">
+                <rect id="bg" fill="#FFFFFF" opacity="0" x="0" y="0" width="1171" height="400"></rect>
+                <rect id="Rectangle" fill="#5CB8FF" transform="translate(108.500000, 173.000000) rotate(-360.000000) translate(-108.500000, -173.000000) " x="101" y="139" width="15" height="68" rx="7.5"></rect>
+                <rect id="Rectangle" fill="#5055DF" opacity="0.0899999961" transform="translate(298.000000, 199.500000) rotate(-360.000000) translate(-298.000000, -199.500000) " x="285" y="22" width="26" height="355" rx="13"></rect>
+                <rect id="Rectangle" fill="#5CB8FF" opacity="0.129999995" transform="translate(958.000000, 284.000000) rotate(-360.000000) translate(-958.000000, -284.000000) " x="945" y="199" width="26" height="170" rx="13"></rect>
+                <rect id="Rectangle" fill="#7703EF" style="mix-blend-mode: overlay;" opacity="0.284193841" transform="translate(178.000000, 325.000000) rotate(-360.000000) translate(-178.000000, -325.000000) " x="163" y="296" width="30" height="58" rx="15"></rect>
+                <rect id="Rectangle" fill="#BA80F7" transform="translate(986.500000, 81.000000) rotate(-360.000000) translate(-986.500000, -81.000000) " x="979" y="47" width="15" height="68" rx="7.5"></rect>
+                <rect id="Rectangle" fill="#7703EF" style="mix-blend-mode: overlay;" opacity="0.284193841" transform="translate(1056.000000, 233.000000) rotate(-360.000000) translate(-1056.000000, -233.000000) " x="1041" y="204" width="30" height="58" rx="15"></rect>
+                <rect id="Rectangle" fill="#5CB8FF" opacity="0.119999997" x="581" y="13" width="26" height="68" rx="13"></rect>
+                <rect id="Rectangle" fill="#FF3366" style="mix-blend-mode: overlay;" opacity="0.768961083" transform="translate(170.500000, 75.000000) rotate(-360.000000) translate(-170.500000, -75.000000) " x="163" y="38" width="15" height="74" rx="7.5"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

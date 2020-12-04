@@ -162,33 +162,5 @@ module.exports = {
       mobileLineHeight: 1.8,
       mobileLetterSpacing: 3
     }
-  ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Prata",
-      category: "serif",
-      variants: ["regular"],
-      subsets: ["cyrillic-ext", "cyrillic", "vietnamese", "latin"],
-      version: "v9",
-      lastModified: "2019-01-15",
-      files: {
-        regular:
-          "http://fonts.gstatic.com/s/prata/v9/6xKhdSpbNNCT-vWIAG_5LWwJ.ttf"
-      }
-    },
-    {
-      kind: "webfonts#webfont",
-      family: "Spinnaker",
-      category: "sans-serif",
-      variants: ["regular"],
-      subsets: ["latin-ext", "latin"],
-      version: "v10",
-      lastModified: "2019-01-15",
-      files: {
-        regular:
-          "http://fonts.gstatic.com/s/spinnaker/v10/w8gYH2oyX-I0_rvR6Hmn3HwLqOqSBg.ttf"
-      }
-    }
   ]
 };

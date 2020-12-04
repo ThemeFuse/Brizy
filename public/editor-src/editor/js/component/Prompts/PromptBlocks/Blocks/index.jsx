@@ -15,6 +15,7 @@ import {
 import { t } from "visual/utils/i18n";
 import { normalizeFonts } from "visual/utils/fonts";
 import Blocks from "./Blocks";
+import { getBlockDataUrl } from "visual/utils/blocks";
 
 class BlocksContainer extends Component {
   static defaultProps = {
@@ -55,10 +56,10 @@ class BlocksContainer extends Component {
     const { type } = this.props;
 
     if (type === "popup") {
-      const r = await fetch(assetUrl(`popups/resolves/${id}.json`));
+      const r = await fetch(getBlockDataUrl("popups", id));
       return await r.json();
     } else {
-      const r = await fetch(assetUrl(`kits/resolves/${id}.json`));
+      const r = await fetch(getBlockDataUrl("kits", id));
       return await r.json();
     }
   }

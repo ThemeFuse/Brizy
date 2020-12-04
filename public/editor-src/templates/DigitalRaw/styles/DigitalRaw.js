@@ -203,5 +203,4 @@ module.exports = {
       fontFamilyType: "google"
     }
   ],
-  extraFonts: []
 };

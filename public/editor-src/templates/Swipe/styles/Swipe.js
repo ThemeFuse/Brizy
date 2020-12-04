@@ -162,42 +162,5 @@ module.exports = {
       mobileLineHeight: 1.8,
       mobileLetterSpacing: 3
     }
-  ],
-  extraFonts: [
-    {
-      kind: "webfonts#webfont",
-      family: "Crimson Text",
-      category: "serif",
-      variants: ["regular", "italic", "600", "600italic", "700", "700italic"],
-      subsets: ["latin"],
-      version: "v9",
-      lastModified: "2019-02-21",
-      files: {
-        "600":
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlppgwHKFkZgtmSR3NB0oRJXsCx2C9lR1LFffg.ttf",
-        "700":
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlppgwHKFkZgtmSR3NB0oRJX1C12C9lR1LFffg.ttf",
-        regular:
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlp2gwHKFkZgtmSR3NB0oRJvaAJSA_JN3Q.ttf",
-        italic:
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlpogwHKFkZgtmSR3NB0oRJfaghWIfdd3ahG.ttf",
-        "600italic":
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlprgwHKFkZgtmSR3NB0oRJfajCOD9NV9rRPfrKu.ttf",
-        "700italic":
-          "http://fonts.gstatic.com/s/crimsontext/v9/wlprgwHKFkZgtmSR3NB0oRJfajDqDtNV9rRPfrKu.ttf"
-      }
-    },
-    {
-      kind: "webfonts#webfont",
-      family: "NTR",
-      category: "sans-serif",
-      variants: ["regular"],
-      subsets: ["latin", "telugu"],
-      version: "v6",
-      lastModified: "2019-04-18",
-      files: {
-        regular: "http://fonts.gstatic.com/s/ntr/v6/RLpzK5Xy0ZjiGGhs5TA4bg.ttf"
-      }
-    }
   ]
 };

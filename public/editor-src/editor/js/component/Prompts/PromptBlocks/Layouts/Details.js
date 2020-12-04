@@ -19,6 +19,7 @@ import { t } from "visual/utils/i18n";
 import { normalizeFonts } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
 import { IS_STORY } from "visual/utils/models";
+import { getBlockDataUrl } from "visual/utils/blocks";
 
 const IS_PRO = Config.get("pro");
 const urls = Config.get("urls");
@@ -100,7 +101,7 @@ class Details extends Component {
     const { active: pageId, importStyles } = this.state;
     const type = this.getType();
 
-    const page = await fetch(assetUrl(`${type}/resolves/${pageId}.json`));
+    const page = await fetch(getBlockDataUrl(type, pageId));
     const { blocks } = await page.json();
     let modelFonts = getUsedModelsFonts({ models: blocks });
     let styles;
