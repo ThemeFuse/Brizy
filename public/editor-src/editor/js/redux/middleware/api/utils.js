@@ -129,13 +129,15 @@ export function pollingSendHeartBeat(heartBeat) {
 
       const polling = () => {
         setTimeout(() => {
-          apiSendHeartBeat().then(r => {
-            if (r.locked === false) {
-              polling();
-            } else {
-              rej({ heartBeat: true, data: r });
-            }
-          });
+          apiSendHeartBeat()
+            .then(r => {
+              if (!r || r.locked === false) {
+                polling();
+              } else {
+                rej({ heartBeat: true, data: r });
+              }
+            })
+            .catch(polling);
         }, heartBeat);
       };
 
