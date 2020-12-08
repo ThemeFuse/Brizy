@@ -552,13 +552,12 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_CompiledHtml
 	 */
 	public function get_compiled_page() {
-		return new Brizy_Editor_CompiledHtml( $this );
+		return new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 	}
 
 	public function isCompiledWithCurrentVersion() {
 		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION;
 	}
-
 
 	/**
 	 * @return bool

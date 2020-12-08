@@ -11,24 +11,18 @@ class Brizy_Editor_CompiledHtml
     private $dom;
 
     /**
-     * @var Brizy_Editor_Entity
-     */
-    private $post;
-
-    /**
      * @var Brizy_Editor_Content_ProcessorInterface[]
      */
     private $processors = array();
 
-    /**
-     * Brizy_Editor_CompiledHtml constructor.
-     *
-     * @param $html
-     */
-    public function __construct($brizyPost)
+	/**
+	 * Brizy_Editor_CompiledHtml constructor.
+	 *
+	 * @param $content
+	 */
+    public function __construct($content)
     {
-        $this->post = $brizyPost;
-        $this->dom  = new Brizy_Editor_Helper_Dom($brizyPost->get_compiled_html());
+        $this->dom  = new Brizy_Editor_Helper_Dom($content);
     }
 
     /**
@@ -53,18 +47,13 @@ class Brizy_Editor_CompiledHtml
      */
     public function get_body()
     {
-
         $body_tag = $this->dom->get_body();
-        $content = $this->apply_processors($body_tag->get_content());
-
-        return $content;
+        return $this->apply_processors($body_tag->get_content());
     }
 
-    /**
-     * @param bool $include_parent_tag
-     *
-     * @return string
-     */
+	/**
+	 * @return string
+	 */
     public function get_head()
     {
         $head_tag = $this->dom->get_head();
