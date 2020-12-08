@@ -1,5 +1,5 @@
 module.exports = {
-  id: "AzionoBecomeAVolunteer",
+  id: "AzinoBecomeAVolunteer",
   thumbnailWidth: 680,
   thumbnailHeight: 591,
   title: "Become A Volunteer",
