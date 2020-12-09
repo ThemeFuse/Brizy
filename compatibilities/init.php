@@ -77,6 +77,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'EM_POST_TYPE_LOCATION' ) ) {
 			new Brizy_Compatibilities_EventsManager();
 		}
+
+		if ( defined( 'POLYLANG_VERSION' ) ) {
+			new Brizy_Compatibilities_Polylang();
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {
