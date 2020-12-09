@@ -673,34 +673,31 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$query = <<<SQL
 			SELECT
 			       p.ID,
-			       p.post_title 
+			       p.post_title as title,
+			       p.post_title as post_title,
+			       '$postType' as post_type,
+			       '$postLabel' as post_type_label,
+			       pm.meta_value as 'uid'
 			FROM
 			     $wpdb->posts p
+				JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
 			WHERE 
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
 			ORDER BY p.post_title ASC
 			LIMIT %d,%d
 SQL;
+		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ) );
 
-		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ), ARRAY_A );
-
-		return array_map(function($post) use ($postType,$postLabel) {
-			$postTitle = apply_filters( 'the_title', $post['post_title'] );
-
-			return (object) array(
-				'ID'              => $post['ID'],
-				'uid'             => self::create_uid( $post['ID'] ),
-				'post_type'       => $postType,
-				'post_type_label' => $postLabel,
-				'title'           => $postTitle,
-				'post_title'      => $postTitle
-			);
-		}, $posts);
+		foreach($posts as $i=>$p) {
+			$postTitle = apply_filters( 'the_title', $p->post_title );
+			$p->post_title = $postTitle;
+			$p->title = $postTitle;
+			$p->uid = self::create_uid( $p->ID,$p->uid );
+		}
+		return $posts;
 	}
 
-	private static function create_uid( $postId ) {
-
-		$uid = get_post_meta( $postId, 'brizy_post_uid', true );
+	private static function create_uid( $postId, $uid ) {
 
 		if ( ! $uid ) {
 			$uid = md5( $postId . time() );
