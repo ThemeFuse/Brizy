@@ -479,10 +479,12 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			}
 		}
 
+		unset($taxonomies);
+
 		$groups[] = array(
 			'title' => 'Specific ' . $postTypeName,
 			'value' => Brizy_Admin_Rule::POSTS,
-			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type ) )
+			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type,null,0,1000 ) )
 		);
 
 		$groups[] = array(

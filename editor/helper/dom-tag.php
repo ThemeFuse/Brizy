@@ -13,7 +13,7 @@ class Brizy_Editor_Helper_DomTag {
 	 * @param string $tag
 	 */
 	public function __construct( $tag ) {
-		$this->html_tag = trim( $tag ); ;
+		$this->html_tag = trim( $tag );
 	}
 
 	/**
