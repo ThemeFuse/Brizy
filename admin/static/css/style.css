@@ -1,7 +1,11 @@
 .brizy-editor-enabled #insert-media-button,
 .brizy-editor-enabled #wp-content-editor-tools .wp-editor-tabs,
 .brizy-editor-enabled #wp-content-editor-container .quicktags-toolbar,
-.brizy-editor-enabled #wp-content-editor-container .wp-editor-area {
+.brizy-editor-enabled #wp-content-editor-container .wp-editor-area,
+.brizy-editor-enabled .editor-block-list__layout,
+.brizy-editor-enabled .block-editor-block-list__layout,
+.brizy-editor-enabled .block-editor-writing-flow__click-redirect,
+.brizy-editor-enabled .edit-post-text-editor__body .editor-post-text-editor {
     display: none;
 }
 

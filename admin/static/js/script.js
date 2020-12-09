@@ -167,9 +167,8 @@ jQuery(document).ready(function ($) {
             guten.find( '.edit-post-header-toolbar' ).append( $( '#brizy-gutenberg-btn-switch-mode' ).html() );
 
             if ( html ) {
-                guten.find( '.block-editor-block-list__layout' ).hide();
-                guten.find( '.block-editor-writing-flow__click-redirect' ).hide();
                 guten.find( '.edit-post-visual-editor .block-editor-writing-flow' ).append( html );
+                guten.find( '.editor-post-text-editor' ).after( html );
             }
         },
 
