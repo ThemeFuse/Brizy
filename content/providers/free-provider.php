@@ -127,6 +127,13 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 			new Brizy_Content_Placeholders_Simple( '', 'editor_product_checkout', function () {
 				return do_shortcode( '[woocommerce_checkout]' );
+            } ),
+            
+			new Brizy_Content_Placeholders_Simple( 'Products Page', 'editor_product_products', function ( $context, $contentPlaceholder ) {
+                
+                $atts = $contentPlaceholder->getAttributes();
+
+                return do_shortcode( '[products limit="' . $atts['limit'] . '" category="' . $atts['category'] . '" columns="' . $atts['columns'] . '" orderby="' . $atts['orderby'] . '" order="' . $atts['order'] . '"]' );
 			} ),
 
 			new Brizy_Content_Placeholders_Simple( '', 'editor_product_my_account', function () {
