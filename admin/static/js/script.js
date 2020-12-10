@@ -157,6 +157,11 @@ jQuery(document).ready(function ($) {
     var BrizyGutenberg = {
 
         insertBrizyBtn: function () {
+
+        	if ( $( '.brizy-buttons' ).length ) {
+        		return;
+	        }
+
             var guten = $( '#editor' ),
                 html = $( '#brizy-gutenberg-btn-middle' ).html();
 
@@ -164,19 +169,24 @@ jQuery(document).ready(function ($) {
                 return;
             }
 
-            guten.find( '.edit-post-header-toolbar' ).append( $( '#brizy-gutenberg-btn-switch-mode' ).html() );
+	        guten.find( '.edit-post-header-toolbar' ).append( $( '#brizy-gutenberg-btn-switch-mode' ).html() );
 
-            if ( html ) {
-                guten.find( '.edit-post-visual-editor .block-editor-writing-flow' ).append( html );
-                guten.find( '.editor-post-text-editor' ).after( html );
-            }
+	        if ( html && ! $( '.brizy-buttons-gutenberg' ).length ) {
+		        guten.find( '.edit-post-visual-editor .block-editor-writing-flow' ).append( html );
+		        guten.find( '.editor-post-text-editor' ).after( html );
+	        }
         },
 
         init: function () {
-            var self = this;
-            setTimeout(function () {
-                self.insertBrizyBtn();
-            }, 500);
+	        var self = this;
+
+	        if (typeof wp.data != 'undefined') {
+		        wp.data.subscribe(function () {
+			        setTimeout( function () {
+				        self.insertBrizyBtn();
+			        }, 1 );
+		        });
+	        }
         }
     };
 

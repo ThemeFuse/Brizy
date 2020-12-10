@@ -88,7 +88,7 @@ class Brizy_Compatibilities_Gutenberg {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() ) );
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
-                    <div class="brizy-buttons" style="margin-top:15px;">
+                    <div class="brizy-buttons">
                         <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button"
                            href="<?php echo $edit_url ?>">
                             <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
