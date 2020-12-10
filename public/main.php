@@ -58,10 +58,10 @@ class Brizy_Public_Main {
 
 		if ( self::is_editing_page_with_editor( $this->post ) && Brizy_Editor_User::is_user_allowed() ) {
 			// When some plugins want to redirect to their templates.
-			remove_all_actions( 'template_redirect' );
-			add_action( 'template_include', array( $this, 'templateInclude' ), 10000 );
-
+			remove_all_filters( 'template_redirect' );
+			add_filter( 'template_include', array( $this, 'templateInclude' ), 10000 );
 		} elseif ( self::is_editing_page_with_editor_on_iframe( $this->post ) && Brizy_Editor_User::is_user_allowed() ) {
+			remove_all_filters( 'template_redirect' );
 			add_filter( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
 			add_filter( 'show_admin_bar', '__return_false' );
 			add_filter( 'body_class', array( $this, 'body_class_editor' ) );
@@ -318,14 +318,14 @@ class Brizy_Public_Main {
 	 * @return bool
 	 */
 	public static function is_editing_page_with_editor( Brizy_Editor_Post $post = null ) {
-		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit' ) ] ) && $post && $post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit' ) ] ) && ( $post ? $post->uses_editor() : true );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public static function is_editing_page_with_editor_on_iframe( Brizy_Editor_Post $post = null ) {
-		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && $post && $post->uses_editor();
+		return ! is_admin() && isset( $_REQUEST[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && ( $post ? $post->uses_editor() : true );
 	}
 
 	/**
@@ -378,7 +378,7 @@ class Brizy_Public_Main {
 		return $content;
 	}
 
-	public function _action_the_content(  ) {
+	public function _action_the_content() {
 		echo $this->_filter_the_content( '' );
 	}
 
