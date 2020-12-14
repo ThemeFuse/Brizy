@@ -558,38 +558,27 @@ class Brizy_Admin_Templates
 		$compiled_page = self::getTemplate()->get_compiled_page();
 		$templateHead  = $compiled_page->get_head();
 
-        // get all assets needed for this page
-        $scripts = $template->getCompiledStyles();
 
-        $assets = Brizy_Public_Main::libAggregator(
-            $scripts['free'],
-            $template,
-            function ($assets, $post) {
-                return apply_filters('brizy_pro_body_assets', $assets, $post);
-            }
-        );
+	    $styles  = $template->getCompiledStyles();
+	    $assetGroups = [];
+	    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+	    $assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $template);
 
-        // include popups
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $templateHead   .= $popupMain->getPopupsHtml($project, $template, 'head');
-        $assets    = array_merge($assets, $popupMain->getPopupsAssets($project, $template, 'head'));
-        // include popup assets
+        // add popups and popup assets
+	    $popupMain         = Brizy_Admin_Popups_Main::_init();
+	    $templateHead .= $popupMain->getPopupsHtml($project, $template, 'head');
 
-        $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['free']['libsMap'], false);
+	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $template, 'head'));
 
-        if (isset($scripts['pro'])) {
-            $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['pro']['libsMap'], true);
-        }
+	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
 
-        $assets = Brizy_Public_Main::sortAssets($assets);
 
         // include content
-        $templateHead .= "<!-- BRIZY ASSETS -->\n\n";
-        foreach ($assets as $script) {
-            $templateHead .= $script['content']."\n";
-        }
-        $templateHead .= "\n\n<!-- END BRIZY ASSETS -->";
-
+	    $templateHead .= "<!-- BRIZY ASSETS -->\n\n";
+	    foreach ($assetAggregator->getAssetList() as $asset) {
+		    $templateHead .= $asset->getContent()."\n";
+	    }
+	    $templateHead .= "\n\n<!-- END BRIZY ASSETS -->";
 
 		$head         = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
         ?>
@@ -625,37 +614,27 @@ class Brizy_Admin_Templates
 
         $content = $compiled_page->get_body();
 
-        // get all assets needed for this page
-        $scripts = $template->getCompiledScripts();
 
-        $assets = Brizy_Public_Main::libAggregator(
-            $scripts['free'],
-            $template,
-            function ($assets, $post) {
-                return apply_filters('brizy_pro_body_assets', $assets, $post);
-            }
-        );
 
-        // include popups
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $content   .= $popupMain->getPopupsHtml($project, $template, 'head');
-        $assets    = array_merge($assets, $popupMain->getPopupsAssets($project, $template, 'head'));
-        // include popup assets
+		// get all assets needed for this page
+		$scripts = $template->getCompiledScripts();
+		$assetGroups = [];
+		$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($scripts['free']);
+		$assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $template);
 
-        $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['free']['libsMap'], false);
+		// add popups and popup assets
+		$popupMain         = Brizy_Admin_Popups_Main::_init();
+		$content .= $popupMain->getPopupsHtml($project, $template, 'body');
 
-        if (isset($scripts['pro'])) {
-            $assets = Brizy_Public_Main::normalizeAssets($assets, $scripts['pro']['libsMap'], true);
-        }
+		$assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $template, 'body'));
+		$assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
 
-        $assets = Brizy_Public_Main::sortAssets($assets);
-
-        // include content
-        $content .= "<!-- BRIZY ASSETS -->\n\n";
-        foreach ($assets as $script) {
-            $content .= $script['content']."\n";
-        }
-        $content .= "\n\n<!-- END BRIZY ASSETS -->";
+		// include content
+		$content .= "<!-- BRIZY ASSETS -->\n\n";
+		foreach ($assetAggregator->getAssetList() as $script) {
+			$content .= $script->getContent()."\n";
+		}
+		$content .= "\n\n<!-- END BRIZY ASSETS -->";
 
 		$content = apply_filters(
             'brizy_content',
