@@ -213,7 +213,7 @@ class Brizy_Public_Main {
 		$args          = array(
 			'id'    => 'brizy_Edit_page_link',
 			'title' => __( "Edit " . $postTypeLabel . " with " . __bt( 'brizy', 'Brizy' ) ),
-			'href'  => $this->post->edit_url(),
+			'href'  => apply_filters( 'brizy_toolbar_link', $this->post->edit_url(), $this->post ),
 			'meta'  => array()
 		);
 		$wp_admin_bar->add_node( $args );
