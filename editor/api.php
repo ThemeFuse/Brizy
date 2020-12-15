@@ -511,14 +511,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					if ( empty( $values[0] ) ) {
 						// For All condition
 						$posts = get_posts( $args );
-$post = isset( $posts[0] ) ? $posts[0] : null;
+						$post = isset( $posts[0] ) ? $posts[0] : null;
 
-						if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+						try {
+							if ( $post && ! Brizy_Editor_Post::get( $post )->uses_editor() ) {
+								return $post;
+							} else {
+								return null;
+							}
+						} catch ( Exception $e ) {
 							return $post;
-						} else {
-							return null;
 						}
-						return isset( $post[0] ) ? $post[0] : null;
 					}
 
 					$filter = $values[0];
@@ -545,11 +548,16 @@ $post = isset( $posts[0] ) ? $posts[0] : null;
 
 					$post = isset( $posts[0] ) ? $posts[0] : null;
 
-					if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+					try {
+						if ( $post && ! Brizy_Editor_Post::get( $post )->uses_editor() ) {
+							return $post;
+						} else {
+							return null;
+						}
+					} catch ( Exception $e ) {
 						return $post;
-					} else {
-						return null;
 					}
+
 					break;
 				case Brizy_Admin_Rule::TAXONOMY :
 					$args = array(
