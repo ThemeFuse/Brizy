@@ -145,7 +145,7 @@ class Brizy_Admin_Post_RevisionManager {
 
 			$wpdb->update(
 				$wpdb->posts,
-				[ 'post_content' => '<!-- version:' . time() . ' -->' ],
+				[ 'post_content' => '<div class="brz-root__container"><!-- version:' . time() . ' --></div>' ],
 				[ 'ID' => $revision ],
                 [ '%s' ]
 			);

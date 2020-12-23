@@ -209,7 +209,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$content = $this->get_compiled_page()->get_body() ? $this->get_compiled_page()->get_body() : '<div class="brz-root__container"></div>';
 		$content .= '<!-- version:' . time() . ' -->';
 
-		$this->deleteOldAutosaves( $this->getWpPostParentId() );
+		$this->deleteOldAutosaves( $this->getWpPostId() );
 
 		if ( $createRevision ) {
 
