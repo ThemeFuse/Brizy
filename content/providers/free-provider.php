@@ -19,10 +19,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		return array(
 			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( $context, $contentPlaceholder ) {
 
-			    if ( ! is_user_logged_in() ) {
-			        return '';
-                }
-
 				$attrs = $contentPlaceholder->getAttributes();
 
 				if ( empty( $attrs['roles'] ) ) {
@@ -31,6 +27,10 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 				$roles = explode( ',', $attrs['roles'] );
 				$user  = wp_get_current_user();
+
+				if ( in_array( 'not_logged', $roles ) && empty( $user->ID ) ) {
+					return $contentPlaceholder->getContent();
+                }
 
 				if ( array_intersect( $roles, (array) $user->roles ) || in_array( 'administrator', $user->roles ) ) {
 					return $contentPlaceholder->getContent();
