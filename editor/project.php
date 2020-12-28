@@ -68,7 +68,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		$this->loadProjectData( $this->getStorage()->get_storage() );
 	}
 
-	protected function populateAutoSavedData( self $autosave ) {
+	protected function populateAutoSavedData( $autosave ) {
 		$autosave->loadProjectData( $this->convertToOptionValue() );
 	}
 
