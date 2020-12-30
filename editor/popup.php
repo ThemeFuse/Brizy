@@ -182,7 +182,7 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	/**
 	 * @param $data
 	 */
-	public function loadInstanceData() {
+    protected function loadInstanceData() {
 		parent::loadInstanceData();
 
 		$storage = $this->getStorage();
@@ -207,7 +207,6 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	public function createResponse( $fields = array() ) {
 
 		$p_id      = (int) $this->getWpPostId();
-		$the_title = get_the_title( $p_id );
 
 		if ( empty( $fields ) ) {
 			$fields = array(
@@ -228,40 +227,4 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 
 		return $global;
 	}
-
-//
-//	/**
-//	 * @param Brizy_Editor_Popup $post
-//	 * @param array $fields
-//	 *
-//	 * @return array
-//	 */
-//	public static function postData( Brizy_Editor_Popup $post, $fields = array() ) {
-//
-//		$p_id = (int) $post->getWpPostId();
-//
-//		if ( empty( $fields ) ) {
-//			$fields = array( 'uid', 'id', 'meta', 'data', 'status' );
-//		}
-//
-//		$global = array();
-//
-//		if ( in_array( 'uid', $fields ) ) {
-//			$global['uid'] = $post->getUid();
-//		}
-//		if ( in_array( 'status', $fields ) ) {
-//			$global['status'] = get_post_status( $p_id );
-//		}
-//		if ( in_array( 'data', $fields ) ) {
-//			$global['data'] = $post->get_editor_data();
-//		}
-//		if ( in_array( 'meta', $fields ) ) {
-//			$global['meta'] = $post->getMeta();
-//		}
-//
-//
-//		return $global;
-//	}
-
-
 }

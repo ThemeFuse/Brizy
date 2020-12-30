@@ -43,14 +43,15 @@ class Brizy_Admin_Blocks_Manager extends Brizy_Admin_Entity_AbstractManager {
 		return $this->getEntityUidAndType( $uid, $this->blockType );
 	}
 
-	/**
-	 * @param $uid
-	 * @param string $status
-	 *
-	 * @return mixed|null+
-	 */
-	public function createEntity( $uid, $status = 'publish' ) {
-		return $this->createEntityByType( $uid, $this->blockType, $status );
+    /**
+     * @param $uid
+     * @param string $status
+     * @param null $properties
+     *
+     * @return mixed|null
+     */
+	public function createEntity( $uid, $status = 'publish', $properties=null ) {
+		return $this->createEntityByType( $uid, $this->blockType, $status, $properties );
 	}
 
 	/**

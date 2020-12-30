@@ -140,6 +140,7 @@ class Brizy_Editor {
 		Brizy_Admin_Blocks_Main::_init();
 		Brizy_Admin_Membership_Membership::_init();
         //Brizy_Admin_Stories_Main::_init();
+        Brizy_Admin_Funnels_Main::_init();
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
@@ -290,6 +291,7 @@ class Brizy_Editor {
         Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 		Brizy_Admin_Membership_Membership::registerCustomPostRoles();
+        Brizy_Admin_Funnels_Main::registerCustomPosts();
 	}
 
 	/**

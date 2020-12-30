@@ -106,59 +106,6 @@ class Brizy_Public_Main
 	$this->addTheContentFilters();
     }
 
-    public static function libAggregator($libSet, $post, $callback = null, $isPro = false)
-    {
-        // get assets list
-        $assets = [];
-
-        if (isset($libSet['main'])) {
-            $assets[] = $libSet['main'];
-        }
-
-        foreach ($libSet['generic'] as $style) {
-            $assets[] = $style;
-        }
-
-        $selectors      = $libSet['libsSelectors'];
-        $selectorsCount = count($selectors);
-
-        if ($selectorsCount != 0) {
-            $selectedLib = array_reduce(
-                $libSet['libsMap'],
-                function ($lib, $alib) use ($selectors, $selectorsCount) {
-                    if ($lib) {
-                        return $lib;
-                    }
-
-                    return count(array_intersect($alib['selectors'], $selectors)) == $selectorsCount ? $alib : null;
-                }
-            );
-
-            if ($selectedLib) {
-                $assets[] = $selectedLib;
-            }
-        }
-
-        foreach ($assets as $i => $asset) {
-            $asset['pro'] = $isPro;
-            $assets[$i]   = $asset;
-        }
-
-        // get pro assets
-        if ($callback) {
-            $assets = $callback($assets, $post);
-        }
-
-        $assets = array_filter(
-            $assets,
-            function ($a) {
-                return ! is_null($a);
-            }
-        );
-
-        return $assets;
-    }
-
     /**
      * @internal
      */
@@ -533,6 +480,7 @@ class Brizy_Public_Main
 	    // add popups and popup assets
 	    $popupMain         = Brizy_Admin_Popups_Main::_init();
         $params['content'] .= $popupMain->getPopupsHtml($project, $this->post, 'head');
+        $params['content'] =  apply_filters('brizy_insert_popup_head_content', $params['content'], $this->post);
 
 	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
 	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
@@ -567,7 +515,6 @@ class Brizy_Public_Main
      */
     public function insert_page_content($content)
     {
-
         global $post;
 
 		if ( doing_filter( 'brizy_dc_excerpt' ) ) {
@@ -603,6 +550,8 @@ class Brizy_Public_Main
 	    // add popups and popup assets
 	    $popupMain         = Brizy_Admin_Popups_Main::_init();
 	    $content .= $popupMain->getPopupsHtml($project, $this->post, 'body');
+
+        $content =  apply_filters('brizy_insert_popup_body_content', $content, $this->post);
 
 	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'body'));
 	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
@@ -663,6 +612,8 @@ class Brizy_Public_Main
 
     private function preparePost()
     {
+    	global $post;
+
         $is_preview    = is_preview() || isset($_GET['preview']);
         $needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
         $autosaveId = null;
@@ -689,6 +640,9 @@ class Brizy_Public_Main
                 $this->post->saveStorage();
                 $this->post->savePost();
             }
+
+            // the global post must be updates otherwise the preview will not work
+	        $post->post_content = $this->post->getWpPost()->post_content;
 
         } catch (Exception $e) {
             Brizy_Logger::instance()->exception($e);

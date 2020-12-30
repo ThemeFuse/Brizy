@@ -60,6 +60,12 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 
         switch ($type) {
 
+            case Brizy_Admin_Funnels_Main::CP_FUNNEL_PAGE:
+                return Brizy_Editor_FunnelPage::get($postId);
+
+            case Brizy_Admin_Funnels_Main::CP_FUNNEL_POPUP:
+                return Brizy_Editor_FunnelPopup::get($postId);
+
             case Brizy_Admin_Blocks_Main::CP_GLOBAL:
             case Brizy_Admin_Blocks_Main::CP_SAVED:
                 return Brizy_Editor_Block::get($postId);
