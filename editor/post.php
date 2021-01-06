@@ -693,6 +693,7 @@ SQL;
 			$p->post_title = $postTitle;
 			$p->title = $postTitle;
 			$p->uid = self::create_uid( $p->ID,$p->uid );
+			$p->ID = (int)$p->ID;
 		}
 		return $posts;
 	}
