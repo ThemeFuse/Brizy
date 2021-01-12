@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 2.2.1
+Stable tag: 2.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,30 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.4 - 2021-01-12 =
+* Fixed: WOOCart toolbar activating from beneath the backdrop
+* Fixed: Sections width on tablet and mobile
+* Fixed: Global blocks
+* Fixed: Accordion when content not displayed in viewport
+* Fixed: Rich-text color style on Copy / Paste 
+* Fixed: Rich-text font size on mobile view
+* Fixed: Custom video in popup
+* Fixed: Login hover on field
+* Fixed: Login authorization
+* Fixed: Stepper on editor in Astra theme
+* Fixed: Video open in fullscreen on iPhone
+* Fixed: Options in the right sidebar
+* Fixed: Slider with padding
+* Fixed: Global Popups
+* Fixed: Editor UI Slider options
+* Fixed: Layout CSS for IE
+* Fixed: Section custom attributes option not acception spaces
+* Improved: Move elements on top when editing posts with Brizy
+* Improved: Polling stop send ping only take over
+* Improved: BlocksData get blocksData from S3
+* New: Added margin option in Header
+* New: Added WooCommerce default Products Page to Pages element
 
 = 2.2.1 - 2020-12-07 =
 * Improved: Templates images

@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.5<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.1<br>
+Stable tag: 2.2.4<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,30 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.4 - 2021-01-12
+* Fixed: WOOCart toolbar activating from beneath the backdrop
+* Fixed: Sections width on tablet and mobile
+* Fixed: Global blocks
+* Fixed: Accordion when content not displayed in viewport
+* Fixed: Rich-text color style on Copy / Paste 
+* Fixed: Rich-text font size on mobile view
+* Fixed: Custom video in popup
+* Fixed: Login hover on field
+* Fixed: Login authorization
+* Fixed: Stepper on editor in Astra theme
+* Fixed: Video open in fullscreen on iPhone
+* Fixed: Options in the right sidebar
+* Fixed: Slider with padding
+* Fixed: Global Popups
+* Fixed: Editor UI Slider options
+* Fixed: Layout CSS for IE
+* Fixed: Section custom attributes option not acception spaces
+* Improved: Move elements on top when editing posts with Brizy
+* Improved: Polling stop send ping only take over
+* Improved: BlocksData get blocksData from S3
+* New: Added margin option in Header
+* New: Added WooCommerce default Products Page to Pages element
 
 ### 2.2.1 - 2020-12-07
 * Improved: Templates images
