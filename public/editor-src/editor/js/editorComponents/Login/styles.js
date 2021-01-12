@@ -30,7 +30,7 @@ export function style(v, vs, vd) {
     ".brz && .brz-login__autorized a:hover": {
       standart: ["cssStyleElementLoginLinkColor"]
     },
-    ".brz &&:hover .brz-form-login .brz-input": {
+    ".brz && .brz-form-login .brz-input:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",

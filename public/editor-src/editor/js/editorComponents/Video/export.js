@@ -47,11 +47,9 @@ const FullScreenObserver = function() {
 };
 
 function hideVideos($node) {
-  $node
-    .find(".brz-video .brz-iframe, .brz-custom-video video")
-    .each(function() {
-      $(this).remove();
-    });
+  $node.find(".brz-video .brz-iframe").each(function() {
+    $(this).remove();
+  });
 
   // remove node if iframe was youtube or vimeo
   $node.find(".brz-embed-code iframe").each(function() {
@@ -63,6 +61,12 @@ function hideVideos($node) {
       const outerHTML = $this.get(0).outerHTML;
       $(this).replaceWith(outerHTML);
     }
+  });
+
+  $node.find(".brz-custom-video").each(function() {
+    var $this = $(this);
+    var $video = $this.find("video");
+    $video.trigger("pause");
   });
 }
 

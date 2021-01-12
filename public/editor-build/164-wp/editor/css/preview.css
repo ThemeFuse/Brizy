@@ -4430,14 +4430,19 @@ img.mfp-img {
         -webkit-box-flex: 1;
             -ms-flex: 1;
                 flex: 1; }
-    .brz .brz-section__content > .brz-container {
-      position: relative;
+      .brz .brz-section__content > .brz-container {
+        position: relative;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1; }
+    .brz .brz-section__content.slick-slide {
       -webkit-box-flex: 1;
           -ms-flex: 1;
               flex: 1; }
-    .brz .brz-section > .brz-slick-slider:not(.slick-initialized)
-> .brz-section__content:not(:first-child) {
-      display: none; }
+    .brz .brz-section > .brz-slick-slider:not(.slick-initialized) {
+      overflow: hidden; }
+      .brz .brz-section > .brz-slick-slider:not(.slick-initialized) > .brz-section__content:not(:first-child) {
+        display: none; }
   .brz .brz-section__header > .brz-section__menu-item {
     position: relative;
     z-index: 1055; }
@@ -4474,6 +4479,8 @@ img.mfp-img {
       top: 0;
       left: 0;
       width: 100%; }
+  .brz .brz-section__header--fixed > .brz-section__menu-item, .brz .brz-section__header-sticky-item {
+    position: relative; }
   .brz .brz-section__menu-item > .brz-bg:after,
   .brz .brz-section__header-sticky-item > .brz-bg:after,
   .brz .brz-footer > .brz-bg:after {
@@ -4720,6 +4727,11 @@ img.mfp-img {
   @media (max-height: 711px) and (min-width: 767px) {
     .brz:not(.brz-ed) .brz-story .brz-container {
       font-size: 320px; } }
+  .brz _:-ms-lang(x)::-ms-backdrop,
+  .brz .brz-container,
+  .brz .brz-section__content .brz-container__wrap {
+    -ms-flex: auto !important;
+    flex: auto !important; }
   .brz .brz-container,
   .brz .brz-container__wrap {
     margin-left: auto;
@@ -4732,7 +4744,8 @@ img.mfp-img {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
-            flex-direction: column; }
+            flex-direction: column;
+    width: var(--brz-section-container-width, 100%); }
   .brz .brz-container__wrap {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -8969,7 +8982,7 @@ b {
       .brz .brz-comments .brz-comments .brz-comments__date {
         position: relative; }
         .brz .brz-comments .brz-comments .brz-comments__date * {
-          color: #818a91;
+          color: inherit;
           font-size: inherit; }
       .brz .brz-comments .brz-comments .brz-comments__reply {
         line-height: inherit; }
@@ -9147,7 +9160,8 @@ b {
         .brz .brz-comments__skin-skin2 .brz-comments__right-date .brz-comments__name-date .brz-comments__name {
           margin-bottom: 6px; }
         .brz .brz-comments__skin-skin2 .brz-comments__right-date .brz-comments__name-date .brz-comments__date {
-          width: 100%; }
+          width: 100%;
+          margin-bottom: 7px; }
           .brz .brz-comments__skin-skin2 .brz-comments__right-date .brz-comments__name-date .brz-comments__date * {
             width: 75px;
             text-align: right;
@@ -9351,6 +9365,7 @@ b {
         -webkit-box-shadow: none;
                 box-shadow: none; }
       .brz .brz-comment-respond .brz--comment__form-reply-body .comment-form-rating .stars a::before {
+        font-family: star;
         display: block;
         position: absolute;
         top: 0;
@@ -9991,6 +10006,12 @@ b {
     -webkit-box-pack: inherit;
         -ms-flex-pack: inherit;
             justify-content: inherit; }
+    .brz .brz-woocart__wrapper--opened .brz-woocart__background {
+      opacity: 1;
+      pointer-events: auto; }
+    .brz .brz-woocart__wrapper--opened .brz-woocart__sidebar {
+      opacity: 1;
+      pointer-events: auto; }
     .brz .brz-woocart__wrapper .brz-woocart__dc {
       width: -webkit-fit-content;
       width: -moz-fit-content;
@@ -10025,9 +10046,6 @@ b {
       transition: opacity 0.3s ease-in-out;
       z-index: 1060;
       cursor: auto; }
-      .brz .brz-woocart__background--active {
-        opacity: 1;
-        pointer-events: auto; }
     .brz .brz-woocart__parent {
       cursor: pointer; }
       .brz .brz-woocart__parent.brz-woocart--bubble .brz-woocart__icon:before {
@@ -10062,9 +10080,6 @@ b {
       cursor: auto;
       -webkit-transition: opacity 0.3s ease-in-out;
       transition: opacity 0.3s ease-in-out; }
-      .brz .brz-woocart__sidebar--active {
-        opacity: 1;
-        pointer-events: auto; }
       .brz .brz-woocart__sidebar-item {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -10175,7 +10190,7 @@ b {
     margin: 0;
     font-size: 1.3rem;
     float: none !important;
-    width: 100%;
+    width: 100% !important;
     max-width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;

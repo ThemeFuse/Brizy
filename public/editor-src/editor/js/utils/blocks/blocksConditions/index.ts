@@ -405,13 +405,17 @@ export const changeRule = (
   let shouldAddRule = true;
 
   if (!IS_TEMPLATE) {
-    const isLevel2IncludeCondition = level2 && isIncludeCondition(level2);
-    const isLevel3IncludeCondition = level3 && isIncludeCondition(level3);
+    const level2IsIncludeCondition = level2 && isIncludeCondition(level2);
+    const level3IsIncludeCondition = level3 && isIncludeCondition(level3);
 
-    shouldAddRule =
-      shouldAddIncludeCondition &&
-      !isLevel2IncludeCondition &&
-      !isLevel3IncludeCondition;
+    const isIncludeBlock = level2IsIncludeCondition || level3IsIncludeCondition;
+
+    const includeAlreadyExist = shouldAddIncludeCondition && isIncludeBlock;
+    const excludeAlreadyExist = !shouldAddIncludeCondition && !isIncludeBlock;
+
+    if (includeAlreadyExist || excludeAlreadyExist) {
+      shouldAddRule = false;
+    }
   }
 
   if (shouldAddRule) {

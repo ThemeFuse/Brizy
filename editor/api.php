@@ -92,7 +92,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getRequestNonce() {
-        return $this->param( 'hash' );
+		return $this->param( 'hash' );
 	}
 
 	public function lock_project() {
@@ -333,7 +333,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$postId        = (int) $this->param( 'post_id' );
 			$defaultFields = [ 'ID', 'post_title', 'post_content' ];
-			$post_fields   = array_intersect( (array)$this->param( 'fields' ), $defaultFields );
+			$post_fields   = array_intersect( (array) $this->param( 'fields' ), $defaultFields );
 
 			if ( count( $post_fields ) == 0 ) {
 				$post_fields = $defaultFields;
@@ -369,9 +369,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$data        = stripslashes( $this->param( 'data' ) );
 			$atemplate   = $this->param( 'template' );
 			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
-			$status = stripslashes( $this->param( 'status' ) );
+			$status      = stripslashes( $this->param( 'status' ) );
 
-			if ( ! in_array( $status, [ 'publish', 'draft','pending','private','future' ] ) ) {
+			if ( ! in_array( $status, [ 'publish', 'draft', 'pending', 'private', 'future' ] ) ) {
 				$this->error( 400, "Invalid post type" );
 			}
 
@@ -432,7 +432,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		try {
 			$this->verifyNonce( self::nonce );
 			$postId       = $this->param( 'post_id' );
-			$placeholders = $this->param( 'placeholders' ) ;
+			$placeholders = $this->param( 'placeholders' );
 
 			if ( ! $placeholders ) {
 				throw new Exception( 'Placeholder string not provided.', 400 );
@@ -449,14 +449,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$contents = [];
 			foreach ( $placeholders as $placeholder ) {
-				$placeholder = stripslashes($placeholder);
-				$contents[] = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
+				$placeholder = stripslashes( $placeholder );
+				$contents[]  = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
 			}
 
 			$this->success( array(
 				'placeholders' => $contents
 			) );
-
 		} catch ( Exception $exception ) {
 			Brizy_Logger::instance()->exception( $exception );
 			$this->error( $exception->getCode(), $exception->getMessage() );
@@ -497,7 +496,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 					if ( empty( $values[0] ) ) {
 						// For All condition
-						$post = get_posts( $args );
+						$posts = get_posts( $args );
+						$post = isset( $posts[0] ) ? $posts[0] : null;
+
+						if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+							return $post;
+						} else {
+							return null;
+						}
 						return isset( $post[0] ) ? $post[0] : null;
 					}
 
@@ -521,9 +527,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						}
 					}
 
-					$post = get_posts( $args );
+					$posts = get_posts( $args );
 
-					return isset( $post[0] ) ? $post[0] : null;
+					$post = isset( $posts[0] ) ? $posts[0] : null;
+
+					if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+						return $post;
+					} else {
+						return null;
+					}
 					break;
 				case Brizy_Admin_Rule::TAXONOMY :
 					$args = array(
@@ -592,7 +604,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
-		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType );
+		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType,0,100 );
 		remove_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10 );
 
 		$this->success( array( 'filter_term' => $searchTerm, 'posts' => $posts ) );
@@ -708,9 +720,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$uid = get_post_meta( $attachmentId, 'brizy_post_uid', true );
 
 			if ( ! $uid ) {
-				$file = get_attached_file( $attachmentId );
-				$path_parts = pathinfo($file);
-				$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
+				$file       = get_attached_file( $attachmentId );
+				$path_parts = pathinfo( $file );
+				$uid        = "wp-" . md5( $attachmentId . time() ) . '.' . $path_parts['extension'];
 				update_post_meta( $attachmentId, 'brizy_post_uid', $uid );
 			}
 
@@ -763,9 +775,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
 
 		if ( ! $uid ) {
-			$file = get_attached_file( $attachmentId );
-			$path_parts = pathinfo($file);
-			$uid = "wp-" . md5( $attachmentId . time() ).'.'.$path_parts['extension'];
+			$file       = get_attached_file( $attachmentId );
+			$path_parts = pathinfo( $file );
+			$uid        = "wp-" . md5( $attachmentId . time() ) . '.' . $path_parts['extension'];
 			update_post_meta( $attachmentId, 'brizy_attachment_uid', $uid );
 		}
 

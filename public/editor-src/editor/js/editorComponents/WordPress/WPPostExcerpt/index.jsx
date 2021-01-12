@@ -8,7 +8,7 @@ import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { blocksDataSelector } from "visual/redux/selectors";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -22,19 +22,33 @@ export default class WPPostExcerpt extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkType, linkPopup } = v;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value._id
-          ].data;
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -44,7 +58,7 @@ export default class WPPostExcerpt extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -63,8 +77,7 @@ export default class WPPostExcerpt extends EditorComponent {
       linkExternalBlank,
       linkExternalRel,
       linkPopup,
-      linkUpload,
-      popups
+      linkUpload
     } = v;
     const className = classnames(
       "brz-wp-post-excerpt",
@@ -111,10 +124,7 @@ export default class WPPostExcerpt extends EditorComponent {
             </Wrapper>
           </CustomCSS>
         </Toolbar>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </Fragment>
     );
   }

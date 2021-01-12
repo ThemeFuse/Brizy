@@ -110,21 +110,30 @@ export function toolbarTypography2FontSize({
     state
   });
 
-  const fontSizeValue = getOptionFontByGlobal(
-    "fontSize",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontSize"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
+  let fontSizeValue = defaultValueValue({
+    v,
+    key: capByPrefix(prefix, "fontSize"),
+    device,
+    state
+  });
+
+  // getOptionFontByGlobal - was writen for shortcodes where elements can't
+  // have fontStyle and fontSize simultaneously(RichText works now another way), this way this condition is needed.
+  // When this changes will be merged with dev branch - remove this condition, because there(in dev branch)
+  // richText was rewritten and works as other elements
+  if (!fontSizeValue) {
+    fontSizeValue = getOptionFontByGlobal(
+      fontSizeKey,
+      fontSizeValue,
+      defaultValueValue({
+        v,
+        key: capByPrefix(prefix, "fontStyle"),
+        device,
+        state
+      })
+    );
+  }
+  
 
   return {
     id: fontSizeKey,
@@ -163,21 +172,25 @@ export function toolbarTypography2LineHeight({
     state
   });
 
-  const lineHeightValue = getOptionFontByGlobal(
-    "lineHeight",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "lineHeight"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
+  let lineHeightValue = defaultValueValue({
+    v,
+    key: capByPrefix(prefix, "lineHeight"),
+    device,
+    state
+  });
+
+  if (!lineHeightValue) {
+    lineHeightValue = getOptionFontByGlobal(
+      lineHeightKey,
+      lineHeightValue,
+      defaultValueValue({
+        v,
+        key: capByPrefix(prefix, "fontStyle"),
+        device,
+        state
+      })
+    );
+  }
 
   return {
     id: lineHeightKey,
@@ -248,21 +261,25 @@ export function toolbarTypography2FontWeight({
     })
   );
 
-  const fontWeightValue = getOptionFontByGlobal(
-    "fontWeight",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontWeight"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
+  let fontWeightValue = defaultValueValue({
+    v,
+    key: capByPrefix(prefix, "fontWeight"),
+    device,
+    state
+  });
+
+  if (!fontWeightValue) {
+    fontWeightValue = getOptionFontByGlobal(
+      fontWeightKey,
+      fontWeightValue,
+      defaultValueValue({
+        v,
+        key: capByPrefix(prefix, "fontStyle"),
+        device,
+        state
+      })
+    );
+  }
 
   return {
     id: fontWeightKey,
@@ -302,21 +319,25 @@ export function toolbarTypography2LetterSpacing({
     state
   });
 
-  const letterSpacingValue = getOptionFontByGlobal(
-    "letterSpacing",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "letterSpacing"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
+  let letterSpacingValue = defaultValueValue({
+    v,
+    key: capByPrefix(prefix, "letterSpacing"),
+    device,
+    state
+  });
+
+  if (!letterSpacingValue) {
+    letterSpacingValue = getOptionFontByGlobal(
+      letterSpacingKey,
+      letterSpacingValue,
+      defaultValueValue({
+        v,
+        key: capByPrefix(prefix, "fontStyle"),
+        device,
+        state
+      })
+    );
+  }
 
   return {
     id: letterSpacingKey,

@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { toolbarDisabledToolbarSettings } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -279,11 +278,7 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
-      roles: ["admin"],
-      position: 110,
-      icon: "nc-cog"
-    },
-    toolbarDisabledToolbarSettings({ v, device })
+      position: 110
+    }
   ];
 }

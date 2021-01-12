@@ -269,11 +269,12 @@ class Login extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          <div
-            className={className}
-            data-islogged="{{editor_is_user_logged_in}}"
-          >
+        <Wrapper
+          {...this.makeWrapperProps({
+            className,
+            attributes: { "data-islogged": "{{editor_is_user_logged_in}}" }
+          })}
+        >
             {IS_EDITOR ? (
               type === "authorized" ? (
                 this.renderAuthorized(v)
@@ -312,7 +313,6 @@ class Login extends EditorComponent {
                 </form>
               </>
             )}
-          </div>
         </Wrapper>
       </CustomCSS>
     );

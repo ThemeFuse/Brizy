@@ -105,7 +105,7 @@ class Brizy_Admin_OptimizeImages {
 		$urls      = array();
 		foreach ( $brizy_ids as $id ) {
 			try {
-				$urls = $this->extractUrlFromPage( $urls, $id, $filesystem, $brizy_editor_project );
+				$urls = $this->extractUrlFromPage( $urls, (int)$id, $filesystem, $brizy_editor_project );
 			} catch ( Exception $e ) {
 				continue;
 			}

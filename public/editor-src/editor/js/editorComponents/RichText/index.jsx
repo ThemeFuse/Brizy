@@ -184,20 +184,33 @@ class RichText extends EditorComponent {
     return ReactDOM.createPortal(content, document.body);
   }
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups } = v;
+
+    if (popups.length > 0) {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -207,7 +220,7 @@ class RichText extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -220,7 +233,6 @@ class RichText extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { formats, prepopulation, population, isToolbarOpened } = this.state;
     const { meta = {} } = this.props;
-    const { popups } = v;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
     const shortcutsTypes = ["copy", "paste", "delete"];
@@ -307,14 +319,12 @@ class RichText extends EditorComponent {
           </CustomCSS>
         </HotKeys>
         {showPopulationHelper && this.renderPopulationHelper()}
-        {popups.length > 0 && this.renderPopups()}
+        {this.renderPopups(v)}
       </React.Fragment>
     );
   }
 
   renderForView(v, vs, vd) {
-    const { popups } = v;
-
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -327,7 +337,7 @@ class RichText extends EditorComponent {
             })}
           />
         </CustomCSS>
-        {popups.length > 0 && this.renderPopups()}
+        {this.renderPopups(v)}
       </Fragment>
     );
   }

@@ -7,10 +7,7 @@ import ThemeIcon from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
-import {
-  blocksDataSelector,
-  deviceModeSelector
-} from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { styleWrapperClassName, styleClassName, styleCSSVars } from "./styles";
@@ -80,20 +77,33 @@ class Icon extends EditorComponent {
     });
   };
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkType, linkPopup } = v;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -103,7 +113,7 @@ class Icon extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -124,7 +134,6 @@ class Icon extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
-      popups,
       actionClosePopup
     } = v;
 
@@ -188,10 +197,7 @@ class Icon extends EditorComponent {
             </Wrapper>
           </CustomCSS>
         </Toolbar>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </Fragment>
     );
   }

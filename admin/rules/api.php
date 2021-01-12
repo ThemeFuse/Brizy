@@ -362,7 +362,6 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		if ( $templateType == 'archive' || $templateType == 'product_archive' || $context == 'popup-rules' ) {
 
-
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE, $templateType ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY, $templateType ) );
 
@@ -480,10 +479,12 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			}
 		}
 
+		unset($taxonomies);
+
 		$groups[] = array(
 			'title' => 'Specific ' . $postTypeName,
 			'value' => Brizy_Admin_Rule::POSTS,
-			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type ) )
+			'items' => array_map( $closurePost, Brizy_Editor_Post::get_post_list( null, $post_type,null,0,1000 ) )
 		);
 
 		$groups[] = array(
@@ -660,6 +661,27 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 				'title'      => '404 page',
 				'value'      => '404',
 				'groupValue' => Brizy_Admin_Rule::TEMPLATE
+			) : null,
+
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
+				'title'      => 'Day Archive page',
+				'value'      => '',
+				'groupValue' => Brizy_Admin_Rule::DAY_ARCHIVE
+			) : null,
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
+				'title'      => 'Month Archive page',
+				'value'      => '',
+				'groupValue' => Brizy_Admin_Rule::MONTH_ARCHIVE
+			) : null,
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
+				'title'      => 'Year Archive page',
+				'value'      => '',
+				'groupValue' => Brizy_Admin_Rule::YEAR_ARCHIVE
+			) : null,
+			$templateType === 'archive' || $context == 'popup-rules' ? array(
+				'title'      => 'Date Archive page',
+				'value'      => '',
+				'groupValue' => Brizy_Admin_Rule::DATE_ARCHIVE
 			) : null,
 			$templateType === 'archive' || $context == 'popup-rules' ? array(
 				'title'      => 'Archive page',

@@ -66,17 +66,25 @@ class Brizy_Compatibilities_Init {
 			}
 		}
 
-        if ( defined( 'LSCWP_V' ) ) {
-            new Brizy_Compatibilities_LiteSpeed();
-        }
+		if ( defined( 'LSCWP_V' ) ) {
+			new Brizy_Compatibilities_LiteSpeed();
+		}
 
-        if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
-            new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
-        }
+		if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
+			new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
+		}
 
-        if ( defined( 'EM_POST_TYPE_LOCATION' ) ) {
-            new Brizy_Compatibilities_EventsManager();
-        }
+		if ( defined( 'EM_POST_TYPE_LOCATION' ) ) {
+			new Brizy_Compatibilities_EventsManager();
+		}
+
+		if ( defined( 'POLYLANG_VERSION' ) ) {
+			new Brizy_Compatibilities_Polylang();
+		}
+
+		if ( class_exists( 'TRP_Translate_Press' ) ) {
+			new Brizy_Compatibilities_TranslatePress();
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {

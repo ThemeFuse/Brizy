@@ -121,6 +121,33 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	            return $html;
             } ),
 
+            new Brizy_Content_Placeholders_Simple( 'Products Page', 'editor_product_products', function ( $context, $contentPlaceholder ) {
+
+                $atts = $contentPlaceholder->getAttributes();
+
+                $shortcodeAttributes = [];
+
+                if(isset($atts['limit'])) {
+                    $shortcodeAttributes[] = sprintf("limit=\"%d\"",(int)$atts['limit']);
+                }
+                if(isset($atts['columns'])) {
+                    $shortcodeAttributes[] = sprintf("columns=\"%d\"",(int)$atts['columns']);
+                }
+                if(isset($atts['category'])) {
+                    $shortcodeAttributes[] = sprintf("category=\"%d\"",(int)$atts['category']);
+                }
+                if(isset($atts['orderby'])) {
+                    $shortcodeAttributes[]= sprintf("orderby=\"%s\"",$atts['orderby']);
+                }
+                if(isset($atts['order'])) {
+                    $shortcodeAttributes[] = sprintf("order=\"%s\"",$atts['order']);
+                }
+
+                $shortcodeAttributes = implode(' ', $shortcodeAttributes);
+
+                return do_shortcode( '[products '.$shortcodeAttributes.' ]' );
+            } ),
+
 			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
 				return do_shortcode( '[woocommerce_cart]' );
 			} ),

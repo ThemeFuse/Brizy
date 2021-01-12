@@ -96,7 +96,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "starsSize",
-          label: t("Stars Size"),
+          label: t("Rating"),
           type: "slider-dev",
           disabled: v.type !== "WPComments" || v.review !== "true",
           config: {

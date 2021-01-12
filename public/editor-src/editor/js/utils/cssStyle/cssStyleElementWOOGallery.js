@@ -123,7 +123,7 @@ export function cssStyleElementWOOGallerySpacingStyleLeftRigth({
     ? `margin-right: ${spacing}px;`
     : v.thumbStyle === "right"
     ? `margin-left: ${spacing}px;`
-    : "";
+    : "margin-right:0; margin-left:0;";
 }
 
 export function cssStyleElementWOOGalleryZoomReposition({ v }) {

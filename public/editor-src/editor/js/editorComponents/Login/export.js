@@ -1,17 +1,14 @@
 import $ from "jquery";
 
-export default function() {
-  if ($(".brz-login").length > 0) {
-    const autorization = $(".brz-login").attr("data-islogged") === "true";
+export default function($node) {
+  $node.find(".brz-login").each(function() {
+    const $this = $(this);
+    const autorization = $this.attr("data-islogged") === "true";
 
     if (autorization) {
-      $(".brz-login")
-        .children(".brz-login__autorized")
-        .css("display", "block");
+      $this.find(".brz-login__autorized").css("display", "block");
     } else {
-      $(".brz-login")
-        .children(".brz-form-login")
-        .css("display", "flex");
+      $this.find(".brz-form-login").css("display", "flex");
     }
-  }
+  });
 }

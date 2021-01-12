@@ -1,24 +1,27 @@
 import React from "react";
-import { t } from "visual/utils/i18n";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import * as toolbarConfigParrent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarSidebarConfig from "./toolbarSidebar";
+import CustomCSS from "visual/component/CustomCSS";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
+import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { makeEmptySidebarConfig } from "visual/utils/toolbar";
+import { css } from "visual/utils/cssStyle";
+import { t } from "visual/utils/i18n";
+import defaultValue from "./defaultValue.json";
+import * as toolbar from "./toolbar";
+import * as sidebar from "./sidebar";
 import * as toolbarProductName from "./toolbarProductName";
 import * as toolbarProductPrice from "./toolbarProductPrice";
 import * as toolbarProductSubtotal from "./toolbarProductSubtotal";
 import * as toolbarProductButton from "./toolbarProductButton";
-import Toolbar from "visual/component/Toolbar";
-import defaultValue from "./defaultValue.json";
+import * as toolbarSidebarSettings from "./toolbarSidebarSettings";
 import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { defaultValueValue } from "visual/utils/onChange";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { Wrapper } from "../../tools/Wrapper";
-import CustomCSS from "visual/component/CustomCSS";
+
+const sidebarProduct = makeEmptySidebarConfig({ title: t("Product") });
+const sidebarSidebarSettings = makeEmptySidebarConfig({
+  title: t("Settings")
+});
 
 export default class WOOCart extends EditorComponent {
   static get componentId() {
@@ -28,116 +31,127 @@ export default class WOOCart extends EditorComponent {
   static defaultValue = defaultValue;
 
   state = {
-    renderHTML: false
+    sidebarOpened: false
   };
 
-  handleClose = id => {
-    const cartElement = document.getElementById(id);
+  backgroundRef = React.createRef();
 
-    const backgroundActive = "brz-woocart__background--active";
-    const sidebarActive = "brz-woocart__sidebar--active";
-    const toolbarActive = "brz-woo-cart-sidebar--open";
+  dcRef = React.createRef();
 
-    if (cartElement) {
-      const background = cartElement.querySelector(".brz-woocart__background");
-      const sidebar = cartElement.querySelector(".brz-woocart__sidebar");
-      const sidebarClose = cartElement.querySelector(
-        ".brz-woocart__sidebar-close"
-      );
-      const toolbar = cartElement.querySelector(
-        ".brz-woocart__sidebar-toolbar"
-      );
-      const sidebarClosed =
-        !background?.classList.contains(backgroundActive) &&
-        !sidebar?.classList.contains(sidebarActive);
+  componentDidMount() {
+    // a hack that stops click propagation on the backdrop
+    // so that it does not reach to the Toolbars with selectors
+    // that are situated beneath it and would open otherwise
+    this.backgroundRef.current?.addEventListener("click", e =>
+      e.stopPropagation()
+    );
+  }
 
-      const listner = () => {
-        background?.classList.remove(backgroundActive);
-        sidebar?.classList.remove(sidebarActive);
-        toolbar?.classList.remove(toolbarActive);
-        this.patchValue({
-          sidebar: "close",
-          tabletSidebar: "close",
-          mobileSidebar: "close"
-        });
+  handleValueChange(patch, meta) {
+    const { sidebar, tabletSidebar, mobileSidebar, ...rest } = patch;
 
-        sidebarClose?.removeEventListener("click", listner);
-      };
-
-      if (cartElement) {
-        if (sidebarClosed) {
-          background?.classList.add(backgroundActive);
-          sidebar?.classList.add(sidebarActive);
-          toolbar?.classList.add(toolbarActive);
-        }
-      }
-      sidebarClose?.addEventListener("click", listner);
-    }
-  };
-
-  componentDidUpdate() {
-    const v = this.getValue();
-    const id = this.getId();
-    const sidebar = defaultValueValue({
-      v,
-      key: "sidebar",
-      device: deviceModeSelector(getStore().getState()),
-      state: "normal"
-    });
-
-    if (sidebar === "open" && IS_EDITOR) {
-      this.handleClose(id);
+    // detect if sidebar needs to be open
+    if (
+      sidebar === "open" ||
+      tabletSidebar === "open" ||
+      mobileSidebar === "open"
+    ) {
+      hideToolbar();
+      this.setState({ sidebarOpened: true }, () => {
+        super.handleValueChange(rest, meta);
+      });
+    } else {
+      super.handleValueChange(patch, meta);
     }
   }
 
+  handleDCSuccess = () => {
+    // closes the sidebar when the user clicks the X icon
+    this.dcRef.current?.addEventListener("click", e => {
+      if (e.target.classList.contains("brz-woocart__sidebar-close")) {
+        this.setState({ sidebarOpened: false });
+      }
+    });
+  };
+
   renderForEdit(v, vs, vd) {
-    const cartId = this.getId();
+    const id = this.getId();
     const { className: className_, purchasesType } = v;
+
     const className = classnames(
       "brz-woocart__wrapper",
+      {
+        "brz-woocart__wrapper--opened": this.state.sidebarOpened
+      },
+
       // Inside DC there is also an element with `brz-woocart__parent` class
       // but it's unclear if this was done on purpose or not
       "brz-woocart__parent",
       `brz-woocart--${purchasesType}`,
       className_,
-      css(this.constructor.componentId, cartId, style(v, vs, vd))
+      css(this.constructor.componentId, id, style(v, vs, vd))
     );
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(
-          toolbarConfigParrent,
-          sidebarExtendParent
-        )}
+        {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}
         selector=".brz-a.brz-woocart, .brz-shortcode__placeholder"
       >
         <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarProductName)}
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarProductName,
+            sidebarProduct,
+            {
+              allowExtend: false
+            }
+          )}
           selector=".brz-woocart__sidebar__product-name"
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarProductPrice)}
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarProductPrice,
+              sidebarProduct,
+              {
+                allowExtend: false
+              }
+            )}
             selector=".brz-woocart__sidebar__product-price__container"
           >
             <Toolbar
-              {...this.makeToolbarPropsFromConfig2(toolbarProductSubtotal)}
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarProductSubtotal,
+                sidebarProduct,
+                {
+                  allowExtend: false
+                }
+              )}
               selector=".brz-woocart__sidebar-subtotal"
             >
               <Toolbar
-                {...this.makeToolbarPropsFromConfig2(toolbarProductButton)}
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarProductButton,
+                  sidebarProduct,
+                  {
+                    allowExtend: false
+                  }
+                )}
                 selector=".brz-woocart__sidebar-buttons"
               >
                 <CustomCSS selectorName={this.getId()} css={v.customCSS}>
                   <Wrapper
                     {...this.makeWrapperProps({
                       className,
-                      attributes: { id: cartId }
+                      attributes: { id: id }
                     })}
                   >
                     {IS_EDITOR && (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarSidebarConfig
+                          toolbarSidebarSettings,
+                          sidebarSidebarSettings,
+                          {
+                            allowExtend: false
+                          }
                         )}
                       >
                         <div className="brz-woocart__sidebar-toolbar">
@@ -145,12 +159,16 @@ export default class WOOCart extends EditorComponent {
                         </div>
                       </Toolbar>
                     )}
-                    <div className="brz-woocart__background" />
+                    <div
+                      className="brz-woocart__background"
+                      ref={this.backgroundRef}
+                    />
                     <DynamicContentHelper
                       placeholder="{{editor_product_cart}}"
                       placeholderIcon="woo-cart"
                       tagName="div"
-                      props={{ className: "brz-woocart__dc" }}
+                      props={{ className: "brz-woocart__dc", ref: this.dcRef }}
+                      onSuccess={this.handleDCSuccess}
                     />
                   </Wrapper>
                 </CustomCSS>

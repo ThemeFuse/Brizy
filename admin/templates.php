@@ -61,12 +61,13 @@ class Brizy_Admin_Templates
         } elseif ( ! defined('DOING_AJAX') &&
                    ! is_admin() &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('_media')]) &&
+                   ! isset($_REQUEST[Brizy_Editor::prefix('-edit-iframe')]) &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('_file')]) &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('_attachment')]) &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('_block_screenshot')]) &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('')])) {
             add_action('wp', array($this, 'templateFrontEnd'));
-            add_action('template_include', array($this, 'templateInclude'), 20000);
+
         }
     }
 
@@ -399,7 +400,6 @@ class Brizy_Admin_Templates
      */
     public function templateInclude($template)
     {
-
         if ( ! self::getTemplate()) {
             return $template;
         }
@@ -446,6 +446,8 @@ class Brizy_Admin_Templates
                 if ( ! self::getTemplate()) {
                     return;
                 }
+
+	            add_filter('template_include', array($this, 'templateInclude'), 20000);
 
                 $is_preview    = is_preview() || isset($_GET['preview']);
                 $needs_compile = $is_preview || ! self::getTemplate()->isCompiledWithCurrentVersion(

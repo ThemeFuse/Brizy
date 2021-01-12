@@ -1,3 +1,12 @@
+export function makeEmptySidebarConfig({ title }) {
+  return {
+    title,
+    getItems() {
+      return [];
+    }
+  };
+}
+
 // BG Image
 export { toolbarBgImage } from "./toolbarBgImage";
 

@@ -2,7 +2,14 @@
   "content": {
     "shortcode": "woocommerce_cart",
     "currentUser": "",
-    "productID": ""
+    "productID": "",
+
+    "columns": 3,
+    "columnsSuffix": null,
+    "limit": 6,
+    "category": "",
+    "orderBy": "name",
+    "order": "ASC"
   },
 
   "style": {

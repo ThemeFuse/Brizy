@@ -3,6 +3,17 @@
   width: 100%;
   justify-content: inherit;
 
+  &--opened {
+    .brz-woocart__background {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .brz-woocart__sidebar {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
   .brz-woocart__dc {
     width: fit-content;
     display: flex;
@@ -32,11 +43,6 @@
     transition: opacity 0.3s ease-in-out;
     z-index: 1060;
     cursor: auto;
-
-    &--active {
-      opacity: 1;
-      pointer-events: auto;
-    }
   }
   &__parent {
     cursor: pointer;
@@ -72,10 +78,6 @@
     cursor: auto;
     transition: opacity 0.3s ease-in-out;
 
-    &--active {
-      opacity: 1;
-      pointer-events: auto;
-    }
     &-item {
       display: flex;
       padding: 20px 0;

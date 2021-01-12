@@ -143,10 +143,10 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix' => Brizy_Editor::prefix(),
-				'permalink'    => get_permalink( $wp_post_id ),
-				'page'         => $wp_post_id,
-
+				'pluginPrefix'    => Brizy_Editor::prefix(),
+				'permalink'       => get_permalink( $wp_post_id ),
+				'page'            => $wp_post_id,
+				'post_type'       => get_post_type( $wp_post_id ),
 				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments' => array( 'images' => $this->get_page_attachments() ),
 				'templates'       => $this->post->get_templates(),
@@ -435,7 +435,7 @@ class Brizy_Editor_Editor_Editor {
 			$menu_data[] = $amenu;
 		}
 
-		return $menu_data;
+		return apply_filters( 'brizy_menu_data', $menu_data );
 	}
 
 	/**
@@ -810,12 +810,22 @@ class Brizy_Editor_Editor_Editor {
 
 			// product archive mode
 			if ( in_array( $rule->getAppliedFor(), [
-					Brizy_Admin_Rule::ARCHIVE,
-					Brizy_Admin_Rule::TAXONOMY,
-					Brizy_Admin_Rule::WOO_SHOP_PAGE
-				] ) &&
-			     in_array( $rule->getEntityType(), [ 'product', 'shop_page' ] ) ) {
-				return 'product_archive';
+				Brizy_Admin_Rule::ARCHIVE,
+				Brizy_Admin_Rule::DATE_ARCHIVE,
+				Brizy_Admin_Rule::DAY_ARCHIVE,
+				Brizy_Admin_Rule::MONTH_ARCHIVE,
+				Brizy_Admin_Rule::YEAR_ARCHIVE,
+				Brizy_Admin_Rule::TAXONOMY,
+				Brizy_Admin_Rule::WOO_SHOP_PAGE
+			] ) ) {
+				if ( $rule->getAppliedFor() == Brizy_Admin_Rule::WOO_SHOP_PAGE && in_array( $rule->getEntityType(), [
+						'product',
+						'shop_page'
+					] ) ) {
+					return 'product_archive';
+				} else {
+					return 'archive';
+				}
 			}
 		}
 

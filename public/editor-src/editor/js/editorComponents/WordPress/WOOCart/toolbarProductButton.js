@@ -127,21 +127,6 @@ export function getItems({ v, device }) {
           ]
         }
       ]
-    },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true
-    },
-    {
-      id: "duplicate",
-      type: "button",
-      disabled: true
-    },
-    {
-      id: "remove",
-      type: "button",
-      disabled: true
     }
   ];
 }
