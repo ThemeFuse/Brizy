@@ -30,10 +30,7 @@ rm -rf ./vendor/shortpixel/shortpixel-php/test
 rm -rf ./vendor/shortpixel/shortpixel-php/examples
 rm -rf ./vendor/enshrined/svg-sanitize/tests/
 rm -rf ./vendor/bagrinsergiu/brizy-migration-utils/tests/
-( find ./ -type d -name ".git" && find ./ -name ".gitignore" && find ./ -name ".gitmodules" && find ./vendor -name "*.md" && find ./ -name "composer.json" && find ./ -name "composer.lock" && find ./ -name ".travis.yml" && find ./ -name "phpunit.xml.dist" ) | xargs rm -rf
-find . -type d -name ".git"  | xargs rm -rf
-find . -name ".gitignore" | xargs rm -rf
-find . -name ".gitmodules" | xargs rm -rf
+(  find ./vendor -name "*.md" && find ./ -name "composer.json" && find ./ -name "composer.lock" && find ./ -name ".travis.yml" && find ./ -name "phpunit.xml.dist" ) | xargs rm -rf
 rm -rf ./Jenkinsfile
 
 
