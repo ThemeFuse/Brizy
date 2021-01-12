@@ -11,8 +11,11 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const TEMPLATE = 8;
 	const BRIZY_TEMPLATE = 16;
 	const ANY_CHILD_TAXONOMY = 128;
-
 	const WOO_SHOP_PAGE = 256;
+	const DATE_ARCHIVE = self::ARCHIVE | 512;
+	const YEAR_ARCHIVE = self::DATE_ARCHIVE | 1024;
+	const MONTH_ARCHIVE = self::DATE_ARCHIVE | 2048;
+	const DAY_ARCHIVE = self::DATE_ARCHIVE | 4096;
 
 	/**
 	 * @var int
@@ -86,15 +89,10 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	public function isMatching( $applyFor, $entityType, $entityValues ) {
 
-		$ruleValues = array_filter(
-			array(
-				$this->getAppliedFor(),
-				$this->getEntityType(),
-				$this->getEntityValues(),
-			),
-			function ( $v ) {
-				return ! empty( $v );
-			}
+		$ruleValues = array(
+			$this->getAppliedFor(),
+			$this->getEntityType(),
+			$this->getEntityValues(),
 		);
 
 		$checkValues = array(
@@ -154,6 +152,18 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 				$tax = get_term_children( $values[2], $values[1] );
 
 				return in_array( $entityValues[0], $tax );
+			}
+		}
+
+		// matching archive rules
+		if ( isset( $ruleValues[0] ) && isset( $checkValues[0] ) && ( $ruleValues[0] & self::ARCHIVE ) && ( $checkValues[0] & self::ARCHIVE ) ) {
+
+			if ( $checkValues[0] == $ruleValues[0] ) {
+				return true;
+			} elseif ( $ruleValues[0] == self::DATE_ARCHIVE ) {
+				return true;
+			} elseif ( $ruleValues[0] == self::ARCHIVE ) {
+				return true;
 			}
 		}
 

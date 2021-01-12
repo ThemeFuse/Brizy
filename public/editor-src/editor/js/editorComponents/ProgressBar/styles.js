@@ -35,7 +35,7 @@ export function styleBg(v, vs, vd) {
         "cssStyleElementProgressBarPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover .brz-text__editor": {
+    ".brz &&:hover .brz-progress-bar__text": {
       standart: [
         "cssStyleLabelColor",
         "cssStyleTypography3FontFamily",

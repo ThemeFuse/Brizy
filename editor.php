@@ -411,10 +411,10 @@ class Brizy_Editor {
 		} elseif
 		( isset( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] ) ) {
 			$pid = (int) $_REQUEST[ Brizy_Editor::prefix( '_post' ) ];
-		} elseif ( $wp_query->is_posts_page ) {
+		} elseif ( $wp_query && $wp_query->is_posts_page ) {
 			$pid = (int) get_queried_object_id();
 		} elseif
-		( ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
+		( $wp_query && ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
 			$pid = (int) $apid;
 		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
 			$pid = wc_get_page_id( 'shop' );

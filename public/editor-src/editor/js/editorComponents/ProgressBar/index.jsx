@@ -44,7 +44,7 @@ export default class ProgressBar extends EditorComponent {
     return (
       <div className={classNameBar} data-progress={percentage}>
         {showText === "on" && (
-          <Text id="text" v={v} onChange={this.handleTextChange} />
+          <Text id="text" v={v} onChange={this.handleTextChange} className="brz-progress-bar__text" />
         )}
         {showPercentage === "on" && (
           <span className="brz-span brz-progress-bar__percent">

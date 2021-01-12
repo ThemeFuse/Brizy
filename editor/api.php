@@ -513,6 +513,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						$posts = get_posts( $args );
 						$post = isset( $posts[0] ) ? $posts[0] : null;
 
+						if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+							return $post;
+						} else {
+							return null;
+						}
+						$post = isset( $posts[0] ) ? $posts[0] : null;
+
 						try {
 							if ( $post && ! Brizy_Editor_Post::get( $post )->uses_editor() ) {
 								return $post;
@@ -631,7 +638,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
-		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType );
+		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType,0,100 );
 		remove_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10 );
 
 		$this->success( array( 'filter_term' => $searchTerm, 'posts' => $posts ) );

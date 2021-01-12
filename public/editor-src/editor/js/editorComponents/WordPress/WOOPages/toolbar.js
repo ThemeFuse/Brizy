@@ -1,7 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ v, device }) {
+export default taxonomies => {
+  return {
+    getItems: getItems(taxonomies)
+  };
+};
+
+const getItems = taxonomies => ({ v, device }) => {
   const dvv = key => defaultValueValue({ v, key, device });
 
   return [
@@ -25,7 +31,8 @@ export function getItems({ v, device }) {
             { title: t("Checkout"), value: "woocommerce_checkout" },
             { title: t("My Account"), value: "woocommerce_my_account" },
             { title: t("Order Tracking"), value: "woocommerce_order_tracking" },
-            { title: t("Product"), value: "product" }
+            { title: t("Product"), value: "product" },
+            { title: t("Products"), value: "products" }
           ]
         },
         {
@@ -35,6 +42,74 @@ export function getItems({ v, device }) {
           devices: "desktop",
           disabled: v.shortcode !== "product",
           placeholder: t("Product ID or SKU")
+        },
+        {
+          id: "columns",
+          label: t("Columns"),
+          type: "slider-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "products",
+          config: {
+            min: 1,
+            max: 6,
+            inputMin: 1,
+            inputMax: 6
+          }
+        },
+        {
+          id: "limit",
+          label: t("Products Count"),
+          type: "inputText-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "products",
+          config: {
+            size: "short"
+          }
+        },
+        {
+          id: "category",
+          label: t("Categories"),
+          type: "select-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "products",
+          choices: [
+            {
+              title: t("All"),
+              value: ""
+            },
+            ...taxonomies.map(item => ({
+              title: item.name,
+              value: item.slug
+            }))
+          ]
+        },
+        {
+          id: "orderBy",
+          label: t("Filter By"),
+          type: "select-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "products",
+          choices: [
+            { title: t("Random"), value: "name" },
+            { title: t("Title"), value: "title" },
+            { title: t("Date"), value: "date" },
+            { title: t("Rating"), value: "rating" },
+            { title: t("Popularity"), value: "popularity" },
+            { title: t("Menu Order"), value: "menu_order" },
+            { title: t("Random"), value: "rand" },
+            { title: t("ID"), value: "id" }
+          ]
+        },
+        {
+          id: "order",
+          label: t("Order"),
+          type: "radioGroup-dev",
+          devices: "desktop",
+          disabled: v.shortcode !== "products",
+          choices: [
+            { value: "ASC", icon: "nc-up" },
+            { value: "DESC", icon: "nc-down" }
+          ]
         }
       ]
     },
@@ -68,4 +143,4 @@ export function getItems({ v, device }) {
       ]
     }
   ];
-}
+};

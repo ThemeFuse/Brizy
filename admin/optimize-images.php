@@ -92,6 +92,70 @@ class Brizy_Admin_OptimizeImages {
 		exit;
 	}
 
+
+	private function get_general_tab( $context ) {
+		$brizy_editor_project = Brizy_Editor_Project::get();
+		$settings             = $brizy_editor_project->getImageOptimizerSettings();
+		$urlBuilder           = new Brizy_Editor_UrlBuilder( $brizy_editor_project );
+		$brizy_upload_path    = $urlBuilder->brizy_upload_path();
+		$adapter              = new Brizy_Admin_Guafrette_LocalAdapter( $brizy_upload_path );
+		$filesystem           = new Filesystem( $adapter );
+
+		$brizy_ids = Brizy_Editor_Post::get_all_brizy_post_ids();
+		$urls      = array();
+		foreach ( $brizy_ids as $id ) {
+			try {
+				$urls = $this->extractUrlFromPage( $urls, (int)$id, $filesystem, $brizy_editor_project );
+			} catch ( Exception $e ) {
+				continue;
+			}
+		}
+
+		$urls = array_unique( $urls );
+
+		$context['urls']         = $urls;
+		$context['count']        = count( $urls );
+		$context['svgObject']    = Brizy_Editor_Asset_StaticFile::get_asset_content( str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_PATH . "/admin/static/img/spinner.svg" ) );
+		$context['svg']          = str_replace( '/', DIRECTORY_SEPARATOR, BRIZY_PLUGIN_URL . "/admin/static/img/spinner.svg#circle" );
+		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
+		$context['submit_label'] = __( 'Optimize', 'brizy' );
+
+		return $this->twig->render( 'optimizer-general.html.twig', $context );
+	}
+
+	private function extractUrlFromPage( $urls, $postId, $filesystem, $project ) {
+		$storage = Brizy_Editor_Storage_Post::instance( $postId );
+		$data    = $storage->get( Brizy_Editor_Post::BRIZY_POST, false );
+
+		if ( ! isset( $data['compiled_html'] ) ) {
+			return $urls;
+		}
+
+		$content = base64_decode( $data['compiled_html'] );
+
+		$content = Brizy_SiteUrlReplacer::restoreSiteUrl( $content );
+
+		$closure = function ( $processors ) {
+			foreach ( $processors as $i => $processor ) {
+				if ( $processor instanceof Brizy_Editor_Asset_MediaAssetProcessor ) {
+					unset( $processors[ $i ] );
+
+					return $processors;
+				}
+			}
+
+			return $processors;
+		};
+
+		add_filter( 'brizy_content_processors', $closure );
+
+		$content = apply_filters( 'brizy_content', $content, $project, get_post( $postId ) );
+
+		remove_filter( 'brizy_content_processors', $closure );
+
+		return $this->extract_media_urls( $urls, $content, $filesystem );
+	}
+
 	public function settings_submit() {
 
 		if ( $_POST['tab'] !== 'settings' ) {

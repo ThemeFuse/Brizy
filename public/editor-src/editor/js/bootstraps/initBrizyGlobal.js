@@ -52,6 +52,7 @@ import {
 } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import {
+  IS_POST,
   IS_SINGLE_TEMPLATE,
   IS_ARCHIVE_TEMPLATE,
   IS_PRODUCT_TEMPLATE,
@@ -107,6 +108,7 @@ global.Brizy = {
     NORMAL,
     HOVER,
 
+    IS_POST,
     IS_SINGLE_TEMPLATE,
     IS_ARCHIVE_TEMPLATE,
     IS_PRODUCT_TEMPLATE,

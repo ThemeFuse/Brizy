@@ -100,7 +100,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$resized_page_asset_path = $this->url_builder->page_upload_path( "/assets/images/" . $media_filter );
 
 
-		return $resized_page_asset_path . "/" . basename( $original_asset_path );
+		return $resized_page_asset_path . "/" . $this->basename( $original_asset_path );
 	}
 
 	/**
@@ -126,11 +126,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$resized_image_path      = $this->getResizedMediaPath( $original_asset_path, $media_filter );
 
 		$optimized_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'optimized';
-		$optimized_image_full_path = $optimized_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
+		$optimized_image_full_path = $optimized_image_path_dir . DIRECTORY_SEPARATOR . $this->basename( $resized_image_path );
 
 		$hq_image_path_dir  = dirname( $resized_image_path ) . DIRECTORY_SEPARATOR . 'hq';
-		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . basename( $resized_image_path );
-
+		$hq_image_full_path = $hq_image_path_dir . DIRECTORY_SEPARATOR . $this->basename( $resized_image_path );
 
 		if ( file_exists( $optimized_image_full_path ) ) {
 			return $optimized_image_full_path;
@@ -200,5 +199,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return $resized_image_path;
 	}
 
-
+	public function basename( $original_asset_path ) {
+		return preg_replace( '/^.+[\\\\\\/]/', '', $original_asset_path );
+	}
 }

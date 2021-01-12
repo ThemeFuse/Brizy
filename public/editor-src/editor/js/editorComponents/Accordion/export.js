@@ -24,6 +24,14 @@ export default function($node) {
         active: $item.get(0),
         tabs: $item.siblings().get()
       });
+
+      setTimeout(function() {
+        //verify if content is outside of viewport
+        const offsetTop = $accordionNavItems.offset().top;
+        if (window.scrollY > offsetTop) {
+          $("html, body").animate({ scrollTop: offsetTop }, 200);
+        }
+      }, 100);
     });
 
     $accordionFilter.on("click", function({ target }) {

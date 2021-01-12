@@ -215,7 +215,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$content = $this->get_compiled_page()->get_body() ? $this->get_compiled_page()->get_body() : '<div class="brz-root__container"></div>';
 		$content .= '<!-- version:' . time() . ' -->';
 
-		$this->deleteOldAutosaves( $this->getWpPostParentId() );
+		$this->deleteOldAutosaves( $this->getWpPostId() );
 
 		if ( $createRevision ) {
 
@@ -729,55 +729,52 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	}
 
 
-	public static function get_post_list( $searchTerm, $postType, $excludePostType = array() ) {
+	public static function get_post_list( $searchTerm, $postType, $excludePostType = array(), $offset = 0, $limit = 20 ) {
 
-		global $wp_post_types;
+		global $wp_post_types, $wpdb;
+		$searchQuery = '';
+		$postLabel   = $wp_post_types[ $postType ]->label;
 
-		$post_query = array(
-			'post_type'      => $postType,
-			'posts_per_page' => - 1,
-			'post_status'    => $postType == 'attachment' ? 'inherit' : array(
-				'publish',
-				'pending',
-				'draft',
-				'future',
-				'private'
-			),
-			'orderby'        => 'post_title',
-			'order'          => 'ASC'
-		);
+		// not sure iw we will have this case :D
+		if ( is_array($excludePostType) && in_array( $postType, $excludePostType ) ) {
+			return [];
+		}
 
 		if ( $searchTerm ) {
-			$post_query['post_title_term'] = $searchTerm;
+			$searchQuery = " AND post_title LIKE %s";
 		}
 
-		$posts = new WP_Query( $post_query );
+		$postStatus = $postType == 'attachment' ? "'inherit'" : "'publish','pending','draft','future','private'";
 
-		$result = array();
+		$query = <<<SQL
+			SELECT
+			       p.ID,
+			       p.post_title as title,
+			       p.post_title as post_title,
+			       '$postType' as post_type,
+			       '$postLabel' as post_type_label,
+			       pm.meta_value as 'uid'
+			FROM
+			     $wpdb->posts p
+				JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
+			WHERE 
+				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
+			ORDER BY p.post_title ASC
+			LIMIT %d,%d
+SQL;
+		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ) );
 
-		foreach ( $posts->posts as $post ) {
-
-			if ( in_array( $post->post_type, $excludePostType ) ) {
-				continue;
-			}
-
-			$result[] = (object) array(
-				'ID'              => $post->ID,
-				'uid'             => self::create_uid( $post->ID ),
-				'post_type'       => $post->post_type,
-				'post_type_label' => $wp_post_types[ $post->post_type ]->label,
-				'title'           => apply_filters( 'the_title', $post->post_title ),
-				'post_title'      => apply_filters( 'the_title', $post->post_title )
-			);
+		foreach($posts as $i=>$p) {
+			$postTitle = apply_filters( 'the_title', $p->post_title );
+			$p->post_title = $postTitle;
+			$p->title = $postTitle;
+			$p->uid = self::create_uid( $p->ID,$p->uid );
+			$p->ID = (int)$p->ID;
 		}
-
-
-		return $result;
+		return $posts;
 	}
 
-	private static function create_uid( $postId ) {
-
-		$uid = get_post_meta( $postId, 'brizy_post_uid', true );
+	private static function create_uid( $postId, $uid ) {
 
 		if ( ! $uid ) {
 			$uid = md5( $postId . time() );

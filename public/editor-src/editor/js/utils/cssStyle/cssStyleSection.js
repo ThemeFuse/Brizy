@@ -13,18 +13,25 @@ import {
   styleMarginUngroupedSuffix
 } from "visual/utils/style2";
 import { cssStylePadding } from "visual/utils/cssStyle";
+import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 const validation = k => k !== undefined;
 
 export function cssStyleSectionMaxWidth({ v, device, state }) {
   const containerType = styleElementSectionContainerType({ v, device, state });
   const containerSize = styleElementSectionContainerSize({ v, device, state });
-
   // used css var(--brz-section-container-width)
   // improvement in the future & need for blocksy
+  const toPercentage = containerSize / 100;
+  let maxWidth = `calc(${toPercentage} * var(--brz-section-container-max-width, 1170px));`;
+
+  if (device === TABLET || device === MOBILE) {
+    maxWidth = `${containerSize}%`;
+  }
+
   return containerType === "boxed"
-    ? `max-width: 100%; width: calc((${containerSize} / 100 * var(--brz-section-container-width, 1170)) * 1px);`
-    : "max-width: 100%; width: 100%;";
+    ? `max-width: ${maxWidth}`
+    : "max-width: 100%;";
 }
 
 export function cssStyleSectionSliderHeight({ v }) {

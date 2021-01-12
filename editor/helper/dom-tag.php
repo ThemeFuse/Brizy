@@ -13,7 +13,7 @@ class Brizy_Editor_Helper_DomTag {
 	 * @param string $tag
 	 */
 	public function __construct( $tag ) {
-		$this->html_tag = trim( $tag ); ;
+		$this->html_tag = trim( $tag );
 	}
 
 	/**
@@ -67,16 +67,11 @@ class Brizy_Editor_Helper_DomTag {
 			return '';
 		}
 
-		$content = $this->get_tag();
+		$html  = $this->get_tag();
+		$start = strpos( $html, ">" )+1;
+		$end   = strrpos( $html, "<" );
 
-		preg_match( "/^<[^>]+>(.*)<\/[^>]+>$/is", $content, $res );
-
-		if ( isset( $res[1] ) ) {
-
-			return $res[1];
-		}
-
-		return null;
+		return  substr($html,$start,$end-$start);
 	}
 
 	/**

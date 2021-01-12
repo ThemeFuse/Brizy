@@ -31,10 +31,10 @@
     "width": 100,
     "widthSuffix": null,
 
-    "logoSize": 67, 
+    "logoSize": 50, 
     "logoSizeSuffix": null,
 
-    "starsSize": 15,
+    "starsSize": 16,
     "starsSizeSuffix": "px",
 
     "borderStyle": "solid",
@@ -162,7 +162,7 @@
     "tempHoverPostButtonColorPalette": "color6",
 
     "starsColorType": "solid",
-    "starsColorHex": "#ffe600",
+    "starsColorHex": "#ffb900",
     "starsColorOpacity": 1,
     "starsColorPalette": "",
 
@@ -177,8 +177,8 @@
     "tempHoverStarsColorPalette": null,
 
     "starsBgColorType": "solid",
-    "starsBgColorHex": "#9e9e9e",
-    "starsBgColorOpacity": 1,
+    "starsBgColorHex": "#ffb900",
+    "starsBgColorOpacity": 0.7,
     "starsBgColorPalette": "",
 
     "tempStarsBgColorOpacity": 1,
