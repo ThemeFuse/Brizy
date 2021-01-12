@@ -7,7 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
-import { globalBlocksSelector } from "visual/redux/selectors";
+import { blocksDataSelector } from "visual/redux/selectors";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -253,20 +253,34 @@ class Image extends EditorComponent {
     };
   }
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkLightBox, linkPopup } = v;
+    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = globalBlocksSelector(getStore().getState())[
-            itemData.value._id
-          ].data;
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -276,7 +290,7 @@ class Image extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -287,11 +301,9 @@ class Image extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, linkLightBox, linkPopup, popups } = v;
+    const { className } = v;
     const { tabletW, mobileW, gallery = {} } = this.props.meta;
     const { containerWidth } = this.state;
-
-    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -369,22 +381,17 @@ class Image extends EditorComponent {
           </Toolbar>
         </Wrapper>
         {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </Fragment>
     );
   }
 
   renderForView(v, vs, vd) {
-    const { className, linkLightBox, linkPopup, popups } = v;
+    const { className } = v;
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
     const wrapperSizes = this.getWrapperSizes(v);
-
-    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
 
     // this is needed for dynamic attributes like alt and title
     const extraAttributes = this.getExtraImageProps(v);
@@ -434,10 +441,7 @@ class Image extends EditorComponent {
             />
           </CustomCSS>
         </Wrapper>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </Fragment>
     );
   }

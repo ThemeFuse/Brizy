@@ -1,3 +1,4 @@
+import QuickLRU from "quick-lru";
 import { DOMParser, XMLSerializer } from "xmldom";
 import {
   getElementsByClassName,
@@ -9,6 +10,8 @@ import {
   closestByClassName,
   hasClassName
 } from "./xmldom-utils";
+
+const cache = new QuickLRU({ maxSize: 100 });
 
 onerror = e => {
   /* eslint-disable no-console */
@@ -319,6 +322,10 @@ function makeSvgDataUriDebug(nodeString, options) {
 }
 
 function fetchResource(url) {
+  if (cache.has(url)) {
+    return Promise.resolve(cache.get(url));
+  }
+
   /* eslint-disable no-console */
   return fetch(url, { credentials: "omit" })
     .then(r => {
@@ -329,6 +336,10 @@ function fetchResource(url) {
       }
     })
     .then(blobToDataUri)
+    .then(base64 => {
+      cache.set(url, base64);
+      return base64;
+    })
     .catch(e => console.error("worker fetch:", e));
   /* eslint-enabled no-console */
 }

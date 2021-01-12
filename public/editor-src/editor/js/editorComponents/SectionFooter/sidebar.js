@@ -12,7 +12,8 @@ import {
   toolbarShapeTopFlip,
   toolbarShapeBottomType,
   toolbarShapeBottomFlip,
-  toolbarEntranceAnimation
+  toolbarEntranceAnimation,
+  toolbarMargin
 } from "visual/utils/toolbar";
 
 export const title = t("Footer");
@@ -58,6 +59,13 @@ export function getItems({ v, device }) {
               v,
               device,
               state: "normal"
+            }),
+            toolbarMargin({
+              v,
+              device,
+              state: "normal",
+              onChangeGrouped: ["onChangeMarginGrouped"],
+              onChangeUngrouped: ["onChangeMarginUngrouped"]
             }),
             toolbarBorderRadius({
               v,

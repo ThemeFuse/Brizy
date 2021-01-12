@@ -11,6 +11,7 @@ $containers-width: map-get($container-max-widths, "lg");
 .brz-container {
   display: flex;
   flex-direction: column;
+  width: var(--brz-section-container-width, 100%);
 }
 .brz-container__wrap {
   display: flex;

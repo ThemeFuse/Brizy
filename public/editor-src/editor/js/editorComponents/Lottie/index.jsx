@@ -62,20 +62,33 @@ class Lottie extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkType, linkPopup } = v;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -85,7 +98,7 @@ class Lottie extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -96,7 +109,7 @@ class Lottie extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { speed, loop, autoplay, direction, linkType, linkPopup, popups } = v;
+    const { speed, loop, autoplay, direction } = v;
 
     const { animation } = this.state;
 
@@ -147,10 +160,7 @@ class Lottie extends EditorComponent {
             </BoxResizer>
           </Wrapper>
         </Toolbar>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </>
     );
   }
@@ -168,8 +178,7 @@ class Lottie extends EditorComponent {
       linkExternalRel,
       linkExternalType,
       linkPopup,
-      linkUpload,
-      popups
+      linkUpload
     } = v;
 
     const hrefs = {
@@ -184,31 +193,34 @@ class Lottie extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
+    const animDom = (
+      <div
+        className="brz-lottie-anim"
+        data-animate-name={animationLink}
+        data-anim-speed={speed}
+        data-anim-loop={loop}
+        data-anim-autoplay={autoplay}
+        data-anim-direction={direction}
+      />
+    );
+
     return (
       <>
         <Wrapper {...this.makeWrapperProps({ className })}>
-          <div
-            className="brz-lottie-anim"
-            data-animate-name={animationLink}
-            data-anim-speed={speed}
-            data-anim-loop={loop}
-            data-anim-autoplay={autoplay}
-            data-anim-direction={direction}
-          />
-          {hrefs[linkType] !== "" && (
+          {hrefs[linkType] ? (
             <Link
-              type={linkType}
               href={hrefs[linkType]}
+              type={linkType}
               target={linkExternalBlank}
               rel={linkExternalRel}
-              className="brz-link-container"
-            />
+            >
+              {animDom}
+            </Link>
+          ) : (
+            animDom
           )}
         </Wrapper>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </>
     );
   }

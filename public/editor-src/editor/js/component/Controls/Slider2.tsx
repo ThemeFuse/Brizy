@@ -32,7 +32,7 @@ export const Slider2: FC<Props> = ({
 
   return (
     <input
-      className={classNames("brz-ed-control--slider2", className)}
+      className={classNames("brz-input brz-ed-control--slider2", className)}
       type="range"
       value={value}
       min={min}

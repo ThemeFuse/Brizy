@@ -7,7 +7,8 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { DynamicContentHelper } from "../common/DynamicContentHelper";
-import * as toolbarConfig from "./toolbar";
+import { getTerms } from "visual/utils/api/editor/index";
+import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
@@ -19,7 +20,9 @@ const shortcodeToPlaceholder = {
   woocommerce_checkout: () => "{{editor_product_checkout}}",
   woocommerce_my_account: () => "{{editor_product_my_account}}",
   woocommerce_order_tracking: () => "{{editor_product_order_tracking}}",
-  product: ({ productID }) => `{{editor_product_page id="${productID}"}}`
+  product: ({ productID }) => `{{editor_product_page id="${productID}"}}`,
+  products: ({ limit, category, columns, orderBy, order }) =>
+    `{{editor_product_products limit="${limit}" category="${category}" columns="${columns}" orderby="${orderBy}" order="${order}"}}`
 };
 
 const resizerPoints = ["centerLeft", "centerRight"];
@@ -30,6 +33,14 @@ export default class WOOPages extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  state = {
+    taxonomies: []
+  };
+
+  componentDidMount() {
+    getTerms("product_cat").then(taxonomies => this.setState({ taxonomies }));
+  }
 
   containerRef = React.createRef();
 
@@ -56,7 +67,10 @@ export default class WOOPages extends EditorComponent {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarConfigFn(this.state.taxonomies),
+          sidebarConfig
+        )}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper

@@ -25,16 +25,24 @@
     .brz-container__wrap {
       flex: 1;
     }
+    > .brz-container {
+      position: relative;
+      flex: 1;
+    }
   }
-  &__content > .brz-container {
-    position: relative;
+
+  // sometime have problems with paddings per slide
+  &__content.slick-slide {
     flex: 1;
   }
 
   // Slider
-  > .brz-slick-slider:not(.slick-initialized)
+  > .brz-slick-slider:not(.slick-initialized) {
+    overflow: hidden;
+
     > .brz-section__content:not(:first-child) {
-    display: none;
+      display: none;
+    }
   }
 }
 
@@ -74,6 +82,10 @@
       left: 0;
       width: 100%;
     }
+  }
+  &--fixed > .brz-section__menu-item,
+  &-sticky-item {
+    position: relative;
   }
 }
 
@@ -377,4 +389,12 @@
       font-size: 320px;
     }
   }
+}
+
+//IE fix
+_:-ms-lang(x)::-ms-backdrop,
+.brz-container,
+.brz-section__content .brz-container__wrap {
+  -ms-flex: auto !important;
+  flex: auto !important;
 }

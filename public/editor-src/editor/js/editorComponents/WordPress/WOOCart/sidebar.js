@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { toolbarBorderRadius } from "visual/utils/toolbar";
 
-export const title = t("Shop Cart");
+export const title = t("Cart");
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>

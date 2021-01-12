@@ -196,20 +196,33 @@ class Column extends EditorComponent {
     );
   }
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkType, linkPopup } = v;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -219,7 +232,7 @@ class Column extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -230,15 +243,7 @@ class Column extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      items,
-      linkType,
-      linkPopup,
-      popups,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { items, customClassName, cssClassPopulation, customAttributes } = v;
     const {
       meta: { inGrid, posts }
     } = this.props;
@@ -319,10 +324,7 @@ class Column extends EditorComponent {
             </ContextMenu>
           )}
         </SortableElement>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </>
     );
   }
@@ -337,7 +339,6 @@ class Column extends EditorComponent {
       linkExternalRel,
       linkPopup,
       linkUpload,
-      popups,
       customClassName,
       cssClassPopulation,
       customAttributes
@@ -398,10 +399,7 @@ class Column extends EditorComponent {
             )}
           </Animation>
         </CustomCSS>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </>
     );
   }

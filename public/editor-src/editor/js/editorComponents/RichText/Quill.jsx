@@ -181,6 +181,18 @@ export default class QuillComponent extends React.Component {
       return new Delta().insert(content, attributers);
     });
 
+    this.quill.clipboard.addMatcher(Node.TEXT_NODE, node => {
+      const { color, colorPalette } = this.quill.getFormat();
+      const attributers =
+        color || colorPalette ? { color, colorPalette } : null;
+
+      return new Delta().insert(
+        // eslint-disable-next-line no-control-regex
+        node.data.replace(new RegExp("\n", "g"), " "),
+        attributers
+      );
+    });
+
     // we add just one listener for all instances
     // because otherwise we would end up with tens of
     // listeners on the document

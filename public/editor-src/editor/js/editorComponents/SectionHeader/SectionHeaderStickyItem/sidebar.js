@@ -8,7 +8,8 @@ import {
   toolbarShapeTopType,
   toolbarShapeTopFlip,
   toolbarShapeBottomType,
-  toolbarShapeBottomFlip
+  toolbarShapeBottomFlip,
+  toolbarMargin
 } from "visual/utils/toolbar";
 
 export const title = t("Header");
@@ -43,6 +44,13 @@ export function getItems({ v, device }) {
               v,
               device,
               state: "normal"
+            }),
+            toolbarMargin({
+              v,
+              device,
+              state: "normal",
+              onChangeGrouped: ["onChangeMarginGrouped"],
+              onChangeUngrouped: ["onChangeMarginUngrouped"]
             }),
             toolbarBorderRadius({
               v,

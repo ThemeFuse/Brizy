@@ -32,11 +32,6 @@ export function getItems({ v, device }) {
       ]
     },
     {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true
-    },
-    {
       id: "toolbarSettings",
       type: "popover-dev",
       roles: ["admin"],
@@ -86,16 +81,6 @@ export function getItems({ v, device }) {
           ]
         }
       ]
-    },
-    {
-      id: "duplicate",
-      type: "button",
-      disabled: true
-    },
-    {
-      id: "remove",
-      type: "button",
-      disabled: true
     }
   ];
 }

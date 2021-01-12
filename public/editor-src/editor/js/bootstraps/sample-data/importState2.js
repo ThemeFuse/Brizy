@@ -25,7 +25,9 @@ export default function importState([myProject, myPage], state) {
   const blocksThumbnailSizes = state.blocksThumbnailSizes;
 
   const userProjectId = project.id;
+  const userProjectVersion = project.dataVersion;
   const userPageId = currentPage.id;
+  const userPageVersion = currentPage.dataVersion;
 
   const traverseCb = (key, value, obj) => {
     if (value === userProjectId) {
@@ -34,6 +36,13 @@ export default function importState([myProject, myPage], state) {
       obj[key] = myPage.id;
     } else if (key === "_thumbnailSrc") {
       delete obj[key];
+    } else if (key === "dataVersion") {
+      if (value === userProjectVersion) {
+        obj[key] = myProject.dataVersion;
+      }
+      if (value === userPageVersion) {
+        obj[key] = myPage.dataVersion;
+      }
     }
   };
 

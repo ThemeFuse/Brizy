@@ -175,20 +175,33 @@ export default class Button extends EditorComponent {
     );
   }
 
-  renderPopups() {
+  renderPopups(v) {
+    const { popups, linkType, linkPopup } = v;
+
+    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+      return null;
+    }
+
+    const normalizePopups = popups.reduce((acc, popup) => {
+      let itemData = popup;
+
+      if (itemData.type === "GlobalBlock") {
+        // TODO: some kind of error handling
+        itemData = blocksDataSelector(getStore().getState())[
+          itemData.value._id
+        ];
+      }
+
+      return itemData ? [...acc, itemData] : acc;
+    }, []);
+
+    if (normalizePopups.length === 0) {
+      return null;
+    }
+
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        let isGlobal = false;
-
-        if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-          isGlobal = true;
-        }
-
         const {
           blockId,
           value: { popupId }
@@ -198,7 +211,7 @@ export default class Button extends EditorComponent {
           blockId,
           instanceKey: IS_EDITOR
             ? `${this.getId()}_${popupId}`
-            : isGlobal
+            : itemData.type === "GlobalBlock"
             ? `global_${popupId}`
             : popupId
         };
@@ -228,7 +241,7 @@ export default class Button extends EditorComponent {
     const state = State.mRead(v.tabsState);
     const device = deviceModeSelector(getStore().getState());
 
-    const { type, iconName, iconType, linkType, linkPopup, popups } = v;
+    const { type, iconName, iconType } = v;
     const renderIcon = iconName && iconType;
     const content =
       hasSizing(v, device, state) && IS_EDITOR && v.type !== "submit" ? (
@@ -254,10 +267,7 @@ export default class Button extends EditorComponent {
               : this.renderSubmit(v, vs, vd, content)}
           </CustomCSS>
         </Toolbar>
-        {popups.length > 0 &&
-          linkType === "popup" &&
-          linkPopup !== "" &&
-          this.renderPopups()}
+        {this.renderPopups(v)}
       </>
     );
   }

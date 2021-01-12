@@ -3,7 +3,11 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleSection(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
+      standart: [
+        "cssStylePaddingPreview",
+        "cssStylePaddingRightLeftForEditor",
+        "cssStyleMargin"
+      ]
     },
     ".brz &&:hover > .brz-bg": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius"]
@@ -46,6 +50,13 @@ export function styleSection(v, vs, vd) {
       ]
     }
   };
+
+  if (IS_EDITOR) {
+    // Added offset for toolbar when uses marginTop in negative value
+    styles[".brz &&:hover .brz-ed-collapsible"] = {
+      standart: ["cssStyleSectionToolbarOffset"]
+    };
+  }
 
   return renderStyles({ v, vs, vd, styles });
 }

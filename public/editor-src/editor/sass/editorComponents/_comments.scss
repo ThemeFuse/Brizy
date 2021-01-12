@@ -58,7 +58,7 @@
       position: relative;
 
       * {
-        color: #818a91;
+        color: inherit;
         font-size: inherit;
       }
     }
@@ -240,6 +240,7 @@
         }
         .brz-comments__date {
           width: 100%;
+          margin-bottom: 7px;
 
           * {
             width: 75px;
@@ -471,6 +472,7 @@
         box-shadow: none;
       }
       a::before {
+        font-family: star;
         display: block;
         position: absolute;
         top: 0;

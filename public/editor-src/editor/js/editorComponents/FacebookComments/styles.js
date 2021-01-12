@@ -30,6 +30,7 @@ export function style(v, vs, vd) {
     },
     ".brz &&:hover .brz-comments__date": {
       standart: [
+        "cssStyleElementCommentsCommentsColor",
         "cssStyleElementCommentsDateFontFamily",
         "cssStyleElementCommentsDateFontSize",
         "cssStyleElementCommentsDateLineHeight",
@@ -135,6 +136,9 @@ export function style(v, vs, vd) {
     },
     ".brz &&:hover .stars a.active ~ a::before": {
       standart: ["cssStyleElementCommentsStarsBgColor"]
+    },
+    ".brz &&:hover .selected a::before": {
+      standart: ["cssStyleElementCommentsStarsColor"]
     }
   };
 

@@ -283,6 +283,7 @@ class Video extends EditorComponent {
               muted={muted === "on"}
               data-autoplay={this.getAutoplay(v)}
               src={customVideoFile}
+              playsInline
             />
           )}
         </div>

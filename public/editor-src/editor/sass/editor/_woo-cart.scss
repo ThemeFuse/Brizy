@@ -21,7 +21,7 @@
   &:hover {
     color: #3dbfe8;
   }
-  &.brz-woo-cart-sidebar--open {
-    display: block;
-  }
+}
+.brz-woocart__wrapper--opened .brz-woocart__sidebar-toolbar {
+  display: block;
 }

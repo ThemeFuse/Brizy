@@ -1,42 +1,28 @@
 import $ from "jquery";
 
+function openSidebar() {
+  $(this)
+    .closest(".brz-woocart__wrapper")
+    .addClass("brz-woocart__wrapper--opened");
+  $(document.body).addClass("brz-ow-hidden brz-woocart--opened");
+}
+
+function closeSidebar() {
+  $(this)
+    .closest(".brz-woocart__wrapper")
+    .removeClass("brz-woocart__wrapper--opened");
+  $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
+}
+
 export default function($node) {
-  $node.find(".brz-woocart").click(function() {
-    const $wrapper = $(this).closest(".brz-woocart__wrapper");
+  $node.find(".brz-woocart__wrapper").each(function() {
+    const $this = $(this);
+    const $cart = $this.find(".brz-woocart");
+    const $close = $this.find(".brz-woocart__sidebar-close");
+    const $backdrop = $this.find(".brz-woocart__background");
 
-    $wrapper
-      .find(".brz-woocart__sidebar")
-      .addClass("brz-woocart__sidebar--active");
-    $wrapper
-      .find(".brz-woocart__background")
-      .addClass("brz-woocart__background--active");
-
-    $(document.body).addClass("brz-ow-hidden brz-woocart--opened");
-  });
-
-  $node.find(".brz-woocart__sidebar-close").click(function() {
-    const $wrapper = $(this).closest(".brz-woocart__wrapper");
-
-    $wrapper
-      .find(".brz-woocart__sidebar")
-      .removeClass("brz-woocart__sidebar--active");
-    $wrapper
-      .find(".brz-woocart__background")
-      .removeClass("brz-woocart__background--active");
-
-    $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
-  });
-
-  $node.find(".brz-woocart__background").click(function() {
-    const $wrapper = $(this).closest(".brz-woocart__wrapper");
-
-    $wrapper
-      .find(".brz-woocart__sidebar")
-      .removeClass("brz-woocart__sidebar--active");
-    $wrapper
-      .find(".brz-woocart__background")
-      .removeClass("brz-woocart__background--active");
-
-    $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
+    $cart.on("click", openSidebar);
+    $close.on("click", closeSidebar);
+    $backdrop.on("click", closeSidebar);
   });
 }

@@ -17,6 +17,7 @@
   background-size: 7px;
   background-repeat: no-repeat;
   background-position: center;
+  margin-top: -7px;
 }
 
 @mixin track {
@@ -27,6 +28,7 @@
   align-items: center;
 }
 
+// base
 input.brz-ed-control--slider2 {
   appearance: none;
   padding: 0;
@@ -38,15 +40,12 @@ input.brz-ed-control--slider2 {
   &::-moz-range-track {
     @include track;
   }
-
   &::-webkit-slider-runnable-track {
     @include track;
   }
-
   &::-webkit-slider-thumb {
     @include thumb;
   }
-
   &::-moz-range-thumb {
     @include thumb;
   }

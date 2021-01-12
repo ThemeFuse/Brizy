@@ -13,13 +13,13 @@ export function parseCustomAttributes(attributes: string): Attributes {
   }
 
   const res: Attributes = {};
-  const regex = /([\w_-]+)[:=](["'])?([\w_-]+)\2/g;
+  const regex = /([\w_-]+)[:=](?:(["'])([\w\s]+)\2|(\w+))/g;
   let match = regex.exec(attributes);
 
   while (match) {
     if (match !== null) {
-      const [, att, , val] = match;
-      res[att] = val;
+      const [, att, , val1, val2] = match;
+      res[att] = val1 ?? val2;
     }
 
     match = regex.exec(attributes);

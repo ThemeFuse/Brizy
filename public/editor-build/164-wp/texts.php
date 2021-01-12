@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_163Wp_Texts {
+class Brizy_Public_EditorBuild_164Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -683,7 +683,6 @@ class Brizy_Public_EditorBuild_163Wp_Texts {
 			"Square" => __("Square", "brizy"),
 			"Stars" => __("Stars", "brizy"),
 			"Stars Bg" => __("Stars Bg", "brizy"),
-			"Stars Size" => __("Stars Size", "brizy"),
 			"Start" => __("Start", "brizy"),
 			"Static" => __("Static", "brizy"),
 			"Status" => __("Status", "brizy"),
