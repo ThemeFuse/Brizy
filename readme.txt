@@ -4,7 +4,7 @@ Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page,
 Requires at least: 4.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -138,6 +138,9 @@ The progress you're making while building your page is always backed up in the c
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.5 - 2021-01-13 =
+* Fixed: Insert Brizy buttons in the editor
 
 = 2.2.4 - 2021-01-12 =
 * Fixed: WOOCart toolbar activating from beneath the backdrop
