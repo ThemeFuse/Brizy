@@ -327,10 +327,19 @@ class Image extends EditorComponent {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
-        const {
+        let {
           blockId,
           value: { popupId }
         } = itemData;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          itemData = blocksDataSelector(getStore().getState())[
+            itemData.value._id
+          ];
+
+          popupId = itemData.value.popupId;
+        }
 
         return {
           blockId,
