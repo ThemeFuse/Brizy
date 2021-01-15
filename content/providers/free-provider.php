@@ -32,7 +32,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 					return $contentPlaceholder->getContent();
 				}
 
-				if ( array_intersect( $roles, (array) $user->roles ) || in_array( 'administrator', $user->roles ) ) {
+				if ( array_intersect( $roles, (array) $user->roles ) ) {
 					return $contentPlaceholder->getContent();
 				}
 
