@@ -114,13 +114,17 @@ class Brizy_Admin_Cloud {
 	}
 
 	public function initializeActions() {
-		Brizy_Admin_Cloud_Api::_init( $this->project );
-
-		if ( wp_doing_ajax() && $this->project->getCloudToken() && $this->project->getCloudContainer() ) {
-			$versions = $this->cloudClient->getCloudEditorVersions();
-			if ( $versions['sync'] == BRIZY_SYNC_VERSION ) {
-				self::registerCloudFilters();
+		try {
+			if ( wp_doing_ajax() && $this->project->getCloudToken() && $this->project->getCloudContainer() ) {
+				$versions = $this->cloudClient->getCloudEditorVersions();
+				if ( $versions['sync'] == BRIZY_SYNC_VERSION ) {
+					self::registerCloudFilters();
+				}
 			}
+
+			Brizy_Admin_Cloud_Api::_init( $this->project );
+		} catch(\Exception $e) {
+			Brizy_Logger::instance()->exception( $e );
 		}
 	}
 
