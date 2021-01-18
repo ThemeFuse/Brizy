@@ -1,6 +1,6 @@
 === Brizy - Page Builder ===
 Contributors: themefuse
-Tags: brizy, page builder, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, website builder, landing page builder, front-end builder
+Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
@@ -8,7 +8,7 @@ Stable tag: 2.2.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Creating WordPress pages should be fast & easy. Brizy is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+A page builder that is fast & easy, Brizy is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
 
 More details on: https://brizy.io
 
@@ -17,14 +17,14 @@ More details on: https://brizy.io
 
 https://vimeo.com/263343966
 
-Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is a new and innovative way of building WordPress pages visually. No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
 
 == Highlights ==
 
 ![Clutter free](https://brizy.io/wp-content/uploads/2018/04/Clutter-free.gif)
 
 = Smart & clutter free =
-Most page builders crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. We show only what's needed, front & centre, close to the element you're editing.
+Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing. 
 
 ![Drag & Drop](https://brizy.io/wp-content/uploads/2018/04/Drag-Drop.gif)
 
@@ -33,13 +33,13 @@ Moving content elements, columns or rows is a breeze with our intuitive Drag & D
 keyword
 ![Design Elements](https://brizy.io/wp-content/uploads/2018/04/Design-Elements.gif)
 
-= Design elements =
+= Page Builder Design elements =
 Text, buttons, images, icons, video, maps and many more are ready to help you create your page design in a snap.
 
 ![Pre-made blocks](https://brizy.io/wp-content/uploads/2018/04/Pre-made-blocks.gif)
 
-= Over 150 pre-made blocks =
-Blocks are pre-made designs that you can add to your page, ready to be customised. This will enable you to create the main structure of your page in a matter of minutes, while also ensuring that it looks awesome.
+= Over 500 pre-made blocks =
+Expertly crafted with conversions in mind, the Brizy website builder design kit is a collection of 500+ blocks that will enable you to create websites in minutes.
 
 ![Icons](https://brizy.io/wp-content/uploads/2018/04/Icons.gif)
 
@@ -49,12 +49,12 @@ Available in both Outline and Glyph versions, even the most demanding icon needs
 ![Global styling](https://brizy.io/wp-content/uploads/2018/04/Global-styling.gif)
 
 = Global styling =
-Ever wanted to change all the similar colors in your web page with a single click? With Brizy, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
+Ever wanted to change all the similar colors in your web page with a single click? With Brizy page builder, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
 
 ![Mobile friendly](https://brizy.io/wp-content/uploads/2018/04/Mobile-friendly.gif)
 
 = Mobile Friendly =
-Switch instantly to Mobile View mode, where you can make changes that will only apply to this type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
+Switch instantly to Mobile View mode, where you can make changes that will only apply to these type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
 
 ![Text Editor](https://brizy.io/wp-content/uploads/2018/04/Text-Editor.gif)
 
@@ -64,7 +64,7 @@ Just click and type to edit all the texts in-place. Changing colors, fonts, alig
 ![Images](https://brizy.io/wp-content/uploads/2018/04/Images.gif)
 
 = Images done right =
-Take full control over your website images by harnessing our powerful and easy-to-use options. Upload, focus, zoom and resize are all done effortlessly, in a matter of seconds.
+The Brizy page builder lets you take full control over your website images by harnessing our powerful and easy-to-use options. Upload, focus, zoom and resize are all done effortlessly, in a matter of seconds.
 
 ![Content adjustments](https://brizy.io/wp-content/uploads/2018/04/Content-adjustments.gif)
 
@@ -73,14 +73,8 @@ Just a couple of clicks are needed to make content adjustments in width, height 
 
 ![Resize columns](https://brizy.io/wp-content/uploads/2018/04/Resize-columns.gif)
 
-= Resize columns =
-Resize columns by dragging the handle that appears in between, with percentage values displayed up top. The content inside will automatically adapt to the new size.
-
 = Undo / Redo =
 Don't worry if you make a mistake or delete something that you shouldn't have. With Undo you can get everything back.
-
-= Cloud auto-save =
-The progress you're making while building your page is always backed up in the cloud, so you'll never lose your work.
 
 = Liked Brizy? =
 - Join our [Facebook Group](https://www.facebook.com/groups/brizy).
