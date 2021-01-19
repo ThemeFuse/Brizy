@@ -310,7 +310,7 @@ class Brizy_Editor_Editor_Editor {
 							}
 
 							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
-							     ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							     ! Brizy_Editor_Entity::isBrizyEnabled($p->ID) ) {
 								$wp_post = $p;
 								break;
 							}

@@ -433,7 +433,7 @@ class Brizy_Admin_Templates
         $is_using_brizy = false;
         try {
             if (in_array(get_post_type($pid), Brizy_Editor::get()->supported_post_types())) {
-                $is_using_brizy = Brizy_Editor_Post::get($pid)->uses_editor();
+                $is_using_brizy = Brizy_Editor_Entity::isBrizyEnabled($pid);
             }
         } catch (Exception $e) {
 
@@ -790,19 +790,14 @@ class Brizy_Admin_Templates
                             $get_option = get_option('page_for_posts');
 
                             if ($get_option) {
-                                $post = Brizy_Editor_Post::get($get_option);
-
-                                return $post->uses_editor() ? null : get_post($get_option);
+                                return Brizy_Editor_Entity::isBrizyEnabled($get_option) ? null : get_post($get_option);
                             }
                             break;
                         case 'front_page':
                             $get_option = get_option('page_on_front');
 
                             if ($get_option) {
-
-                                $post = Brizy_Editor_Post::get($get_option);
-
-                                return $post->uses_editor() ? null : get_post($get_option);
+                                return Brizy_Editor_Entity::isBrizyEnabled($get_option) ? null : get_post($get_option);
                             }
                             break;
                     }

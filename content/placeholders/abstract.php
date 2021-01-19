@@ -31,7 +31,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 	abstract public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder );
 
 	/**
-	 * This must return the option valie that will be passed to the editor
+	 * This must return the option value that will be passed to the editor
 	 *
 	 *
 	 * @return mixed

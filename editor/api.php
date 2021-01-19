@@ -499,7 +499,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						$posts = get_posts( $args );
 						$post = isset( $posts[0] ) ? $posts[0] : null;
 
-						if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+						if ( $post && !Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
 							return $post;
 						} else {
 							return null;
@@ -531,7 +531,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 					$post = isset( $posts[0] ) ? $posts[0] : null;
 
-					if ( $post && !Brizy_Editor_Post::get( $post )->uses_editor() ) {
+					if ( $post && !Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
 						return $post;
 					} else {
 						return null;
@@ -674,9 +674,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$project = Brizy_Editor_Project::get();
 			$apost   = (int) $_REQUEST['post_id'];
-			$post    = Brizy_Editor_Post::get( $apost );
 
-			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $post->getWpPostId() );
+			$media_cacher = new Brizy_Editor_CropCacheMedia( $project, $apost );
 			$media_cacher->download_original_image( $_REQUEST['media'] );
 
 			$this->success( array(), 200 );
