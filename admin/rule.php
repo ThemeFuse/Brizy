@@ -5,6 +5,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const TYPE_INCLUDE = 1;
 	const TYPE_EXCLUDE = 2;
 
+	const ALL = 0;
 	const POSTS = 1;
 	const TAXONOMY = 2;
 	const ARCHIVE = 4;
@@ -90,18 +91,31 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	public function isMatching( $applyFor, $entityType, $entityValues ) {
 
 		$ruleValues = array(
+			$this->getType(),
 			$this->getAppliedFor(),
 			$this->getEntityType(),
 			$this->getEntityValues(),
 		);
 
 		$checkValues = array(
+			self::TYPE_INCLUDE, // include
 			$applyFor,
 			$entityType,
 			$entityValues,
 		);
 
+
+
+		// return if the rule is for exclude
+		if($ruleValues[0]!=$checkValues[0]) {
+			return false;
+		}
+
 		$entity_values = $this->getEntityValues();
+
+		// check is the rule is matching all
+		if($ruleValues[0]==self::TYPE_INCLUDE && !$ruleValues[1])
+			return  true;
 
 		// exception for home page that has two behaviors.. as page and as a template
 		if ( $applyFor == self::TEMPLATE &&
@@ -156,13 +170,13 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		}
 
 		// matching archive rules
-		if ( isset( $ruleValues[0] ) && isset( $checkValues[0] ) && ( $ruleValues[0] & self::ARCHIVE ) && ( $checkValues[0] & self::ARCHIVE ) ) {
+		if ( isset( $ruleValues[1] ) && isset( $checkValues[1] ) && ( $ruleValues[1] & self::ARCHIVE ) && ( $checkValues[1] & self::ARCHIVE ) ) {
 
-			if ( $checkValues[0] == $ruleValues[0] ) {
+			if ( $checkValues[1] == $ruleValues[1] ) {
 				return true;
-			} elseif ( $ruleValues[0] == self::DATE_ARCHIVE ) {
+			} elseif ( $ruleValues[1] == self::DATE_ARCHIVE ) {
 				return true;
-			} elseif ( $ruleValues[0] == self::ARCHIVE ) {
+			} elseif ( $ruleValues[1] == self::ARCHIVE ) {
 				return true;
 			}
 		}

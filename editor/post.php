@@ -478,7 +478,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 */
 	public function get_compiled_page() {
 
-		if ( self::$compiled_page[$this->getWpPostId()] ) {
+		if ( isset(self::$compiled_page[$this->getWpPostId()]) ) {
 			return self::$compiled_page[$this->getWpPostId()];
 		}
 
