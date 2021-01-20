@@ -38,7 +38,6 @@ class Brizy_Admin_OptimizeImages {
 		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_optimizer_submit', array( $this, 'settings_submit' ) );
-
 	}
 
 	public function addSubmenuPage() {
