@@ -7,11 +7,6 @@ class Brizy_Admin_OptimizeImages {
 	const PAGE_KEY = 'brizy-optimize-images';
 
 	/**
-	 * @var Brizy_TwigEngine
-	 */
-	private $twig;
-
-	/**
 	 * @var string
 	 */
 	private $screenName;
@@ -43,7 +38,7 @@ class Brizy_Admin_OptimizeImages {
 		add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
 		add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
 		add_action( 'brizy_optimizer_submit', array( $this, 'settings_submit' ) );
-		$this->twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/optimizer/" );
+
 	}
 
 	public function addSubmenuPage() {
@@ -120,7 +115,8 @@ class Brizy_Admin_OptimizeImages {
 		$context['enabled']      = ( isset( $settings['shortpixel']['API_KEY'] ) && $settings['shortpixel']['API_KEY'] != '' ) ? 1 : 0;
 		$context['submit_label'] = __( 'Optimize', 'brizy' );
 
-		return $this->twig->render( 'optimizer-general.html.twig', $context );
+		$twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/optimizer/" );
+		return $twig->render( 'optimizer-general.html.twig', $context );
 	}
 
 	private function extractUrlFromPage( $urls, $postId, $filesystem, $project ) {
@@ -209,7 +205,8 @@ class Brizy_Admin_OptimizeImages {
 			"lossy"   => 1
 		);
 
-		return $this->twig->render( 'optimizer-settings.html.twig', $context );
+		$twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/optimizer/" );
+		return $twig->render( 'optimizer-settings.html.twig', $context );
 	}
 
 	/**
