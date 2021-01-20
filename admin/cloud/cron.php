@@ -11,7 +11,7 @@ class Brizy_Admin_Cloud_Cron {
 		static $instance;
 
 		if ( ! $instance ) {
-			$instance = new self( new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() ) );
+			$instance = new self( Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() ) );
 		}
 
 		return $instance;

@@ -41,7 +41,7 @@ class Brizy_Admin_Cloud {
 		}
 
 		if ( ! $cloudClient ) {
-			$cloudClient = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$cloudClient = Brizy_Admin_Cloud_Client::instance( $project, new WP_Http() );
 		}
 
 		if ( ! wp_doing_ajax() && Brizy_Editor_Project::get()->getCloudToken() ) {

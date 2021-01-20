@@ -30,7 +30,6 @@ class Brizy_Admin_Templates
      */
     protected function __construct()
     {
-
         add_action('wp_loaded', array($this, 'initializeActions'));
 
         $this->ruleManager = new Brizy_Admin_Rules_Manager();

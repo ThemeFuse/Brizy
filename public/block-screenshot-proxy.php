@@ -41,7 +41,7 @@ class Brizy_Public_BlockScreenshotProxy extends Brizy_Public_AbstractProxy {
 		}
 
 		// try to get the screenshot from cloud
-		$client = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+		$client = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
 		$url    = $client->getScreenshotUrl( $screenUID );
 
 		$image_content = Brizy_Editor_Asset_StaticFile::get_asset_content($url);
