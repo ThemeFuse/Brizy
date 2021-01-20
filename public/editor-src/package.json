@@ -22,7 +22,7 @@
     "flatpickr": "^4.5.2",
     "glamor": "^2.20.40",
     "imagesloaded": "^4.1.4",
-    "immer": "^3.1.2",
+    "immer": "^8.0.1",
     "isotope-layout": "^3.0.6",
     "jquery": "^3.3.1",
     "js-base64": "^2.4.9",
