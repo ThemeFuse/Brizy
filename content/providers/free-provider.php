@@ -132,11 +132,11 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	            }
 
 	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
-	            remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            $html = do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
 
-	            add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            add_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            return $html;
             } ),

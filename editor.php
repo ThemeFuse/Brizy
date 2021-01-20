@@ -131,7 +131,7 @@ class Brizy_Editor {
 		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
 
 		//Brizy_Editor_Asset_Cleaner::_init();
-		Brizy_Admin_Templates::_init();
+		Brizy_Admin_Templates::instance();
 		Brizy_Admin_Popups_Main::_init();
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
