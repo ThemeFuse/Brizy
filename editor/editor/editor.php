@@ -303,18 +303,16 @@ class Brizy_Editor_Editor_Editor {
 
 						$array = get_posts( $args );
 
-						foreach ( $array as $p ) {
+						foreach ( $array as $i => $p ) {
 
 							if ( $p->post_type == 'attachment' ) {
 								return addQueryStringToUrl( get_attachment_link( $p->ID ), 'preview=1' );
 							}
 
-							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
-							     ! Brizy_Editor_Entity::isBrizyEnabled($p->ID) ) {
+							if ( ! Brizy_Editor_Post::get( $p )->uses_editor() || ( $i + 1 ) === count( $array ) ) {
 								$wp_post = $p;
 								break;
 							}
-
 						}
 						break;
 					case Brizy_Admin_Rule::TAXONOMY :
