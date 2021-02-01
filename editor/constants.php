@@ -7,5 +7,5 @@ class Brizy_Editor_Constants {
 	 */
 	const USES_BRIZY = 'brizy-use-brizy';
 
-	const BRIZY_ENABLED = 'brizy-enabled';
+	const BRIZY_ENABLED = 'brizy_enabled';
 }

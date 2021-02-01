@@ -90,9 +90,10 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 	}
 
 	/**
-	 * @param $val
+	 * @param $value
 	 *
 	 * @return $this
+	 * @throws Brizy_Editor_Exceptions_AccessDenied
 	 */
 	public function set_uses_editor( $value ) {
 		self::setBrizyEnabled($this->getWpPostId(), $value);
