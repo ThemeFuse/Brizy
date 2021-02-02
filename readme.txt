@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,17 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.7 - 2021-02-02 =
+* New: Added animation option for Accordion content
+* Improved: Code refactoring and optimization 
+* Fixed: Custom Video CSS option
+* Fixed: Images with absolute position no longer blurry
+* Fixed: Get taxonomies bug 
+* Fixed: Removed duplicate dynamic content call
+* Fixed: Restore template from trash
+* Fixed: Avoid cloud call crash
+
 
 = 2.2.6 - 2021-01-14 =
 * Fixed: Global Popups
