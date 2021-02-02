@@ -140,8 +140,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	 * @return $this
 	 */
 	public function set_uses_editor( $val ) {
-		$this->uses_editor = true;
-
+		parent::set_uses_editor(true);
 		return $this;
 	}
 

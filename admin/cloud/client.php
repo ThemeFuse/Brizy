@@ -17,11 +17,30 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 */
 	private $http;
 
-
 	/**
 	 * @var integer
 	 */
 	private $library;
+
+	/**
+	 * @var Brizy_Admin_Cloud_Client
+	 */
+	static private $instance;
+
+	/**
+	 * @param $project
+	 * @param $http
+	 *
+	 * @return Brizy_Admin_Cloud_Client
+	 */
+	public static  function instance( $project, $http ) {
+		static $instance;
+		if ( self::$instance ) {
+			return self::$instance;
+		}
+
+		return self::$instance = new self( $project, $http );
+	}
 
 	/**
 	 * Brizy_Admin_Cloud_Client constructor.
@@ -29,7 +48,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http {
 	 * @param Brizy_Editor_Project $project
 	 * @param WP_Http $http
 	 */
-	public function __construct( $project, $http ) {
+	private function __construct( $project, $http ) {
 		$this->brizyProject = $project;
 		$this->http         = $http;
 

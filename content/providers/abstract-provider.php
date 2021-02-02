@@ -3,20 +3,6 @@
 abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content_Providers_Interface {
 
 	/**
-	 * @var Brizy_Content_Context
-	 */
-	protected $context;
-
-	/**
-	 * BrizyPro_Content_ProviderWp constructor.
-	 *
-	 * @param Brizy_Content_Context $context
-	 */
-	public function __construct( Brizy_Content_Context $context ) {
-		$this->context = $context;
-	}
-
-	/**
 	 * @return array
 	 */
 	protected function getDefaultGroupPlaceholders() {

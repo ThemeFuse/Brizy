@@ -8,6 +8,10 @@
     "afterFilterSpacing": 20,
     "afterFilterSpacingSuffix": null,
     "collapsible": "on",
+
+    "animDuration": 0.3,
+    "animDurationSuffix": "s",
+
     "navIcon": "none",
     "enableTags": "on"
   },
@@ -462,7 +466,6 @@
     "tempActiveFilterBoxShadowSpread": null,
     "tempActiveFilterBoxShadowVertical": null,
     "tempActiveFilterBoxShadowHorizontal": null,
-
 
     "filterPaddingType": "grouped",
     "tempFilterPaddingType": "grouped",

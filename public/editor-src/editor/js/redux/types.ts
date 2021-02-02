@@ -50,6 +50,7 @@ export type ReduxState = {
       alignment: "right" | "left";
     };
     showHiddenElements: boolean;
+    currentRole: string;
   };
 
   // below any are temporary and needed for ReduxStateWithHistory

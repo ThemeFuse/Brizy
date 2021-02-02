@@ -51,34 +51,31 @@ class Brizy_Content_PlaceholderExtractor
         }
 
         foreach ($matches['placeholder'] as $i => $name) {
-            $placeholders[] = $placeholder = new Brizy_Content_ContentPlaceholder(
-                $matches['placeholderName'][$i],
-                $matches['placeholder'][$i],
-                $this->getPlaceholderAttributes($matches['attributes'][$i]),
-                $matches['content'][$i]
-            );
 
-            $hasPlaceholder = $this->provider->getPlaceholder($placeholder->getName());
+            $hasPlaceholder = $this->provider->getPlaceholder($matches['placeholderName'][$i]);
 
             // ignore unknown placeholders
             if (!$hasPlaceholder) {
                 continue;
             }
 
-            $pos = strpos($content, $placeholder->getPlaceholder());
+	        $placeholder = new Brizy_Content_ContentPlaceholder(
+		        $matches['placeholderName'][$i],
+		        $matches['placeholder'][$i],
+		        $this->getPlaceholderAttributes($matches['attributes'][$i]),
+		        $matches['content'][$i]
+	        );
 
-//			if ( function_exists( 'mb_strpos' ) ) {
-//				$pos          = mb_strpos( utf8_encode( $content ), utf8_encode($placeholder->getPlaceholder()) );
-//			}
+	        $placeholders[] = $placeholder;
+
+            $pos = strpos($content, $placeholder->getPlaceholder());
 
             $length = strlen($placeholder->getPlaceholder());
 
             if ($pos !== false) {
                 $content = substr_replace($content, $placeholder->getUid(), $pos, $length);
             }
-
         }
-
         return array($placeholders, $content);
     }
 

@@ -147,7 +147,7 @@ class Video extends EditorComponent {
     const customVideoFile = customFileUrl(custom);
 
     const classNameVideo = classnames(
-      "brz-video-element",
+      "brz-video-elem",
       css(
         `${this.constructor.componentId}-bg2`,
         `${this.getId()}-bg2`,

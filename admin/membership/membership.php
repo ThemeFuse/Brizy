@@ -201,13 +201,31 @@ class Brizy_Admin_Membership_Membership {
 			return;
 		}
 
-		echo Brizy_Admin_View::render(
-			'membership/checklist',
-			[
-				'roles'      => $this->get_editable_roles(),
-				'user_roles' => isset( $user->roles ) ? $user->roles : null
-			]
-		);
+		$roles          = $this->get_editable_roles();
+		$user_roles     = isset( $user->roles ) ? $user->roles : null;
+		$creating       = isset( $_POST['createuser'] );
+		$selected_roles = $creating && isset( $_POST['editor_multiple_roles'] ) ? wp_unslash( $_POST['editor_multiple_roles'] ) : '';
+
+		echo '<div class="editor-checklist-roles" style="display:none;" data-label-text="' . esc_attr( __( 'Roles' ) ) . '">';
+
+		foreach( $roles as $name => $label ) {
+			$checked = '';
+
+			if ( ! is_null( $user_roles ) ) {
+				$checked = checked( in_array( $name, $user_roles ), true, false );
+			} elseif ( ! empty( $selected_roles ) ) {
+				$checked = checked( in_array( $name, $selected_roles ), true, false );
+			}
+
+			echo
+				'<label>
+					<input type="checkbox" name="editor_multiple_roles[]" style="width:auto;" value="' . esc_attr( $name ) . '" ' . $checked . '>' .
+					esc_html( translate_user_role( $label ) ) .
+				'</label>
+				<br>';
+		}
+
+		echo '</div>';
 	}
 
 	/**

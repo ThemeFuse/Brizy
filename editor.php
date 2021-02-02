@@ -119,7 +119,7 @@ class Brizy_Editor {
 		} catch ( Brizy_Admin_Migrations_UpgradeRequiredException $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Please upgrade Brizy to the latest version.' );
 			Brizy_Logger::instance()->critical( 'Unknown migration found. The plugin must be downgraded to the previous version' );
-			throw new Exception( 'Halt plugin execution!' );
+			//throw new Exception( 'Halt plugin execution!' );
 		}
 	}
 
@@ -132,7 +132,7 @@ class Brizy_Editor {
 
 		//Brizy_Editor_Asset_Cleaner::_init();
 		Brizy_Admin_PanelPostContent::_init();
-		Brizy_Admin_Templates::_init();
+		Brizy_Admin_Templates::instance();
 		Brizy_Admin_Popups_Main::_init();
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
@@ -207,18 +207,20 @@ class Brizy_Editor {
 	public function wordpressObjectCreated() {
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
-		try {
-			// do not delete this line
-			$user = Brizy_Editor_User::get();
 
-			if ( $pid ) {
-				$post = Brizy_Editor_Post::get( $pid );
+		if ( Brizy_Editor_Entity::isBrizyEnabled($pid) ) {
+
+			try {
+				// do not delete this line
+				$user = Brizy_Editor_User::get();
+
+				if ( $pid ) {
+					$post = Brizy_Editor_Post::get( $pid );
+				}
+			} catch ( Exception $e ) {
+				return;
 			}
-		} catch ( Exception $e ) {
-			return;
-		}
 
-		if ( $post && $post->uses_editor() ) {
 			$this->handleFrontEndEditor( $post );
 		}
 	}
@@ -236,7 +238,7 @@ class Brizy_Editor {
 				return $revisionCount;
 			}
 
-			if ( Brizy_Editor_Post::get( $post )->uses_editor() ) {
+			if ( Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
 				$num = $revisionCount;
 			}
 		} catch ( Exception $e ) {
@@ -282,6 +284,7 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
         //Brizy_Admin_Stories_Main::registerCustomPosts();
+		Brizy_Admin_Membership_Membership::registerCustomPostRoles();
         Brizy_Admin_Popups_Main::registerCustomPosts();
         Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();

@@ -5,6 +5,9 @@
     "media": "image",
     "tagName": "footer",
 
+    "membership": "off",
+    "membershipRoles": "[]",
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,

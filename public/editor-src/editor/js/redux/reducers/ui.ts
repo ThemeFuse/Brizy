@@ -14,7 +14,8 @@ const defaultState: UIState = {
     lock: undefined,
     alignment: "right"
   },
-  showHiddenElements: false
+  showHiddenElements: false,
+  currentRole: "default"
 };
 
 export function ui(

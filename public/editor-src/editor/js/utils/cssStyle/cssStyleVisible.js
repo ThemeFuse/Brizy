@@ -92,3 +92,17 @@ export function cssStyleVisibleMode({ v, device, state, mode = "editor" }) {
     ? visible
     : "";
 }
+
+export function cssStyleShowMembershipBlock({ v }) {
+  const { membership, membershipRoles } = v;
+  const roles = JSON.parse(membershipRoles || "[]");
+
+  if (membership === "off" || roles.length === 0) {
+    return "";
+  }
+
+  const cssRoles = roles.map(item => `, var(--role-${item}`).join("");
+  const closeParentheses = ")".repeat(roles.length + 1);
+
+  return `display: var(--role-default ${cssRoles}, none${closeParentheses};`;
+}

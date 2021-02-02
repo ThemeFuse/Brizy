@@ -336,7 +336,7 @@ class Brizy_Editor_Editor_Editor {
 							}
 
 							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
-							     ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							     ! Brizy_Editor_Entity::isBrizyEnabled($p->ID) ) {
 								$wp_post = $p;
 								break;
 							}
@@ -989,7 +989,7 @@ class Brizy_Editor_Editor_Editor {
 		);
 
 		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
-			$cloudClient               = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
 			$versions                  = $cloudClient->getCloudEditorVersions();
 			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
 		}

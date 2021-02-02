@@ -67,14 +67,29 @@ class MenuItem extends EditorComponent {
 
   getMeta(v) {
     const { meta, mods, mMenu } = this.props;
-    const { desktopW, tabletW, mobileW } = calculateMeta({
+    const {
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    } = calculateMeta({
       v,
       meta,
       mods,
       isMMenu: Boolean(mMenu)
     });
 
-    return { ...meta, desktopW, tabletW, mobileW };
+    return {
+      ...meta,
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    };
   }
 
   getMegaMenuWidth(width, suffix, mode) {

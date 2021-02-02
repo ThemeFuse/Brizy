@@ -83,7 +83,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function() {
 
-                $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
                 $post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
 
                 if ( $post ) {
@@ -92,7 +91,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     $params['date']     = get_the_date( '', $post );
                     $params['time']     = get_the_time( '', $post );
                     $params['comments'] = get_comment_count( $post->ID );
-
+	                $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
                     return $twig->render( 'post-info.html.twig', $params );
                 }
 
@@ -133,11 +132,11 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	            }
 
 	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
-	            remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            $html = do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
 
-	            add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            add_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            return $html;
             } ),

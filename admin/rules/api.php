@@ -416,7 +416,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$postTypeName = $wp_post_types[ $post_type ]->labels->name;
 
-		$taxonomies = get_taxonomies( [ 'object_type' => [ $post_type ] ], 'objects' );
+		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
 
 		$groups = array();
 
@@ -496,6 +496,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$groups = array_values( array_filter( $groups, function ( $o ) {
 			return ! is_null( $o );
 		} ) );
+
 		wp_send_json_success( $groups, 200 );
 	}
 

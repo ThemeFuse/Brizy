@@ -91,7 +91,7 @@ class Brizy_Editor_Story extends Brizy_Editor_Post
      */
     public function set_uses_editor($val)
     {
-        $this->uses_editor = true;
+	    parent::set_uses_editor(true);
 
         return $this;
     }

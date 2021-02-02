@@ -82,30 +82,36 @@ class SectionFooter extends EditorComponent {
     const size = styleSizeContainerSize({ v, device: "desktop" });
     const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
     const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
+      wNoSpacing: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
       width: size,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: wInTabletPage,
+      wNoSpacing: wInTabletPage,
       width: tabletSize,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: wInMobilePage,
+      wNoSpacing: wInMobilePage,
       width: mobileSize,
       device: "mobile"
     });
 
     return {
       ...meta,
+      desktopW,
+      desktopWNoSpacing,
       tabletW,
+      tabletWNoSpacing,
       mobileW,
-      desktopW
+      mobileWNoSpacing
     };
   }
 
@@ -222,6 +228,22 @@ class SectionFooter extends EditorComponent {
     );
   }
 
+  renderMemberShipWrapper(content, v) {
+    if (v.membership === "on") {
+      const roles = JSON.parse(v.membershipRoles).join(",");
+
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    }
+
+    return content;
+  }
+
   renderForView(v, vs, vd) {
     const {
       className,
@@ -261,7 +283,7 @@ class SectionFooter extends EditorComponent {
       className: classNameSection
     };
 
-    return (
+    const content = (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
           iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
@@ -273,6 +295,8 @@ class SectionFooter extends EditorComponent {
         </Animation>
       </CustomCSS>
     );
+
+    return this.renderMemberShipWrapper(content, v);
   }
 }
 

@@ -14,10 +14,12 @@ class Brizy_Compatibilities_RankMathSeo {
 		}
 
 		try {
-			$post = Brizy_Editor_Post::get( $_GET['post'] );
 
-			if ( ! $post->uses_editor() ) {
-				return;
+			if ( Brizy_Editor_Entity::isBrizyEnabled( $request->get_param( 'postId' ) ) ) {
+				$post = Brizy_Editor_Post::get( $request->get_param( 'postId' ) );
+				return wp_send_json_success( [ 'content' => apply_filters( 'brizy_content', $post->get_compiled_page()->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() ) ] );
+			} else {
+				wp_send_json_error( 'This post does not use Brizy.', 204 );
 			}
 
 			$needs_compile = ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();

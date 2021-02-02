@@ -54,7 +54,7 @@ class Brizy_Compatibilities_Gutenberg {
 		}
 
 		try {
-			if ( Brizy_Editor_Post::get( $_GET['post'] )->uses_editor() ) {
+			if ( Brizy_Editor_Entity::isBrizyEnabled($_GET['post']) ) {
 				add_filter( 'gutenberg_can_edit_post_type', '__return_false' );
 			}
 		} catch ( Exception $e ) {
@@ -79,12 +79,8 @@ class Brizy_Compatibilities_Gutenberg {
 			get_permalink( get_the_ID() )
 		);
 
-		$log_dir = BRIZY_PLUGIN_URL . '/admin/static/img/';
-
 		try {
-			$post = Brizy_Editor_Post::get( get_the_ID() );
-
-			if ( $post->uses_editor() ) {
+			if ( Brizy_Editor_Entity::isBrizyEnabled( get_the_ID() ) ) {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() ) );
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">

@@ -53,6 +53,9 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 
 		$provider = $context->getProvider();
 
+		if(!$provider)
+			return;
+
 		$placeholder = $provider->getPlaceholder( $placeholderName );
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {

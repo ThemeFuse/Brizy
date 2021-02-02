@@ -4,43 +4,37 @@
 class Brizy_Content_PlaceholderReplacer {
 
 	/**
-	 * @var Brizy_Content_Context
-	 */
-	private $context;
-
-	/**
 	 * @var Brizy_Content_Providers_AbstractProvider
 	 */
 	private $placeholderProvider;
 
-	/**
-	 * @var Brizy_Content_PlaceholderExtractor
-	 */
-	private $placeholderExtractor;
 
 	/**
 	 * Brizy_Content_PlaceholderReplacer constructor.
 	 *
 	 * @param $context
 	 * @param $placeholderProvider
-	 * @param $extractor
 	 */
-	public function __construct( $context, $placeholderProvider, $extractor ) {
-		$this->context              = $context;
+	public function __construct( $context,   $placeholderProvider ) {
 		$this->placeholderProvider  = $placeholderProvider;
-		$this->placeholderExtractor = $extractor;
 	}
 
 	/**
 	 * @param $placeholders
 	 * @param $content
+	 * @param $context
 	 *
-	 * @return mixed
+	 * @return string|string[]
 	 */
-	public function getContent( $placeholders = null, $content = null ) {
+	public function getContent( $placeholders, $content, $context= null) {
 
 		$toReplace           = array();
 		$toReplaceWithValues = array();
+
+		if(!$context)
+		{
+			$context = Brizy_Content_ContextFactory::createEmptyContext();
+		}
 
 		if ( $placeholders ) {
 			foreach ( $placeholders as $contentPlaceholder ) {
@@ -48,7 +42,7 @@ class Brizy_Content_PlaceholderReplacer {
 					$placeholder = $this->placeholderProvider->getPlaceholder( $contentPlaceholder->getName() );
 					if ( $placeholder ) {
                         $toReplace[] = $contentPlaceholder->getUid();
-						$toReplaceWithValues[] = $placeholder->getValue( $this->context, $contentPlaceholder );
+						$toReplaceWithValues[] = $placeholder->getValue( $context , $contentPlaceholder );
 					} else {
                         $toReplace[] = $contentPlaceholder->getPlaceholder();
 						$toReplaceWithValues[] = '';
