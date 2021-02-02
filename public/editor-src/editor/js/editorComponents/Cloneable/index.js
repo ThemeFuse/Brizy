@@ -5,7 +5,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
-import { percentageToPixels } from "visual/utils/meta";
+import { getWrapperContainerW } from "visual/utils/meta";
 import * as Str from "visual/utils/string/specs";
 import Items from "./items";
 import * as toolbarExtendConfig from "./toolbarExtend";
@@ -24,6 +24,7 @@ import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { attachRef } from "visual/utils/react";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -78,161 +79,36 @@ export default class Cloneable extends EditorComponent {
   };
 
   getMeta(v) {
+    const { horizontalAlign, tabletHorizontalAlign, mobileHorizontalAlign } = v;
     const { meta } = this.props;
-    const {
-      // Margin
-      marginType,
-      margin,
-      marginSuffix,
-      marginLeft,
-      marginLeftSuffix,
-      marginRight,
-      marginRightSuffix,
-
-      // Padding
-      paddingType,
-      padding,
-      paddingSuffix,
-      paddingLeft,
-      paddingLeftSuffix,
-      paddingRight,
-      paddingRightSuffix,
-
-      // Align
-      horizontalAlign,
-
-      // Tablet Padding
-      tabletPadding,
-      tabletPaddingType,
-      tabletPaddingSuffix,
-      tabletPaddingLeft,
-      tabletPaddingLeftSuffix,
-      tabletPaddingRight,
-      tabletPaddingRightSuffix,
-
-      // Tablet margin
-      tabletMargin,
-      tabletMarginType,
-      tabletMarginSuffix,
-      tabletMarginLeft,
-      tabletMarginLeftSuffix,
-      tabletMarginRight,
-      tabletMarginRightSuffix,
-
-      // Tablet align
-      tabletHorizontalAlign,
-
-      // Mobile Padding
-      mobilePadding,
-      mobilePaddingType,
-      mobilePaddingSuffix,
-      mobilePaddingLeft,
-      mobilePaddingLeftSuffix,
-      mobilePaddingRight,
-      mobilePaddingRightSuffix,
-
-      // Mobile margin
-      mobileMargin,
-      mobileMarginType,
-      mobileMarginSuffix,
-      mobileMarginLeft,
-      mobileMarginLeftSuffix,
-      mobileMarginRight,
-      mobileMarginRightSuffix,
-
-      // Mobile align
-      mobileHorizontalAlign
-    } = v;
-
-    const marginW =
-      marginType === "grouped"
-        ? percentageToPixels(margin * 2, marginSuffix, meta.desktopW)
-        : percentageToPixels(marginLeft, marginLeftSuffix, meta.desktopW) +
-          percentageToPixels(marginRight, marginRightSuffix, meta.desktopW);
-    const paddingW =
-      paddingType === "grouped"
-        ? percentageToPixels(padding * 2, paddingSuffix, meta.desktopW)
-        : percentageToPixels(paddingLeft, paddingLeftSuffix, meta.desktopW) +
-          percentageToPixels(paddingRight, paddingRightSuffix, meta.desktopW);
-
-    // Tablet
-    const tabletPaddingW =
-      tabletPaddingType === "grouped"
-        ? percentageToPixels(
-            tabletPadding * 2,
-            tabletPaddingSuffix,
-            meta.tabletW
-          )
-        : percentageToPixels(
-            tabletPaddingLeft,
-            tabletPaddingLeftSuffix,
-            meta.tabletW
-          ) +
-          percentageToPixels(
-            tabletPaddingRight,
-            tabletPaddingRightSuffix,
-            meta.tabletW
-          );
-    const tabletMarginW =
-      tabletMarginType === "grouped"
-        ? percentageToPixels(tabletMargin * 2, tabletMarginSuffix, meta.tabletW)
-        : percentageToPixels(
-            tabletMarginLeft,
-            tabletMarginLeftSuffix,
-            meta.tabletW
-          ) +
-          percentageToPixels(
-            tabletMarginRight,
-            tabletMarginRightSuffix,
-            meta.tabletW
-          );
-
-    // Mobile
-    const mobilePaddingW =
-      mobilePaddingType === "grouped"
-        ? percentageToPixels(
-            mobilePadding * 2,
-            mobilePaddingSuffix,
-            meta.mobileW
-          )
-        : percentageToPixels(
-            mobilePaddingLeft,
-            mobilePaddingLeftSuffix,
-            meta.mobileW
-          ) +
-          percentageToPixels(
-            mobilePaddingRight,
-            mobilePaddingRightSuffix,
-            meta.mobileW
-          );
-    const mobileMarginW =
-      mobileMarginType === "grouped"
-        ? percentageToPixels(mobileMargin * 2, mobileMarginSuffix, meta.mobileW)
-        : percentageToPixels(
-            mobileMarginLeft,
-            mobileMarginLeftSuffix,
-            meta.mobileW
-          ) +
-          percentageToPixels(
-            mobileMarginRight,
-            mobileMarginRightSuffix,
-            meta.mobileW
-          );
-
-    const externalSpacing = marginW + paddingW;
-    const externalTabletSpacing = tabletMarginW + tabletPaddingW;
-    const externalMobileSpacing = mobileMarginW + mobilePaddingW;
-
-    const mobileW =
-      Math.round((meta.mobileW - externalMobileSpacing) * 10) / 10;
-    const tabletW =
-      Math.round((meta.tabletW - externalTabletSpacing) * 10) / 10;
-    const desktopW = Math.round((meta.desktopW - externalSpacing) * 10) / 10;
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getWrapperContainerW(
+      {
+        v,
+        w: meta.desktopW,
+        wNoSpacing: meta.desktopWNoSpacing,
+        device: DESKTOP
+      }
+    );
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getWrapperContainerW({
+      v,
+      w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
+      device: TABLET
+    });
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getWrapperContainerW({
+      v,
+      w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
+      device: MOBILE
+    });
 
     return _.extend({}, meta, {
-      mobileW,
-      tabletW,
       desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing,
       horizontalAlign,
       tabletHorizontalAlign,
       mobileHorizontalAlign,

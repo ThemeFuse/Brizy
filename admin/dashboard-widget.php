@@ -118,12 +118,8 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 		$brizy_posts = [];
 
 		foreach ( $posts as $apost ) {
-
 			try {
-
-				$brizy_post = Brizy_Editor_Post::get( $apost );
-
-				if ( ! $brizy_post->uses_editor() ) {
+				if ( ! Brizy_Editor_Entity::isBrizyEnabled( $apost ) ) {
 					continue;
 				}
 

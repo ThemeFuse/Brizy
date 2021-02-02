@@ -22,6 +22,7 @@ import {
   styleMarginType
 } from "visual/utils/style2";
 import { Wrapper } from "../tools/Wrapper";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 export default class Timeline extends EditorComponent {
   static get componentId() {
@@ -47,46 +48,78 @@ export default class Timeline extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  getWidthWithW(v, _w, device) {
+  getWidthWithW(data) {
+    const { v, w, wNoSpacing, device } = data;
     const tabsCount = styleElementTimelineTabsCount({ v, device });
     const verticalMode = styleElementTimelineVerticalMode({ v, device });
-    const width = styleElementTimelineWidth({ v, device });
-    const widthSuffix = styleElementTimelineWidthSuffix({ v, device });
-    let dWidth = 100;
-    let w = _w;
 
     if (verticalMode === "on") {
+      const width = styleElementTimelineWidth({ v, device });
+      const widthSuffix = styleElementTimelineWidthSuffix({ v, device });
+
       if (widthSuffix === "px") {
         const marginType = styleMarginType({ v, device });
         const marginW = getMargin({ w, v, device, type: marginType });
 
-        w = width + marginW;
-      } else {
-        dWidth = width;
+        return {
+          v,
+          device,
+          w: width + marginW,
+          wNoSpacing: width
+        };
       }
-    } else {
-      w = w / tabsCount;
+
+      return {
+        v,
+        w,
+        wNoSpacing,
+        device,
+        width
+      };
     }
 
-    return { w, v, device, width: dWidth };
+    return {
+      v,
+      device,
+      w: w / tabsCount,
+      wNoSpacing: wNoSpacing / tabsCount
+    };
   }
 
   getMeta(v) {
     const { meta } = this.props;
-    const desktopW = getContainerW(
-      this.getWidthWithW(v, meta.desktopW, "desktop")
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW(
+      this.getWidthWithW({
+        v,
+        w: meta.desktopW,
+        wNoSpacing: meta.desktopWNoSpacing,
+        device: DESKTOP
+      })
     );
-    const tabletW = getContainerW(
-      this.getWidthWithW(v, meta.tabletW, "tablet")
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW(
+      this.getWidthWithW({
+        v,
+        w: meta.tabletW,
+        wNoSpacing: meta.tabletWNoSpacing,
+        device: TABLET
+      })
     );
-    const mobileW = getContainerW(
-      this.getWidthWithW(v, meta.mobileW, "mobile")
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW(
+      this.getWidthWithW({
+        v,
+        w: meta.mobileW,
+        wNoSpacing: meta.mobileWNoSpacing,
+        device: MOBILE
+      })
     );
 
     return _.extend({}, meta, {
-      mobileW,
+      desktopW,
+      desktopWNoSpacing,
       tabletW,
-      desktopW
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
     });
   }
 

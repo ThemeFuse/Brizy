@@ -33,7 +33,7 @@ class Brizy_Compatibilities_RankMathSeo {
 	public function get_post_content( WP_REST_Request $request ) {
 		try {
 			$post = Brizy_Editor_Post::get( $request->get_param( 'postId' ) );
-			if ( $post->uses_editor() ) {
+			if ( Brizy_Editor_Entity::isBrizyEnabled( $post ) ) {
 				return wp_send_json_success( [ 'content' => apply_filters( 'brizy_content', $post->get_compiled_page()->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() ) ] );
 			} else {
 				wp_send_json_error( 'This post does not use Brizy.', 204 );

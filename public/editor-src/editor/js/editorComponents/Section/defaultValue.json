@@ -6,6 +6,9 @@
 
     "cssIDPopulation": "",
 
+    "membership": "off",
+    "membershipRoles": "[]",
+
     "fullHeight": "off",
     "tagName": "section",
 

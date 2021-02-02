@@ -75,8 +75,9 @@ class Blocks extends EditorArrayComponent {
     let disabled = false;
     if (itemData.type === "GlobalBlock") {
       const blocksData = blocksDataSelector(getStore().getState());
+      const slider = blocksData[itemData.value._id]?.value?.slider;
 
-      disabled = blocksData[itemData.value._id]?.value?.slider === "off";
+      disabled = !slider || slider === "off";
     }
     const cloneRemoveConfig = {
       getItemsForDesktop: () => [

@@ -48,12 +48,11 @@ class Brizy_Compatibilities_YoastSeo {
 		}
 
 		try {
-			$post = Brizy_Editor_Post::get( $_GET['post'] );
-
-			if ( ! $post->uses_editor() ) {
+			if ( ! Brizy_Editor_Entity::isBrizyEnabled($_GET['post']) ) {
 				return;
 			}
 
+			$post = Brizy_Editor_Post::get( $_GET['post'] );
 			$needs_compile = ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
 
 			if ( $needs_compile ) {

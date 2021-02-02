@@ -3,12 +3,12 @@
 class Brizy_TwigEngine {
 
 	/**
-	 * @var Twig_LoaderInterface
+	 * @var \Twig\Loader\LoaderInterface
 	 */
 	private $loader;
 
 	/**
-	 * @var Twig_Environment
+	 * @var Twig\Environment
 	 */
 	private $environment;
 
@@ -31,7 +31,7 @@ class Brizy_TwigEngine {
 			$loader_templates[ basename( $template ) ] = file_get_contents( $template );
 		}
 
-		return new self( new Twig_Loader_Array( $loader_templates ) );
+		return new self( new Twig\Loader\ArrayLoader( $loader_templates ) );
 	}
 
 	/**
@@ -52,26 +52,26 @@ class Brizy_TwigEngine {
 			$options['cache'] = $path;
 		}
 
-		$this->environment = new Twig_Environment( $loader, $options );
+		$this->environment = new Twig\Environment( $loader, $options );
 
-		$this->environment->addFunction( new Twig_SimpleFunction( 'wl', function ( $key, $value ) {
+		$this->environment->addFunction( new \Twig\TwigFunction( 'wl', function ( $key, $value ) {
 			return __bt( $key, $value );
 		} ) );
 
-		$this->environment->addFunction( new Twig_SimpleFunction( '__', function ( $key, $value='default' ) {
+		$this->environment->addFunction( new \Twig\TwigFunction( '__', function ( $key, $value='default' ) {
 			return __( $key, $value );
 		} ) );
 
-		$this->environment->addFunction( new Twig_SimpleFunction( 'sprintf', function ( $string, $args ) {
+		$this->environment->addFunction( new \Twig\TwigFunction( 'sprintf', function ( $string, $args ) {
 			return sprintf( $string, $args );
 		} ) );
 
 		if ( WP_DEBUG ) {
-			$this->environment->addFunction( new Twig_SimpleFunction( 'dump', function ( $value ) {
+			$this->environment->addFunction( new \Twig\TwigFunction( 'dump', function ( $value ) {
 				var_dump( $value );
 			} ) );
 
-			$this->environment->addFunction( new Twig_SimpleFunction( 'get_pagenum_link', function ( $value ) {
+			$this->environment->addFunction( new \Twig\TwigFunction( 'get_pagenum_link', function ( $value ) {
 				return get_pagenum_link( $value, false );
 			} ) );
 		}

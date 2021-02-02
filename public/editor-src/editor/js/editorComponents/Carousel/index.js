@@ -135,8 +135,13 @@ class Carousel extends EditorComponent {
     return {
       ...meta,
       desktopW: Math.round((desktopW / slidesToShow) * 10) / 10,
+      desktopWNoSpacing:
+        Math.round((meta.desktopWNoSpacing / slidesToShow) * 10) / 10,
       tabletW: Math.round((tabletW / tabletSlidesToShow) * 10) / 10,
+      tabletWNoSpacing:
+        Math.round((meta.tabletWNoSpacing / tabletSlidesToShow) * 10) / 10,
       mobileW: Math.round((meta.mobileW - mobilePaddingW) * 10) / 10,
+      mobileWNoSpacing: meta.mobileWNoSpacing,
       inCarousel: true,
       inGrid: false
     };

@@ -60,27 +60,33 @@ class SectionMegaMenu extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: meta.desktopW,
+      wNoSpacing: meta.desktopWNoSpacing,
       device: DESKTOP
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
       device: TABLET
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
       device: TABLET
     });
 
     return {
       ...meta,
       desktopW,
+      desktopWNoSpacing,
       tabletW,
-      mobileW
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
     };
   }
 

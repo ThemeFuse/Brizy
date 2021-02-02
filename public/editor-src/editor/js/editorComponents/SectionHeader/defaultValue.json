@@ -8,10 +8,11 @@
 
     "cssIDPopulation": "",
 
+    "membership": "off",
+    "membershipRoles": "[]",
+
     "showOnDesktop": "on",
-
     "showOnTablet": "on",
-
     "showOnMobile": "on"
   },
 

@@ -156,21 +156,24 @@ class SectionPopup2 extends EditorComponent {
       v,
       device: "mobile"
     });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: widthSuffix === "px" ? width : wInFullPage,
+      wNoSpacing: widthSuffix === "px" ? width : wInFullPage,
       width: widthSuffix === "px" ? 100 : width,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: tabletWidthSuffix === "px" ? tabletWidth : wInTabletPage,
+      wNoSpacing: tabletWidthSuffix === "px" ? tabletWidth : wInTabletPage,
       width: tabletWidthSuffix === "px" ? 100 : tabletWidth,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: mobileWidthSuffix === "px" ? mobileWidth : wInMobilePage,
+      wNoSpacing: mobileWidthSuffix === "px" ? mobileWidth : wInMobilePage,
       width: mobileWidthSuffix === "px" ? 100 : mobileWidth,
       device: "mobile"
     });
@@ -178,8 +181,11 @@ class SectionPopup2 extends EditorComponent {
     return {
       ...meta,
       desktopW,
+      desktopWNoSpacing,
       tabletW,
+      tabletWNoSpacing,
       mobileW,
+      mobileWNoSpacing,
       sectionPopup2: true
     };
   }

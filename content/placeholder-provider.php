@@ -10,21 +10,19 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 	/**
 	 * @var array
 	 */
-	static private $cache = null;
+	static private $cache_grouped_placeholders = null;
+	static private $cache_all_placeholders = null;
 
 	/**
 	 * BrizyPro_Content_ProviderPlaceholders constructor.
 	 *
+	 * $context: for back compatibility
+	 *
 	 * @param Brizy_Content_Context $context
 	 */
-	public function __construct( $context ) {
-
-		parent::__construct( $context );
-
-		$this->providers[] = new Brizy_Content_Providers_FreeProvider( $context );
-		$this->providers   = apply_filters( 'brizy_providers', $this->providers, $context );
-
-		$context->setProvider( $this );
+	public function __construct( $context = null ) {
+		$this->providers[] = new Brizy_Content_Providers_FreeProvider(  );
+		$this->providers   = apply_filters( 'brizy_providers', $this->providers, null );
 	}
 
 	/**
@@ -32,8 +30,8 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 	 */
 	public function getGroupedPlaceholders() {
 
-		if ( self::$cache ) {
-			return self::$cache;
+		if ( self::$cache_grouped_placeholders ) {
+			return self::$cache_grouped_placeholders;
 		}
 
 		$placeholders = array();
@@ -62,7 +60,7 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 			}
 		}
 
-		return apply_filters( 'brizy_placeholders', self::$cache = $placeholders );
+		return apply_filters( 'brizy_placeholders', self::$cache_grouped_placeholders = $placeholders );
 	}
 
 	/**
@@ -71,9 +69,15 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 	public function getAllPlaceholders() {
 		$out = array();
 
+		if ( self::$cache_all_placeholders ) {
+			return self::$cache_all_placeholders;
+		}
+
 		foreach ( $this->providers as $provider ) {
 			$out = array_merge( $out, $provider->getAllPlaceholders() );
 		}
+
+		self::$cache_all_placeholders = $out;
 
 		return $out;
 	}
@@ -85,7 +89,7 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 	 */
 	public function getPlaceholder( $name ) {
 		foreach ( $this->getAllPlaceholders() as $placeholder ) {
-			if ( $placeholder->getPlaceholder() == $name ) {
+			if ( $placeholder->getPlaceholder() === $name ) {
 				return $placeholder;
 			}
 		}

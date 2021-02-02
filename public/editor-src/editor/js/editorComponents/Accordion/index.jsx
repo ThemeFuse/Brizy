@@ -47,18 +47,19 @@ class Accordion extends EditorComponent {
   };
 
   renderForEdit(v, vs, vd) {
-    const className = classnames(
-      "brz-accordion",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
-    );
-
     const {
       activeAccordionItem,
       filterStyle,
       navIcon,
       collapsible,
+      animDuration,
       enableTags
     } = v;
+
+    const className = classnames(
+      "brz-accordion",
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+    );
 
     const animationClassName = classnames(
       validateKeyByProperty(v, "animationName", "none") &&
@@ -75,6 +76,7 @@ class Accordion extends EditorComponent {
       activeAccordionItem,
       navIcon,
       collapsible,
+      animDuration,
       enableTags,
       animationClassName,
       bindWithKey: "items",

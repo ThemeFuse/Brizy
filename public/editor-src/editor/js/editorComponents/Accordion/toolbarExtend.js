@@ -43,6 +43,17 @@ export function getItems({ v, device }) {
                   type: "switch-dev"
                 },
                 {
+                  id: "animDuration",
+                  type: "slider-dev",
+                  label: t("Duration"),
+                  config: {
+                    min: 0,
+                    max: 2,
+                    step: 0.1,
+                    units: [{ value: "s", title: "s" }]
+                  }
+                },
+                {
                   id: "navIcon",
                   label: t("Icon"),
                   type: "select-dev",

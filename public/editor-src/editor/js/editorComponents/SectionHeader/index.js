@@ -147,6 +147,8 @@ export default class SectionHeader extends EditorComponent {
 
   getRerender(v) {
     const {
+      membership,
+      membershipRoles,
       showOnDesktop,
       showOnMobile,
       showOnTablet,
@@ -157,6 +159,8 @@ export default class SectionHeader extends EditorComponent {
     } = v;
 
     return {
+      membership,
+      membershipRoles,
       showOnDesktop,
       showOnMobile,
       showOnTablet,
@@ -311,6 +315,22 @@ export default class SectionHeader extends EditorComponent {
     );
   }
 
+  renderMemberShipWrapper(content, v) {
+    if (v.membership === "on") {
+      const roles = JSON.parse(v.membershipRoles).join(",");
+
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    }
+
+    return content;
+  }
+
   renderForView(v, vs, vd) {
     const {
       className,
@@ -331,7 +351,7 @@ export default class SectionHeader extends EditorComponent {
       )
     );
 
-    return (
+    const content = (
       <section
         id={
           cssIDPopulation === ""
@@ -345,5 +365,7 @@ export default class SectionHeader extends EditorComponent {
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
     );
+
+    return this.renderMemberShipWrapper(content, v);
   }
 }

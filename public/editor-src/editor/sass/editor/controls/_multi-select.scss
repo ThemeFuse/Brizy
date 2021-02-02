@@ -37,7 +37,8 @@
     position: relative;
     color: #fff;
 
-    input {
+    input,
+    input::placeholder {
       color: #fff;
     }
 

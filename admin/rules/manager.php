@@ -278,77 +278,52 @@ class Brizy_Admin_Rules_Manager {
 		return new Brizy_Admin_RuleSet( $this->getRules( $postId ) );
 	}
 //
-//	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
-//
-//		$defaults = array(
-//			'post_type'      => $postType,
-//			'posts_per_page' => - 1,
-//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
-//		);
-//
-//		$r = wp_parse_args( $args, $defaults );
-//
-//		$templates = get_posts( $r );
-//
-//		$rules = array();
-//
-//		foreach ( $templates as $template ) {
-//			$tRules = $this->getRules( $template->ID );
-//			$rules  = array_merge( $rules, $tRules );
-//		}
-//
-//		$rules = $this->sortRules( $rules );
-//
-//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-//
-//		return $ruleSet;
-//	}
-//
-//	public function getAllRulesSetByPostId( $args = array(), $postId ) {
-//
-//		$defaults = array(
-//			'post_type'      => $postType,
-//			'posts_per_page' => - 1,
-//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
-//		);
-//
-//		$r = wp_parse_args( $args, $defaults );
-//
-//		$templates = get_posts( $r );
-//
-//		$rules = array();
-//
-//		foreach ( $templates as $template ) {
-//			$tRules = $this->getRules( $template->ID );
-//			$rules  = array_merge( $rules, $tRules );
-//		}
-//
-//		$rules = $this->sortRules( $rules );
-//
-//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-//
-//		return $ruleSet;
-//	}
-//
-//	private function sortRules( $rules ) {
-//		// sort the rules by how specific they are
-//		usort( $rules, function ( $a, $b ) {
-//			/**
-//			 * @var Brizy_Admin_Rule $a ;
-//			 * @var Brizy_Admin_Rule $b ;
-//			 */
-//
-//			$la = $a->getRuleWeight();
-//			$lb = $b->getRuleWeight();
-//			if ( $lb == $la ) {
-//				return 0;
-//			}
-//
-//			return $la < $lb ? 1 : - 1;
-//		} );
-//
-//		return $rules;
-//	}
+	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
+
+		$defaults = array(
+			'post_type'      => $postType,
+			'posts_per_page' => - 1,
+			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+		);
+
+		$r = wp_parse_args( $args, $defaults );
+
+		$templates = get_posts( $r );
+
+		$rules = array();
+
+		foreach ( $templates as $template ) {
+			$tRules = $this->getRules( $template->ID );
+			$rules  = array_merge( $rules, $tRules );
+		}
+
+		$rules = $this->sortRules( $rules );
+
+		$ruleSet = new Brizy_Admin_RuleSet( $rules );
+
+		return $ruleSet;
+	}
+
+
+	private function sortRules( $rules ) {
+		// sort the rules by how specific they are
+		usort( $rules, function ( $a, $b ) {
+			/**
+			 * @var Brizy_Admin_Rule $a ;
+			 * @var Brizy_Admin_Rule $b ;
+			 */
+
+			$la = $a->getRuleWeight([]);
+			$lb = $b->getRuleWeight([]);
+			if ( $lb == $la ) {
+				return 0;
+			}
+
+			return $la < $lb ? 1 : - 1;
+		} );
+
+		return $rules;
+	}
 //
 //	/**
 //	 * @param $postType
