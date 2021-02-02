@@ -124,8 +124,11 @@ export type Props<M extends ElementModel, P> = WithClassName & {
   reduxDispatch: unknown;
   meta: {
     desktopW?: number;
+    desktopWNoSpacing?: number;
     tabletW?: number;
+    tabletWNoSpacing?: number;
     mobileW?: number;
+    mobileWNoSpacing?: number;
     sectionPopup?: boolean;
     sectionPopup2?: boolean;
     [k: string]: unknown;

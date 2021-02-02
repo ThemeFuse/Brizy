@@ -24,25 +24,31 @@
     display: block;
     width: 100%;
 
-    & > .brz-accordion__content {
-      display: none;
+    > .brz-accordion__content {
+      overflow: hidden;
+      height: 0;
+      will-change: height, transition-duration;
       background-clip: padding-box;
       border-top-color: transparent !important;
     }
-    & > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon--active {
+
+    // resolve problems with height and animation
+    > .brz-accordion__content > * {
+      flex-shrink: 0;
+    }
+    > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon--active {
       display: none;
     }
   }
-
   &__item--active {
-    & > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon--active {
+    > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon--active {
       display: block;
     }
-    & > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon {
+    > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon {
       display: none;
     }
-    & > .brz-accordion__content {
-      display: flex;
+    > .brz-accordion__content {
+      height: auto;
 
       &:empty {
         min-height: 50px;
@@ -78,4 +84,3 @@
 .brz-accordion__hidden {
   display: none;
 }
-

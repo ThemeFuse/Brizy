@@ -27,6 +27,10 @@ export default {
           roles: ["admin"]
         },
         {
+          type: "wpShowMembership",
+          label: t("View as")
+        },
+        {
           type: "wpFeatureImage",
           label: t("Featured Image"),
           disabled: IS_TEMPLATE

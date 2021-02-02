@@ -187,9 +187,12 @@ class RichText extends EditorComponent {
   renderPopups(v) {
     const { popups } = v;
 
-    if (popups.length > 0) {
-      return null;
-    }
+    // we disabled this optimization here, because we know nothing about
+    // formats during compilation time, so this condition won't work
+    // const { linkType, linkPopup } = this.state.formats;
+    // if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
+    //   return null;
+    // }
 
     const normalizePopups = popups.reduce((acc, popup) => {
       let itemData = popup;
@@ -218,11 +221,11 @@ class RichText extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
+          const blockData = blocksDataSelector(getStore().getState())[
             itemData.value._id
           ];
 
-          popupId = itemData.value.popupId;
+          popupId = blockData.value.popupId;
         }
 
         return {

@@ -10,7 +10,11 @@ import {
 } from "visual/utils/fonts";
 import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
-import { currentStyleSelector, unDeletedFontSelector } from "../selectors";
+import {
+  currentStyleSelector,
+  unDeletedFontSelector,
+  currentRoleSelector
+} from "../selectors";
 import { fontSelector, extraFontStylesSelector } from "../selectors2";
 import {
   HYDRATE,
@@ -99,6 +103,10 @@ export default config => store => next => action => {
     handleHiddenElementsChange(callbacks);
   }
 
+  if (action.type === UPDATE_UI && action.key === "currentRole") {
+    handleCurrentRoleChange(callbacks);
+  }
+
   if (action.type === COPY_ELEMENT) {
     handleCopiedElementChange(callbacks);
   }
@@ -184,6 +192,9 @@ function handleHydrate(callbacks) {
 
     // Hidden Elements
     document.body.style.setProperty("--elements-visibility", "none");
+
+    // Hidden Membership Blocks
+    document.body.style.setProperty("--role-default", "block");
 
     // clipboard sync between tabs
     jQuery(window).on("storage", e => {
@@ -301,6 +312,17 @@ function handleHiddenElementsChange(callbacks) {
     } else {
       document.body.style.setProperty("--elements-visibility", "none");
     }
+  });
+}
+
+function handleCurrentRoleChange(callbacks) {
+  callbacks.onAfterNext.push(({ config, oldState, action }) => {
+    const { document } = config;
+    const oldRole = currentRoleSelector(oldState);
+    const newRole = action.value;
+
+    document.body.style.removeProperty(`--role-${oldRole}`);
+    document.body.style.setProperty(`--role-${newRole}`, "block");
   });
 }
 

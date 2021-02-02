@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_165Wp_Texts {
+class Brizy_Public_EditorBuild_166Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -783,6 +783,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"Vertical Align" => __("Vertical Align", "brizy"),
 			"Vertical Offset" => __("Vertical Offset", "brizy"),
 			"Video" => __("Video", "brizy"),
+			"View as" => __("View as", "brizy"),
 			"Vimeo" => __("Vimeo", "brizy"),
 			"Volume" => __("Volume", "brizy"),
 			"WHAT WILL TRIGGER THE POPUP TO OPEN" => __("WHAT WILL TRIGGER THE POPUP TO OPEN", "brizy"),

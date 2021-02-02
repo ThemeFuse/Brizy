@@ -46,6 +46,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-accordion__content": {
       standart: [
         "cssStylePaddingFourFields",
+        "cssStyleElementAccordionAnimDuration",
         "cssStyleElementAccordionMarginTop"
       ]
     },

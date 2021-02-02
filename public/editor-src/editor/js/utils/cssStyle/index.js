@@ -277,7 +277,8 @@ export {
   cssStyleVisibleEditorDisplayNoneOrFlex,
   cssStyleVisibleEditorDisplayNoneOrBlock,
   cssStyleVisibleEditorDisplayNoneOrInlineFlex,
-  cssStyleVisibleMode
+  cssStyleVisibleMode,
+  cssStyleShowMembershipBlock
 } from "./cssStyleVisible";
 
 // Filter
@@ -665,7 +666,8 @@ export {
   cssStyleElementAccordionActiveColor,
   cssStyleElementAccordionActiveBgColor,
   cssStyleElementAccordionActiveBorder,
-  cssStyleElementAccordionActiveShadow
+  cssStyleElementAccordionActiveShadow,
+  cssStyleElementAccordionAnimDuration
 } from "./cssStyleElementAccordion";
 
 // Tabs

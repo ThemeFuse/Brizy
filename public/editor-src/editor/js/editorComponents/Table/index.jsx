@@ -28,7 +28,14 @@ class Table extends EditorComponent {
   getMeta(v) {
     const { tableAside, rows, columns } = v;
     const { meta } = this.props;
-    const { desktopW, tabletW, mobileW } = calculateMeta({
+    const {
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    } = calculateMeta({
       v,
       meta,
       state: NORMAL
@@ -36,9 +43,12 @@ class Table extends EditorComponent {
 
     return {
       ...meta,
-      mobileW,
-      tabletW,
       desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing,
       table: {
         rows,
         columns,

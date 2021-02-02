@@ -93,6 +93,11 @@ export const showHiddenElementsSelector = createSelector(
   ui => ui.showHiddenElements
 );
 
+export const currentRoleSelector = createSelector(
+  uiSelector,
+  ui => ui.currentRole
+);
+
 // === END 1 DEPENDENCY ===
 
 // === 2 DEPENDENCIES ===

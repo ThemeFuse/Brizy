@@ -13,26 +13,29 @@ import {
   styleElementMegaMenuWidth,
   styleElementMegaMenuWidthSuffix
 } from "visual/utils/style2";
+import { ElementModel } from "visual/component/Elements/Types";
 
-type CalculateMeta = {
+interface Meta {
+  desktopW: number;
+  desktopWNoSpacing: number;
+  tabletW: number;
+  tabletWNoSpacing: number;
+  mobileW: number;
+  mobileWNoSpacing: number;
+}
+interface CalculateMeta {
   meta: Meta;
   mods: Mods;
-  v: unknown;
+  v: ElementModel;
   isMMenu: boolean;
-};
-type GetWidth = {
+}
+interface GetWidth {
   W: number;
   isMMenu: boolean;
-  v: unknown;
+  v: ElementModel;
   mode: Mode;
   device: ResponsiveMode;
-};
-
-type Meta = {
-  desktopW: number;
-  tabletW: number;
-  mobileW: number;
-};
+}
 
 type Mode = "vertical" | "horizontal";
 
@@ -104,13 +107,27 @@ const getWidth = (data: GetWidth): number => {
 
 export const calculateMeta = (data: CalculateMeta): Meta => {
   const { meta, mods, isMMenu, v } = data;
-  const { desktopW, tabletW, mobileW } = meta;
+  const {
+    desktopW,
+    desktopWNoSpacing,
+    tabletW,
+    tabletWNoSpacing,
+    mobileW,
+    mobileWNoSpacing
+  } = meta;
 
   return {
     desktopW: getWidth({
       v,
       isMMenu,
       W: desktopW,
+      mode: mods[DESKTOP],
+      device: DESKTOP
+    }),
+    desktopWNoSpacing: getWidth({
+      v,
+      isMMenu,
+      W: desktopWNoSpacing,
       mode: mods[DESKTOP],
       device: DESKTOP
     }),
@@ -121,10 +138,24 @@ export const calculateMeta = (data: CalculateMeta): Meta => {
       mode: mods[TABLET],
       device: TABLET
     }),
+    tabletWNoSpacing: getWidth({
+      v,
+      isMMenu,
+      W: tabletWNoSpacing,
+      mode: mods[TABLET],
+      device: TABLET
+    }),
     mobileW: getWidth({
       v,
       isMMenu,
       W: mobileW,
+      mode: mods[MOBILE],
+      device: MOBILE
+    }),
+    mobileWNoSpacing: getWidth({
+      v,
+      isMMenu,
+      W: mobileWNoSpacing,
       mode: mods[MOBILE],
       device: MOBILE
     })

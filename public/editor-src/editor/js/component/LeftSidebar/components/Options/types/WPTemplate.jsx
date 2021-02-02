@@ -29,13 +29,11 @@ class WPTemplate extends React.Component {
   renderOptions() {
     const { templates } = Config.get("wp");
 
-    return templates.map((template, index) => {
-      return (
-        <SelectItem key={index} value={template.id}>
-          {template.title}
-        </SelectItem>
-      );
-    });
+    return templates.map((template, index) => (
+      <SelectItem key={index} value={template.id}>
+        {template.title}
+      </SelectItem>
+    ));
   }
 
   render() {
@@ -66,7 +64,4 @@ const mapStateToProps = state => ({
   currentTemplate: state.page.template
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(WPTemplate);
+export default connect(mapStateToProps, null)(WPTemplate);
