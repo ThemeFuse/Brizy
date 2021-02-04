@@ -7,7 +7,6 @@ class Brizy_Config {
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const MEDIA_IMAGE_URL = '/media';
-	const FONTS_URL = 'https://www.brizy.cloud/fonts/wp?path=%s';
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'https://api.brizy.io';
@@ -31,7 +30,6 @@ class Brizy_Config {
 
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/' . BRIZY_EDITOR_VERSION;
-	const COMPILER_DOWNLOAD_URL = 'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
@@ -78,5 +76,13 @@ class Brizy_Config {
 				'http://media2.brizycompiler.run'
 			)
 		);
+	}
+
+	static public function getFontsUrl() {
+		return  "https://www.brizy.cloud/fonts/wp?path=%s";
+	}
+
+	static public function getCompilerDownloadUrl() {
+		return  'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
 	}
 }

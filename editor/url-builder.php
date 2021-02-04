@@ -359,7 +359,7 @@ class Brizy_Editor_UrlBuilder {
 			$template_version = BRIZY_EDITOR_VERSION;
 		}
 
-		$url = Brizy_Config::FONTS_URL;
+		$url = Brizy_Config::getFontsUrl();
 
 		return sprintf( $url, $template_version );
 	}
