@@ -16,6 +16,7 @@
     "lucatume/wp-browser": "^2.2",
     "squizlabs/php_codesniffer": "^3.0@dev",
     "gumlet/php-image-resize": "^1.6"
+
   },
   "require": {
     "twig/twig": "1.42.5",
@@ -23,7 +24,8 @@
     "bagrinsergiu/brizy-migration-utils": "^1.4.2",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
-    "shortpixel/shortpixel-php": "dev-master"
+    "shortpixel/shortpixel-php": "dev-master",
+    "symfony/dotenv": "5.x-dev"
   },
   "repositories": [
     {

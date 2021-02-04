@@ -1,0 +1,40 @@
+name: Brizy Free
+
+on:
+  push:
+    branches:
+      - master
+      - beta-*
+      - fixes-*
+      - develop
+
+jobs:
+  base:
+    environment: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '1'
+      - name: Load Build Evnrorment Data
+        uses: falti/dotenv-action@master
+        id: env
+        with:
+          path: .github/.build-env
+      - name: Create an instance of project
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          passphrase: ${{ secrets.KEY_PASSPHRASE }}
+          script: |
+            ./BB/build/run-editor-instance.sh \
+            -v ${{ steps.env.outputs.build_environment }} \
+            -f ${{ steps.env.outputs.free_branch }} \
+            -p ${{ steps.env.outputs.pro_branch }} \
+            -e ${{ steps.env.outputs.editor_branch }} \
+            -n traefik \
+            -t ${{ secrets.COMPOSER_TOKEN }}
