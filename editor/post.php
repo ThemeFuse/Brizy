@@ -15,6 +15,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	const BRIZY_POST_PLUGIN_VERSION = 'brizy-post-plugin-version';
 
 	static protected $instance = null;
+	static protected $compiled_page = [];
 
 	/**
 	 * @var string
