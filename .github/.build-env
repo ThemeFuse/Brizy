@@ -1,0 +1,4 @@
+BUILD_ENVIRONMENT=develop
+FREE_BRANCH=develop
+PRO_BRANCH=develop
+EDITOR_BRANCH=improved/docker
