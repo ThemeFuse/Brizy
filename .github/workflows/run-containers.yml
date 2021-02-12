@@ -29,6 +29,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          command_timeout: 200m
           passphrase: ${{ secrets.KEY_PASSPHRASE }}
           script: |
             ./BB/build/run-editor-instance.sh \
