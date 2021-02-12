@@ -28,7 +28,6 @@ define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_URL', rtrim( plugin_dir_url( BRIZY_FILE ), "/" ) );
 define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 30 );
 
-
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/languages/main.php';
 
