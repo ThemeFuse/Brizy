@@ -587,13 +587,18 @@ class Brizy_Editor_Editor_Editor {
 	 * @return array
 	 */
 	private function roleList() {
-		$editable_roles = wp_roles()->roles;
-		$editable_roles = apply_filters( 'editable_roles', $editable_roles );
-		$roles          = array();
+		$editable_roles = apply_filters( 'editable_roles', wp_roles()->roles );
+		$roles          = [];
+
+		if ( ! Brizy_Admin_Membership_Membership::is_pro() ) {
+			$editable_roles = array_intersect_key( $editable_roles, array_flip( [ 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager' ] ) );
+		}
+
 		foreach ( $editable_roles as $role => $details ) {
-			$sub['role'] = esc_attr( $role );
-			$sub['name'] = translate_user_role( $details['name'] );
-			$roles[]     = $sub;
+			$roles[] = [
+				'role' => esc_attr( $role ),
+				'name' => translate_user_role( $details['name'] )
+			];
 		}
 
 		return $roles;
