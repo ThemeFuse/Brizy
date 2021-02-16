@@ -4,7 +4,6 @@ import { Value } from "./entities/Value";
 import { HAlign } from "visual/utils/position/HAlign";
 import { VAlign } from "visual/utils/position/VAlign";
 import { Draggable as Drag } from "visual/component/Draggable";
-import { getCurrentW, getCurrentH } from "visual/utils/meta";
 
 type Delta = { deltaX: number; deltaY: number };
 type Props = WithOnChange<Value> & {
@@ -16,6 +15,10 @@ type Props = WithOnChange<Value> & {
   getValue: () => {
     x: number;
     y: number;
+  };
+  getContainerSizes: () => {
+    width: number;
+    height: number;
   };
   onStart?: (value: Value) => void;
   onEnd?: (value: Value) => void;
@@ -32,7 +35,8 @@ export const Draggable: FC<Props> = ({
   vAlign,
   xSuffix,
   ySuffix,
-  getValue
+  getValue,
+  getContainerSizes
 }) => {
   // we don't just send x & y because of responsive
   // when we change device mode, editor doesn't rerender
@@ -42,10 +46,9 @@ export const Draggable: FC<Props> = ({
 
   const onDrag = useCallback(
     ({ deltaX, deltaY }: Delta) => {
-      const offsetX =
-        xSuffix === "px" ? deltaX : (deltaX * 100) / getCurrentW();
-      const offsetY =
-        ySuffix === "px" ? deltaY : (deltaY * 100) / getCurrentH();
+      const { width: cW, height: cH } = getContainerSizes();
+      const offsetX = xSuffix === "px" ? deltaX : (deltaX * 100) / cW;
+      const offsetY = ySuffix === "px" ? deltaY : (deltaY * 100) / cH;
 
       onChange({
         x: Math.round(v.x + offsetX),

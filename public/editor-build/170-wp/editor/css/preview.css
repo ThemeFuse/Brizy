@@ -5760,10 +5760,8 @@ img.mfp-img {
     display: inline-block;
     width: 100%;
     min-height: 20px;
-    height: auto;
-    word-break: break-all;
-    word-wrap: break-word; }
-    .brz .brz-embed-code::before {
+    height: auto; }
+    .brz .brz-embed-code:before {
       content: "";
       width: 100%;
       height: 100%;

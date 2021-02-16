@@ -5,10 +5,8 @@
   width: 100%;
   min-height: 20px;
   height: auto;
-  word-break: break-all;
-  word-wrap: break-word;
 
-  &::before {
+  &:before {
     content: "";
     width: 100%;
     height: 100%;
@@ -20,15 +18,12 @@
     pointer-events: none;
     overflow: hidden;
   }
-
   .brz-shortcode__placeholder {
     height: 250px;
   }
-
   img {
     max-width: 100%;
   }
-
   .brz-embed-content {
     width: 100%;
   }

@@ -25,6 +25,7 @@ import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { uuid } from "visual/utils/uuid";
 import { attachRef } from "visual/utils/react";
+import { DW, DH } from "visual/editorComponents/Story/utils";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Plugin<P extends {} = any> = [
@@ -101,6 +102,16 @@ export function WrapperComponent<T extends WithClassName & {}>(
       onChange(Position.setHOffset(dvk, x, Position.setVOffset(dvk, y, {})));
     };
 
+    const getContainerSizes = (): { width: number; height: number } => {
+      // this code will execute only inside stories - this way we use DW & DH
+      // if smth. will change - and container size will be another - don't
+      // forget to change this code
+      return {
+        width: DW,
+        height: DH
+      };
+    };
+
     return (
       <Draggable
         hAlign={Position.getHAlign(dvv) ?? "left"}
@@ -114,6 +125,7 @@ export function WrapperComponent<T extends WithClassName & {}>(
           x: Position.getHOffset(dvv) ?? 0,
           y: Position.getVOffset(dvv) ?? 0
         })}
+        getContainerSizes={getContainerSizes}
         onStart={hideToolbar}
         onChange={handleDraggable}
       >

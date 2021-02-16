@@ -1,4 +1,4 @@
-// import Config from "visual/global/Config";
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import {
   toolbarShowOnResponsive,
@@ -6,7 +6,7 @@ import {
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
-// import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -30,7 +30,7 @@ export function getItems({ v, device, component }) {
     { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
   ];
 
-  // const membershipRoles = Config.get("wp")?.availableRoles || [];
+  const membershipRoles = Config.get("wp")?.availableRoles || [];
 
   return [
     toolbarShowOnResponsive({
@@ -69,29 +69,29 @@ export function getItems({ v, device, component }) {
                     })
                   ]
                 },
-                // {
-                //   id: "membership",
-                //   label: t("Membership"),
-                //   type: "switch-dev",
-                //   disabled: !IS_WP
-                // },
-                // {
-                //   id: "membershipRoles",
-                //   label: t("Show to"),
-                //   type: "multiSelect-dev",
-                //   placeholder: "0 Selected",
-                //   disabled: v.membership === "off" || !IS_WP,
-                //   choices: [
-                //     {
-                //       title: "Not logged",
-                //       value: "not_logged"
-                //     },
-                //     ...membershipRoles.map(({ role, name }) => ({
-                //       title: name,
-                //       value: role
-                //     }))
-                //   ]
-                // },
+                {
+                  id: "membership",
+                  label: t("Membership"),
+                  type: "switch-dev",
+                  disabled: !IS_WP
+                },
+                {
+                  id: "membershipRoles",
+                  label: t("Show to"),
+                  type: "multiSelect-dev",
+                  placeholder: "Select",
+                  disabled: v.membership === "off" || !IS_WP,
+                  choices: [
+                    {
+                      title: "Not logged",
+                      value: "not_logged"
+                    },
+                    ...membershipRoles.map(({ role, name }) => ({
+                      title: name,
+                      value: role
+                    }))
+                  ]
+                },
                 {
                   id: "slider",
                   label: t("Make it a Slider"),

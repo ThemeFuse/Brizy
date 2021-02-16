@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_166Wp_Texts {
+class Brizy_Public_EditorBuild_170Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -146,6 +146,7 @@ class Brizy_Public_EditorBuild_166Wp_Texts {
 			"Checkbox" => __("Checkbox", "brizy"),
 			"Checkout" => __("Checkout", "brizy"),
 			"Children" => __("Children", "brizy"),
+			"Choose File" => __("Choose File", "brizy"),
 			"Circle" => __("Circle", "brizy"),
 			"Classic" => __("Classic", "brizy"),
 			"Clear" => __("Clear", "brizy"),
@@ -423,6 +424,7 @@ class Brizy_Public_EditorBuild_166Wp_Texts {
 			"Max. File Size" => __("Max. File Size", "brizy"),
 			"Medium" => __("Medium", "brizy"),
 			"Mega Menu" => __("Mega Menu", "brizy"),
+			"Membership" => __("Membership", "brizy"),
 			"Mention" => __("Mention", "brizy"),
 			"Menu" => __("Menu", "brizy"),
 			"Menu Items" => __("Menu Items", "brizy"),
@@ -651,6 +653,7 @@ class Brizy_Public_EditorBuild_166Wp_Texts {
 			"Show Social Context" => __("Show Social Context", "brizy"),
 			"Show message" => __("Show message", "brizy"),
 			"Show on Desktop" => __("Show on Desktop", "brizy"),
+			"Show to" => __("Show to", "brizy"),
 			"Sidebar" => __("Sidebar", "brizy"),
 			"SignUp" => __("SignUp", "brizy"),
 			"Size" => __("Size", "brizy"),

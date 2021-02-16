@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import ThemeIcon from "visual/component/ThemeIcon";
+import { t } from "visual/utils/i18n";
 
 class Upload extends Component {
   static defaultProps = {
@@ -37,7 +38,7 @@ class Upload extends Component {
             value={value}
             onChange={onChange}
           />
-          <span className="brz-button">Choose File</span>
+          <span className="brz-button">{t("Choose File")}</span>
         </label>
       </div>
     );
@@ -57,7 +58,7 @@ class Upload extends Component {
             name="close"
             type="editor"
           />
-          <span className="brz-button">Choose File</span>
+          <span className="brz-button">{t("Choose File")}</span>
         </label>
       </div>
     );

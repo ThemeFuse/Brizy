@@ -57,13 +57,16 @@ export const dynamicStyleIds = {
   paragraph: "p"
 };
 
-export const makeRichTextFontStylesCSS = value => {
+export const makeRichTextFontStylesCSS = (
+  value,
+  { getClassName = c => c } = {}
+) => {
   return value
     .map(item => {
       const { id, ...styles } = item;
 
       const { desktop, tablet, mobile } = generateStyles(styles);
-      const className = `.brz-tp-${id.toLowerCase()}`;
+      const className = getClassName(`.brz-tp-${id.toLowerCase()}`);
 
       return IS_EDITOR
         ? [
