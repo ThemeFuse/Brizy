@@ -14,6 +14,7 @@ import {
   styleTypography2FontSize,
   styleTypography2LineHeight
 } from "visual/utils/style2";
+import { defaultValueValue } from "visual/utils/onChange";
 
 function cssStyleElementTimelineIconHeightWidth({ v, device, prefix }) {
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix });
@@ -102,9 +103,17 @@ export function cssStyleElementTimelineNavTitleVisible({ v }) {
   return enableText ? "display: block;" : "display: none;";
 }
 
-export function cssStyleElementTimelineLineBgColor({ v, device }) {
+export function cssStyleElementTimelineLineBgColor({ v, device, state }) {
   const borderColor = styleBorderColor({ v, device, prefix: "line" });
-  return `background-color: ${borderColor};`;
+  const orientation = styleElementTimelineOrientation({ v, device, state });
+
+  const dvv = key => defaultValueValue({ v, key, device });
+  const borderStyle = dvv("lineBorderStyle");
+  const borderWidth = dvv("lineBorderWidth");
+
+  return orientation === "off"
+    ? `border-top: ${borderColor} ${borderWidth}px ${borderStyle};`
+    : `border-left: ${borderColor} ${borderWidth}px ${borderStyle};border-top:0;`;
 }
 
 export function cssStyleElementTimelineLineTop({ v, device, state }) {
@@ -226,7 +235,7 @@ export function cssStyleElementTimelineVerticalPosition({
   }
 }
 
-export function cssStyleElementTimelineLineWidthHeight({
+export function cssStyleElementTimelineLineWidthHeightBefore({
   v,
   device,
   state,
@@ -243,9 +252,33 @@ export function cssStyleElementTimelineLineWidthHeight({
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
   const orientation = styleElementTimelineOrientation({ v, device, state });
   if (orientation === "on") {
-    return `height: calc(100px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px;`;
+    return `height: calc(50% - ${halfIconWidth}px); width: ${borderWidth}px;`;
   } else if (orientation === "off") {
-    return `width: calc(100% - ${iconWidth}px); height:  ${borderWidth}px;`;
+    return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
+  }
+}
+
+export function cssStyleElementTimelineLineWidthHeightAfter({
+  v,
+  device,
+  state,
+  prefix
+}) {
+  const halfIconWidth = cssStyleElementTimelineIconHalfHeightWidth({
+    v,
+    prefix
+  });
+  const iconWidth = cssStyleElementTimelineIconHeightWidth({
+    v,
+    prefix
+  });
+  const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
+  const orientation = styleElementTimelineOrientation({ v, device, state });
+  if (orientation === "on") {
+    return `height: calc(${100 -
+      borderWidth}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px;`;
+  } else if (orientation === "off") {
+    return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }
 }
 
@@ -408,7 +441,7 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return `top: ${afterHeight}px; bottom:auto; right: auto; left: ${horizontalLeftPosition}px;`;
+        return `bottom:auto; right: auto; left: ${horizontalLeftPosition}px;`;
       }
       case "style-2": {
         return `bottom: ${afterHeight}px; top:auto; right: auto; left: ${horizontalLeftPosition}px;`;

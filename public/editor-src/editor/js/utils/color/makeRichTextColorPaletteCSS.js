@@ -1,8 +1,12 @@
-export const makeRichTextColorPaletteCSS = colorPalette => {
+export const makeRichTextColorPaletteCSS = (
+  colorPalette,
+  { getClassName = c => c } = {}
+) => {
   return colorPalette
-    .map(
-      ({ id, hex }) =>
-        `.brz .brz-cp-${id.toLowerCase()}, .brz .brz-bcp-${id.toLowerCase()}{color: ${hex};}`
-    )
+    .map(({ id, hex }) => {
+      const className = getClassName(`.brz-cp-${id.toLowerCase()}`);
+
+      return `.brz ${className}, .brz ${className}{color: ${hex};}`;
+    })
     .join("");
 };

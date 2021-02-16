@@ -240,3 +240,21 @@
     margin-left: 2px;
   }
 }
+
+&.brz-ed--tablet,
+&.brz-ed--mobile {
+  .color-picker2-body
+    .color-picker2-alpha
+    .color-picker2-pointer
+    .color-picker2-pointer-tooltip {
+    right: 18px;
+    left: auto;
+
+    &:before {
+      right: -12px;
+      left: auto;
+      border-right: 6px solid transparent;
+      border-left: 6px solid $toolbar-bg-color;
+    }
+  }
+}

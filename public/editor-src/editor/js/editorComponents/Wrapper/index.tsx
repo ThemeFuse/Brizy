@@ -92,6 +92,22 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     this.childToolbarExtend = childToolbarExtend;
   };
 
+  getContainerSizes = (): { width: number; height: number } => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+
+    const value = defaultValueValue({ key: "elementPosition", device, v });
+    const isAbsolute = value === "absolute";
+    const meta = this.props.meta;
+
+    return {
+      width: isAbsolute
+        ? (meta[`${device}WNoSpacing`] as number)
+        : window.innerWidth,
+      height: window.innerHeight
+    };
+  };
+
   getMeta(v: ElementModel): ElementModel {
     const { horizontalAlign, tabletHorizontalAlign, mobileHorizontalAlign } = v;
     const { meta } = this.props;
@@ -263,6 +279,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 x: Position.getHOffset(dvv) ?? 0,
                 y: Position.getVOffset(dvv) ?? 0
               })}
+              getContainerSizes={this.getContainerSizes}
             >
               {(ref, className): ReactNode =>
                 isRelative

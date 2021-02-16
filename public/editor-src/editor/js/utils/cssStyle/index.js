@@ -498,7 +498,8 @@ export {
   cssStyleElementTimelineNavTitleVisible,
   // Vertical
   cssStyleElementTimelineVerticalPosition,
-  cssStyleElementTimelineLineWidthHeight,
+  cssStyleElementTimelineLineWidthHeightBefore,
+  cssStyleElementTimelineLineWidthHeightAfter,
   cssStyleElementTimelineVerticalLinePosition,
   cssStyleElementTimelineVerticalLineTopPosition,
   cssStyleElementTimelineVerticalLineBottomPosition,
