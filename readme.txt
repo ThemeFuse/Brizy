@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,16 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.8 - 2021-02-16 =
+• New: Membership functionality
+• New: Accordion content animation
+• New: IconText icon link
+• Improved: Publish toolbar CSS
+• Fixed: Colorpicker minor issues
+• Fixed: Drag & Drop for 'absolute' positioned elements
+• Fixed: Timeline CSS
+• Fixed: Embed CSS
 
 = 2.2.7 - 2021-02-02 =
 * New: Added animation option for Accordion content
