@@ -12,6 +12,11 @@ class Brizy_Admin_Membership_Membership {
 	}
 
 	private function __construct() {
+
+		if ( ! self::is_pro() ) {
+			return;
+		}
+
 		add_action( 'enter_title_here',                   [ $this, 'enter_title_here' ] );
 		add_action( 'transition_post_status',             [ $this, 'transition_post_status' ], 10, 3 );
 		add_filter( 'post_updated_messages',              [ $this, 'post_updated_messages' ] );
@@ -34,6 +39,10 @@ class Brizy_Admin_Membership_Membership {
 	}
 
 	static public function registerCustomPostRoles() {
+
+		if ( ! self::is_pro() ) {
+			return;
+		}
 
 		$labels = array(
 			'name'               => _x( 'Roles', 'post type general name', 'brizy' ),
@@ -381,5 +390,9 @@ class Brizy_Admin_Membership_Membership {
 		}
 
 		return $final_roles;
+	}
+
+	static function is_pro() {
+		return ( class_exists( 'BrizyPro_Admin_License' ) && BrizyPro_Admin_License::_init()->getCurrentLicense() );
 	}
 }

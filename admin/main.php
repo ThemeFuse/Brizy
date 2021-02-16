@@ -92,9 +92,7 @@ class Brizy_Admin_Main {
 			return $content;
 		}
 
-
-		$brizyPost = get_post_meta( $postId, Brizy_Editor_Storage_Post::META_KEY, false );
-		if ( $brizyPost ) {
+		if ( Brizy_Editor_Entity::isBrizyEnabled( $postId ) ) {
 			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post, 'body' );
 		}
 

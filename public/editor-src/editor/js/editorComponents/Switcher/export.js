@@ -27,7 +27,10 @@ export default function($node) {
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
 
       // Emit Switcher Changed
-      window.Brizy.emit("elements.switcher.changed", $this.get(0));
+      window.Brizy.emit("elements.switcher.changed", $this.get(0), {
+        active: $this.find(".brz-switcher__content--tab--active").get(0),
+        tabs: $switcherContent.get()
+      });
     });
   });
 }

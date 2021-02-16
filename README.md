@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.6<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.7<br>
+Stable tag: 2.2.8<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.8 - 2021-02-16
+• New: Membership functionality
+• New: Accordion content animation
+• New: IconText icon link
+• Improved: Publish toolbar CSS
+• Fixed: Colorpicker minor issues
+• Fixed: Drag & Drop for 'absolute' positioned elements
+• Fixed: Timeline CSS
+• Fixed: Embed CSS
 
 ### 2.2.7 - 2021-02-02
 * New: Added animation option for Accordion content

@@ -4,6 +4,7 @@ import {
   makeRichTextFontStylesCSS,
   makeRichTextDynamicFontStylesCSS
 } from "visual/utils/fonts";
+import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 export default function addFontStylesCSS($) {
   const allPossibleFontStyles = getFontStyles({ includeDeleted: true });
@@ -18,7 +19,20 @@ export default function addFontStylesCSS($) {
   const dynamicFontStylesToLoad = allPossibleFontStyles.filter(
     fs => parsedDynamicFontStylesObj[fs.id]
   );
-  const richTextFontStylesCSS = makeRichTextFontStylesCSS(fontStylesToLoad);
+
+  let getClassName = c => c;
+
+  // if we add external popup to brizy page - his global styles rewrite page global styles
+  if (IS_EXTERNAL_POPUP) {
+    const popupId = $(".brz-popup2").attr("id");
+
+    getClassName = className => `#${popupId} ${className}`;
+  }
+
+  const richTextFontStylesCSS = makeRichTextFontStylesCSS(fontStylesToLoad, {
+    getClassName
+  });
+
   const richTextDynamicFontStylesCSS = makeRichTextDynamicFontStylesCSS(
     dynamicFontStylesToLoad
   );

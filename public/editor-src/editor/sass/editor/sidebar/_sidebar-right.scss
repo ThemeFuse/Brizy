@@ -3,7 +3,7 @@
 // Sidebar Right
 .brz-ed-sidebar__right {
   width: auto;
-  z-index: z("sidebar");
+  z-index: z("sidebar") - 1;
 
   &.brz-ed-sidebar__right--align-left {
     left: 0;

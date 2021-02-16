@@ -1,13 +1,4 @@
-import { getStore } from "visual/redux/store";
-import { deviceModeSelector } from "visual/redux/selectors";
-import {
-  wInBoxedPage,
-  wInFullPage,
-  wInTabletPage,
-  wInMobilePage
-} from "visual/config/columns";
-import { IS_STORY } from "visual/utils/models";
-import { DW, DH } from "visual/editorComponents/Story/utils";
+import { wInFullPage } from "visual/config/columns";
 
 import {
   styleBorderWidthGrouped,
@@ -215,29 +206,6 @@ export const getWidthByPosition = ({
   const marginType = styleMarginType({ v, device, state });
   const marginW = getMargin({ w, v, device, state, type: marginType });
   return { w: w - marginW, wNoSpacing };
-};
-
-export const getCurrentW = (): number => {
-  if (IS_STORY) {
-    return DW;
-  }
-
-  const deviceMode = deviceModeSelector(getStore().getState());
-  switch (deviceMode) {
-    case "tablet": {
-      return wInTabletPage;
-    }
-    case "mobile": {
-      return wInMobilePage;
-    }
-    default: {
-      return wInBoxedPage;
-    }
-  }
-};
-
-export const getCurrentH = (): number => {
-  return IS_STORY ? DH : window.innerHeight;
 };
 
 export const getContainerW = ({

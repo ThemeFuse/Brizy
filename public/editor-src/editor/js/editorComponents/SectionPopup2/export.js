@@ -72,7 +72,9 @@ export default function($node) {
   });
 
   $node
-    .find(".brz-simple-popup, .brz-conditions-internal-popup")
+    .find(
+      ".brz-simple-popup, .brz-conditions-internal-popup, .brz-conditions-external-popup"
+    )
     .each(function() {
       const $this = $(this);
 
@@ -96,7 +98,10 @@ export default function($node) {
         }
       });
 
-      if ($this.hasClass("brz-conditions-internal-popup")) {
+      if (
+        $this.hasClass("brz-conditions-internal-popup") ||
+        $this.hasClass("brz-conditions-external-popup")
+      ) {
         const data = _parsePopupData($this);
         const popup = $this.popup();
 

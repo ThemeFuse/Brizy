@@ -41,15 +41,6 @@ export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
   };
 }
 
-export function toolbarDisabledLink({ devices = "all" }) {
-  return {
-    id: "toolbarLink",
-    type: "popover-dev",
-    devices,
-    disabled: true
-  };
-}
-
 export function toolbarDisabledShowOnResponsive({ device }) {
   let r;
   if (device === "tablet") {
