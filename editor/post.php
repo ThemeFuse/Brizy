@@ -635,8 +635,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			       p.ID,
 			       p.post_title as title,
 			       p.post_title as post_title,
-			       '$postType' as post_type,
-			       '$postLabel' as post_type_label,
+			       %s as post_type,
+			       %s as post_type_label,
 			       pm.meta_value as 'uid'
 			FROM
 			     $wpdb->posts p
@@ -646,7 +646,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			ORDER BY p.post_title ASC
 			LIMIT %d,%d
 SQL;
-		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ) );
+		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $postLabel, $postType, $offset, $limit ) );
 
 		foreach($posts as $i=>$p) {
 			$postTitle = apply_filters( 'the_title', $p->post_title );
