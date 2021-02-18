@@ -85,6 +85,10 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'TRP_Translate_Press' ) ) {
 			new Brizy_Compatibilities_TranslatePress();
 		}
+
+		if ( class_exists( 'bbPress' ) ) {
+			new Brizy_Compatibilities_Bbpress();
+		}
 	}
 
 	private function is_plugin_active( $plugin_file ) {
