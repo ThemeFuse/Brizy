@@ -22,7 +22,7 @@ jobs:
         id: env
         with:
           path: .github/.build-env
-      - name: Create an instance of project
+      - name: Intialize  the  containers
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -33,9 +33,27 @@ jobs:
           passphrase: ${{ secrets.KEY_PASSPHRASE }}
           script: |
             ./BB/build/run-editor-instance.sh \
+            -c ${{ steps.vars.outputs.sha_short }} \
             -v ${{ steps.env.outputs.build_environment }} \
             -f ${{ steps.env.outputs.free_branch }} \
             -p ${{ steps.env.outputs.pro_branch }} \
             -e ${{ steps.env.outputs.editor_branch }} \
             -n traefik \
             -t ${{ secrets.COMPOSER_TOKEN }}
+      - name: Clean context folder
+        uses: appleboy/ssh-action@master
+        if: ${{ always() }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 200m
+          passphrase: ${{ secrets.KEY_PASSPHRASE }}
+          script: |
+            ./BB/build/clean-editor-instance.sh \
+            -v ${{ steps.env.outputs.build_environment }} \
+            -f ${{ steps.env.outputs.free_branch }} \
+            -p ${{ steps.env.outputs.pro_branch }} \
+            -e ${{ steps.env.outputs.editor_branch }} \
+            -c ${{ steps.vars.outputs.sha_short }}
