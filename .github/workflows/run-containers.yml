@@ -22,6 +22,11 @@ jobs:
         id: env
         with:
           path: .github/.build-env
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+            echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Intialize  the  containers
         uses: appleboy/ssh-action@master
         with:
