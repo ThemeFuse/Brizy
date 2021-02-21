@@ -33,7 +33,7 @@ jobs:
           passphrase: ${{ secrets.KEY_PASSPHRASE }}
           script: |
             ./BB/build/run-editor-instance.sh \
-            -c ${{ steps.vars.outputs.sha_short }} \
+            -c ${{ GITHUB_SHA }} \
             -v ${{ steps.env.outputs.build_environment }} \
             -f ${{ steps.env.outputs.free_branch }} \
             -p ${{ steps.env.outputs.pro_branch }} \
@@ -56,4 +56,4 @@ jobs:
             -f ${{ steps.env.outputs.free_branch }} \
             -p ${{ steps.env.outputs.pro_branch }} \
             -e ${{ steps.env.outputs.editor_branch }} \
-            -c ${{ steps.vars.outputs.sha_short }}
+            -c ${{ GITHUB_SHA }}
