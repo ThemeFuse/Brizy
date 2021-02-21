@@ -13,7 +13,7 @@ jobs:
     environment: Build
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: '1'
@@ -55,10 +55,5 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 200m
           passphrase: ${{ secrets.KEY_PASSPHRASE }}
-          script: |
-            ./BB/build/clean-editor-instance.sh \
-            -v ${{ steps.env.outputs.build_environment }} \
-            -f ${{ steps.env.outputs.free_branch }} \
-            -p ${{ steps.env.outputs.pro_branch }} \
-            -e ${{ steps.env.outputs.editor_branch }} \
-            -c ${{ steps.vars.outputs.sha_short }}
+          script:
+            ./BB/build/clean-context-folder.sh -c ${{ steps.vars.outputs.sha_short }}
