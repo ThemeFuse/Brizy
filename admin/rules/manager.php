@@ -275,7 +275,7 @@ class Brizy_Admin_Rules_Manager {
 	 * @return Brizy_Admin_RuleSet
 	 */
 	public function getRuleSet( $postId ) {
-		return new Brizy_Admin_RuleSet( $this->getRules( $postId ) );
+		return new Brizy_Admin_RuleSet( $this->sortRules( $this->getRules( $postId ) ) );
 	}
 //
 	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {

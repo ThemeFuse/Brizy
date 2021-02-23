@@ -350,7 +350,7 @@ var RuleTypeField = function (params) {
                         "option",
                         {
                             value: RULE_TYPE_INCLUDE,
-                            selected: params.value === RULE_TYPE_INCLUDE
+                            selected: parseInt(params.value) === RULE_TYPE_INCLUDE
                         },
                         "Include"
                     ),
@@ -358,7 +358,7 @@ var RuleTypeField = function (params) {
                         "option",
                         {
                             value: RULE_TYPE_EXCLUDE,
-                            selected: params.value === RULE_TYPE_EXCLUDE
+                            selected: parseInt(params.value) === RULE_TYPE_EXCLUDE
                         },
                         "Exclude"
                     )
@@ -743,6 +743,7 @@ var RuleList = function (params) {
     if (params.rules.length) {
         elements.push(h("h4", {}, "Where do You Want to Display it"));
     }
+
     params.rules.forEach(function (rule, index) {
         elements.push(
             h(RuleListItem, {
