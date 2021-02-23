@@ -28,7 +28,10 @@ class Brizy_Admin_Rules_Manager {
 		} elseif ( is_search() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'search';
-		} elseif ( is_front_page() && !is_home() ) {
+		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+			$applyFor   = Brizy_Admin_Rule::WOO_SHOP_PAGE;
+			$entityType = 'shop_page';
+		} elseif ( is_front_page() && ! is_home() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'front_page';
 		} elseif ( is_home() ) {
@@ -38,9 +41,6 @@ class Brizy_Admin_Rules_Manager {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
-		} elseif ( function_exists( 'is_shop' ) &&  is_shop() ) {
-			$applyFor = Brizy_Admin_Rule::WOO_SHOP_PAGE;
-			$entityType     = "shop_page";
 		} elseif ( is_day() ) {
 			$applyFor = Brizy_Admin_Rule::DAY_ARCHIVE;
 			if ( $wp_query->queried_object ) {
