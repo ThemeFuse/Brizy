@@ -50,7 +50,7 @@ class Brizy_Editor_Http_Client {
 	public function request( $url, $options = array(), $method = 'GET' ) {
 
 		$options['method']  = $method;
-		$options['timeout'] = 30;
+		$options['timeout'] = Brizy_Config::WP_HTTP_TIMEOUT;
 		$options            = $this->prepare_options( $options );
 		$response           = null;
 
