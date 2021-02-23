@@ -17,26 +17,36 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function getAllPlaceholders() {
 
 		return array(
-			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( $context, $contentPlaceholder ) {
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
 
 				$attrs = $contentPlaceholder->getAttributes();
 
-				if ( empty( $attrs['roles'] ) ) {
-					return $contentPlaceholder->getContent();
+				if ( ! empty( $attrs['roles'] ) ) {
+					$roles = explode( ',', $attrs['roles'] );
+					$user  = wp_get_current_user();
+
+					if ( in_array( 'not_logged', $roles ) ) {
+
+						$roles = array_diff( $roles, [ 'not_logged' ] );
+
+						if ( $user->ID && ! array_intersect( $roles, (array) $user->roles ) ) {
+							return '';
+						}
+					} else {
+						if ( ! array_intersect( $roles, (array) $user->roles ) ) {
+							return '';
+						}
+					}
 				}
 
-				$roles = explode( ',', $attrs['roles'] );
-				$user  = wp_get_current_user();
+				$placeholderProvider = new Brizy_Content_PlaceholderProvider();
+				$extractor           = new Brizy_Content_PlaceholderExtractor( $placeholderProvider );
 
-				if ( in_array( 'not_logged', $roles ) && empty( $user->ID ) ) {
-					return $contentPlaceholder->getContent();
-				}
+				list( $placeholders, $content ) = $extractor->extract( $contentPlaceholder->getContent() );
 
-				if ( array_intersect( $roles, (array) $user->roles ) ) {
-					return $contentPlaceholder->getContent();
-				}
+				$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider );
 
-				return '';
+				return $replacer->getContent( $placeholders, $content, $context );
 			} ),
 			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' ),
 			new Brizy_Content_Placeholders_ImageAltAttribute( 'Internal Alt Attributes', 'brizy_dc_image_alt' ),
