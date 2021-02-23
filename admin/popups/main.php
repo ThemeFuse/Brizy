@@ -207,9 +207,13 @@ class Brizy_Admin_Popups_Main {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		foreach ( $allPopups as $aPopup ) {
 			$ruleSet = $ruleManager->getRuleSet( $aPopup->ID );
-			if ( $ruleSet->isMatching( $applyFor, $entityType, $entityValues ) ) {
-				$resultPopups[] = Brizy_Editor_Post::get( $aPopup );
-			}
+            try  {
+                if ( $ruleSet->isMatching( $applyFor, $entityType, $entityValues ) ) {
+                    $resultPopups[] = Brizy_Editor_Post::get( $aPopup );
+                }
+            } catch (\Exception $e) {
+                continue; // we catch here  the  exclusions
+            }
 		}
 
 		return $resultPopups;
