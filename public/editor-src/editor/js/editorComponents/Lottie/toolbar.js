@@ -1,9 +1,10 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue } from "visual/utils/onChange";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { toolbarLinkAnchor, toolbarLinkExternal } from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 export function getItems({ v, device, component }) {
+  const dvk = key => defaultValueKey({ v, key, device });
   const dvv = key => defaultValueValue({ v, key, device });
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
@@ -25,6 +26,7 @@ export function getItems({ v, device, component }) {
           type: "inputText-dev",
           devices: "desktop",
           placeholder: "lottie link",
+          disabled: dvv("animationFile") !== "",
           config: {
             size: "medium"
           },
@@ -33,6 +35,14 @@ export function getItems({ v, device, component }) {
               "This is Lottie .json URL. Get more from LottieFiles.com."
             )
           }
+        },
+        {
+          id: dvk("animationFile"),
+          label: t("Lottie File"),
+          type: "fileUpload",
+          acceptedExtensions: [".json"],
+          devices: "desktop",
+          value: dvv("animationFile")
         },
         {
           id: "autoplay",

@@ -5,7 +5,7 @@ import classnames from "classnames";
 import Scrollbars from "react-custom-scrollbars";
 import { connect, ConnectedProps } from "react-redux";
 import Config from "visual/global/Config";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import EditorIcon from "visual/component/EditorIcon";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import Button from "visual/component/Prompts/common/Button";

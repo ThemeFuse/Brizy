@@ -52,10 +52,7 @@ function ThirdPartyIframe({ src, onRequestClose }) {
           break;
         case "NAVIGATE":
           if (e.data.url) {
-            if (
-              process.env.NODE_ENV === "development" &&
-              TARGET === "node_local"
-            ) {
+            if (TARGET === "Cloud-localhost") {
               const url = new URL(window.parent.location.href);
               const match = /\/(\d+)(?:$|\/(internal_popup))/.exec(e.data.url);
 

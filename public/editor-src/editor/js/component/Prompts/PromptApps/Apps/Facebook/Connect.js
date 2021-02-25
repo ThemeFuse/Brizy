@@ -4,7 +4,7 @@ import { Connect } from "../../../common/GlobalApps/StepsView";
 import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
 import { Context } from "../../../common/GlobalApps/Context";
 import validation from "./validation";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 const apiKeys = [{ name: "appid", title: "App ID" }];
 

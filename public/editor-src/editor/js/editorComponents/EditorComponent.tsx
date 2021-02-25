@@ -22,7 +22,7 @@ import {
   setOptionPrefix,
   makeToolbarPropsFromConfigDefaults
 } from "./utils";
-import { getModel } from "visual/component/Options/types";
+import { getOptionModel } from "visual/component/Options/types";
 import { wrapOption } from "visual/utils/options/utils";
 import {
   DynamicContentObjIncomplete,
@@ -88,7 +88,7 @@ type SidebarConfig<M> = {
   title?: string | ((d: { v: M }) => string);
 };
 
-type NewToolbarConfig<M> = {
+export type NewToolbarConfig<M> = {
   getItems: (d: {
     v: M;
     device: Responsive.ResponsiveMode;
@@ -124,8 +124,11 @@ export type Props<M extends ElementModel, P> = WithClassName & {
   reduxDispatch: unknown;
   meta: {
     desktopW?: number;
+    desktopWNoSpacing?: number;
     tabletW?: number;
+    tabletWNoSpacing?: number;
     mobileW?: number;
+    mobileWNoSpacing?: number;
     sectionPopup?: boolean;
     sectionPopup2?: boolean;
     [k: string]: unknown;
@@ -140,14 +143,6 @@ export type Props<M extends ElementModel, P> = WithClassName & {
   toolbarExtend?: ToolbarExtend;
   wrapperExtend?: WrapperProps<P>;
 } & P;
-
-const scuReduxKeys: (keyof ReduxState)[] = [
-  "currentStyleId",
-  "currentStyle",
-  "extraFontStyles",
-  "fonts",
-  "copiedElement"
-];
 
 export class EditorComponent<
   M extends ElementModel,
@@ -198,24 +193,33 @@ export class EditorComponent<
       return true;
     }
 
-    // check meta
-    const curMeta = this.props.meta;
-    const nextMeta = nextProps.meta;
+    // check redux
     if (
-      curMeta?.mobileW !== nextMeta?.mobileW ||
-      curMeta?.tabletW !== nextMeta?.tabletW ||
-      curMeta?.desktopW !== nextMeta?.desktopW
+      props.reduxState.currentStyleId !== nextProps.reduxState.currentStyleId
     ) {
-      // console.log("scu", this.constructor.componentId, "meta", true);
+      // console.log("scu", this.constructor.componentId, "project", true);
       return true;
     }
 
-    // check redux
-    for (const key of scuReduxKeys) {
-      if (props.reduxState[key] !== nextProps.reduxState[key]) {
-        // console.log("scu", this.constructor.componentId, `redux:${key}`, true);
-        return true;
-      }
+    if (props.reduxState.currentStyle !== nextProps.reduxState.currentStyle) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (
+      props.reduxState.extraFontStyles !== nextProps.reduxState.extraFontStyles
+    ) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (props.reduxState.copiedElement !== nextProps.reduxState.copiedElement) {
+      return true;
     }
 
     // check path
@@ -443,10 +447,10 @@ export class EditorComponent<
       className,
       attributes,
       id: this.getId(),
-      meta: this.props.meta,
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       componentId: this.constructor.componentId,
+      meta: this.props.meta,
       ...this.getValue2(),
       // ! is it ok to use here type assertion - as Partial<Model<M>> ?!
       onChange: this.bindPatchValue,
@@ -757,7 +761,7 @@ export class EditorComponent<
           state: optionState(state, option)
         });
 
-        option.value = getModel(type)(key => {
+        option.value = getOptionModel(type)(key => {
           return defaultValueValue({
             v,
             key: createOptionId(id, key),

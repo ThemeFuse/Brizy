@@ -244,6 +244,41 @@ function cssOutput({ v, styles, legacy }) {
   return goout;
 }
 
+export function parseOutputCss(css, className) {
+  let rest = css;
+
+  // eslint-disable-next-line no-useless-escape
+  const cssRE = new RegExp(`${className}\{(.+?)\}`);
+  let result = {};
+
+  if (devices.mobile) {
+    const re = /@media\(max-width:767px\)\{(.+?\})\}/;
+    const mobileCss = css.match(re)[1];
+    result.mobile = styleToObject(mobileCss.match(cssRE)[1].split(";"));
+    rest = rest.replace(re, "");
+  }
+  if (devices.tablet) {
+    const re = /@media\(max-width:991px\) and \(min-width:768px\){(.+?\})\}/;
+    const tabletCss = css.match(re)[1];
+    result.tablet = styleToObject(tabletCss.match(cssRE)[1].split(";"));
+    rest = rest.replace(re, "");
+  }
+  result.desktop = styleToObject(rest.match(cssRE)[1].split(";"));
+
+  return result;
+
+  function styleToObject(styles) {
+    return styles.reduce((acc, val) => {
+      const [key, value] = val.split(":");
+
+      if (key && value) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+  }
+}
+
 function legacyByOut({ legacy, out, styleKey, state, currentStyle }) {
   if (
     state === "hover" &&
@@ -420,6 +455,68 @@ export function css(
   ].join(" ");
 }
 
+export function css1(elementID, elementStyle) {
+  let elementData;
+  elementData = cssCache.get(elementID);
+  if (!elementData) {
+    const className = `brz-css-${uuid(5)}`;
+    const cssText = replacePlaceholders(elementStyle, className);
+    let node;
+
+    if (!css.isServer) {
+      node = document.createElement("style");
+      if (process.env.NODE_ENV === "development") {
+        node.setAttribute("data-brz-css", "");
+      }
+      node.appendChild(document.createTextNode(""));
+      node.childNodes[0].nodeValue = cssText;
+
+      insertStyleNodeIntoDOM("custom", node);
+    }
+
+    elementData = {
+      node,
+      className,
+      cssText
+    };
+    cssOrdered.custom.push(elementData);
+    cssCache.set(elementID, elementData);
+  } else {
+    const { node, className, cssText } = elementData;
+    const cssTextNext = replacePlaceholders(elementStyle, className);
+
+    if (cssTextNext !== cssText) {
+      if (!css.isServer) {
+        node.childNodes[0].nodeValue = cssTextNext;
+      }
+
+      elementData = {
+        node,
+        className,
+        cssText: cssTextNext
+      };
+      cssCache.set(elementID, elementData);
+    }
+  }
+
+  return {
+    className: elementData.className,
+    cssText: elementData.cssText,
+    clean() {
+      const elementData = cssCache.get(elementID);
+
+      document.head.removeChild(elementData.node);
+      cssCache.delete(elementID);
+    }
+  };
+}
+
+export function clearCache() {
+  for (const [key] of cssCache) {
+    cssCache.clear(key);
+  }
+}
+
 export function tmpCSSFromCache() {
   let css = "";
 
@@ -433,7 +530,7 @@ export function tmpCSSFromCache() {
   return css;
 }
 
-function replacePlaceholders(styles, className) {
+export function replacePlaceholders(styles, className) {
   return styles.replace(/&&/gm, `.${className}`);
 }
 

@@ -14,7 +14,7 @@ export type Config = WithSize & {
   lines: number;
 };
 export type Model = Option.SimpleValue<string>;
-export type Props = Option.Props<Model, Model> &
+export type Props = Option.Props<Model> &
   WithConfig<Config> &
   WithClassName &
   WithPlaceholder;
@@ -24,7 +24,8 @@ export const Textarea: FC<Props> & Option.OptionType<Model> = ({
   onChange,
   value: { value },
   config = {},
-  placeholder
+  placeholder,
+  label
 }) => {
   const [_value, setValue] = useState(value);
 
@@ -39,19 +40,34 @@ export const Textarea: FC<Props> & Option.OptionType<Model> = ({
   );
 
   return (
-    <Control
-      className={className}
-      onChange={setValue}
-      value={_value}
-      size={config.size ?? "auto"}
-      placeholder={placeholder}
-      rows={config.lines}
-    />
+    <>
+      {label}
+      <Control
+        className={className}
+        onChange={setValue}
+        value={_value}
+        size={config.size ?? "auto"}
+        placeholder={placeholder}
+        rows={config.lines}
+      />
+    </>
   );
 };
 
 const getModel: Option.GetModel<Model> = get => ({
-  value: String.read(get("value")) || ""
+  value: String.read(get("value"))
 });
 
+const getElementModel: Option.GetElementModel<Model> = (values, get) => {
+  return {
+    [get("value")]: values.value
+  };
+};
+
 Textarea.getModel = getModel;
+
+Textarea.getElementModel = getElementModel;
+
+Textarea.defaultValue = {
+  value: ""
+};

@@ -47,6 +47,7 @@
     "fontStyle": "",
     "fontFamilyType": "google",
     "fontSize": 56,
+    "fontSizeSuffix": "px",
     "fontWeight": 400,
     "lineHeight": 1.3,
     "letterSpacing": 0,
@@ -115,6 +116,7 @@
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
     "tabletFontSize": 56,
+    "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
@@ -125,6 +127,7 @@
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
     "mobileFontSize": 56,
+    "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,
     "mobileLetterSpacing": 0

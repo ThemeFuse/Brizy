@@ -326,6 +326,7 @@ const mapDispatchToProps = dispatch => ({
 export const AddElements = {
   id: "addElements",
   icon: "nc-add",
+  type: "drawer",
   drawerTitle: t("Add Elements"),
   showInDeviceModes: ["desktop"],
   drawerComponent: connect(

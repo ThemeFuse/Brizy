@@ -9,6 +9,7 @@ import {
 import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
 import {
+  pageSelector,
   pageBlocksAssembledSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
@@ -17,19 +18,18 @@ import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
-import { pageSelector } from "visual/redux/selectors2";
 
 const DragHandle = SortableHandle(({ item }) => (
   <BlockThumbnail blockData={item} />
 ));
 
 const SortableItem = SortableElement(
-  ({ item, globalBlocks, pageId, onRemove }) => {
+  ({ item, globalBlocks, page, onRemove }) => {
     if (item.type === "GlobalBlock") {
       const { _id } = item.value;
 
       try {
-        if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+        if (!canUseConditionInPage(globalBlocks[_id], page)) {
           return <div />;
         }
       } catch {
@@ -49,7 +49,7 @@ const SortableItem = SortableElement(
 );
 
 const SortableList = SortableContainer(
-  ({ isSorting, items, innerRef, globalBlocks, pageId, onItemRemove }) => {
+  ({ isSorting, items, innerRef, globalBlocks, page, onItemRemove }) => {
     const filteredItems = [];
 
     for (let i = 0; i < items.length; i++) {
@@ -64,7 +64,7 @@ const SortableList = SortableContainer(
           key={item.value._id}
           item={item}
           globalBlocks={globalBlocks}
-          pageId={pageId}
+          page={page}
           index={i}
           onRemove={() => onItemRemove(i)}
         />
@@ -163,7 +163,7 @@ class DrawerComponent extends React.Component {
 
   render() {
     const { blocks, isSorting } = this.state;
-    const { pageId, globalBlocks } = this.props;
+    const { page, globalBlocks } = this.props;
 
     return (
       <SortableList
@@ -174,7 +174,7 @@ class DrawerComponent extends React.Component {
         distance={5}
         useDragHandle={true}
         innerRef={this.content}
-        pageId={pageId}
+        page={page}
         contentWindow={this.getContentWindow}
         getContainer={this.getContainer}
         onSortStart={this.handleBeforeSortStart}
@@ -188,11 +188,12 @@ class DrawerComponent extends React.Component {
 const mapStateToProps = state => ({
   pageBlocks: pageBlocksAssembledSelector(state),
   globalBlocks: globalBlocksSelector(state),
-  pageId: pageSelector(state).id
+  page: pageSelector(state)
 });
 
 export const BlocksSortable = {
   id: "blocksSortable",
+  type: "drawer",
   icon: "nc-reorder",
   disabled: IS_GLOBAL_POPUP || IS_STORY,
   drawerTitle: t("Reorder Blocks"),

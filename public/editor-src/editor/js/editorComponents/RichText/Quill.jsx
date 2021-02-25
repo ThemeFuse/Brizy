@@ -58,8 +58,6 @@ const DEFAULT = {
   fontStyle: null,
   lineHeight: 1.6,
   horizontalAlign: "left",
-  intermediateMobileLineHeight: null,
-  intermediateMobileFontSize: null,
   italic: false,
   letterSpacing: null,
   linkType: "external",
@@ -75,7 +73,10 @@ const DEFAULT = {
   marginTop: "0",
   mobileLineHeight: null,
   mobileFontSize: null,
-  fontsize: 16,
+  fontSize: 16,
+  fontSizeSuffix: "px",
+  tabletFontSizeSuffix: "px",
+  mobileFontSizeSuffix: "px",
   tagName: null,
   fontWeight: ""
 };
@@ -164,25 +165,42 @@ export default class QuillComponent extends React.Component {
       this.save(this.quill.root.innerHTML);
     });
 
-    this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, node => {
-      const { color, colorPalette } = this.quill.getFormat();
-      const attributers =
-        color || colorPalette ? { color, colorPalette } : null;
+    this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+      let ops = [];
+      delta.ops.forEach(d => {
+        if (typeof d.insert === "string") {
+          ops.push({
+            insert: d.insert.trim().length === 0 ? d.insert : d.insert.trim(),
+            attributes: {
+              italic: d?.attributes?.italic ?? null,
+              bold: d?.attributes?.bold ?? null,
+              color: d?.attributes?.color ?? null,
+              colorPalette: d?.attributes?.colorPalette ?? null,
+              header: d?.attributes?.header ?? null,
 
-      const headerTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"];
+              newFontStyle: "paragraph",
+              tabletFontStyle: "paragraph",
+              mobileFontStyle: "paragraph"
+            }
+          });
+        }
+      });
 
-      let content = node.textContent;
-      if (headerTags.includes(node.tagName.toLowerCase())) {
-        let lineBreak = node.textContent.trim() === "" ? "\n\n " : "";
-
-        content = node.textContent.trim() + lineBreak;
+      // delta can be empty. Quill throw error in this case
+      if (ops.length === 0) {
+        ops.push({
+          insert: "\n",
+          newFontStyle: "paragraph",
+          tabletFontStyle: "paragraph",
+          mobileFontStyle: "paragraph"
+        });
       }
 
-      return new Delta().insert(content, attributers);
+      return { ops };
     });
 
     this.quill.clipboard.addMatcher(Node.TEXT_NODE, node => {
-      const { color, colorPalette } = this.quill.getFormat();
+      const { color = null, colorPalette = null } = this.quill.getFormat();
       const attributers =
         color || colorPalette ? { color, colorPalette } : null;
 

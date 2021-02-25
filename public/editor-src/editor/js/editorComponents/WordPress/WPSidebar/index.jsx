@@ -8,7 +8,7 @@ import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
-import { getSidebars } from "visual/utils/api/editor";
+import { getSidebars } from "visual/utils/api";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "../../tools/Wrapper";
 

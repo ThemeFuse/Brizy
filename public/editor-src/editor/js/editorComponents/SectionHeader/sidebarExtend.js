@@ -1,7 +1,19 @@
 import { t } from "visual/utils/i18n";
+import { toolbarEntranceAnimation } from "visual/utils/toolbar";
 import { getDynamicContentChoices } from "visual/utils/options";
 
-export function getItems() {
+export function getItems({ v, device }) {
+  const toolbarTagsChoices = [
+    { title: t("Div"), value: "div" },
+    { title: t("Header"), value: "header" },
+    { title: t("Footer"), value: "footer" },
+    { title: t("Main"), value: "main" },
+    { title: t("Article"), value: "article" },
+    { title: t("Section"), value: "section" },
+    { title: t("Aside"), value: "aside" },
+    { title: t("Nav"), value: "nav" }
+  ];
+
   const richTextDC = getDynamicContentChoices("richText", true);
 
   return [
@@ -11,13 +23,11 @@ export function getItems() {
       config: {
         align: "start"
       },
-      devices: "desktop",
       tabs: [
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
-          devices: "desktop",
           options: [
             {
               id: "showOnDesktop",
@@ -81,6 +91,18 @@ export function getItems() {
                   "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
               },
               population: richTextDC
+            },
+            toolbarEntranceAnimation({
+              v,
+              device,
+              state: "normal"
+            }),
+            {
+              id: "tagName",
+              label: t("HTML Tag"),
+              type: "select-dev",
+              devices: "desktop",
+              choices: toolbarTagsChoices
             }
           ]
         }

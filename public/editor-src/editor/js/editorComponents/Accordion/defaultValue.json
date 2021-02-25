@@ -1,15 +1,26 @@
 {
   "content": {
     "items": [],
+
     "activeAccordionItem": 0,
+
     "filterStyle": "style-1",
     "filterSpacing": 3,
     "filterSpacingSuffix": null,
+
     "afterFilterSpacing": 20,
     "afterFilterSpacingSuffix": null,
+
     "collapsible": "on",
+
+    "animDuration": 0.3,
+    "animDurationSuffix": "s",
+
     "navIcon": "none",
-    "enableTags": "on"
+
+    "enableTags": "on",
+
+    "tagName": "span"
   },
 
   "style": {
@@ -32,6 +43,7 @@
     "fontStyle": "",
     "fontFamilyType": "google",
     "fontSize": 16,
+    "fontSizeSuffix": "px",
     "fontWeight": 400,
     "lineHeight": 1.5,
     "letterSpacing": 0,
@@ -39,6 +51,7 @@
     "filterFontStyle": "",
     "filterFontFamilyType": "google",
     "filterFontSize": 16,
+    "filterFontSizeSuffix": "px",
     "filterFontWeight": 400,
     "filterLineHeight": 1.5,
     "filterLetterSpacing": 0,
@@ -463,7 +476,6 @@
     "tempActiveFilterBoxShadowVertical": null,
     "tempActiveFilterBoxShadowHorizontal": null,
 
-
     "filterPaddingType": "grouped",
     "tempFilterPaddingType": "grouped",
 
@@ -560,6 +572,7 @@
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
     "tabletFontSize": 14,
+    "tabletFontSizeSuffix": "px",
     "tabletLineHeight": 1.5,
     "tabletFontWeight": 400,
     "tabletLetterSpacing": 0,
@@ -567,6 +580,7 @@
     "tabletFilterFontStyle": "",
     "tabletFilterFontFamilyType": null,
     "tabletFilterFontSize": 14,
+    "tabletFilterFontSizeSuffix": "px",
     "tabletFilterFontWeight": 400,
     "tabletFilterLineHeight": 1.5,
     "tabletFilterLetterSpacing": 0,
@@ -694,6 +708,7 @@
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
     "mobileFontSize": 14,
+    "mobileFontSizeSuffix": "px",
     "mobileLineHeight": 1.5,
     "mobileFontWeight": 400,
     "mobileLetterSpacing": 0,
@@ -701,6 +716,7 @@
     "mobileFilterFontStyle": "",
     "mobileFilterFontFamilyType": null,
     "mobileFilterFontSize": 14,
+    "mobileFilterFontSizeSuffix": "px",
     "mobileFilterFontWeight": 400,
     "mobileFilterLineHeight": 1.5,
     "mobileFilterLetterSpacing": 0,

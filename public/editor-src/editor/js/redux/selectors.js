@@ -12,8 +12,12 @@ import {
 import {
   pageSelector,
   fontSelector,
-  extraFontStylesSelector
-} from "./selectors2";
+  extraFontStylesSelector,
+  uiSelector
+} from "./selectors-new";
+
+// temporary until all selectors won't be migrated to TS
+export * from "./selectors-new";
 
 // === 0 DEPENDENCIES ===
 export const screenshotsSelector = state => state.screenshots || {};
@@ -30,8 +34,6 @@ export const projectSelector = state => state.project || {};
 
 export const stylesSelector = state => state.styles || [];
 
-export const uiSelector = state => state.ui || {};
-
 export const copiedElementSelector = state => state.copiedElement;
 
 export const currentStyleIdSelector = state => state.currentStyleId;
@@ -43,19 +45,6 @@ export const errorSelector = state => state.error;
 // === END 0 DEPENDENCIES ===
 
 // === 1 DEPENDENCY ===
-
-export const unDeletedFontSelector = createSelector(fontSelector, fonts => {
-  return Object.entries(fonts).reduce((acc, curr) => {
-    const [type, { data = [] }] = curr;
-
-    return {
-      ...acc,
-      [`${type}`]: {
-        data: data.filter(i => i.deleted !== true)
-      }
-    };
-  }, {});
-});
 
 export const disabledElementsSelector = createSelector(
   projectSelector,
@@ -91,6 +80,11 @@ export const deviceModeSelector = createSelector(
 export const showHiddenElementsSelector = createSelector(
   uiSelector,
   ui => ui.showHiddenElements
+);
+
+export const currentRoleSelector = createSelector(
+  uiSelector,
+  ui => ui.currentRole
 );
 
 // === END 1 DEPENDENCY ===
@@ -137,10 +131,9 @@ export const globalBlocksPositionsSelector = createSelector(
   blocksOrderSelector,
   globalBlocksWithoutPopupsSelector,
   (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups) => {
-    const pageId = Number(page.id);
     const newBlocksOrder = blocksOrder.filter(_id => {
       if (globalBlocks[_id]) {
-        return canUseConditionInPage(globalBlocks[_id], pageId);
+        return canUseConditionInPage(globalBlocks[_id], page);
       }
 
       return true;
@@ -220,10 +213,8 @@ export const globalBlocksInPageSelector = createSelector(
   blocksOrderSelector,
   globalBlocksSelector,
   (page, blocksOrder, globalBlocks) => {
-    const pageId = Number(page.id);
-
     return blocksOrder.reduce((acc, id) => {
-      if (globalBlocks[id] && canUseConditionInPage(globalBlocks[id], pageId)) {
+      if (globalBlocks[id] && canUseConditionInPage(globalBlocks[id], page)) {
         acc[id] = globalBlocks[id];
       }
 
@@ -375,18 +366,21 @@ export const rulesSelector = createSelector(
           fontFamily: font.fontFamily,
           fontFamilyType: font.fontFamilyType,
           fontSize: font.fontSize,
+          fontSizeSuffix: font.fontSizeSuffix ?? "px",
           fontWeight: font.fontWeight,
           lineHeight: font.lineHeight,
           letterSpacing: font.letterSpacing
         },
         [`${font.id}__fsTablet`]: {
           tabletFontSize: font.tabletFontSize,
+          tabletFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
           tabletFontWeight: font.tabletFontWeight,
           tabletLineHeight: font.tabletLineHeight,
           tabletLetterSpacing: font.tabletLetterSpacing
         },
         [`${font.id}__fsMobile`]: {
           mobileFontSize: font.mobileFontSize,
+          mobileFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
           mobileFontWeight: font.mobileFontWeight,
           mobileLineHeight: font.mobileLineHeight,
           mobileLetterSpacing: font.mobileLetterSpacing
@@ -395,18 +389,21 @@ export const rulesSelector = createSelector(
           subMenuFontFamily: font.fontFamily,
           subMenuFontFamilyType: font.fontFamilyType,
           subMenuFontSize: font.fontSize,
+          subMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
           subMenuFontWeight: font.fontWeight,
           subMenuLineHeight: font.lineHeight,
           subMenuLetterSpacing: font.letterSpacing
         },
         [`${font.id}__subMenuFsTablet`]: {
           tabletSubMenuFontSize: font.tabletFontSize,
+          tabletSubMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
           tabletSubMenuFontWeight: font.tabletFontWeight,
           tabletSubMenuLineHeight: font.tabletLineHeight,
           tabletSubMenuLetterSpacing: font.tabletLetterSpacing
         },
         [`${font.id}__subMenuFsMobile`]: {
           mobileSubMenuFontSize: font.mobileFontSize,
+          mobileSubMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
           mobileSubMenuFontWeight: font.mobileFontWeight,
           mobileSubMenuLineHeight: font.mobileLineHeight,
           mobileSubMenuLetterSpacing: font.mobileLetterSpacing
@@ -415,18 +412,21 @@ export const rulesSelector = createSelector(
           mMenuFontFamily: font.fontFamily,
           mMenuFontFamilyType: font.fontFamilyType,
           mMenuFontSize: font.fontSize,
+          mMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
           mMenuFontWeight: font.fontWeight,
           mMenuLineHeight: font.lineHeight,
           mMenuLetterSpacing: font.letterSpacing
         },
         [`${font.id}__mMenuFsTablet`]: {
           tabletMMenuFontSize: font.tabletFontSize,
+          tabletMMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
           tabletMMenuFontWeight: font.tabletFontWeight,
           tabletMMenuLineHeight: font.tabletLineHeight,
           tabletMMenuLetterSpacing: font.tabletLetterSpacing
         },
         [`${font.id}__mMenuFsMobile`]: {
           mobileMMenuFontSize: font.mobileFontSize,
+          mobileMMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
           mobileMMenuFontWeight: font.mobileFontWeight,
           mobileMMenuLineHeight: font.mobileLineHeight,
           mobileMMenuLetterSpacing: font.mobileLetterSpacing
@@ -669,12 +669,11 @@ export const pageBlocksAssembledRawSelector = createSelector(
   globalBlocksSelector,
   screenshotsSelector,
   (page, blocks, globalBlocks, screenshots) => {
-    const pageId = Number(page.id);
     const newBlocks = blocks.filter(block => {
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;
 
-        return canUseConditionInPage(globalBlocks[_id], pageId);
+        return canUseConditionInPage(globalBlocks[_id], page);
       }
 
       return true;

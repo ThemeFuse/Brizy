@@ -19,6 +19,17 @@ export function styleTypographyFontSize({ v, device, state }) {
   return fontSize;
 }
 
+export function styleTypographyFontSizeSuffix({ v, device, state }) {
+  const fontSizeSuffix = defaultValueValue({
+    v,
+    key: "fontSizeSuffix",
+    device,
+    state
+  });
+
+  return fontSizeSuffix;
+}
+
 export function styleTypographyLineHeight({ v, device, state }) {
   const lineHeight = defaultValueValue({ v, key: "lineHeight", device, state });
 

@@ -12,6 +12,8 @@ export function styleSection(v, vs, vd) {
   };
 
   if (IS_EDITOR) {
+    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipBlock");
+
     styles[".brz &&:hover .brz-container"] = {
       interval: ["cssStyleVisibleMode|||editor"]
     };
@@ -22,6 +24,20 @@ export function styleSection(v, vs, vd) {
       interval: ["cssStyleVisibleMode|||editor"]
     };
   }
+
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleAnimation(v, vs, vd) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleAnimation",
+        "cssStyleAnimationDuration",
+        "cssStyleAnimationDelay"
+      ]
+    }
+  };
 
   return renderStyles({ v, vs, vd, styles });
 }

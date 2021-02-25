@@ -3,7 +3,7 @@ import _ from "underscore";
 import { connect } from "react-redux";
 import { addFonts } from "visual/redux/actions2";
 import { uuid } from "visual/utils/uuid";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import { weightTypes } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";

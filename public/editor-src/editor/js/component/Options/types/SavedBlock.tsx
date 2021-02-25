@@ -3,19 +3,18 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import EditorIcon from "visual/component/EditorIcon";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
+import {
+  pageDataNoRefsSelector,
+  extraFontStylesSelector
+} from "visual/redux/selectors";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { ToastNotification } from "visual/component/Notifications";
-import {
-  createBlockScreenshot,
-  createSavedBlock
-} from "visual/utils/api/editor";
+import { createBlockScreenshot, createSavedBlock } from "visual/utils/api";
 import { findDeep } from "visual/utils/object";
 import { uuid } from "visual/utils/uuid";
 import { t } from "visual/utils/i18n";
 import { Block, SavedBlock } from "visual/types";
 import { ReduxState } from "visual/redux/types";
-import { extraFontStylesSelector } from "visual/redux/selectors2";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
 
 type SavedBlockMapStateToProps = {

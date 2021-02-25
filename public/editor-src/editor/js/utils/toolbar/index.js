@@ -98,7 +98,6 @@ export {
 // Disabled
 export {
   toolbarDisabledAdvancedSettings,
-  toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
   toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
@@ -147,6 +146,7 @@ export {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
   toolbarTypography2FontSize,
+  toolbarTypography2FontSizeSuffix,
   toolbarTypography2LineHeight,
   toolbarTypography2FontWeight,
   toolbarTypography2LetterSpacing

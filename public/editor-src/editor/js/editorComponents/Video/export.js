@@ -174,7 +174,7 @@ export default function($node) {
     .find(".brz-custom-video .brz-video-custom-fullscreen-btn")
     .click(function(event) {
       var $shortcodeVideo = $(event.target).closest(".brz-video");
-      var $video = $shortcodeVideo.find(".brz-video-element");
+      var $video = $shortcodeVideo.find(".brz-video-elem");
       var video = $video.find("video")[0];
 
       if (!video.src || !video.duration) return;

@@ -1,0 +1,29 @@
+@import "../../variables";
+
+// Buttons
+.brz-ed-control__button {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  color: $brand-primary;
+  font-size: $options-item-font-size;
+  transition: color 0.2s linear;
+  cursor: pointer;
+
+  .brz-icon-svg {
+    font-size: $toolbar-font-size;
+  }
+
+  &.reverse {
+    .brz-ed-control__label {
+      order: 1;
+    }
+    .brz-icon-svg {
+      order: 2;
+    }
+  }
+
+  &:hover {
+    color: $sidebar-font-color;
+  }
+}

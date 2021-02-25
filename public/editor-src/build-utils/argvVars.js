@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = function(argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
-  const TARGET = argv_.target || argv_.t || "node_local";
+  const TARGET = argv_.target || argv_.t || "Cloud-localhost";
   const IS_PRODUCTION = Boolean(argv_.production);
   const IS_EXPORT = Boolean(argv_.export || argv_.e);
   const IS_PRO = Boolean(argv_.pro || argv_.p);
@@ -11,7 +11,8 @@ module.exports = function(argv) {
   const VERSION_PRO = argv_["version-pro"];
   const BUILD_DIR = argv_["build-dir"];
   const BUILD_DIR_PRO = argv_["build-dir-pro"];
-  const NO_WATCH = Boolean(argv_["no-watch"]);
+  const NO_WATCH = argv_["watch"] === false;
+  const NO_VERIFICATION = Boolean(!argv_["verification"]);
   const PORT = argv_.port || 3000;
   const BUNDLE_ANALYZER = argv_["bundle-analyzer"];
 
@@ -36,6 +37,7 @@ module.exports = function(argv) {
     BUILD_DIR,
     BUILD_DIR_PRO,
     NO_WATCH,
+    NO_VERIFICATION,
     PORT,
     BUNDLE_ANALYZER,
     paths
@@ -52,7 +54,7 @@ module.exports = function(argv) {
       } else {
         r = path.resolve(
           __dirname,
-          "../../../apache/wordpress/wp-content/plugins/brizy/public/editor-build"
+          "../../../wordpress/wp-content/plugins/brizy/public/editor-build"
         );
       }
 
@@ -81,7 +83,7 @@ module.exports = function(argv) {
       } else {
         r = path.resolve(
           __dirname,
-          "../../../apache/wordpress/wp-content/plugins/brizy-pro/public/editor-build"
+          "../../../wordpress/wp-content/plugins/brizy-pro/public/editor-build"
         );
       }
 

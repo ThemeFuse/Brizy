@@ -2,6 +2,7 @@ import nonWP from "./index.js";
 // import WPPosts from "./WordPress/WPPosts";
 import WPSidebar from "./WPSidebar";
 import WPCustomShortcode from "./WPCustomShortcode";
+import WPFeaturedImage from "./WPFeaturedImage";
 // import WOOProducts from "./WOOProducts";
 // import WOOProductPage from "./WOOProductPage";
 import WOOCategories from "./WOOCategories";
@@ -21,7 +22,7 @@ import {
 
 const wordpressShortcodes = IS_STORY
   ? []
-  : [...(hasSidebars() ? [WPSidebar] : []), WPCustomShortcode];
+  : [...(hasSidebars() ? [WPSidebar] : []), WPCustomShortcode, WPFeaturedImage];
 
 const woocommerceShortcodes =
   !IS_STORY && pluginActivated("woocommerce") ? [WOOCategories, WOOPages] : [];

@@ -1,0 +1,27 @@
+@import "../variables";
+
+.brz-ed--check-mark {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  background: #000;
+  border: 1px solid rgba(129, 138, 145, 0.6);
+
+  .brz-icon-svg {
+    opacity: 0;
+    color: $brand-primary;
+  }
+
+  &.checked {
+    border: 0;
+    background-color: $floating-button-blue;
+
+    .brz-icon-svg {
+      opacity: 1;
+    }
+  }
+}

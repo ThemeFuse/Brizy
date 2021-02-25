@@ -9,7 +9,7 @@ import * as sidebarConfig from "./sidebar";
 import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
-import { getTerms } from "visual/utils/api/editor/index";
+import { getTerms } from "visual/utils/api";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 

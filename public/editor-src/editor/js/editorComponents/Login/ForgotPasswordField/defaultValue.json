@@ -2,12 +2,17 @@
   "content": {
     "type": "RessetEmail",
     "label": "Enter Text",
-    "placeholder": null 
+    "placeholder": null
   },
 
   "style": {
     "width": 100,
+    "widthSuffix": "%",
+
     "tabletWidth": null,
+    "tabletWidthSuffix": null,
+
+    "mobileWidthSuffix": null,
     "mobileWidth": null
   }
 }

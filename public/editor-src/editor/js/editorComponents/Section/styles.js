@@ -25,6 +25,10 @@ export function styleSection(v, vs, vd) {
   };
 
   if (IS_EDITOR) {
+    // roles need only for editor mode
+    // preview works with {{ placeholders }}
+    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipBlock");
+
     // Added offset for toolbar when uses marginTop in negative value
     styles[".brz &&:hover .brz-ed-collapsible"] = {
       standart: ["cssStyleSectionToolbarOffset"]

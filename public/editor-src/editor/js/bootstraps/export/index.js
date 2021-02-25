@@ -1,5 +1,3 @@
-import "@babel/polyfill";
-
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Provider } from "react-redux";
@@ -7,13 +5,14 @@ import { renderStatic } from "glamor/server";
 import cheerio from "cheerio";
 import deepMerge from "deepmerge";
 
-import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
+import { items as googleFonts } from "visual/config/googleFonts.json";
 
+import * as Str from "visual/utils/reader/string";
 import {
-  parsePage,
+  parsePageCommon,
   parseProject,
   parseGlobalBlock
-} from "visual/utils/api/editor/adapter";
+} from "visual/utils/api/adapter";
 import {
   getUsedModelsFonts,
   getUsedStylesFonts,
@@ -25,29 +24,22 @@ import {
   getDefaultFont
 } from "visual/utils/fonts";
 import { getBlocksInPage } from "visual/utils/blocks";
+import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
+import { flatMap } from "visual/utils/array";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 import { createStore } from "visual/redux/store";
+import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { hydrate } from "visual/redux/actions";
 
 import EditorGlobal from "visual/global/Editor";
 import "../registerEditorParts";
 
-import addFonts from "./transforms/addFonts";
-import addDefaultFont from "./transforms/addDefaultFont";
-import addColorPaletteCSS from "./transforms/addColorPaletteCSS";
-import addFontStylesCSS from "./transforms/addFontStylesCSS";
-import addCustomCSS from "./transforms/addCustomCSS";
+import { getAssets } from "./transforms/assets";
 import changeRichText from "./transforms/changeRichText";
-import changeRichTextDCColor from "./transforms/changeRichTextDCColor";
 import extractPopups from "./transforms/extractPopups";
 import dynamicContent from "./transforms/dynamicContent";
 import replaceIcons from "./transforms/replaceIcons";
-
-import { items as googleFonts } from "visual/config/googleFonts.json";
-import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
-import { flatMap } from "visual/utils/array";
-
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
 
 export default async function main({
   pageId,
@@ -56,19 +48,36 @@ export default async function main({
   globalBlocks: globalBlocks_,
   buildPath
 }) {
+  // ! pages.map(parsePageCommon)  removes collectionType property
+  // ! .map((page, i) => ({ ...page, collectionType: pages[i].collectionType })) - this is a temp
   const page = pages
-    .map(parsePage)
-    .find(page => (pageId ? page.id === Number(pageId) : page.is_index));
+    .map(parsePageCommon)
+    .map((page, i) => ({
+      ...page,
+      collectionType: pages[i].collectionType,
+      fields: pages[i].fields
+    }))
+    .find(page => {
+      if (pageId) {
+        const pageId1 = Str.read(page.id);
+        const pageId2 = Str.read(pageId);
+
+        return pageId1 && pageId2 && pageId1 === pageId2;
+      } else {
+        return page.is_index;
+      }
+    });
+
+  if (!page) {
+    throw new Error(`can not find page with id ${pageId}`);
+  }
+
   const globalBlocks = globalBlocks_
     .map(parseGlobalBlock)
     .reduce((acc, { uid, data, rules, position, status, dataVersion }) => {
       acc[uid] = { id: uid, data, rules, position, status, dataVersion };
       return acc;
     }, {});
-
-  if (!page) {
-    throw new Error(`can not find page with id ${pageId}`);
-  }
 
   return {
     meta: getPageMeta({ page }),
@@ -172,7 +181,6 @@ async function getPageBlocks({
     upload: []
   };
   const { upload = [], google = [] } = projectFontsData(_fonts);
-  const defaultFont = getDefaultFont(reduxState);
   let includedDefaultProjectFont = false;
 
   parsedFonts.forEach(({ type, family }) => {
@@ -218,19 +226,25 @@ async function getPageBlocks({
 
   // transforms
   await replaceIcons($pageHTML, buildPath);
-  changeRichTextDCColor($pageHTML);
-  addColorPaletteCSS($pageHTML);
-  addFontStylesCSS($pageHTML);
-  addFonts($pageHTML, fontMap);
-  addDefaultFont($pageHTML, defaultFont);
-  addCustomCSS($pageHTML);
   changeRichText($pageHTML);
-  extractPopups($pageHTML);
 
+  const { freeScripts, freeStyles, proScripts, proStyles } = getAssets(
+    $pageHTML,
+    fontMap
+  );
+
+  // at the moment extractPopups MUST come after getAssets
+  // because extractPopups expects a certain html structure that
+  // becomes true only after getAssets is executed
+  extractPopups($pageHTML);
   const head = $pageHTML("head").html();
   const body = dynamicContent($pageHTML("body").html());
 
   return {
+    freeStyles,
+    freeScripts,
+    proStyles,
+    proScripts,
     head,
     body
   };

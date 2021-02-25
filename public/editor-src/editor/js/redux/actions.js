@@ -1,5 +1,5 @@
 import { mergeDeep } from "timm";
-import { fontSelector } from "./selectors2";
+import { fontSelector } from "./selectors";
 
 export const HYDRATE = "HYDRATE";
 export const EDITOR_RENDERED = "EDITOR_RENDERED";

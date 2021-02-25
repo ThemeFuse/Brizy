@@ -2,7 +2,7 @@ import React from "react";
 import produce from "immer";
 import _ from "underscore";
 import { objectTraverse, objectFromEntries } from "visual/utils/object";
-import { getDynamicContent } from "visual/utils/api/editor";
+import { getDynamicContent } from "visual/utils/api";
 
 export const withPopulation = Component => {
   if (TARGET !== "WP") {

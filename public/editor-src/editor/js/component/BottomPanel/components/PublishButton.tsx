@@ -10,15 +10,15 @@ import { ToastNotification } from "visual/component/Notifications";
 import { removeBlocks } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { updatePageStatus, fetchPageSuccess } from "visual/redux/actions2";
-import { extraFontStylesSelector, pageSelector } from "visual/redux/selectors2";
 import { SavedLayout } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import {
-  createBlockScreenshot,
-  createSavedLayout
-} from "visual/utils/api/editor";
+  pageSelector,
+  pageDataNoRefsSelector,
+  extraFontStylesSelector
+} from "visual/redux/selectors";
+import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
+import { createBlockScreenshot, createSavedLayout } from "visual/utils/api";
 import { uuid } from "visual/utils/uuid";
 import { IS_STORY } from "visual/utils/models";
 
@@ -177,16 +177,14 @@ class PublishButton extends Component<Props, State> {
         {!IS_STORY ? (
           <>
             <Roles allow={["admin"]}>
-          <Roles allow={["admin"]}>
-          <TooltipItem
-            className="brz-ed-fixed-bottom-panel-popover__item"
-            onClick={this.handleClearPage}
-          >
-            <EditorIcon icon="nc-trash" />
-            <span className="brz-span">{t("Clear Layout")}</span>
-          </TooltipItem>
-        </Roles>
-        </Roles>
+              <TooltipItem
+                className="brz-ed-fixed-bottom-panel-popover__item"
+                onClick={this.handleClearPage}
+              >
+                <EditorIcon icon="nc-trash" />
+                <span className="brz-span">{t("Clear Layout")}</span>
+              </TooltipItem>
+            </Roles>
             <TooltipItem
               className="brz-ed-fixed-bottom-panel-popover__item"
               onClick={this.handleSavePage}

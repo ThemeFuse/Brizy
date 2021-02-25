@@ -364,8 +364,7 @@ export function getItems({ v, device }) {
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER],
-                  disabled: v.type === "custom"
+                  states: [NORMAL, HOVER]
                 }
               ]
             }

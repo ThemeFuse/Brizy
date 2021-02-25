@@ -3,9 +3,10 @@ import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
 import Toolbar from "visual/component/Toolbar";
-import { stringifyAttributes } from "./utils";
+import { IS_WP } from "visual/utils/env";
+import { stringifyAttributes } from "./utils.common";
 
-class Items extends EditorArrayComponent {
+export default class Items extends EditorArrayComponent {
   static get componentId() {
     return "Posts.Items";
   }
@@ -68,7 +69,7 @@ class Items extends EditorArrayComponent {
       <div
         key={itemKey}
         className="brz-posts__item"
-        data-filter={showFilter ? "{{ brizy_dc_post_tags }}" : undefined}
+        data-filter={showFilter ? "{{brizy_dc_post_tags}}" : undefined}
       >
         {item}
       </div>
@@ -166,6 +167,10 @@ class Items extends EditorArrayComponent {
   }
 
   renderForView(v) {
+    return IS_WP ? this.renderForViewWP(v) : this.renderForViewCloud(v);
+  }
+
+  renderForViewWP(v) {
     const {
       type,
       className,
@@ -175,26 +180,46 @@ class Items extends EditorArrayComponent {
       filterStyle
     } = this.props;
     const item = v.map(this.renderItem);
-    const filterClassName = `brz-posts__filter--${filterStyle}`;
-    const filterItemClassName = `brz-posts__filter__item--${filterStyle}`;
 
-    const brizy_dc_name =
+    const tagsTaxonomy =
+      type === "posts" ? "post_tag" : type === "products" ? "product_tag" : "";
+    const tagsULClassName = `brz-posts__filter--${filterStyle}`;
+    const tagsLIClassName = `brz-posts__filter__item--${filterStyle}`;
+
+    const postLoopName =
       type === "upsell" ? "editor_product_upsells" : "brizy_dc_post_loop";
+    const loopAttributes = this.getLoopAttributesString();
 
     return (
       <div className={className} style={style}>
         {showFilter &&
-          `{{ brizy_dc_post_loop_tags ulClassName='${filterClassName}' liClassName='${filterItemClassName}' }}`}
+          `{{brizy_dc_post_loop_tags tax='${tagsTaxonomy}' ulClassName='${tagsULClassName}' liClassName='${tagsLIClassName}'}}`}
         <div className="brz-posts__wrapper">
-          {`{{ ${brizy_dc_name} ${this.getLoopAttributesString()} }}`}
+          {`{{${postLoopName} ${loopAttributes}}}`}
           {super.renderItemsContainer(item)}
-          {`{{end_${brizy_dc_name}}}`}
+          {`{{end_${postLoopName}}}`}
         </div>
         {showPagination &&
-          `{{ brizy_dc_post_loop_pagination ${this.getLoopAttributesString()} }}`}
+          `{{brizy_dc_post_loop_pagination ${loopAttributes}}}`}
+      </div>
+    );
+  }
+
+  renderForViewCloud(v) {
+    const { className, style, showPagination } = this.props;
+    const item = v.map(this.renderItem);
+    const loopAttributes = this.getLoopAttributesString();
+
+    return (
+      <div className={className} style={style}>
+        <div className="brz-posts__wrapper">
+          {`{{brizy_dc_post_loop ${loopAttributes}}}`}
+          {super.renderItemsContainer(item)}
+          {"{{end_brizy_dc_post_loop}}"}
+        </div>
+        {showPagination &&
+          `{{brizy_dc_post_loop_pagination ${loopAttributes}}}`}
       </div>
     );
   }
 }
-
-export default Items;

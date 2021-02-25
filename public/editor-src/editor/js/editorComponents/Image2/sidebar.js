@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { toolbarImageBorderRadius } from "visual/utils/toolbar";
-import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/env";
 
 export const title = t("Image");
 

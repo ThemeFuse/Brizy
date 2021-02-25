@@ -1,7 +1,5 @@
-import flatpickr from "flatpickr";
-import Scrollbars from "perfect-scrollbar";
 import $ from "jquery";
-import "select2";
+import { Libs } from "visual/libs";
 
 export default function($node) {
   const root = $node.get(0);
@@ -62,8 +60,8 @@ export default function($node) {
     const maxDate = data.max;
     const native = data.native === "true";
 
-    if (!native) {
-      flatpickr(node, {
+    if (!native && Libs.Flatpickr) {
+      Libs.Flatpickr(node, {
         minDate: minDate,
         maxDate: maxDate,
         disableMobile: true
@@ -81,8 +79,8 @@ export default function($node) {
     const maxDate = data.max;
     const native = data.native === "true";
 
-    if (!native) {
-      flatpickr(node, {
+    if (!native && Libs.Flatpickr) {
+      Libs.Flatpickr(node, {
         minDate: minDate,
         maxDate: maxDate,
         enableTime: true,
@@ -126,9 +124,9 @@ export default function($node) {
 
         $dropdown.css("maxHeight", itemHeight * maxItemDropdown);
 
-        if ($dropdown.length) {
+        if ($dropdown.length && Libs.Scrollbars) {
           const node = $dropdown.get(0);
-          scrollbars = new Scrollbars(node);
+          scrollbars = new Libs.Scrollbars(node);
         }
       }, 0);
     });

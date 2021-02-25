@@ -4,6 +4,7 @@ process.on("unhandledRejection", error => {
 
 const fs = require("fs");
 const path = require("path");
+const glob = require("glob-fs")();
 
 // gulp
 const gulp = require("gulp");
@@ -36,11 +37,14 @@ const postsCssProcessors = [
 const chalk = require("chalk");
 const del = require("del");
 
+const { uniq } = require("underscore");
+
 // build utils
 const argvVars = require("./build-utils/argvVars");
 const {
   wpTranslations: wpTranslationsUtil
 } = require("./build-utils/wpTranslations");
+const LibsConfig = require("./editor/js/bootstraps/libs.json");
 
 // flags
 const {
@@ -52,6 +56,7 @@ const {
   VERSION,
   VERSION_PRO,
   NO_WATCH,
+  NO_VERIFICATION,
   BUNDLE_ANALYZER,
   paths
 } = argvVars(process.argv);
@@ -131,20 +136,16 @@ function editorJS(done) {
     }
   });
 }
-function editorPolyfill() {
-  const src = paths.editor + "/polyfill/**/*.js";
-  const dest = paths.build + "/editor/js";
-
-  return gulp
-    .src(src)
-    .pipe(gulpPlugins.if(IS_PRODUCTION, gulpPlugins.terser()))
-    .pipe(gulpPlugins.concat("polyfill.js"))
-    .pipe(gulp.dest(dest));
-}
 function editorCSS() {
   const icons = WP
-    ? [paths.editor + "/sass/main.editor.icons.wp.scss"]
-    : [paths.editor + "/sass/main.editor.icons.scss"];
+    ? [
+        paths.editor + "/js/libs/group-all/index.scss",
+        paths.editor + "/sass/main.editor.icons.wp.scss"
+      ]
+    : [
+        paths.editor + "/js/libs/group-all/index.scss",
+        paths.editor + "/sass/main.editor.icons.scss"
+      ];
 
   const src = [
     paths.editor + "/lib/common/*/*.css",
@@ -250,7 +251,14 @@ function exportJS(done) {
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH
   };
-  const config = [webpackConfigPreview(options), webpackConfigExport(options)];
+  const config = [webpackConfigExport(options)];
+
+  if (IS_EXPORT) {
+    config.push(
+      webpackConfigPreview.preview(options),
+      webpackConfigPreview.libs(options)
+    );
+  }
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
@@ -288,6 +296,40 @@ function exportCSS() {
     )
     .pipe(gulpPlugins.concat("preview.css"))
     .pipe(gulp.dest(dest));
+}
+function exportLibsCSS() {
+  const { free } = LibsConfig;
+  const src = free.reduce((acc, { path }) => {
+    return [...acc, `${path}/*.scss`];
+  }, []);
+
+  const rename = path => {
+    if (path.extname) {
+      path.extname = ".css";
+      path.basename = path.dirname;
+      path.dirname = "";
+    }
+  };
+
+  const dest = `${paths.build}/editor/css`;
+
+  return gulp
+    .src(src, {
+      base: `${paths.editor}/js/libs`,
+      sourcemaps: !IS_PRODUCTION
+    })
+    .pipe(
+      gulpPlugins
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
+        })
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
+    )
+    .pipe(gulpPlugins.rename(rename))
+    .pipe(gulp.dest(dest, { sourcemaps: !IS_PRODUCTION }));
 }
 function exportTwig() {
   const src =
@@ -328,7 +370,8 @@ function proJS(done) {
   if (IS_EXPORT) {
     config.push(
       webpackConfigPro.export(options),
-      webpackConfigPro.preview(options)
+      webpackConfigPro.preview(options),
+      webpackConfigPro.libs(options)
     );
   }
 
@@ -350,7 +393,11 @@ function proJS(done) {
 }
 function proEditorCSS() {
   const icons = WP ? [paths.editor + "/sass/main.editor.icons.scss"] : [];
-  const src = [paths.editor + "/sass/main.editor.pro.scss", ...icons];
+  const src = [
+    paths.editor + "/js/libs/all-pro/*.scss",
+    paths.editor + "/sass/main.editor.pro.scss",
+    ...icons
+  ];
   const dest = paths.buildPro + "/css";
 
   return gulp
@@ -393,6 +440,40 @@ function proExportCSS() {
     )
     .pipe(gulpPlugins.concat("preview.pro.css"))
     .pipe(gulp.dest(dest));
+}
+function proExportLibsCSS() {
+  const { pro } = LibsConfig;
+  const src = pro.reduce((acc, { path }) => {
+    return [...acc, `${path}/*.scss`];
+  }, []);
+
+  const rename = path => {
+    if (path.extname) {
+      path.extname = ".css";
+      path.basename = path.dirname;
+      path.dirname = "";
+    }
+  };
+
+  const dest = `${paths.buildPro}/css`;
+
+  return gulp
+    .src(src, {
+      base: `${paths.editor}/js/libs`,
+      sourcemaps: !IS_PRODUCTION
+    })
+    .pipe(
+      gulpPlugins
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
+        })
+        .on("error", err => {
+          console.log("Sass Syntax Error", err);
+        })
+    )
+    .pipe(gulpPlugins.rename(rename))
+    .pipe(gulp.dest(dest, { sourcemaps: !IS_PRODUCTION }));
 }
 
 function thumbsPreview() {
@@ -798,7 +879,7 @@ function watch() {
 }
 
 exports.build = gulp.series.apply(undefined, [
-  verifications,
+  ...(NO_VERIFICATION ? [] : [verifications]),
   clean,
 
   // thumbs
@@ -828,7 +909,6 @@ exports.build = gulp.series.apply(undefined, [
   // editor
   gulp.parallel(
     editorJS,
-    editorPolyfill,
     editorCSS,
     editorFonts,
     editorIcons,
@@ -838,7 +918,9 @@ exports.build = gulp.series.apply(undefined, [
   ),
 
   // export
-  ...(IS_EXPORT ? [gulp.parallel(exportJS, exportCSS, exportTwig)] : []),
+  ...(IS_EXPORT
+    ? [gulp.parallel(exportJS, exportCSS, exportLibsCSS, exportTwig)]
+    : []),
 
   // pro
   ...(IS_PRO
@@ -846,7 +928,7 @@ exports.build = gulp.series.apply(undefined, [
         gulp.parallel.apply(undefined, [
           proJS,
           proEditorCSS,
-          ...(IS_EXPORT ? [proExportCSS] : [])
+          ...(IS_EXPORT ? [proExportCSS, proExportLibsCSS] : [])
         ])
       ]
     : []),
@@ -895,3 +977,299 @@ exports.external_popups = gulp.series(
   externalPopupsPopup,
   externalPopupsCodeInjection
 );
+
+function deleteLibs(done) {
+  const src = `${paths.editor}/js/libs/group-*_*`;
+
+  del.sync(src, { force: true });
+
+  done();
+}
+
+const k_combinations = (set, k) => {
+  if (k > set.length || k <= 0) {
+    return [];
+  }
+
+  if (k === set.length) {
+    return [set];
+  }
+
+  if (k === 1) {
+    return set.reduce((acc, cur) => [...acc, [cur]], []);
+  }
+
+  const combs = [];
+  let tail_combs = [];
+
+  for (let i = 0; i <= set.length - k + 1; i++) {
+    tail_combs = k_combinations(set.slice(i + 1), k - 1);
+    for (let j = 0; j < tail_combs.length; j++) {
+      combs.push([set[i], ...tail_combs[j]]);
+    }
+  }
+
+  return combs;
+};
+
+const getGroupName = pathToGroup => {
+  const [name] = pathToGroup.match(/group-*.+/) || [];
+
+  if (name) {
+    return name;
+  }
+};
+
+const createGroupName = (name1, name2) => {
+  const [nameGr1] = name1.match(/\d+/) || [];
+  const [nameGr2] = name2.match(/\d+/) || [];
+
+  if (nameGr1 && nameGr2) {
+    return `group-${nameGr1}_${nameGr2}`;
+  }
+};
+
+const relativePath = filePath => path.resolve(__dirname, filePath);
+
+const sortFile = (a, b) => a - b;
+
+const isFree = file => /group-\d+.?\d?$/.test(file);
+
+const isPro = file => /group-\d+(.+)?-pro/.test(file);
+
+// export * from "../name-1";
+// export * from "../name-2";
+const createGroupFileJS = (rs, { base, name1, name2 }) => {
+  const content = `export * from "../${name1}";\nexport * from "../${name2}";\n`;
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/index.js`,
+      contents: Buffer.from(content)
+    })
+  );
+};
+
+// @import "../name-1/index";
+// @import "../name-2/index";
+const createGroupFileCSS = (rs, { base, name1, name2 }) => {
+  const content = `@import "../${name1}/index";\n@import "../${name2}/index";\n`;
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/index.scss`,
+      contents: Buffer.from(content)
+    })
+  );
+};
+
+// selectors [...group1, ...group2]
+const createGroupFileSelectors = (rs, { base, name1, name2 }) => {
+  const selectors1 = require(`${relativePath(name1)}/selectors.json`);
+  const selectors2 = require(`${relativePath(name2)}/selectors.json`);
+  const selectors = uniq([...selectors1, ...selectors2]);
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/selectors.json`,
+      contents: Buffer.from(JSON.stringify(selectors))
+    })
+  );
+};
+
+const createGroupAllData = groups => {
+  const groupAll = new Map();
+
+  groups.forEach(groupPath => {
+    const selectors = require(`${relativePath(groupPath)}/selectors.json`);
+    const oldSelectors = groupAll.get("selectors") || [];
+    const oldCSS = groupAll.get("css") || "";
+    const oldJS = groupAll.get("js") || "";
+    const groupName = getGroupName(groupPath);
+    const newCSS = `@import "../${groupName}/index";`;
+    const newJS = `export * from "../${groupName}";`;
+    const newSelectors = uniq([...oldSelectors, ...selectors]);
+
+    groupAll.set("selectors", newSelectors);
+    groupAll.set("js", `${oldJS}${newJS}\n`);
+    groupAll.set("css", `${oldCSS}${newCSS}\n`);
+  });
+
+  const selectors = groupAll.get("selectors") || [];
+  const js = groupAll.get("js") || "";
+  const css = groupAll.get("css") || "";
+
+  return { css, js, selectors };
+};
+
+const createGroupAllFile = (rs, { base, files }) => {
+  const { css, js, selectors } = createGroupAllData(files);
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/index.js`,
+      contents: Buffer.from(js)
+    })
+  );
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/index.scss`,
+      contents: Buffer.from(css)
+    })
+  );
+
+  rs.push(
+    new Vinyl({
+      path: `${base}/selectors.json`,
+      contents: Buffer.from(JSON.stringify(selectors))
+    })
+  );
+};
+
+function generateLibs() {
+  const src = "/editor/js/libs/group-!(*_*|*all)";
+  const dest = `${paths.editor}/js/libs`;
+  const groupCombinationK = 2;
+
+  const groups = glob.readdirSync(src, {});
+
+  const freeGroups = groups.filter(isFree);
+  const proGroups = groups.filter(isPro);
+
+  let rs = new Readable({
+    objectMode: true
+  });
+
+  const groupFreeCombinations = k_combinations(freeGroups, groupCombinationK);
+  const groupProCombinations = k_combinations(proGroups, groupCombinationK);
+
+  // free
+  groupFreeCombinations.forEach(([group1, group2]) => {
+    const groupName1 = getGroupName(group1);
+    const groupName2 = getGroupName(group2);
+    let groupName;
+
+    if (groupName1 && groupName2) {
+      groupName = createGroupName(groupName1, groupName2);
+    }
+
+    if (groupName) {
+      const data = {
+        base: groupName,
+        name1: groupName1,
+        name2: groupName2
+      };
+      createGroupFileJS(rs, data);
+      createGroupFileCSS(rs, data);
+      createGroupFileSelectors(rs, {
+        base: groupName,
+        name1: group1,
+        name2: group2
+      });
+    } else {
+      console.error("Cloud not create groups", group1, group2);
+    }
+  });
+
+  // pro
+  groupProCombinations.forEach(([group1, group2]) => {
+    const groupName1 = getGroupName(group1);
+    const groupName2 = getGroupName(group2);
+    let groupName;
+
+    if (groupName1 && groupName2) {
+      groupName = createGroupName(groupName1, groupName2);
+    }
+
+    if (groupName) {
+      const data = {
+        base: `${groupName}-pro`,
+        name1: groupName1,
+        name2: groupName2
+      };
+      createGroupFileJS(rs, data);
+      createGroupFileCSS(rs, data);
+      createGroupFileSelectors(rs, {
+        base: `${groupName}-pro`,
+        name1: group1,
+        name2: group2
+      });
+    } else {
+      console.error("Cloud not create groups", group1, group2);
+    }
+  });
+
+  // create group all
+  createGroupAllFile(rs, {
+    base: "group-all",
+    files: freeGroups
+  });
+  createGroupAllFile(rs, {
+    base: "group-all-pro",
+    files: proGroups
+  });
+
+  // null signifies stream end
+  rs.push(null);
+  return rs.pipe(gulp.dest(dest));
+}
+
+function generateLibsConfig(done) {
+  const src = "/editor/js/libs/group-*";
+  const dest = `${paths.editor}/js/bootstraps`;
+
+  const files = uniq(glob.readdirSync(src, {}).map(relativePath));
+  const groupAll = files.filter(file => file.includes("group-all"));
+  const freeFiles = files.filter(isFree).sort(sortFile);
+  const proFiles = files.filter(isPro).sort(sortFile);
+
+  const formattedFiles = [...freeFiles, ...proFiles, ...groupAll];
+
+  fs.writeFileSync(dest + "/libs.json", getConfig(formattedFiles), "utf8");
+
+  done();
+
+  function getConfig(files) {
+    const config = {
+      free: [
+        {
+          name: "group-jq",
+          path: "./editor/js/libs/common/jQuery",
+          selectors: [".brz__group__jquery"]
+        }
+      ],
+      pro: []
+    };
+    const dirname = path.resolve(__dirname);
+
+    files.forEach(file => {
+      const isPro = file.includes("-pro");
+      const selectors = require(`${file}/selectors.json`);
+      const name = getGroupName(file);
+      const path = file.replace(dirname, ".");
+
+      if (isPro) {
+        config.pro.push({
+          name: name.replace("-pro", ""),
+          path,
+          selectors
+        });
+      } else {
+        config.free.push({
+          name,
+          path,
+          selectors
+        });
+      }
+    });
+
+    return JSON.stringify(config);
+  }
+}
+
+exports.libs = gulp.series.apply(undefined, [
+  deleteLibs,
+  generateLibs,
+  generateLibsConfig
+]);

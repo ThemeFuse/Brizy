@@ -1,6 +1,7 @@
 import {
   styleTypography2FontFamily,
   styleTypography2FontSize,
+  styleTypography2FontSizeSuffix,
   styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing
@@ -13,7 +14,10 @@ export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
 }
 
 export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {
-  return `font-size:${styleTypography2FontSize({ v, device, prefix })}px;`;
+  const fontSize = styleTypography2FontSize({ v, device, prefix });
+  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, prefix });
+
+  return `font-size:${fontSize}${fontSizeSuffix || "px"};`;
 }
 
 export function cssStyleTypography2LineHeight({ v, device, prefix = "" }) {

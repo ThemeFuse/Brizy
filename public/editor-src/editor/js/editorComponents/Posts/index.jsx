@@ -7,17 +7,24 @@ import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParent from "./toolbarExtendParent";
+import toolbarExtendParentFn from "./toolbarExtendParent";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as toolbarExtendPagination from "./toolbarExtendPagination";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
 import * as toolbarExtendFilter from "./toolbarExtendFilter";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
+import { IS_WP } from "visual/utils/env";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
+import { tabletSyncOnChange } from "visual/utils/onChange";
+import { symbolsToV, vToSymbols } from "./utils.common";
+import { getLoopAttributes } from "./utils";
+import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
 
-class Posts extends EditorComponent {
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import { migrations } from "./migrations";
+
+export class Posts extends EditorComponent {
   static get componentId() {
     return "Posts";
   }
@@ -28,60 +35,66 @@ class Posts extends EditorComponent {
     extendParentToolbar: noop
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    let context;
+
+    if (!IS_WP) {
+      const collectionTypesInfo = await getCollectionTypesInfo();
+      context = { collectionTypesInfo };
+    }
+
+    const toolbarExtendParent = toolbarExtendParentFn(context);
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParent,
-      {
-        allowExtend: false
-      }
+      { allowExtend: false }
     );
+
     this.props.extendParentToolbar(toolbarExtend);
+  }
+
+  handleValueChange(newValue, meta) {
+    super.handleValueChange(vToSymbols(newValue), meta);
+  }
+
+  getValue2() {
+    const values = super.getValue2();
+    const v = symbolsToV(values.v);
+
+    return v === values.v ? values : Object.assign(values, { v });
   }
 
   getMeta(v) {
     const { meta } = this.props;
     const { gridColumn, padding, tabletGridColumn } = v;
     const desktopW = meta.desktopW / gridColumn;
+    const desktopWNoSpacing = meta.desktopWNoSpacing / gridColumn;
     const tabletW = meta.tabletW / tabletGridColumn;
+    const tabletWNoSpacing = meta.tabletWNoSpacing / tabletGridColumn;
 
     const tabletPadding = tabletSyncOnChange(v, "padding");
 
     return {
       ...meta,
       desktopW: Math.round((desktopW - padding) * 10) / 10,
+      desktopWNoSpacing,
       tabletW: Math.round((tabletW - tabletPadding) * 10) / 10,
+      tabletWNoSpacing,
       inGrid: false,
       posts: true
     };
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      type,
-      taxonomy,
-      taxonomyId,
-      orderBy,
-      order,
-      gridRow,
-      gridColumn,
-      pagination,
-      filter,
-      filterStyle
-    } = v;
+    const { type, gridRow, gridColumn, pagination, filter, filterStyle } = v;
     const className = classnames(
       "brz-posts",
       { "brz-posts--masonry": filter === "on" },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
-      )
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
-
     const itemsProps = this.makeSubcomponentProps({
-      type,
       bindWithKey: "items",
+      type,
       className,
       rowCount: gridRow,
       columnCount: gridColumn,
@@ -103,31 +116,7 @@ class Posts extends EditorComponent {
           allowExtend: false
         }
       ),
-      loopAttributes: {
-        ...(type === "posts" || type === "products"
-          ? {
-              query: {
-                tax_query: {
-                  0: {
-                    taxonomy,
-                    field: "id",
-                    terms: taxonomyId
-                  }
-                },
-                posts_per_page: gridRow * gridColumn,
-                order,
-                orderby: orderBy
-              }
-            }
-          : type === "upsell"
-          ? {
-              count: gridRow * gridColumn
-            }
-          : {
-              query: "",
-              count: gridRow * gridColumn
-            })
-      }
+      loopAttributes: IS_EDITOR ? undefined : getLoopAttributes(v)
     });
 
     return (
@@ -139,4 +128,5 @@ class Posts extends EditorComponent {
     );
   }
 }
-export default Posts;
+
+export default withMigrations(Posts, migrations);

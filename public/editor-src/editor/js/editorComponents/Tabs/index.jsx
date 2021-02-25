@@ -31,26 +31,32 @@ export default class Tabs extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWMoSpacing } = getContainerW({
       v,
       w: meta.desktopW,
+      wNoSpacing: meta.desktopWNoSpacing,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWMoSpacing } = getContainerW({
       v,
       w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWMoSpacing } = getContainerW({
       v,
       w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
       device: "mobile"
     });
 
     return Object.assign({}, meta, {
-      mobileW,
+      desktopW,
+      desktopWMoSpacing,
       tabletW,
-      desktopW
+      tabletWMoSpacing,
+      mobileW,
+      mobileWMoSpacing
     });
   }
 

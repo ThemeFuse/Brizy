@@ -14,7 +14,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import ClickOutside from "visual/component/ClickOutside";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors2";
+import { pageSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
 import { css } from "visual/utils/cssStyle";
 import ContextMenu from "visual/component/ContextMenu";
@@ -55,10 +55,24 @@ export default class Menu extends EditorComponent {
     const tabletMMenu = styleElementMMenu({ v, device: TABLET });
     const mobileMMenu = styleElementMMenu({ v, device: MOBILE });
     const desktopW = mMenu === "on" ? wInMMenu : meta.desktopW;
+    const desktopWNoSpacing =
+      mMenu === "on" ? wInMMenu : meta.desktopWNoSpacing;
     const tabletW = tabletMMenu === "on" ? wInMMenu : meta.tabletW;
+    const tabletWNoSpacing =
+      tabletMMenu === "on" ? wInMMenu : meta.tabletWNoSpacing;
     const mobileW = mobileMMenu === "on" ? wInMMenu : meta.mobileW;
+    const mobileWNoSpacing =
+      mobileMMenu === "on" ? wInMMenu : meta.mobileWNoSpacing;
 
-    return { ...meta, desktopW, tabletW, mobileW };
+    return {
+      ...meta,
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    };
   }
 
   getDeviceMode() {

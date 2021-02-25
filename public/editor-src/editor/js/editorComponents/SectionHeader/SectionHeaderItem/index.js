@@ -84,21 +84,24 @@ export default class SectionHeaderItem extends EditorComponent {
     const size = styleSizeContainerSize({ v, device: "desktop" });
     const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
     const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
+      wNoSpacing: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
       width: size,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: wInTabletPage,
+      wNoSpacing: wInTabletPage,
       width: tabletSize,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: wInMobilePage,
+      wNoSpacing: wInMobilePage,
       width: mobileSize,
       device: "mobile"
     });
@@ -106,8 +109,11 @@ export default class SectionHeaderItem extends EditorComponent {
     return {
       ...meta,
       desktopW,
+      desktopWNoSpacing,
       tabletW,
-      mobileW
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
     };
   }
 

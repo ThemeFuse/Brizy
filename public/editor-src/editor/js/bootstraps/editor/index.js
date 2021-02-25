@@ -1,17 +1,18 @@
-import "@babel/polyfill";
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import deepMerge from "deepmerge";
-import Config from "visual/global/Config";
 
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
+
+import { getCurrentPage } from "./getCurrentPage";
 import {
   getProject,
   getGlobalBlocks,
   removeProjectLockedSendBeacon,
   addProjectLockedBeacon
-} from "visual/utils/api/editor";
+} from "visual/utils/api";
 import { assetUrl } from "visual/utils/asset";
 import { getBlocksInPage } from "visual/utils/blocks";
 
@@ -20,20 +21,19 @@ import {
   getUsedStylesFonts,
   getBlocksStylesFonts
 } from "visual/utils/traverse";
-import { normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
 import { CustomError, PageError } from "visual/utils/errors";
 
 import { createStore } from "visual/redux/store";
 import getMiddleware from "./middleware";
 import { hydrate, editorRendered } from "visual/redux/actions";
-import { t } from "visual/utils/i18n";
+import { getAuthorized } from "visual/utils/user/getAuthorized";
 
 import Editor from "visual/component/Editor";
 import { ToastNotification } from "visual/component/Notifications";
-import { getCurrentPage } from "./getCurrentPage";
+
 import "../registerEditorParts";
-import { getAuthorized } from "visual/utils/user/getAuthorized";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -96,13 +96,21 @@ const pageCurtain = window.parent.document.querySelector(
       {}
     );
 
+    const normalizedProject = {
+      ...project,
+      data: {
+        ...project.data,
+        styles: normalizeStyles(styles)
+      }
+    };
+
     const store = createStore({
       middleware: await getMiddleware()
     });
 
     store.dispatch(
       hydrate({
-        project,
+        project: normalizedProject,
         projectStatus,
         globalBlocks,
         blocksThumbnailSizes,
@@ -148,9 +156,10 @@ const pageCurtain = window.parent.document.querySelector(
     }
     /* eslint-enabled no-console */
 
-    const message = isCustomError
-      ? `${t("Something went wrong with the")} ${e.getName()}`
-      : t("Something went wrong");
+    const message =
+      isCustomError && e.getMessage()
+        ? e.getMessage()
+        : t("Something went wrong");
 
     ToastNotification.error(message, {
       hideAfter: 0,

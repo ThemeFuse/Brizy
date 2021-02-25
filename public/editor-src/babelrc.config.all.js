@@ -1,3 +1,7 @@
+const basicOptions = {
+  sourceType: "unambiguous"
+};
+
 exports.editor = () => {
   const presets = [
     [
@@ -11,7 +15,8 @@ exports.editor = () => {
             "last 2 edge versions"
           ]
         },
-        useBuiltIns: "entry",
+        corejs: "3.7.0",
+        useBuiltIns: "usage",
         modules: false
       }
     ],
@@ -33,6 +38,7 @@ exports.editor = () => {
   ];
 
   return {
+    ...basicOptions,
     presets,
     plugins
   };
@@ -40,9 +46,13 @@ exports.editor = () => {
 
 exports.export = () => {
   const { presets, plugins } = exports.editor();
+  const clonedPresets = JSON.parse(JSON.stringify(presets));
+
+  clonedPresets[0][1].targets.node = "8";
 
   return {
-    presets,
+    ...basicOptions,
+    presets: clonedPresets,
     plugins: [...plugins, "transform-remove-console"]
   };
 };
@@ -51,9 +61,15 @@ exports.preview = () => {
   const { presets, plugins } = exports.editor();
   const clonedPresets = JSON.parse(JSON.stringify(presets));
 
-  clonedPresets[0][1].targets.browsers = ["IE 11"];
+  clonedPresets[0][1].targets.browsers = [
+    "chrome 85",
+    "edge 85",
+    "firefox 81",
+    "safari 14"
+  ];
 
   return {
+    ...basicOptions,
     presets: clonedPresets,
     plugins
   };

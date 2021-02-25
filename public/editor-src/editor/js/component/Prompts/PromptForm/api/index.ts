@@ -1,7 +1,7 @@
 import produce from "immer";
 import _ from "underscore";
 import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api/editor";
+import { request2 } from "visual/utils/api";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import {
   CreateForm,

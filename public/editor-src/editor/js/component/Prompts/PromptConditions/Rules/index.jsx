@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-
+import { getStore } from "visual/redux/store";
+import { pageSelector } from "visual/redux/selectors";
 import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
+import { IS_CMS } from "visual/utils/env";
 import Buttons from "../Buttons";
-// import { getRulesList } from "visual/utils/api/editor";
 import ConditionChoices from "./ConditionChoices";
-import { filterRules, PAGES_GROUP_ID, PAGE_TYPE } from "./utils";
+import { filterRules } from "./utils";
+
+import { PAGES_GROUP_ID } from "visual/utils/blocks/blocksConditions";
 
 import useRuleList from "./useRuleList";
 
 export default function Rules({
-  value = [],
+  value = null,
   asyncGetValue,
   onClose = () => {},
   onChange = () => {}
@@ -22,7 +25,20 @@ export default function Rules({
 
   useEffect(() => {
     async function fetchData() {
-      const rules = (await asyncGetValue()) || [];
+      let rules = await asyncGetValue();
+
+      if (IS_CMS && !rules) {
+        rules = [
+          {
+            type: 1,
+            appliedFor: null,
+            entityType: "",
+            entityValues: []
+          }
+        ];
+      } else if (!rules) {
+        rules = [];
+      }
 
       setRules(rules);
     }
@@ -31,12 +47,15 @@ export default function Rules({
   }, []);
 
   function handleAdd() {
+    const entityType = IS_CMS
+      ? pageSelector(getStore().getState()).collectionType.id
+      : "page";
     setRules([
       ...rules,
       {
         type: 1,
         appliedFor: PAGES_GROUP_ID,
-        entityType: PAGE_TYPE,
+        entityType: entityType,
         entityValues: []
       }
     ]);
@@ -87,11 +106,13 @@ export default function Rules({
           }}
           className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
         >
-          <ConditionChoices
-            rules={rules}
-            rulesList={rulesList}
-            onChange={rules => setRules(rules)}
-          />
+          {rules !== null && (
+            <ConditionChoices
+              rules={rules}
+              rulesList={rulesList}
+              onChange={rules => setRules(rules)}
+            />
+          )}
           <div
             className="brz-ed-popup-conditions__add-condition"
             onClick={handleAdd}

@@ -31,6 +31,7 @@ module.exports = (options = {}) => {
   return {
     mode: options.IS_PRODUCTION ? "production" : "development",
     entry: {
+      polyfill: "./editor/js/bootstraps/polyfill.js",
       editor: [
         "./editor/js/bootstraps/initConfig.js",
         "./editor/js/bootstraps/editor/webpack-public-path.js",
@@ -59,6 +60,8 @@ module.exports = (options = {}) => {
       ]
     },
     plugins: [
+      // NOTE: DefinePlugin's order (0) is important
+      // because it is relied on in ./webpack.config.pro.js
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(
           options.IS_PRODUCTION ? "production" : "development"

@@ -3,7 +3,7 @@ import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
 import { removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class AccordionItems extends EditorArrayComponent {
@@ -36,19 +36,14 @@ class AccordionItems extends EditorArrayComponent {
       activeAccordionItem,
       navIcon,
       collapsible,
-      animationClassName
+      animDuration,
+      animationClassName,
+      tagName
     } = this.props;
-    const { visibleTag } = this.state;
 
     const { tags = "" } = itemData.value;
-    let tag = this.updateTags(tags);
+    const tag = this.updateTags(tags);
 
-    const className = classnames("brz-accordion__item", tag, {
-      "brz-accordion__item--active": activeAccordionItem === itemIndex,
-      "brz-accordion__hidden": !(
-        visibleTag === "All" || tag.includes(visibleTag)
-      )
-    });
     const cloneRemoveConfig = {
       getItems: () => [
         {
@@ -81,13 +76,14 @@ class AccordionItems extends EditorArrayComponent {
 
     return {
       meta,
-      className,
-      activeAccordionItem: activeAccordionItem === itemIndex,
       navIcon,
+      tag,
       collapsible,
+      animDuration,
       animationClassName,
       toolbarExtend,
-      tag,
+      tagName,
+      activeAccordionItem: activeAccordionItem === itemIndex,
       visibleTag: this.state.visibleTag,
       handleAccordion: () => {
         this.handleAccordionActive(itemIndex);
@@ -186,10 +182,14 @@ class AccordionItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    const { className, style, enableTags } = this.props;
+    const { className, style, enableTags, animDuration } = this.props;
 
     return (
-      <div className={className} style={style}>
+      <div
+        className={className}
+        style={style}
+        data-duration={animDuration * 1000}
+      >
         {enableTags === "on" && this.tags.size > 0 && this.renderTags()}
         {items}
       </div>

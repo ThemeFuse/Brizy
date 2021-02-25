@@ -2,6 +2,7 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { NORMAL, HOVER } from "visual/utils/stateMode";
 import {
   toolbarGradientType,
   toolbarBgColorHexField2,
@@ -18,7 +19,7 @@ import {
   toolbarBgImage
 } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state: "hover" });
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
@@ -44,75 +45,17 @@ export function getItems({ v, device }) {
       },
       position: 80,
       options: [
-        {
-          id: dvk("tabsState"),
-          tabsPosition: "left",
-          type: "tabs",
-          tabs: [
-            {
-              id: dvk("tabNormal"),
-              tabIcon: "nc-circle",
-              title: t("Normal"),
-              options: [
-                {
-                  id: dvk("tabsCurrentElement"),
-                  type: "tabs",
-                  value: dvv("tabsCurrentElement"),
-                  tabs: [
-                    {
-                      id: dvk("tabCurrentElement"),
-                      label: t("Image"),
-                      options: [
-                        toolbarBgImage({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBgImage",
-                            "onChangeBgImageBgOpacity",
-                            "onChangeBgImageDependencies"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: dvk("tabHover"),
-              tabIcon: "nc-hover",
-              title: t("Hover"),
-              options: [
-                {
-                  id: dvk("tabsCurrentElement"),
-                  type: "tabs",
-                  value: dvv("tabsCurrentElement"),
-                  devices: "desktop",
-                  tabs: [
-                    {
-                      id: dvk("tabCurrentElement"),
-                      label: t("Image"),
-                      options: [
-                        toolbarBgImage({
-                          v,
-                          device,
-                          state: "hover",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBgImage",
-                            "onChangeBgImageBgOpacity",
-                            "onChangeBgImageDependencies"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
+        toolbarBgImage({
+          v,
+          device,
+          state,
+          states: [NORMAL, HOVER],
+          onChange: [
+            "onChangeBgImage",
+            "onChangeBgImageBgOpacity",
+            "onChangeBgImageDependencies"
           ]
-        }
+        })
       ]
     },
     {

@@ -1,7 +1,8 @@
 import { MValue } from "visual/utils/value";
 import { OptionName, OptionTypes } from "visual/component/Options/types";
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { Literal } from "visual/utils/types/Literal";
+import { ElementModel } from "visual/component/Elements/Types";
 import {
   WithClassName,
   WithHelper,
@@ -13,17 +14,26 @@ export type OnChange<T> = (v: T) => void;
 
 export type SimpleValue<T> = { value: T };
 
-export type GetModel<M> = (get: (k: string) => MValue<Literal>) => M;
+export type GetModel<M> = (get: (k: string) => MValue<Literal>) => Partial<M>;
 
-export type Props<Model, Patch> = {
+export type GetElementModel<M> = (
+  value: M,
+  get: (k: string) => string
+) => ElementModel;
+
+export type Props<Model> = {
   value: Model;
-  onChange: OnChange<Patch>;
+  onChange: OnChange<ElementModel>;
   toolbar?: object;
+  label?: ReactNode;
+  description?: ReactNode;
 };
 
-export interface OptionType<M> {
+export type OptionType<M extends Patch, Patch = M> = {
   getModel: GetModel<M>;
-}
+  defaultValue: M;
+  getElementModel: GetElementModel<Patch>;
+};
 
 export interface GenericOptionDefinition<K extends OptionName>
   extends WithId<string>,

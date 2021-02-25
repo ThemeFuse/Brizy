@@ -21,8 +21,9 @@ import {
   toolbarLinkPopup
 } from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, component }) {
+export function getItems({ v, device, state, component }) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const dvk = key => defaultValueKey({ key, device });
@@ -46,69 +47,25 @@ export function getItems({ v, device, component }) {
       position: 80,
       options: [
         {
-          id: dvk("tabsState"),
-          tabsPosition: "left",
-          type: "tabs",
+          id: "tabsCurrentElement",
+          type: "tabs-dev",
           tabs: [
             {
-              id: dvk("tabNormal"),
-              tabIcon: "nc-circle",
-              title: t("Normal"),
+              id: "tabCurrentElement",
+              label: t("Image"),
               options: [
-                {
-                  id: "tabsCurrentElement",
-                  type: "tabs-dev",
-                  tabs: [
-                    {
-                      id: dvk("tabCurrentElement"),
-                      label: t("Image"),
-                      options: [
-                        toolbarBgImage({
-                          v,
-                          device,
-                          state: "normal",
-                          onChange: [
-                            "onChangeBgImage",
-                            "onChangeBgImageBgOpacity",
-                            "onChangeBgImageDependencies",
-                            "onChangeBgImageColumnAndRowSyncMobile"
-                          ]
-                        })
-                      ]
-                    }
+                toolbarBgImage({
+                  v,
+                  device,
+                  state,
+                  states: [NORMAL, HOVER],
+                  onChange: [
+                    "onChangeBgImage",
+                    "onChangeBgImageBgOpacity",
+                    "onChangeBgImageDependencies",
+                    "onChangeBgImageColumnAndRowSyncMobile"
                   ]
-                }
-              ]
-            },
-            {
-              id: dvk("tabHover"),
-              tabIcon: "nc-hover",
-              title: t("Hover"),
-              options: [
-                {
-                  id: "tabsCurrentElement",
-                  type: "tabs-dev",
-                  tabs: [
-                    {
-                      id: dvk("tabCurrentElement"),
-                      label: t("Image"),
-                      options: [
-                        toolbarBgImage({
-                          v,
-                          device,
-                          state: "hover",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBgImage",
-                            "onChangeBgImageBgOpacity",
-                            "onChangeBgImageDependencies",
-                            "onChangeBgImageColumnAndRowSyncMobile"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
-                }
+                })
               ]
             }
           ]
@@ -144,7 +101,7 @@ export function getItems({ v, device, component }) {
                   type: "tabs-dev",
                   tabs: [
                     {
-                      id: dvk("tabOverlay"),
+                      id: "tabOverlay",
                       label: t("Overlay"),
                       options: [
                         toolbarBgColor2({
@@ -242,7 +199,7 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
-                      id: dvk("tabBorder"),
+                      id: "tabBorder",
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
@@ -313,7 +270,7 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
-                      id: dvk("tabBoxShadow"),
+                      id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
                         toolbarBoxShadow2({
@@ -387,7 +344,7 @@ export function getItems({ v, device, component }) {
                   devices: "desktop",
                   tabs: [
                     {
-                      id: dvk("tabOverlay"),
+                      id: "tabOverlay",
                       label: t("Overlay"),
                       options: [
                         toolbarBgColor2({
@@ -485,7 +442,7 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
-                      id: dvk("tabBorder"),
+                      id: "tabBorder",
                       label: t("Border"),
                       options: [
                         toolbarBorder2({
@@ -559,7 +516,7 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
-                      id: dvk("tabBoxShadow"),
+                      id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
                         toolbarBoxShadow2({
@@ -651,7 +608,7 @@ export function getItems({ v, device, component }) {
           },
           tabs: [
             {
-              id: dvk("external"),
+              id: "external",
               label: t("URL"),
               options: [
                 toolbarImageLinkExternal({
@@ -675,7 +632,7 @@ export function getItems({ v, device, component }) {
               ]
             },
             {
-              id: dvk("anchor"),
+              id: "anchor",
               label: t("Block"),
               options: [
                 toolbarLinkAnchor({
@@ -688,7 +645,7 @@ export function getItems({ v, device, component }) {
               ]
             },
             {
-              id: dvk("popup"),
+              id: "popup",
               label: t("Popup"),
               options: [
                 toolbarLinkPopup({
@@ -731,7 +688,7 @@ export function getItems({ v, device, component }) {
           ]
         },
         {
-          id: dvk("advancedSettings"),
+          id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           label: t("More Settings"),

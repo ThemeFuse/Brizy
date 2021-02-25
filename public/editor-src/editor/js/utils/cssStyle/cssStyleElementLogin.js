@@ -135,3 +135,165 @@ export function cssStyleElementLoginTextColor({ v, device, state }) {
 export function cssStyleElementLoginLinkColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "linkColor" });
 }
+
+export function cssStyleElementLoginRegisterInfoTypography2FontFamily({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "registerInfo" });
+}
+
+export function cssStyleElementLoginRegisterInfoTypography2FontSize({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "registerInfo" });
+}
+
+export function cssStyleElementLoginRegisterInfoTypography2LineHeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "registerInfo" });
+}
+
+export function cssStyleElementLoginRegisterInfoTypography2FontWeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "registerInfo" });
+}
+
+export function cssStyleElementLoginRegisterInfoTypography2LetterSpacing({
+  v,
+  device
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    prefix: "registerInfo"
+  });
+}
+
+export function cssStyleElementRegisterInfoColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "registerInfoColor" });
+}
+
+export function cssStyleElementRegisterInfoAlign({ v, device, state }) {
+  const align = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    prefix: "registerInfo"
+  });
+
+  return align === undefined ? "" : `text-align:${align};`;
+}
+
+export function cssStyleElementLoginRegisterLinkTypography2FontFamily({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "registerLink" });
+}
+
+export function cssStyleElementLoginRegisterLinkTypography2FontSize({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "registerLink" });
+}
+
+export function cssStyleElementLoginRegisterLinkTypography2LineHeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "registerLink" });
+}
+
+export function cssStyleElementLoginRegisterLinkTypography2FontWeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "registerLink" });
+}
+
+export function cssStyleElementLoginRegisterLinkTypography2LetterSpacing({
+  v,
+  device
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    prefix: "registerLink"
+  });
+}
+
+export function cssStyleElementLoginRegisterLinkColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "registerLinkColor" });
+}
+
+export function cssStyleElementLoginRegisterLinkAlign({ v, device, state }) {
+  const align = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    prefix: "registerLink"
+  });
+
+  return align === undefined ? "" : `text-align:${align};`;
+}
+
+export function cssStyleElementLoginLoginLinkTypography2FontFamily({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "loginLink" });
+}
+
+export function cssStyleElementLoginLoginLinkTypography2FontSize({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "loginLink" });
+}
+
+export function cssStyleElementLoginLoginLinkTypography2LineHeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "loginLink" });
+}
+
+export function cssStyleElementLoginLoginLinkTypography2FontWeight({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "loginLink" });
+}
+
+export function cssStyleElementLoginLoginLinkTypography2LetterSpacing({
+  v,
+  device
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    prefix: "loginLink"
+  });
+}
+
+export function cssStyleElementLoginLoginLinkColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "loginLinkColor" });
+}
+
+export function cssStyleElementLoginLoginLinkAlign({ v, device, state }) {
+  const align = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    prefix: "loginLink"
+  });
+
+  return align === undefined ? "" : `text-align:${align};`;
+}

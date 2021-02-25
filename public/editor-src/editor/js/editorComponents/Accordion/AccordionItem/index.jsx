@@ -1,44 +1,122 @@
 import React from "react";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import ThemeIcon from "visual/component/ThemeIcon";
+import Animation from "visual/component/Animation";
 import Toolbar from "visual/component/Toolbar";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import ItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
-import ThemeIcon from "visual/component/ThemeIcon";
-import classnames from "classnames";
-import Animation from "visual/component/Animation";
+import { expend, collapse } from "../utils";
 
 class AccordionItem extends EditorComponent {
   static get componentId() {
     return "AccordionItem";
   }
+  static defaultValue = defaultValue;
 
   static defaultProps = {
-    meta: {}
+    meta: {},
+    collapsible: "",
+    navIcon: "",
+    tag: "",
+    animDuration: 0,
+    animationClassName: "",
+    activeAccordionItem: false,
+    visibleTag: false
   };
 
+  content = React.createRef();
+
   state = {
-    isActive: false
+    active: false,
+    height: 0
+  };
+
+  componentDidMount() {
+    const { collapsible, activeAccordionItem } = this.props;
+
+    if (collapsible === "on" && activeAccordionItem) {
+      this.handleCollapse();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { collapsible, activeAccordionItem } = this.props;
+    const { active } = this.state;
+
+    if (prevProps.collapsible !== collapsible) {
+      if (collapsible === "on") {
+        if (activeAccordionItem) {
+          this.handleCollapse();
+        } else {
+          this.handleExpend();
+        }
+      } else {
+        this.setState({ active: false });
+      }
+      return;
+    }
+
+    if (prevProps.activeAccordionItem !== activeAccordionItem) {
+      if (prevProps.activeAccordionItem) {
+        this.handleExpend();
+      } else {
+        this.handleCollapse();
+      }
+    }
+
+    if (prevState.active !== active) {
+      if (prevState.active) {
+        this.handleExpend();
+      } else {
+        this.handleCollapse();
+      }
+    }
+  }
+
+  handleCollapse = () => {
+    const node = this.content.current;
+
+    if (node) {
+      const { height } = node.children[0]?.getBoundingClientRect();
+      const duration = this.props.animDuration;
+
+      collapse(node, { height, duration: duration * 1000 });
+    }
+  };
+
+  handleExpend = () => {
+    const node = this.content.current;
+
+    if (node) {
+      const { height } = node.children[0]?.getBoundingClientRect();
+      const duration = this.props.animDuration;
+
+      expend(node, { height, duration: duration * 1000 });
+    }
   };
 
   handleClick = () => {
-    this.setState({
-      isActive: !this.state.isActive
-    });
-  };
+    const { collapsible, handleAccordion } = this.props;
 
-  static defaultValue = defaultValue;
+    if (collapsible === "off") {
+      this.setState({
+        active: !this.state.active
+      });
+    } else {
+      handleAccordion();
+    }
+  };
 
   handleTextChange = labelText => {
     this.patchValue({ labelText });
   };
 
-  getIcon(activeAccordionItem, navIcon) {
-    let icon = activeAccordionItem
-      ? `up-arrow-${navIcon}`
-      : `down-arrow-${navIcon}`;
+  getIcon(active, navIcon) {
+    const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
     return IS_EDITOR ? (
       <div className="brz-accordion--icon-wrapper">
         <ThemeIcon
@@ -63,88 +141,75 @@ class AccordionItem extends EditorComponent {
     );
   }
 
-  renderForEdit(v) {
+  renderNav(v) {
+    const { navIcon, collapsible, activeAccordionItem, tagName } = this.props;
+    const activeIcon =
+      collapsible === "off" ? this.state.active : activeAccordionItem;
+
+    return (
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
+        <div
+          className="brz-accordion__nav"
+          data-collapsible={collapsible}
+          onClick={this.handleClick}
+        >
+          <TextEditor
+            value={v.labelText}
+            tagName={tagName}
+            onChange={this.handleTextChange}
+          />
+          {navIcon !== "none" && this.getIcon(activeIcon, navIcon)}
+        </div>
+      </Toolbar>
+    );
+  }
+
+  renderItems() {
     const {
-      className,
       meta,
-      handleAccordion,
-      activeAccordionItem,
-      navIcon,
-      collapsible,
-      visibleTag,
-      tag,
       animationClassName,
       meta: { sectionPopup, sectionPopup2 }
     } = this.props;
+
     const itemsProps = this.makeSubcomponentProps({
+      meta,
       bindWithKey: "items",
-      className: "brz-accordion--sortable brz-d-xs-flex brz-flex-xs-column",
-      meta
+      className: "brz-accordion--sortable brz-d-xs-flex brz-flex-xs-column"
     });
 
-    if (collapsible === "off") {
-      let cls = classnames("brz-accordion__item", tag, {
-        "brz-accordion__item--active": this.state.isActive,
-        "brz-accordion__hidden": !(
-          visibleTag === "All" || tag.includes(visibleTag)
-        )
-      });
-      return (
-        <div className={cls}>
-          <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-            <div
-              className="brz-accordion__nav"
-              data-collapsible={collapsible}
-              onClick={this.handleClick}
-            >
-              <TextEditor
-                value={v.labelText}
-                onChange={this.handleTextChange}
-              />
-              {navIcon !== "none" && this.getIcon(this.state.isActive, navIcon)}
-            </div>
-          </Toolbar>
-          <Animation
-            iterationCount={
-              IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
-            }
-            component={"div"}
-            componentProps={{
-              className:
-                "brz-accordion__content brz-d-xs-flex brz-flex-xs-column"
-            }}
-            animationClass={animationClassName}
-          >
-            <ItemItems {...itemsProps} />
-          </Animation>
-        </div>
-      );
-    }
+    return (
+      <Animation
+        ref={this.content}
+        iterationCount={
+          IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+        }
+        component={"div"}
+        componentProps={{
+          className: "brz-accordion__content brz-d-xs-flex brz-flex-xs-column"
+        }}
+        animationClass={animationClassName}
+      >
+        <ItemItems {...itemsProps} />
+      </Animation>
+    );
+  }
+
+  renderForEdit(v) {
+    const { activeAccordionItem, collapsible, visibleTag, tag } = this.props;
+    const active =
+      collapsible === "off" ? this.state.active : activeAccordionItem;
+
+    const className = classnames("brz-accordion__item", tag, {
+      "brz-accordion__item--active": active,
+      "brz-accordion__hidden": !(
+        visibleTag === "All" || tag.includes(visibleTag)
+      )
+    });
 
     return (
       <div className={className}>
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-          <div
-            className="brz-accordion__nav"
-            onClick={handleAccordion}
-            data-collapsible={collapsible}
-          >
-            <TextEditor value={v.labelText} onChange={this.handleTextChange} />
-            {navIcon !== "none" && this.getIcon(activeAccordionItem, navIcon)}
-          </div>
-        </Toolbar>
-        <Animation
-          iterationCount={
-            IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
-          }
-          component={"div"}
-          componentProps={{
-            className: "brz-accordion__content brz-d-xs-flex brz-flex-xs-column"
-          }}
-          animationClass={animationClassName}
-        >
-          <ItemItems {...itemsProps} />
-        </Animation>
+        {this.renderNav(v)}
+        {this.renderItems(active)}
       </div>
     );
   }

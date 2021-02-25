@@ -1,10 +1,7 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarDisabledLink,
-  toolbarDisabledAdvancedSettings
-} from "visual/utils/toolbar";
+import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -50,11 +47,6 @@ export function getItems({ v, device }) {
         { icon: "nc-hrz-align-right", title: t("Align"), value: "right" }
       ]
     },
-    toolbarDisabledLink({
-      v,
-      device,
-      state: "normal"
-    }),
     toolbarDisabledAdvancedSettings({ device })
   ];
 }

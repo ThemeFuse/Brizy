@@ -2,18 +2,20 @@ import { Palette } from "visual/component/Options/types/dev/ColorPicker/entities
 import { Type } from "./Type";
 import { GradientType } from "./GradientType";
 import { GradientActivePointer } from "./GradientActivePointer";
+import { Hex } from "visual/utils/color/Hex";
+import { Opacity } from "visual/utils/cssProps/opacity";
 
 export type Value = {
-  hex: string;
-  opacity: number;
-  tempOpacity: number;
+  hex: Hex;
+  opacity: Opacity;
+  tempOpacity: Opacity;
   palette: Palette;
   tempPalette: Palette;
-  hex2: string;
-  opacity2: number;
-  tempOpacity2: number;
-  palette2: Palette;
-  tempPalette2: Palette;
+  gradientHex: Hex;
+  gradientOpacity: Opacity;
+  tempGradientOpacity: Opacity;
+  gradientPalette: Palette;
+  tempGradientPalette: Palette;
   type: Type;
   tempType: Type;
   gradientType: GradientType;

@@ -1,85 +1,3 @@
-// Default sliders styles from libs
-.slick-slider {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-  touch-action: pan-y;
-  -webkit-tap-highlight-color: transparent;
-
-  // solve problems with big with
-  width: 0;
-  min-width: 100%;
-
-  &.slick-dotted {
-    margin: 0;
-  }
-}
-.slick-list {
-  position: relative;
-  overflow: hidden;
-  display: block;
-  margin: 0;
-  padding: 0;
-
-  &:focus {
-    outline: none;
-  }
-  &.dragging {
-    cursor: pointer;
-    cursor: hand;
-  }
-}
-.slick-slider .slick-track,
-.slick-slider .slick-list {
-  transform: translate3d(0, 0, 0);
-}
-.slick-track {
-  position: relative;
-  left: 0;
-  top: 0;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-
-  .slick-loading & {
-    visibility: hidden;
-  }
-  &:before,
-  &:after {
-    content: none;
-  }
-}
-.slick-slide {
-  min-height: 1px;
-  display: none;
-  float: none;
-
-  img {
-    display: block;
-  }
-  &.slick-loading img {
-    display: none;
-  }
-  &.dragging img {
-    pointer-events: none;
-  }
-  .slick-initialized & {
-    display: block;
-  }
-  .slick-loading & {
-    visibility: hidden;
-  }
-  .slick-vertical & {
-    display: block;
-    height: auto;
-    border: 1px solid transparent;
-  }
-}
-.slick-arrow.slick-hidden {
-  display: none;
-}
-
-// Theme
 .brz-slick-slider {
   .brz-rich-text *,
   .brz-icon-svg {
@@ -105,15 +23,6 @@
       visibility: visible;
     }
   }
-}
-
-// Globals Style
-.slick-initialized .slick-slide {
-  display: block;
-}
-.slick-track {
-  display: flex;
-  flex-wrap: wrap;
 }
 
 // Dots

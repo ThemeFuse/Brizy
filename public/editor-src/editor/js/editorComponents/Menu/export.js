@@ -1,8 +1,7 @@
 import $ from "jquery";
-import MMenu from "../../libs/mmenu/custom-build/mmenu";
 import { debounce } from "underscore";
-import { createPopper } from "@popperjs/core";
 import { uuid } from "visual/utils/uuid";
+import { LibsPro } from "visual/libs";
 
 const hasRootContainer = $(document).find(".brz-root__container").length > 0;
 const megaMenus = new Map();
@@ -23,8 +22,13 @@ const getCurrentDevice = () => {
 let lastCurrentDevice = getCurrentDevice();
 
 export default function($node) {
-  const root = $node.get(0);
+  const { MMenu } = LibsPro;
 
+  if (!MMenu) {
+    return;
+  }
+
+  const root = $node.get(0);
   $node.find("[data-mmenu-id]").each(function() {
     const $this = $(this);
     const mmenuId = $this.data().mmenuId;
@@ -298,6 +302,12 @@ const resize = root => () => {
 };
 
 const init = (item, root) => {
+  const { CreatePopper } = LibsPro;
+
+  if (!CreatePopper) {
+    return;
+  }
+
   let megaMenu = item.querySelector(".brz-mega-menu__portal");
   const device = lastCurrentDevice;
 
@@ -346,7 +356,7 @@ const init = (item, root) => {
   megaMenu.style.maxWidth = getMegaMenuWidth(item, settings, device);
 
   const reference = getPopperReference(item, settings, device);
-  const popper = createPopper(reference, megaMenu, popperSettings);
+  const popper = CreatePopper(reference, megaMenu, popperSettings);
   const temporaryUid = item.getAttribute("data-mega-menu-open-uid");
 
   item.popper = popper;
@@ -370,7 +380,7 @@ const update = (item, root) => {
 
   // update maxWidth & recalculate popper
   megaMenu.style.maxWidth = getMegaMenuWidth(item, settings, device);
-  item.popper.update();
+  item.popper?.update();
 };
 
 const appendItemToMenu = (item, root) => {

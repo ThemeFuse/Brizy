@@ -2,7 +2,7 @@ import React, { ReactElement, RefObject, useRef } from "react";
 import classnames from "classnames";
 import jQuery from "jquery";
 import { getStore } from "visual/redux/store";
-import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/env";
 import { useLayoutEffect } from "../utils";
 
 import "../lib/jquery.parallax.js";

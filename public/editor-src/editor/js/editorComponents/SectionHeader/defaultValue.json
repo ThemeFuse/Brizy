@@ -4,14 +4,17 @@
 
     "type": "fixed",
 
+    "tagName": "section",
+
     "anchorName": "",
 
     "cssIDPopulation": "",
 
+    "membership": "off",
+    "membershipRoles": "[]",
+
     "showOnDesktop": "on",
-
     "showOnTablet": "on",
-
     "showOnMobile": "on"
   },
 
@@ -26,5 +29,25 @@
 
     "customAttributes": "",
     "customAttributesPopulation": null
+  },
+
+  "animation": {
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+
+    "tempAnimationName": "none",
+
+    "tabletAnimationName": null,
+    "tabletAnimationDuration": null,
+    "tabletAnimationDelay": null,
+
+    "tempTabletAnimationName": null,
+
+    "mobileAnimationName": null,
+    "mobileAnimationDuration": null,
+    "mobileAnimationDelay": null,
+
+    "tempMobileAnimationName": null
   }
 }

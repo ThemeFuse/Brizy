@@ -143,6 +143,7 @@ export { styleZIndex } from "./styleZIndex";
 export {
   styleTypographyFontFamily,
   styleTypographyFontSize,
+  styleTypographyFontSizeSuffix,
   styleTypographyLineHeight,
   styleTypographyFontWeight,
   styleTypographyLetterSpacing
@@ -152,6 +153,7 @@ export {
 export {
   styleTypography2FontFamily,
   styleTypography2FontSize,
+  styleTypography2FontSizeSuffix,
   styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing

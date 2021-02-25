@@ -95,13 +95,19 @@ class ImageGallery extends EditorComponent {
     const { meta } = this.props;
     const { spacing, gridColumn, tabletGridColumn, mobileGridColumn } = v;
     const desktopW = meta.desktopW / gridColumn;
+    const desktopWNoSpacing = meta.desktopWNoSpacing / gridColumn;
     const tabletW = meta.tabletW / tabletGridColumn;
+    const tabletWNoSpacing = meta.tabletWNoSpacing / tabletGridColumn;
     const mobileW = meta.mobileW / mobileGridColumn;
+    const mobileWNoSpacing = meta.mobileWNoSpacing / mobileGridColumn;
 
     return Object.assign({}, meta, {
       desktopW: Math.round((desktopW - spacing) * 10) / 10,
+      desktopWNoSpacing: Math.round(desktopWNoSpacing),
       tabletW: Math.round(tabletW),
+      tabletWNoSpacing: Math.round(tabletWNoSpacing),
       mobileW: Math.round(mobileW),
+      mobileWNoSpacing: Math.round(mobileWNoSpacing),
       gallery: {
         inGallery: true,
         enableTags: v.enableTags === "on"

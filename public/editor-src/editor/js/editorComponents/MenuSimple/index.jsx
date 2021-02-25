@@ -9,7 +9,7 @@ import Toolbar from "visual/component/Toolbar";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors2";
+import { pageSelector } from "visual/redux/selectors";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
@@ -59,7 +59,6 @@ export default class MenuSimple extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-
     const className = classnames(
       "brz-menu-simple",
       "brz-menu-simple--cloud",

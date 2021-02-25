@@ -19,6 +19,18 @@
   form:not(.variations_form) {
     display: inline-flex;
   }
+
+  form.grouped_form {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: inherit;
+
+    .woocommerce-grouped-product-list-item__label a {
+      text-decoration: unset;
+      color: inherit;
+    }
+  }
+
   form.variations_form {
     width: 100%;
     justify-content: inherit;
@@ -36,6 +48,7 @@
         margin-left: 15px;
       }
     }
+
     .single_variation_wrap {
       display: flex;
       flex-wrap: wrap;

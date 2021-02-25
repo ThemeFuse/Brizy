@@ -37,7 +37,8 @@
     position: relative;
     color: #fff;
 
-    input {
+    input,
+    input::placeholder {
       color: #fff;
     }
 
@@ -110,7 +111,7 @@
   &__menu {
     font-family: $font-family-1;
     z-index: z("select-portal");
-    box-shadow: 0 1px 10px 0 rgba(18, 34, 35, 0.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     margin-top: 3px; // ? placement
     border-radius: $control-border-radius;
     background: $options-control-background;

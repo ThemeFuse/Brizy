@@ -1,23 +1,15 @@
-.brz-ed-option-type__group {
-  &,
-  &-dev {
-    .brz-ed-control__group {
-      flex: 1 1 auto;
+.brz-ed-sidebar__right .brz-ed-control__group,
+.brz-ed-control__group {
+  flex: 1 1 auto;
 
-      & > .brz-ed-option {
-        padding: 0;
-        border: none;
-        min-height: unset;
-        margin-bottom: 5px;
+  & > .brz-ed-option {
+    padding: 0;
+    border: none;
+    min-height: unset;
+    margin-bottom: 5px;
 
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        &:first-child {
-          margin-bottom: 0;
-        }
-      }
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }

@@ -1,13 +1,13 @@
 import {
-  PageWP,
-  PageCloud,
+  Page,
   GlobalBlock,
   GoogleFont,
   UploadedFont,
   Authorized,
   DeviceMode,
   Block,
-  SyncAllowed
+  SyncAllowed,
+  Style
 } from "visual/types";
 import { HistoryEnhancerState } from "./history/types";
 
@@ -15,7 +15,7 @@ import { HistoryEnhancerState } from "./history/types";
 // Types should be added as we go on
 export type ReduxState = {
   project: {};
-  page: PageWP | PageCloud;
+  page: Page;
   globalBlocks: {
     [key: string]: GlobalBlock;
   };
@@ -42,7 +42,7 @@ export type ReduxState = {
     deviceMode: DeviceMode;
     leftSidebar: {
       isOpen: boolean;
-      drawerContentType: string | undefined; // TODO: converted to a union of actual drawer type later
+      drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later
     };
     rightSidebar: {
       isOpen: boolean;
@@ -50,7 +50,9 @@ export type ReduxState = {
       alignment: "right" | "left";
     };
     showHiddenElements: boolean;
+    currentRole: string;
   };
+  styles: Style[];
 
   // below any are temporary and needed for ReduxStateWithHistory
   // they will be removed once we finish with ReduxState types

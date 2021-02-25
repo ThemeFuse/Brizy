@@ -16,6 +16,7 @@ import { t } from "visual/utils/i18n";
 import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";
+import { customFileUrl } from "visual/utils/customFile";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -46,15 +47,28 @@ class Lottie extends EditorComponent {
   };
 
   componentDidMount() {
-    const v = this.getValue();
-    this.getAnimation(v.animationLink);
+    const { animationFile, animationLink } = this.getValue();
+    this.getAnimation(
+      animationFile ? customFileUrl(animationFile) : animationLink
+    );
   }
 
   handleValueChange(newValue, meta) {
     super.handleValueChange(newValue, meta);
+    const { animationFile, animationLink } = meta.patch || {};
 
-    if (meta.patch.animationLink) {
-      this.getAnimation(meta.patch.animationLink);
+    if (animationFile === undefined && animationLink === undefined) {
+      return;
+    }
+
+    const animationPatch = customFileUrl(animationFile) || animationLink;
+
+    if (animationPatch) {
+      this.getAnimation(animationPatch);
+    } else {
+      const { animationFile, animationLink } = this.getValue();
+      const animationValue = animationLink || customFileUrl(animationFile);
+      this.getAnimation(animationValue);
     }
   }
 
@@ -96,11 +110,11 @@ class Lottie extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
+          const blockData = blocksDataSelector(getStore().getState())[
             itemData.value._id
           ];
 
-          popupId = itemData.value.popupId;
+          popupId = blockData.value.popupId;
         }
 
         return {
@@ -181,6 +195,7 @@ class Lottie extends EditorComponent {
       autoplay,
       direction,
       animationLink,
+      animationFile,
       linkType,
       linkAnchor,
       linkExternalBlank,
@@ -201,11 +216,14 @@ class Lottie extends EditorComponent {
       "brz-lottie",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
+    const _animationLink = animationFile
+      ? customFileUrl(animationFile)
+      : animationLink;
 
     const animDom = (
       <div
         className="brz-lottie-anim"
-        data-animate-name={animationLink}
+        data-animate-name={_animationLink}
         data-anim-speed={speed}
         data-anim-loop={loop}
         data-anim-autoplay={autoplay}

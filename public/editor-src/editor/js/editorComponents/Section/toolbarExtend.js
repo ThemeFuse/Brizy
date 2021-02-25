@@ -1,3 +1,5 @@
+import Config from "visual/global/Config";
+import { IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import {
   toolbarShowOnResponsive,
@@ -5,7 +7,6 @@ import {
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component }) {
@@ -27,6 +28,8 @@ export function getItems({ v, device, component }) {
     { title: t("Round"), icon: "nc-right-arrow-filled", value: "filled" },
     { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
   ];
+
+  const membershipRoles = Config.get("wp")?.availableRoles || [];
 
   return [
     toolbarShowOnResponsive({
@@ -62,7 +65,36 @@ export function getItems({ v, device, component }) {
                       device,
                       devices: "all",
                       component
-                    })
+                    }),
+                    {
+                      id: "gbConditions",
+                      disabled: !component.props.meta.globalBlockId,
+                      value: component.props.meta.globalBlockId,
+                      type: "gbConditions"
+                    }
+                  ]
+                },
+                {
+                  id: "membership",
+                  label: t("Membership"),
+                  type: "switch-dev",
+                  disabled: !IS_WP
+                },
+                {
+                  id: "membershipRoles",
+                  label: t("Show to"),
+                  type: "multiSelect-dev",
+                  placeholder: "Select",
+                  disabled: v.membership === "off" || !IS_WP,
+                  choices: [
+                    {
+                      title: "Not logged",
+                      value: "not_logged"
+                    },
+                    ...membershipRoles.map(({ role, name }) => ({
+                      title: name,
+                      value: role
+                    }))
                   ]
                 },
                 {

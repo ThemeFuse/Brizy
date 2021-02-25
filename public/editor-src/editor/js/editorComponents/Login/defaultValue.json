@@ -6,8 +6,13 @@
     "showPlaceholder": "on",
     "showLabel": "off",
     "remember": "on",
+    "showRegisterInfo": "on",
     "lostPassword": "Lost your password?",
     "showLostPassword": "on",
+    "registerLink": "Registration",
+    "showRegisterLink": "on",
+    "loginLink": "Login",
+    "showLoginLink": "on",
     "items": []
   },
 
@@ -18,10 +23,13 @@
 
   "style": {
     "horizontalAlign": "left",
-
     "autorizedHorizontalAlign": "center",
+    "registerInfoHorizontalAlign": "left",
+    "registerLinkHorizontalAlign": "left",
+    "loginLinkHorizontalAlign": "left",
 
     "submitWidth": 100,
+    "submitWidthSuffix": "%",
 
     "families": {
       "fontFamily": "lato",
@@ -38,12 +46,22 @@
       "mobileLostFontFamily": null,
       "textFontFamily": "lato",
       "tabletTextFontFamily": null,
-      "mobileTextFontFamily": null
+      "mobileTextFontFamily": null,
+      "registerInfoFontFamily": "lato",
+      "tabletRegisterInfoFontFamily": null,
+      "mobileRegisterInfoFontFamily": null,
+      "registerLinkFontFamily": "lato",
+      "tabletRegisterLinkFontFamily": null,
+      "mobileRegisterLinkFontFamily": null,
+      "loginLinkFontFamily": "lato",
+      "tabletLoginLinkFontFamily": null,
+      "mobileLoginLinkFontFamily": null
     },
 
     "fontStyle": "",
     "fontFamilyType": "google",
     "fontSize": 16,
+    "fontSizeSuffix": "px",
     "fontWeight": 400,
     "lineHeight": 1.1,
     "letterSpacing": 0,
@@ -51,9 +69,34 @@
     "textFontStyle": "",
     "textFontFamilyType": "google",
     "textFontSize": 16,
+    "textFontSizeSuffix": "px",
     "textFontWeight": 400,
     "textLineHeight": 1.1,
     "textLetterSpacing": 0,
+
+    "registerInfoFontStyle": "",
+    "registerInfoFontFamilyType": "google",
+    "registerInfoFontSize": 16,
+    "registerInfoFontSizeSuffix": "px",
+    "registerInfoFontWeight": 400,
+    "registerInfoLineHeight": 1.5,
+    "registerInfoLetterSpacing": 0,
+
+    "registerLinkFontStyle": "",
+    "registerLinkFontFamilyType": "google",
+    "registerLinkFontSize": 16,
+    "registerLinkFontSizeSuffix": "px",
+    "registerLinkFontWeight": 400,
+    "registerLinkLineHeight": 1,
+    "registerLinkLetterSpacing": 0,
+
+    "loginLinkFontStyle": "",
+    "loginLinkFontFamilyType": "google",
+    "loginLinkFontSize": 16,
+    "loginLinkFontSizeSuffix": "px",
+    "loginLinkFontWeight": 400,
+    "loginLinkLineHeight": 1,
+    "loginLinkLetterSpacing": 0,
 
     "size": "medium",
     "sizeLargePadding": 20,
@@ -115,6 +158,48 @@
 
     "tempHoverLostColorOpacity": null,
     "tempHoverLostColorPalette": null,
+
+    "registerInfoColorHex": "#73777f",
+    "registerInfoColorOpacity": 0.7,
+    "registerInfoColorPalette": "",
+
+    "tempRegisterInfoColorOpacity": 0.7,
+    "tempRegisterInfoColorPalette": "",
+
+    "hoverRegisterInfoColorHex": null,
+    "hoverRegisterInfoColorOpacity": null,
+    "hoverRegisterInfoColorPalette": null,
+
+    "tempHoverRegisterInfoColorOpacity": null,
+    "tempHoverRegisterInfoColorPalette": null,
+
+    "registerLinkColorHex": "#73777f",
+    "registerLinkColorOpacity": 0.7,
+    "registerLinkColorPalette": "",
+
+    "tempRegisterLinkColorOpacity": 0.7,
+    "tempRegisterLinkColorPalette": "",
+
+    "hoverRegisterLinkColorHex": null,
+    "hoverRegisterLinkColorOpacity": null,
+    "hoverRegisterLinkColorPalette": null,
+
+    "tempHoverRegisterLinkColorOpacity": null,
+    "tempHoverRegisterLinkColorPalette": null,
+
+    "loginLinkColorHex": "#73777f",
+    "loginLinkColorOpacity": 0.7,
+    "loginLinkColorPalette": "",
+
+    "tempLoginLinkColorOpacity": 0.7,
+    "tempLoginLinkColorPalette": "",
+
+    "hoverLoginLinkColorHex": null,
+    "hoverLoginLinkColorOpacity": null,
+    "hoverLoginLinkColorPalette": null,
+
+    "tempHoverLoginLinkColorOpacity": null,
+    "tempHoverLoginLinkColorPalette": null,
 
     "borderStyle": "solid",
 
@@ -247,6 +332,7 @@
     "labelFontStyle": "",
     "labelFontFamilyType": "google",
     "labelFontSize": 16,
+    "labelFontSizeSuffix": "px",
     "labelFontWeight": 400,
     "labelLineHeight": 1.5,
     "labelLetterSpacing": 0,
@@ -379,6 +465,7 @@
     "checkboxFontStyle": "",
     "checkboxFontFamilyType": "google",
     "checkboxFontSize": 16,
+    "checkboxFontSizeSuffix": "px",
     "checkboxFontWeight": 400,
     "checkboxLineHeight": 1.5,
     "checkboxLetterSpacing": 0,
@@ -386,8 +473,9 @@
     "lostFontStyle": "",
     "lostFontFamilyType": "google",
     "lostFontSize": 16,
+    "lostFontSizeSuffix": "px",
     "lostFontWeight": 400,
-    "lostLineHeight": 1.5,
+    "lostLineHeight": 1,
     "lostLetterSpacing": 0,
 
     "boxShadow": "",
@@ -433,7 +521,9 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "tabletHorizontalAlign": null,
+
     "tabletSubmitWidth": null,
+    "tabletSubmitWidthSuffix": null,
 
     "tabletSize": "medium",
 
@@ -444,16 +534,21 @@
     "tabletLabelFontFamilyType": null,
     "tabletLabelFontStyle": "",
     "tabletLabelFontSize": 14,
+    "tabletLabelFontSizeSuffix": "px",
     "tabletLabelLineHeight": 1.5,
     "tabletLabelFontWeight": 400,
     "tabletLabelLetterSpacing": 0,
 
     "tabletLabelHorizontalAlign": null,
     "tabletLostHorizontalAlign": null,
+    "tabletRegisterInfoHorizontalAlign": null,
+    "tabletRegisterLinkHorizontalAlign": null,
+    "tabletLoginLinkHorizontalAlign": null,
 
     "tabletFontFamilyType": null,
     "tabletFontStyle": "",
     "tabletFontSize": 14,
+    "tabletFontSizeSuffix": "px",
     "tabletLineHeight": 1.5,
     "tabletLetterSpacing": 0,
     "tabletFontWeight": 400,
@@ -461,6 +556,7 @@
     "tabletTextFontFamilyType": null,
     "tabletTextFontStyle": "",
     "tabletTextFontSize": 14,
+    "tabletTextFontSizeSuffix": "px",
     "tabletTextLineHeight": 1.5,
     "tabletTextLetterSpacing": 0,
     "tabletTextFontWeight": 400,
@@ -468,6 +564,7 @@
     "tabletCheckboxFontFamilyType": null,
     "tabletCheckboxFontStyle": "",
     "tabletCheckboxFontSize": 14,
+    "tabletCheckboxFontSizeSuffix": "px",
     "tabletCheckboxLineHeight": 1.5,
     "tabletCheckboxFontWeight": 400,
     "tabletCheckboxLetterSpacing": 0,
@@ -475,21 +572,46 @@
     "tabletLostFontFamilyType": null,
     "tabletLostFontStyle": "",
     "tabletLostFontSize": 14,
-    "tabletLostLineHeight": 1.5,
+    "tabletLostFontSizeSuffix": "px",
+    "tabletLostLineHeight": 1,
     "tabletLostFontWeight": 400,
     "tabletLostLetterSpacing": 0,
+
+    "tabletRegisterInfoFontFamilyType": null,
+    "tabletRegisterInfoFontStyle": "",
+    "tabletRegisterInfoFontSize": 14,
+    "tabletRegisterInfoFontSizeSuffix": "px",
+    "tabletRegisterInfoLineHeight": 1.5,
+    "tabletRegisterInfoFontWeight": 400,
+    "tabletRegisterInfoLetterSpacing": 0,
+
+    "tabletRegisterLinkFontFamilyType": null,
+    "tabletRegisterLinkFontStyle": "",
+    "tabletRegisterLinkFontSize": 14,
+    "tabletRegisterLinkFontSizeSuffix": "px",
+    "tabletRegisterLinkLineHeight": 1,
+    "tabletRegisterLinkFontWeight": 400,
+    "tabletRegisterLinkLetterSpacing": 0,
+
+    "tabletLoginLinkFontFamilyType": null,
+    "tabletLoginLinkFontStyle": "",
+    "tabletLoginLinkFontSize": 14,
+    "tabletLoginLinkFontSizeSuffix": "px",
+    "tabletLoginLinkLineHeight": 1,
+    "tabletLoginLinkFontWeight": 400,
+    "tabletLoginLinkLetterSpacing": 0,
 
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
 
     "tabletPadding": 15,
-    "tabletPaddingTop": 0,
+    "tabletPaddingTop": 15,
     "tabletPaddingRight": 15,
     "tabletPaddingBottom": 15,
     "tabletPaddingLeft": 15,
 
     "tempTabletPadding": 15,
-    "tempTabletPaddingTop": 0,
+    "tempTabletPaddingTop": 15,
     "tempTabletPaddingRight": 15,
     "tempTabletPaddingBottom": 15,
     "tempTabletPaddingLeft": 15,
@@ -642,7 +764,9 @@
     "tempHoverTabletFieldPaddingLeftSuffix": null,
 
     "mobileHorizontalAlign": null,
+
     "mobileSubmitWidth": null,
+    "mobileSubmitWidthSuffix": null,
 
     "mobileSize": "small",
     "mobileSizeLargePadding": 20,
@@ -652,16 +776,21 @@
     "mobileLabelFontFamilyType": null,
     "mobileLabelFontStyle": "",
     "mobileLabelFontSize": 14,
+    "mobileLabelFontSizeSuffix": "px",
     "mobileLabelLineHeight": 1.5,
     "mobileLabelFontWeight": 400,
     "mobileLabelLetterSpacing": 0,
 
     "mobileLabelHorizontalAlign": null,
     "mobileLostHorizontalAlign": null,
+    "mobileRegisterInfoHorizontalAlign": null,
+    "mobileRegisterLinkHorizontalAlign": null,
+    "mobileLoginLinkHorizontalAlign": null,
 
     "mobileFontFamilyType": null,
     "mobileFontStyle": "",
     "mobileFontSize": 14,
+    "mobileFontSizeSuffix": "px",
     "mobileLineHeight": 1.5,
     "mobileFontWeight": 400,
     "mobileLetterSpacing": 0,
@@ -669,6 +798,7 @@
     "mobileTextFontFamilyType": null,
     "mobileTextFontStyle": "",
     "mobileTextFontSize": 14,
+    "mobileTextFontSizeSuffix": "px",
     "mobileTextLineHeight": 1.5,
     "mobileTextFontWeight": 400,
     "mobileTextLetterSpacing": 0,
@@ -676,6 +806,7 @@
     "mobileCheckboxFontFamilyType": null,
     "mobileCheckboxFontStyle": "",
     "mobileCheckboxFontSize": 14,
+    "mobileCheckboxFontSizeSuffix": "px",
     "mobileCheckboxLineHeight": 1.5,
     "mobileCheckboxFontWeight": 400,
     "mobileCheckboxLetterSpacing": 0,
@@ -683,21 +814,46 @@
     "mobileLostFontFamilyType": null,
     "mobileLostFontStyle": "",
     "mobileLostFontSize": 14,
-    "mobileLostLineHeight": 1.5,
+    "mobileLostFontSizeSuffix": "px",
+    "mobileLostLineHeight": 1,
     "mobileLostFontWeight": 400,
     "mobileLostLetterSpacing": 0,
+
+    "mobileRegisterInfoFontFamilyType": null,
+    "mobileRegisterInfoFontStyle": "",
+    "mobileRegisterInfoFontSize": 14,
+    "mobileRegisterInfoFontSizeSuffix": "px",
+    "mobileRegisterInfoLineHeight": 1.5,
+    "mobileRegisterInfoFontWeight": 400,
+    "mobileRegisterInfoLetterSpacing": 0,
+
+    "mobileRegisterLinkFontFamilyType": null,
+    "mobileRegisterLinkFontStyle": "",
+    "mobileRegisterLinkFontSize": 14,
+    "mobileRegisterLinkFontSizeSuffix": "px",
+    "mobileRegisterLinkLineHeight": 1,
+    "mobileRegisterLinkFontWeight": 400,
+    "mobileRegisterLinkLetterSpacing": 0,
+
+    "mobileLoginLinkFontFamilyType": null,
+    "mobileLoginLinkFontStyle": "",
+    "mobileLoginLinkFontSize": 14,
+    "mobileLoginLinkFontSizeSuffix": "px",
+    "mobileLoginLinkLineHeight": 1,
+    "mobileLoginLinkFontWeight": 400,
+    "mobileLoginLinkLetterSpacing": 0,
 
     "mobilePaddingType": "ungrouped",
     "tempMobilePaddingType": "ungrouped",
 
     "mobilePadding": 15,
-    "mobilePaddingTop": 0,
+    "mobilePaddingTop": 15,
     "mobilePaddingRight": 15,
     "mobilePaddingBottom": 15,
     "mobilePaddingLeft": 15,
 
     "tempMobilePadding": 15,
-    "tempMobilePaddingTop": 0,
+    "tempMobilePaddingTop": 15,
     "tempMobilePaddingRight": 15,
     "tempMobilePaddingBottom": 15,
     "tempMobilePaddingLeft": 15,

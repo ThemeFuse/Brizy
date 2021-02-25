@@ -6,7 +6,11 @@ import * as O from "visual/component/Options/Type";
 import { String } from "visual/utils/string/specs";
 import { Value, empty, eq, read } from "./types/Value";
 import { PopulationMethod } from "./types/PopulationMethod";
-import { GetModel, OptionDefinition } from "visual/component/Options/Type";
+import {
+  GetModel,
+  GetElementModel,
+  OptionDefinition
+} from "visual/component/Options/Type";
 import Options from "visual/component/Options";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 
@@ -15,10 +19,7 @@ interface Config {
   choices?: Array<PopulationMethod>;
 }
 
-interface Props
-  extends O.Props<Value, Value>,
-    WithConfig<Config>,
-    WithClassName {
+interface Props extends O.Props<Value>, WithConfig<Config>, WithClassName {
   options?: OptionDefinition[];
 }
 
@@ -29,7 +30,8 @@ export const Population: Type = ({
   value = empty,
   onChange,
   options = [],
-  className
+  className,
+  label
 }) => {
   let input;
   const choices = config?.choices || [];
@@ -62,24 +64,39 @@ export const Population: Type = ({
   }
 
   return (
-    <div className="brz-ed-control__population">
-      {input}
-      {choices.length > 0 ? (
-        <Select
-          className={_className}
-          choices={choices}
-          value={value.population}
-          onChange={_onChange}
-        />
-      ) : null}
-    </div>
+    <>
+      {label}
+      <div className="brz-ed-control__population">
+        {input}
+        {choices.length > 0 ? (
+          <Select
+            className={_className}
+            choices={choices}
+            value={value.population}
+            onChange={_onChange}
+          />
+        ) : null}
+      </div>
+    </>
   );
 };
 
 const getModel: GetModel<Value> = get => ({
-  population: String.read(get("population")) || ""
+  population: String.read(get("population"))
 });
 
+const getElementModel: GetElementModel<Value> = (values, get) => {
+  return {
+    [get("population")]: values.population
+  };
+};
+
 Population.getModel = getModel;
+Population.getElementModel = getElementModel;
+
+Population.defaultValue = {
+  population: ""
+};
+
 Population.shouldOptionBeFiltered = ({ config }): boolean =>
   !!config?.iconOnly && (config?.choices ?? []).length === 0;

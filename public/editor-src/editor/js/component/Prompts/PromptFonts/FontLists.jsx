@@ -4,10 +4,11 @@ import { connect } from "react-redux";
 import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
 import { fontTransform } from "visual/utils/fonts";
-import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
+import { projectSelector } from "visual/redux/selectors";
+import { unDeletedFontSelector } from "visual/redux/selectors-new";
 import { deleteFont } from "visual/redux/actions";
 import { deleteFont as apiDeleteFont } from "./api";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 const compareFont = (a, b) => {
   const familyA = a.family.toUpperCase();

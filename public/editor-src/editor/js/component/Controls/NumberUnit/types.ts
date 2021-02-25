@@ -4,21 +4,21 @@ import {
   WithValue
 } from "visual/utils/options/attributes";
 
-export type Value = {
+export type Value<U> = {
   number: number;
-  unit: string;
+  unit: U;
 };
 
-export type Unit = {
-  value: string;
+export type Unit<T> = {
+  value: T;
   title: string;
 };
 
-export type Props = WithClassName &
-  WithValue<Value> &
-  WithOnChange<Value> & {
+export type Props<U> = WithClassName &
+  WithValue<Value<U>> &
+  WithOnChange<Value<U>> & {
     step: number;
     min?: number;
     max?: number;
-    units: Unit[];
+    units: Unit<U>[];
   };

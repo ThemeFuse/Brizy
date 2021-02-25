@@ -8,6 +8,10 @@
     max-width: 100%;
   }
 
+  .brz-capitalize-on {
+    text-transform: uppercase;
+  }
+
   @include word-wrap;
 
   > * {
@@ -170,17 +174,6 @@
   }
 }
 
-.brz-story {
-  .brz-rich-text {
-    p {
-      width: 100%;
-      font-size: calc(16% * 0.23);
-    }
-    .brz-ed-box__resizer {
-      font-size: inherit;
-    }
-    .brz-ed-box__resizer {
-      font-size: inherit;
-    }
-  }
+.brz-story .brz-rich-text p {
+  width: 100%;
 }

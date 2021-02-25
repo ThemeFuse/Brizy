@@ -1,13 +1,14 @@
 {
   "content": {
     "items": [],
+    "symbols": null,
 
     "type": "posts",
 
-    "taxonomy": "category",
-    "taxonomyId": 1,
-    "order": "ASC",
-    "orderBy": "ID"
+    "source": "post",
+    "offset": 0,
+    "orderBy": "id",
+    "order": "ASC"
   },
 
   "style": {
@@ -53,6 +54,7 @@
     "paginationFontStyle": "",
     "paginationFontFamilyType": "google",
     "paginationFontSize": 16,
+    "paginationFontSizeSuffix": "px",
     "paginationFontWeight": 400,
     "paginationLineHeight": 1.5,
     "paginationLetterSpacing": 0,
@@ -60,6 +62,7 @@
     "tabletPaginationFontStyle": "",
     "tabletPaginationFontFamilyType": null,
     "tabletPaginationFontSize": 14,
+    "tabletPaginationFontSizeSuffix": "px",
     "tabletPaginationFontWeight": 400,
     "tabletPaginationLineHeight": 1.5,
     "tabletPaginationLetterSpacing": 0,
@@ -67,6 +70,7 @@
     "mobilePaginationFontStyle": "",
     "mobilePaginationFontFamilyType": null,
     "mobilePaginationFontSize": 14,
+    "mobilePaginationFontSizeSuffix": "px",
     "mobilePaginationFontWeight": 400,
     "mobilePaginationLineHeight": 1.5,
     "mobilePaginationLetterSpacing": 0,
@@ -183,6 +187,7 @@
     "filterFontStyle": "",
     "filterFontFamilyType": "google",
     "filterFontSize": 16,
+    "filterFontSizeSuffix": "px",
     "filterFontWeight": 400,
     "filterLineHeight": 1.5,
     "filterLetterSpacing": 0,
@@ -190,6 +195,7 @@
     "tabletFilterFontStyle": "",
     "tabletFilterFontFamilyType": null,
     "tabletFilterFontSize": 14,
+    "tabletFilterFontSizeSuffix": "px",
     "tabletFilterFontWeight": 400,
     "tabletFilterLineHeight": 1.5,
     "tabletFilterLetterSpacing": 0,
@@ -197,6 +203,7 @@
     "mobileFilterFontStyle": "",
     "mobileFilterFontFamilyType": null,
     "mobileFilterFontSize": 14,
+    "mobileFilterFontSizeSuffix": "px",
     "mobileFilterFontWeight": 400,
     "mobileFilterLineHeight": 1.5,
     "mobileFilterLetterSpacing": 0,

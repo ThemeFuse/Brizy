@@ -7,10 +7,10 @@ import {
   authorizedSelector,
   fontSelector,
   extraFontStylesSelector
-} from "visual/redux/selectors2";
+} from "visual/redux/selectors";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { SavedBlockMeta, SavedLayoutMeta } from "visual/utils/api/editor/types";
+import { SavedBlockMeta, SavedLayoutMeta } from "visual/utils/api/types";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import { BlockMetaType, SavedBlock, SavedLayout } from "visual/types";
 import {
@@ -18,7 +18,7 @@ import {
   getBlocksStylesFonts,
   getUsedStylesFonts
 } from "visual/utils/traverse";
-import { normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts, normalizeFontStyles } from "visual/utils/fonts";
 import {
   getSavedBlocks,
   getSavedBlockById,
@@ -26,7 +26,7 @@ import {
   getSavedLayouts,
   getSavedLayoutById,
   deleteSavedLayout
-} from "visual/utils/api/editor";
+} from "visual/utils/api";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { BlockCategory, PromptBlock, PromptBlockTemplate } from "../types";
@@ -173,12 +173,15 @@ class Library extends Component<
       getBlocksStylesFonts([...blockFonts, ...stylesFonts], projectFonts)
     );
 
+    const filteredStyles = extraFontStyles.filter(
+      ({ id }: { id: string }) => !projectExtraFontStyles.some(p => p.id === id)
+    );
+
     return {
       fonts,
-      extraFontStyles: extraFontStyles.filter(
-        ({ id }: { id: string }) =>
-          !projectExtraFontStyles.some(p => p.id === id)
-      )
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      extraFontStyles: normalizeFontStyles(filteredStyles)
     };
   }
 

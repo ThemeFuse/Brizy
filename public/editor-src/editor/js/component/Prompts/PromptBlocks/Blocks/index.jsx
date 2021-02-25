@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { connect } from "react-redux";
-import { projectSelector, stylesSelector } from "visual/redux/selectors";
-import { fontSelector } from "visual/redux/selectors2";
+import {
+  projectSelector,
+  stylesSelector,
+  fontSelector
+} from "visual/redux/selectors";
 import { importKit, updateCurrentKitId } from "visual/redux/actions";
 import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
@@ -13,7 +16,7 @@ import {
   getBlocksStylesFonts
 } from "visual/utils/traverse";
 import { t } from "visual/utils/i18n";
-import { normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import Blocks from "./Blocks";
 import { getBlockDataUrl } from "visual/utils/blocks";
 
@@ -181,7 +184,8 @@ class BlocksContainer extends Component {
       dispatch(
         importKit({
           selectedKit: kitId,
-          styles,
+          // TEMP. Check styles reducers and change this condition
+          styles: styles ? normalizeStyles(styles) : undefined,
           fonts
         })
       );

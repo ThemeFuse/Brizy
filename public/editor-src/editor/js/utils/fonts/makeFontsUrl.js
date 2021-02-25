@@ -25,3 +25,15 @@ export const makeUploadFontsUrl = fonts => {
 
   return `${fontsUrl}?${qs}`;
 };
+
+// prefetch assets
+export const makePrefetchFonts = () => {
+  return [
+    /* eslint-disable quotes */
+    '<link class="brz-link brz-link-google-prefetch" rel="dns-prefetch" href="//ajax.googleapis.com">',
+    '<link class="brz-link brz-link-google-prefetch" rel="dns-prefetch" href="//fonts.googleapis.com">',
+    '<link class="brz-link brz-link-google-preconnect" rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>',
+    '<link class="brz-link brz-link-cdn-preconnect" rel="preconnect" href="https://brizy.b-cdn.net/" crossorigin>'
+    /* eslint-enabled quotes */
+  ];
+};

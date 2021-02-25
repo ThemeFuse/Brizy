@@ -83,7 +83,7 @@ export function styleContents(v, vs, vd) {
     ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active .brz-video-playlist-title-video span:last-child": {
       standart: ["cssStyleElementVideoPlaylistItemSubtitleActiveColor"]
     },
-    ".brz &&:hover .brz-video-playlist-video-element": {
+    ".brz &&:hover .brz-video-playlist-video-elem": {
       standart: ["cssStyleElementVideoPlaylistImageSize"]
     },
     ".brz &&:hover .brz-iframe, && .brz-video-playlist__cover:before": {

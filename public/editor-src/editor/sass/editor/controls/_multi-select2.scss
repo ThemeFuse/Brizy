@@ -1,0 +1,136 @@
+@import "../../variables";
+
+.brz-ed-control__multiSelect2 {
+  font-family: $font-family-1;
+  width: 136px;
+
+  &__value {
+    display: flex;
+    align-items: center;
+    min-height: $control-height;
+    padding: 0 $control-padding;
+    border-radius: $control-border-radius;
+    background-color: $options-control-background;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+    color: #fff;
+    cursor: pointer;
+
+    &--placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    &--loading {
+      justify-content: center;
+    }
+
+    .brz-span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__dropdown-container {
+    position: relative;
+  }
+
+  &__dropdown {
+    z-index: z("select-portal");
+    width: 100%;
+    margin-top: 3px;
+    border-radius: $control-border-radius;
+    background: $options-control-background;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    transform: none !important;
+
+    &--with-search {
+      .brz-ed-control__multiSelect2__option:first-child {
+        border-top: 1px solid $control-border-color;
+      }
+    }
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    padding: 0 $control-padding;
+
+    .brz-input {
+      // flex-basis: 100%; // TODO: WHY DOES THIS NOT WORK !?
+      width: 100%;
+      height: $control-height;
+      outline: 0;
+      border: none;
+      background: transparent;
+      color: #fff;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+      }
+    }
+
+    .brz-ed-control__multiSelect2__spinner {
+      margin-left: 5px;
+
+      &--hidden {
+        visibility: hidden;
+      }
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    height: $control-height;
+    margin: 0;
+    padding: 0 $control-padding;
+    border-bottom: 1px solid $control-border-color;
+    font-size: $control-font-size;
+    letter-spacing: $control-letter-spacing;
+    line-height: $control-height;
+    color: $control-color;
+    transition: color 0.15s linear;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &--active,
+    &:hover {
+      color: $brand-primary;
+    }
+
+    &--disabled {
+      cursor: initial;
+      color: rgba(255, 255, 255, 0.4);
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    &-checkbox {
+      flex-shrink: 0;
+      margin-right: 8px;
+      font-size: 12px;
+      color: #5b6068;
+    }
+    &--active .brz-ed-control__multiSelect2__option-checkbox {
+      color: $brand-primary;
+    }
+
+    &-text {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .brz-ed-control__multiSelect2__spinner {
+    font-size: 12px;
+    color: #818a91;
+  }
+}

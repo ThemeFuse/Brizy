@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
 
 import items from "./items";
+
+const ConfigUrls = Config.get("urls");
+const IS_PRO = Config.get("pro");
 
 export default class PromptConditions extends Component {
   static defaultProps = {
@@ -46,6 +51,25 @@ export default class PromptConditions extends Component {
     });
   }
 
+  renderProException() {
+    return (
+      <div className="brz-ed-alert brz-ed-alert-pro brz-mb-lg-0">
+        <span className="brz-span">
+          {t("Block conditions are available only in PRO")}
+        </span>
+        <a
+          className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
+          rel="noopener noreferrer"
+          href={ConfigUrls.upgradeToPro}
+          target="_blank"
+        >
+          <EditorIcon icon="nc-lock" />
+          {t("Get Brizy PRO")}
+        </a>
+      </div>
+    );
+  }
+
   render() {
     const { options, opened, onClose } = this.props;
     const { activeTab } = this.state;
@@ -67,6 +91,7 @@ export default class PromptConditions extends Component {
           </div>
           <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
             <div className="brz-ed-popup-body">
+              {IS_PRO ? (
               <div className="brz-ed-popup-conditions">
                 <div className="brz-ed-popup-conditions__head">
                   <h3>{title}</h3>
@@ -75,6 +100,9 @@ export default class PromptConditions extends Component {
                   <Item {...itemProps} onClose={onClose} />
                 </div>
               </div>
+              ) : (
+                this.renderProException()
+              )}
             </div>
           </div>
         </div>

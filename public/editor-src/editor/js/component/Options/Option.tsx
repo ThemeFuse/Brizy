@@ -5,6 +5,7 @@ import { inDevelopment } from "visual/editorComponents/utils";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { WithClassName } from "visual/utils/options/attributes";
 import { OptionDefinition } from "visual/component/Options/Type";
+import { OptionLabel } from "visual/component/OptionLabel";
 
 export interface Props extends WithClassName {
   data: OptionDefinition;
@@ -61,16 +62,22 @@ class Option extends React.Component<Props> {
       __className
     );
 
-    return (
-      <OptionWrapper
-        className={className}
+    const Label = (
+      <OptionLabel
         label={label}
         icon={icon}
         helper={helper?.content}
         helperPlacement={helper?.position}
-        display={display}
-      >
-        <Component toolbar={this.props.toolbar} {...optionProps} />
+      />
+    );
+
+    return (
+      <OptionWrapper className={className} display={display}>
+        <Component
+          toolbar={this.props.toolbar}
+          {...optionProps}
+          label={Label}
+        />
       </OptionWrapper>
     );
   }

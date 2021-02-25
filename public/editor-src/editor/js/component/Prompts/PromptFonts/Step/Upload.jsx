@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { InputFields } from "visual/component/Prompts/common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 
 class Upload extends Component {

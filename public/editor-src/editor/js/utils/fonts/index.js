@@ -3,7 +3,11 @@ export { getUsedFonts, getUsedFontsDetails } from "./getUsedFonts";
 export { getFontStyles } from "./getFontStyles";
 export { getFontStyle } from "./getFontStyle";
 export { weightTypes, getWeight, getWeightChoices } from "./getFontWeight";
-export { makeSubsetGoogleFontsUrl, makeUploadFontsUrl } from "./makeFontsUrl";
+export {
+  makeSubsetGoogleFontsUrl,
+  makeUploadFontsUrl,
+  makePrefetchFonts
+} from "./makeFontsUrl";
 export {
   makeRichTextFontGoogleCSS,
   makeRichTextFontUploadCSS
@@ -22,7 +26,9 @@ export {
   getUploadFontDetails,
   findFonts,
   projectFontsData,
-  normalizeFonts
+  normalizeFonts,
+  normalizeStyles,
+  normalizeFontStyles
 } from "./transform";
 
 // Default Font CSS

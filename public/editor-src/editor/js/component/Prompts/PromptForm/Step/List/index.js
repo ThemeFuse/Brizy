@@ -4,7 +4,7 @@ import { updateIntegration, createIntegrationList } from "../../api";
 import { Context } from "../../../common/GlobalApps/Context";
 import { RadioFields } from "../../../common/GlobalApps/StepsView";
 import CreateList from "./CreateList";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 const getError = (type, app) => {
   if (type === "server") {

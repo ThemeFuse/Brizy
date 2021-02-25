@@ -8,6 +8,8 @@ import { GradientType } from "visual/component/Options/types/dev/BackgroundColor
 import { GradientActivePointer } from "visual/component/Options/types/dev/BackgroundColor/entities/GradientActivePointer";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import { toggleColor } from "visual/component/Options/types/dev/ColorPicker/utils";
+import { Hex } from "visual/utils/color/Hex";
+import { Opacity } from "visual/utils/cssProps/opacity";
 
 export const toggleType = (enable: boolean, m: Value): Value => {
   const type = enable ? Type.append(m.type, m.tempType) : Type.empty;
@@ -21,43 +23,46 @@ export {
   getPalette
 } from "visual/component/Options/types/dev/ColorPicker/model";
 
-export const setHex: Setter<string, Value> = (v, m) =>
+export const setHex: Setter<Hex, Value> = (v, m) =>
   toggleType(true, { ...m, ...Color.setHex(v, m) });
 
-export const setOpacity: Setter<number, Value> = (v, m) =>
+export const setOpacity: Setter<Opacity, Value> = (v, m) =>
   toggleType(v > 0, { ...m, ...Color.setOpacity(v, m) });
 
 export const setPalette: Setter<Palette.Palette, Value> = (v, m) =>
   toggleType(v !== Palette.empty, { ...m, ...Color.setPalette(v, m) });
 
-export const getHex2: Getter<string, Value> = mCompose(
+export const getGradientHex: Getter<string, Value> = mCompose(
   Color.getHex,
   gradientToColor
 );
 
-export const setHex2: Setter<string, Value> = (v, m) =>
+export const setGradientHex: Setter<Hex, Value> = (v, m) =>
   toggleType(true, {
     ...m,
     ...colorToGradient(Color.setHex(v, gradientToColor(m)))
   });
 
-export const getOpacity2: Getter<number, Value> = mCompose(
+export const getGradientOpacity: Getter<number, Value> = mCompose(
   Color.getOpacity,
   gradientToColor
 );
 
-export const setOpacity2: Setter<number, Value> = (v, m) =>
+export const setGradientOpacity: Setter<Opacity, Value> = (v, m) =>
   toggleType(v > 0, {
     ...m,
     ...colorToGradient(Color.setOpacity(v, gradientToColor(m)))
   });
 
-export const getPalette2: Getter<Value["palette2"], Value> = mCompose(
-  Color.getPalette,
-  gradientToColor
-);
+export const getGradientPalette: Getter<
+  Value["gradientPalette"],
+  Value
+> = mCompose(Color.getPalette, gradientToColor);
 
-export const setPalette2: Setter<Value["palette2"], Value> = (v, m) =>
+export const setGradientPalette: Setter<Value["gradientPalette"], Value> = (
+  v,
+  m
+) =>
   toggleType(v !== Palette.empty, {
     ...m,
     ...colorToGradient(Color.setPalette(v, gradientToColor(m)))

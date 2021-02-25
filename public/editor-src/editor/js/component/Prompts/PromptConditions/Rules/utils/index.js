@@ -1,11 +1,10 @@
 import _ from "underscore";
 import { setIn } from "timm";
 
-export const PAGES_GROUP_ID = 1;
-export const CATEGORIES_GROUP_ID = 2;
-export const TEMPLATES_GROUP_ID = 16;
-
-export const PAGE_TYPE = "page";
+import {
+  PAGES_GROUP_ID,
+  CATEGORIES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
 
 export function getUniqRules(rules) {
   return rules.reduce((acc, item) => {

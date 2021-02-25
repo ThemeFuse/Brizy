@@ -336,7 +336,10 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "lineBorder",
-                  type: "border-dev"
+                  type: "border-dev",
+                  config: {
+                    width: ["grouped"]
+                  }
                 }
               ]
             }

@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import SwitchControl from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { pendingRequest, createGlobalBlock } from "visual/utils/api/editor";
+import { pendingRequest, createGlobalBlock } from "visual/utils/api";
 import { getCurrentRule } from "visual/utils/blocks";
 import {
   blocksDataSelector,
   pageBlocksNoRefsSelector,
-  globalBlocksAssembled2Selector
+  globalBlocksAssembled2Selector,
+  extraFontStylesSelector
 } from "visual/redux/selectors";
-import { extraFontStylesSelector } from "visual/redux/selectors2";
 import {
   makeNormalToGlobalBlock,
   makeGlobalToNormalBlock,

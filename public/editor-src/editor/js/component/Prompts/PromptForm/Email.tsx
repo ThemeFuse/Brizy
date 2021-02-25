@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import classnames from "classnames";
 import _ from "underscore";
 import produce from "immer";
-import Config from "visual/global/Config";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
 import Tooltip from "visual/component/Controls/Tooltip";
@@ -10,6 +9,7 @@ import Switch from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { CodeMirror } from "visual/component/Controls/CodeMirror";
 import { assetUrl } from "visual/utils/asset";
+import { IS_PRO, IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import * as AppsComponent from "./Apps";
 import {
@@ -27,9 +27,6 @@ import {
   BaseIntegrationState,
   FormField
 } from "../common/GlobalApps/type";
-
-const IS_PRO = Config.get("pro");
-const IS_WP = Config.get("wp");
 
 type Props = BaseIntegrationProps & {
   formId: string;

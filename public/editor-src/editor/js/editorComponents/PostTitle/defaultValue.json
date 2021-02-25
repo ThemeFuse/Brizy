@@ -1,0 +1,128 @@
+{
+  "content": {
+    "type": "wp",
+    "popups": []
+  },
+
+  "toolbar": {
+    "tabsState": "",
+    "tabsColor": ""
+  },
+
+  "style": {
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
+    "tagName": "span",
+
+    "fontStyle": "heading2",
+    "fontFamilyType": "google",
+    "fontSize": 56,
+    "fontSizeSuffix": "px",
+    "fontWeight": 400,
+    "lineHeight": 1.3,
+    "letterSpacing": 0,
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "",
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "textShadow": "",
+    "tempTextShadow": "on",
+
+    "textShadowColorHex": "#000000",
+    "textShadowColorOpacity": 1,
+    "textShadowColorPalette": "",
+
+    "tempTextShadowColorOpacity": 1,
+    "tempTextShadowColorPalette": "",
+
+    "textShadowBlur": 0,
+    "textShadowSpread": 0,
+    "textShadowVertical": 0,
+    "textShadowHorizontal": 0,
+
+    "tempTextShadowBlur": 4,
+    "tempTextShadowSpread": 0,
+    "tempTextShadowVertical": 2,
+    "tempTextShadowHorizontal": 1,
+
+    "hoverTextShadow": null,
+
+    "tempHoverTextShadow": null,
+
+    "hoverTextShadowColorHex": null,
+    "hoverTextShadowColorOpacity": null,
+    "hoverTextShadowColorPalette": null,
+
+    "tempHoverTextShadowColorPalette": null,
+    "tempHoverTextShadowColorOpacity": null,
+
+    "hoverTextShadowBlur": null,
+    "hoverTextShadowSpread": null,
+    "hoverTextShadowVertical": null,
+    "hoverTextShadowHorizontal": null,
+
+    "tempHoverTextShadowBlur": null,
+    "tempHoverTextShadowSpread": null,
+    "tempHoverTextShadowVertical": null,
+    "tempHoverTextShadowHorizontal": null,
+
+    "contentHorizontalAlign": "left",
+
+    "className": "",
+    "customCSS": "",
+
+    "tabletFontStyle": "heading2",
+    "tabletFontFamilyType": null,
+    "tabletFontSize": 30,
+    "tabletFontSizeSuffix": "px",
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1,
+    "tabletLetterSpacing": 1,
+
+    "tabletContentHorizontalAlign": null,
+
+    "mobileFontStyle": "heading2",
+    "mobileFontFamilyType": null,
+    "mobileFontSize": 30,
+    "mobileFontSizeSuffix": "px",
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1,
+    "mobileLetterSpacing": 1,
+
+    "mobileContentHorizontalAlign": null
+  },
+
+  "link": {
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPopulation": "",
+    "linkUpload": "",
+    "linkPopup": "",
+    "actionClosePopup": "off",
+
+    "tabletLinkType": null,
+    "tabletLinkPopup": null,
+
+    "mobileLinkType": null,
+    "mobileLinkPopup": null
+  }
+}

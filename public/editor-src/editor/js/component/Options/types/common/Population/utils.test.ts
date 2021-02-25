@@ -1,15 +1,9 @@
 import { property } from "underscore";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import {
-  bindPopulation,
-  isEnabled
-} from "visual/component/Options/types/common/Population/utils";
+import { bindPopulationEnabled } from "visual/component/Options/types/common/Population/utils";
 import { PopulationMethod } from "visual/component/Options/types/common/Population/types/PopulationMethod";
 
-describe("Testing 'bindPopulation' function", function() {
-  // @ts-ignore
-  global.TARGET = "WP";
-
+describe("Testing 'bindPopulationEnabled' function", function() {
   const method: PopulationMethod = { title: "test", value: "test" };
   const option: ToolbarItemType = {
     id: "test",
@@ -25,7 +19,7 @@ describe("Testing 'bindPopulation' function", function() {
       value: { src: "test.jpg", extension: "jpg" }
     };
 
-    expect(bindPopulation(i)).toEqual(i);
+    expect(bindPopulationEnabled(i)).toEqual(i);
   });
 
   test("If option is not in development, return original option", () => {
@@ -36,7 +30,7 @@ describe("Testing 'bindPopulation' function", function() {
       population: [method]
     };
 
-    expect(bindPopulation(i)).toEqual(i);
+    expect(bindPopulationEnabled(i)).toEqual(i);
   });
 
   test("Wrap option in a population option type", () => {
@@ -54,7 +48,7 @@ describe("Testing 'bindPopulation' function", function() {
       options: [option]
     };
 
-    expect(bindPopulation(withPopulation)).toEqual(result);
+    expect(bindPopulationEnabled(withPopulation)).toEqual(result);
   });
 
   const o: ToolbarItemType = {
@@ -70,7 +64,7 @@ describe("Testing 'bindPopulation' function", function() {
       content: "Test helper"
     }
   };
-  const r = bindPopulation(o);
+  const r = bindPopulationEnabled(o);
 
   test.each([
     "label",
@@ -97,19 +91,5 @@ describe("Testing 'bindPopulation' function", function() {
     expect(property(["options", 0])(r)).not.toHaveProperty(
       property("population")(o)
     );
-  });
-});
-
-describe("Testing 'isEnabled' function", function() {
-  test("Return false if TARGET is not WP", () => {
-    // @ts-ignore
-    global.TARGET = "node_local";
-    expect(isEnabled()).toBe(false);
-  });
-
-  test("Return false if TARGET is not WP", () => {
-    // @ts-ignore
-    global.TARGET = "WP";
-    expect(isEnabled()).toBe(true);
   });
 });

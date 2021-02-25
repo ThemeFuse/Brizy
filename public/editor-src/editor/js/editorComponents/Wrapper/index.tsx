@@ -11,18 +11,15 @@ import EditorComponent, {
 } from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { Roles, currentUserRole } from "visual/component/Roles";
+import { getWrapperContainerW } from "visual/utils/meta";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import contextMenuConfig from "./contextMenu";
-import { percentageToPixels } from "visual/utils/meta";
 import defaultValue from "./defaultValue.json";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { NumberSpec } from "visual/utils/math/number";
-import { MRead } from "visual/utils/types/Type";
-import { mRead as mStr } from "visual/utils/string/specs";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import * as Position from "visual/utils/position/element";
@@ -51,6 +48,7 @@ import Animation from "visual/component/Animation";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { WithClassName } from "visual/utils/options/attributes";
 import { attachRef } from "visual/utils/react";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 type Value = ElementModel & {
   items: ElementModel[];
@@ -59,8 +57,11 @@ type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Props = {
   meta: {
     desktopW: number;
+    desktopWNoSpacing: number;
     tabletW: number;
+    tabletWNoSpacing: number;
     mobileW: number;
+    mobileWNoSpacing: number;
     sectionPopup?: boolean;
     sectionPopup2?: boolean;
   };
@@ -73,8 +74,6 @@ type Static = WithClassName & {
   extraAttr?: {};
   ref?: Ref<unknown>;
 };
-
-const mNumber: MRead<number> = v => NumberSpec.read(v) ?? 0;
 
 export default class Wrapper extends EditorComponent<Value, Props> {
   static get componentId(): string {
@@ -93,195 +92,54 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     this.childToolbarExtend = childToolbarExtend;
   };
 
+  getContainerSizes = (): { width: number; height: number } => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+
+    const value = defaultValueValue({ key: "elementPosition", device, v });
+    const isAbsolute = value === "absolute";
+    const meta = this.props.meta;
+
+    return {
+      width: isAbsolute
+        ? (meta[`${device}WNoSpacing`] as number)
+        : window.innerWidth,
+      height: window.innerHeight
+    };
+  };
+
   getMeta(v: ElementModel): ElementModel {
+    const { horizontalAlign, tabletHorizontalAlign, mobileHorizontalAlign } = v;
     const { meta } = this.props;
-    const {
-      // Margin
-      marginType,
-      margin,
-      marginSuffix,
-      marginLeft,
-      marginLeftSuffix,
-      marginRight,
-      marginRightSuffix,
-
-      // Padding
-      paddingType,
-      padding,
-      paddingSuffix,
-      paddingLeft,
-      paddingLeftSuffix,
-      paddingRight,
-      paddingRightSuffix,
-
-      // Align
-      horizontalAlign,
-
-      // Tablet Padding
-      tabletPadding,
-      tabletPaddingType,
-      tabletPaddingSuffix,
-      tabletPaddingLeft,
-      tabletPaddingLeftSuffix,
-      tabletPaddingRight,
-      tabletPaddingRightSuffix,
-
-      // Tablet margin
-      tabletMargin,
-      tabletMarginType,
-      tabletMarginSuffix,
-      tabletMarginLeft,
-      tabletMarginLeftSuffix,
-      tabletMarginRight,
-      tabletMarginRightSuffix,
-
-      // Tablet align
-      tabletHorizontalAlign,
-
-      // Mobile Padding
-      mobilePadding,
-      mobilePaddingType,
-      mobilePaddingSuffix,
-      mobilePaddingLeft,
-      mobilePaddingLeftSuffix,
-      mobilePaddingRight,
-      mobilePaddingRightSuffix,
-
-      // Mobile margin
-      mobileMargin,
-      mobileMarginType,
-      mobileMarginSuffix,
-      mobileMarginLeft,
-      mobileMarginLeftSuffix,
-      mobileMarginRight,
-      mobileMarginRightSuffix,
-
-      // Mobile align
-      mobileHorizontalAlign
-    } = v;
-
-    const marginW =
-      marginType === "grouped"
-        ? percentageToPixels(
-            mNumber(margin) * 2,
-            mStr(marginSuffix),
-            meta?.desktopW
-          )
-        : percentageToPixels(
-            mNumber(marginLeft),
-            mStr(marginLeftSuffix),
-            meta?.desktopW
-          ) +
-          percentageToPixels(
-            mNumber(marginRight),
-            mStr(marginRightSuffix),
-            meta?.desktopW
-          );
-    const paddingW =
-      paddingType === "grouped"
-        ? percentageToPixels(
-            mNumber(padding) * 2,
-            mStr(paddingSuffix),
-            meta?.desktopW
-          )
-        : percentageToPixels(
-            mNumber(paddingLeft),
-            mStr(paddingLeftSuffix),
-            meta?.desktopW
-          ) +
-          percentageToPixels(
-            mNumber(paddingRight),
-            mStr(paddingRightSuffix),
-            meta?.desktopW
-          );
-
-    // Tablet
-    const tabletPaddingW =
-      tabletPaddingType === "grouped"
-        ? percentageToPixels(
-            mNumber(tabletPadding) * 2,
-            mStr(tabletPaddingSuffix),
-            meta?.tabletW
-          )
-        : percentageToPixels(
-            mNumber(tabletPaddingLeft),
-            mStr(tabletPaddingLeftSuffix),
-            meta?.tabletW
-          ) +
-          percentageToPixels(
-            mNumber(tabletPaddingRight),
-            mStr(tabletPaddingRightSuffix),
-            meta?.tabletW
-          );
-    const tabletMarginW =
-      tabletMarginType === "grouped"
-        ? percentageToPixels(
-            mNumber(tabletMargin) * 2,
-            mStr(tabletMarginSuffix),
-            meta?.tabletW
-          )
-        : percentageToPixels(
-            mNumber(tabletMarginLeft),
-            mStr(tabletMarginLeftSuffix),
-            meta?.tabletW
-          ) +
-          percentageToPixels(
-            mNumber(tabletMarginRight),
-            mStr(tabletMarginRightSuffix),
-            meta?.tabletW
-          );
-
-    // Mobile
-    const mobilePaddingW =
-      mobilePaddingType === "grouped"
-        ? percentageToPixels(
-            mNumber(mobilePadding) * 2,
-            mStr(mobilePaddingSuffix),
-            meta?.mobileW
-          )
-        : percentageToPixels(
-            mNumber(mobilePaddingLeft),
-            mStr(mobilePaddingLeftSuffix),
-            meta?.mobileW
-          ) +
-          percentageToPixels(
-            mNumber(mobilePaddingRight),
-            mStr(mobilePaddingRightSuffix),
-            meta?.mobileW
-          );
-    const mobileMarginW =
-      mobileMarginType === "grouped"
-        ? percentageToPixels(
-            mNumber(mobileMargin) * 2,
-            mStr(mobileMarginSuffix),
-            meta?.mobileW
-          )
-        : percentageToPixels(
-            mNumber(mobileMarginLeft),
-            mStr(mobileMarginLeftSuffix),
-            meta?.mobileW
-          ) +
-          percentageToPixels(
-            mNumber(mobileMarginRight),
-            mStr(mobileMarginRightSuffix),
-            meta?.mobileW
-          );
-
-    const externalSpacing = marginW + paddingW;
-    const externalTabletSpacing = tabletMarginW + tabletPaddingW;
-    const externalMobileSpacing = mobileMarginW + mobilePaddingW;
-
-    const mobileW =
-      Math.round((meta?.mobileW - externalMobileSpacing) * 10) / 10;
-    const tabletW =
-      Math.round((meta?.tabletW - externalTabletSpacing) * 10) / 10;
-    const desktopW = Math.round((meta?.desktopW - externalSpacing) * 10) / 10;
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getWrapperContainerW(
+      {
+        v,
+        w: meta.desktopW,
+        wNoSpacing: meta.desktopWNoSpacing,
+        device: DESKTOP
+      }
+    );
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getWrapperContainerW({
+      v,
+      w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
+      device: TABLET
+    });
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getWrapperContainerW({
+      v,
+      w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
+      device: MOBILE
+    });
 
     return {
       ...meta,
-      mobileW,
-      tabletW,
       desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing,
       horizontalAlign,
       tabletHorizontalAlign,
       mobileHorizontalAlign
@@ -421,6 +279,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 x: Position.getHOffset(dvv) ?? 0,
                 y: Position.getVOffset(dvv) ?? 0
               })}
+              getContainerSizes={this.getContainerSizes}
             >
               {(ref, className): ReactNode =>
                 isRelative

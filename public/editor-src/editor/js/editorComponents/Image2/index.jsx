@@ -288,11 +288,11 @@ class Image extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
+          const blockData = blocksDataSelector(getStore().getState())[
             itemData.value._id
           ];
 
-          popupId = itemData.value.popupId;
+          popupId = blockData.value.popupId;
         }
 
         return {
