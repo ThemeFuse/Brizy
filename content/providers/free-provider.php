@@ -141,6 +141,8 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		            return __( 'Please set a valid product', 'brizy' );
 	            }
 
+	            $this->setScriptDependency( 'brizy-preview', [ 'zoom', 'photoswipe', 'flexslider', 'wc-single-product' ] );
+
 	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
 	            remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 

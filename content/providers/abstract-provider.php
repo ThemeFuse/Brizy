@@ -29,4 +29,29 @@ abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content
 
 		return $out;
 	}
+
+	/**
+	 * @param $handle string
+	 * @param $deps array
+	 *
+	 * @return bool
+	 */
+	protected function setScriptDependency( $handle, $deps ) {
+
+		global $wp_scripts;
+
+		$script = $wp_scripts->query( $handle );
+
+		if ( ! $script ) {
+			return false;
+		}
+
+		foreach ( $deps as $dep ) {
+			if ( ! in_array( $dep, $script->deps ) ) {
+				$script->deps[] = $dep;
+			}
+		}
+
+		return true;
+	}
 }
