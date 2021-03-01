@@ -358,7 +358,6 @@ class Brizy_Admin_Templates
      */
     public function getTemplateForCurrentPage()
     {
-
         list($applyFor, $entityType, $entityValues) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
         $is_preview = is_preview();
@@ -379,14 +378,18 @@ class Brizy_Admin_Templates
                 'entityValues' => $entityValues,
             ]
         );
+
 	    $ruleManager = new Brizy_Admin_Rules_Manager();
         foreach ($templates as $atemplate) {
             $ruleSet = $ruleManager->getRuleSet($atemplate->ID);
-            if ($ruleSet->isMatching($applyFor, $entityType, $entityValues)) {
-                return Brizy_Editor_Post::get($atemplate->ID);
+            try  {
+                if ($ruleSet->isMatching($applyFor, $entityType, $entityValues)) {
+                    return Brizy_Editor_Post::get($atemplate->ID);
+                }
+            } catch (\Exception $e) {
+                continue; // we catch here  the  exclusions
             }
         }
-
         return null;
     }
 

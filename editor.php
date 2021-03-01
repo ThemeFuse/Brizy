@@ -42,20 +42,21 @@ class Brizy_Editor {
 	public static function prefix( $string = null ) {
 
 		if ( ! self::$prefix ) {
-			$savedPrefix = get_option( 'brizy_prefix', null );
 
-			if ( ! $savedPrefix ) {
-				update_option( 'brizy_prefix', 'brizy' );
-				$savedPrefix = 'brizy';
+			$prefix = 'brizy';
+
+			if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+				$prefix = method_exists( 'BrizyPro_Admin_WhiteLabel', 'getPrefix' ) ? BrizyPro_Admin_WhiteLabel::_init()->getPrefix() : get_option( 'brizy_prefix', 'brizy' );
 			}
 
-			self::$prefix = $savedPrefix;
+			self::$prefix = $prefix;
 		}
 
 		return self::$prefix . trim( $string );
 	}
 
 	/**
+	 * @deprecated
 	 * Return the prefix
 	 *
 	 * @param string $string

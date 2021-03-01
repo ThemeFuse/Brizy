@@ -5,6 +5,7 @@ class Brizy_Compatibilities_Init {
 	public function __construct() {
 		$this->load_compatibilites();
 		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
+		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
 	}
 
 	private function load_compatibilites() {
@@ -88,6 +89,16 @@ class Brizy_Compatibilities_Init {
 
 		if ( class_exists( 'WooCommerce' ) ) {
 			new Brizy_Compatibilities_Woocommerce();
+    }
+    
+		if ( class_exists( 'bbPress' ) ) {
+			new Brizy_Compatibilities_Bbpress();
+		}
+  }
+
+	public function after_setup_theme() {
+		if ( function_exists( 'tf_autoload' ) ) {
+			new Brizy_Compatibilities_Tfuse();
 		}
 	}
 

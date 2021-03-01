@@ -107,9 +107,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 
 		// return if the rule is for exclude
-		if($ruleValues[0]!=$checkValues[0]) {
-			return false;
-		}
+//		if($ruleValues[0]!=$checkValues[0]) {
+//			return false;
+//		}
 
 		$entity_values = $this->getEntityValues();
 
@@ -183,8 +183,10 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 
 		foreach ( $ruleValues as $i => $value ) {
 
+		    if($i===0) continue;
+
 			if ( is_array( $value ) ) {
-				// this means that the rull accept any value
+				// this means that the rule accept any value
 				if ( count( $ruleValues[ $i ] ) == 0 ) {
 					break;
 				}
