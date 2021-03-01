@@ -111,11 +111,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-
-			if ( $block = $bockManager->getEntity( $this->param( 'uid' ) ) ) {
-				$this->error( 400, 'Duplicate block uid. Please refresh the page and try again' );
-			}
-
 			$block = $bockManager->createEntity( $this->param( 'uid' ), $status );
 			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( $editorData );
