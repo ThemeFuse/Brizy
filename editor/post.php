@@ -640,7 +640,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			       pm.meta_value as 'uid'
 			FROM
 			     $wpdb->posts p
-				JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
+				LEFT JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
 			WHERE 
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
 			ORDER BY p.post_title ASC
