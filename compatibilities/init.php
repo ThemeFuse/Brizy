@@ -87,10 +87,14 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_TranslatePress();
 		}
 
+		if ( class_exists( 'WooCommerce' ) ) {
+			new Brizy_Compatibilities_Woocommerce();
+    }
+    
 		if ( class_exists( 'bbPress' ) ) {
 			new Brizy_Compatibilities_Bbpress();
 		}
-	}
+  }
 
 	public function after_setup_theme() {
 		if ( function_exists( 'tf_autoload' ) ) {
