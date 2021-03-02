@@ -608,6 +608,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$autosave->set_template( $this->get_template() );
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );
+		$autosave->set_needs_compile(true);
 
 		return $autosave;
 	}
