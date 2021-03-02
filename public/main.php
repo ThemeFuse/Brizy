@@ -426,7 +426,7 @@ class Brizy_Public_Main {
 		}
 
 		if ( false === strpos( $content, 'brz-root__container' ) ||
-		     ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
+		     ( $post && $post->ID !== $this->post->getWpPostId() && !wp_is_post_autosave($this->post->getWpPostId()) ) ) {
 			return $content;
 		}
 
@@ -497,7 +497,7 @@ class Brizy_Public_Main {
 				$this->post    = Brizy_Editor_Post::get( $autosaveId );
 				$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
 			} else {
-				// we make this false becasue the page was saved.
+				// we make this false because the page was saved.
 				$is_preview = false;
 			}
 		}
@@ -507,9 +507,10 @@ class Brizy_Public_Main {
 				$this->post->compile_page();
 			}
 
-			if ( ! $is_preview && $needs_compile ) {
+			if ( ! $is_preview && $needs_compile || $autosaveId) {
 				$this->post->saveStorage();
 				$this->post->savePost();
+
 			}
 
 		} catch ( Exception $e ) {
