@@ -75,7 +75,7 @@ trait Brizy_Editor_AutoSaveAware {
 	 */
 	public static function getAutoSavePost( $postId, $userId ) {
 		$postParentId = wp_get_post_parent_id( $postId );
-		$autosave     = wp_get_post_autosave( $postParentId, $userId );
+		$autosave     = wp_get_post_autosave( $postParentId ?$postParentId:$postId, $userId );
 
 		if ( ! $autosave ) {
 			return;
