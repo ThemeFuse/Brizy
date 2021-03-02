@@ -794,11 +794,11 @@ class Brizy_Editor_Editor_Editor {
 
 			// single mode
 			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
-				if ( in_array( $rule->getEntityType(), [ '404', 'author', 'front_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ '404',  'front_page' ] ) ) {
 					return 'single';
 				}
 
-				if ( in_array( $rule->getEntityType(), [ 'search', 'home_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ 'search', 'author', 'home_page' ] ) ) {
 					return 'archive';
 				}
 			}
