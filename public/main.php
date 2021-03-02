@@ -494,7 +494,7 @@ class Brizy_Public_Main {
 	private function preparePost() {
 		$is_preview    = is_preview() || isset( $_GET['preview'] );
 		$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
-
+        $autosaveId = null;
 		if ( $is_preview ) {
 			$user_id      = get_current_user_id();
 			$postParentId = $this->post->getWpPostId();
