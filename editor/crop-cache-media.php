@@ -23,7 +23,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @param Brizy_Editor_Project $project
 	 * @param int $post_id
 	 */
-	public function __construct( $project, $post_id ) {
+	public function __construct( $project, $post_id = null ) {
 
 		$this->post_id     = $post_id;
 		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $this->post_id );
@@ -201,5 +201,64 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 	public function basename( $original_asset_path ) {
 		return preg_replace( '/^.+[\\\\\\/]/', '', $original_asset_path );
+	}
+
+	public function get_static_url( $url ) {
+
+		$url   = Brizy_SiteUrlReplacer::restoreSiteUrl( $url );
+		$query = parse_url( $url, PHP_URL_QUERY );
+
+		if ( empty( $query ) ) {
+			return $url;
+		}
+
+		parse_str( $query, $query );
+
+		$media  = $query[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ];
+		$filter = $query[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER ) ];
+		$post   = $query[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST ) ];
+
+		if ( empty( $media ) ) {
+			return $url;
+		}
+
+		try {
+			$mediaUrl = $this->getMediaUrl( $media );
+		} catch ( Exception $e ) {
+			return $url;
+		}
+
+		$this->url_builder->set_post_id( $post );
+
+		$crop = new self( Brizy_Editor_Project::get(), $post );
+
+		return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $crop->crop_media( $mediaUrl, $filter ) );
+	}
+
+	public function getMediaUrl( $hash ) {
+
+		$id = null;
+
+		if ( is_numeric( $hash ) ) {
+			$id = $hash;
+		} else {
+			$attachments = get_posts( [
+				'meta_key'       => 'brizy_attachment_uid',
+				'meta_value'     => $hash,
+				'post_type'      => 'attachment',
+				'fields'         => 'ids',
+				'posts_per_page' => 1
+			] );
+
+			if ( isset( $attachments[0] ) ) {
+				$id = $attachments[0];
+			}
+		}
+
+		if ( ! $id ) {
+			throw new Exception( 'Media not found' );
+		}
+
+		return get_attached_file( $id );
 	}
 }
