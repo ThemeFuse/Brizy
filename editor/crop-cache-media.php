@@ -203,6 +203,14 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		return preg_replace( '/^.+[\\\\\\/]/', '', $original_asset_path );
 	}
 
+	/**
+	 * Do not remove this function!!! it is used in other plugins like Rank Math
+	 *
+	 * @param $url
+	 *
+	 * @return string|string[]|null
+	 * @throws Exception
+	 */
 	public function get_static_url( $url ) {
 
 		$url   = Brizy_SiteUrlReplacer::restoreSiteUrl( $url );
