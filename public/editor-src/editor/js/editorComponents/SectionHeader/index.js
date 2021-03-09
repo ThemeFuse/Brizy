@@ -6,7 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Portal from "visual/component/Portal";
 import Sticky from "visual/component/Sticky";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { capitalize } from "visual/utils/string";
@@ -226,7 +226,7 @@ export default class SectionHeader extends EditorComponent {
     });
 
     return (
-      <SortableZIndex zindex={1}>
+      <SortableZIndex zIndex={1}>
         <div className={className}>
           <ToolbarExtend position="fixed">
             <EditorArrayComponent {...stickyItemProps} />
@@ -254,7 +254,7 @@ export default class SectionHeader extends EditorComponent {
     const toolbarPosition = isSticky ? "fixed" : "absolute";
 
     return (
-      <SortableZIndex zindex={1}>
+      <SortableZIndex zIndex={1}>
         <div className={className} ref={this.stickyNode}>
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic({ v })}

@@ -608,6 +608,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$autosave->set_template( $this->get_template() );
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );
+		$autosave->set_needs_compile(true);
 
 		return $autosave;
 	}
@@ -635,18 +636,18 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			       p.ID,
 			       p.post_title as title,
 			       p.post_title as post_title,
-			       '$postType' as post_type,
-			       '$postLabel' as post_type_label,
+			       %s as post_type,
+			       %s as post_type_label,
 			       pm.meta_value as 'uid'
 			FROM
 			     $wpdb->posts p
-				JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
+				LEFT JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
 			WHERE 
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
 			ORDER BY p.post_title ASC
 			LIMIT %d,%d
 SQL;
-		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ) );
+		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $postLabel, $postType, $offset, $limit ) );
 
 		foreach($posts as $i=>$p) {
 			$postTitle = apply_filters( 'the_title', $p->post_title );

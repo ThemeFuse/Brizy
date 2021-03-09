@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1823,
   title: "Homepage",
-  keywords: "Landing, Layouts, One-Page, Personal",
+  keywords: "Resume, Landing, Layouts, One-Page, Personal",
   cat: [0, 11, 100],
   resolve: {
     blocks: [

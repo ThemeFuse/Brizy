@@ -435,7 +435,7 @@ class Brizy_Admin_Settings {
 			array( $this, 'filter_types' )
 		);
 
-		return $types;
+		return apply_filters( 'brizy_settings_post_types', $types );
 	}
 
 

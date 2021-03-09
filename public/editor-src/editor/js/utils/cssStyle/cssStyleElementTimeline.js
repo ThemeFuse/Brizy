@@ -264,6 +264,8 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   state,
   prefix
 }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+
   const halfIconWidth = cssStyleElementTimelineIconHalfHeightWidth({
     v,
     prefix
@@ -274,9 +276,14 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   });
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
   const orientation = styleElementTimelineOrientation({ v, device, state });
+  const borderStyle = dvv("lineBorderStyle");
+  const lineOffset =
+    borderStyle === "dashed" || borderStyle === "dotted"
+      ? 100 - borderWidth
+      : 100;
+
   if (orientation === "on") {
-    return `height: calc(${100 -
-      borderWidth}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px;`;
+    return `height: calc(${lineOffset}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px;`;
   } else if (orientation === "off") {
     return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }

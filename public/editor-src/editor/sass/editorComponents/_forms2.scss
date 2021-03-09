@@ -7,6 +7,12 @@
 .brz-forms2 {
   width: 100%;
 
+  .brz-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
   &__wrap,
   &__fields {
     display: flex;

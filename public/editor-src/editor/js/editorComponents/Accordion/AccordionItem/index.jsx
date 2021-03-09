@@ -9,7 +9,7 @@ import ItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
-import { expend, collapse } from "../utils";
+import { expand, collapse } from "../utils";
 
 class AccordionItem extends EditorComponent {
   static get componentId() {
@@ -52,7 +52,7 @@ class AccordionItem extends EditorComponent {
         if (activeAccordionItem) {
           this.handleCollapse();
         } else {
-          this.handleExpend();
+          this.handleExpand();
         }
       } else {
         this.setState({ active: false });
@@ -62,7 +62,7 @@ class AccordionItem extends EditorComponent {
 
     if (prevProps.activeAccordionItem !== activeAccordionItem) {
       if (prevProps.activeAccordionItem) {
-        this.handleExpend();
+        this.handleExpand();
       } else {
         this.handleCollapse();
       }
@@ -70,7 +70,7 @@ class AccordionItem extends EditorComponent {
 
     if (prevState.active !== active) {
       if (prevState.active) {
-        this.handleExpend();
+        this.handleExpand();
       } else {
         this.handleCollapse();
       }
@@ -88,14 +88,14 @@ class AccordionItem extends EditorComponent {
     }
   };
 
-  handleExpend = () => {
+  handleExpand = () => {
     const node = this.content.current;
 
     if (node) {
       const { height } = node.children[0]?.getBoundingClientRect();
       const duration = this.props.animDuration;
 
-      expend(node, { height, duration: duration * 1000 });
+      expand(node, { height, duration: duration * 1000 });
     }
   };
 
@@ -160,7 +160,7 @@ class AccordionItem extends EditorComponent {
     );
   }
 
-  renderItems() {
+  renderItems(active) {
     const {
       meta,
       animationClassName,
@@ -169,6 +169,7 @@ class AccordionItem extends EditorComponent {
 
     const itemsProps = this.makeSubcomponentProps({
       meta,
+      isActive: active,
       bindWithKey: "items",
       className: "brz-accordion--sortable brz-d-xs-flex brz-flex-xs-column"
     });

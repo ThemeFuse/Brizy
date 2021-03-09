@@ -21,6 +21,7 @@ import {
 } from "visual/utils/api/editor";
 import { uuid } from "visual/utils/uuid";
 import { IS_STORY } from "visual/utils/models";
+import { isNumber } from "visual/utils/math";
 
 const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
 
@@ -113,44 +114,37 @@ class PublishButton extends Component<Props, State> {
       extraFontStyles,
       type: "normal"
     };
-    const screenshotsSupported: boolean = await browserSupports();
+    let screenshotsSupported: boolean;
+
+    try {
+      screenshotsSupported = await browserSupports();
+    } catch (e) {
+      screenshotsSupported = false;
+    }
 
     if (screenshotsSupported) {
       const node = document.querySelector("#brz-ed-page__blocks");
-      const { src, width, height } = await makeNodeScreenshot(node).catch(e => {
-        ToastNotification.error(t("Could not save layout"));
-        console.error(e);
-
-        return {
+      const { src, width, height } = await makeNodeScreenshot(node).catch(
+        () => ({
           src: undefined,
           width: undefined,
           height: undefined
-        };
-      });
+        })
+      );
 
-      if (!src || typeof width !== "number" || typeof height !== "number") {
-        ToastNotification.error(t("Could not save layout"));
-        return;
+      if (src && isNumber(width) && isNumber(height)) {
+        const { id } = await createBlockScreenshot({
+          base64: src,
+          blockType: "layout"
+        }).catch(() => ({ id: undefined }));
+
+        if (id) {
+          meta._thumbnailSrc = id;
+          meta._thumbnailWidth = width;
+          meta._thumbnailHeight = height;
+          meta._thumbnailTime = Date.now();
+        }
       }
-
-      const { id } = await createBlockScreenshot({
-        base64: src,
-        blockType: "layout"
-      }).catch(e => {
-        ToastNotification.error(t("Could not save layout"));
-        console.error(e);
-        return { id: undefined };
-      });
-
-      if (!id) {
-        ToastNotification.error(t("Could not save layout"));
-        return;
-      }
-
-      meta._thumbnailSrc = id;
-      meta._thumbnailWidth = width;
-      meta._thumbnailHeight = height;
-      meta._thumbnailTime = Date.now();
     }
 
     await createSavedLayout({
@@ -162,6 +156,13 @@ class PublishButton extends Component<Props, State> {
       ToastNotification.error(t("Could not save layout"));
       console.error(e);
     });
+
+    if (!screenshotsSupported) {
+      ToastNotification.warn(
+        t("Your block was saved without screenshot, browser is not compatible"),
+        { hideAfter: 5 }
+      );
+    }
 
     this.setState({ layoutLoading: false });
   };
@@ -177,16 +178,14 @@ class PublishButton extends Component<Props, State> {
         {!IS_STORY ? (
           <>
             <Roles allow={["admin"]}>
-          <Roles allow={["admin"]}>
-          <TooltipItem
-            className="brz-ed-fixed-bottom-panel-popover__item"
-            onClick={this.handleClearPage}
-          >
-            <EditorIcon icon="nc-trash" />
-            <span className="brz-span">{t("Clear Layout")}</span>
-          </TooltipItem>
-        </Roles>
-        </Roles>
+              <TooltipItem
+                className="brz-ed-fixed-bottom-panel-popover__item"
+                onClick={this.handleClearPage}
+              >
+                <EditorIcon icon="nc-trash" />
+                <span className="brz-span">{t("Clear Layout")}</span>
+              </TooltipItem>
+            </Roles>
             <TooltipItem
               className="brz-ed-fixed-bottom-panel-popover__item"
               onClick={this.handleSavePage}

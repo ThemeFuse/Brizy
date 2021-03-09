@@ -28,35 +28,51 @@ export default class FileUpload extends TextField {
     };
   }
 
+  handleTextChange = value => {
+    this.handleChange({ fileText: value });
+  };
+
+  handleValueChange = e => {
+    this.handleChange({
+      label: e.target.value,
+      placeholder: e.target.value
+    });
+  };
+
   renderForEdit(v) {
     const { labelType, attr } = v;
+    const { fileText } = this.props;
 
     return labelType === "outside" ? (
       <Upload
         {...attr}
+        fileText={fileText}
         className={this.getClassName(v)}
         value={attr.placeholder}
-        onChange={e => {
-          this.handleChange({ placeholder: e.target.value });
-        }}
+        onChange={this.handleValueChange}
+        onChangeText={this.handleTextChange}
       />
     ) : (
       <Upload
         {...attr}
+        fileText={fileText}
         className={this.getClassName(v)}
-        onChange={e => {
-          this.handleChange({
-            label: e.target.value,
-            placeholder: e.target.value
-          });
-        }}
+        onChange={this.handleValueChange}
+        onChangeText={this.handleTextChange}
       />
     );
   }
 
   renderForView(v) {
+    const { fileText } = this.props;
+
     return (
-      <Upload {...v.attr} multiple={false} className={this.getClassName(v)} />
+      <Upload
+        {...v.attr}
+        fileText={fileText}
+        multiple={false}
+        className={this.getClassName(v)}
+      />
     );
   }
 }

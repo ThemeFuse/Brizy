@@ -145,13 +145,20 @@ class Brizy_Public_Main {
 
 		$config_object    = $this->getConfigObject();
 		$assets_url       = $config_object->urls->assets;
-		$editor_js_deps   = apply_filters( 'brizy_editor_js_deps', [ 'brizy-editor-polyfill', 'brizy-editor-vendor' ] );
+		$editor_js_deps   = [ 'brizy-editor-polyfill', 'brizy-editor-vendor' ];
 		$editor_js_config = json_encode( $config_object );
+
+		if ( class_exists( 'WooCommerce' ) ) {
+			$editor_js_deps[] = 'zoom';
+			$editor_js_deps[] = 'photoswipe';
+			$editor_js_deps[] = 'flexslider';
+			$editor_js_deps[] = 'wc-single-product';
+		}
 
 		wp_enqueue_style( 'brizy-editor', "${assets_url}/editor/css/editor.css", array(), null );
 		wp_register_script( 'brizy-editor-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
 		wp_register_script( 'brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), null, true );
-		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", $editor_js_deps, null, true );
+		wp_enqueue_script( 'brizy-editor', "${assets_url}/editor/js/editor.js", apply_filters( 'brizy_editor_js_deps', $editor_js_deps ), null, true );
 		wp_add_inline_script( 'brizy-editor', "var __VISUAL_CONFIG__ = ${editor_js_config};", 'before' );
 
 		do_action( 'brizy_editor_enqueue_scripts' );
@@ -426,7 +433,7 @@ class Brizy_Public_Main {
 		}
 
 		if ( false === strpos( $content, 'brz-root__container' ) ||
-		     ( $post && $post->ID !== $this->post->getWpPostId() ) ) {
+		     ( $post && $post->ID !== $this->post->getWpPostId() && !wp_is_post_autosave($this->post->getWpPostId()) ) ) {
 			return $content;
 		}
 
@@ -487,7 +494,7 @@ class Brizy_Public_Main {
 	private function preparePost() {
 		$is_preview    = is_preview() || isset( $_GET['preview'] );
 		$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
-
+        $autosaveId = null;
 		if ( $is_preview ) {
 			$user_id      = get_current_user_id();
 			$postParentId = $this->post->getWpPostId();
@@ -497,7 +504,7 @@ class Brizy_Public_Main {
 				$this->post    = Brizy_Editor_Post::get( $autosaveId );
 				$needs_compile = ! $this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
 			} else {
-				// we make this false becasue the page was saved.
+				// we make this false because the page was saved.
 				$is_preview = false;
 			}
 		}
@@ -507,9 +514,10 @@ class Brizy_Public_Main {
 				$this->post->compile_page();
 			}
 
-			if ( ! $is_preview && $needs_compile ) {
+			if ( ! $is_preview && $needs_compile || $autosaveId) {
 				$this->post->saveStorage();
 				$this->post->savePost();
+
 			}
 
 		} catch ( Exception $e ) {

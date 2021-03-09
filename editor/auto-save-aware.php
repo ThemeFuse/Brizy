@@ -12,7 +12,7 @@ trait Brizy_Editor_AutoSaveAware {
 		try {
 			$user_id                   = get_current_user_id();
 			$postParentId              = $post->post_parent;
-			$old_autosave              = $this->getLastAutosave( $postParentId, $user_id );
+			$old_autosave              = $this->getLastAutosave( $postParentId?$postParentId:$post->ID, $user_id );
 			$post_data                 = get_object_vars( $post );
 			$post_data['post_content'] .= "\n<!-- " . time() . "-->";
 			$autosavePost              = null;
@@ -75,7 +75,7 @@ trait Brizy_Editor_AutoSaveAware {
 	 */
 	public static function getAutoSavePost( $postId, $userId ) {
 		$postParentId = wp_get_post_parent_id( $postId );
-		$autosave     = wp_get_post_autosave( $postParentId, $userId );
+		$autosave     = wp_get_post_autosave( $postParentId ?$postParentId:$postId, $userId );
 
 		if ( ! $autosave ) {
 			return;

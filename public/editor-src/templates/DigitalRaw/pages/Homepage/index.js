@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1796,
   title: "Homepage",
-  keywords: "Landing, Layouts, One-Page",
+  keywords: "Digital Raw, Landing, Layouts, One-Page",
   cat: [0, 11],
   pro: true,
   resolve: {

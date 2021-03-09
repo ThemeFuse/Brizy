@@ -129,6 +129,8 @@ class SectionItems extends EditorArrayComponent {
             draggable={false}
             accessibility={false}
             arrows={sliderArrows !== "none"}
+            useTransform={false}
+            speed={500}
             nextArrow={
               <SliderArrow
                 icon={`right-arrow-${sliderArrows}`}
@@ -165,6 +167,11 @@ class SectionItems extends EditorArrayComponent {
           }
         ];
 
+        // wrapped in div have problems with different padding per slide
+        const _items = items.map((item, index) => (
+          <div key={index}>{item}</div>
+        ));
+
         ret = (
           <div
             className="brz-slick-slider brz-slick-slider__section"
@@ -180,7 +187,7 @@ class SectionItems extends EditorArrayComponent {
             data-swipe={false}
             data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           >
-            {items}
+            {_items}
             {sliderArrows !== "none" && (
               <ThemeIcon
                 className="brz-hidden"

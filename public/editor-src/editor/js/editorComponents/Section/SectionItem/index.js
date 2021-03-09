@@ -8,7 +8,6 @@ import Background from "visual/component/Background";
 import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -20,6 +19,7 @@ import {
   styleSizeContainerSize
 } from "visual/utils/style2";
 import { getContainerW } from "visual/utils/meta";
+import { hasMembership } from "visual/utils/membership";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -107,6 +107,7 @@ class SectionItem extends EditorComponent {
 
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
+    const { membership, membershipRoles } = this.props.rerender;
 
     return (
       <CollapsibleToolbar
@@ -114,15 +115,8 @@ class SectionItem extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          globalBlockId
-            ? child => (
-                <ConditionsComponent value={globalBlockId}>
-                  {child}
-                </ConditionsComponent>
-              )
-            : null
-        }
+        global={!!globalBlockId}
+        membership={hasMembership(membership, membershipRoles)}
       />
     );
   }

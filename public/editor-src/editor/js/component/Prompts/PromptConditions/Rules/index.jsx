@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
+import { IS_PRO } from "visual/utils/models/modes";
 import Buttons from "../Buttons";
 // import { getRulesList } from "visual/utils/api/editor";
 import ConditionChoices from "./ConditionChoices";
@@ -31,50 +32,47 @@ export default function Rules({
   }, []);
 
   function handleAdd() {
-    setRules([
-      ...rules,
-      {
-        type: 1,
-        appliedFor: PAGES_GROUP_ID,
-        entityType: PAGE_TYPE,
-        entityValues: []
-      }
-    ]);
+    if (IS_PRO) {
+      setRules([
+        ...rules,
+        {
+          type: 1,
+          appliedFor: PAGES_GROUP_ID,
+          entityType: PAGE_TYPE,
+          entityValues: []
+        }
+      ]);
+    }
   }
 
-  async function handleChange() {
-    setLoading(true);
-    setError(null);
+  function handleChange() {
+    if (IS_PRO) {
+      setLoading(true);
+      setError(null);
 
-    onChange({
-      data: {
-        rules: filterRules(rules)
-      },
-      meta: {
-        syncSuccess: () => setLoading(false),
-        syncFail: data => {
-          setLoading(false);
-          setError(data.responseJSON.data.message);
+      onChange({
+        data: {
+          rules: filterRules(rules)
+        },
+        meta: {
+          syncSuccess: () => setLoading(false),
+          syncFail: data => {
+            setLoading(false);
+            setError(data.responseJSON.data.message);
+          }
         }
-      }
-    });
+      });
+    }
+  }
 
-    // getStore().dispatch(
-    //   updateRules({
-    //     data: filterRules(rules),
-    //     meta: {
-    //       syncSuccess: () => setLoading(false),
-    //       syncFail: data => {
-    //         setLoading(false);
-    //         setError(data.responseJSON.data.message);
-    //       }
-    //     }
-    //   })
-    // );
+  function handleConditionChange(rules) {
+    if (IS_PRO) {
+      setRules(rules);
+    }
   }
 
   return (
-    <React.Fragment>
+    <>
       {listLoading ? (
         <div className="brz-ed-popup-conditions__spin">
           <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
@@ -90,7 +88,7 @@ export default function Rules({
           <ConditionChoices
             rules={rules}
             rulesList={rulesList}
-            onChange={rules => setRules(rules)}
+            onChange={handleConditionChange}
           />
           <div
             className="brz-ed-popup-conditions__add-condition"
@@ -103,6 +101,6 @@ export default function Rules({
 
       {error && <div className="error">{error}</div>}
       <Buttons loading={loading} onChange={handleChange} onClose={onClose} />
-    </React.Fragment>
+    </>
   );
 }

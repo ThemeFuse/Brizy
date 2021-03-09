@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
 import Prompts from "visual/component/Prompts";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getStore } from "visual/redux/store";
 import { updatePopupRules } from "visual/redux/actions";
@@ -11,8 +10,6 @@ import { getRulesList } from "visual/utils/api/editor";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 import { globalBlocksSelector } from "visual/redux/selectors";
-
-const IS_PRO = Config.get("pro");
 
 type ChangeCallbackData = {
   data: {
@@ -49,10 +46,6 @@ export const ConditionsComponent: React.FC<{
       }
     });
   };
-
-  if (!IS_PRO) {
-    return React.Children.only(children);
-  }
 
   return React.cloneElement(React.Children.only(children), {
     onMouseDown: handleMouseDown
