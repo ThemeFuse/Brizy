@@ -1,2280 +1,2697 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2019-10-23 14:55+0300\n"
-"PO-Revision-Date: 2018-08-14 16:04+0300\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Brizy\n"
+"POT-Creation-Date: 2021-03-04 16:05+0200\n"
+"PO-Revision-Date: 2021-03-04 16:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
-"X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr_e;_bt\n"
-"X-Poedit-SearchPath-0: brizy/languages\n"
-"X-Poedit-SearchPath-1: brizy\n"
-"X-Poedit-SearchPath-2: brizy-pro\n"
-"X-Poedit-SearchPathExcluded-0: brizy/public/editor-build\n"
-"X-Poedit-SearchPathExcluded-1: brizy/public/editor-src\n"
-"X-Poedit-SearchPathExcluded-2: brizy/vendor\n"
-"X-Poedit-SearchPathExcluded-3: brizy/vendor\n"
 
-#: brizy-pro/admin/integrations.php:39 brizy-pro/admin/integrations.php:63
-msgid "Integrations"
-msgstr ""
-
-#: brizy-pro/admin/license.php:92 brizy-pro/admin/license.php:93
-msgid "License"
-msgstr ""
-
-#: brizy-pro/admin/license.php:130
-msgid "Deactivate"
-msgstr ""
-
-#: brizy-pro/admin/settings.php:21
-msgid "Limited Access"
-msgstr ""
-
-#: brizy-pro/admin/updater.php:330
-msgid "You do not have permission to install plugin updates"
-msgstr ""
-
-#: brizy-pro/admin/updater.php:330 brizy/languages/texts.php:361
-msgid "Error"
-msgstr ""
-
-#: brizy-pro/admin/white-label.php:153 brizy-pro/admin/white-label.php:168
-msgid "Settings saved."
-msgstr ""
-
-#: brizy-pro/admin/white-label.php:208 brizy-pro/admin/white-label.php:209
-msgid "White Label"
-msgstr ""
-
-#: brizy-pro/content/placeholders/excerpt.php:30
-msgid "There is no excerpt because this is a protected post."
-msgstr ""
-
-#: brizy-pro/content/providers/woocommerce.php:27 brizy/languages/texts.php:461
-msgid "Description"
-msgstr ""
-
-#: brizy-pro/content/providers/woocommerce.php:42
-msgid "Additional information"
-msgstr ""
-
-#: brizy-pro/content/providers/woocommerce.php:93
-#, php-format
-msgid "%s customer review"
-msgid_plural "%s customer reviews"
-msgstr[0] ""
-msgstr[1] ""
-
-#: brizy-pro/content/providers/woocommerce.php:231
-#, php-format
-msgid "%1$s review for %2$s"
-msgid_plural "%1$s reviews for %2$s"
-msgstr[0] ""
-msgstr[1] ""
-
-#: brizy-pro/content/providers/woocommerce.php:237
-msgid "Reviews"
-msgstr ""
-
-#: brizy-pro/content/providers/wp.php:245
-msgctxt "yearly archives date format"
-msgid "Y"
-msgstr ""
-
-#: brizy-pro/content/providers/wp.php:247
-msgctxt "monthly archives date format"
-msgid "F Y"
-msgstr ""
-
-#: brizy-pro/content/providers/wp.php:249
-msgctxt "daily archives date format"
-msgid "F j, Y"
-msgstr ""
-
-#: brizy-pro/main.php:112
-msgid "Brizy Pro is inactive. Please install and activate Brizy FREE first.!"
-msgstr ""
-
-#: brizy-pro/main.php:123
-#, php-format
-msgid "Brizy Pro %s requires Brizy FREE to be %s or newer"
-msgstr ""
-
-#: brizy-pro/main.php:234
-msgid "Dynamic content"
-msgstr ""
-
-#: brizy/admin/blocks/main.php:100
+#: admin/blocks/main.php:100
 msgctxt "post type general name"
 msgid "Global blocks"
 msgstr ""
 
-#: brizy/admin/blocks/main.php:108 brizy/admin/blocks/main.php:130
+#: admin/blocks/main.php:108 admin/blocks/main.php:130
 msgid "global block."
 msgstr ""
 
-#: brizy/admin/blocks/main.php:122
+#: admin/blocks/main.php:122
 msgctxt "brizy"
 msgid "Saved blocks"
 msgstr ""
 
-#: brizy/admin/fonts/main.php:60
+#: admin/cloud/cron.php:56
+msgid "Once in 5 minutes"
+msgstr ""
+
+#: admin/dashboard-widget.php:69
+msgid "Something went wrong. There is no a valid response code."
+msgstr ""
+
+#: admin/dashboard-widget.php:76
+msgid "The request was blocked, or something is wrong with the remote server."
+msgstr ""
+
+#: admin/dashboard-widget.php:80
+msgid "There is no body in the remote server response."
+msgstr ""
+
+#: admin/dashboard-widget.php:86
+msgid "Filed decode returned json by brizy.io"
+msgstr ""
+
+#: admin/feedback.php:30
+msgid ""
+"Hello! Seems like you are using Brizy to build your website - Thanks a lot!"
+msgstr ""
+
+#: admin/feedback.php:32
+msgid ""
+"Could you please do us a BIG favor and give it a 5-star rating on WordPress? "
+"This would boost our motivation and help other users make a comfortable "
+"decision while choosing the Brizy plugin."
+msgstr ""
+
+#: admin/feedback.php:36
+msgid "Ok, you deserve it"
+msgstr ""
+
+#: admin/feedback.php:40
+msgid "Nope, maybe later"
+msgstr ""
+
+#: admin/feedback.php:44
+msgid "I already did"
+msgstr ""
+
+#: admin/feedback.php:111
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: admin/feedback.php:115
+msgid "I found a better plugin"
+msgstr ""
+
+#: admin/feedback.php:116
+msgid "Please share which plugin"
+msgstr ""
+
+#: admin/feedback.php:119
+msgid "I couldn't get the plugin to work"
+msgstr ""
+
+#: admin/feedback.php:123
+msgid "It's a temporary deactivation"
+msgstr ""
+
+#: admin/feedback.php:127
+msgid "I have Brizy Pro"
+msgstr ""
+
+#: admin/feedback.php:129
+msgid ""
+"Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy Pro "
+"in order for the plugin to work."
+msgstr ""
+
+#: admin/feedback.php:132
+msgid "Other"
+msgstr ""
+
+#: admin/feedback.php:133
+msgid "Please share the reason"
+msgstr ""
+
+#: admin/feedback.php:142
+msgid "Quick Feedback"
+msgstr ""
+
+#: admin/feedback.php:146
+msgid "If you have a moment, please share why you are deactivating Brizy:"
+msgstr ""
+
+#: admin/fonts/main.php:97
 msgctxt "post type general name"
 msgid "Fonts"
 msgstr ""
 
-#: brizy/admin/fonts/main.php:68
+#: admin/fonts/main.php:105
 msgid "font"
 msgstr ""
 
-#: brizy/admin/form-entries.php:58
+#: admin/form-entries.php:61
 msgid "Leads details"
 msgstr ""
 
-#: brizy/admin/form-entries.php:59 brizy/languages/texts.php:314
+#: admin/form-entries.php:62 languages/texts.php:314
 msgid "Date"
 msgstr ""
 
-#: brizy/admin/form-entries.php:109 brizy/admin/form-entries.php:220
-#: brizy/admin/form-entries.php:232
+#: admin/form-entries.php:121 admin/form-entries.php:324
+#: admin/form-entries.php:336
 msgid "Leads"
 msgstr ""
 
-#: brizy/admin/form-entries.php:132
+#: admin/form-entries.php:144
 msgid "Disable"
 msgstr ""
 
-#: brizy/admin/form-entries.php:136
+#: admin/form-entries.php:148
 msgid "Enable "
 msgstr ""
 
-#: brizy/admin/form-entries.php:211
+#: admin/form-entries.php:201
+msgid "Export to .csv"
+msgstr ""
+
+#: admin/form-entries.php:315
 msgctxt "post type general name"
 msgid "Leads"
 msgstr ""
 
-#: brizy/admin/form-entries.php:212
+#: admin/form-entries.php:316
 msgctxt "post type singular name"
 msgid "Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:213
+#: admin/form-entries.php:317
 msgctxt "admin menu"
 msgid "Leads"
 msgstr ""
 
-#: brizy/admin/form-entries.php:214
+#: admin/form-entries.php:318
 msgctxt "add new on admin bar"
 msgid "Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:216
+#: admin/form-entries.php:320
 msgid "Add New Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:217
+#: admin/form-entries.php:321
 msgid "New Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:218
+#: admin/form-entries.php:322
 msgid "Edit Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:219
+#: admin/form-entries.php:323
 msgid "View Lead"
 msgstr ""
 
-#: brizy/admin/form-entries.php:221
+#: admin/form-entries.php:325
 msgid "Search Leads"
 msgstr ""
 
-#: brizy/admin/form-entries.php:222
+#: admin/form-entries.php:326
 msgid "Parent Leads:"
 msgstr ""
 
-#: brizy/admin/form-entries.php:223
+#: admin/form-entries.php:327
 msgid "No Leads found."
 msgstr ""
 
-#: brizy/admin/form-entries.php:224
+#: admin/form-entries.php:328
 msgid "No Leads found in Trash."
 msgstr ""
 
-#: brizy/admin/main.php:102
+#: admin/layouts/main.php:35
+msgctxt "post type general name"
+msgid "Layouts"
+msgstr ""
+
+#: admin/layouts/main.php:43
+msgid "Layout."
+msgstr ""
+
+#: admin/main.php:126
 msgid "Edit or Update Image"
 msgstr ""
 
-#: brizy/admin/main.php:237 brizy/admin/optimize-images.php:303
-#: brizy/languages/texts.php:181
+#: admin/main.php:253 admin/optimize-images.php:354 admin/settings.php:108
+#: admin/settings.php:109 languages/texts.php:181
 msgid "Settings"
 msgstr ""
 
-#: brizy/admin/main.php:245 brizy/admin/settings.php:125
+#: admin/main.php:261 admin/settings.php:147
 msgid "Go Pro"
 msgstr ""
 
-#: brizy/admin/main.php:413
+#: admin/main.php:320
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: admin/main.php:321
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: admin/main.php:435
 msgid "Edit with "
 msgstr ""
 
-#: brizy/admin/main.php:476
+#: admin/main.php:491
 msgid "Auto Draft"
 msgstr ""
 
-#: brizy/admin/main.php:530
+#: admin/main.php:545
 #, php-format
-msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
+msgid ""
+"Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible "
+"version: %s "
 msgstr ""
 
-#: brizy/admin/optimize-images.php:51 brizy/admin/optimize-images.php:52
+#: admin/membership/membership.php:48
+msgctxt "post type general name"
+msgid "Roles"
+msgstr ""
+
+#: admin/membership/membership.php:49
+msgctxt "post type singular name"
+msgid "Role"
+msgstr ""
+
+#: admin/membership/membership.php:50
+msgctxt "admin menu"
+msgid "Roles"
+msgstr ""
+
+#: admin/membership/membership.php:51
+msgctxt "add new on admin bar"
+msgid "Role"
+msgstr ""
+
+#: admin/membership/membership.php:52
+msgctxt "add new post type role"
+msgid "Add Role"
+msgstr ""
+
+#: admin/membership/membership.php:53
+msgid "Add New Role"
+msgstr ""
+
+#: admin/membership/membership.php:54
+msgid "New Role"
+msgstr ""
+
+#: admin/membership/membership.php:55
+msgid "Edit Role"
+msgstr ""
+
+#: admin/membership/membership.php:56
+msgid "View Role"
+msgstr ""
+
+#: admin/membership/membership.php:57 admin/membership/membership.php:218
+#: admin/views/settings/maintenance.php:33
+msgid "Roles"
+msgstr ""
+
+#: admin/membership/membership.php:58
+msgid "Search Role"
+msgstr ""
+
+#: admin/membership/membership.php:59
+msgid "Parent Role:"
+msgstr ""
+
+#: admin/membership/membership.php:60
+msgid "No Roles found."
+msgstr ""
+
+#: admin/membership/membership.php:61
+msgid "No Roles found in Trash."
+msgstr ""
+
+#: admin/membership/membership.php:69
+msgid "roles"
+msgstr ""
+
+#: admin/membership/membership.php:91
+msgid "Enter Role Name"
+msgstr ""
+
+#: admin/membership/membership.php:136 admin/membership/membership.php:139
+msgid "Role updated."
+msgstr ""
+
+#: admin/membership/membership.php:137 admin/stories/main.php:95
+#: admin/templates.php:164
+msgid "Custom field updated."
+msgstr ""
+
+#: admin/membership/membership.php:138 admin/stories/main.php:96
+#: admin/templates.php:165
+msgid "Custom field deleted."
+msgstr ""
+
+#: admin/membership/membership.php:140
+msgid "Role published."
+msgstr ""
+
+#: admin/membership/membership.php:141
+msgid "Role saved."
+msgstr ""
+
+#: admin/membership/membership.php:142
+msgid "Role submitted."
+msgstr ""
+
+#: admin/network-settings.php:79 admin/settings.php:293
+msgid "No Access"
+msgstr ""
+
+#: admin/network-settings.php:82 admin/settings.php:296
+msgid "Full Access"
+msgstr ""
+
+#: admin/optimize-images.php:45 admin/optimize-images.php:46
 msgid "Optimize Images"
 msgstr ""
 
-#: brizy/admin/optimize-images.php:190 brizy/languages/texts.php:500
-msgid "Save"
-msgstr ""
-
-#: brizy/admin/optimize-images.php:297
+#: admin/optimize-images.php:115 admin/optimize-images.php:348
 msgid "Optimize"
 msgstr ""
 
-#: brizy/admin/popups/main.php:53
+#: admin/optimize-images.php:200 languages/texts.php:500
+msgid "Save"
+msgstr ""
+
+#: admin/popups/main.php:45
 msgctxt "post type general name"
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:54
+#: admin/popups/main.php:46
 msgctxt "post type singular name"
 msgid "Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:55
+#: admin/popups/main.php:47
 msgctxt "admin menu"
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:56
+#: admin/popups/main.php:48
 msgctxt "add new on admin bar"
 msgid "Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:58
+#: admin/popups/main.php:50
 msgid "Add New Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:59
+#: admin/popups/main.php:51
 msgid "New Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:60
+#: admin/popups/main.php:52
 msgid "Edit Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:61
+#: admin/popups/main.php:53
 msgid "View Popup"
 msgstr ""
 
-#: brizy/admin/popups/main.php:62 brizy/admin/popups/main.php:75
+#: admin/popups/main.php:54 admin/popups/main.php:67
 msgid "Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:63
+#: admin/popups/main.php:55
 msgid "Search Popups"
 msgstr ""
 
-#: brizy/admin/popups/main.php:64
+#: admin/popups/main.php:56
 msgid "Parent Popups:"
 msgstr ""
 
-#: brizy/admin/popups/main.php:65
+#: admin/popups/main.php:57
 msgid "No Popups found."
 msgstr ""
 
-#: brizy/admin/popups/main.php:66
+#: admin/popups/main.php:58
 msgid "No Popups found in Trash."
 msgstr ""
 
-#: brizy/admin/popups/main.php:67
+#: admin/popups/main.php:59
 msgid "Popup attributes:"
 msgstr ""
 
-#: brizy/admin/settings.php:103 brizy/admin/settings.php:148
-msgid "Role Manager"
+#: admin/rules/api.php:460
+msgid "From"
 msgstr ""
 
-#: brizy/admin/settings.php:142
+#: admin/rules/api.php:472
+msgid "From any child of"
+msgstr ""
+
+#: admin/rules/api.php:531
+msgid "Specific"
+msgstr ""
+
+#: admin/rules/api.php:541
+msgid "Any child of"
+msgstr ""
+
+#: admin/settings.php:130
+msgid "Get Help"
+msgstr ""
+
+#: admin/settings.php:159
 msgid "General"
 msgstr ""
 
-#: brizy/admin/settings.php:255
-msgid "No Access"
+#: admin/settings.php:165
+msgid "Role Manager"
 msgstr ""
 
-#: brizy/admin/settings.php:256
-msgid "Full Access"
+#: admin/settings.php:171
+msgid "Maintenance Mode"
 msgstr ""
 
-#: brizy/admin/templates.php:114 brizy/admin/templates.php:117
+#: admin/stories/main.php:39
+msgctxt "post type general name"
+msgid "Stories"
+msgstr ""
+
+#: admin/stories/main.php:40
+msgctxt "post type singular name"
+msgid "Story"
+msgstr ""
+
+#: admin/stories/main.php:41
+msgctxt "admin menu"
+msgid "Stories"
+msgstr ""
+
+#: admin/stories/main.php:42
+msgctxt "add new on admin bar"
+msgid "Story"
+msgstr ""
+
+#: admin/stories/main.php:44
+msgid "Add New Story"
+msgstr ""
+
+#: admin/stories/main.php:45
+msgid "New Story"
+msgstr ""
+
+#: admin/stories/main.php:46
+msgid "Edit Story"
+msgstr ""
+
+#: admin/stories/main.php:47 admin/stories/main.php:117
+msgid "View Story"
+msgstr ""
+
+#: admin/stories/main.php:48
+msgid "Stories"
+msgstr ""
+
+#: admin/stories/main.php:49
+msgid "Search Stories"
+msgstr ""
+
+#: admin/stories/main.php:50
+msgid "Parent Stories:"
+msgstr ""
+
+#: admin/stories/main.php:51
+msgid "No Stories found."
+msgstr ""
+
+#: admin/stories/main.php:52
+msgid "No Stories found in Trash."
+msgstr ""
+
+#: admin/stories/main.php:60
+msgid "stories"
+msgstr ""
+
+#: admin/stories/main.php:94 admin/stories/main.php:97
+msgid "Story updated."
+msgstr ""
+
+#: admin/stories/main.php:100
+#, php-format
+msgid "Story restored to revision from %s"
+msgstr ""
+
+#: admin/stories/main.php:103
+msgid "Story published."
+msgstr ""
+
+#: admin/stories/main.php:104
+msgid "Story saved."
+msgstr ""
+
+#: admin/stories/main.php:105
+msgid "Story submitted."
+msgstr ""
+
+#: admin/stories/main.php:107
+#, php-format
+msgid "Story scheduled for: <strong>%1$s</strong>."
+msgstr ""
+
+#. translators: Publish box date format, see http://php.net/date
+#: admin/stories/main.php:109 admin/templates.php:178
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: admin/stories/main.php:111
+msgid "Story draft updated."
+msgstr ""
+
+#: admin/stories/main.php:126
+msgid "Preview Story"
+msgstr ""
+
+#: admin/templates.php:125
+msgid "Single"
+msgstr ""
+
+#: admin/templates.php:126
+msgid "Archive"
+msgstr ""
+
+#: admin/templates.php:131 languages/texts.php:56
+msgid "Product"
+msgstr ""
+
+#: admin/templates.php:132
+msgid "Product Archive"
+msgstr ""
+
+#: admin/templates.php:163 admin/templates.php:166
 msgid "Template updated."
 msgstr ""
 
-#: brizy/admin/templates.php:115
-msgid "Custom field updated."
-msgstr ""
-
-#: brizy/admin/templates.php:116
-msgid "Custom field deleted."
-msgstr ""
-
-#: brizy/admin/templates.php:119
+#: admin/templates.php:169
 #, php-format
 msgid "Template restored to revision from %s"
 msgstr ""
 
-#: brizy/admin/templates.php:120
+#: admin/templates.php:172
 msgid "Template published."
 msgstr ""
 
-#: brizy/admin/templates.php:121
+#: admin/templates.php:173
 msgid "Template saved."
 msgstr ""
 
-#: brizy/admin/templates.php:122
+#: admin/templates.php:174
 msgid "Template submitted."
 msgstr ""
 
-#: brizy/admin/templates.php:124
+#: admin/templates.php:176
 #, php-format
 msgid "Template scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: brizy/admin/templates.php:126
-msgid "M j, Y @ G:i"
-msgstr ""
-
-#: brizy/admin/templates.php:128
+#: admin/templates.php:180
 msgid "Template draft updated."
 msgstr ""
 
-#: brizy/admin/templates.php:134 brizy/admin/templates.php:199
+#: admin/templates.php:186 admin/templates.php:249
 msgid "View Template"
 msgstr ""
 
-#: brizy/admin/templates.php:140
+#: admin/templates.php:195
 msgid "Preview Template"
 msgstr ""
 
-#: brizy/admin/templates.php:191
+#: admin/templates.php:241
 msgctxt "post type general name"
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:192
+#: admin/templates.php:242
 msgctxt "post type singular name"
 msgid "Template"
 msgstr ""
 
-#: brizy/admin/templates.php:193
+#: admin/templates.php:243
 msgctxt "admin menu"
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:194
+#: admin/templates.php:244
 msgctxt "add new on admin bar"
 msgid "Template"
 msgstr ""
 
-#: brizy/admin/templates.php:196
+#: admin/templates.php:246
 msgid "Add New Template"
 msgstr ""
 
-#: brizy/admin/templates.php:197
+#: admin/templates.php:247
 msgid "New Template"
 msgstr ""
 
-#: brizy/admin/templates.php:198
+#: admin/templates.php:248
 msgid "Edit Template"
 msgstr ""
 
-#: brizy/admin/templates.php:200
+#: admin/templates.php:250
 msgid "Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:201
+#: admin/templates.php:251
 msgid "Search Templates"
 msgstr ""
 
-#: brizy/admin/templates.php:202
+#: admin/templates.php:252
 msgid "Parent Templates:"
 msgstr ""
 
-#: brizy/admin/templates.php:203
+#: admin/templates.php:253
 msgid "No Templates found."
 msgstr ""
 
-#: brizy/admin/templates.php:204
+#: admin/templates.php:254
 msgid "No Templates found in Trash."
 msgstr ""
 
-#: brizy/admin/templates.php:212
+#: admin/templates.php:263
 msgid "templates"
 msgstr ""
 
-#: brizy/admin/templates.php:230
+#: admin/templates.php:292
 msgid "Display Conditions"
 msgstr ""
 
-#: brizy/admin/views/button.php:45 brizy/admin/views/editor.php:21
-msgid "Continue to edit with"
+#: admin/templates.php:344
+msgid "Unable to show the rule box."
 msgstr ""
 
-#: brizy/admin/views/dashboard-news.php:4
-msgid "News & Updates"
+#: admin/templates.php:909
+msgid "Unable to get the rule validator for this post type."
 msgstr ""
 
-#: brizy/admin/views/dashboard-news.php:10
-msgid "New"
+#: admin/templates.php:916 admin/templates.php:937
+msgid "Invalid data version."
 msgstr ""
 
-#: brizy/admin/views/dashboard-news.php:19
-msgid "No News"
-msgstr ""
-
-#: brizy/admin/views/dashboard-posts.php:4
-msgid "Recently Edited"
-msgstr ""
-
-#: brizy/admin/views/dashboard.php:12
-msgid "Blog"
-msgstr ""
-
-#: brizy/admin/views/dashboard.php:17
-msgid "Help"
-msgstr ""
-
-#: brizy/admin/views/dashboard.php:23
-msgid "Go PRO"
-msgstr ""
-
-#: brizy/admin/views/notice.php:14
-msgid "Dismiss this notice"
-msgstr ""
-
-#: brizy/admin/views/settings/general.php:12
-msgid "Activate"
-msgstr ""
-
-#: brizy/admin/views/settings/general.php:12
-msgid "For"
-msgstr ""
-
-#: brizy/admin/views/settings/general.php:32
-#: brizy/admin/views/settings/roles.php:24
-msgid "Save Changes"
-msgstr ""
-
-#: brizy/compatibilities/gutenberg.php:97
+#: admin/views/button.php:11 compatibilities/gutenberg.php:91
 msgid "Back to WordPress Editor"
 msgstr ""
 
-#: brizy/compatibilities/gutenberg.php:104
+#: admin/views/button.php:11 compatibilities/gutenberg.php:109
+msgid "Edit with"
+msgstr ""
+
+#: admin/views/button.php:45 admin/views/editor.php:21
+msgid "Continue to edit with"
+msgstr ""
+
+#: admin/views/dashboard-news.php:4
+msgid "News & Updates"
+msgstr ""
+
+#: admin/views/dashboard-news.php:10
+msgid "New"
+msgstr ""
+
+#: admin/views/dashboard-news.php:19
+msgid "No News"
+msgstr ""
+
+#: admin/views/dashboard-posts.php:4
+msgid "Recently Edited"
+msgstr ""
+
+#: admin/views/dashboard.php:12
+msgid "Blog"
+msgstr ""
+
+#: admin/views/dashboard.php:17
+msgid "Help"
+msgstr ""
+
+#: admin/views/dashboard.php:23
+msgid "Go PRO"
+msgstr ""
+
+#: admin/views/notice.php:14
+msgid "Dismiss this notice"
+msgstr ""
+
+#: admin/views/settings/general.php:12
+msgid "Activate"
+msgstr ""
+
+#: admin/views/settings/general.php:12
+msgid "For"
+msgstr ""
+
+#: admin/views/settings/general.php:24
+msgid "Enable SVG uploads"
+msgstr ""
+
+#: admin/views/settings/general.php:46 admin/views/settings/maintenance.php:76
+#: admin/views/settings/roles.php:26
+msgid "Save Changes"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:10
+msgid "Choose Mode"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:14
+msgid "Disabled"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:15
+msgid "Coming Soon"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:16
+msgid "Maintenance"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:22
+msgid "Who Can Access"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:26
+msgid "Logged In"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:27 languages/texts.php:140
+msgid "Custom"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:49
+msgid "Choose a Page"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:54
+msgid "Select a page"
+msgstr ""
+
+#: admin/views/settings/maintenance.php:60
+#, php-format
+msgid "You have no pages. Please %s create %s one."
+msgstr ""
+
+#: admin/views/settings/maintenance.php:66
+msgid "Whitelisted IP Addresses"
+msgstr ""
+
+#: brizy.php:64
+#, php-format
+msgid ""
+"%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS "
+"NOT RUNNING.</b>"
+msgstr ""
+
+#: compatibilities/gutenberg.php:98
 msgid "Continue to edit with "
 msgstr ""
 
-#: brizy/editor.php:178
+#: content/providers/free-provider.php:141
+msgid "Please set a valid product"
+msgstr ""
+
+#: editor.php:277
 msgid " Template"
 msgstr ""
 
-#: brizy/editor/block.php:106 brizy/editor/post.php:372
-#: brizy/editor/project.php:317
-msgid "There is nothing to save. The autosave and the post content are the same."
+#: editor/asset/cleaner.php:86
+msgid "Every Ten Minutes"
 msgstr ""
 
-#: brizy/editor/post.php:781
+#: editor/auto-save-aware.php:42
+msgid ""
+"There is nothing to save. The autosave and the post content are the same."
+msgstr ""
+
+#: editor/block-screenshot-api.php:61
+msgid "Bad request"
+msgstr ""
+
+#: editor/block-screenshot-api.php:81
+msgid "Invalid image content"
+msgstr ""
+
+#: editor/post.php:501
 msgid "Default"
 msgstr ""
 
-#: brizy/editor/project.php:101
+#: editor/project.php:88
 msgid "Brizy Project."
 msgstr ""
 
-#: brizy/languages/texts.php:9
+#: editor/rest-extend.php:25
+msgid "Brizy attached media"
+msgstr ""
+
+#: languages/texts.php:9
 msgid "START BUILDING YOUR PAGE"
 msgstr ""
 
-#: brizy/languages/texts.php:11
+#: languages/texts.php:11
 msgid "Press the button above to add blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:14
+#: languages/texts.php:14
 msgid "SWITCH TO DESKTOP"
 msgstr ""
 
-#: brizy/languages/texts.php:16
+#: languages/texts.php:16
 msgid "Switch to desktop to add blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:21
+#: languages/texts.php:21
 msgid "Add a new block"
 msgstr ""
 
-#: brizy/languages/texts.php:23
+#: languages/texts.php:23
 msgid "Press the button to add blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:29
+#: languages/texts.php:29
 msgid "Add Elements"
 msgstr ""
 
-#: brizy/languages/texts.php:30
+#: languages/texts.php:30
 msgid "Text"
 msgstr ""
 
-#: brizy/languages/texts.php:31
+#: languages/texts.php:31
 msgid "Button"
 msgstr ""
 
-#: brizy/languages/texts.php:32
+#: languages/texts.php:32
 msgid "Icon"
 msgstr ""
 
-#: brizy/languages/texts.php:33
+#: languages/texts.php:33
 msgid "Image"
 msgstr ""
 
-#: brizy/languages/texts.php:34
+#: languages/texts.php:34
 msgid "Video"
 msgstr ""
 
-#: brizy/languages/texts.php:35
+#: languages/texts.php:35
 msgid "Spacer"
 msgstr ""
 
-#: brizy/languages/texts.php:36
+#: languages/texts.php:36
 msgid "Line"
 msgstr ""
 
-#: brizy/languages/texts.php:37
+#: languages/texts.php:37
 msgid "Map"
 msgstr ""
 
-#: brizy/languages/texts.php:38
+#: languages/texts.php:38
 msgid "Embed"
 msgstr ""
 
-#: brizy/languages/texts.php:39
+#: languages/texts.php:39
 msgid "Form"
 msgstr ""
 
-#: brizy/languages/texts.php:40
+#: languages/texts.php:40
 msgid "Icon Box"
 msgstr ""
 
-#: brizy/languages/texts.php:41
+#: languages/texts.php:41
 msgid "SndCloud"
 msgstr ""
 
-#: brizy/languages/texts.php:42
+#: languages/texts.php:42
 msgid "Counter"
 msgstr ""
 
-#: brizy/languages/texts.php:43
+#: languages/texts.php:43
 msgid "Countdown"
 msgstr ""
 
-#: brizy/languages/texts.php:44
+#: languages/texts.php:44
 msgid "Tabs"
 msgstr ""
 
-#: brizy/languages/texts.php:45
+#: languages/texts.php:45
 msgid "Progress"
 msgstr ""
 
-#: brizy/languages/texts.php:46
+#: languages/texts.php:46
 msgid "Accordion"
 msgstr ""
 
-#: brizy/languages/texts.php:47
+#: languages/texts.php:47
 msgid "Row"
 msgstr ""
 
-#: brizy/languages/texts.php:48
+#: languages/texts.php:48
 msgid "Column"
 msgstr ""
 
-#: brizy/languages/texts.php:49
+#: languages/texts.php:49
 msgid "Rows"
 msgstr ""
 
-#: brizy/languages/texts.php:50
+#: languages/texts.php:50
 msgid "Columns"
 msgstr ""
 
-#: brizy/languages/texts.php:51
+#: languages/texts.php:51
 msgid "Add to cart"
 msgstr ""
 
-#: brizy/languages/texts.php:52
+#: languages/texts.php:52
 msgid "Categories"
 msgstr ""
 
-#: brizy/languages/texts.php:53
+#: languages/texts.php:53
 msgid "Layouts"
 msgstr ""
 
-#: brizy/languages/texts.php:54 brizy/languages/texts.php:443
+#: languages/texts.php:54 languages/texts.php:443
 msgid "layouts"
 msgstr ""
 
-#: brizy/languages/texts.php:55
+#: languages/texts.php:55
 msgid "layout"
 msgstr ""
 
-#: brizy/languages/texts.php:56
-msgid "Product"
-msgstr ""
-
-#: brizy/languages/texts.php:57
+#: languages/texts.php:57
 msgid "Products"
 msgstr ""
 
-#: brizy/languages/texts.php:58
+#: languages/texts.php:58
 msgid "Shortcode"
 msgstr ""
 
-#: brizy/languages/texts.php:59
+#: languages/texts.php:59
 msgid "Menu"
 msgstr ""
 
-#: brizy/languages/texts.php:60
+#: languages/texts.php:60
 msgid "WP Menu"
 msgstr ""
 
-#: brizy/languages/texts.php:61
+#: languages/texts.php:61
 msgid "Posts"
 msgstr ""
 
-#: brizy/languages/texts.php:62
+#: languages/texts.php:62
 msgid "Archives"
 msgstr ""
 
-#: brizy/languages/texts.php:63
+#: languages/texts.php:63
 msgid "Taxonomy"
 msgstr ""
 
-#: brizy/languages/texts.php:64
+#: languages/texts.php:64
 msgid "Pagination"
 msgstr ""
 
-#: brizy/languages/texts.php:65
+#: languages/texts.php:65
 msgid "Sidebar"
 msgstr ""
 
-#: brizy/languages/texts.php:67
+#: languages/texts.php:67
 msgid "Reorder Blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:68
+#: languages/texts.php:68
 msgid "Drag to reorder"
 msgstr ""
 
-#: brizy/languages/texts.php:70
+#: languages/texts.php:70
 msgid "Styling"
 msgstr ""
 
-#: brizy/languages/texts.php:71
+#: languages/texts.php:71
 msgid "Add New Google Font"
 msgstr ""
 
-#: brizy/languages/texts.php:72
+#: languages/texts.php:72
 msgid "Type font name"
 msgstr ""
 
-#: brizy/languages/texts.php:73
+#: languages/texts.php:73
 msgid "Add new option"
 msgstr ""
 
-#: brizy/languages/texts.php:74
+#: languages/texts.php:74
 msgid "Add New"
 msgstr ""
 
-#: brizy/languages/texts.php:75
+#: languages/texts.php:75
 #, php-format
 msgid "New Style #%s"
 msgstr ""
 
-#: brizy/languages/texts.php:76
+#: languages/texts.php:76
 msgid "Copy"
 msgstr ""
 
-#: brizy/languages/texts.php:77
+#: languages/texts.php:77
 msgid "Paste"
 msgstr ""
 
-#: brizy/languages/texts.php:78
+#: languages/texts.php:78
 msgid "Paste Styles"
 msgstr ""
 
-#: brizy/languages/texts.php:80
+#: languages/texts.php:80
 msgid "Mobile view"
 msgstr ""
 
-#: brizy/languages/texts.php:81
+#: languages/texts.php:81
 msgid "Tablet view"
 msgstr ""
 
-#: brizy/languages/texts.php:82
+#: languages/texts.php:82
 msgid "Desktop"
 msgstr ""
 
-#: brizy/languages/texts.php:83
+#: languages/texts.php:83
 msgid "Tablet"
 msgstr ""
 
-#: brizy/languages/texts.php:84
+#: languages/texts.php:84
 msgid "Mobile"
 msgstr ""
 
-#: brizy/languages/texts.php:86
+#: languages/texts.php:86
 msgid "More"
 msgstr ""
 
-#: brizy/languages/texts.php:87
+#: languages/texts.php:87
 msgid "About Brizy"
 msgstr ""
 
-#: brizy/languages/texts.php:88
+#: languages/texts.php:88
 msgid "Back to Brizy"
 msgstr ""
 
-#: brizy/languages/texts.php:89
+#: languages/texts.php:89
 msgid "Plugin Settings"
 msgstr ""
 
-#: brizy/languages/texts.php:90
+#: languages/texts.php:90
 msgid "Back to WordPress"
 msgstr ""
 
-#: brizy/languages/texts.php:91
+#: languages/texts.php:91
 msgid "Featured Image"
 msgstr ""
 
-#: brizy/languages/texts.php:92
+#: languages/texts.php:92
 msgid "Submit an Issue"
 msgstr ""
 
-#: brizy/languages/texts.php:93
+#: languages/texts.php:93
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: brizy/languages/texts.php:96
+#: languages/texts.php:96
 msgid "Save HTML"
 msgstr ""
 
-#: brizy/languages/texts.php:97
+#: languages/texts.php:97
 msgid "Update"
 msgstr ""
 
-#: brizy/languages/texts.php:98
+#: languages/texts.php:98
 msgid "Publish"
 msgstr ""
 
-#: brizy/languages/texts.php:101
+#: languages/texts.php:101
 msgid "More Settings"
 msgstr ""
 
-#: brizy/languages/texts.php:102
+#: languages/texts.php:102
 msgid "Advanced"
 msgstr ""
 
-#: brizy/languages/texts.php:103
+#: languages/texts.php:103
 msgid "Show on Desktop"
 msgstr ""
 
-#: brizy/languages/texts.php:104
+#: languages/texts.php:104
 msgid "Disable on Mobile"
 msgstr ""
 
-#: brizy/languages/texts.php:105
+#: languages/texts.php:105
 msgid "Disable on Tablet"
 msgstr ""
 
-#: brizy/languages/texts.php:106
+#: languages/texts.php:106
 msgid "Enable on Mobile"
 msgstr ""
 
-#: brizy/languages/texts.php:107
+#: languages/texts.php:107
 msgid "Enable on Tablet"
 msgstr ""
 
-#: brizy/languages/texts.php:108
+#: languages/texts.php:108
 msgid "Write your CSS here..."
 msgstr ""
 
-#: brizy/languages/texts.php:109
+#: languages/texts.php:109
 msgid "Z-index"
 msgstr ""
 
-#: brizy/languages/texts.php:110
+#: languages/texts.php:110
 msgid "Anchor Name"
 msgstr ""
 
-#: brizy/languages/texts.php:111
+#: languages/texts.php:111
 msgid "CSS Class"
 msgstr ""
 
-#: brizy/languages/texts.php:112
+#: languages/texts.php:112
 msgid "Custom CSS"
 msgstr ""
 
-#: brizy/languages/texts.php:116
+#: languages/texts.php:116
 msgid "Slider"
 msgstr ""
 
-#: brizy/languages/texts.php:118
+#: languages/texts.php:118
 msgid "Make it a Slider"
 msgstr ""
 
-#: brizy/languages/texts.php:119
+#: languages/texts.php:119
 msgid "Auto Play"
 msgstr ""
 
-#: brizy/languages/texts.php:120
+#: languages/texts.php:120
 msgid "Speed"
 msgstr ""
 
-#: brizy/languages/texts.php:121
+#: languages/texts.php:121
 msgid "Navigation"
 msgstr ""
 
-#: brizy/languages/texts.php:122
+#: languages/texts.php:122
 msgid "Dots"
 msgstr ""
 
-#: brizy/languages/texts.php:123
+#: languages/texts.php:123
 msgid "None"
 msgstr ""
 
-#: brizy/languages/texts.php:124
+#: languages/texts.php:124
 msgid "Circle"
 msgstr ""
 
-#: brizy/languages/texts.php:125
+#: languages/texts.php:125
 msgid "Diamond"
 msgstr ""
 
-#: brizy/languages/texts.php:126
+#: languages/texts.php:126
 msgid "Square"
 msgstr ""
 
-#: brizy/languages/texts.php:127
+#: languages/texts.php:127
 msgid "Arrows"
 msgstr ""
 
-#: brizy/languages/texts.php:128
+#: languages/texts.php:128
 msgid "Arrows Spacing"
 msgstr ""
 
-#: brizy/languages/texts.php:129
+#: languages/texts.php:129
 msgid "Thin"
 msgstr ""
 
-#: brizy/languages/texts.php:130
+#: languages/texts.php:130
 msgid "Heavy"
 msgstr ""
 
-#: brizy/languages/texts.php:131
+#: languages/texts.php:131
 msgid "Tail"
 msgstr ""
 
-#: brizy/languages/texts.php:132
+#: languages/texts.php:132
 msgid "Round"
 msgstr ""
 
-#: brizy/languages/texts.php:133
+#: languages/texts.php:133
 msgid "Outline"
 msgstr ""
 
-#: brizy/languages/texts.php:135
+#: languages/texts.php:135
 msgid "Full Height"
 msgstr ""
 
-#: brizy/languages/texts.php:136
+#: languages/texts.php:136
 msgid "Width"
 msgstr ""
 
-#: brizy/languages/texts.php:137
+#: languages/texts.php:137
 msgid "Height"
 msgstr ""
 
-#: brizy/languages/texts.php:138
+#: languages/texts.php:138
 msgid "Boxed"
 msgstr ""
 
-#: brizy/languages/texts.php:139
+#: languages/texts.php:139
 msgid "Auto"
 msgstr ""
 
-#: brizy/languages/texts.php:140
-msgid "Custom"
-msgstr ""
-
-#: brizy/languages/texts.php:141
+#: languages/texts.php:141
 msgid "Full"
 msgstr ""
 
-#: brizy/languages/texts.php:142
+#: languages/texts.php:142
 msgid "Hover Transition"
 msgstr ""
 
-#: brizy/languages/texts.php:144
+#: languages/texts.php:144
 msgid "Carousel"
 msgstr ""
 
-#: brizy/languages/texts.php:145
+#: languages/texts.php:145
 msgid "Swipe"
 msgstr ""
 
-#: brizy/languages/texts.php:148
+#: languages/texts.php:148
 msgid "Missing Element"
 msgstr ""
 
-#: brizy/languages/texts.php:149
+#: languages/texts.php:149
 msgid "Could not find"
 msgstr ""
 
-#: brizy/languages/texts.php:150
+#: languages/texts.php:150
 msgid "component"
 msgstr ""
 
-#: brizy/languages/texts.php:153
+#: languages/texts.php:153
 msgid "Add New Column"
 msgstr ""
 
-#: brizy/languages/texts.php:155
+#: languages/texts.php:155
 msgid "Background"
 msgstr ""
 
-#: brizy/languages/texts.php:156
+#: languages/texts.php:156
 msgid "Bg Size"
 msgstr ""
 
-#: brizy/languages/texts.php:157
+#: languages/texts.php:157
 msgid "Parallax"
 msgstr ""
 
-#: brizy/languages/texts.php:158
+#: languages/texts.php:158
 msgid "Fixed"
 msgstr ""
 
-#: brizy/languages/texts.php:159
+#: languages/texts.php:159
 msgid "Animated"
 msgstr ""
 
-#: brizy/languages/texts.php:160
+#: languages/texts.php:160
 msgid "Sticky"
 msgstr ""
 
-#: brizy/languages/texts.php:161
+#: languages/texts.php:161
 msgid "URL"
 msgstr ""
 
-#: brizy/languages/texts.php:162
+#: languages/texts.php:162
 msgid "YouTube or Vimeo"
 msgstr ""
 
-#: brizy/languages/texts.php:163
+#: languages/texts.php:163
 msgid "Quality"
 msgstr ""
 
-#: brizy/languages/texts.php:164
+#: languages/texts.php:164
 msgid "1080p"
 msgstr ""
 
-#: brizy/languages/texts.php:165
+#: languages/texts.php:165
 msgid "720p"
 msgstr ""
 
-#: brizy/languages/texts.php:166
+#: languages/texts.php:166
 msgid "Loop"
 msgstr ""
 
-#: brizy/languages/texts.php:167
+#: languages/texts.php:167
 msgid "Address"
 msgstr ""
 
-#: brizy/languages/texts.php:168
+#: languages/texts.php:168
 msgid "Enter address"
 msgstr ""
 
-#: brizy/languages/texts.php:169
+#: languages/texts.php:169
 msgid "Zoom"
 msgstr ""
 
-#: brizy/languages/texts.php:171
+#: languages/texts.php:171
 msgid "Colors"
 msgstr ""
 
-#: brizy/languages/texts.php:172
+#: languages/texts.php:172
 msgid "Color"
 msgstr ""
 
-#: brizy/languages/texts.php:173
+#: languages/texts.php:173
 msgid "Overlay"
 msgstr ""
 
-#: brizy/languages/texts.php:174
+#: languages/texts.php:174
 msgid "Border"
 msgstr ""
 
-#: brizy/languages/texts.php:175
+#: languages/texts.php:175
 msgid "Solid"
 msgstr ""
 
-#: brizy/languages/texts.php:176
+#: languages/texts.php:176
 msgid "Gradient"
 msgstr ""
 
-#: brizy/languages/texts.php:177
+#: languages/texts.php:177
 msgid "Linear"
 msgstr ""
 
-#: brizy/languages/texts.php:178
+#: languages/texts.php:178
 msgid "Radial"
 msgstr ""
 
-#: brizy/languages/texts.php:180
+#: languages/texts.php:180
 msgid "Dynamic Content"
 msgstr ""
 
-#: brizy/languages/texts.php:183
+#: languages/texts.php:183
 msgid "Duplicate"
 msgstr ""
 
-#: brizy/languages/texts.php:184
+#: languages/texts.php:184
 msgid "Delete"
 msgstr ""
 
-#: brizy/languages/texts.php:186
+#: languages/texts.php:186
 msgid "Entrance Animation"
 msgstr ""
 
-#: brizy/languages/texts.php:187
+#: languages/texts.php:187
 msgid "Duration"
 msgstr ""
 
-#: brizy/languages/texts.php:188
+#: languages/texts.php:188
 msgid "Delay"
 msgstr ""
 
-#: brizy/languages/texts.php:189
+#: languages/texts.php:189
 msgid "Bounce"
 msgstr ""
 
-#: brizy/languages/texts.php:190
+#: languages/texts.php:190
 msgid "Flash"
 msgstr ""
 
-#: brizy/languages/texts.php:191
+#: languages/texts.php:191
 msgid "Pulse"
 msgstr ""
 
-#: brizy/languages/texts.php:192
+#: languages/texts.php:192
 msgid "RubberBand"
 msgstr ""
 
-#: brizy/languages/texts.php:193
+#: languages/texts.php:193
 msgid "Shake"
 msgstr ""
 
-#: brizy/languages/texts.php:194
+#: languages/texts.php:194
 msgid "Swing"
 msgstr ""
 
-#: brizy/languages/texts.php:195
+#: languages/texts.php:195
 msgid "Tada"
 msgstr ""
 
-#: brizy/languages/texts.php:196
+#: languages/texts.php:196
 msgid "Wobble"
 msgstr ""
 
-#: brizy/languages/texts.php:197
+#: languages/texts.php:197
 msgid "Jello"
 msgstr ""
 
-#: brizy/languages/texts.php:198
+#: languages/texts.php:198
 msgid "BounceIn"
 msgstr ""
 
-#: brizy/languages/texts.php:199
+#: languages/texts.php:199
 msgid "BounceInDown"
 msgstr ""
 
-#: brizy/languages/texts.php:200
+#: languages/texts.php:200
 msgid "BounceInLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:201
+#: languages/texts.php:201
 msgid "BounceInRight"
 msgstr ""
 
-#: brizy/languages/texts.php:202
+#: languages/texts.php:202
 msgid "BounceInUp"
 msgstr ""
 
-#: brizy/languages/texts.php:203
+#: languages/texts.php:203
 msgid "BounceOut"
 msgstr ""
 
-#: brizy/languages/texts.php:204
+#: languages/texts.php:204
 msgid "BounceOutDown"
 msgstr ""
 
-#: brizy/languages/texts.php:205
+#: languages/texts.php:205
 msgid "BounceOutLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:206
+#: languages/texts.php:206
 msgid "BounceOutRight"
 msgstr ""
 
-#: brizy/languages/texts.php:207
+#: languages/texts.php:207
 msgid "BounceOutUp"
 msgstr ""
 
-#: brizy/languages/texts.php:208
+#: languages/texts.php:208
 msgid "FadeIn"
 msgstr ""
 
-#: brizy/languages/texts.php:209
+#: languages/texts.php:209
 msgid "FadeInDown"
 msgstr ""
 
-#: brizy/languages/texts.php:210
+#: languages/texts.php:210
 msgid "FadeInDownBig"
 msgstr ""
 
-#: brizy/languages/texts.php:211
+#: languages/texts.php:211
 msgid "FadeInLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:212
+#: languages/texts.php:212
 msgid "FadeInLeftBig"
 msgstr ""
 
-#: brizy/languages/texts.php:213
+#: languages/texts.php:213
 msgid "FadeInRight"
 msgstr ""
 
-#: brizy/languages/texts.php:214
+#: languages/texts.php:214
 msgid "FadeInRightBig"
 msgstr ""
 
-#: brizy/languages/texts.php:215
+#: languages/texts.php:215
 msgid "FadeInUp"
 msgstr ""
 
-#: brizy/languages/texts.php:216
+#: languages/texts.php:216
 msgid "FadeInUpBig"
 msgstr ""
 
-#: brizy/languages/texts.php:217
+#: languages/texts.php:217
 msgid "FadeOut"
 msgstr ""
 
-#: brizy/languages/texts.php:218
+#: languages/texts.php:218
 msgid "FadeOutDown"
 msgstr ""
 
-#: brizy/languages/texts.php:219
+#: languages/texts.php:219
 msgid "FadeOutDownBig"
 msgstr ""
 
-#: brizy/languages/texts.php:220
+#: languages/texts.php:220
 msgid "FadeOutLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:221
+#: languages/texts.php:221
 msgid "FadeOutLeftBig"
 msgstr ""
 
-#: brizy/languages/texts.php:222
+#: languages/texts.php:222
 msgid "FadeOutRight"
 msgstr ""
 
-#: brizy/languages/texts.php:223
+#: languages/texts.php:223
 msgid "FadeOutRightBig"
 msgstr ""
 
-#: brizy/languages/texts.php:224
+#: languages/texts.php:224
 msgid "FadeOutUp"
 msgstr ""
 
-#: brizy/languages/texts.php:225
+#: languages/texts.php:225
 msgid "FadeOutUpBig"
 msgstr ""
 
-#: brizy/languages/texts.php:226
+#: languages/texts.php:226
 msgid "Flip"
 msgstr ""
 
-#: brizy/languages/texts.php:227
+#: languages/texts.php:227
 msgid "FlipInX"
 msgstr ""
 
-#: brizy/languages/texts.php:228
+#: languages/texts.php:228
 msgid "FlipInY"
 msgstr ""
 
-#: brizy/languages/texts.php:229
+#: languages/texts.php:229
 msgid "FlipOutX"
 msgstr ""
 
-#: brizy/languages/texts.php:230
+#: languages/texts.php:230
 msgid "FlipOutY"
 msgstr ""
 
-#: brizy/languages/texts.php:231
+#: languages/texts.php:231
 msgid "LightSpeedIn"
 msgstr ""
 
-#: brizy/languages/texts.php:232
+#: languages/texts.php:232
 msgid "RotateIn"
 msgstr ""
 
-#: brizy/languages/texts.php:233
+#: languages/texts.php:233
 msgid "RotateInDownLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:234
+#: languages/texts.php:234
 msgid "RotateInDownRight"
 msgstr ""
 
-#: brizy/languages/texts.php:235
+#: languages/texts.php:235
 msgid "RotateInUpLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:236
+#: languages/texts.php:236
 msgid "RotateInUpRight"
 msgstr ""
 
-#: brizy/languages/texts.php:237
+#: languages/texts.php:237
 msgid "RotateOut"
 msgstr ""
 
-#: brizy/languages/texts.php:238
+#: languages/texts.php:238
 msgid "RotateOutDownLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:239
+#: languages/texts.php:239
 msgid "RotateOutDownRight"
 msgstr ""
 
-#: brizy/languages/texts.php:240
+#: languages/texts.php:240
 msgid "RotateOutUpLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:241
+#: languages/texts.php:241
 msgid "RotateOutUpRight"
 msgstr ""
 
-#: brizy/languages/texts.php:242
+#: languages/texts.php:242
 msgid "SlideInUp"
 msgstr ""
 
-#: brizy/languages/texts.php:243
+#: languages/texts.php:243
 msgid "SlideInDown"
 msgstr ""
 
-#: brizy/languages/texts.php:244
+#: languages/texts.php:244
 msgid "SlideInLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:245
+#: languages/texts.php:245
 msgid "SlideInRight"
 msgstr ""
 
-#: brizy/languages/texts.php:246
+#: languages/texts.php:246
 msgid "SlideOutUp"
 msgstr ""
 
-#: brizy/languages/texts.php:247
+#: languages/texts.php:247
 msgid "SlideOutDown"
 msgstr ""
 
-#: brizy/languages/texts.php:248
+#: languages/texts.php:248
 msgid "SlideOutLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:249
+#: languages/texts.php:249
 msgid "SlideOutRight"
 msgstr ""
 
-#: brizy/languages/texts.php:250
+#: languages/texts.php:250
 msgid "ZoomIn"
 msgstr ""
 
-#: brizy/languages/texts.php:251
+#: languages/texts.php:251
 msgid "ZoomInDown"
 msgstr ""
 
-#: brizy/languages/texts.php:252
+#: languages/texts.php:252
 msgid "ZoomInLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:253
+#: languages/texts.php:253
 msgid "ZoomInRight"
 msgstr ""
 
-#: brizy/languages/texts.php:254
+#: languages/texts.php:254
 msgid "ZoomInUp"
 msgstr ""
 
-#: brizy/languages/texts.php:255
+#: languages/texts.php:255
 msgid "ZoomOut"
 msgstr ""
 
-#: brizy/languages/texts.php:256
+#: languages/texts.php:256
 msgid "ZoomOutDown"
 msgstr ""
 
-#: brizy/languages/texts.php:257
+#: languages/texts.php:257
 msgid "ZoomOutLeft"
 msgstr ""
 
-#: brizy/languages/texts.php:258
+#: languages/texts.php:258
 msgid "ZoomOutRight"
 msgstr ""
 
-#: brizy/languages/texts.php:259
+#: languages/texts.php:259
 msgid "ZoomOutUp"
 msgstr ""
 
-#: brizy/languages/texts.php:260
+#: languages/texts.php:260
 msgid "Hinge"
 msgstr ""
 
-#: brizy/languages/texts.php:261
+#: languages/texts.php:261
 msgid "JackInTheBox"
 msgstr ""
 
-#: brizy/languages/texts.php:262
+#: languages/texts.php:262
 msgid "RollIn"
 msgstr ""
 
-#: brizy/languages/texts.php:263
+#: languages/texts.php:263
 msgid "RollOut"
 msgstr ""
 
-#: brizy/languages/texts.php:265
+#: languages/texts.php:265
 msgid "Content"
 msgstr ""
 
-#: brizy/languages/texts.php:266
+#: languages/texts.php:266
 msgid "Align"
 msgstr ""
 
-#: brizy/languages/texts.php:267
+#: languages/texts.php:267
 msgid "Position"
 msgstr ""
 
-#: brizy/languages/texts.php:269
+#: languages/texts.php:269
 msgid "Typography"
 msgstr ""
 
-#: brizy/languages/texts.php:270
+#: languages/texts.php:270
 msgid "Font Family"
 msgstr ""
 
-#: brizy/languages/texts.php:271
+#: languages/texts.php:271
 msgid "Size"
 msgstr ""
 
-#: brizy/languages/texts.php:272
+#: languages/texts.php:272
 msgid "Line Hgt."
 msgstr ""
 
-#: brizy/languages/texts.php:273
+#: languages/texts.php:273
 msgid "Letter Sp."
 msgstr ""
 
-#: brizy/languages/texts.php:274
+#: languages/texts.php:274
 msgid "List"
 msgstr ""
 
-#: brizy/languages/texts.php:275
+#: languages/texts.php:275
 msgid "Bold"
 msgstr ""
 
-#: brizy/languages/texts.php:276
+#: languages/texts.php:276
 msgid "Italic"
 msgstr ""
 
-#: brizy/languages/texts.php:277
+#: languages/texts.php:277
 msgid "Gap Above"
 msgstr ""
 
-#: brizy/languages/texts.php:278
+#: languages/texts.php:278
 msgid "Gap Below"
 msgstr ""
 
-#: brizy/languages/texts.php:279
+#: languages/texts.php:279
 msgid "HTML Tag"
 msgstr ""
 
-#: brizy/languages/texts.php:280
+#: languages/texts.php:280
 msgid "P"
 msgstr ""
 
-#: brizy/languages/texts.php:281
+#: languages/texts.php:281
 msgid "H1"
 msgstr ""
 
-#: brizy/languages/texts.php:282
+#: languages/texts.php:282
 msgid "H2"
 msgstr ""
 
-#: brizy/languages/texts.php:283
+#: languages/texts.php:283
 msgid "H3"
 msgstr ""
 
-#: brizy/languages/texts.php:284
+#: languages/texts.php:284
 msgid "H4"
 msgstr ""
 
-#: brizy/languages/texts.php:285
+#: languages/texts.php:285
 msgid "H5"
 msgstr ""
 
-#: brizy/languages/texts.php:286
+#: languages/texts.php:286
 msgid "H6"
 msgstr ""
 
-#: brizy/languages/texts.php:287
+#: languages/texts.php:287
 msgid "PRE"
 msgstr ""
 
-#: brizy/languages/texts.php:288
+#: languages/texts.php:288
 msgid "Editable Text"
 msgstr ""
 
-#: brizy/languages/texts.php:290
+#: languages/texts.php:290
 msgid "Link"
 msgstr ""
 
-#: brizy/languages/texts.php:291
+#: languages/texts.php:291
 msgid "Anchor"
 msgstr ""
 
-#: brizy/languages/texts.php:292
+#: languages/texts.php:292
 msgid "Link to"
 msgstr ""
 
-#: brizy/languages/texts.php:293
+#: languages/texts.php:293
 msgid "Open In New Tab"
 msgstr ""
 
-#: brizy/languages/texts.php:296
+#: languages/texts.php:296
 msgid "Padding"
 msgstr ""
 
-#: brizy/languages/texts.php:297
+#: languages/texts.php:297
 msgid "Margin"
 msgstr ""
 
-#: brizy/languages/texts.php:298
+#: languages/texts.php:298
 msgid "Corner"
 msgstr ""
 
-#: brizy/languages/texts.php:299
+#: languages/texts.php:299
 msgid "Fill"
 msgstr ""
 
-#: brizy/languages/texts.php:300
+#: languages/texts.php:300
 msgid "Spacing"
 msgstr ""
 
-#: brizy/languages/texts.php:303
+#: languages/texts.php:303
 msgid "Shadow"
 msgstr ""
 
-#: brizy/languages/texts.php:306
+#: languages/texts.php:306
 msgid "Normal"
 msgstr ""
 
-#: brizy/languages/texts.php:307
+#: languages/texts.php:307
 msgid "Hover"
 msgstr ""
 
-#: brizy/languages/texts.php:310
+#: languages/texts.php:310
 msgid "Reverse Columns"
 msgstr ""
 
-#: brizy/languages/texts.php:315
+#: languages/texts.php:315
 msgid "Hour"
 msgstr ""
 
-#: brizy/languages/texts.php:316
+#: languages/texts.php:316
 msgid "Minutes"
 msgstr ""
 
-#: brizy/languages/texts.php:317
+#: languages/texts.php:317
 msgid "Time Zone"
 msgstr ""
 
-#: brizy/languages/texts.php:318
+#: languages/texts.php:318
 msgid "- 11:00 (Niue)"
 msgstr ""
 
-#: brizy/languages/texts.php:319
+#: languages/texts.php:319
 msgid "- 10:00 (Honolulu, Papeete)"
 msgstr ""
 
-#: brizy/languages/texts.php:320
+#: languages/texts.php:320
 msgid "- 9:00 (Anchorage)"
 msgstr ""
 
-#: brizy/languages/texts.php:321
+#: languages/texts.php:321
 msgid "- 8:00 (Los Angeles)"
 msgstr ""
 
-#: brizy/languages/texts.php:322
+#: languages/texts.php:322
 msgid "- 7:00 (Denver, Phoenix)"
 msgstr ""
 
-#: brizy/languages/texts.php:323
+#: languages/texts.php:323
 msgid "- 6:00 (Chicago, Dallas)"
 msgstr ""
 
-#: brizy/languages/texts.php:324
+#: languages/texts.php:324
 msgid "- 5:00 (New York, Miami)"
 msgstr ""
 
-#: brizy/languages/texts.php:325
+#: languages/texts.php:325
 msgid "- 4:00 (Halifax, Manaus)"
 msgstr ""
 
-#: brizy/languages/texts.php:326
+#: languages/texts.php:326
 msgid "- 3:00 (Brasilia, Santiago)"
 msgstr ""
 
-#: brizy/languages/texts.php:327
+#: languages/texts.php:327
 msgid "- 2:00 (Noronha)"
 msgstr ""
 
-#: brizy/languages/texts.php:328
+#: languages/texts.php:328
 msgid "- 1:00 (Cape Verde)"
 msgstr ""
 
-#: brizy/languages/texts.php:329
+#: languages/texts.php:329
 msgid "00:00 (London, Dublin)"
 msgstr ""
 
-#: brizy/languages/texts.php:330
+#: languages/texts.php:330
 msgid "+ 1:00 (Berlin, Paris)"
 msgstr ""
 
-#: brizy/languages/texts.php:331
+#: languages/texts.php:331
 msgid "+ 2:00 (Athens, Istanbul)"
 msgstr ""
 
-#: brizy/languages/texts.php:332
+#: languages/texts.php:332
 msgid "+ 3:00 (Moscow, Baghdad)"
 msgstr ""
 
-#: brizy/languages/texts.php:333
+#: languages/texts.php:333
 msgid "+ 4:00 (Dubai, Baku)"
 msgstr ""
 
-#: brizy/languages/texts.php:334
+#: languages/texts.php:334
 msgid "+ 5:00 (Yekaterinburg)"
 msgstr ""
 
-#: brizy/languages/texts.php:335
+#: languages/texts.php:335
 msgid "+ 6:00 (Astana)"
 msgstr ""
 
-#: brizy/languages/texts.php:336
+#: languages/texts.php:336
 msgid "+ 7:00 (Bangkok, Jakarta)"
 msgstr ""
 
-#: brizy/languages/texts.php:337
+#: languages/texts.php:337
 msgid "+ 8:00 (Singapore, Beijing)"
 msgstr ""
 
-#: brizy/languages/texts.php:338
+#: languages/texts.php:338
 msgid "+ 9:00 (Tokyo, Seoul)"
 msgstr ""
 
-#: brizy/languages/texts.php:339
+#: languages/texts.php:339
 msgid "+ 10:00 (Sidney, Melbourne)"
 msgstr ""
 
-#: brizy/languages/texts.php:340
+#: languages/texts.php:340
 msgid "+ 11:00 (Ponape)"
 msgstr ""
 
-#: brizy/languages/texts.php:341
+#: languages/texts.php:341
 msgid "+ 12:00 (Auckland)"
 msgstr ""
 
-#: brizy/languages/texts.php:342
+#: languages/texts.php:342
 msgid "Language"
 msgstr ""
 
-#: brizy/languages/texts.php:343
+#: languages/texts.php:343
 msgid "German"
 msgstr ""
 
-#: brizy/languages/texts.php:344
+#: languages/texts.php:344
 msgid "English"
 msgstr ""
 
-#: brizy/languages/texts.php:345
+#: languages/texts.php:345
 msgid "Spanish"
 msgstr ""
 
-#: brizy/languages/texts.php:346
+#: languages/texts.php:346
 msgid "French"
 msgstr ""
 
-#: brizy/languages/texts.php:347
+#: languages/texts.php:347
 msgid "Italian"
 msgstr ""
 
-#: brizy/languages/texts.php:348
+#: languages/texts.php:348
 msgid "Dutch"
 msgstr ""
 
-#: brizy/languages/texts.php:349
+#: languages/texts.php:349
 msgid "Russian"
 msgstr ""
 
-#: brizy/languages/texts.php:351
+#: languages/texts.php:351
 msgid "Start"
 msgstr ""
 
-#: brizy/languages/texts.php:352
+#: languages/texts.php:352
 msgid "End"
 msgstr ""
 
-#: brizy/languages/texts.php:354
+#: languages/texts.php:354
 msgid "Paste your code here..."
 msgstr ""
 
-#: brizy/languages/texts.php:356
+#: languages/texts.php:356
 msgid "Field"
 msgstr ""
 
-#: brizy/languages/texts.php:357
+#: languages/texts.php:357
 msgid "Field Type"
 msgstr ""
 
-#: brizy/languages/texts.php:358
+#: languages/texts.php:358
 msgid "Label"
 msgstr ""
 
-#: brizy/languages/texts.php:359
+#: languages/texts.php:359
 msgid "Message"
 msgstr ""
 
-#: brizy/languages/texts.php:360
+#: languages/texts.php:360
 msgid "Success"
 msgstr ""
 
-#: brizy/languages/texts.php:362
+#: languages/texts.php:361
+msgid "Error"
+msgstr ""
+
+#: languages/texts.php:362
 msgid "Message sent"
 msgstr ""
 
-#: brizy/languages/texts.php:363
+#: languages/texts.php:363
 msgid "Message not sent"
 msgstr ""
 
-#: brizy/languages/texts.php:364
+#: languages/texts.php:364
 msgid "Redirect"
 msgstr ""
 
-#: brizy/languages/texts.php:365
+#: languages/texts.php:365
 msgid "Go to"
 msgstr ""
 
-#: brizy/languages/texts.php:366
+#: languages/texts.php:366
 msgid "Required"
 msgstr ""
 
-#: brizy/languages/texts.php:367
+#: languages/texts.php:367
 msgid "Email"
 msgstr ""
 
-#: brizy/languages/texts.php:368
+#: languages/texts.php:368
 msgid "Number"
 msgstr ""
 
-#: brizy/languages/texts.php:369
+#: languages/texts.php:369
 msgid "Paragraph"
 msgstr ""
 
-#: brizy/languages/texts.php:370
+#: languages/texts.php:370
 msgid "Select"
 msgstr ""
 
-#: brizy/languages/texts.php:373
+#: languages/texts.php:373
 msgid "Style"
 msgstr ""
 
-#: brizy/languages/texts.php:374
+#: languages/texts.php:374
 msgid "Opacity"
 msgstr ""
 
-#: brizy/languages/texts.php:375
+#: languages/texts.php:375
 msgid "Contrast"
 msgstr ""
 
-#: brizy/languages/texts.php:376
+#: languages/texts.php:376
 msgid "Hue"
 msgstr ""
 
-#: brizy/languages/texts.php:377
+#: languages/texts.php:377
 msgid "Brightness"
 msgstr ""
 
-#: brizy/languages/texts.php:378
+#: languages/texts.php:378
 msgid "Saturation"
 msgstr ""
 
-#: brizy/languages/texts.php:380
+#: languages/texts.php:380
 msgid "LightBox"
 msgstr ""
 
-#: brizy/languages/texts.php:381
+#: languages/texts.php:381
 msgid "Open in Lightbox"
 msgstr ""
 
-#: brizy/languages/texts.php:383
+#: languages/texts.php:383
 msgid "Gallery"
 msgstr ""
 
-#: brizy/languages/texts.php:385
+#: languages/texts.php:385
 msgid "Percentage"
 msgstr ""
 
-#: brizy/languages/texts.php:386
+#: languages/texts.php:386
 msgid "Show Percentage"
 msgstr ""
 
-#: brizy/languages/texts.php:387
+#: languages/texts.php:387
 msgid "Bar"
 msgstr ""
 
-#: brizy/languages/texts.php:389
+#: languages/texts.php:389
 msgid "SoundCloud"
 msgstr ""
 
-#: brizy/languages/texts.php:390
+#: languages/texts.php:390
 msgid "SoundCloud Link"
 msgstr ""
 
-#: brizy/languages/texts.php:392
+#: languages/texts.php:392
 msgid "Video Link"
 msgstr ""
 
-#: brizy/languages/texts.php:393
+#: languages/texts.php:393
 msgid "Ratio"
 msgstr ""
 
-#: brizy/languages/texts.php:394
+#: languages/texts.php:394
 msgid "Controls"
 msgstr ""
 
-#: brizy/languages/texts.php:395
+#: languages/texts.php:395
 msgid "Cover"
 msgstr ""
 
-#: brizy/languages/texts.php:396
+#: languages/texts.php:396
 msgid "Play"
 msgstr ""
 
-#: brizy/languages/texts.php:399
+#: languages/texts.php:399
 msgid "Header"
 msgstr ""
 
-#: brizy/languages/texts.php:402
+#: languages/texts.php:402
 msgid "Footer"
 msgstr ""
 
-#: brizy/languages/texts.php:403
+#: languages/texts.php:403
 msgid "MultiPage"
 msgstr ""
 
-#: brizy/languages/texts.php:406
+#: languages/texts.php:406
 msgid "Type"
 msgstr ""
 
-#: brizy/languages/texts.php:407
+#: languages/texts.php:407
 msgid "Static"
 msgstr ""
 
-#: brizy/languages/texts.php:410
+#: languages/texts.php:410
 msgid "No matches found"
 msgstr ""
 
-#: brizy/languages/texts.php:413
+#: languages/texts.php:413
 msgid "Popup"
 msgstr ""
 
-#: brizy/languages/texts.php:414
+#: languages/texts.php:414
 msgid "Close"
 msgstr ""
 
-#: brizy/languages/texts.php:417
+#: languages/texts.php:417
 msgid "Comments"
 msgstr ""
 
-#: brizy/languages/texts.php:418
+#: languages/texts.php:418
 msgid "Like"
 msgstr ""
 
-#: brizy/languages/texts.php:419
+#: languages/texts.php:419
 msgid "Recommend"
 msgstr ""
 
-#: brizy/languages/texts.php:420
+#: languages/texts.php:420
 msgid "Include Share Button"
 msgstr ""
 
-#: brizy/languages/texts.php:421
+#: languages/texts.php:421
 msgid "Show Friends' Faces"
 msgstr ""
 
-#: brizy/languages/texts.php:422
+#: languages/texts.php:422
 msgid "Show Button Counter"
 msgstr ""
 
-#: brizy/languages/texts.php:423
+#: languages/texts.php:423
 msgid "Dark Scheme"
 msgstr ""
 
-#: brizy/languages/texts.php:424
+#: languages/texts.php:424
 msgid "Target URL"
 msgstr ""
 
-#: brizy/languages/texts.php:425
+#: languages/texts.php:425
 msgid "Current Page"
 msgstr ""
 
-#: brizy/languages/texts.php:426
+#: languages/texts.php:426
 msgid "Custom Page"
 msgstr ""
 
-#: brizy/languages/texts.php:427
+#: languages/texts.php:427
 msgid "Include Full Post"
 msgstr ""
 
-#: brizy/languages/texts.php:428
+#: languages/texts.php:428
 msgid "Full Screen"
 msgstr ""
 
-#: brizy/languages/texts.php:429
+#: languages/texts.php:429
 msgid "AutoPlay"
 msgstr ""
 
-#: brizy/languages/texts.php:430
+#: languages/texts.php:430
 msgid "Captions"
 msgstr ""
 
-#: brizy/languages/texts.php:431
+#: languages/texts.php:431
 msgid "Timeline"
 msgstr ""
 
-#: brizy/languages/texts.php:432
+#: languages/texts.php:432
 msgid "Events"
 msgstr ""
 
-#: brizy/languages/texts.php:433
+#: languages/texts.php:433
 msgid "Messages"
 msgstr ""
 
-#: brizy/languages/texts.php:434
+#: languages/texts.php:434
 msgid "Use Small Header"
 msgstr ""
 
-#: brizy/languages/texts.php:435
+#: languages/texts.php:435
 msgid "Hide Cover Photo"
 msgstr ""
 
-#: brizy/languages/texts.php:436
+#: languages/texts.php:436
 msgid "Show Friend's Faces"
 msgstr ""
 
-#: brizy/languages/texts.php:437
+#: languages/texts.php:437
 msgid "Facebook Button"
 msgstr ""
 
-#: brizy/languages/texts.php:438
+#: languages/texts.php:438
 msgid "Facebook Comments"
 msgstr ""
 
-#: brizy/languages/texts.php:439
+#: languages/texts.php:439
 msgid "Facebook Embed"
 msgstr ""
 
-#: brizy/languages/texts.php:440
+#: languages/texts.php:440
 msgid "Facebook Page"
 msgstr ""
 
-#: brizy/languages/texts.php:442
+#: languages/texts.php:442
 msgid "Back to Layouts"
 msgstr ""
 
-#: brizy/languages/texts.php:444
+#: languages/texts.php:444
 msgid "Import This Layout"
 msgstr ""
 
-#: brizy/languages/texts.php:445
+#: languages/texts.php:445
 msgid "Nothing here yet, save a block first."
 msgstr ""
 
-#: brizy/languages/texts.php:446
+#: languages/texts.php:446
 msgid "Nothing here yet, make a global block first."
 msgstr ""
 
-#: brizy/languages/texts.php:448
+#: languages/texts.php:448
 msgid "Query"
 msgstr ""
 
-#: brizy/languages/texts.php:449
+#: languages/texts.php:449
 msgid "Product ID"
 msgstr ""
 
-#: brizy/languages/texts.php:450
+#: languages/texts.php:450
 msgid "Product ID or SKU"
 msgstr ""
 
-#: brizy/languages/texts.php:451
+#: languages/texts.php:451
 msgid "Products Count"
 msgstr ""
 
-#: brizy/languages/texts.php:452
+#: languages/texts.php:452
 msgid "Layout"
 msgstr ""
 
-#: brizy/languages/texts.php:453
+#: languages/texts.php:453
 msgid "Style Add to Cart"
 msgstr ""
 
-#: brizy/languages/texts.php:454
+#: languages/texts.php:454
 msgid "Categories Count"
 msgstr ""
 
-#: brizy/languages/texts.php:455
+#: languages/texts.php:455
 msgid "Order"
 msgstr ""
 
-#: brizy/languages/texts.php:456
+#: languages/texts.php:456
 msgid "Asc"
 msgstr ""
 
-#: brizy/languages/texts.php:457
+#: languages/texts.php:457
 msgid "Desc"
 msgstr ""
 
-#: brizy/languages/texts.php:458
+#: languages/texts.php:458
 msgid "Order By"
 msgstr ""
 
-#: brizy/languages/texts.php:459
+#: languages/texts.php:459
 msgid "Name"
 msgstr ""
 
-#: brizy/languages/texts.php:460
+#: languages/texts.php:460
 msgid "Slug"
 msgstr ""
 
-#: brizy/languages/texts.php:462
+#: languages/texts.php:461
+msgid "Description"
+msgstr ""
+
+#: languages/texts.php:462
 msgid "Count"
 msgstr ""
 
-#: brizy/languages/texts.php:463
+#: languages/texts.php:463
 msgid "Page"
 msgstr ""
 
-#: brizy/languages/texts.php:464
+#: languages/texts.php:464
 msgid "Cart"
 msgstr ""
 
-#: brizy/languages/texts.php:465
+#: languages/texts.php:465
 msgid "Checkout"
 msgstr ""
 
-#: brizy/languages/texts.php:466
+#: languages/texts.php:466
 msgid "My Account"
 msgstr ""
 
-#: brizy/languages/texts.php:467
+#: languages/texts.php:467
 msgid "Order Tracking"
 msgstr ""
 
-#: brizy/languages/texts.php:468
+#: languages/texts.php:468
 msgid "Filter"
 msgstr ""
 
-#: brizy/languages/texts.php:469
+#: languages/texts.php:469
 msgid "Title"
 msgstr ""
 
-#: brizy/languages/texts.php:470
+#: languages/texts.php:470
 msgid "Rating"
 msgstr ""
 
-#: brizy/languages/texts.php:471
+#: languages/texts.php:471
 msgid "Popularity"
 msgstr ""
 
-#: brizy/languages/texts.php:472
+#: languages/texts.php:472
 msgid "Menu Order"
 msgstr ""
 
-#: brizy/languages/texts.php:473
+#: languages/texts.php:473
 msgid "Random"
 msgstr ""
 
-#: brizy/languages/texts.php:474
+#: languages/texts.php:474
 msgid "ID"
 msgstr ""
 
-#: brizy/languages/texts.php:475
+#: languages/texts.php:475
 msgid "Paste your wordpress shortcode here..."
 msgstr ""
 
-#: brizy/languages/texts.php:476
+#: languages/texts.php:476
 msgid "Weight"
 msgstr ""
 
-#: brizy/languages/texts.php:477
+#: languages/texts.php:477
 msgid "Post Type"
 msgstr ""
 
-#: brizy/languages/texts.php:478
+#: languages/texts.php:478
 msgid "Post"
 msgstr ""
 
-#: brizy/languages/texts.php:479
+#: languages/texts.php:479
 msgid "Number posts"
 msgstr ""
 
-#: brizy/languages/texts.php:480
+#: languages/texts.php:480
 msgid "Category"
 msgstr ""
 
-#: brizy/languages/texts.php:481
+#: languages/texts.php:481
 msgid "Author"
 msgstr ""
 
-#: brizy/languages/texts.php:482
+#: languages/texts.php:482
 msgid "Include"
 msgstr ""
 
-#: brizy/languages/texts.php:483
+#: languages/texts.php:483
 msgid "Exclude"
 msgstr ""
 
-#: brizy/languages/texts.php:484
+#: languages/texts.php:484
 msgid "Status"
 msgstr ""
 
-#: brizy/languages/texts.php:485
+#: languages/texts.php:485
 msgid "Future"
 msgstr ""
 
-#: brizy/languages/texts.php:486
+#: languages/texts.php:486
 msgid "Draft"
 msgstr ""
 
-#: brizy/languages/texts.php:487
+#: languages/texts.php:487
 msgid "Pending"
 msgstr ""
 
-#: brizy/languages/texts.php:488
+#: languages/texts.php:488
 msgid "Private"
 msgstr ""
 
-#: brizy/languages/texts.php:489
+#: languages/texts.php:489
 msgid "Trash"
 msgstr ""
 
-#: brizy/languages/texts.php:490
+#: languages/texts.php:490
 msgid "Auto-Draft"
 msgstr ""
 
-#: brizy/languages/texts.php:491
+#: languages/texts.php:491
 msgid "Inherit"
 msgstr ""
 
-#: brizy/languages/texts.php:492
+#: languages/texts.php:492
 msgid "Meta Key"
 msgstr ""
 
-#: brizy/languages/texts.php:493
+#: languages/texts.php:493
 msgid "Meta Value"
 msgstr ""
 
-#: brizy/languages/texts.php:494
+#: languages/texts.php:494
 msgid "Modified"
 msgstr ""
 
-#: brizy/languages/texts.php:495
+#: languages/texts.php:495
 msgid "Parent"
 msgstr ""
 
-#: brizy/languages/texts.php:496
+#: languages/texts.php:496
 msgid "Comment Count"
 msgstr ""
 
-#: brizy/languages/texts.php:497
+#: languages/texts.php:497
 msgid "Filter By"
 msgstr ""
 
-#: brizy/languages/texts.php:498
+#: languages/texts.php:498
 msgid "Block"
 msgstr ""
 
-#: brizy/languages/texts.php:499
+#: languages/texts.php:499
 msgid "Make it Global"
 msgstr ""
 
-#: brizy/languages/texts.php:501
+#: languages/texts.php:501
 msgid "Blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:502
+#: languages/texts.php:502
 msgid "Saved Blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:503
+#: languages/texts.php:503
 msgid "Global Blocks"
 msgstr ""
 
-#: brizy/languages/texts.php:504
+#: languages/texts.php:504
 msgid "Light"
 msgstr ""
 
-#: brizy/languages/texts.php:505
+#: languages/texts.php:505
 msgid "Dark"
 msgstr ""
 
-#: brizy/languages/texts.php:506
+#: languages/texts.php:506
 msgid "All Categories"
 msgstr ""
 
-#: brizy/languages/texts.php:507
+#: languages/texts.php:507
 msgid "Enter Search Keyword"
 msgstr ""
 
-#: brizy/languages/texts.php:508
+#: languages/texts.php:508
 msgid "Type to search"
 msgstr ""
 
-#: brizy/languages/texts.php:509
+#: languages/texts.php:509
 msgid "Add a blank block"
 msgstr ""
 
-#: brizy/languages/texts.php:510
+#: languages/texts.php:510
 msgid "An error happened while trying to display this block"
 msgstr ""
 
-#: brizy/languages/texts.php:511
+#: languages/texts.php:511
 msgid "You can"
 msgstr ""
 
-#: brizy/languages/texts.php:512
+#: languages/texts.php:512
 msgid "open an issue"
 msgstr ""
 
-#: brizy/languages/texts.php:513
+#: languages/texts.php:513
 msgid "or"
 msgstr ""
 
-#: brizy/languages/texts.php:514
+#: languages/texts.php:514
 msgid "remove this block"
 msgstr ""
 
-#: brizy/languages/texts.php:515
+#: languages/texts.php:515
 msgid "Page Template"
 msgstr ""
 
-#: brizy/languages/texts.php:516
+#: languages/texts.php:516
 msgid "Toggle Menu"
 msgstr ""
 
-#: brizy/languages/texts.php:517
+#: languages/texts.php:517
 msgid "Make it Nofollow"
 msgstr ""
 
-#: brizy/languages/texts.php:518
+#: languages/texts.php:518
 msgid "Dividers"
 msgstr ""
 
-#: brizy/languages/texts.php:519
+#: languages/texts.php:519
 msgid "Arrangement"
 msgstr ""
 
-#: brizy/languages/texts.php:520
+#: languages/texts.php:520
 msgid "Repeat"
 msgstr ""
 
-#: brizy/languages/texts.php:521
+#: languages/texts.php:521
 msgid "Make it Hamburger"
 msgstr ""
 
-#: brizy/languages/texts.php:522
+#: languages/texts.php:522
 msgid "Add a Menu"
 msgstr ""
 
-#: brizy/languages/texts.php:523
+#: languages/texts.php:523
 msgid "Please select a menu"
 msgstr ""
 
-#: brizy/languages/texts.php:524
+#: languages/texts.php:524
 msgid "Select a Menu"
 msgstr ""
 
-#: brizy/languages/texts.php:525
+#: languages/texts.php:525
 msgid "in your WordPress admin"
 msgstr ""
 
-#: brizy/languages/texts.php:526
+#: languages/texts.php:526
 msgid "Drawer Position"
 msgstr ""
 
-#: brizy/languages/texts.php:527
+#: languages/texts.php:527
 msgid "anchor-name"
 msgstr ""
 
-#: brizy/languages/texts.php:528
+#: languages/texts.php:528
 msgid "APPS"
 msgstr ""
 
-#: brizy/languages/texts.php:529
+#: languages/texts.php:529
 msgid "It's a sample"
 msgstr ""
 
-#: brizy/public/main.php:83
+#: maintenance-mode.php:110
+msgid "Maintenance Mode ON"
+msgstr ""
+
+#: maintenance-mode.php:117
+msgid "Edit Page"
+msgstr ""
+
+#: public/main.php:112
 msgid "Preview"
 msgstr ""
 
-#: brizy/public/main.php:94
+#: public/main.php:123
 msgid "View"
 msgstr ""
 
-#: brizy/public/main.php:184
+#: public/main.php:222
 msgid "Edit "
+msgstr ""
+
+#: admin/views/optimizer/optimizer-base.html.twig:2
+msgid "Image Optimization"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-general.html.twig:85
+#, php-format
+msgid "There are <b>%d</b> images that can be optimized."
+msgstr ""
+
+#: admin/views/optimizer/optimizer-general.html.twig:98
+msgid "Please provide an API KEY in the Settings tab."
+msgstr ""
+
+#: admin/views/optimizer/optimizer-general.html.twig:104
+msgid "Don't leave this page until the optimisation process is completed."
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:11
+msgid "Shortpixel API Key"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:17
+msgid "Get an API key"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:21
+msgid "Compression"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:27
+msgid "Lossy"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:27
+msgid ""
+"creates the smallest optimised images you can get. If you want the best "
+"balance between optimisation and picture quality, go with this option. "
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:33
+msgid "Glossy"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:33
+msgid ""
+"the best choice if you believe that a slight loss of page speed is an "
+"acceptable compromise for a top image quality."
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:40
+msgid "Lossless"
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:40
+msgid ""
+"images are pixel-by-pixel identical with the originals. If you want your "
+"images to remain untouched with a small size reduction, go with this option."
+msgstr ""
+
+#: admin/views/optimizer/optimizer-settings.html.twig:51
+msgid "Optimize images"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Brizy"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://brizy.io/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"A free drag & drop front-end page builder to help you create WordPress pages "
+"lightning fast. It's easy with Brizy."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Brizy.io"
 msgstr ""
