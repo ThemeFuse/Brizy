@@ -31,7 +31,7 @@ jobs:
         with:
           repository: git@github.com:bagrinsergiu/BB.git
           ref: master
-          token: ''
+          token: ${{ secrets.COMPOSER_TOKEN }}
           path: bb
           submodules: 'recursive'
           fetch-depth: '1'
