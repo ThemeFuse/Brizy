@@ -8,9 +8,8 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -112,30 +111,36 @@ class SectionPopup extends EditorComponent {
     const size = styleSizeContainerSize({ v, device: "desktop" });
     const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
     const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
+      wNoSpacing: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
       width: size,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: wInTabletPage,
+      wNoSpacing: wInTabletPage,
       width: tabletSize,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: wInMobilePage,
+      wNoSpacing: wInMobilePage,
       width: mobileSize,
       device: "mobile"
     });
 
     return {
       ...meta,
-      tabletW,
-      mobileW,
       desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing,
       sectionPopup: true
     };
   }
@@ -151,15 +156,7 @@ class SectionPopup extends EditorComponent {
         })}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          IS_GLOBAL_POPUP && globalBlockId
-            ? child => (
-                <ConditionsComponent type="popup">{child}</ConditionsComponent>
-              )
-            : globalBlockId
-            ? child => child
-            : null
-        }
+        global={!!globalBlockId}
       />
     );
   }
@@ -196,7 +193,7 @@ class SectionPopup extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <SortableZIndex zindex={1}>
+        <SortableZIndex zIndex={1}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
               <EditorArrayComponent {...itemsProps} />

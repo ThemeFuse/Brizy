@@ -277,7 +277,8 @@ export {
   cssStyleVisibleEditorDisplayNoneOrFlex,
   cssStyleVisibleEditorDisplayNoneOrBlock,
   cssStyleVisibleEditorDisplayNoneOrInlineFlex,
-  cssStyleVisibleMode
+  cssStyleVisibleMode,
+  cssStyleShowMembershipBlock
 } from "./cssStyleVisible";
 
 // Filter
@@ -497,7 +498,8 @@ export {
   cssStyleElementTimelineNavTitleVisible,
   // Vertical
   cssStyleElementTimelineVerticalPosition,
-  cssStyleElementTimelineLineWidthHeight,
+  cssStyleElementTimelineLineWidthHeightBefore,
+  cssStyleElementTimelineLineWidthHeightAfter,
   cssStyleElementTimelineVerticalLinePosition,
   cssStyleElementTimelineVerticalLineTopPosition,
   cssStyleElementTimelineVerticalLineBottomPosition,
@@ -665,7 +667,8 @@ export {
   cssStyleElementAccordionActiveColor,
   cssStyleElementAccordionActiveBgColor,
   cssStyleElementAccordionActiveBorder,
-  cssStyleElementAccordionActiveShadow
+  cssStyleElementAccordionActiveShadow,
+  cssStyleElementAccordionAnimDuration
 } from "./cssStyleElementAccordion";
 
 // Tabs

@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.2.6
+ * Version: 2.2.9.1
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,9 +19,9 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.2.6' );
-define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '165-wp' );
-define( 'BRIZY_SYNC_VERSION', '165' );
+define( 'BRIZY_VERSION', '2.2.9.1' );
+define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '173-wp' );
+define( 'BRIZY_SYNC_VERSION', '173' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -30,6 +30,11 @@ define( 'BRIZY_MAX_REVISIONS_TO_KEEP', 30 );
 
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/autoload.php';
 include_once rtrim( BRIZY_PLUGIN_PATH, "/" ) . '/languages/main.php';
+
+if ( BRIZY_DEVELOPMENT ) {
+	$dotenv = new \Symfony\Component\Dotenv\Dotenv('APP_ENV');
+	$dotenv->loadEnv( __DIR__ . '/.env' );
+}
 
 add_action( 'plugins_loaded', 'brizy_load' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
@@ -41,6 +46,7 @@ function brizy_load() {
 
 	if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
 		add_action( 'admin_notices', 'brizy_notices' );
+
 		return;
 	}
 
@@ -53,14 +59,14 @@ function brizy_notices() {
 	?>
     <div class="notice notice-error is-dismissible">
         <p>
-            <?php
-                printf(
-                    __( '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>', 'brizy' ),
-                    __bt( 'brizy', 'Brizy' ),
-                    PHP_VERSION,
-                    strtoupper( __bt( 'brizy', 'Brizy' ) )
-                );
-            ?>
+			<?php
+			printf(
+				__( '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>', 'brizy' ),
+				__bt( 'brizy', 'Brizy' ),
+				PHP_VERSION,
+				strtoupper( __bt( 'brizy', 'Brizy' ) )
+			);
+			?>
         </p>
     </div>
 	<?php
@@ -71,7 +77,7 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 		foreach ( $options['plugins'] as $plugin ) {
 			if ( $plugin == BRIZY_PLUGIN_BASE ) {
 				add_option( 'brizy-regenerate-permalinks', 1 );
-				do_action('brizy-updated');
+				do_action( 'brizy-updated' );
 			}
 		}
 	}
@@ -80,13 +86,13 @@ function brizy_upgrade_completed( $upgrader_object, $options ) {
 function brizy_install() {
 	Brizy_Logger::install();
 	add_option( 'brizy-regenerate-permalinks', 1 );
-	do_action('brizy-activated');
+	do_action( 'brizy-activated' );
 }
 
 function brizy_clean() {
 	Brizy_Logger::clean();
 	add_option( 'brizy-regenerate-permalinks', 1 );
-	do_action('brizy-deactivated');
+	do_action( 'brizy-deactivated' );
 }
 
 new Brizy_Compatibilities_Init();

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import ThemeIcon from "visual/component/ThemeIcon";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 
 class Upload extends Component {
   static defaultProps = {
@@ -13,7 +14,9 @@ class Upload extends Component {
     required: false,
     accept: "",
     multiple: false,
+    fileText: "",
     onChange: _.noop,
+    onChangeText: _.noop,
     onBlur: _.noop,
     onClick: _.noop
   };
@@ -23,8 +26,10 @@ class Upload extends Component {
       className: _className,
       value,
       onChange,
+      onChangeText,
       onBlur,
-      onClick
+      onClick,
+      fileText
     } = this.props;
     const className = classnames("brz-input__upload", _className);
 
@@ -37,19 +42,23 @@ class Upload extends Component {
             value={value}
             onChange={onChange}
           />
-          <span className="brz-button">Choose File</span>
+          <span className="brz-button">
+            <TextEditor value={fileText} onChange={onChangeText} />
+          </span>
         </label>
       </div>
     );
   }
 
   renderForView() {
-    const { id, className: _className, placeholder } = this.props;
+    const { fileText, ...props } = this.props;
+    const { id, className: _className, placeholder } = props;
+
     const className = classnames("brz-input__upload", _className);
 
     return (
       <div className={className}>
-        <input {...this.props} type="file" className="brz-input" />
+        <input {...props} type="file" className="brz-input" />
         <label htmlFor={id} className="brz-label">
           <span className="brz-span">{placeholder}</span>
           <ThemeIcon
@@ -57,7 +66,7 @@ class Upload extends Component {
             name="close"
             type="editor"
           />
-          <span className="brz-button">Choose File</span>
+          <span className="brz-button">{fileText}</span>
         </label>
       </div>
     );

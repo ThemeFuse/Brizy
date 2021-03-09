@@ -12,7 +12,7 @@ import {
   pageBlocksAssembledSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
-import { canUseConditionInPage } from "visual/utils/blocks";
+import { canUseCondition } from "visual/utils/blocks";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
@@ -29,7 +29,7 @@ const SortableItem = SortableElement(
       const { _id } = item.value;
 
       try {
-        if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+        if (!canUseCondition(globalBlocks[_id], pageId)) {
           return <div />;
         }
       } catch {

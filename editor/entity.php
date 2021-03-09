@@ -41,6 +41,19 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
         $this->loadInstanceData();
     }
 
+	/**
+	 * @return bool
+	 */
+	public function can_edit_posts() {
+		return current_user_can( 'edit_posts' );
+	}
+	/**
+	 * @return bool
+	 */
+	static public function canEditPosts() {
+		return current_user_can( 'edit_posts' );
+	}
+
     static public function get($postId)
     {
         $type = get_post_type($postId);
@@ -56,6 +69,66 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
                 return Brizy_Editor_Block::get($postId);
         }
     }
+
+
+	/**
+	 * @return bool
+	 */
+	public function uses_editor() {
+		return self::isBrizyEnabled($this->getWpPostId());
+	}
+
+	/**
+	 * @return bool
+	 */
+	static public function isBrizyEnabled($post) {
+
+		if($post instanceof WP_Post)
+			$post = $post->ID;
+
+		return (bool)get_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, true);
+	}
+
+	/**
+	 * @param $value
+	 *
+	 * @return $this
+	 * @throws Brizy_Editor_Exceptions_AccessDenied
+	 */
+	public function set_uses_editor( $value ) {
+		self::setBrizyEnabled($this->getWpPostId(), $value);
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	static public function setBrizyEnabled($post, $value) {
+
+		if ( ! self::canEditPosts() ) {
+			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
+		}
+
+		if($post instanceof WP_Post)
+			$post = $post->ID;
+
+		update_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, (int)$value);
+	}
+
+
+	/**
+	 * @return string
+	 */
+	static public function getEditUrl($post) {
+
+		if($post instanceof WP_Post)
+			$post = $post->ID;
+
+		return add_query_arg(
+			array( Brizy_Editor::prefix( '-edit' ) => '' ),
+			get_permalink( $post )
+		);
+	}
 
     /**
      * @param $postId

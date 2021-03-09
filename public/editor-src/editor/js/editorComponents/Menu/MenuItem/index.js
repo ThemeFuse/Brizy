@@ -4,7 +4,7 @@ import { noop } from "underscore";
 import { Manager, Reference, Popper } from "react-popper";
 import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Portal from "visual/component/Portal";
 import Toolbar from "visual/component/Toolbar";
 import ThemeIcon from "visual/component/ThemeIcon";
@@ -67,14 +67,29 @@ class MenuItem extends EditorComponent {
 
   getMeta(v) {
     const { meta, mods, mMenu } = this.props;
-    const { desktopW, tabletW, mobileW } = calculateMeta({
+    const {
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    } = calculateMeta({
       v,
       meta,
       mods,
       isMMenu: Boolean(mMenu)
     });
 
-    return { ...meta, desktopW, tabletW, mobileW };
+    return {
+      ...meta,
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
+    };
   }
 
   getMegaMenuWidth(width, suffix, mode) {
@@ -283,7 +298,7 @@ class MenuItem extends EditorComponent {
       <Popper {...props}>
         {({ ref, style, placement }) => (
           <Portal node={document.body}>
-            <SortableZIndex zindex={2}>
+            <SortableZIndex zIndex={2}>
               <div
                 className={portalClassName}
                 ref={ref}

@@ -87,13 +87,13 @@
   }
 
   // Video Player
-  .brz-video-element {
+  .brz-video-elem {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     z-index: 999;
-    min-width: 350px;
+    min-width: 150px;
 
     video {
       position: absolute;
@@ -226,7 +226,7 @@
 
 // Custom Video Style
 .brz-custom-video {
-  min-width: 355px;
+  min-width: 150px;
 
   .brz-video-content {
     overflow: hidden;

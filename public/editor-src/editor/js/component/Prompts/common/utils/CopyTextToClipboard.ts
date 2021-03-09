@@ -1,5 +1,5 @@
-const fallbackCopyTextToClipboard = text => {
-  let textarea = document.createElement("textarea");
+export const copyTextToClipboard = (text: string): void => {
+  const textarea = document.createElement("textarea");
   textarea.value = text;
   document.body.appendChild(textarea);
   textarea.focus();
@@ -14,12 +14,4 @@ const fallbackCopyTextToClipboard = text => {
   }
 
   document.body.removeChild(textarea);
-};
-
-export const copyTextToClipboard = text => {
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-  } else {
-    navigator.clipboard.writeText(text);
-  }
 };

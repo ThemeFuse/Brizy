@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
@@ -19,6 +20,7 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
+import { IS_WP } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -31,6 +33,8 @@ export function getItems({ v, device, component, state }) {
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
+
+  const membershipRoles = Config.get("wp")?.availableRoles || [];
 
   return [
     toolbarShowOnResponsive({
@@ -58,7 +62,36 @@ export function getItems({ v, device, component, state }) {
               component,
               devices: "desktop",
               state: "normal"
-            })
+            }),
+            {
+              id: "gbConditions",
+              disabled: !component.props.meta.globalBlockId,
+              value: component.props.meta.globalBlockId,
+              type: "gbConditions"
+            }
+          ]
+        },
+        {
+          id: "membership",
+          label: t("Membership"),
+          type: "switch-dev",
+          disabled: !IS_WP
+        },
+        {
+          id: "membershipRoles",
+          label: t("Show to"),
+          type: "multiSelect-dev",
+          placeholder: "Select",
+          disabled: v.membership === "off" || !IS_WP,
+          choices: [
+            {
+              title: "Not logged",
+              value: "not_logged"
+            },
+            ...membershipRoles.map(({ role, name }) => ({
+              title: name,
+              value: role
+            }))
           ]
         }
       ]

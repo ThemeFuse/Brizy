@@ -35,32 +35,46 @@ export default class Section extends EditorComponent {
   getMeta(v) {
     const { meta } = this.props;
     const { slider } = v;
-    const desktopFullW = getContainerW({
+    const {
+      w: desktopFullW,
+      wNoSpacing: desktopFullWNoSpacing
+    } = getContainerW({
       v,
       w: wInFullPage,
+      wNoSpacing: wInFullPage,
       device: "desktop"
     });
-    const desktopBoxedW = getContainerW({
+    const {
+      w: desktopBoxedW,
+      wNoSpacing: desktopBoxedWNoSpacing
+    } = getContainerW({
       v,
       w: wInBoxedPage,
+      wNoSpacing: wInBoxedPage,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: wInTabletPage,
+      wNoSpacing: wInTabletPage,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: wInMobilePage,
+      wNoSpacing: wInMobilePage,
       device: "mobile"
     });
 
     return Object.assign({}, meta, {
       desktopFullW,
+      desktopFullWNoSpacing,
       desktopBoxedW,
+      desktopBoxedWNoSpacing,
       tabletW,
+      tabletWNoSpacing,
       mobileW,
+      mobileWNoSpacing,
       section: {
         isSlider: slider === "on"
       }
@@ -93,6 +107,8 @@ export default class Section extends EditorComponent {
 
   renderItems(v) {
     const {
+      membership,
+      membershipRoles,
       sliderDots,
       sliderArrows,
       sliderAutoPlay,
@@ -136,6 +152,8 @@ export default class Section extends EditorComponent {
           cssClassPopulation,
           customAttributesPopulation,
           marginType,
+          membership,
+          membershipRoles,
           tabletMarginType,
           mobileMarginType
         }
@@ -192,6 +210,22 @@ export default class Section extends EditorComponent {
     );
   }
 
+  renderMemberShipWrapper(content, v) {
+    if (v.membership === "on") {
+      const roles = JSON.parse(v.membershipRoles).join(",");
+
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    }
+
+    return content;
+  }
+
   renderForView(v, vs, vd) {
     const {
       className,
@@ -231,7 +265,7 @@ export default class Section extends EditorComponent {
       className: classNameSection
     };
 
-    return (
+    const content = (
       <Animation
         iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={tagName}
@@ -241,5 +275,7 @@ export default class Section extends EditorComponent {
         {this.renderItems(v)}
       </Animation>
     );
+
+    return this.renderMemberShipWrapper(content, v);
   }
 }

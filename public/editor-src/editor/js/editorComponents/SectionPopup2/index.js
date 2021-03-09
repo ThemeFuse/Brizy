@@ -12,10 +12,9 @@ import Toolbar, {
   CollapsibleToolbar,
   ToolbarExtend
 } from "visual/component/Toolbar";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
 import HotKeys from "visual/component/HotKeys";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
@@ -156,21 +155,24 @@ class SectionPopup2 extends EditorComponent {
       v,
       device: "mobile"
     });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: widthSuffix === "px" ? width : wInFullPage,
+      wNoSpacing: widthSuffix === "px" ? width : wInFullPage,
       width: widthSuffix === "px" ? 100 : width,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: tabletWidthSuffix === "px" ? tabletWidth : wInTabletPage,
+      wNoSpacing: tabletWidthSuffix === "px" ? tabletWidth : wInTabletPage,
       width: tabletWidthSuffix === "px" ? 100 : tabletWidth,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: mobileWidthSuffix === "px" ? mobileWidth : wInMobilePage,
+      wNoSpacing: mobileWidthSuffix === "px" ? mobileWidth : wInMobilePage,
       width: mobileWidthSuffix === "px" ? 100 : mobileWidth,
       device: "mobile"
     });
@@ -178,8 +180,11 @@ class SectionPopup2 extends EditorComponent {
     return {
       ...meta,
       desktopW,
+      desktopWNoSpacing,
       tabletW,
+      tabletWNoSpacing,
       mobileW,
+      mobileWNoSpacing,
       sectionPopup2: true
     };
   }
@@ -196,15 +201,7 @@ class SectionPopup2 extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          IS_GLOBAL_POPUP && globalBlockId
-            ? child => (
-                <ConditionsComponent type="popup">{child}</ConditionsComponent>
-              )
-            : globalBlockId
-            ? child => child
-            : null
-        }
+        global={!!globalBlockId}
       />
     );
   }
@@ -243,7 +240,7 @@ class SectionPopup2 extends EditorComponent {
     return (
       <Background value={v} meta={meta}>
         <div className={innerClassName}>
-          <SortableZIndex zindex={1}>
+          <SortableZIndex zIndex={1}>
             <div className="brz-container__wrap">
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(

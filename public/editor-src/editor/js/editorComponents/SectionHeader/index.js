@@ -6,7 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Portal from "visual/component/Portal";
 import Sticky from "visual/component/Sticky";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { capitalize } from "visual/utils/string";
@@ -147,6 +147,8 @@ export default class SectionHeader extends EditorComponent {
 
   getRerender(v) {
     const {
+      membership,
+      membershipRoles,
       showOnDesktop,
       showOnMobile,
       showOnTablet,
@@ -157,6 +159,8 @@ export default class SectionHeader extends EditorComponent {
     } = v;
 
     return {
+      membership,
+      membershipRoles,
       showOnDesktop,
       showOnMobile,
       showOnTablet,
@@ -222,7 +226,7 @@ export default class SectionHeader extends EditorComponent {
     });
 
     return (
-      <SortableZIndex zindex={1}>
+      <SortableZIndex zIndex={1}>
         <div className={className}>
           <ToolbarExtend position="fixed">
             <EditorArrayComponent {...stickyItemProps} />
@@ -250,7 +254,7 @@ export default class SectionHeader extends EditorComponent {
     const toolbarPosition = isSticky ? "fixed" : "absolute";
 
     return (
-      <SortableZIndex zindex={1}>
+      <SortableZIndex zIndex={1}>
         <div className={className} ref={this.stickyNode}>
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic({ v })}
@@ -311,6 +315,22 @@ export default class SectionHeader extends EditorComponent {
     );
   }
 
+  renderMemberShipWrapper(content, v) {
+    if (v.membership === "on") {
+      const roles = JSON.parse(v.membershipRoles).join(",");
+
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    }
+
+    return content;
+  }
+
   renderForView(v, vs, vd) {
     const {
       className,
@@ -331,7 +351,7 @@ export default class SectionHeader extends EditorComponent {
       )
     );
 
-    return (
+    const content = (
       <section
         id={
           cssIDPopulation === ""
@@ -345,5 +365,7 @@ export default class SectionHeader extends EditorComponent {
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </section>
     );
+
+    return this.renderMemberShipWrapper(content, v);
   }
 }

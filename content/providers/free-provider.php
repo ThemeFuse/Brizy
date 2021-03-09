@@ -17,27 +17,37 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function getAllPlaceholders() {
 
 		return array(
-			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( $context, $contentPlaceholder ) {
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
 
 				$attrs = $contentPlaceholder->getAttributes();
 
-				if ( empty( $attrs['roles'] ) ) {
-				    return $contentPlaceholder->getContent();
-                }
+				if ( ! empty( $attrs['roles'] ) ) {
+					$roles = explode( ',', $attrs['roles'] );
+					$user  = wp_get_current_user();
 
-				$roles = explode( ',', $attrs['roles'] );
-				$user  = wp_get_current_user();
+					if ( in_array( 'not_logged', $roles ) ) {
 
-				if ( in_array( 'not_logged', $roles ) && empty( $user->ID ) ) {
-					return $contentPlaceholder->getContent();
-                }
+						$roles = array_diff( $roles, [ 'not_logged' ] );
 
-				if ( array_intersect( $roles, (array) $user->roles ) || in_array( 'administrator', $user->roles ) ) {
-					return $contentPlaceholder->getContent();
+						if ( $user->ID && ! array_intersect( $roles, (array) $user->roles ) ) {
+							return '';
+						}
+					} else {
+						if ( ! array_intersect( $roles, (array) $user->roles ) ) {
+							return '';
+						}
+					}
 				}
 
-				return '';
-            } ),
+				$placeholderProvider = new Brizy_Content_PlaceholderProvider();
+				$extractor           = new Brizy_Content_PlaceholderExtractor( $placeholderProvider );
+
+				list( $placeholders, $content ) = $extractor->extract( $contentPlaceholder->getContent() );
+
+				$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider );
+
+				return $replacer->getContent( $placeholders, $content, $context );
+			} ),
 			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' ),
 			new Brizy_Content_Placeholders_ImageAltAttribute( 'Internal Alt Attributes', 'brizy_dc_image_alt' ),
 			new Brizy_Content_Placeholders_UniquePageUrl( 'Uniquer page url', 'brizy_dc_current_page_unique_url' ),
@@ -83,7 +93,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function() {
 
-                $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
                 $post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
 
                 if ( $post ) {
@@ -92,7 +101,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     $params['date']     = get_the_date( '', $post );
                     $params['time']     = get_the_time( '', $post );
                     $params['comments'] = get_comment_count( $post->ID );
-
+	                $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
                     return $twig->render( 'post-info.html.twig', $params );
                 }
 
@@ -132,12 +141,14 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		            return __( 'Please set a valid product', 'brizy' );
 	            }
 
+	            $this->setScriptDependency( 'brizy-preview', [ 'zoom', 'photoswipe', 'flexslider', 'wc-single-product' ] );
+
 	            // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
-	            remove_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            $html = do_shortcode( '[product_page id="' . $atts['id'] . '"]' );
 
-	            add_filter( 'the_content', [ Brizy_Admin_Templates::_init(), 'filterPageContent' ], -12000 );
+	            add_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], -12000 );
 
 	            return $html;
             } ),

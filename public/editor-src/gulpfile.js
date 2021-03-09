@@ -52,6 +52,7 @@ const {
   VERSION,
   VERSION_PRO,
   NO_WATCH,
+  NO_VERIFICATION,
   BUNDLE_ANALYZER,
   paths
 } = argvVars(process.argv);
@@ -798,7 +799,7 @@ function watch() {
 }
 
 exports.build = gulp.series.apply(undefined, [
-  verifications,
+  ...(NO_VERIFICATION ? [] : [verifications]),
   clean,
 
   // thumbs

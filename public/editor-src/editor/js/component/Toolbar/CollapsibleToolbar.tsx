@@ -16,7 +16,8 @@ type CollapsibleToolbarProps = {
   getSidebarTitle?: () => string;
   className?: string;
   animation?: "leftToRight" | "rightToLeft";
-  badge?: React.ReactNode;
+  global: boolean;
+  membership: boolean;
   onBeforeOpen?: () => void;
   onBeforeClose?: () => void;
   onOpen?: () => void;
@@ -32,7 +33,8 @@ export default class CollapsibleToolbar
   implements ToolbarMonitorHandler {
   static defaultProps = {
     animation: "leftToRight",
-    badge: false
+    global: false,
+    membership: false
   };
 
   state = {
@@ -116,10 +118,17 @@ export default class CollapsibleToolbar
   }
 
   renderBadge(): React.ReactNode {
+    const { membership, global } = this.props;
+
+    if (!membership && !global) {
+      return null;
+    }
+
     return (
       <CSSTransition key="badge" timeout={0}>
         <div className="brz-ed-collapsible__badge">
-          <EditorIcon icon="nc-global" />
+          {global && <EditorIcon icon="nc-global" />}
+          {membership && <EditorIcon icon="nc-user" />}
         </div>
       </CSSTransition>
     );
@@ -159,7 +168,6 @@ export default class CollapsibleToolbar
   render(): React.ReactNode {
     const {
       className: _className,
-      badge,
       getSidebarItems,
       getSidebarTitle
     } = this.props;
@@ -177,7 +185,7 @@ export default class CollapsibleToolbar
           exceptions={this.getClickOutSideExceptions()}
         >
           <TransitionGroup className={className}>
-            {typeof badge === "function" && badge(this.renderBadge())}
+            {this.renderBadge()}
             {opened ? this.renderToolbar() : this.renderIcon()}
           </TransitionGroup>
         </ClickOutside>

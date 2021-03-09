@@ -1,35 +1,35 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.5<br>
+Tested up to: 5.6<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.6<br>
+Stable tag: 2.2.9.1<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Creating WordPress pages should be fast & easy. Brizy is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+A page builder that is fast & easy, Brizy is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
 
 More details on: https://brizy.io 
 
-## Description 
+## Description
 
 https://vimeo.com/263343966
 
-Creating WordPress pages should be fast & easy. [Brizy](https://brizy.io/) is the most user-friendly visual page builder in town! No designer or developer skills required. The only tools you'll need to master are clicks and drags.
+A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
 
 ## Highlights
 
 ### Smart & clutter free
-Most page builders crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. We show only what's needed, front & centre, close to the element you're editing.
+Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing. 
 
 ### Intuitive Drag & Drop
 Moving content elements, columns or rows is a breeze with our intuitive Drag & Drop feature. Just grab and drag them to the desired position and everything will instantly fall into place.
 
-### Design Elements
+### Page Builder Design Elements
 Text, buttons, images, icons, video, maps and many more are ready to help you create your page design in a snap.
 
-### Over 150 pre-made blocks
-Blocks are pre-made designs that you can add to your page, ready to be customised. This will enable you to create the main structure of your page in a matter of minutes, while also ensuring that it looks awesome.
+### Over 500 pre-made blocks
+Expertly crafted with conversions in mind, the Brizy website builder design kit is a collection of 500+ blocks that will enable you to create websites in minutes.
 
 ### Over 4000 icons included
 Available in both Outline and Glyph versions, even the most demanding icon needs are covered. Quickly find the icons you're after by filtering through categories or searching by keywords.
@@ -38,10 +38,10 @@ Available in both Outline and Glyph versions, even the most demanding icon needs
 Don't worry if you make a mistake or delete something that you shouldn't have. With Undo you can get everything back.
 
 ### Global styling
-Ever wanted to change all the similar colors in your web page with a single click? With Brizy, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
+Ever wanted to change all the similar colors in your web page with a single click? With Brizy page builder, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
 
 ### Mobile Friendly
-Switch instantly to Mobile View mode, where you can make changes that will only apply to this type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
+Switch instantly to Mobile View mode, where you can make changes that will only apply to these type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
 
 ### Cloud auto-save
 The progress you're making while building your page is always backed up in the cloud, so you'll never lose your work.
@@ -117,6 +117,68 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.9.1 - 2021-03-09
+* New: Form input file label is now editable
+* Improved: Sections with Membership enabled now have an indicator icon
+* Fixed: Some images could experience blurriness
+* Fixed: Clicking Global Blocks conditions options would do nothing
+* Fixed: Carousel content flicker
+* Fixed: Carousel options in responsive mode
+* Fixed: Form Submit align option
+* Fixed: Form Custom HTML template copy to clipboard
+* Fixed: Form Integrations Popup scroll in Safari
+* Fixed: Accordion drag and drop
+* Fixed: Accordion adjusting browser scroll position even when not needed
+* Fixed: Slider Prev and Next buttons outline
+* Fixed: Slider padding option
+* Fixed: Image sizes
+* Fixed: Timeline border CSS
+* Fixed: PostContent CSS
+* Fixed: WooCommerce Add to Cart CSS
+* Fixed: Typography option issues in Safari
+* Fixed: Slider option CSS
+* Fixed: Saving a block or a layout would fail if the browser did not support screenshot saving
+* Fixed: Browser back button not working after clicking an anchor to a block on the page
+* Fixed: Do not render Terms page on checkout if it created with Brizy
+* Fixed: White label prefix for multi-site
+* Fixed: Compatibility with BBpress plugin
+* Fixed: Page shop as front page template issue
+* Fixed: Exclude rule
+* Fixed: Dynamic content in Membership block
+* Fixed: Get post lists API
+* Fixed: Compatibility with ThemeFuse old themes
+* Fixed: Avoid duplicate global blocks on create blocks
+* Fixed: Add script dependencies from placeholder
+* Fixed: Preview for autosaves
+* Fixed: Archive element on Author archive template not available
+* Fixed: Possibility to crop an image by its Dynamic URL
+* Fixed: Updated .POT file
+* Fixed: Added an alert comment when removing a function used in other plugins
+* Fixed: Global Blocks would not appear in category pages made with Brizy Template
+* Fixed: PostContent CSS
+* Fixed: WooCommerce Add to Cart CSS
+
+### 2.2.8 - 2021-02-16
+• New: Membership functionality
+• New: Accordion content animation
+• New: IconText icon link
+• Improved: Publish toolbar CSS
+• Fixed: Colorpicker minor issues
+• Fixed: Drag & Drop for 'absolute' positioned elements
+• Fixed: Timeline CSS
+• Fixed: Embed CSS
+
+### 2.2.7 - 2021-02-02
+* New: Added animation option for Accordion content
+* Improved: Code refactoring and optimization 
+* Fixed: Custom Video CSS option
+* Fixed: Images with absolute position no longer blurry
+* Fixed: Get taxonomies bug 
+* Fixed: Removed duplicate dynamic content call
+* Fixed: Restore template from trash
+* Fixed: Avoid cloud call crash
+
 
 ### 2.2.6 - 2021-01-14
 * Fixed: Global Popups

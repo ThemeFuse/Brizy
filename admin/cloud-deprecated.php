@@ -44,7 +44,7 @@ class Brizy_Admin_Cloud {
 	private function __construct( Brizy_Editor_Project $project ) {
 
 		$this->project     = $project;
-		$this->cloudClient = new Brizy_Admin_Cloud_Client( $project, new WP_Http() );
+		$this->cloudClient = Brizy_Admin_Cloud_Client::instance( $project, new WP_Http() );
 
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 //		add_action( 'wp_ajax_' . self::GET_CLOUD_PROJECTS_ACTION, array( $this, 'actionGetProjects' ) );

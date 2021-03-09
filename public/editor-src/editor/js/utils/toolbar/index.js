@@ -98,7 +98,6 @@ export {
 // Disabled
 export {
   toolbarDisabledAdvancedSettings,
-  toolbarDisabledLink,
   toolbarDisabledShowOnResponsive,
   toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,

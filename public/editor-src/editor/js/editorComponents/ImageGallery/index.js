@@ -15,6 +15,8 @@ import { style, styleForFilter } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { applyFilter } from "visual/utils/filters";
 import { Wrapper } from "../tools/Wrapper";
+import { defaultValueValue } from "visual/utils/onChange";
+import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -94,14 +96,32 @@ class ImageGallery extends EditorComponent {
   getMeta(v) {
     const { meta } = this.props;
     const { spacing, gridColumn, tabletGridColumn, mobileGridColumn } = v;
-    const desktopW = meta.desktopW / gridColumn;
-    const tabletW = meta.tabletW / tabletGridColumn;
-    const mobileW = meta.mobileW / mobileGridColumn;
+    const tabletSpacing = defaultValueValue({
+      v,
+      key: "spacing",
+      device: TABLET,
+      state: "normal"
+    });
+    const mobileSpacing = defaultValueValue({
+      v,
+      key: "spacing",
+      device: MOBILE,
+      state: "normal"
+    });
+    const desktopW = (meta.desktopW + spacing) / gridColumn;
+    const desktopWNoSpacing = meta.desktopWNoSpacing / gridColumn;
+    const tabletW = (meta.tabletW + tabletSpacing) / tabletGridColumn;
+    const tabletWNoSpacing = meta.tabletWNoSpacing / tabletGridColumn;
+    const mobileW = (meta.mobileW + mobileSpacing) / mobileGridColumn;
+    const mobileWNoSpacing = meta.mobileWNoSpacing / mobileGridColumn;
 
     return Object.assign({}, meta, {
       desktopW: Math.round((desktopW - spacing) * 10) / 10,
-      tabletW: Math.round(tabletW),
-      mobileW: Math.round(mobileW),
+      desktopWNoSpacing: Math.round(desktopWNoSpacing),
+      tabletW: Math.round(tabletW - tabletSpacing),
+      tabletWNoSpacing: Math.round(tabletWNoSpacing),
+      mobileW: Math.round(mobileW - mobileSpacing),
+      mobileWNoSpacing: Math.round(mobileWNoSpacing),
       gallery: {
         inGallery: true,
         enableTags: v.enableTags === "on"

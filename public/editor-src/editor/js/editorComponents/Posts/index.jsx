@@ -32,9 +32,7 @@ class Posts extends EditorComponent {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParent,
-      {
-        allowExtend: false
-      }
+      { allowExtend: false }
     );
     this.props.extendParentToolbar(toolbarExtend);
   }
@@ -43,14 +41,18 @@ class Posts extends EditorComponent {
     const { meta } = this.props;
     const { gridColumn, padding, tabletGridColumn } = v;
     const desktopW = meta.desktopW / gridColumn;
+    const desktopWNoSpacing = meta.desktopWNoSpacing / gridColumn;
     const tabletW = meta.tabletW / tabletGridColumn;
+    const tabletWNoSpacing = meta.tabletWNoSpacing / tabletGridColumn;
 
     const tabletPadding = tabletSyncOnChange(v, "padding");
 
     return {
       ...meta,
       desktopW: Math.round((desktopW - padding) * 10) / 10,
+      desktopWNoSpacing,
       tabletW: Math.round((tabletW - tabletPadding) * 10) / 10,
+      tabletWNoSpacing,
       inGrid: false,
       posts: true
     };

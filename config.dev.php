@@ -1,13 +1,11 @@
 <?php
 
-
 class Brizy_Config {
 
 	const SITE_URL_PLACEHOLDER = '{@brizy_SITE_URL_PLACEHOLDER@}';
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const MEDIA_IMAGE_URL = '/media';
-	const FONTS_URL = 'http://editor:3000/static';
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'http://api.brizy.org';
@@ -30,7 +28,6 @@ class Brizy_Config {
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
 	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
-	const COMPILER_DOWNLOAD_URL = 'http://apache/wp-content/plugins/brizy/public/editor-build/dev';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'http://www.brizysites.com';
@@ -50,17 +47,20 @@ class Brizy_Config {
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
 
 	static public function getCompilerUrls() {
+		$host = $_ENV['COMPILER_HOST'] ?? $_SERVER['COMPILER_HOST'];
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler:5000/compile/v3'
+				"http://{$host}/compile/v3"
 			)
 		);
 	}
 
 	static public function getStaticUrls() {
+		$host = $_ENV['STATIC_HOST'] ?? $_SERVER['STATIC_HOST'];
+
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://bitblox.local/static'
+				"http://{$host}/static"
 			)
 		);
 	}
@@ -73,10 +73,13 @@ class Brizy_Config {
 		);
 	}
 
-	static public function getOptimizerConfig( $className ) {
-		switch ( $className ) {
-			case 'Brizy_Editor_Asset_Optimize_ShortpixelOptimizer':
-				return array( 'API_KEY' => 'uunlmNjZZBtKLfCSg4OK' );
-		}
+	static public function getFontsUrl() {
+		$host = $_ENV['EDITOR_HOST'] ?? $_SERVER['EDITOR_HOST'];
+		return  "http://{$host}/static";
+	}
+
+	static public function getCompilerDownloadUrl() {
+		$host = $_ENV['COMPILER_DOWNLOAD_HOST'] ?? $_SERVER['COMPILER_DOWNLOAD_HOST'];
+		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
 	}
 }

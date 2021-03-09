@@ -12,11 +12,8 @@ export const getAllowedGBIds = (pageBlocksIds, globalBlocks, pageId) => {
   return Object.entries(globalBlocks).reduce(
     (acc, [currentGlobalBlockId, globalBlock]) => {
       const isInPage = pageBlocksIds.includes(currentGlobalBlockId);
-      const canUseCondition = IS_TEMPLATE
-        ? canUseConditionInTemplates(globalBlock)
-        : canUseConditionInPage(globalBlock, pageId);
 
-      if (!isInPage && canUseCondition) {
+      if (!isInPage && canUseCondition(globalBlock, pageId)) {
         acc.push(currentGlobalBlockId);
       }
 
@@ -25,6 +22,12 @@ export const getAllowedGBIds = (pageBlocksIds, globalBlocks, pageId) => {
     []
   );
 };
+
+export function canUseCondition(globalBlock, pageId) {
+  return IS_TEMPLATE
+    ? canUseConditionInTemplates(globalBlock)
+    : canUseConditionInPage(globalBlock, pageId);
+}
 
 export function canUseConditionInTemplates({ rules }) {
   const { ruleMatches, page } = Config.get("wp");

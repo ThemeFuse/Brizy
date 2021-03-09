@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { canUseConditionInPage } from "visual/utils/blocks";
+import { canUseCondition } from "visual/utils/blocks";
 import {
   blocksDataSelector,
   globalBlocksSelector
@@ -65,7 +65,8 @@ class GlobalBlock extends EditorComponent {
 
     // if all rules was removed in globalBlock - it still exists
     // into pageJson, but shouldn't be shown
-    if (!canUseConditionInPage(globalBlocks[_id], pageId)) {
+
+    if (!canUseCondition(globalBlocks[_id], pageId)) {
       return null;
     }
 

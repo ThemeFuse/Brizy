@@ -21,19 +21,11 @@ class Brizy_Admin_Templates
     private static $template;
 
     /**
-     * @var Brizy_Admin_Rules_Manager
-     */
-    private $ruleManager;
-
-    /**
      * Brizy_Admin_Templates constructor.
      */
     protected function __construct()
     {
-
         add_action('wp_loaded', array($this, 'initializeActions'));
-
-        $this->ruleManager = new Brizy_Admin_Rules_Manager();
     }
 
     /**
@@ -67,14 +59,19 @@ class Brizy_Admin_Templates
                    ! isset($_REQUEST[Brizy_Editor::prefix('_block_screenshot')]) &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('')])) {
             add_action('wp', array($this, 'templateFrontEnd'));
-
         }
     }
 
     /**
+     * @deprecated
      * @return Brizy_Admin_Templates
      */
     public static function _init()
+    {
+        return self::instance();
+    }
+
+    public static function instance()
     {
         static $instance;
 
@@ -134,13 +131,13 @@ class Brizy_Admin_Templates
             $templateGroups['single_product']  = __('Product', 'brizy');
             $templateGroups['product_archive'] = __('Product Archive', 'brizy');
         }
-
+	    $ruleManager = new Brizy_Admin_Rules_Manager();
         wp_localize_script(
             Brizy_Editor::get_slug().'-rules',
             'Brizy_Admin_Rules',
             array(
                 'url'          => set_url_scheme(admin_url('admin-ajax.php')),
-                'rules'        => $this->ruleManager->getRules(get_the_ID()),
+                'rules'        => $ruleManager->getRules(get_the_ID()),
                 'hash'         => wp_create_nonce(Brizy_Admin_Rules_Api::nonce),
                 'id'           => get_the_ID(),
                 'templateType' => Brizy_Admin_Templates::getTemplateType(get_the_ID()),
@@ -321,8 +318,8 @@ class Brizy_Admin_Templates
             if ( ! $templateId) {
                 throw new Exception();
             }
-
-            $rules = $this->ruleManager->getRules($templateId);
+	        $ruleManager = new Brizy_Admin_Rules_Manager();
+            $rules = $ruleManager->getRules($templateId);
 
             $nonce   = wp_create_nonce(Brizy_Editor_API::nonce);
             $context = array(
@@ -361,7 +358,6 @@ class Brizy_Admin_Templates
      */
     public function getTemplateForCurrentPage()
     {
-
         list($applyFor, $entityType, $entityValues) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
         $is_preview = is_preview();
@@ -383,13 +379,17 @@ class Brizy_Admin_Templates
             ]
         );
 
+	    $ruleManager = new Brizy_Admin_Rules_Manager();
         foreach ($templates as $atemplate) {
-            $ruleSet = $this->ruleManager->getRuleSet($atemplate->ID);
-            if ($ruleSet->isMatching($applyFor, $entityType, $entityValues)) {
-                return Brizy_Editor_Post::get($atemplate->ID);
+            $ruleSet = $ruleManager->getRuleSet($atemplate->ID);
+            try  {
+                if ($ruleSet->isMatching($applyFor, $entityType, $entityValues)) {
+                    return Brizy_Editor_Post::get($atemplate->ID);
+                }
+            } catch (\Exception $e) {
+                continue; // we catch here  the  exclusions
             }
         }
-
         return null;
     }
 
@@ -433,7 +433,7 @@ class Brizy_Admin_Templates
         $is_using_brizy = false;
         try {
             if (in_array(get_post_type($pid), Brizy_Editor::get()->supported_post_types())) {
-                $is_using_brizy = Brizy_Editor_Post::get($pid)->uses_editor();
+                $is_using_brizy = Brizy_Editor_Entity::isBrizyEnabled($pid);
             }
         } catch (Exception $e) {
 
@@ -841,19 +841,14 @@ class Brizy_Admin_Templates
                             $get_option = get_option('page_for_posts');
 
                             if ($get_option) {
-                                $post = Brizy_Editor_Post::get($get_option);
-
-                                return $post->uses_editor() ? null : get_post($get_option);
+                                return Brizy_Editor_Entity::isBrizyEnabled($get_option) ? null : get_post($get_option);
                             }
                             break;
                         case 'front_page':
                             $get_option = get_option('page_on_front');
 
                             if ($get_option) {
-
-                                $post = Brizy_Editor_Post::get($get_option);
-
-                                return $post->uses_editor() ? null : get_post($get_option);
+                                return Brizy_Editor_Entity::isBrizyEnabled($get_option) ? null : get_post($get_option);
                             }
                             break;
                     }

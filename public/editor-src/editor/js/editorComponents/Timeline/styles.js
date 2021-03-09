@@ -70,7 +70,7 @@ export function style(v, vs, vd) {
     ".brz && .brz-timeline__tab:after": {
       standart: [
         "cssStyleElementTimelineLineTop",
-        "cssStyleElementTimelineLineWidthHeight"
+        "cssStyleElementTimelineLineWidthHeightAfter"
       ]
     },
     ".brz && .brz-timeline__tab:nth-child(even):after": {
@@ -85,7 +85,7 @@ export function style(v, vs, vd) {
     ".brz && .brz-timeline__tab:before": {
       standart: [
         "cssStyleElementTimelineBeforeDisplay",
-        "cssStyleElementTimelineLineWidthHeight",
+        "cssStyleElementTimelineLineWidthHeightBefore",
         "cssStyleElementTimelineVerticalLinePosition"
       ]
     },
@@ -122,7 +122,6 @@ export function style(v, vs, vd) {
         "cssStyleElementTimelineTabContentArrowCustomColor1"
       ]
     },
-
     ".brz && .brz-timeline__tabs--horizontal.brz-timeline__tabs--style-2": {
       standart: ["cssStyleDisplayFlex"]
     },

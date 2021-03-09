@@ -1,0 +1,59 @@
+name: Brizy Free
+
+on:
+  push:
+    branches:
+      - master
+      - beta-*
+      - fixes-*
+      - develop
+
+jobs:
+  base:
+    environment: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '1'
+      - name: Load Build Evnrorment Data
+        uses: falti/dotenv-action@master
+        id: env
+        with:
+          path: .github/.build-env
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Intialize  the  containers
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 200m
+          passphrase: ${{ secrets.KEY_PASSPHRASE }}
+          script: |
+            ./BB/build/run-editor-instance.sh \
+            -c ${{ steps.vars.outputs.sha_short }} \
+            -v ${{ steps.env.outputs.build_environment }} \
+            -f ${{ steps.env.outputs.free_branch }} \
+            -p ${{ steps.env.outputs.pro_branch }} \
+            -e ${{ steps.env.outputs.editor_branch }} \
+            -n traefik \
+            -t ${{ secrets.COMPOSER_TOKEN }}
+      - name: Clean context folder
+        uses: appleboy/ssh-action@master
+        if: ${{ always() }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 200m
+          passphrase: ${{ secrets.KEY_PASSPHRASE }}
+          script:
+            ./BB/build/clean-context-folder.sh -c ${{ steps.vars.outputs.sha_short }}

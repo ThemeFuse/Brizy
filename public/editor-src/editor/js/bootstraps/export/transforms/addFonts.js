@@ -17,28 +17,32 @@ export default function addFonts($, { google, upload }) {
     generateUploadAssets($, upload);
   }
 }
-function generateGoogleAssets($, fonts) {
-  const fontsUrl = makeSubsetGoogleFontsUrl(
-    fonts.filter(font => font.deleted !== true)
-  );
-  const richTextFamiliesCSS = makeRichTextFontGoogleCSS(fonts);
+function generateGoogleAssets($, _fonts) {
+  const fonts = _fonts.filter(font => font.deleted !== true);
 
-  $("head")
-    .append(
-      `<link class="brz-link brz-link-google" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
-    )
-    .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
+  if (fonts.length) {
+    const fontsUrl = makeSubsetGoogleFontsUrl(fonts);
+    const richTextFamiliesCSS = makeRichTextFontGoogleCSS(fonts);
+
+    $("head")
+      .append(
+        `<link class="brz-link brz-link-google" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
+      )
+      .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
+  }
 }
 
-function generateUploadAssets($, fonts) {
-  const fontsUrl = makeUploadFontsUrl(
-    fonts.filter(font => font.deleted !== true)
-  );
-  const richTextFamiliesCSS = makeRichTextFontUploadCSS(fonts);
+function generateUploadAssets($, _fonts) {
+  const fonts = _fonts.filter(font => font.deleted !== true);
 
-  $("head")
-    .append(
-      `<link class="brz-link brz-link-upload" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
-    )
-    .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
+  if (fonts.length) {
+    const fontsUrl = makeUploadFontsUrl(fonts);
+    const richTextFamiliesCSS = makeRichTextFontUploadCSS(fonts);
+
+    $("head")
+      .append(
+        `<link class="brz-link brz-link-upload" type="text/css" rel="stylesheet" href="${fontsUrl}" />`
+      )
+      .append(`<style class="brz-style">${richTextFamiliesCSS}</style>`);
+  }
 }

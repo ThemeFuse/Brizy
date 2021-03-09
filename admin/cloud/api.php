@@ -38,7 +38,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	public function __construct( $project ) {
 
 		$this->project = $project;
-		$this->setClient( new Brizy_Admin_Cloud_Client( $project, new WP_Http() ) );
+		$this->setClient( Brizy_Admin_Cloud_Client::instance( $project, new WP_Http() ) );
 		parent::__construct();
 	}
 

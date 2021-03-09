@@ -3,20 +3,6 @@
 abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content_Providers_Interface {
 
 	/**
-	 * @var Brizy_Content_Context
-	 */
-	protected $context;
-
-	/**
-	 * BrizyPro_Content_ProviderWp constructor.
-	 *
-	 * @param Brizy_Content_Context $context
-	 */
-	public function __construct( Brizy_Content_Context $context ) {
-		$this->context = $context;
-	}
-
-	/**
 	 * @return array
 	 */
 	protected function getDefaultGroupPlaceholders() {
@@ -42,5 +28,30 @@ abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content
 		}
 
 		return $out;
+	}
+
+	/**
+	 * @param $handle string
+	 * @param $deps array
+	 *
+	 * @return bool
+	 */
+	protected function setScriptDependency( $handle, $deps ) {
+
+		global $wp_scripts;
+
+		$script = $wp_scripts->query( $handle );
+
+		if ( ! $script ) {
+			return false;
+		}
+
+		foreach ( $deps as $dep ) {
+			if ( ! in_array( $dep, $script->deps ) ) {
+				$script->deps[] = $dep;
+			}
+		}
+
+		return true;
 	}
 }

@@ -57,6 +57,9 @@ export default function($node) {
       const activeClassName = "brz-tabs__items--active";
       const mobileActiveClassName = "brz-tabs__nav--mobile--active";
       const $item = $navMobile.closest(".brz-tabs__items");
+      const $tabsContent = $this
+        .children(".brz-tabs__content")
+        .children(".brz-tabs__items");
 
       $item.siblings().removeClass(activeClassName);
       $item
@@ -77,7 +80,10 @@ export default function($node) {
       }, 100);
 
       // Emit Tabs Changed
-      window.Brizy.emit("elements.tabs.changed", $item.get(0));
+      window.Brizy.emit("elements.tabs.changed", $item.get(0), {
+        active: $item.get(0),
+        tabs: $tabsContent.get()
+      });
     });
   });
 }

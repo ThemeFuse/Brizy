@@ -1,8 +1,7 @@
 export { percentageToPixels } from "./percentageToPixels";
 export {
   getContainerW,
-  getCurrentW,
-  getCurrentH,
+  getWrapperContainerW,
   getMargin,
   getBorder,
   getPadding

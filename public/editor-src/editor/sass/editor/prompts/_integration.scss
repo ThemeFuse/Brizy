@@ -230,6 +230,7 @@ $option-color: #626b70;
   &__progress {
     display: flex;
     margin-bottom: 28px;
+    flex-shrink: 0;
 
     &-stage:after,
     &-stage > :after {
@@ -322,6 +323,7 @@ $option-color: #626b70;
     margin-left: 36px;
     padding-top: 11px;
     max-height: 100%;
+    flex: 1;
   }
   &-step__head {
     font-size: 13px;
@@ -339,6 +341,16 @@ $option-color: #626b70;
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    // scroll in safari
+    > div:not(.brz-ed-popup-integrations-step__buttons) {
+      flex-shrink: 1;
+      display: flex;
+
+      > div:first-child {
+        flex: 1;
+      }
+    }
   }
   &-step__buttons {
     display: flex;

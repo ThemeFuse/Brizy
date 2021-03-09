@@ -206,3 +206,7 @@ export function cssStyleElementAccordionActiveBorder({ v, device }) {
 export function cssStyleElementAccordionActiveShadow({ v, device }) {
   return cssStyleBoxShadow({ v, device, prefix: "active" });
 }
+
+export function cssStyleElementAccordionAnimDuration({ v }) {
+  return `transition: height ${v.animDuration}s ease-out;`;
+}

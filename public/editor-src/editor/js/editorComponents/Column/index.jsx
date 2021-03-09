@@ -91,21 +91,24 @@ class Column extends EditorComponent {
     const width = styleSizeWidth({ v, device: "desktop" });
     const tabletWidth = styleSizeWidth({ v, device: "tablet" });
     const mobileWidth = styleSizeWidth({ v, device: "mobile" });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       width,
       w: meta.desktopW,
+      wNoSpacing: meta.desktopWNoSpacing,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
       width: tabletWidth,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
       width: mobileWidth,
       device: "mobile"
     });
@@ -119,9 +122,12 @@ class Column extends EditorComponent {
         tabletWidth,
         mobileWidth
       },
-      mobileW,
+      desktopW,
+      desktopWNoSpacing,
       tabletW,
-      desktopW
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
     });
   }
 
@@ -230,11 +236,11 @@ class Column extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          itemData = blocksDataSelector(getStore().getState())[
+          const blockData = blocksDataSelector(getStore().getState())[
             itemData.value._id
           ];
 
-          popupId = itemData.value.popupId;
+          popupId = blockData.value.popupId;
         }
 
         return {

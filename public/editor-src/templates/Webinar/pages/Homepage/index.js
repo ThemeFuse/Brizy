@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1619,
   title: "Homepage",
-  keywords: "Business, Landing, Layouts, One-Page",
+  keywords: "Webinar, Business, Landing, Layouts, One-Page",
   cat: [0, 1, 11],
   pro: true,
   resolve: {

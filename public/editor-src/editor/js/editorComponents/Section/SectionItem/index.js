@@ -8,7 +8,6 @@ import Background from "visual/component/Background";
 import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { Roles } from "visual/component/Roles";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -20,6 +19,7 @@ import {
   styleSizeContainerSize
 } from "visual/utils/style2";
 import { getContainerW } from "visual/utils/meta";
+import { hasMembership } from "visual/utils/membership";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -69,30 +69,45 @@ class SectionItem extends EditorComponent {
     const size = styleSizeContainerSize({ v, device: "desktop" });
     const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
     const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const desktopW = getContainerW({
+    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: containerType === "fullWidth" ? meta.desktopFullW : meta.desktopBoxedW,
+      wNoSpacing:
+        containerType === "fullWidth"
+          ? meta.desktopFullWNoSpacing
+          : meta.desktopBoxedWNoSpacing,
       width: size,
       device: "desktop"
     });
-    const tabletW = getContainerW({
+    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
       w: meta.tabletW,
+      wNoSpacing: meta.tabletWNoSpacing,
       width: tabletSize,
       device: "tablet"
     });
-    const mobileW = getContainerW({
+    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
       w: meta.mobileW,
+      wNoSpacing: meta.mobileWNoSpacing,
       width: mobileSize,
       device: "mobile"
     });
 
-    return { ...meta, mobileW, tabletW, desktopW };
+    return {
+      ...meta,
+      mobileW,
+      mobileWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      desktopW,
+      desktopWNoSpacing
+    };
   }
 
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
+    const { membership, membershipRoles } = this.props.rerender;
 
     return (
       <CollapsibleToolbar
@@ -100,15 +115,8 @@ class SectionItem extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          globalBlockId
-            ? child => (
-                <ConditionsComponent value={globalBlockId}>
-                  {child}
-                </ConditionsComponent>
-              )
-            : null
-        }
+        global={!!globalBlockId}
+        membership={hasMembership(membership, membershipRoles)}
       />
     );
   }

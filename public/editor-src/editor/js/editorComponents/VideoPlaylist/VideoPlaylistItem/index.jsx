@@ -83,7 +83,7 @@ class VideoPlaylistItem extends EditorComponent {
             data-link={videoSrc}
             onClick={onActiveItem}
           >
-            <div className="brz-video-playlist-video-element">{content}</div>
+            <div className="brz-video-playlist-video-elem">{content}</div>
             <div className="brz-video-playlist-title-video">
               <TextEditor value={title} onChange={this.handleTextChange} />
               <TextEditor value={subTitle} onChange={this.handleText2Change} />

@@ -101,9 +101,6 @@ class Brizy_EditorCest {
 		$I->assertEquals( 'brizy-action', Brizy_Editor::prefix( '-action' ), 'It should add the correct prefix' );
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy_prefix', 'option_value' => 'brizy' ] );
 
-		// set a new prefix
-		Brizy_Editor::setPrefix( 'test' );
-
 		$I->assertEquals( 'test-action', Brizy_Editor::prefix( '-action' ), 'It should add the correct prefix' );
 		$I->seeOptionInDatabase( [ 'option_name' => 'brizy_prefix', 'option_value' => 'test' ] );
 	}

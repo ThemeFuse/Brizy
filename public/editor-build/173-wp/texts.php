@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_165Wp_Texts {
+class Brizy_Public_EditorBuild_173Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -101,6 +101,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"Blank" => __("Blank", "brizy"),
 			"Block" => __("Block", "brizy"),
 			"Block Name" => __("Block Name", "brizy"),
+			"Block conditions are available only in PRO" => __("Block conditions are available only in PRO", "brizy"),
 			"Blocks" => __("Blocks", "brizy"),
 			"Blog" => __("Blog", "brizy"),
 			"Bold" => __("Bold", "brizy"),
@@ -423,6 +424,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"Max. File Size" => __("Max. File Size", "brizy"),
 			"Medium" => __("Medium", "brizy"),
 			"Mega Menu" => __("Mega Menu", "brizy"),
+			"Membership" => __("Membership", "brizy"),
 			"Mention" => __("Mention", "brizy"),
 			"Menu" => __("Menu", "brizy"),
 			"Menu Items" => __("Menu Items", "brizy"),
@@ -651,6 +653,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"Show Social Context" => __("Show Social Context", "brizy"),
 			"Show message" => __("Show message", "brizy"),
 			"Show on Desktop" => __("Show on Desktop", "brizy"),
+			"Show to" => __("Show to", "brizy"),
 			"Sidebar" => __("Sidebar", "brizy"),
 			"SignUp" => __("SignUp", "brizy"),
 			"Size" => __("Size", "brizy"),
@@ -783,6 +786,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"Vertical Align" => __("Vertical Align", "brizy"),
 			"Vertical Offset" => __("Vertical Offset", "brizy"),
 			"Video" => __("Video", "brizy"),
+			"View as" => __("View as", "brizy"),
 			"Vimeo" => __("Vimeo", "brizy"),
 			"Volume" => __("Volume", "brizy"),
 			"WHAT WILL TRIGGER THE POPUP TO OPEN" => __("WHAT WILL TRIGGER THE POPUP TO OPEN", "brizy"),
@@ -805,6 +809,7 @@ class Brizy_Public_EditorBuild_165Wp_Texts {
 			"You must be have one font added" => __("You must be have one font added", "brizy"),
 			"YouTube or Vimeo" => __("YouTube or Vimeo", "brizy"),
 			"Your Plugin version is incompatible with Brizy Account version, please update plugin" => __("Your Plugin version is incompatible with Brizy Account version, please update plugin", "brizy"),
+			"Your block was saved without screenshot, browser is not compatible" => __("Your block was saved without screenshot, browser is not compatible", "brizy"),
 			"Your link is not correct" => __("Your link is not correct", "brizy"),
 			"Youtube" => __("Youtube", "brizy"),
 			"You’ll need Brizy PRO to use this block" => __("You’ll need Brizy PRO to use this block", "brizy"),

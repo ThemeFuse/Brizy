@@ -46,6 +46,8 @@ export default function($node) {
       fade,
       vertical,
       responsive,
+      useTransform: false,
+      speed: 350,
       draggable: swipe,
       nextArrow: arrows && getArrow("brz-slick-slider__arrow-next"),
       prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),

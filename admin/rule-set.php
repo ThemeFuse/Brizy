@@ -49,9 +49,14 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 		}
 
 		foreach ( $this->rules as $rule ) {
-
+		    //var_dump($rule->isMatching( $applyFor, $entityType, $entityValues ));
 			if ( $rule->isMatching( $applyFor, $entityType, $entityValues ) ) {
-				return $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ? true : false;
+			    if($rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE)
+			        return  true;
+
+			    throw new \Exception('Exclude catch');
+
+				//return $rule->getType() == Brizy_Admin_Rule::TYPE_INCLUDE ? true : false;
 			}
 		}
 

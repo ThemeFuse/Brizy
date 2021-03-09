@@ -336,7 +336,7 @@ class Brizy_Editor_Editor_Editor {
 							}
 
 							if ( ! Brizy_Editor::checkIfPostTypeIsSupported( $p->ID, false ) ||
-							     ! Brizy_Editor_Post::get( $p )->uses_editor() ) {
+							     ! Brizy_Editor_Entity::isBrizyEnabled($p->ID) ) {
 								$wp_post = $p;
 								break;
 							}
@@ -618,13 +618,18 @@ class Brizy_Editor_Editor_Editor {
 	 * @return array
 	 */
 	private function roleList() {
-		$editable_roles = wp_roles()->roles;
-		$editable_roles = apply_filters( 'editable_roles', $editable_roles );
-		$roles          = array();
+		$editable_roles = apply_filters( 'editable_roles', wp_roles()->roles );
+		$roles          = [];
+
+		if ( ! Brizy_Admin_Membership_Membership::is_pro() ) {
+			$editable_roles = array_intersect_key( $editable_roles, array_flip( [ 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager' ] ) );
+		}
+
 		foreach ( $editable_roles as $role => $details ) {
-			$sub['role'] = esc_attr( $role );
-			$sub['name'] = translate_user_role( $details['name'] );
-			$roles[]     = $sub;
+			$roles[] = [
+				'role' => esc_attr( $role ),
+				'name' => translate_user_role( $details['name'] )
+			];
 		}
 
 		return $roles;
@@ -820,11 +825,11 @@ class Brizy_Editor_Editor_Editor {
 
 			// single mode
 			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
-				if ( in_array( $rule->getEntityType(), [ '404', 'author', 'front_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ '404',  'front_page' ] ) ) {
 					return 'single';
 				}
 
-				if ( in_array( $rule->getEntityType(), [ 'search', 'home_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ 'search', 'author', 'home_page' ] ) ) {
 					return 'archive';
 				}
 			}
@@ -902,7 +907,6 @@ class Brizy_Editor_Editor_Editor {
 			'setProjectMeta'             => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 			'getGlobalBlockList'         => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 			'createGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-			'createGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCKS_ACTION,
 			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 			'updateGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
 			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
@@ -989,7 +993,7 @@ class Brizy_Editor_Editor_Editor {
 		);
 
 		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
-			$cloudClient               = new Brizy_Admin_Cloud_Client( Brizy_Editor_Project::get(), new WP_Http() );
+			$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
 			$versions                  = $cloudClient->getCloudEditorVersions();
 			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
 		}

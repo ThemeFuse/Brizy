@@ -3,7 +3,7 @@ import produce from "immer";
 import configRules from "visual/config/rules";
 import { objectTraverse2, objectFromEntries } from "visual/utils/object";
 import { mapModels } from "visual/utils/models";
-import { canUseConditionInPage } from "visual/utils/blocks";
+import { canUseCondition } from "visual/utils/blocks";
 
 import {
   getPositions,
@@ -93,6 +93,11 @@ export const showHiddenElementsSelector = createSelector(
   ui => ui.showHiddenElements
 );
 
+export const currentRoleSelector = createSelector(
+  uiSelector,
+  ui => ui.currentRole
+);
+
 // === END 1 DEPENDENCY ===
 
 // === 2 DEPENDENCIES ===
@@ -140,7 +145,7 @@ export const globalBlocksPositionsSelector = createSelector(
     const pageId = Number(page.id);
     const newBlocksOrder = blocksOrder.filter(_id => {
       if (globalBlocks[_id]) {
-        return canUseConditionInPage(globalBlocks[_id], pageId);
+        return canUseCondition(globalBlocks[_id], pageId);
       }
 
       return true;
@@ -223,7 +228,7 @@ export const globalBlocksInPageSelector = createSelector(
     const pageId = Number(page.id);
 
     return blocksOrder.reduce((acc, id) => {
-      if (globalBlocks[id] && canUseConditionInPage(globalBlocks[id], pageId)) {
+      if (globalBlocks[id] && canUseCondition(globalBlocks[id], pageId)) {
         acc[id] = globalBlocks[id];
       }
 
@@ -674,7 +679,7 @@ export const pageBlocksAssembledRawSelector = createSelector(
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;
 
-        return canUseConditionInPage(globalBlocks[_id], pageId);
+        return canUseCondition(globalBlocks[_id], pageId);
       }
 
       return true;

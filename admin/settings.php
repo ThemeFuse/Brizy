@@ -127,7 +127,7 @@ class Brizy_Admin_Settings {
         }
 
 		global $submenu;
-        $submenu[self::menu_slug()][] = array( '<span id="get-help"></span>'.__( 'Go Help', 'brizy' ) , 'manage_options', __bt('support-url',apply_filters('brizy_support_url', Brizy_Config::SUPPORT_URL)) );
+        $submenu[self::menu_slug()][] = array( '<span id="get-help"></span>'.__( 'Get Help', 'brizy' ) , 'manage_options', __bt('support-url',apply_filters('brizy_support_url', Brizy_Config::SUPPORT_URL)) );
     }
 
 	/**
@@ -435,7 +435,7 @@ class Brizy_Admin_Settings {
 			array( $this, 'filter_types' )
 		);
 
-		return $types;
+		return apply_filters( 'brizy_settings_post_types', $types );
 	}
 
 

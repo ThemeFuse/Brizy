@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
+import { IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device }) {
   return [
@@ -77,6 +78,7 @@ export function getItems({ v, device }) {
           id: "submitHeight",
           label: t("Height"),
           type: "slider-dev",
+          disabled: !IS_STORY,
           config: {
             min: 1,
             max: 100,

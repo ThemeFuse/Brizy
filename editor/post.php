@@ -196,7 +196,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'compiler_version'                 => $this->compiler_version,
 			'plugin_version'                   => $this->plugin_version,
 			'editor_data'                      => $this->editor_data,
-			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor
+			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor()
 		);
 	}
 
@@ -552,29 +552,16 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_CompiledHtml
 	 */
 	public function get_compiled_page() {
-		return new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
+
+		if ( isset(self::$compiled_page[$this->getWpPostId()]) ) {
+			return self::$compiled_page[$this->getWpPostId()];
+		}
+
+		return self::$compiled_page[$this->getWpPostId()] = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 	}
 
 	public function isCompiledWithCurrentVersion() {
 		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function uses_editor() {
-		return $this->uses_editor;
-	}
-
-	/**
-	 * @param $val
-	 *
-	 * @return $this
-	 */
-	public function set_uses_editor( $val ) {
-		$this->uses_editor = $val;
-
-		return $this;
 	}
 
 	/**
@@ -641,22 +628,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	}
 
 	/**
+	 * @deprecated Use getEditUrl()
 	 * @return string
 	 */
 	public function edit_url() {
-		return add_query_arg(
-			array( Brizy_Editor::prefix( '-edit' ) => '' ),
-			get_permalink( $this->getWpPostId() )
-		);
-	}
-
-	/**
-	 * @return bool
-	 * @todo: Move this
-	 *
-	 */
-	public function can_edit_posts() {
-		return current_user_can( 'edit_posts' );
+		return self::getEditUrl($this->getWpPostId());
 	}
 
 	/**
@@ -675,14 +651,12 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		// get the storage values
 		$storage = $this->getStorage();
 		//$storageData          = $storage->get_storage();
-		$using_editor_old = $storage->get( Brizy_Editor_Constants::USES_BRIZY, false );
 		$storage_post     = $storage->get( $this->getObjectKey(), false );
 
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
 			$this->set_editor_data( $storage_post->editor_data );
 			$this->set_needs_compile( true );
-			$this->set_uses_editor( $using_editor_old );
 			$this->save();
 		} else if ( is_array( $storage_post ) ) {
 
@@ -704,14 +678,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$this->set_plugin_version( isset( $storage_post['plugin_version'] ) ? $storage_post['plugin_version'] : BRIZY_VERSION );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
-			$this->uses_editor        = (bool) ( isset( $storage_post[ Brizy_Editor_Constants::USES_BRIZY ] ) ? $storage_post[ Brizy_Editor_Constants::USES_BRIZY ] : false );
-		}
-
-		// check if the old flag is set
-		if ( ! is_null( $using_editor_old ) ) {
-			$this->uses_editor = (bool) $using_editor_old;
-			$storage->delete( Brizy_Editor_Constants::USES_BRIZY );
-			$this->saveStorage();
 		}
 	}
 
@@ -724,6 +690,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$autosave->set_template( $this->get_template() );
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );
+		$autosave->set_needs_compile(true);
 
 		return $autosave;
 	}
@@ -751,18 +718,18 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			       p.ID,
 			       p.post_title as title,
 			       p.post_title as post_title,
-			       '$postType' as post_type,
-			       '$postLabel' as post_type_label,
+			       %s as post_type,
+			       %s as post_type_label,
 			       pm.meta_value as 'uid'
 			FROM
 			     $wpdb->posts p
-				JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
+				LEFT JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
 			WHERE 
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
 			ORDER BY p.post_title ASC
 			LIMIT %d,%d
 SQL;
-		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $offset, $limit ) );
+		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $postLabel, $postType, $offset, $limit ) );
 
 		foreach($posts as $i=>$p) {
 			$postTitle = apply_filters( 'the_title', $p->post_title );

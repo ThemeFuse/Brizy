@@ -28,7 +28,10 @@ class Brizy_Admin_Rules_Manager {
 		} elseif ( is_search() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'search';
-		} elseif ( is_front_page() && !is_home() ) {
+		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+			$applyFor   = Brizy_Admin_Rule::WOO_SHOP_PAGE;
+			$entityType = 'shop_page';
+		} elseif ( is_front_page() && ! is_home() ) {
 			$applyFor   = Brizy_Admin_Rule::TEMPLATE;
 			$entityType = 'front_page';
 		} elseif ( is_home() ) {
@@ -38,9 +41,6 @@ class Brizy_Admin_Rules_Manager {
 			$applyFor       = Brizy_Admin_Rule::TAXONOMY;
 			$entityType     = $wp_query->queried_object->taxonomy;
 			$entityValues[] = $wp_query->queried_object_id;
-		} elseif ( function_exists( 'is_shop' ) &&  is_shop() ) {
-			$applyFor = Brizy_Admin_Rule::WOO_SHOP_PAGE;
-			$entityType     = "shop_page";
 		} elseif ( is_day() ) {
 			$applyFor = Brizy_Admin_Rule::DAY_ARCHIVE;
 			if ( $wp_query->queried_object ) {
@@ -275,80 +275,55 @@ class Brizy_Admin_Rules_Manager {
 	 * @return Brizy_Admin_RuleSet
 	 */
 	public function getRuleSet( $postId ) {
-		return new Brizy_Admin_RuleSet( $this->getRules( $postId ) );
+		return new Brizy_Admin_RuleSet( $this->sortRules( $this->getRules( $postId ) ) );
 	}
 //
-//	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
-//
-//		$defaults = array(
-//			'post_type'      => $postType,
-//			'posts_per_page' => - 1,
-//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
-//		);
-//
-//		$r = wp_parse_args( $args, $defaults );
-//
-//		$templates = get_posts( $r );
-//
-//		$rules = array();
-//
-//		foreach ( $templates as $template ) {
-//			$tRules = $this->getRules( $template->ID );
-//			$rules  = array_merge( $rules, $tRules );
-//		}
-//
-//		$rules = $this->sortRules( $rules );
-//
-//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-//
-//		return $ruleSet;
-//	}
-//
-//	public function getAllRulesSetByPostId( $args = array(), $postId ) {
-//
-//		$defaults = array(
-//			'post_type'      => $postType,
-//			'posts_per_page' => - 1,
-//			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
-//		);
-//
-//		$r = wp_parse_args( $args, $defaults );
-//
-//		$templates = get_posts( $r );
-//
-//		$rules = array();
-//
-//		foreach ( $templates as $template ) {
-//			$tRules = $this->getRules( $template->ID );
-//			$rules  = array_merge( $rules, $tRules );
-//		}
-//
-//		$rules = $this->sortRules( $rules );
-//
-//		$ruleSet = new Brizy_Admin_RuleSet( $rules );
-//
-//		return $ruleSet;
-//	}
-//
-//	private function sortRules( $rules ) {
-//		// sort the rules by how specific they are
-//		usort( $rules, function ( $a, $b ) {
-//			/**
-//			 * @var Brizy_Admin_Rule $a ;
-//			 * @var Brizy_Admin_Rule $b ;
-//			 */
-//
-//			$la = $a->getRuleWeight();
-//			$lb = $b->getRuleWeight();
-//			if ( $lb == $la ) {
-//				return 0;
-//			}
-//
-//			return $la < $lb ? 1 : - 1;
-//		} );
-//
-//		return $rules;
-//	}
+	public function getAllRulesSet( $args = array(), $postType = Brizy_Admin_Templates::CP_TEMPLATE ) {
+
+		$defaults = array(
+			'post_type'      => $postType,
+			'posts_per_page' => - 1,
+			'post_status'    => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' )
+		);
+
+		$r = wp_parse_args( $args, $defaults );
+
+		$templates = get_posts( $r );
+
+		$rules = array();
+
+		foreach ( $templates as $template ) {
+			$tRules = $this->getRules( $template->ID );
+			$rules  = array_merge( $rules, $tRules );
+		}
+
+		$rules = $this->sortRules( $rules );
+
+		$ruleSet = new Brizy_Admin_RuleSet( $rules );
+
+		return $ruleSet;
+	}
+
+
+	private function sortRules( $rules ) {
+		// sort the rules by how specific they are
+		usort( $rules, function ( $a, $b ) {
+			/**
+			 * @var Brizy_Admin_Rule $a ;
+			 * @var Brizy_Admin_Rule $b ;
+			 */
+
+			$la = $a->getRuleWeight([]);
+			$lb = $b->getRuleWeight([]);
+			if ( $lb == $la ) {
+				return 0;
+			}
+
+			return $la < $lb ? 1 : - 1;
+		} );
+
+		return $rules;
+	}
 //
 //	/**
 //	 * @param $postType
