@@ -10,9 +10,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout main
-          uses: actions/checkout@v2
-          with:
-            path: main
+         uses: actions/checkout@v2
+         with:
+           path: main
 
       - name: Load Build Evnrorment Data
         uses: falti/dotenv-action@master
