@@ -1,0 +1,129 @@
+name: Brizy Free Sefl-Hosted
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  base:
+    environment: Build
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Load Build Evnrorment Data
+        uses: falti/dotenv-action@master
+        id: dotenv
+        with:
+          path: main/.github/.build-env
+
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=MYSQL_CONTAINER_NAME::testing-mysql-${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=EDITOR_CONTAINER_NAME::testing-editor-${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=WORDPRESS_CONTAINER_NAME::testing-wordpress-${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=COMPILER_CONTAINER_NAME::testing-compiler"
+          echo "::set-output name=WORDPRESS_IMAGE::brizy/testing-wordpress:${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=EDITOR_IMAGE::brizy/testing-editor:${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=MYSQL_IMAGE::brizy/testing-mysql:${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=DB_NAME::brizy-${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=BITBLOX_DOMAIN::${{ steps.dotenv.outputs.build_environment }}.editor.office.brizy.org"
+          echo "::set-output name=NETWORK::traefik"
+          echo "::set-output name=DOMAIN::${{ steps.dotenv.outputs.build_environment }}.wordpress.office.brizy.org"
+
+      - name: Checkout BB
+        uses: actions/checkout@v2
+        with:
+          repository: bagrinsergiu/BB
+          ssh-key: ${{ secrets.ACCESS_KEY }}
+          path: bb
+          submodules: 'recursive'
+          fetch-depth: '1'
+
+      - name: Change submodule branches
+        id: change-branches-on-bb
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/bb/editor && git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && git checkout ${{ steps.dotenv.outputs.editor_branch }}
+          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && git fetch origin ${{ steps.dotenv.outputs.free_branch }} && git checkout ${{ steps.dotenv.outputs.free_branch }}
+          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && git checkout ${{ steps.dotenv.outputs.pro_branch }}
+
+      - name: Build mysql image
+        id: build-mysql-image
+        shell: bash
+        run: |
+          docker stop "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" || true
+          docker build -t "${{ steps.vars.outputs.MYSQL_IMAGE }}" --target build-deployment $GITHUB_WORKSPACE/bb/mysql
+          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                          --network-alias="${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" \
+                          --name="${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" \
+                          --cpus=3 \
+                          --memory=2g \
+                          -e "MAX_CPUS=3" \
+                          -e "MYSQL_ROOT_PASSWORD=nopassword" \
+                          -e "MYSQL_DATABASE=${{ steps.vars.outputs.DB_NAME }}" \
+                          -e "MYSQL_USER=brizy" \
+                          -e "MYSQL_PASSWORD=nopassword" \
+                         "${{ steps.vars.outputs.MYSQL_IMAGE }}"
+
+      - name: Build wordpress image
+        id: build-wordpress-image
+        shell: bash
+        run: |
+          docker stop "${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" || true
+          docker rmi "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" || true
+          docker build -t "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" \
+                      --build-arg COMPOSER_AUTH="{\"github-oauth\":{\"github.com\":\"${{ secrets.GITHUB_TOKEN }}\"}}" \
+                      --target wordpress $GITHUB_WORKSPACE/bb/wordpress
+          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                      --network-alias="${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
+                      --name="${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
+                      --cpus=2 \
+                      --memory=2g \
+                      -e "MAX_CPUS=2" \
+                      -e "WORDPRESS_DB_HOST=${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" \
+                      -e "WORDPRESS_DB_USER=root" \
+                      -e "WORDPRESS_DB_PASSWORD=nopassword" \
+                      -e "WORDPRESS_DB_NAME=${{ steps.vars.outputs.DB_NAME }}" \
+                      -e "WORDPRESS_DEBUG=1" \
+                      -e "APP_ENV=dev" \
+                      -e "EDITOR_HOST=${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}:3000" \
+                      -e "COMPILER_HOST=${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}:5000" \
+                      -e "STATIC_HOST=${{ steps.vars.outputs.BITBLOX_DOMAIN }}:8080" \
+                      -e "COMPILER_DOWNLOAD_HOST=${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
+                      -e "WORDPRESS_CONFIG_EXTRA=
+                          define('FS_METHOD', 'direct');
+                          define( 'WP_HOME', 'http://${{ steps.vars.outputs.DOMAIN }}:8080/' );
+                          define( 'WP_SITEURL', 'http://${{ steps.vars.outputs.DOMAIN }}:8080/' ); " \
+                      --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
+                      --label "traefik.enable"="true" \
+                      --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.DOMAIN }}" \
+                      --label "traefik.port"="80" \
+                      "${{ steps.vars.outputs.WORDPRESS_IMAGE }}"
+
+      - name: Build Editor image
+        id: build-editor-image
+        shell: bash
+        run: |
+          docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
+          docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
+          docker build -t "${{ steps.vars.outputs.EDITOR_IMAGE }}" --target remote $GITHUB_WORKSPACE/bb/editor
+          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                    --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --cpus=1 \
+                    --memory=1g \
+                    -e "MAX_CPUS=1" \
+                    --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
+                    --label "traefik.enable"="true" \
+                    --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.BITBLOX_DOMAIN }}" \
+                    --label "traefik.port"="3000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE,PUT" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Max-Age:1000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Headers:x-requested-with,Content-Type,origin,authorization,accept,client-security-token" \
+                    "${{ steps.vars.outputs.EDITOR_IMAGE }}"
