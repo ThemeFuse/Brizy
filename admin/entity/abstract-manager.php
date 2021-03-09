@@ -71,6 +71,11 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	}
 
 	protected function createEntityByType( $uid, $type, $status = 'publish' ) {
+
+	    if($this->getEntityUidAndType($uid,$type)) {
+	        throw new Exception('Duplicate block uid. Please refresh the page and try again');
+        }
+
 		$name  = md5( time() );
 		$apost = wp_insert_post( array(
 			'post_title'  => $name,

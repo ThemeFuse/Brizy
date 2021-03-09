@@ -37,7 +37,6 @@ export function getItems({ v, device }) {
         title: t("Carousel")
       },
       roles: ["admin"],
-      disabled: device !== "desktop" && v.sliderArrows === "none",
       position: 70,
       options: [
         {
@@ -87,7 +86,7 @@ export function getItems({ v, device }) {
                   type: "slider-dev",
                   config: {
                     min: 1,
-                    max: 6,
+                    max: 100,
                     units: [{ value: "px", title: "px" }]
                   }
                 },
@@ -95,6 +94,7 @@ export function getItems({ v, device }) {
                   id: "sliderArrowsSpacing",
                   label: t("Arrows Spacing"),
                   type: "slider-dev",
+                  disabled: v.sliderArrows === "none",
                   devices: "responsive",
                   config: {
                     min: 0,

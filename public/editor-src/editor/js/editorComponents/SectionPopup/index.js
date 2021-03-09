@@ -8,9 +8,8 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -157,15 +156,7 @@ class SectionPopup extends EditorComponent {
         })}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          IS_GLOBAL_POPUP && globalBlockId
-            ? child => (
-                <ConditionsComponent type="popup">{child}</ConditionsComponent>
-              )
-            : globalBlockId
-            ? child => child
-            : null
-        }
+        global={!!globalBlockId}
       />
     );
   }
@@ -202,7 +193,7 @@ class SectionPopup extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <SortableZIndex zindex={1}>
+        <SortableZIndex zIndex={1}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
               <EditorArrayComponent {...itemsProps} />

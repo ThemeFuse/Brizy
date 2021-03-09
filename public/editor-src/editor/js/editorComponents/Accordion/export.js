@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { collapse, expend } from "./utils";
+import { collapse, expand } from "./utils";
 
 export default function($node) {
   $node.find(".brz-accordion").each(function() {
@@ -31,6 +31,23 @@ export default function($node) {
         return height;
       });
 
+      // when animation is done wee need
+      // 1. emit.accordion.changed
+      // 2. need to see if offset top of elements is outside of viewport
+      const handleAnimationComplete = () => {
+        // Emit Accordion Changed
+        const offsetTop = $item.offset().top;
+        window.Brizy.emit("elements.accordion.changed", _this, {
+          active: $item.get(0),
+          tabs: $item.siblings().get()
+        });
+
+        // verify if content is outside of viewport
+        if (window.scrollY > offsetTop) {
+          $("html, body").animate({ scrollTop: offsetTop }, 200);
+        }
+      };
+
       if ($collapsible === "on") {
         if ($item.hasClass(activeClassName)) {
           return;
@@ -45,14 +62,22 @@ export default function($node) {
 
             if (activeNode) {
               const height = heights[idx];
-              expend(node, { height, duration });
+              expand(node, {
+                height,
+                duration,
+                onFinish: handleAnimationComplete
+              });
               activeNode.classList.remove(activeClassName);
             }
           });
 
         const node = $itemContent.get(0);
         const height = heights[itemIndex];
-        collapse(node, { height, duration });
+        collapse(node, {
+          height,
+          duration,
+          onFinish: handleAnimationComplete
+        });
 
         $item.addClass(activeClassName);
       } else {
@@ -60,27 +85,21 @@ export default function($node) {
         const height = heights[itemIndex];
 
         if ($item.hasClass(activeClassName)) {
-          expend(node, { height, duration });
+          expand(node, {
+            height,
+            duration,
+            onFinish: handleAnimationComplete
+          });
           $item.removeClass(activeClassName);
         } else {
-          collapse(node, { height, duration });
+          collapse(node, {
+            height,
+            duration,
+            onFinish: handleAnimationComplete
+          });
           $item.addClass(activeClassName);
         }
       }
-
-      // Emit Accordion Changed
-      window.Brizy.emit("elements.accordion.changed", _this, {
-        active: $item.get(0),
-        tabs: $item.siblings().get()
-      });
-
-      setTimeout(function() {
-        //verify if content is outside of viewport
-        const offsetTop = $accordionNavItems.offset().top;
-        if (window.scrollY > offsetTop) {
-          $("html, body").animate({ scrollTop: offsetTop }, 200);
-        }
-      }, 100);
     });
 
     $accordionFilter.on("click", function({ target }) {

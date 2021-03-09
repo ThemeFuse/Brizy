@@ -12,10 +12,9 @@ import Toolbar, {
   CollapsibleToolbar,
   ToolbarExtend
 } from "visual/component/Toolbar";
-import SortableZIndex from "visual/component/Sortable/SortableZIndex";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";
 import HotKeys from "visual/component/HotKeys";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   IS_INTERNAL_POPUP,
   IS_EXTERNAL_POPUP,
@@ -202,15 +201,7 @@ class SectionPopup2 extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          IS_GLOBAL_POPUP && globalBlockId
-            ? child => (
-                <ConditionsComponent type="popup">{child}</ConditionsComponent>
-              )
-            : globalBlockId
-            ? child => child
-            : null
-        }
+        global={!!globalBlockId}
       />
     );
   }
@@ -249,7 +240,7 @@ class SectionPopup2 extends EditorComponent {
     return (
       <Background value={v} meta={meta}>
         <div className={innerClassName}>
-          <SortableZIndex zindex={1}>
+          <SortableZIndex zIndex={1}>
             <div className="brz-container__wrap">
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(

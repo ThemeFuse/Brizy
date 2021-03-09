@@ -31,6 +31,7 @@ class BlockThumbnail extends React.Component {
   anchorInputRefs = [];
 
   componentWillUnmount() {
+    this.handleInputChange.cancel();
     this.anchorInputRefs = null;
   }
 

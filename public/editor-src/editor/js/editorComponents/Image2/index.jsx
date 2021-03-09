@@ -73,7 +73,14 @@ class Image extends EditorComponent {
     const { containerWidth: stateContainerWidth } = this.state;
 
     if (getStore().getState().ui.deviceMode === "desktop") {
-      const containerWidth = this.container.current.parentElement.clientWidth;
+      const parentNode = this.container.current.parentElement;
+      const cs = getComputedStyle(parentNode);
+
+      const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+      const borderX =
+        parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+      const containerWidth = parentNode.offsetWidth - paddingX - borderX;
 
       if (containerWidth !== stateContainerWidth) {
         this.setState({ containerWidth });
@@ -108,7 +115,7 @@ class Image extends EditorComponent {
           iH: Math.round(iH),
           oX: Math.round(oX),
           oY: Math.round(oY),
-          cW: Math.round(cW),
+          cW: Math.round(cW), 
           cH: Math.round(cH)
         };
 

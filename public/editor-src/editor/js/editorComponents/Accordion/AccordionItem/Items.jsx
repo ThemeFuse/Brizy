@@ -14,7 +14,8 @@ class AccordionItemItems extends EditorArrayComponent {
 
   static defaultProps = {
     className: "",
-    meta: {}
+    meta: {},
+    isActive: false
   };
 
   handleSortableAcceptElements = from => {
@@ -86,17 +87,16 @@ class AccordionItemItems extends EditorArrayComponent {
       return items;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.className}>{items}</div>
-    ) : null;
+    const { className, isActive } = this.props;
 
     return (
       <Sortable
         path={this.getPath()}
         type="column"
+        disabled={!isActive}
         acceptElements={this.handleSortableAcceptElements}
       >
-        {sortableContent}
+        {items.length > 0 && <div className={className}>{items}</div>}
       </Sortable>
     );
   }

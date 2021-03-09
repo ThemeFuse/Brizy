@@ -83,7 +83,6 @@ export default class Form2 extends EditorComponent {
     const className = classnames(
       "brz-forms2",
       "brz-forms2__item",
-      "brz-align-self-xs-end",
       "brz-forms2__item-button",
       { "brz-forms2-story": IS_STORY }
     );
@@ -112,11 +111,7 @@ export default class Form2 extends EditorComponent {
     };
 
     const formContent = (
-      <form
-        className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
-        noValidate
-        onSubmit={this.handleSubmit}
-      >
+      <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
         {this.renderFields(v)}
         {this.renderButton(v)}
       </form>

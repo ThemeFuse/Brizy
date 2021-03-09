@@ -46,16 +46,6 @@ $.fn.popup = function() {
   };
 };
 
-// closes a popup when an anchor link is clicked inside it
-$(document).on("brz.anchor.click", function(e, anchor) {
-  const $closestPopup = $(anchor).closest(".brz-popup2");
-
-  if ($closestPopup.length > 0) {
-    const popup = $closestPopup.popup();
-    popup.close();
-  }
-});
-
 export default function($node) {
   $node.find("[data-brz-link-type='popup']").on("click", function(e) {
     e.preventDefault();
@@ -117,6 +107,16 @@ export default function($node) {
         );
       }
     });
+
+  // closes a popup when an anchor link is clicked inside it
+  window.Brizy.on("elements.anchor.startScrolled", anchor => {
+    const $closestPopup = $(anchor).closest(".brz-popup2");
+
+    if ($closestPopup.length > 0) {
+      const popup = $closestPopup.popup();
+      popup.close();
+    }
+  });
 }
 
 function _parsePopupData($popup) {

@@ -1,8 +1,6 @@
 import $ from "jquery";
 
 export default function($node) {
-  const $document = $(document);
-
   $node.find("[data-brz-link-type='popup']").on("click", function(e) {
     e.preventDefault();
 
@@ -29,7 +27,7 @@ export default function($node) {
   $(".brz-popup").addClass("brz-initialized");
 
   // closes a popup when an anchor link is clicked inside it
-  $document.on("brz.anchor.click", function(e, anchor) {
+  window.Brizy.on("elements.anchor.startScrolled", anchor => {
     const $closestPopup = $(anchor).closest(".brz-popup");
 
     if ($closestPopup.length > 0) {

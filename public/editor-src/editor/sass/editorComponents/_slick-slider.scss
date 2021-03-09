@@ -114,6 +114,7 @@
 .slick-track {
   display: flex;
   flex-wrap: wrap;
+  will-change: left;
 }
 
 // Dots

@@ -17,6 +17,7 @@ import { Block, SavedBlock } from "visual/types";
 import { ReduxState } from "visual/redux/types";
 import { extraFontStylesSelector } from "visual/redux/selectors2";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
+import { isNumber } from "visual/utils/math";
 
 type SavedBlockMapStateToProps = {
   isAuthorized: boolean;
@@ -122,7 +123,13 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
       return;
     }
 
-    const screenshotsSupported: boolean = await browserSupports();
+    let screenshotsSupported: boolean;
+
+    try {
+      screenshotsSupported = await browserSupports();
+    } catch (e) {
+      screenshotsSupported = false;
+    }
 
     if (screenshotsSupported) {
       // getElementById instead of querySelector was used deliberately
@@ -130,16 +137,27 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
       const node: HTMLElement | null = document.getElementById(blockId);
 
       if (node) {
-        const { src, width, height } = await makeNodeScreenshot(node);
-        const { id } = await createBlockScreenshot({
-          base64: src,
-          blockType: "saved"
-        });
+        const { src, width, height } = await makeNodeScreenshot(node).catch(
+          () => ({
+            src: undefined,
+            width: undefined,
+            height: undefined
+          })
+        );
 
-        meta._thumbnailSrc = id;
-        meta._thumbnailWidth = width;
-        meta._thumbnailHeight = height;
-        meta._thumbnailTime = Date.now();
+        if (src && isNumber(width) && isNumber(height)) {
+          const { id } = await createBlockScreenshot({
+            base64: src,
+            blockType: "saved"
+          }).catch(() => ({ id: undefined }));
+
+          if (id) {
+            meta._thumbnailSrc = id;
+            meta._thumbnailWidth = width;
+            meta._thumbnailHeight = height;
+            meta._thumbnailTime = Date.now();
+          }
+        }
       }
     }
 
@@ -157,6 +175,13 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
 
       console.error(err);
     });
+
+    if (!screenshotsSupported) {
+      ToastNotification.warn(
+        t("Your block was saved without screenshot, browser is not compatible"),
+        { hideAfter: 5 }
+      );
+    }
 
     if (this.mounted) {
       this.setState({ loading: false });

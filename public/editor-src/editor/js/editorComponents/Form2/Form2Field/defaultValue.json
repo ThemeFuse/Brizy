@@ -8,8 +8,10 @@
     "options": ["Option 1", "Option 2"],
     "nativeHtml": "off",
     "multipleSelection": "off",
+
     "fileTypes": ".jpg, .jpeg, .png, .gif, .pdf",
-    "fileMaxSize": "1mb"
+    "fileMaxSize": "1mb",
+    "fileText": "Choose File"
   },
 
   "style": {

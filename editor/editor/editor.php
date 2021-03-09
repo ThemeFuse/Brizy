@@ -825,11 +825,11 @@ class Brizy_Editor_Editor_Editor {
 
 			// single mode
 			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
-				if ( in_array( $rule->getEntityType(), [ '404', 'author', 'front_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ '404',  'front_page' ] ) ) {
 					return 'single';
 				}
 
-				if ( in_array( $rule->getEntityType(), [ 'search', 'home_page' ] ) ) {
+				if ( in_array( $rule->getEntityType(), [ 'search', 'author', 'home_page' ] ) ) {
 					return 'archive';
 				}
 			}
@@ -907,7 +907,6 @@ class Brizy_Editor_Editor_Editor {
 			'setProjectMeta'             => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
 			'getGlobalBlockList'         => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
 			'createGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-			'createGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCKS_ACTION,
 			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
 			'updateGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
 			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,

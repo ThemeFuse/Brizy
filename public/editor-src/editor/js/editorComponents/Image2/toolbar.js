@@ -7,7 +7,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 import {
-  toolbarImageTags,
+  toolbarImageTags, 
   toolbarLinkAnchor,
   toolbarImageLinkExternal,
   toolbarImageSetter
@@ -124,6 +124,7 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
                   config: {
                     min: 100,
                     max: 200,
+                    inputMin: 100,
                     units: [{ value: "%", title: "%" }]
                   }
                 },

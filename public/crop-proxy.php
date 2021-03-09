@@ -64,7 +64,6 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 		}
 	}
 
-
 	/**
 	 * @param $attachment_hash
 	 * @param $filter
@@ -75,18 +74,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	 */
 	private function crop_local_asset( $attachment_hash, $filter, $post_id, $optimize = false ) {
 		try {
-
-			$attachment = $this->getAttachment( $attachment_hash );
-
-			if ( ! $attachment ) {
-				throw new Exception( 'Media not found' );
-			}
-
-			$media_url = get_attached_file( $attachment->ID );
-
-			$project = Brizy_Editor_Project::get();
-
-			$media_cache     = new Brizy_Editor_CropCacheMedia( $project, $post_id );
+			$media_cache     = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id );
+			$media_url       = $media_cache->getMediaUrl( $attachment_hash );
 			$crop_media_path = $media_cache->crop_media( $media_url, $filter, true, $optimize );
 
 			do_action( 'brizy_before_send_asset', $post_id );
@@ -97,24 +86,5 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			Brizy_Logger::instance()->exception( $e );
 			throw new Exception( 'Unable to crop media' );
 		}
-	}
-
-	private function getAttachment( $hash ) {
-		$attachment = null;
-		if ( is_numeric( $hash ) ) {
-			$attachment = get_post( (int) $hash );
-		} else {
-			$attachments = get_posts( array(
-				'meta_key'   => 'brizy_attachment_uid',
-				'meta_value' => $hash,
-				'post_type'  => 'attachment',
-			) );
-
-			if ( isset( $attachments[0] ) ) {
-				$attachment = $attachments[0];
-			}
-		}
-
-		return $attachment;
 	}
 }

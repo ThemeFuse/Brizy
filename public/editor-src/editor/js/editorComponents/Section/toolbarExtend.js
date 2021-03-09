@@ -66,7 +66,13 @@ export function getItems({ v, device, component }) {
                       device,
                       devices: "all",
                       component
-                    })
+                    }),
+                    {
+                      id: "gbConditions",
+                      disabled: !component.props.meta.globalBlockId,
+                      value: component.props.meta.globalBlockId,
+                      type: "gbConditions"
+                    }
                   ]
                 },
                 {

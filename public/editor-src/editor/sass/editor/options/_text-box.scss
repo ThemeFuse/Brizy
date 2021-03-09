@@ -10,7 +10,7 @@
 
   .brz-label {
     display: flex;
-    line-height: 1;
+    align-items: center;
     color: $options-label-color;
     font-family: $font-family-1;
     font-size: 13px;
@@ -26,6 +26,7 @@
     position: relative;
     font-weight: 400;
     max-width: 90%;
+    line-height: 1;
   }
   &__helper {
     font-family: inherit;
@@ -35,6 +36,9 @@
     &--active {
       color: $brand-primary;
     }
+  }
+  &__input > .brz-invisible {
+    line-height: 1.1;
   }
   &--fixed-width {
     width: 65px;
@@ -69,6 +73,7 @@
 .brz-ed-control__text-box--resizer {
   @include small-input;
 
+  padding: 0;
   position: absolute;
   width: 105%;
   height: 100%;

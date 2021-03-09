@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.6<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.8<br>
+Stable tag: 2.2.9.1<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,47 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.9.1 - 2021-03-09
+* New: Form input file label is now editable
+* Improved: Sections with Membership enabled now have an indicator icon
+* Fixed: Some images could experience blurriness
+* Fixed: Clicking Global Blocks conditions options would do nothing
+* Fixed: Carousel content flicker
+* Fixed: Carousel options in responsive mode
+* Fixed: Form Submit align option
+* Fixed: Form Custom HTML template copy to clipboard
+* Fixed: Form Integrations Popup scroll in Safari
+* Fixed: Accordion drag and drop
+* Fixed: Accordion adjusting browser scroll position even when not needed
+* Fixed: Slider Prev and Next buttons outline
+* Fixed: Slider padding option
+* Fixed: Image sizes
+* Fixed: Timeline border CSS
+* Fixed: PostContent CSS
+* Fixed: WooCommerce Add to Cart CSS
+* Fixed: Typography option issues in Safari
+* Fixed: Slider option CSS
+* Fixed: Saving a block or a layout would fail if the browser did not support screenshot saving
+* Fixed: Browser back button not working after clicking an anchor to a block on the page
+* Fixed: Do not render Terms page on checkout if it created with Brizy
+* Fixed: White label prefix for multi-site
+* Fixed: Compatibility with BBpress plugin
+* Fixed: Page shop as front page template issue
+* Fixed: Exclude rule
+* Fixed: Dynamic content in Membership block
+* Fixed: Get post lists API
+* Fixed: Compatibility with ThemeFuse old themes
+* Fixed: Avoid duplicate global blocks on create blocks
+* Fixed: Add script dependencies from placeholder
+* Fixed: Preview for autosaves
+* Fixed: Archive element on Author archive template not available
+* Fixed: Possibility to crop an image by its Dynamic URL
+* Fixed: Updated .POT file
+* Fixed: Added an alert comment when removing a function used in other plugins
+* Fixed: Global Blocks would not appear in category pages made with Brizy Template
+* Fixed: PostContent CSS
+* Fixed: WooCommerce Add to Cart CSS
 
 ### 2.2.8 - 2021-02-16
 • New: Membership functionality

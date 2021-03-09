@@ -34,6 +34,15 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputBoxShadow"
       ]
     },
+    ".brz &&:hover .woocommerce-grouped-product-list-item__quantity input[type=number].input-text": {
+      standart: [
+        "cssStyleElementWOOAddToCartTableBorder",
+        "cssStyleElementWOOAddToCartTableBg"
+      ]
+    },
+    ".brz &&:hover input[type=number].input-text::placeholder": {
+      standart: ["cssStyleElementWOOAddToCartInputColor"]
+    },
     ".brz &&:hover .single_variation": {
       standart: [
         "cssStyleElementWOOAddToCartValueColor",
@@ -95,6 +104,16 @@ export function style(v, vs, vd) {
       standart: [
         "cssStyleElementWOOAddToCartTableBorder",
         "cssStyleElementWOOAddToCartTableBg",
+        "cssStyleElementWOOAddToCartValueColor",
+        "cssStyleElementWOOAddToCartValueFontFamily",
+        "cssStyleElementWOOAddToCartValueFontSize",
+        "cssStyleElementWOOAddToCartValueLineHeight",
+        "cssStyleElementWOOAddToCartValueFontWeight",
+        "cssStyleElementWOOAddToCartValueLetterSpacing"
+      ]
+    },
+    ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
+      standart: [
         "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
