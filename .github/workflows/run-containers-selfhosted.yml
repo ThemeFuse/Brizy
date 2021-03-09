@@ -31,7 +31,7 @@ jobs:
         with:
           repository: git@github.com:bagrinsergiu/BB.git
           ref: master
-          ssh_key: ${{ secrets.ACCESS_KEY }}
+          ssh-key: ${{ secrets.ACCESS_KEY }}
           path: bb
           submodules: 'recursive'
           fetch-depth: '1'
