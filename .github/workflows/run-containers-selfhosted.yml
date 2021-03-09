@@ -73,31 +73,31 @@ jobs:
 #          dbName="brizy-${target}"
 #          docker stop "${mysqlContainerName}" || true
 #          docker build -t "${brizyMysqlImage}" --target build-deployment bb/mysql
-          docker run -d --rm --network="${network}" \
-          --network-alias="${wpContainerName}" \
-          --name="${wpContainerName}" \
-          --cpus=2 \
-          --memory=2g \
-          -e "MAX_CPUS=2" \
-          -e "WORDPRESS_DB_HOST=${mysqlContainerName}" \
-          -e "WORDPRESS_DB_USER=root" \
-          -e "WORDPRESS_DB_PASSWORD=nopassword" \
-          -e "WORDPRESS_DB_NAME=${dbName}" \
-          -e "WORDPRESS_DEBUG=1" \
-          -e "APP_ENV=dev" \
-          -e "EDITOR_HOST=${editorContainerName}:3000" \
-          -e "COMPILER_HOST=${compilerContainerName}:5000" \
-          -e "STATIC_HOST=${bitbloxDomain}:8080" \
-          -e "COMPILER_DOWNLOAD_HOST=${wpContainerName}" \
-          -e "WORDPRESS_CONFIG_EXTRA=
-          define('FS_METHOD', 'direct');
-          define( 'WP_HOME', 'http://${domainName}:8080/' );
-          define( 'WP_SITEURL', 'http://${domainName}:8080/' ); " \
-          --label "traefik.docker.network"="${network}" \
-          --label "traefik.enable"="true" \
-          --label "traefik.frontend.rule"="Host:${domainName}" \
-          --label "traefik.port"="80" \
-          "${brizyWordpressImage}"
+#          docker run -d --rm --network="${network}" \
+#          --network-alias="${wpContainerName}" \
+#          --name="${wpContainerName}" \
+#          --cpus=2 \
+#          --memory=2g \
+#          -e "MAX_CPUS=2" \
+#          -e "WORDPRESS_DB_HOST=${mysqlContainerName}" \
+#          -e "WORDPRESS_DB_USER=root" \
+#          -e "WORDPRESS_DB_PASSWORD=nopassword" \
+#          -e "WORDPRESS_DB_NAME=${dbName}" \
+#          -e "WORDPRESS_DEBUG=1" \
+#          -e "APP_ENV=dev" \
+#          -e "EDITOR_HOST=${editorContainerName}:3000" \
+#          -e "COMPILER_HOST=${compilerContainerName}:5000" \
+#          -e "STATIC_HOST=${bitbloxDomain}:8080" \
+#          -e "COMPILER_DOWNLOAD_HOST=${wpContainerName}" \
+#          -e "WORDPRESS_CONFIG_EXTRA=
+#          define('FS_METHOD', 'direct');
+#          define( 'WP_HOME', 'http://${domainName}:8080/' );
+#          define( 'WP_SITEURL', 'http://${domainName}:8080/' ); " \
+#          --label "traefik.docker.network"="${network}" \
+#          --label "traefik.enable"="true" \
+#          --label "traefik.frontend.rule"="Host:${domainName}" \
+#          --label "traefik.port"="80" \
+#          "${brizyWordpressImage}"
 
 
 
