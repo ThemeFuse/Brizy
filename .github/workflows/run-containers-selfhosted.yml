@@ -29,7 +29,7 @@ jobs:
       - name: Checkout BB
         uses: actions/checkout@v2
         with:
-          repository: bagrinsergiu/BB.git
+          repository: bagrinsergiu/BB
           ssh-key: ${{ secrets.ACCESS_KEY }}
           path: bb
           submodules: 'recursive'
