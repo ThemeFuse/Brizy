@@ -222,7 +222,13 @@ export const getContainerW = ({
   const containerWNoSpacing = wNoSpacing * (width / 100);
   const paddingType = stylePaddingType({ v, device, state });
   const borderType = styleBorderWidthType({ v, device, state });
-  const paddingW = getPadding({ v, device, state, w, type: paddingType });
+  const paddingW = getPadding({
+    v,
+    device,
+    state,
+    w: containerW,
+    type: paddingType
+  });
   const borderWidthW = getBorder({ v, device, state, type: borderType });
   const externalSpacing = paddingW + borderWidthW;
 

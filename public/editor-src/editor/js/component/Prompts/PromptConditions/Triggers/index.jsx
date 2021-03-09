@@ -13,12 +13,14 @@ import { triggersSelector } from "visual/redux/selectors";
 import { updateTriggers } from "visual/redux/actions";
 
 import items from "./items";
+import { IS_PRO } from "visual/utils/models/modes";
 
 class Triggers extends React.Component {
   constructor(props) {
     super(props);
 
-    const triggerOnce = props.values.find(({ id }) => id === "triggerOnce") || {};
+    const triggerOnce =
+      props.values.find(({ id }) => id === "triggerOnce") || {};
 
     const values = removeAt(props.values, props.values.indexOf(triggerOnce));
 
@@ -30,42 +32,54 @@ class Triggers extends React.Component {
   }
 
   handleChange = () => {
-    const { values, triggerOnce } = this.state;
+    if (IS_PRO) {
+      const { values, triggerOnce } = this.state;
 
-    const triggerOnceObj = {
-      id: "triggerOnce",
-      active: true,
-      value: triggerOnce
-    };
-
-    this.setState({ loading: true }, () => {
-      const meta = {
-        syncSuccess: () =>
-          this.setState({
-            loading: false
-          }),
-        syncFail: () =>
-          this.setState({
-            loading: false
-          })
+      const triggerOnceObj = {
+        id: "triggerOnce",
+        active: true,
+        value: triggerOnce
       };
 
-      this.props.dispatch(updateTriggers([...values, triggerOnceObj], meta));
-    });
+      this.setState({ loading: true }, () => {
+        const meta = {
+          syncSuccess: () =>
+            this.setState({
+              loading: false
+            }),
+          syncFail: () =>
+            this.setState({
+              loading: false
+            })
+        };
+
+        this.props.dispatch(updateTriggers([...values, triggerOnceObj], meta));
+      });
+    }
   };
 
-  handleTriggerOnceChange = triggerOnce => this.setState({ triggerOnce });
+  handleTriggerOnceChange = triggerOnce => {
+    if (IS_PRO) {
+      this.setState({ triggerOnce });
+    }
+  };
 
-  handleWrapperTriggerChange = (index, value) =>
-    this.setState({
-      values: setIn(this.state.values, [index], {
-        ...this.state.values[index],
-        ...value
-      })
-    });
+  handleWrapperTriggerChange = (index, value) => {
+    if (IS_PRO) {
+      this.setState({
+        values: setIn(this.state.values, [index], {
+          ...this.state.values[index],
+          ...value
+        })
+      });
+    }
+  };
 
-  handleWrapperTriggerRemove = index =>
-    this.setState({ values: removeAt(this.state.values, index) });
+  handleWrapperTriggerRemove = index => {
+    if (IS_PRO) {
+      this.setState({ values: removeAt(this.state.values, index) });
+    }
+  };
 
   handleTriggerChange(oldTriggerIndex, newName) {
     const { values } = this.state;
@@ -83,26 +97,31 @@ class Triggers extends React.Component {
     });
   }
 
-  handleValueChange = (index, value) =>
-    this.setState({
-      values: setIn(this.state.values, [index, "value"], value)
-    });
+  handleValueChange = (index, value) => {
+    if (IS_PRO) {
+      this.setState({
+        values: setIn(this.state.values, [index, "value"], value)
+      });
+    }
+  };
 
   handleAdd = () => {
-    const { values } = this.state;
-    const availableItems = this.getAvailableItems();
+    if (IS_PRO) {
+      const { values } = this.state;
+      const availableItems = this.getAvailableItems();
 
-    if (availableItems[0]) {
-      this.setState({
-        values: [
-          ...values,
-          {
-            id: availableItems[0].id,
-            active: true,
-            value: availableItems[0].defaultValue
-          }
-        ]
-      });
+      if (availableItems[0]) {
+        this.setState({
+          values: [
+            ...values,
+            {
+              id: availableItems[0].id,
+              active: true,
+              value: availableItems[0].defaultValue
+            }
+          ]
+        });
+      }
     }
   };
 
@@ -126,7 +145,7 @@ class Triggers extends React.Component {
           duplicatesAmount > currentDuplicatesAmount[id];
 
         return (
-          currentId === id || (currentDuplicatesAreLess || !isAlreadyInValues)
+          currentId === id || currentDuplicatesAreLess || !isAlreadyInValues
         );
       })
       .sort(
@@ -212,7 +231,7 @@ class Triggers extends React.Component {
     });
 
     return (
-      <React.Fragment>
+      <>
         <div className="brz-ed-popup-conditions__trigger-once">
           <div>Trigger Popup Only Once</div>
           <Switch
@@ -240,7 +259,7 @@ class Triggers extends React.Component {
           onChange={this.handleChange}
           onClose={this.props.onClose}
         />
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -251,7 +270,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 });
 
-export default connect(
-  stateToProps,
-  mapDispatchToProps
-)(Triggers);
+export default connect(stateToProps, mapDispatchToProps)(Triggers);

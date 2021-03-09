@@ -47,6 +47,10 @@ export function styleClassName(v) {
           paddingTop: "var(--tabletPaddingTop)",
           paddingBottom: "var(--tabletPaddingBottom)"
         },
+        "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
+          paddingLeft: "var(--tabletSpacing)",
+          paddingRight: "var(--tabletSpacing)"
+        },
         "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: "var(--tabletArrowsSpacing)"
         },
@@ -62,6 +66,10 @@ export function styleClassName(v) {
         "& > .brz-carousel__slider > .slick-list": {
           paddingTop: "var(--mobilePaddingTop)",
           paddingBottom: "var(--mobilePaddingBottom)"
+        },
+        "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
+          paddingLeft: "var(--mobileSpacing)",
+          paddingRight: "var(--mobileSpacing)"
         },
         "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: "var(--mobileArrowsSpacing)"
@@ -119,6 +127,8 @@ export function styleClassName(v) {
       v,
       "sliderArrowsSpacing"
     );
+    const tabletSpace = tabletSyncOnChange(v, "spacing");
+    const mobileSpace = mobileSyncOnChange(v, "spacing");
 
     glamorObj = {
       // Hide slideItems before slick-slide initialized
@@ -202,8 +212,8 @@ export function styleClassName(v) {
               : tabletSliderPaddingBottom + tabletSliderPaddingBottomSuffix
         },
         "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
-          paddingLeft: 0,
-          paddingRight: 0
+          paddingLeft: `${tabletSpace / 2}px`,
+          paddingRight: `${tabletSpace / 2}px`
         },
         "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: `${tabletSliderArrowsSpacing}px`
@@ -236,8 +246,8 @@ export function styleClassName(v) {
               : mobileSliderPaddingBottom + mobileSliderPaddingBottomSuffix
         },
         "& > .brz-carousel__slider > .slick-list > .slick-track > .slick-slide": {
-          paddingLeft: 0,
-          paddingRight: 0
+          paddingLeft: `${mobileSpace / 2}px`,
+          paddingRight: `${mobileSpace / 2}px`
         },
         "& > .brz-carousel__slider > .brz-slick-slider__arrow-prev": {
           left: `${mobileSliderArrowsSpacing}px`
@@ -303,6 +313,8 @@ export function styleCSSVars(v) {
     v,
     "sliderArrowsSpacing"
   );
+  const tabletSpace = tabletSyncOnChange(v, "spacing");
+  const mobileSpace = mobileSyncOnChange(v, "spacing");
 
   return {
     "--spacing": `${spacing / 2}px`,
@@ -336,6 +348,7 @@ export function styleCSSVars(v) {
       sliderPaddingType === "grouped"
         ? sliderPadding + sliderPaddingSuffix
         : sliderPaddingLeft + sliderPaddingLeftSuffix,
+    "--tabletSpacing": `${tabletSpace / 2}px`,
     "--tabletArrowsSpacing": `${tabletSliderArrowsSpacing}px`,
     "--tabletPaddingTop":
       tabletSliderPaddingType === "grouped"
@@ -353,6 +366,7 @@ export function styleCSSVars(v) {
       tabletSliderPaddingType === "grouped"
         ? tabletSliderPadding + tabletSliderPaddingSuffix
         : tabletSliderPaddingLeft + tabletSliderPaddingLeftSuffix,
+    "--mobileSpacing": `${mobileSpace / 2}px`,
     "--mobileArrowsSpacing": `${mobileSliderArrowsSpacing}px`,
     "--mobilePaddingTop":
       mobileSliderPaddingType === "grouped"

@@ -32,8 +32,13 @@
   }
 
   // sometime have problems with paddings per slide
-  &__content.slick-slide {
-    flex: 1;
+  > .brz-slick-slider {
+    > .slick-list > .slick-track > .slick-slide {
+      flex: 1;
+    }
+    .brz-section__content {
+      height: 100%;
+    }
   }
 
   // Slider

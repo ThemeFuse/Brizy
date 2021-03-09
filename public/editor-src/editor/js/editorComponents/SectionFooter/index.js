@@ -8,7 +8,6 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
-import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -28,6 +27,7 @@ import {
 } from "visual/utils/style2";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import Animation from "visual/component/Animation";
+import { hasMembership } from "visual/utils/membership";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -115,8 +115,9 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  renderToolbar() {
+  renderToolbar(v) {
     const { globalBlockId } = this.props.meta;
+    const { membership, membershipRoles } = v;
 
     return (
       <CollapsibleToolbar
@@ -124,15 +125,8 @@ class SectionFooter extends EditorComponent {
         ref={this.collapsibleToolbarRef}
         className="brz-ed-collapsible--section"
         animation="rightToLeft"
-        badge={
-          globalBlockId
-            ? child => (
-                <ConditionsComponent value={globalBlockId}>
-                  {child}
-                </ConditionsComponent>
-              )
-            : null
-        }
+        global={!!globalBlockId}
+        membership={hasMembership(membership, membershipRoles)}
         onClose={this.handleToolbarClose}
       />
     );

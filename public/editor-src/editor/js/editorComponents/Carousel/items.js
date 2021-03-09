@@ -5,7 +5,7 @@ import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
 import ThemeIcon from "visual/component/ThemeIcon";
-import { hideToolbar } from "visual/component/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar";
 import HotKeys from "visual/component/HotKeys";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -280,6 +280,8 @@ class Items extends EditorArrayComponent {
         draggable={false}
         accessibility={false}
         arrows={sliderArrows !== "none"}
+        useTransform={false}
+        speed={500}
         nextArrow={
           <SliderArrow
             icon={`right-arrow-${sliderArrows}`}

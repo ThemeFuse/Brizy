@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1566,
   title: "Homepage",
-  keywords: "Landing, Layouts, One-Page, Portfolio",
+  keywords: "Camera App, Landing, Layouts, One-Page, Portfolio",
   cat: [0, 3, 11],
   pro: true,
   resolve: {

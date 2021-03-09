@@ -83,6 +83,9 @@
 .mfp-wrap {
   z-index: z("brz-ed-fixed") + 1; // 1101
 }
+.mfp-figure figcaption {
+  margin: 0;
+}
 .mfp-figure:after,
 .mfp-iframe-scaler iframe {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);

@@ -5,7 +5,7 @@
 .brz-ed-option__popup_conditions {
   min-height: 0 !important;
   color: #3dbfe8;
-  transition: color .2s linear;
+  transition: color 0.2s linear;
   cursor: pointer;
   font-family: $font-family-1;
   font-size: 13px;
@@ -15,6 +15,12 @@
 }
 .brz-ed-popup-conditions {
   padding: 35px 43px 45px 43px;
+
+  &__free {
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
+  }
 
   &__spin {
     min-height: 350px;

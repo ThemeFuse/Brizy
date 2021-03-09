@@ -6,11 +6,13 @@ import ContextMenu from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import Items from "./items";
 import { percentageToPixels } from "visual/utils/meta";
+import { defaultValueValue } from "visual/utils/onChange";
 import { styleClassName, styleCSSVars } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarExtend from "./toolbarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import defaultValue from "./defaultValue.json";
+import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 class Carousel extends EditorComponent {
   static get componentId() {
@@ -129,8 +131,22 @@ class Carousel extends EditorComponent {
             mobileSliderPaddingRightSuffix,
             meta.mobileW
           );
+
+    const tabletSpacing = defaultValueValue({
+      v,
+      key: "spacing",
+      device: TABLET,
+      state: "normal"
+    });
+    const mobileSpacing = defaultValueValue({
+      v,
+      key: "spacing",
+      device: MOBILE,
+      state: "normal"
+    });
     const desktopW = meta.desktopW - (spacing + paddingW);
-    const tabletW = meta.tabletW - (spacing + tabletPaddingW);
+    const tabletW = meta.tabletW - (tabletSpacing + tabletPaddingW);
+    const mobileW = meta.mobileW - (mobileSpacing + mobilePaddingW);
 
     return {
       ...meta,
@@ -140,7 +156,7 @@ class Carousel extends EditorComponent {
       tabletW: Math.round((tabletW / tabletSlidesToShow) * 10) / 10,
       tabletWNoSpacing:
         Math.round((meta.tabletWNoSpacing / tabletSlidesToShow) * 10) / 10,
-      mobileW: Math.round((meta.mobileW - mobilePaddingW) * 10) / 10,
+      mobileW: Math.round(mobileW * 10) / 10,
       mobileWNoSpacing: meta.mobileWNoSpacing,
       inCarousel: true,
       inGrid: false
