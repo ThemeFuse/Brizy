@@ -39,9 +39,9 @@ jobs:
         id: change-branches-on-bb
         shell: bash
         run: |
-          cd bb/editor && git fetch origin ${EDITOR_BRANCH} &&  git checkout ${EDITOR_BRANCH}
-          cd bb/worpdress/www/wp-content/plugins/brizy && git fetch origin ${FREE_BRANCH} &&  git checkout ${FREE_BRANCH}
-          cd bb/worpdress/www/wp-content/plugins/brizy-pro && git fetch origin ${PRO_BRANCH} && git checkout ${PRO_BRANCH}
+          cd ${GITHUB_WORKSPACE}/bb/editor && git fetch origin ${EDITOR_BRANCH} &&  git checkout ${EDITOR_BRANCH}
+          cd ${GITHUB_WORKSPACE}/bb/worpdress/www/wp-content/plugins/brizy && git fetch origin ${FREE_BRANCH} &&  git checkout ${FREE_BRANCH}
+          cd ${GITHUB_WORKSPACE}/bb/worpdress/www/wp-content/plugins/brizy-pro && git fetch origin ${PRO_BRANCH} && git checkout ${PRO_BRANCH}
 
 #      - name: Build mysql image
 #        id: build-mysql-image
