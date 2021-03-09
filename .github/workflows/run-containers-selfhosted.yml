@@ -30,7 +30,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: git@github.com:bagrinsergiu/BB.git
-          ref: master
           ssh-key: ${{ secrets.ACCESS_KEY }}
           path: bb
           submodules: 'recursive'
