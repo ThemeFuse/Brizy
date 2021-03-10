@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - fixes-*
 jobs:
   base:
     environment: Build
