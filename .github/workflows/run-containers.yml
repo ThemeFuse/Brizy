@@ -50,7 +50,9 @@ jobs:
         id: change-branches-on-bb
         shell: bash
         run: |
-          cd $GITHUB_WORKSPACE/bb/editor && git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && git checkout -t -b ${{ steps.dotenv.outputs.editor_branch }}  origin/${{ steps.dotenv.outputs.editor_branch }}
+
+          cd $GITHUB_WORKSPACE/bb/editor && git remote -v
+          cd $GITHUB_WORKSPACE/bb/editor && git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && git checkout ${{ steps.dotenv.outputs.editor_branch }}
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && git fetch origin ${{ steps.dotenv.outputs.free_branch }} && git checkout -t origin/${{ steps.dotenv.outputs.free_branch }}
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && git checkout -t origin/${{ steps.dotenv.outputs.pro_branch }}
 
