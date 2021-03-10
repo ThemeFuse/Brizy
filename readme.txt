@@ -149,8 +149,6 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Slider padding option
 * Fixed: Image sizes
 * Fixed: Timeline border CSS
-* Fixed: PostContent CSS
-* Fixed: WooCommerce Add to Cart CSS
 * Fixed: Typography option issues in Safari
 * Fixed: Slider option CSS
 * Fixed: Saving a block or a layout would fail if the browser did not support screenshot saving
@@ -175,14 +173,14 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: WooCommerce Add to Cart CSS
 
 = 2.2.8 - 2021-02-16 =
-• New: Membership functionality
-• New: Accordion content animation
-• New: IconText icon link
-• Improved: Publish toolbar CSS
-• Fixed: Colorpicker minor issues
-• Fixed: Drag & Drop for 'absolute' positioned elements
-• Fixed: Timeline CSS
-• Fixed: Embed CSS
+* New: Membership functionality
+* New: Accordion content animation
+* New: IconText icon link
+* Improved: Publish toolbar CSS
+* Fixed: Colorpicker minor issues
+* Fixed: Drag & Drop for 'absolute' positioned elements
+* Fixed: Timeline CSS
+* Fixed: Embed CSS
 
 = 2.2.7 - 2021-02-02 =
 * New: Added animation option for Accordion content
