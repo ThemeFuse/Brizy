@@ -44,7 +44,7 @@ jobs:
           ssh-key: ${{ secrets.ACCESS_KEY }}
           path: bb
           submodules: 'recursive'
-          fetch-depth: '1'
+          fetch-depth: 0
 
       - name: Change submodule branches
         id: change-branches-on-bb
