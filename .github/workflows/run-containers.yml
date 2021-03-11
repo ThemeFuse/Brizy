@@ -66,6 +66,9 @@ jobs:
         id: change-branches-on-bb
         shell: bash
         run: |
+          git -C $GITHUB_WORKSPACE/bb/editor config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
           cd $GITHUB_WORKSPACE/bb/editor && \
           git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && \
           git checkout ${{ steps.dotenv.outputs.editor_branch }} && \
