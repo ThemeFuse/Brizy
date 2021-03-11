@@ -64,46 +64,46 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE/bb/editor && \
-          git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && \
-          git checkout ${{ steps.dotenv.outputs.editor_branch }} && \
-          git reset --hard origin/${{ steps.dotenv.outputs.editor_branch }}
+          git fetch origin ${{ steps.vars.outputs.editor_branch }} && \
+          git checkout ${{ steps.vars.outputs.editor_branch }} && \
+          git reset --hard origin/${{ steps.vars.outputs.editor_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && \
-          git fetch origin ${{ steps.dotenv.outputs.free_branch }} && \
-          git checkout ${{ steps.dotenv.outputs.free_branch }} && \
-          git reset --hard origin/${{ steps.dotenv.outputs.free_branch }}
+          git fetch origin ${{ steps.vars.outputs.free_branch }} && \
+          git checkout ${{ steps.vars.outputs.free_branch }} && \
+          git reset --hard origin/${{ steps.vars.outputs.free_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && \
-          git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && \
-          git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
-          git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
+          git fetch origin ${{ steps.vars.outputs.pro_branch }} && \
+          git checkout ${{ steps.vars.outputs.pro_branch }} && \
+          git reset --hard origin/${{ steps.vars.outputs.pro_branch }}
 
       - name: Build compier container
         id: build-compiler
-        if: ${{ steps.dotenv.outputs.is_compiler_built=='' }}
+        if: ${{ steps.vars.outputs.is_compiler_built=='' }}
         shell: bash
         run: |
             cd $GITHUB_WORKSPACE/bb/editor.compiler
             rm  -rf  node_modules
             npm i
-            docker build -t "${{ steps.dotenv.outputs.compiler_image }}" ./
+            docker build -t "${{ steps.vars.outputs.compiler_image }}" ./
 
 
       - name: Start compiler container
         id: compiler-container-start
-        if: ${{ steps.dotenv.outputs.is_compiler_ruinning=='' }}
+        if: ${{ steps.vars.outputs.is_compiler_ruinning=='' }}
         shell: bash
         run: |
-              docker run -d --rm --network="${{ steps.dotenv.outputs.network }}" \
-                --network-alias="${{ steps.dotenv.outputs.compiler_container_name }}" \
+              docker run -d --rm --network="${{ steps.vars.outputs.network }}" \
+                --network-alias="${{ steps.vars.outputs.compiler_container_name }}" \
                 --cpus=3 \
                 --memory=2g \
                 -e "MAX_CPUS=3" \
                 -e "PORT=5000" \
                 -e "NODE_ENV=development" \
                 -u "1000:1000" \
-                --name="${{ steps.dotenv.outputs.compiler_container_name }}" \
-                "${{ steps.dotenv.outputs.compiler_image }}"
+                --name="${{ steps.vars.outputs.compiler_container_name }}" \
+                "${{ steps.vars.outputs.compiler_image }}"
 
       - name: Build mysql image
         id: build-mysql-image
