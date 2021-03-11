@@ -81,7 +81,7 @@ jobs:
           git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
 
-      - name: Build compier container
+      - name: Build compiler container
         id: build-compiler
         if: ${{ steps.vars.outputs.IS_COMPILER_BUILT=='' }}
         shell: bash
@@ -127,6 +127,9 @@ jobs:
         id: build-wordpress-image
         shell: bash
         run: |
+          sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
+          sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
+
           docker stop "${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" || true
           docker rmi "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" || true
           docker build -t "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" \
