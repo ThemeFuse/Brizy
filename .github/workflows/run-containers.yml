@@ -1,20 +1,33 @@
 name: Brizy Free Sefl-Hosted
-
 on:
   push:
     branches:
       - master
       - fixes-*
+      - develop-*
+      - beta-*
 jobs:
-  base:
+
+  cancel-previous-workflow:
+    name: Cancel previous workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
+  build-images-and-containers:
+    needs: cancel-previous-workflow
+    name: Build images and containers
     environment: Build
     runs-on: self-hosted
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           path: main
-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "8"
       - name: Load Build Evnrorment Data
         uses: falti/dotenv-action@master
         id: dotenv
@@ -32,10 +45,13 @@ jobs:
           echo "::set-output name=WORDPRESS_IMAGE::brizy/testing-wordpress:${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=EDITOR_IMAGE::brizy/testing-editor:${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=MYSQL_IMAGE::brizy/testing-mysql:${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=COMPILER_IMAGE::brizy/testing-compiler"
           echo "::set-output name=DB_NAME::brizy-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=BITBLOX_DOMAIN::${{ steps.dotenv.outputs.build_environment }}.editor.office.brizy.org"
           echo "::set-output name=NETWORK::traefik"
           echo "::set-output name=DOMAIN::${{ steps.dotenv.outputs.build_environment }}.wordpress.office.brizy.org"
+          echo "::set-output name=IS_COMPILER_BUILT::$( sudo docker images -q brizy/testing-compiler )"
+          echo "::set-output name=IS_COMPILER_RUINNING::$( docker ps -q -f name=testing-compiler )"
 
       - name: Checkout BB
         uses: actions/checkout@v2
@@ -44,18 +60,53 @@ jobs:
           ssh-key: ${{ secrets.ACCESS_KEY }}
           path: bb
           submodules: 'recursive'
-          fetch-depth: 1
+          fetch-depth: '1'
 
       - name: Change submodule branches
         id: change-branches-on-bb
         shell: bash
         run: |
-          git -C $GITHUB_WORKSPACE/bb/editor config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-          cd $GITHUB_WORKSPACE/bb/editor && git fetch origin ${{ steps.dotenv.outputs.editor_branch }}  && git checkout ${{ steps.dotenv.outputs.editor_branch }} && git pull origin ${{ steps.dotenv.outputs.editor_branch }}
-          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && git fetch origin ${{ steps.dotenv.outputs.free_branch }} && git checkout ${{ steps.dotenv.outputs.free_branch }} && git pull origin ${{ steps.dotenv.outputs.free_branch }}
-          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && git checkout ${{ steps.dotenv.outputs.pro_branch }} && git pull origin ${{ steps.dotenv.outputs.pro_branch }}
+          cd $GITHUB_WORKSPACE/bb/editor && \
+          git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.editor_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.editor_branch }}
+
+          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && \
+          git fetch origin ${{ steps.dotenv.outputs.free_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.free_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.free_branch }}
+
+          cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && \
+          git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
+
+      - name: Build compier container
+        id: build-compiler
+        if: ${{ steps.vars.outputs.is_compiler_built=='' }}
+        shell: bash
+        run: |
+            cd $GITHUB_WORKSPACE/bb/editor.compiler
+            rm  -rf  node_modules
+            npm i
+            docker build -t "${{ steps.vars.outputs.compiler_image }}" ./
+
+
+      - name: Start compiler container
+        id: compiler-container-start
+        if: ${{ steps.vars.outputs.is_compiler_ruinning=='' }}
+        shell: bash
+        run: |
+              docker run -d --rm --network="${{ steps.vars.outputs.network }}" \
+                --network-alias="${{ steps.vars.outputs.compiler_container_name }}" \
+                --cpus=3 \
+                --memory=2g \
+                -e "MAX_CPUS=3" \
+                -e "PORT=5000" \
+                -e "NODE_ENV=development" \
+                -u "1000:1000" \
+                --name="${{ steps.vars.outputs.compiler_container_name }}" \
+                "${{ steps.vars.outputs.compiler_image }}"
 
       - name: Build mysql image
         id: build-mysql-image
