@@ -11,6 +11,7 @@ jobs:
   cancel-previous-workflow:
     name: Cancel previous workflow
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip cd]')"
     steps:
       - uses: styfle/cancel-workflow-action@0.8.0
         with:
@@ -19,6 +20,7 @@ jobs:
   build-images-and-containers:
     needs: cancel-previous-workflow
     name: Build images and containers
+    if: "!contains(github.event.head_commit.message, '[skip cd]')"
     environment: Build
     runs-on: self-hosted
     steps:
