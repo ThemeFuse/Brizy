@@ -127,7 +127,7 @@ jobs:
         id: build-editor-image
         shell: bash
         run: |
-          cd $GITHUB_WORKSPACE/bb/editor/visual && npm i
+          cd $GITHUB_WORKSPACE/bb/editor/visual && rm  -rf  node_modules && npm i
 
           sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
           sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
