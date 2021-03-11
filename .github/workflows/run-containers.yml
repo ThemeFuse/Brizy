@@ -1,10 +1,10 @@
 name: Brizy Free Sefl-Hosted
-
 on:
   push:
     branches:
       - master
 jobs:
+
   cancel-previous-workflow:
     name: Cancel previous workflow
     runs-on: ubuntu-latest
@@ -12,6 +12,7 @@ jobs:
       - uses: styfle/cancel-workflow-action@0.8.0
         with:
           access_token: ${{ github.token }}
+
   build-images-and-containers:
     environment: Build
     runs-on: self-hosted
