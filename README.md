@@ -160,14 +160,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: WooCommerce Add to Cart CSS
 
 ### 2.2.8 - 2021-02-16
-• New: Membership functionality
-• New: Accordion content animation
-• New: IconText icon link
-• Improved: Publish toolbar CSS
-• Fixed: Colorpicker minor issues
-• Fixed: Drag & Drop for 'absolute' positioned elements
-• Fixed: Timeline CSS
-• Fixed: Embed CSS
+* New: Membership functionality
+* New: Accordion content animation
+* New: IconText icon link
+* Improved: Publish toolbar CSS
+* Fixed: Colorpicker minor issues
+* Fixed: Drag & Drop for 'absolute' positioned elements
+* Fixed: Timeline CSS
+* Fixed: Embed CSS
 
 ### 2.2.7 - 2021-02-02
 * New: Added animation option for Accordion content
