@@ -18,11 +18,12 @@ jobs:
     environment: Build
     runs-on: self-hosted
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           path: main
-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "8"
       - name: Load Build Evnrorment Data
         uses: falti/dotenv-action@master
         id: dotenv
@@ -74,12 +75,7 @@ jobs:
         run: |
             cd $GITHUB_WORKSPACE/bb/editor.compiler
             rm  -rf  node_modules
-            docker run --rm --name build-editor \
-                -v "$GITHUB_WORKSPACE/bb/editor.compiler":/usr/src/app \
-                -w /usr/src/app/visual \
-                --entrypoint="/bin/bash" \
-                node:12 \
-                -c 'npm i'
+            npm i
             docker build -t "${{ steps.dotenv.outputs.COMPILER_IMAGE }}" ./
 
 
