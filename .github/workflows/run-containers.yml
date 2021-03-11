@@ -123,6 +123,36 @@ jobs:
                           -e "MYSQL_PASSWORD=nopassword" \
                          "${{ steps.vars.outputs.MYSQL_IMAGE }}"
 
+      - name: Build Editor image
+        id: build-editor-image
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/bb/editor && npm i
+          npm run build:brizy -- -t WP -p -e --no-watch --no-verification \
+                    --build-dir ../build/free \
+                    --build-dir-pro ../build/pro
+          cp -r "$GITHUB_WORKSPACE/editor/visual/build/free/dev" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/public/editor-build"
+          cp -r "$GITHUB_WORKSPACE/editor/visual/build/pro/dev"  "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
+
+          docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
+          docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
+          docker build -t "${{ steps.vars.outputs.EDITOR_IMAGE }}" --target remote $GITHUB_WORKSPACE/bb/editor
+          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                    --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --cpus=1 \
+                    --memory=1g \
+                    -e "MAX_CPUS=1" \
+                    --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
+                    --label "traefik.enable"="true" \
+                    --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.BITBLOX_DOMAIN }}" \
+                    --label "traefik.port"="3000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE,PUT" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Max-Age:1000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Headers:x-requested-with,Content-Type,origin,authorization,accept,client-security-token" \
+                    "${{ steps.vars.outputs.EDITOR_IMAGE }}"
+
+
       - name: Build wordpress image
         id: build-wordpress-image
         shell: bash
@@ -161,25 +191,3 @@ jobs:
                       --label "traefik.port"="80" \
                       "${{ steps.vars.outputs.WORDPRESS_IMAGE }}"
 
-      - name: Build Editor image
-        id: build-editor-image
-        shell: bash
-        run: |
-          cd $GITHUB_WORKSPACE/bb/editor && npm i
-          docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
-          docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
-          docker build -t "${{ steps.vars.outputs.EDITOR_IMAGE }}" --target remote $GITHUB_WORKSPACE/bb/editor
-          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
-                    --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
-                    --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
-                    --cpus=1 \
-                    --memory=1g \
-                    -e "MAX_CPUS=1" \
-                    --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
-                    --label "traefik.enable"="true" \
-                    --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.BITBLOX_DOMAIN }}" \
-                    --label "traefik.port"="3000" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE,PUT" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Max-Age:1000" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Headers:x-requested-with,Content-Type,origin,authorization,accept,client-security-token" \
-                    "${{ steps.vars.outputs.EDITOR_IMAGE }}"
