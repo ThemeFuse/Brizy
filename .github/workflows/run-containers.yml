@@ -86,7 +86,7 @@ jobs:
         if: ${{ steps.vars.outputs.IS_COMPILER_BUILT=='' }}
         shell: bash
         run: |
-            cd $GITHUB_WORKSPACE/bb/editor.compiler && rm  -rf  node_modules && npm i
+            cd $GITHUB_WORKSPACE/bb/editor.compiler  && npm i
             docker build -t "${{ steps.vars.outputs.COMPILER_IMAGE }}" ./
 
       - name: Start compiler container
@@ -127,7 +127,7 @@ jobs:
         id: build-editor-image
         shell: bash
         run: |
-          cd $GITHUB_WORKSPACE/bb/editor/visual && rm  -rf  node_modules && npm i
+          cd $GITHUB_WORKSPACE/bb/editor/visual  && npm i
 
           sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
           sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
@@ -136,8 +136,8 @@ jobs:
                     --build-dir ../build/free \
                     --build-dir-pro ../build/pro
 
-          cp -r "$GITHUB_WORKSPACE/editor/visual/build/free/dev" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/public/editor-build"
-          cp -r "$GITHUB_WORKSPACE/editor/visual/build/pro/dev"  "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
+          cp -r "$GITHUB_WORKSPACE/bb/editor/visual/build/free/dev" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/public/editor-build"
+          cp -r "$GITHUB_WORKSPACE/bb/editor/visual/build/pro/dev"  "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
 
           docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
           docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
