@@ -64,19 +64,19 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE/bb/editor && \
-          git fetch origin ${{ steps.vars.outputs.editor_branch }} && \
-          git checkout ${{ steps.vars.outputs.editor_branch }} && \
-          git reset --hard origin/${{ steps.vars.outputs.editor_branch }}
+          git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.editor_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.editor_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && \
-          git fetch origin ${{ steps.vars.outputs.free_branch }} && \
-          git checkout ${{ steps.vars.outputs.free_branch }} && \
-          git reset --hard origin/${{ steps.vars.outputs.free_branch }}
+          git fetch origin ${{ steps.dotenv.outputs.free_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.free_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.free_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && \
-          git fetch origin ${{ steps.vars.outputs.pro_branch }} && \
-          git checkout ${{ steps.vars.outputs.pro_branch }} && \
-          git reset --hard origin/${{ steps.vars.outputs.pro_branch }}
+          git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && \
+          git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
+          git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
 
       - name: Build compier container
         id: build-compiler
