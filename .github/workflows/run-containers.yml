@@ -14,6 +14,7 @@ jobs:
           access_token: ${{ github.token }}
 
   build-images-and-containers:
+    name: Build images and containers
     environment: Build
     runs-on: self-hosted
     steps:
