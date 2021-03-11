@@ -165,7 +165,6 @@ jobs:
           docker stop "${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" || true
           docker rmi "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" || true
           docker build -t "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" \
-                      --build-arg COMPOSER_AUTH="{\"github-oauth\":{\"github.com\":\"${{ secrets.GITHUB_TOKEN }}\"}}" \
                       --target wordpress $GITHUB_WORKSPACE/bb/wordpress
           docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
                       --network-alias="${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
@@ -192,4 +191,3 @@ jobs:
                       --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.DOMAIN }}" \
                       --label "traefik.port"="80" \
                       "${{ steps.vars.outputs.WORDPRESS_IMAGE }}"
-
