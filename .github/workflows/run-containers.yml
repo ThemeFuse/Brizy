@@ -14,6 +14,7 @@ jobs:
           access_token: ${{ github.token }}
 
   build-images-and-containers:
+    needs: cancel-previous-workflow
     name: Build images and containers
     environment: Build
     runs-on: self-hosted
@@ -39,11 +40,11 @@ jobs:
           echo "::set-output name=MYSQL_CONTAINER_NAME::testing-mysql-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=EDITOR_CONTAINER_NAME::testing-editor-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=WORDPRESS_CONTAINER_NAME::testing-wordpress-${{ steps.dotenv.outputs.build_environment }}"
-          echo "::set-output name=COMPILER_CONTAINER_NAME::${COMPILER_CONTAINER_NAME}"
+          echo "::set-output name=COMPILER_CONTAINER_NAME::$COMPILER_CONTAINER_NAME"
           echo "::set-output name=WORDPRESS_IMAGE::brizy/testing-wordpress:${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=EDITOR_IMAGE::brizy/testing-editor:${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=MYSQL_IMAGE::brizy/testing-mysql:${{ steps.dotenv.outputs.build_environment }}"
-          echo "::set-output name=COMPILER_IMAGE::${COMPILER_IMAGE_NAME}"
+          echo "::set-output name=COMPILER_IMAGE::$COMPILER_IMAGE_NAME"
           echo "::set-output name=DB_NAME::brizy-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=BITBLOX_DOMAIN::${{ steps.dotenv.outputs.build_environment }}.editor.office.brizy.org"
           echo "::set-output name=NETWORK::traefik"
