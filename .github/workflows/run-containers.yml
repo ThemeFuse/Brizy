@@ -27,7 +27,7 @@ jobs:
           path: main
       - uses: actions/setup-node@v1
         with:
-          node-version: "8"
+          node-version: "12"
       - name: Load Build Evnrorment Data
         uses: falti/dotenv-action@master
         id: dotenv
