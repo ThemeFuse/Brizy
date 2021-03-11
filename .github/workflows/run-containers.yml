@@ -27,7 +27,7 @@ jobs:
           path: main
       - uses: actions/setup-node@v1
         with:
-          node-version: "8"
+          node-version: "12"
       - name: Load Build Evnrorment Data
         uses: falti/dotenv-action@master
         id: dotenv
@@ -81,32 +81,29 @@ jobs:
           git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
 
-      - name: Build compier container
+      - name: Build compiler container
         id: build-compiler
-        if: ${{ steps.vars.outputs.is_compiler_built=='' }}
+        if: ${{ steps.vars.outputs.IS_COMPILER_BUILT=='' }}
         shell: bash
         run: |
-            cd $GITHUB_WORKSPACE/bb/editor.compiler
-            rm  -rf  node_modules
-            npm i
-            docker build -t "${{ steps.vars.outputs.compiler_image }}" ./
-
+            cd $GITHUB_WORKSPACE/bb/editor.compiler  && npm i
+            docker build -t "${{ steps.vars.outputs.COMPILER_IMAGE }}" ./
 
       - name: Start compiler container
         id: compiler-container-start
-        if: ${{ steps.vars.outputs.is_compiler_ruinning=='' }}
+        if: ${{ steps.vars.outputs.IS_COMPILER_RUINNING=='' }}
         shell: bash
         run: |
-              docker run -d --rm --network="${{ steps.vars.outputs.network }}" \
-                --network-alias="${{ steps.vars.outputs.compiler_container_name }}" \
+              docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                --network-alias="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
                 --cpus=3 \
                 --memory=2g \
                 -e "MAX_CPUS=3" \
                 -e "PORT=5000" \
                 -e "NODE_ENV=development" \
                 -u "1000:1000" \
-                --name="${{ steps.vars.outputs.compiler_container_name }}" \
-                "${{ steps.vars.outputs.compiler_image }}"
+                --name="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
+                "${{ steps.vars.outputs.COMPILER_IMAGE }}"
 
       - name: Build mysql image
         id: build-mysql-image
@@ -125,6 +122,41 @@ jobs:
                           -e "MYSQL_USER=brizy" \
                           -e "MYSQL_PASSWORD=nopassword" \
                          "${{ steps.vars.outputs.MYSQL_IMAGE }}"
+
+      - name: Build Editor image
+        id: build-editor-image
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/bb/editor/visual  && npm i
+
+          sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
+          sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
+
+          npm run build:brizy -- -t WP -p -e --no-watch --no-verification \
+                    --build-dir ../build/free \
+                    --build-dir-pro ../build/pro
+
+          cp -r "$GITHUB_WORKSPACE/bb/editor/visual/build/free/dev" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/public/editor-build"
+          cp -r "$GITHUB_WORKSPACE/bb/editor/visual/build/pro/dev"  "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
+
+          docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
+          docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
+          docker build -t "${{ steps.vars.outputs.EDITOR_IMAGE }}" --target remote $GITHUB_WORKSPACE/bb/editor
+          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                    --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --cpus=1 \
+                    --memory=1g \
+                    -e "MAX_CPUS=1" \
+                    --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
+                    --label "traefik.enable"="true" \
+                    --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.BITBLOX_DOMAIN }}" \
+                    --label "traefik.port"="3000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE,PUT" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Max-Age:1000" \
+                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Headers:x-requested-with,Content-Type,origin,authorization,accept,client-security-token" \
+                    "${{ steps.vars.outputs.EDITOR_IMAGE }}"
+
 
       - name: Build wordpress image
         id: build-wordpress-image
@@ -161,24 +193,3 @@ jobs:
                       --label "traefik.port"="80" \
                       "${{ steps.vars.outputs.WORDPRESS_IMAGE }}"
 
-      - name: Build Editor image
-        id: build-editor-image
-        shell: bash
-        run: |
-          docker stop "${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" || true
-          docker rmi "${{ steps.vars.outputs.EDITOR_IMAGE }}" || true
-          docker build -t "${{ steps.vars.outputs.EDITOR_IMAGE }}" --target remote $GITHUB_WORKSPACE/bb/editor
-          docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
-                    --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
-                    --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
-                    --cpus=1 \
-                    --memory=1g \
-                    -e "MAX_CPUS=1" \
-                    --label "traefik.docker.network"="${{ steps.vars.outputs.NETWORK }}" \
-                    --label "traefik.enable"="true" \
-                    --label "traefik.frontend.rule"="Host:${{ steps.vars.outputs.BITBLOX_DOMAIN }}" \
-                    --label "traefik.port"="3000" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE,PUT" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Max-Age:1000" \
-                    --label "traefik.frontend.headers.customRequestHeaders"="Access-Control-Allow-Headers:x-requested-with,Content-Type,origin,authorization,accept,client-security-token" \
-                    "${{ steps.vars.outputs.EDITOR_IMAGE }}"
