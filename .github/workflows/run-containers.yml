@@ -77,7 +77,7 @@ jobs:
             cd $GITHUB_WORKSPACE/bb/editor.compiler
             rm  -rf  node_modules
             npm i
-            docker build -t "${{ steps.dotenv.outputs.COMPILER_IMAGE }}" ./
+            docker build -t "${{ steps.dotenv.outputs.compiler_image }}" ./
 
 
       - name: Start compiler container
