@@ -16,7 +16,6 @@ jobs:
       - uses: styfle/cancel-workflow-action@0.8.0
         with:
           access_token: ${{ github.token }}
-
   build-images-and-containers:
     needs: cancel-previous-workflow
     name: Build images and containers
