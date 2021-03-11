@@ -131,6 +131,9 @@ jobs:
           npm run build:brizy -- -t WP -p -e --no-watch --no-verification \
                     --build-dir ../build/free \
                     --build-dir-pro ../build/pro
+          sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
+          sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
+
           cp -r "$GITHUB_WORKSPACE/editor/visual/build/free/dev" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/public/editor-build"
           cp -r "$GITHUB_WORKSPACE/editor/visual/build/pro/dev"  "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
 
@@ -157,9 +160,6 @@ jobs:
         id: build-wordpress-image
         shell: bash
         run: |
-          sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy/brizy.php"
-          sed -i "s/'BRIZY_PRO_DEVELOPMENT',.[^\)]*/'BRIZY_PRO_DEVELOPMENT', true /" "$GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro/brizy-pro.php"
-
           docker stop "${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" || true
           docker rmi "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" || true
           docker build -t "${{ steps.vars.outputs.WORDPRESS_IMAGE }}" \
