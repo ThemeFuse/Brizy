@@ -6,7 +6,6 @@ on:
       - develop
       - fixes-*
       - beta-*
-
 jobs:
   cancel-previous-workflow:
     name: Cancel previous workflow
