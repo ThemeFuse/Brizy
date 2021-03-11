@@ -97,16 +97,16 @@ jobs:
         if: ${{ steps.vars.outputs.is_compiler_ruinning=='' }}
         shell: bash
         run: |
-              docker run -d --rm --network="${{ steps.vars.outputs.NETOWRK }}" \
-                --network-alias="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
+              docker run -d --rm --network="${{ steps.vars.outputs.network }}" \
+                --network-alias="${{ steps.vars.outputs.compiler_container_name }}" \
                 --cpus=3 \
                 --memory=2g \
                 -e "MAX_CPUS=3" \
                 -e "PORT=5000" \
                 -e "NODE_ENV=development" \
                 -u "1000:1000" \
-                --name="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
-                "${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}"
+                --name="${{ steps.vars.outputs.compiler_container_name }}" \
+                "${{ steps.vars.outputs.compiler_image }}"
 
       - name: Build mysql image
         id: build-mysql-image
