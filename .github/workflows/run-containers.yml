@@ -83,30 +83,27 @@ jobs:
 
       - name: Build compier container
         id: build-compiler
-        if: ${{ steps.vars.outputs.is_compiler_built=='' }}
+        if: ${{ steps.vars.outputs.IS_COMPILER_BUILT=='' }}
         shell: bash
         run: |
-            cd $GITHUB_WORKSPACE/bb/editor.compiler
-            rm  -rf  node_modules
-            npm i
-            docker build -t "${{ steps.vars.outputs.compiler_image }}" ./
-
+            cd $GITHUB_WORKSPACE/bb/editor.compiler && rm  -rf  node_modules && npm i
+            docker build -t "${{ steps.vars.outputs.COMPILER_IMAGE }}" ./
 
       - name: Start compiler container
         id: compiler-container-start
-        if: ${{ steps.vars.outputs.is_compiler_ruinning=='' }}
+        if: ${{ steps.vars.outputs.IS_COMPILER_RUINNING=='' }}
         shell: bash
         run: |
-              docker run -d --rm --network="${{ steps.vars.outputs.network }}" \
-                --network-alias="${{ steps.vars.outputs.compiler_container_name }}" \
+              docker run -d --rm --network="${{ steps.vars.outputs.NETWORK }}" \
+                --network-alias="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
                 --cpus=3 \
                 --memory=2g \
                 -e "MAX_CPUS=3" \
                 -e "PORT=5000" \
                 -e "NODE_ENV=development" \
                 -u "1000:1000" \
-                --name="${{ steps.vars.outputs.compiler_container_name }}" \
-                "${{ steps.vars.outputs.compiler_image }}"
+                --name="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
+                "${{ steps.vars.outputs.COMPILER_IMAGE }}"
 
       - name: Build mysql image
         id: build-mysql-image
