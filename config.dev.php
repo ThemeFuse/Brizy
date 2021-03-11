@@ -45,6 +45,7 @@ class Brizy_Config {
 	const CLOUD_LAYOUTS = '/api/layouts';
 	const CLOUD_SCREENSHOT = '/screenshot/%s';
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
+	const WP_HTTP_TIMEOUT = 600;
 
 	static public function getCompilerUrls() {
 		$host = $_ENV['COMPILER_HOST'] ?? $_SERVER['COMPILER_HOST'];
