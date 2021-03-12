@@ -66,20 +66,20 @@ jobs:
         id: change-branches-on-bb
         shell: bash
         run: |
-          git -C $GITHUB_WORKSPACE/bb/editor config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-          git -C $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
           cd $GITHUB_WORKSPACE/bb/editor && \
+          git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
           git fetch origin ${{ steps.dotenv.outputs.editor_branch }} && \
           git checkout ${{ steps.dotenv.outputs.editor_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.editor_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy && \
+          git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
           git fetch origin ${{ steps.dotenv.outputs.free_branch }} && \
           git checkout ${{ steps.dotenv.outputs.free_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.free_branch }}
 
           cd $GITHUB_WORKSPACE/bb/wordpress/www/wp-content/plugins/brizy-pro && \
+          git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
           git fetch origin ${{ steps.dotenv.outputs.pro_branch }} && \
           git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
