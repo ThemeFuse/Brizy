@@ -69,36 +69,7 @@ class Brizy_Admin_Main {
 		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
-		add_filter( 'content_edit_pre', array( $this, 'fixContentForPastBrizyPosts' ), 10, 2 );
 	}
-
-	/**
-	 * @param $content
-	 *
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	public function fixContentForPastBrizyPosts( $content, $postId ) {
-
-		$post = get_post( $postId );
-
-		// do not fix anything for popups/blocksand templates
-		if ( in_array( $post->post_type, [
-			Brizy_Admin_Templates::CP_TEMPLATE,
-			Brizy_Admin_Blocks_Main::CP_GLOBAL,
-			Brizy_Admin_Blocks_Main::CP_SAVED,
-			Brizy_Admin_Popups_Main::CP_POPUP
-		] ) ) {
-			return $content;
-		}
-
-		if ( Brizy_Editor_Entity::isBrizyEnabled( $postId ) ) {
-			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post, 'body' );
-		}
-
-		return $content;
-	}
-
 
 	public function addFocalPoint( $content, $postId, $thumbId ) {
 
