@@ -104,7 +104,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		return wp_mail(
-			$this->getEmailTo(),
+            apply_filters( 'brizy_form_email_to', $this->getEmailTo(), $fields, $form ),
 			$email_subject,
 			$email_body,
 			$headers
