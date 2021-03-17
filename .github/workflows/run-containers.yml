@@ -152,6 +152,7 @@ jobs:
           docker run -d --network="${{ steps.vars.outputs.NETWORK }}" \
                     --network-alias="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
                     --name="${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}" \
+                    --restart=unless-stopped \
                     --cpus=1 \
                     --memory=1g \
                     -e "MAX_CPUS=1" \
@@ -177,6 +178,7 @@ jobs:
           docker run -d --network="${{ steps.vars.outputs.NETWORK }}" \
                       --network-alias="${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
                       --name="${{ steps.vars.outputs.WORDPRESS_CONTAINER_NAME }}" \
+                      --restart=unless-stopped \
                       --cpus=2 \
                       --memory=2g \
                       -e "MAX_CPUS=2" \
