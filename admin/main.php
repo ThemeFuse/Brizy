@@ -66,7 +66,7 @@ class Brizy_Admin_Main {
 
 		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
 
-		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
+		add_filter( 'save_post', array( $this, 'save_focal_point' ) );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
 	}
@@ -170,24 +170,18 @@ class Brizy_Admin_Main {
 
 	/**
 	 * @param $post_id
-	 * @param $post
 	 */
-	public function save_focal_point( $post_id, $post ) {
-		try {
+	public function save_focal_point( $post_id ) {
 
-			if ( isset( $_REQUEST['_thumbnail_focal_point_x'], $_REQUEST['_thumbnail_focal_point_y'] ) && $post_id ) {
-				update_post_meta( $post_id, 'brizy_attachment_focal_point', array(
-					'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
-					'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
-				) );
-			} else {
-				delete_post_meta( $post_id, 'brizy_attachment_focal_point' );
-			}
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) ) {
 			return;
+		}
+
+		if ( isset( $_REQUEST['_thumbnail_focal_point_x'], $_REQUEST['_thumbnail_focal_point_y'] ) && $post_id ) {
+			update_post_meta( $post_id, 'brizy_attachment_focal_point', [
+				'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
+				'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
+			] );
 		}
 	}
 

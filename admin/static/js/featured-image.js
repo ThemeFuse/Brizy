@@ -109,6 +109,10 @@ jQuery(document).ready(function ($) {
                                 el('a', {
                                         id: 'remove-post-thumbnail', href: "#", onClick: function (e) {
                                             origianalProps.onRemoveImage(e);
+
+			                                Brizy_Admin_Data.page.focalPoint.x = 50;
+			                                Brizy_Admin_Data.page.focalPoint.y = 50;
+
                                             wp.data.dispatch('core/editor').editPost({
                                                 'brizy_attachment_focal_point': {
                                                     x: 50,
