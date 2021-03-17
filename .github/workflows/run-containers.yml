@@ -97,6 +97,7 @@ jobs:
         if: ${{ steps.vars.outputs.IS_COMPILER_RUINNING=='' }}
         shell: bash
         run: |
+              docker rm "${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" || true
               docker run -d  --network="${{ steps.vars.outputs.NETWORK }}" \
                 --network-alias="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
                 --restart=unless-stopped \
