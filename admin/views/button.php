@@ -8,7 +8,6 @@
  */
 
 $state     = $is_using_brizy ? 'disable' : 'enable';
-$label     = $is_using_brizy ? esc_html__( 'Back to WordPress Editor', 'brizy' ) : esc_html__( 'Edit with', 'brizy' );
 $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary';
 ?>
     <div class="brizy-buttons">
@@ -18,11 +17,11 @@ $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary'
 			if ( $is_using_brizy ) {
 				?>
                 <img src="<?php echo plugins_url( '../static/img/arrow.png', __FILE__ ) ?>"
-                     class="brizy-button--arrow"/><?php echo __( $label, 'brizy' ); ?>
+                     class="brizy-button--arrow"/><?php esc_html_e( 'Back to WordPress Editor', 'brizy' ); ?>
 				<?php
 			} else {
 				?>
-				<?php echo $label; ?>
+				<?php esc_html_e( 'Edit with', 'brizy' ); ?>
                 <img class="brizy-logo" width="16"
                      src="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?>"
                      srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../static/img/arrow.png', __FILE__ ) ) ?> 2x" /><?php echo __bt( 'brizy', 'Brizy' ); ?>
