@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.9.1
+Stable tag: 2.2.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,12 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.10 - 2021-03-23 =
+* Fixed: Remove product_visibility taxonomy from template conditions
+* Fixed: Compile page in the admin panel if the page is created with Brizy
+* Fixed: Save focal point on post save
+* Fixed: Sorry, Brizy could not load the content on blog page
 
 = 2.2.9.1 - 2021-03-09 =
 * New: Form input file label is now editable
