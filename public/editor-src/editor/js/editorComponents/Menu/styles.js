@@ -180,13 +180,13 @@ export function styleMenu(v, vs, vd) {
     },
 
     // Current SubMenu
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current .brz-a": {
+    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current > .brz-a": {
       standart: ["cssStyleElementMenuSubMenuCurrentColor"]
     },
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current": {
+    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current": {
       standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
     },
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item--current:hover": {
+    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current:hover": {
       standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
     },
     ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {

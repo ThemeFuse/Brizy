@@ -66,39 +66,10 @@ class Brizy_Admin_Main {
 
 		add_filter( 'wp_import_posts', array( $this, 'handlePostsImport' ) );
 
-		add_filter( 'save_post', array( $this, 'save_focal_point' ), 10, 2 );
+		add_filter( 'save_post', array( $this, 'save_focal_point' ) );
 
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'addFocalPoint' ), 10, 3 );
-		add_filter( 'content_edit_pre', array( $this, 'fixContentForPastBrizyPosts' ), 10, 2 );
 	}
-
-	/**
-	 * @param $content
-	 *
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	public function fixContentForPastBrizyPosts( $content, $postId ) {
-
-		$post = get_post( $postId );
-
-		// do not fix anything for popups/blocksand templates
-		if ( in_array( $post->post_type, [
-			Brizy_Admin_Templates::CP_TEMPLATE,
-			Brizy_Admin_Blocks_Main::CP_GLOBAL,
-			Brizy_Admin_Blocks_Main::CP_SAVED,
-			Brizy_Admin_Popups_Main::CP_POPUP
-		] ) ) {
-			return $content;
-		}
-
-		if ( Brizy_Editor_Entity::isBrizyEnabled( $postId ) ) {
-			return apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post, 'body' );
-		}
-
-		return $content;
-	}
-
 
 	public function addFocalPoint( $content, $postId, $thumbId ) {
 
@@ -199,24 +170,18 @@ class Brizy_Admin_Main {
 
 	/**
 	 * @param $post_id
-	 * @param $post
 	 */
-	public function save_focal_point( $post_id, $post ) {
-		try {
+	public function save_focal_point( $post_id ) {
 
-			if ( isset( $_REQUEST['_thumbnail_focal_point_x'], $_REQUEST['_thumbnail_focal_point_y'] ) && $post_id ) {
-				update_post_meta( $post_id, 'brizy_attachment_focal_point', array(
-					'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
-					'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
-				) );
-			} else {
-				delete_post_meta( $post_id, 'brizy_attachment_focal_point' );
-			}
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) ) {
 			return;
+		}
+
+		if ( isset( $_REQUEST['_thumbnail_focal_point_x'], $_REQUEST['_thumbnail_focal_point_y'] ) && $post_id ) {
+			update_post_meta( $post_id, 'brizy_attachment_focal_point', [
+				'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
+				'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
+			] );
 		}
 	}
 
