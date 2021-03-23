@@ -292,6 +292,11 @@ class Brizy_Editor_Editor_Editor {
 			if ( $rule ) {
 
 				switch ( $rule->getAppliedFor() ) {
+					case Brizy_Admin_Rule::WOO_SHOP_PAGE:
+						if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) ) {
+							$wp_post = get_post( wc_get_page_id( 'shop' ) );
+						}
+						break;
 					case  Brizy_Admin_Rule::POSTS :
 						$args = array(
 							'post_type' => $rule->getEntityType(),
