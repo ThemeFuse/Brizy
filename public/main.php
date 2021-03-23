@@ -317,15 +317,7 @@ class Brizy_Public_Main
 
     public function templateIncludeForEditor($template)
     {
-        global $post;
-
-        if ( ! $post ) {
-
-			$pid = Brizy_Editor::get()->currentPostId();
-
-			$post = get_post( $pid );if ( ! $post) {
-            return $template;
-        }}
+		$post = $this->post->getWpPost();
 
         $template_path = get_post_meta($post->ID, '_wp_page_template', true);
         $template_path = ! $template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;

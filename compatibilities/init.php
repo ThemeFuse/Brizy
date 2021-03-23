@@ -47,10 +47,6 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_SeoPress();
 		}
 
-		if ( $this->is_plugin_active( 'seo-by-rank-math/rank-math.php' ) ) {
-			new Brizy_Compatibilities_RankMathSEO();
-		}
-
 		if ( function_exists( 'WPNCEasyWP' ) ) {
 			new Brizy_Compatibilities_NcEasywp();
 		}

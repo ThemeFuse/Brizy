@@ -15,32 +15,19 @@ class Brizy_Admin_PanelPostContent {
 	protected function __construct() {
 		add_filter( 'wp_insert_post_data',           [ $this, 'wp_insert_post_data' ], 10, 2 );
 		add_action( 'rest_request_before_callbacks', [ $this, 'rest_request_before_callbacks' ] );
-		add_filter( 'content_edit_pre',              [ $this, 'fixContentForPastBrizyPosts' ], 10, 2 );
+		add_filter( 'content_edit_pre',              [ $this, 'content_edit_pre' ], 10, 2 );
 	}
 
 	public function wp_insert_post_data( $data, $postarr ) {
 
-		$post_id = $postarr['ID'];
-
+		// Do not run when the page is updated from editor, only from wp dashboard
 		if ( wp_doing_ajax() ) {
 			return $data;
 		}
 
-		try {
+		$data['post_content'] = $this->get_compiled_html( $postarr['ID'], $data['post_content'] );
 
-			$postEditor = Brizy_Editor_Post::get( $post_id );
-
-			if ( ! $postEditor->uses_editor() ) {
-				return $data;
-			}
-
-			$data['post_content'] = $postEditor->get_compiled_page()->get_body();
-
-			return $data;
-
-		} catch ( Exception $e ) {
-			return $data;
-		}
+		return $data;
 	}
 
 	public function rest_request_before_callbacks( $response ){
@@ -62,18 +49,7 @@ class Brizy_Admin_PanelPostContent {
 			return $response;
 		}
 
-		try {
-			$editorPost = Brizy_Editor_Post::get( $post->ID );
-
-			if ( ! $editorPost->uses_editor() ) {
-				return $response;
-			}
-
-			$response->data['content']['raw'] = apply_filters( 'brizy_content', $editorPost->get_compiled_page()->get_body(), Brizy_Editor_Project::get(), $editorPost->getWpPost() );
-
-		} catch ( Exception $e ) {
-			return $response;
-		}
+		$response->data['content']['raw'] = $this->get_compiled_html( $post->ID, $response->data['content']['raw'] );
 
 		return $response;
 	}
@@ -86,7 +62,7 @@ class Brizy_Admin_PanelPostContent {
 	 * @return null|string|string[]
 	 * @throws Exception
 	 */
-	public function fixContentForPastBrizyPosts( $content, $postId ) {
+	public function content_edit_pre( $content, $postId ) {
 
 		$post = get_post( $postId );
 
@@ -100,17 +76,30 @@ class Brizy_Admin_PanelPostContent {
 			return $content;
 		}
 
+		return $this->get_compiled_html( $postId, $content );
+	}
+
+	private function get_compiled_html( $postId, $content ) {
+
+		if ( ! Brizy_Editor_Entity::isBrizyEnabled( $postId ) ) {
+			return $content;
+		}
+
+		$editor = Brizy_Editor_Post::get( $postId );
+
+		if ( $editor->isCompiledWithCurrentVersion() && ! $editor->get_needs_compile() ) {
+			return $content;
+		}
+
 		try {
-			$editorPost = Brizy_Editor_Post::get( $postId );
-
-			if ( ! $editorPost->uses_editor() ) {
-				return $content;
-			}
-
-			return apply_filters( 'brizy_content', $editorPost->get_compiled_page()->get_body(), Brizy_Editor_Project::get(), $editorPost->getWpPost() );
-
+			$editor->compile_page();
+			$editor->saveStorage();
+			$editor->savePost();
+			$project = Brizy_Editor_Project::get();
 		} catch ( Exception $e ) {
 			return $content;
 		}
+
+		return apply_filters( 'brizy_content', $editor->get_compiled_page()->get_body(), $project, $editor->getWpPost() );
 	}
 }
