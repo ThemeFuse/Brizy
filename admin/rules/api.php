@@ -415,8 +415,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		$postTypeName = $wp_post_types[ $post_type ]->labels->name;
+		$taxonomies   = get_object_taxonomies( $post_type, 'objects' );
 
-		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+		if ( isset( $taxonomies['product_visibility'] ) ) {
+			unset( $taxonomies['product_visibility'] );
+		}
 
 		$groups = array();
 

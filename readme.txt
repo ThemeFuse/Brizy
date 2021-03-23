@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.2.9.1
+Stable tag: 2.2.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -133,6 +133,12 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.2.10 - 2021-03-23 =
+* Fixed: Remove product_visibility taxonomy from template conditions
+* Fixed: Compile page in the admin panel if the page is created with Brizy
+* Fixed: Save focal point on post save
+* Fixed: Sorry, Brizy could not load the content on blog page
+
 = 2.2.9.1 - 2021-03-09 =
 * New: Form input file label is now editable
 * Improved: Sections with Membership enabled now have an indicator icon
@@ -149,8 +155,6 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Slider padding option
 * Fixed: Image sizes
 * Fixed: Timeline border CSS
-* Fixed: PostContent CSS
-* Fixed: WooCommerce Add to Cart CSS
 * Fixed: Typography option issues in Safari
 * Fixed: Slider option CSS
 * Fixed: Saving a block or a layout would fail if the browser did not support screenshot saving
@@ -175,14 +179,14 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: WooCommerce Add to Cart CSS
 
 = 2.2.8 - 2021-02-16 =
-• New: Membership functionality
-• New: Accordion content animation
-• New: IconText icon link
-• Improved: Publish toolbar CSS
-• Fixed: Colorpicker minor issues
-• Fixed: Drag & Drop for 'absolute' positioned elements
-• Fixed: Timeline CSS
-• Fixed: Embed CSS
+* New: Membership functionality
+* New: Accordion content animation
+* New: IconText icon link
+* Improved: Publish toolbar CSS
+* Fixed: Colorpicker minor issues
+* Fixed: Drag & Drop for 'absolute' positioned elements
+* Fixed: Timeline CSS
+* Fixed: Embed CSS
 
 = 2.2.7 - 2021-02-02 =
 * New: Added animation option for Accordion content

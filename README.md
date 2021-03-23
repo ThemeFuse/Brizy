@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.6<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.9.1<br>
+Stable tag: 2.2.10<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.10 - 2021-03-23
+* Fixed: Remove product_visibility taxonomy from template conditions
+* Fixed: Compile page in the admin panel if the page is created with Brizy
+* Fixed: Save focal point on post save
+* Fixed: Sorry, Brizy could not load the content on blog page
 
 ### 2.2.9.1 - 2021-03-09
 * New: Form input file label is now editable
