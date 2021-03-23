@@ -609,12 +609,17 @@ class Brizy_Admin_Templates
      */
     public function filterPageContent($content)
     {
-
         if ( ! self::getTemplate() || doing_filter('brizy_content')) {
             return $content;
         }
-        $pid           = Brizy_Editor::get()->currentPostId();
-        $brizyPost     = get_post($pid);
+
+        $pid       = Brizy_Editor::get()->currentPostId();
+	    $brizyPost = null;
+
+        if ( $pid ) {
+	        $brizyPost = get_post( $pid );
+        }
+
         $compiled_page = self::getTemplate()->get_compiled_page();
 
         return apply_filters(
