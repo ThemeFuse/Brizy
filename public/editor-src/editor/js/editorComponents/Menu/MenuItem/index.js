@@ -398,8 +398,13 @@ class MenuItem extends EditorComponent {
     const className = styleClassName(v, this.state, isMinimLevel);
 
     if (IS_PREVIEW) {
+      const attr =
+        TARGET === "WP"
+          ? { className, "data-menu-item-id": v.id }
+          : { className };
+
       return (
-        <li className={className}>
+        <li {...attr}>
           {this.renderLink(v, vs, vd, content)}
           {isMinimLevel &&
             (v.megaMenu === "off"
@@ -495,8 +500,16 @@ class MenuItem extends EditorComponent {
     const isDropDown = v.megaMenu === "off";
 
     if (IS_PREVIEW) {
+      const attr =
+        TARGET === "WP"
+          ? {
+              className: styleMmMenuClassName(v, isMinimLevel),
+              "data-menu-item-id": v.id
+            }
+          : { className: styleMmMenuClassName(v, isMinimLevel) };
+
       return (
-        <li className={styleMmMenuClassName(v, isMinimLevel)}>
+        <li {...attr}>
           {this.renderLink(v, vs, vd, content)}
           {isMinimLevel &&
             (isDropDown

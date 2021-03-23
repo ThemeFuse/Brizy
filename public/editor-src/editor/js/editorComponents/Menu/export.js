@@ -25,6 +25,29 @@ let lastCurrentDevice = getCurrentDevice();
 export default function($node) {
   const root = $node.get(0);
 
+  // normalize current menu item
+  root.querySelectorAll("[data-menu-items-active]").forEach(menu => {
+    const isMMenu = menu.closest(".brz-menu__mmenu");
+    const menuItemsActive = menu.dataset.menuItemsActive || "";
+    const currentClassName = isMMenu
+      ? "brz-mm-menu__item--current"
+      : "brz-menu__item--current";
+    const activeItemsSelector = menuItemsActive
+      .split(",")
+      .map(id => `[data-menu-item-id='${id}']`)
+      .join(",");
+    const oldCurrentMenus = menu.querySelectorAll(`.${currentClassName}`);
+    const newCurrentMenus = menu.querySelectorAll(activeItemsSelector);
+
+    oldCurrentMenus.forEach(menu => {
+      menu.classList.remove(currentClassName);
+    });
+
+    newCurrentMenus.forEach(menu => {
+      menu?.classList.add(currentClassName);
+    });
+  });
+
   $node.find("[data-mmenu-id]").each(function() {
     const $this = $(this);
     const mmenuId = $this.data().mmenuId;

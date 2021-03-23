@@ -215,7 +215,7 @@ export default class Menu extends EditorComponent {
   }
 
   renderMenu(v, vs, vd, id) {
-    const { className: _className, items } = v;
+    const { className: _className, items, menuSelected } = v;
     const hasMMenu = this.hasMMenu() && !!id;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -252,9 +252,17 @@ export default class Menu extends EditorComponent {
       hasMMenu && this.getMMenuClassNames()
     );
 
+    const ulAttr =
+      IS_PREVIEW && TARGET === "WP"
+        ? {
+            className: "brz-menu__ul",
+            "data-menu-items-active": `{{ editor_menu_active_item menu='${menuSelected}' }}`
+          }
+        : { className: "brz-menu__ul" };
+
     return (
       <nav id={id} className={className}>
-        <ul className="brz-menu__ul">
+        <ul {...ulAttr}>
           {IS_EDITOR && hasMMenu && this.renderMMenuTitle(v)}
           <EditorArrayComponent {...itemsProps} />
         </ul>
