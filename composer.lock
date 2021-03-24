@@ -4,8 +4,47 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "104117200a0905b88ce8620dd7f74409",
+    "content-hash": "8daf1e41903a6681a67f7351b8a2166a",
     "packages": [
+        {
+            "name": "bagrinsergiu/brizy-merge-page-assets",
+            "version": "1.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
+                "reference": "681a447ff67d486971c8ed5bf7a083728af08ef3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-merge-page-assets/zipball/681a447ff67d486971c8ed5bf7a083728af08ef3",
+                "reference": "681a447ff67d486971c8ed5bf7a083728af08ef3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrizyMerge\\": "lib/",
+                    "BrizyMergeTests\\": "tests/"
+                }
+            },
+            "description": "Merge page assets compiled by Brizy compiler",
+            "keywords": [
+                "brizy",
+                "brizy merge assets"
+            ],
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/1.0.15",
+                "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
+            },
+            "time": "2020-11-25T10:35:37+00:00"
+        },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
             "version": "1.4.2",
@@ -502,6 +541,63 @@
                 }
             ],
             "time": "2021-01-07T16:49:33+00:00"
+        },
+        {
+            "name": "tburry/pquery",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tburry/pquery.git",
+                "reference": "c28159447f4cec57f2a016c2ec15f5b754b58052"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tburry/pquery/zipball/c28159447f4cec57f2a016c2ec15f5b754b58052",
+                "reference": "c28159447f4cec57f2a016c2ec15f5b754b58052",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "htmlawed/htmlawed": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "IQuery.php",
+                    "gan_formatter.php",
+                    "gan_node_html.php",
+                    "gan_parser_html.php",
+                    "gan_selector_html.php",
+                    "gan_tokenizer.php",
+                    "gan_xml2array.php",
+                    "pQuery.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Todd Burry",
+                    "email": "todd@vanillaforums.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A jQuery like html dom parser written in php.",
+            "keywords": [
+                "dom",
+                "ganon",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/tburry/pquery/issues",
+                "source": "https://github.com/tburry/pquery/tree/master"
+            },
+            "time": "2016-03-23T18:57:26+00:00"
         },
         {
             "name": "twig/twig",
@@ -10029,6 +10125,7 @@
     "stability-flags": {
         "shortpixel/shortpixel-php": 20,
         "symfony/dotenv": 20,
+        "tburry/pquery": 20,
         "squizlabs/php_codesniffer": 20
     },
     "prefer-stable": false,
