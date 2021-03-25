@@ -166,7 +166,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     $shortcodeAttributes[] = sprintf("columns=\"%d\"",(int)$atts['columns']);
                 }
                 if(isset($atts['category'])) {
-                    $shortcodeAttributes[] = sprintf("category=\"%d\"",(int)$atts['category']);
+                    $shortcodeAttributes[] = sprintf("category=\"%s\"",$atts['category']);
                 }
                 if(isset($atts['orderby'])) {
                     $shortcodeAttributes[]= sprintf("orderby=\"%s\"",$atts['orderby']);
