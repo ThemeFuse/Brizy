@@ -397,7 +397,7 @@ class Brizy_Admin_Main {
 			if ( Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
 				$editUrl = Brizy_Editor_Entity::getEditUrl($post->ID);
 				$actions['brizy-edit'] = "<a href='{$editUrl}'>"
-				                         . __( 'Edit with ' . __bt( 'brizy', 'Brizy' ), 'brizy' )
+				                         . sprintf( __( 'Edit with %s', 'brizy' ),  __bt( 'brizy', 'Brizy' ) )
 				                         . "</a>";
 			}
 		} catch ( Exception $exception ) {
