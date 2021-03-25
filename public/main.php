@@ -68,6 +68,7 @@ class Brizy_Public_Main {
 			add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), - 12000 );
 			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
+			add_action( 'post_password_required', '__return_false' );
 			$this->plugin_live_composer_fixes();
 
 			/*
@@ -78,10 +79,6 @@ class Brizy_Public_Main {
 
 
 		} elseif ( self::is_view_page( $this->post ) ) {
-
-			if ( post_password_required( $this->post->getWpPost() ) ) {
-				return;
-			}
 
 			$this->preparePost();
 
