@@ -2,7 +2,10 @@ name: Brizy Free Sefl-Hosted
 on:
   push:
     branches:
-      - new-deploy
+      - master
+      - develop
+      - fixes-*
+      - beta-*
 jobs:
   cancel-previous-workflow:
     name: Cancel previous workflow
