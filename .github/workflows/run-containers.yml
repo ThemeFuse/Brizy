@@ -38,20 +38,23 @@ jobs:
         id: vars
         shell: bash
         run: |
-          echo "::set-output name=MYSQL_CONTAINER_NAME::testing-mysql-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=EDITOR_CONTAINER_NAME::testing-editor-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=WORDPRESS_CONTAINER_NAME::testing-wordpress-${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=COMPILER_CONTAINER_NAME::testing-compiler"
           echo "::set-output name=WORDPRESS_IMAGE::brizy/testing-wordpress:${{ steps.dotenv.outputs.build_environment }}"
           echo "::set-output name=EDITOR_IMAGE::brizy/testing-editor:${{ steps.dotenv.outputs.build_environment }}"
-          echo "::set-output name=MYSQL_IMAGE::brizy/testing-mysql:${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=MYSQL_IMAGE::brizy/testing-common-mysql"
+          echo "::set-output name=MYSQL_CONTAINER_NAME::testing-common-mysql"
           echo "::set-output name=COMPILER_IMAGE::brizy/testing-compiler"
-          echo "::set-output name=DB_NAME::brizy-${{ steps.dotenv.outputs.build_environment }}"
+          echo "::set-output name=DB_NAME::$(echo "brizy_${{ steps.dotenv.outputs.build_environment }}" | sed "s/-/_/g")"
           echo "::set-output name=BITBLOX_DOMAIN::${{ steps.dotenv.outputs.build_environment }}.editor.office.brizy.org"
           echo "::set-output name=NETWORK::traefik"
           echo "::set-output name=DOMAIN::${{ steps.dotenv.outputs.build_environment }}.wordpress.office.brizy.org"
           echo "::set-output name=IS_COMPILER_BUILT::$( sudo docker images -q brizy/testing-compiler )"
           echo "::set-output name=IS_COMPILER_RUINNING::$( docker ps -q -f name=testing-compiler )"
+          echo "::set-output name=IS_MYSQL_BUILT::$( sudo docker images -q brizy/testing-common-mysql )"
+          echo "::set-output name=IS_MYSQL_RUINNING::$( docker ps -q -f name=testing-common-mysql )"
+          echo "::set-output name=IS_MYSQL_VOLUME_CREATED::$( docker volume ls -q --filter="Name=^testing-mysql-volume$" )"
 
       - name: Checkout BB
         uses: actions/checkout@v2
@@ -65,6 +68,7 @@ jobs:
       - name: Change submodule branches
         id: change-branches-on-bb
         shell: bash
+
         run: |
           cd $GITHUB_WORKSPACE/bb/editor && \
           git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
@@ -84,7 +88,8 @@ jobs:
           git checkout ${{ steps.dotenv.outputs.pro_branch }} && \
           git reset --hard origin/${{ steps.dotenv.outputs.pro_branch }}
 
-      - name: Build compiler container
+
+      - name: Build compiler image
         id: build-compiler
         if: ${{ steps.vars.outputs.IS_COMPILER_BUILT=='' }}
         shell: bash
@@ -110,13 +115,28 @@ jobs:
                 --name="${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}" \
                 "${{ steps.vars.outputs.COMPILER_IMAGE }}"
 
-      - name: Build mysql image
+      - name: Build MySQL image
         id: build-mysql-image
+        if: ${{ steps.vars.outputs.IS_MYSQL_BUILT=='' }}
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/bb/editor.compiler  && npm i
+          docker build -t "${{ steps.vars.outputs.MYSQL_IMAGE }}" $GITHUB_WORKSPACE/bb/mysql
+
+      - name: Create MySQL volume
+        id: create-mysql-volume
+        if: ${{ steps.vars.outputs.IS_MYSQL_VOLUME_CREATED=='' }}
+        shell: bash
+        run: |
+          docker volume create testing-mysql-volume
+
+      - name: Start MySQL container
+        id: start-mysql-container
+        if: ${{ steps.vars.outputs.IS_MYSQL_RUINNING=='' }}
         shell: bash
         run: |
           docker stop "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" || true
           docker rm "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" || true
-          docker build -t "${{ steps.vars.outputs.MYSQL_IMAGE }}" --target build-deployment $GITHUB_WORKSPACE/bb/mysql
           docker run -d --network="${{ steps.vars.outputs.NETWORK }}" \
                           --network-alias="${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" \
                           --name="${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" \
@@ -125,10 +145,26 @@ jobs:
                           --memory=2g \
                           -e "MAX_CPUS=3" \
                           -e "MYSQL_ROOT_PASSWORD=nopassword" \
-                          -e "MYSQL_DATABASE=${{ steps.vars.outputs.DB_NAME }}" \
-                          -e "MYSQL_USER=brizy" \
-                          -e "MYSQL_PASSWORD=nopassword" \
+                          --mount source=testing-mysql-volume,destination=/var/lib/mysql \
                          "${{ steps.vars.outputs.MYSQL_IMAGE }}"
+
+      - name: Create MySQL database
+        id: create-mysql-database
+        shell: bash
+        run: |
+          maxcounter=45
+          counter=1
+          while !  docker exec "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" mysql --protocol TCP -uroot -pnopassword -e "show databases;" > /dev/null 2>&1; do
+              sleep 1
+              counter=`expr $counter + 1`
+              if [ $counter -gt $maxcounter ]; then
+                  >&2 echo "We have been waiting for MySQL too long already; failing."
+                  exit 1
+              fi;
+          done
+          docker exec "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" mysql -uroot -pnopassword \
+              -e "DROP SCHEMA IF EXISTS ${{ steps.vars.outputs.DB_NAME }}; CREATE SCHEMA ${{ steps.vars.outputs.DB_NAME }};"
+          docker exec -i "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" sh -c 'exec mysql -uroot -pnopassword ${{ steps.vars.outputs.DB_NAME }}' < $GITHUB_WORKSPACE/bb/mysql/configure/brizy_localhost-2021_03_09_10_19_48-dump.sql
 
       - name: Build Editor image
         id: build-editor-image
