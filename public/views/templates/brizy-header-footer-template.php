@@ -6,7 +6,11 @@ get_header();
 		do_action( 'brizy_template_content' );
 	} else {
 		while ( have_posts() ) { the_post();
-			the_content();
+			if ( post_password_required() ) {
+				echo get_the_password_form();
+			} else {
+				the_content();
+			}
 		}
 	}
 

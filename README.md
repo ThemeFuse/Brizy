@@ -1,7 +1,7 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.6<br>
+Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
 Stable tag: 2.2.10<br>
 License: GPLv3<br>

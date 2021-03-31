@@ -75,8 +75,8 @@ class Brizy_Admin_FormEntries {
 			// and the function json_encode broke the json or encode the characters like this ud83dude00.
 			if ( isset( $data->formData ) ) {
 				foreach ( $data->formData as $i => $field ) {
-					$data->formData[ $i ]->name  = html_entity_decode( $field->name );
-					$data->formData[ $i ]->value = html_entity_decode( $field->value );
+					$data->formData[ $i ]->name  = html_entity_decode( $field->name, ENT_COMPAT, 'UTF-8' );
+					$data->formData[ $i ]->value = html_entity_decode( $field->value, ENT_COMPAT, 'UTF-8' );
 				}
 			}
 
@@ -291,8 +291,8 @@ class Brizy_Admin_FormEntries {
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters.
-			$fields[ $i ]->name  = htmlentities( $field->name );
-			$fields[ $i ]->value = htmlentities( $field->value );
+			$fields[ $i ]->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+			$fields[ $i ]->value = htmlentities( $field->value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
 		}
 
 		$params = array(
