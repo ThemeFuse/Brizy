@@ -74,7 +74,8 @@ class Brizy_Public_Main
             add_filter('the_content', array($this, '_filter_the_content' ), - 12000);
             add_action('brizy_template_content', array($this, '_action_the_content' ) );
 
-            $this->plugin_live_composer_fixes();
+            add_action( 'post_password_required', '__return_false' );
+			$this->plugin_live_composer_fixes();
 
             /*
                 The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
@@ -85,9 +86,7 @@ class Brizy_Public_Main
 
         } elseif (self::is_view_page( $this->post)) {
 
-            if (post_password_required($this->post->getWpPost())) {
-                return;
-            }
+
 
             $this->preparePost();
 
