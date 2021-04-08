@@ -20,7 +20,8 @@ export default function($node) {
             elem: this,
             start: $this.attr("data-start"),
             end: $this.attr("data-end"),
-            duration: $this.attr("data-duration")
+            duration: $this.attr("data-duration"),
+            separator: $this.attr("data-separator")
           });
         });
     });
@@ -31,7 +32,8 @@ export default function($node) {
         elem: this,
         start: $this.attr("data-start"),
         end: $this.attr("data-end"),
-        duration: $this.attr("data-duration")
+        duration: $this.attr("data-duration"),
+        separator: $this.attr("data-separator")
       });
 
       $this.addClass("brz-initialized");
@@ -43,12 +45,12 @@ export default function($node) {
   }
 }
 
-function formatNumber(number) {
+function formatNumber(number, separator) {
   var splitNum;
   number = Math.abs(number);
   number = number.toFixed(0);
   splitNum = number.split(".");
-  splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
   return splitNum.join("-");
 }
 
@@ -62,13 +64,12 @@ function isScrolledIntoView(el) {
 }
 
 function animate(value) {
-  var $figures = $(value.elem).find(
-    ".brz-counter-figures .brz-counter-numbers"
-  );
-  var $chart = $(value.elem).find(".brz-counter-pie-chart");
+  const { elem, separator } = value;
+  var $figures = $(elem).find(".brz-counter-figures .brz-counter-numbers");
+  var $chart = $(elem).find(".brz-counter-pie-chart");
 
   var step = function(countNum) {
-    $figures.text(formatNumber(countNum));
+    $figures.text(formatNumber(countNum, separator));
     $chart &&
       $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
   };

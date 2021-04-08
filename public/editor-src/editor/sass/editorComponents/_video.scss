@@ -61,7 +61,6 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      transition: transform 0.3s ease;
 
       .brz-icon-svg {
         width: 100%;
@@ -238,12 +237,6 @@
       .brz-shortcode__placeholder .brz-icon-svg {
         cursor: pointer;
       }
-    }
-    .brz-shortcode__placeholder {
-      transition: all 0.6s ease;
-    }
-    .brz-icon-svg {
-      transition: all 0.6s ease;
     }
   }
 }

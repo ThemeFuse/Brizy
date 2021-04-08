@@ -13,3 +13,20 @@
     margin-bottom: 1em;
   }
 }
+
+.brz-rich-text .brz-tp__dc-block-st1 {
+  width: 100%;
+  white-space: initial;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  > * {
+    margin-bottom: 1em;
+  }
+}

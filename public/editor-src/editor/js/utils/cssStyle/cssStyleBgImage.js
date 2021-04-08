@@ -15,6 +15,14 @@ export function cssStyleBgImage({ v, device, state }) {
   return `background-image:${bgImage};`;
 }
 
+export function cssStyleBgImageHover({ v, device }) {
+  const bgImage = IS_EDITOR
+    ? styleBgImage({ v, device, state: "hover" })
+    : styleExportBgImage({ v, device, state: "hover" });
+
+  return bgImage ? `content: "";background-image:${bgImage};` : "";
+}
+
 export function cssStyleBgMediaImage({ v, device }) {
   const media = styleMediaBg({ v, device });
 

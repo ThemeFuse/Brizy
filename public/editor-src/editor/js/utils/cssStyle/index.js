@@ -113,6 +113,7 @@ export { cssStyleBgGradient } from "./cssStyleBgGradient";
 // Bg Image
 export {
   cssStyleBgImage,
+  cssStyleBgImageHover,
   cssStyleBgMediaImage,
   cssStyleBgImagePosition,
   cssStyleBgImageAttachment
@@ -291,7 +292,6 @@ export {
 export {
   cssStyleElementVideoPaddingRatio,
   cssStyleElementVideoFilter,
-  cssStyleElementVideoPointerEvents,
   cssStyleElementVideoBgSize,
   cssStyleElementVideoIconFontSize,
   cssStyleElementVideoIconWidth,
@@ -929,6 +929,7 @@ export {
   cssStyleElementTableSpacing,
   cssStyleElementTableBtnIconPosition,
   cssStyleElementTableCustomFlexHorizontalAlign,
+  cssStyleElementTableCustomTextHorizontalAlign,
   cssStyleElementTableAsideWidth,
   cssStyleElementTableEvenBgColor,
   cssStyleElementTableEvenColor,

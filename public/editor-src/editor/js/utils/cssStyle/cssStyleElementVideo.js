@@ -3,7 +3,6 @@ import {
   styleElementVideoIconFontSize,
   styleElementVideoBgColorRatio,
   styleElementVideoCoverSrc,
-  styleElementVideoPointerEvents,
   styleElementVideoCoverPositionX,
   styleElementVideoCoverPositionY,
   styleElementVideoCoverZoom,
@@ -38,12 +37,6 @@ export function cssStyleElementVideoFilter({ v, device, state }) {
   return empty
     ? ""
     : `filter:brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%);`;
-}
-
-export function cssStyleElementVideoPointerEvents() {
-  const pointerEvents = styleElementVideoPointerEvents();
-
-  return pointerEvents;
 }
 
 export function cssStyleElementVideoBgSize({ v, device, state }) {
@@ -98,7 +91,7 @@ export function cssStyleElementVideoCoverPosition({ v, device, state }) {
 }
 
 export function cssStyleElementVideoPropertyHoverTransition() {
-  return "transition-property: box-shadow, border, border-radius;";
+  return "transition-property: box-shadow, border, border-radius, background-color, color, transform;";
 }
 
 export function cssStyleVideoControlsBgColor({ v, device, state }) {

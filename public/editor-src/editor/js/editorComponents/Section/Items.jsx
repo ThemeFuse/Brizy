@@ -184,7 +184,7 @@ class SectionItems extends EditorArrayComponent {
             data-vertical={sliderAnimation === "vertical"}
             data-auto-play={sliderAutoPlay}
             data-auto-play-speed={sliderAutoPlaySpeed * 1000}
-            data-swipe={false}
+            data-swipe={true}
             data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           >
             {_items}

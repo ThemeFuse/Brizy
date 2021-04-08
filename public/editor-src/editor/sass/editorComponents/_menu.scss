@@ -239,6 +239,11 @@ $dropdown-arrow-size: 7px;
     line-height: 20px;
     font-size: 13px;
     padding: 12px 20px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 
   // MMenu has dropdown

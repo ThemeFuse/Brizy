@@ -66,6 +66,20 @@ export function cssStyleElementTableCustomFlexHorizontalAlign({
   }
 }
 
+export function cssStyleElementTableCustomTextHorizontalAlign({
+  v,
+  device,
+  state
+}) {
+  const horizontalAlign = styleElementTableHorizontalAlign({
+    v,
+    device,
+    state
+  });
+
+  return `text-align: ${horizontalAlign};`;
+}
+
 export function cssStyleElementTableAsideWidth({ v, device, state }) {
   const aside = styleElementTableAside({ v, device, state });
 

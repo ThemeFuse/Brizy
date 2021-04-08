@@ -47,6 +47,7 @@ class WPPostInfo extends EditorComponent {
           <Wrapper {...this.makeWrapperProps({ className: classNameBC })}>
             <DynamicContentHelper
               placeholder="{{editor_post_info}}"
+              placeholderIcon="wp-post-info"
               tagName="div"
               blocked={false}
             />

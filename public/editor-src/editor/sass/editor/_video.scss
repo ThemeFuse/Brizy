@@ -13,3 +13,10 @@
     width: 25%;
   }
 }
+
+.brz-youtube-video,
+.brz-vimeo-video {
+  iframe {
+    pointer-events: none;
+  }
+}

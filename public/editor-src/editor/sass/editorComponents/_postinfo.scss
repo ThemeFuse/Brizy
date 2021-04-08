@@ -1,9 +1,10 @@
 .brz-wp__postinfo {
-  width: auto !important;
-  padding: 0;
-  margin: 0;
   display: inline-flex;
   flex-wrap: wrap;
+  justify-content: inherit;
+  width: 100%;
+  padding: 0;
+  margin: 0;
   word-break: break-all;
 
   &__column ul {

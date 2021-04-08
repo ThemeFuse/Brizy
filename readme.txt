@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.10
+Stable tag: 2.2.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,27 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.11 - 2021-04-08 =
+* New: Added ability to change tags for post content and post excerpt
+* New: Added Brizy_Editor_CompiledHtml::getPageContent
+* Improved: Added swipe to Carousel element and for block sliders
+* Improved: Icon for Post element 
+* Fixed: Do not translate Company Name when there is white label
+* Fixed: Suppress language when wpml media translation is active on extracting our fonts
+* Fixed: Brizy template is not applying for Password-Protected pages
+* Fixed: Do not redirect when woo option Default customer location is set to Geolocate
+* Fixed: Encode and decode leads with utf-8
+* Fixed: Set compiled html to the post content, allow SEO plugins parsing our content.
+* Fixed: Remove product_visibility taxonomy from template conditions
+* Fixed: Compile page in the WordPress admin panel if the page is created with Brizy
+* Fixed: Save focal point when saving posts
+* Fixed: Error Brizy could not load the content on blog page
+* Fixed: Anchor scroll
+* Fixed: Global Blocks Screenshots
+* Fixed: Minimum size for Spacer element
+* Fixed: Membership placement 
+* Fixed: Post Content Rich-text element
 
 = 2.2.10 - 2021-03-23 =
 * Fixed: Remove product_visibility taxonomy from template conditions

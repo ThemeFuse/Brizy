@@ -183,7 +183,13 @@ export function getItems({ v, device }) {
     {
       id: "horizontalAlign",
       type: "toggle-dev",
-      disabled: true
+      position: 100,
+      devices: "desktop",
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
     },
     {
       id: "advancedSettings",

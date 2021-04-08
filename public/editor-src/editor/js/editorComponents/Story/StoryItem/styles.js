@@ -13,6 +13,9 @@ export function style(v, vs, vd, props) {
         "cssStyleBgMediaImage"
       ]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
+      standart: ["cssStyleBgImageHover"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
