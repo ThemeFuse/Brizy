@@ -41,6 +41,7 @@
 
     "className": "",
     "customCSS": "",
+    "tagName": "span",
 
     "tabletFontStyle": "heading2",
     "tabletFontFamilyType": null,

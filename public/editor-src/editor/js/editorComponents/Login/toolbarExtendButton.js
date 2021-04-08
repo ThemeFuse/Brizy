@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export function getItems() {
+export function getItems({ v }) {
   return [
     {
       id: "popoverLink",
@@ -13,11 +13,28 @@ export function getItems() {
       position: 90,
       options: [
         {
-          id: "messageRedirect",
-          label: t("Redirect After Login"),
-          type: "inputText-dev",
-          devices: "desktop",
-          placeholder: "http://"
+          id: "redirectGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "redirectType",
+              type: "select-dev",
+              label: t("Redirect After Login"),
+              devices: "desktop",
+              choices: [
+                { title: t("Same Page"), value: "samePage" },
+                { title: t("Custom"), value: "custom" }
+              ]
+            },
+            {
+              id: "messageRedirect",
+              label: t("URL"),
+              type: "inputText-dev",
+              disabled: v.redirectType !== "custom",
+              devices: "desktop",
+              placeholder: "http://"
+            }
+          ]
         }
       ]
     },

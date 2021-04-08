@@ -107,7 +107,7 @@ export default class WPPostExcerpt extends EditorComponent {
       <DynamicContentHelper
         placeholder="{{brizy_dc_post_excerpt}}"
         placeholderIcon="wp-excerpt"
-        tagName="span"
+        tagName={v.tagName}
       />
     );
 

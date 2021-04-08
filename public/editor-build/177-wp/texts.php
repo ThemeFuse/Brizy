@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_176Wp_Texts {
+class Brizy_Public_EditorBuild_177Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -612,6 +612,7 @@ class Brizy_Public_EditorBuild_176Wp_Texts {
 			"START BUILDING YOUR POPUP" => __("START BUILDING YOUR POPUP", "brizy"),
 			"SWITCH TO DESKTOP" => __("SWITCH TO DESKTOP", "brizy"),
 			"Sale" => __("Sale", "brizy"),
+			"Same Page" => __("Same Page", "brizy"),
 			"Saturation" => __("Saturation", "brizy"),
 			"Save" => __("Save", "brizy"),
 			"Save Draft" => __("Save Draft", "brizy"),
@@ -678,6 +679,7 @@ class Brizy_Public_EditorBuild_176Wp_Texts {
 			"SoundCloud Link" => __("SoundCloud Link", "brizy"),
 			"Spacer" => __("Spacer", "brizy"),
 			"Spacing" => __("Spacing", "brizy"),
+			"Span" => __("Span", "brizy"),
 			"Spanish" => __("Spanish", "brizy"),
 			"Specify a start time (in seconds)" => __("Specify a start time (in seconds)", "brizy"),
 			"Specify an end time (in seconds)" => __("Specify an end time (in seconds)", "brizy"),

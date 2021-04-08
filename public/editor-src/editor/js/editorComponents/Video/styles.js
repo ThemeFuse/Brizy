@@ -16,20 +16,11 @@ export function styleContent(v, vs, vd) {
         "cssStyleElementVideoPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover .brz-video-content, && .brz-shortcode__placeholder": {
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
-      ]
-    },
     ".brz &&:hover .brz-iframe, && .brz-video__cover:before": {
       standart: ["cssStyleElementVideoFilter"]
     },
     ".brz &&:hover.brz-custom-video video": {
       standart: ["cssStyleElementVideoFilter"]
-    },
-    ".brz &&:hover .brz-video-custom-progress": {
-      standart: ["cssStyleBg2Color"]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -38,10 +29,7 @@ export function styleContent(v, vs, vd) {
 export function styleWrapper(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleElementVideoPaddingRatio",
-        "cssStyleElementVideoPointerEvents"
-      ]
+      standart: ["cssStyleElementVideoPaddingRatio"]
     },
     ".brz &&:hover .brz-video__cover::before": {
       standart: [
@@ -56,10 +44,18 @@ export function styleWrapper(v, vs, vd) {
         "cssStyleElementVideoIconWidth",
         "cssStyleElementVideoIconHeight",
         "cssStyleBgColor"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
       ]
     },
     ".brz &&:hover .brz-video__cover .brz-video__cover-icon .brz-a": {
-      standart: ["cssStyleColor"]
+      standart: ["cssStyleColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
     }
   };
 
@@ -68,17 +64,40 @@ export function styleWrapper(v, vs, vd) {
 
 export function styleCustomVideo(v, vs, vd) {
   const styles = {
-    ".brz &&:hover > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time": {
-      standart: ["cssStyleVideoIconControls"]
+    ".brz && > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover": {
+      standart: ["cssStyleVideoIconControls"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
     },
-    ".brz &&:hover > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time": {
-      standart: ["cssStyleVideoIconControls"]
+    ".brz && > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover": {
+      standart: ["cssStyleVideoIconControls"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
     },
-    ".brz &&:hover .brz-video-custom-slider:before": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
+    ".brz && .brz-video-custom-slider:hover:before": {
+      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
     },
-    ".brz &&:hover .brz-video-custom-video-controls": {
-      standart: ["cssStyleVideoControlsBgColor"]
+    ".brz && .brz-video-custom-slider:hover .brz-video-custom-progress": {
+      standart: ["cssStyleBg2Color"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
+    },
+    ".brz && .brz-video-custom-video-controls:hover": {
+      standart: ["cssStyleVideoControlsBgColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -107,6 +126,10 @@ export function styleIcon(v, vs, vd) {
       standart: [
         "cssStyleElementVideoControlsIconFontSize",
         "cssStyleVideoIconControls"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoPropertyHoverTransition"
       ]
     }
   };

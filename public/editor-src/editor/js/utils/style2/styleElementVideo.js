@@ -35,10 +35,6 @@ export function styleElementVideoBgColorRatio({ v, device, state }) {
   return ratio === undefined ? ratio : colorBgVideoRatio;
 }
 
-export function styleElementVideoPointerEvents() {
-  return IS_EDITOR ? "pointer-events: none" : "";
-}
-
 export function styleElementVideoCoverSrc({ v, device, state }) {
   const coverImageSrc = defaultValueValue({
     v,

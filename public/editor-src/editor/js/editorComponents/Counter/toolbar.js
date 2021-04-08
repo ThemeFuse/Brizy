@@ -146,6 +146,16 @@ export function getItems({ v, device }) {
                     size: "medium"
                   },
                   population: richTextDC
+                },
+                {
+                  id: "separator",
+                  label: t("Separator"),
+                  type: "inputText-dev",
+                  placeholder: ",",
+                  config: {
+                    size: "medium"
+                  },
+                  population: richTextDC
                 }
               ]
             }

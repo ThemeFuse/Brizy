@@ -117,7 +117,7 @@ class Counter extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { final } = this.state;
-    const { type, start, end, duration } = v;
+    const { type, start, end, duration, separator } = v;
     const isSimple = type === "simple";
 
     const prefixLabel = isSimple ? v.prefixLabel : v.prefixLabelRadial;
@@ -171,7 +171,7 @@ class Counter extends EditorComponent {
       number = Math.abs(number);
       number = number.toFixed(0);
       splitNum = number.split(".");
-      splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
       return splitNum.join("-");
     };
 
@@ -194,7 +194,8 @@ class Counter extends EditorComponent {
               attributes: {
                 "data-start": start,
                 "data-end": end,
-                "data-duration": duration
+                "data-duration": duration,
+                "data-separator": separator
               }
             })}
           >

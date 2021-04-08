@@ -11,6 +11,9 @@ export function styleCloseButton(v, vs, vd) {
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
+      standart: ["cssStyleBgImageHover"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     }

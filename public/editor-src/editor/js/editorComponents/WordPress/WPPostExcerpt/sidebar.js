@@ -39,6 +39,22 @@ export function getItems() {
               devices: "desktop",
               helper: { content: helperHTML },
               placeholder: "element { CSS goes here }"
+            },
+            {
+              id: "tagName",
+              label: t("HTML Tag"),
+              type: "select-dev",
+              choices: [
+                { title: t("Span"), value: "span" },
+                { title: t("P"), value: "p" },
+                { title: t("H1"), value: "h1" },
+                { title: t("H2"), value: "h2" },
+                { title: t("H3"), value: "h3" },
+                { title: t("H4"), value: "h4" },
+                { title: t("H5"), value: "h5" },
+                { title: t("H6"), value: "h6" },
+                { title: t("PRE"), value: "pre" }
+              ]
             }
           ]
         }
