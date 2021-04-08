@@ -28,6 +28,9 @@ export function styleRow(v, vs, vd) {
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
+      standart: ["cssStyleBgImageHover"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]

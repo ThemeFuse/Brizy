@@ -217,7 +217,7 @@ class Video extends EditorComponent {
       : this.renderPlaceholder();
 
     return (
-      <React.Fragment>
+      <>
         <div className={classNameWrapper}>{content}</div>
         <div className={classNameVideo}>
           {controls === "on" && (
@@ -287,7 +287,7 @@ class Video extends EditorComponent {
             />
           )}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 

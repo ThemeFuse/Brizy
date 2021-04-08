@@ -12,12 +12,12 @@ import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import toolbarConfigFn from "./toolbar";
-import { calcWrapperSizes } from "./utils";
 import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { style, styleContent } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
-import { isSVG, isGIF } from "./utils";
+import { isSVG, isGIF, calcWrapperSizes } from "./utils";
+import { isNumber } from "visual/utils/math";
 
 import ImageWrapper from "./Wrapper";
 import ImageContent from "./Image";
@@ -73,16 +73,18 @@ class Image extends EditorComponent {
     const { containerWidth: stateContainerWidth } = this.state;
 
     if (getStore().getState().ui.deviceMode === "desktop") {
-      const parentNode = this.container.current.parentElement;
+      const parentNode = this.container?.current?.parentElement;
+      const parentWidth = parentNode?.getBoundingClientRect().width;
+
       const cs = getComputedStyle(parentNode);
 
       const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
       const borderX =
         parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
-      const containerWidth = parentNode.offsetWidth - paddingX - borderX;
+      const containerWidth = parentWidth - paddingX - borderX;
 
-      if (containerWidth !== stateContainerWidth) {
+      if (isNumber(containerWidth) && containerWidth !== stateContainerWidth) {
         this.setState({ containerWidth });
       }
     }
@@ -115,7 +117,7 @@ class Image extends EditorComponent {
           iH: Math.round(iH),
           oX: Math.round(oX),
           oY: Math.round(oY),
-          cW: Math.round(cW), 
+          cW: Math.round(cW),
           cH: Math.round(cH)
         };
 

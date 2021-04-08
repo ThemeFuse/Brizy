@@ -107,7 +107,7 @@ export default class WPPostsTitle extends EditorComponent {
       <DynamicContentHelper
         placeholder="{{brizy_dc_post_title}}"
         placeholderIcon="wp-title"
-        tagName="span"
+        tagName={v.tagName}
       />
     );
 

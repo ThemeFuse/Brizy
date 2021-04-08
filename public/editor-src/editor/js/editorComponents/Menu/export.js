@@ -64,7 +64,8 @@ export default function($node) {
       ],
       slidingSubmenus: false,
       navbar: {
-        title: mmenuTitle
+        title: mmenuTitle,
+        titleLink: "custom"
       },
       hooks: {
         "openPanel:after": panel => {

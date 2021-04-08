@@ -21,6 +21,9 @@
     "suffixLabelRadial": "%",
     "suffixLabelRadial2Population": null,
 
+    "separator": ",",
+    "separatorPopulation": null,
+
     "offsetX": 0,
     "offsetY": 0
   },

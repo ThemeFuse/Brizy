@@ -3,7 +3,7 @@
     "className": "",
 
     "height": 50,
-    "heightSuffix": null,
+    "heightSuffix": "px",
 
     "tabletHeight": null,
     "tabletHeightSuffix": null,
