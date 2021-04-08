@@ -7,9 +7,7 @@ import {
 } from "visual/utils/style2";
 
 export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
-  return device === "desktop"
-    ? `font-family:${styleTypography2FontFamily({ v, device, prefix })};`
-    : "";
+  return `font-family:${styleTypography2FontFamily({ v, device, prefix })};`;
 }
 
 export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {

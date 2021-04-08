@@ -173,6 +173,7 @@ export const globalBlocksAssembledSelector = createSelector(
 
           if (screenshot) {
             Object.assign(draft.data.value, screenshot);
+            Object.assign(draft.meta, screenshot);
           }
 
           objectTraverse2(draft.data.value, obj => {
@@ -184,6 +185,7 @@ export const globalBlocksAssembledSelector = createSelector(
               screenshots[obj.value._id]
             ) {
               Object.assign(obj.value, screenshots[obj.value._id]);
+              Object.assign(obj.meta, screenshots[obj.value._id]);
             }
           });
         });

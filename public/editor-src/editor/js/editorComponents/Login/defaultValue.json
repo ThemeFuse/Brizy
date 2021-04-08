@@ -1,13 +1,18 @@
 {
   "content": {
     "type": "login",
+
+    "redirectType": "samePage",
     "messageRedirect": "",
     "logoutRedirect": "",
+
     "showPlaceholder": "on",
     "showLabel": "off",
+
     "remember": "on",
     "lostPassword": "Lost your password?",
     "showLostPassword": "on",
+
     "items": []
   },
 

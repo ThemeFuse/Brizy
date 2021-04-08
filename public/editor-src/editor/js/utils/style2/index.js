@@ -213,7 +213,6 @@ export {
 // Element Video
 export {
   styleElementVideoPaddingRatio,
-  styleElementVideoPointerEvents,
   styleElementVideoIconFontSize,
   styleElementVideoBgColorRatio,
   styleElementVideoCoverSrc,

@@ -279,18 +279,7 @@ class Login extends EditorComponent {
               type === "authorized" ? (
                 this.renderAuthorized(v)
               ) : (
-                <form
-                  className="brz-form-login"
-                  noValidate
-                  onSubmit={this.handleSubmit}
-                  action="{{editor_login_url}}"
-                  method="post"
-                >
-                  <input
-                    type="hidden"
-                    name="redirect_to"
-                    value={v.messageRedirect === "" ? "/" : v.messageRedirect}
-                  />
+                <form className="brz-form-login">
                   {this.renderLoginForm(v)}
                 </form>
               )
@@ -307,6 +296,7 @@ class Login extends EditorComponent {
                   <input
                     type="hidden"
                     name="redirect_to"
+                    data-redirect={v.redirectType}
                     value={v.messageRedirect === "" ? "/" : v.messageRedirect}
                   />
                   {this.renderLoginForm(v)}

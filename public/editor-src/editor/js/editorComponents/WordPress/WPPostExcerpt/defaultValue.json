@@ -38,6 +38,7 @@
 
     "className": "",
     "customCSS": "",
+    "tagName": "span",
 
     "tabletFontStyle": "paragraph",
     "tabletFontFamilyType": null,

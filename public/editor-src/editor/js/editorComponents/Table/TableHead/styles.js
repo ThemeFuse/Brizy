@@ -8,7 +8,8 @@ export function style(v, vs, vd) {
     ".brz && .brz-table__th--btn": {
       standart: [
         "cssStyleElementTableBtnIconPosition",
-        "cssStyleElementTableCustomFlexHorizontalAlign"
+        "cssStyleElementTableCustomFlexHorizontalAlign",
+        "cssStyleElementTableCustomTextHorizontalAlign"
       ]
     },
     ".brz && .brz-table__th.brz-table__th": {
