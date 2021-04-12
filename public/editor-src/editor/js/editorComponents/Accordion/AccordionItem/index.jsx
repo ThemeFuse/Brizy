@@ -81,7 +81,8 @@ class AccordionItem extends EditorComponent {
     const node = this.content.current;
 
     if (node) {
-      const { height } = node.children[0]?.getBoundingClientRect();
+      const height =
+        node.firstElementChild?.getBoundingClientRect().height ?? 0;
       const duration = this.props.animDuration;
 
       collapse(node, { height, duration: duration * 1000 });
@@ -92,7 +93,8 @@ class AccordionItem extends EditorComponent {
     const node = this.content.current;
 
     if (node) {
-      const { height } = node.children[0]?.getBoundingClientRect();
+      const height =
+        node.firstElementChild?.getBoundingClientRect().height ?? 0;
       const duration = this.props.animDuration;
 
       expand(node, { height, duration: duration * 1000 });
@@ -166,12 +168,16 @@ class AccordionItem extends EditorComponent {
       animationClassName,
       meta: { sectionPopup, sectionPopup2 }
     } = this.props;
+    const className = classnames(
+      "brz-accordion__item-content brz-d-xs-flex brz-flex-xs-column",
+      { "brz-accordion--sortable": IS_EDITOR }
+    );
 
     const itemsProps = this.makeSubcomponentProps({
       meta,
+      className,
       isActive: active,
-      bindWithKey: "items",
-      className: "brz-accordion--sortable brz-d-xs-flex brz-flex-xs-column"
+      bindWithKey: "items"
     });
 
     return (

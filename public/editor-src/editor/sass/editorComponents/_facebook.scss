@@ -41,3 +41,12 @@
 .brz-fb-comments {
   width: 100%;
 }
+
+.brz-fb-styles-button--small {
+  &-button {
+    height: 20px;
+  }
+  &-boxed {
+    height: 64px;
+  }
+}
