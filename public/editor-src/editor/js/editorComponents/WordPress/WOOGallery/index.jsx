@@ -62,7 +62,7 @@ export default class WOOGallery extends EditorComponent {
       //   }
       // };
 
-      jQuery(gallery).wc_product_gallery();
+      jQuery(gallery).wc_product_gallery?.();
     }
   };
 

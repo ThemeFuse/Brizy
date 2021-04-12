@@ -66,6 +66,10 @@ class Facebook extends EditorComponent {
       `brz-fb-${facebookType === "button" ? "like" : facebookType}`,
       { "brz-fb-styles": facebookType !== "button" },
       { "brz-fb-styles-button": facebookType === "button" },
+      {
+        [`brz-fb-styles-button--small-${layout}`]:
+          facebookType === "button" && size === "small"
+      },
       _className,
       css(
         `${this.constructor.componentId}`,
@@ -198,6 +202,10 @@ class Facebook extends EditorComponent {
       `brz-fb-${facebookType === "button" ? "like" : facebookType}`,
       { "brz-fb-styles": facebookType !== "button" },
       { "brz-fb-styles-button": facebookType === "button" },
+      {
+        [`brz-fb-styles-button--small-${layout}`]:
+          facebookType === "button" && size === "small"
+      },
       _className,
       css(
         `${this.constructor.componentId}`,

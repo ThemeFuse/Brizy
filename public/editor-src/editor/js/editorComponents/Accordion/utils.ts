@@ -14,7 +14,7 @@ export const expand = (node: HTMLElement, config: Config): void => {
     {
       duration,
       iterations: 1,
-      fill: "forwards" // ensures item stays open at end of animation
+      fill: "backwards"
     }
   );
   if (typeof onFinish === "function") {
@@ -27,13 +27,12 @@ export const collapse = (node: HTMLElement, config: Config): void => {
   const animation = node.animate(
     [
       { height: 0, offset: 0 },
-      { height: `${height}px`, offset: 1 },
-      { height: "auto" }
+      { height: `${height}px`, offset: 1 }
     ],
     {
       duration,
       iterations: 1,
-      fill: "forwards" // ensures item stays open at end of animation
+      fill: "backwards"
     }
   );
   if (typeof onFinish === "function") {

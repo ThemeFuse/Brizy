@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.11
+Stable tag: 2.2.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,16 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.12 - 2021-04-12 =
+* Improved: Removed postContent when edit post
+* Fixed: About Brizy from left sidebar white label issue
+* Fixed: Woocomerce minors bugs
+* Fixed: Hover, active mode in accordion element
+* Fixed: Hover, active mode in tabs element
+* Fixed: Accordion animation when have padding
+* Fixed: Align for Title and Excerpt elements
+* Fixed: Facebook minors bugs
 
 = 2.2.11 - 2021-04-08 =
 * New: Added ability to change tags for post content and post excerpt

@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_177Wp_Texts {
+class Brizy_Public_EditorBuild_178Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -31,6 +31,7 @@ class Brizy_Public_EditorBuild_177Wp_Texts {
 			"ADD FONT VARIATION" => __("ADD FONT VARIATION", "brizy"),
 			"ADD GOOGLE FONT" => __("ADD GOOGLE FONT", "brizy"),
 			"APPS" => __("APPS", "brizy"),
+			"About %s" => __("About %s", "brizy"),
 			"About Brizy" => __("About Brizy", "brizy"),
 			"Access your Library in any WP install by connecting your Brizy Account" => __("Access your Library in any WP install by connecting your Brizy Account", "brizy"),
 			"Accordion" => __("Accordion", "brizy"),

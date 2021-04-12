@@ -43,7 +43,7 @@ const scrollTo = (config: {
 export default function($node: JQuery): void {
   const root = $node.get(0);
   const anchorSelector =
-    ".brz-a[href^='#'], .brz-anchor, .link--anchor, .brz-wp-shortcode__menu .menu-item a";
+    ".brz-a[href^='#'], .brz-anchor, .link--anchor, .brz-menu__ul a.menu-item";
 
   const handleGoTo = (hash: string, targetNode?: HTMLElement): void => {
     const node: HTMLElement | null = root.querySelector(hash);
