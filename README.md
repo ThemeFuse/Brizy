@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.11<br>
+Stable tag: 2.2.12<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.12 - 2021-04-12
+* Improved: Removed postContent when edit post
+* Fixed: About Brizy from left sidebar white label issue
+* Fixed: Woocomerce minors bugs
+* Fixed: Hover, active mode in accordion element
+* Fixed: Hover, active mode in tabs element
+* Fixed: Accordion animation when have padding
+* Fixed: Align for Title and Excerpt elements
+* Fixed: Facebook minors bugs
 
 ### 2.2.11 - 2021-04-08
 * New: Added ability to change tags for post content and post excerpt
