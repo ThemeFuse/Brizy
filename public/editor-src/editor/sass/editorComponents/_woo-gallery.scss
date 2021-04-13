@@ -14,9 +14,13 @@
       margin-bottom: 0;
       width: 100%;
     }
+    .woocommerce-product-gallery__wrapper {
+      overflow: hidden;
+    }
     .flex-control-thumbs {
       display: flex;
       flex-wrap: wrap;
+      padding: 0;
 
       li {
         overflow: hidden;

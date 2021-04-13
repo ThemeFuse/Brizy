@@ -1,63 +1,46 @@
 import {
   styleAlignHorizontal,
   styleBorderWidthUngrouped,
-  styleTypography2FontSize,
-  styleBgColor
+  styleTypography2FontSize
 } from "visual/utils/style2";
-import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
-import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
+import {
+  cssStyleBorder,
+  cssStyleColor,
+  cssStyleBgColor,
+  cssStyleBoxShadow,
+  cssStyleTypography2FontFamily,
+  cssStyleTypography2FontSize,
+  cssStyleTypography2FontWeight,
+  cssStyleTypography2LetterSpacing,
+  cssStyleTypography2LineHeight,
+  cssStylePaddingFourFields,
+  cssStyleBorderRadius
+} from "visual/utils/cssStyle";
 import {
   styleElementAccordionFilterAfterSpacing,
   styleElementAccordionFilterSpacing,
   styleElementAccordionNavAlign,
   styleElementAccordionSpacing
 } from "visual/utils/style2/styleElementAccordion";
-import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
-import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
-import {
-  cssStyleTypography2FontFamily,
-  cssStyleTypography2FontSize,
-  cssStyleTypography2FontWeight,
-  cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight
-} from "visual/utils/cssStyle/cssStyleTypography2";
 
 export function cssStyleElementAccordionFilterColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "filterColor" });
 }
 
-export function cssStyleElementAccordionFilterActiveColor({
-  v,
-  device,
-  state
-}) {
-  return cssStyleColor({ v, device, state, prefix: "activeFilterColor" });
+export function cssStyleElementAccordionFilterActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "filterColor" });
 }
 
-export function cssStyleElementAccordionFilterActiveBgColor({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeFilterBg" });
+export function cssStyleElementAccordionFilterActiveBgColor({ v, device }) {
+  return cssStyleBgColor({ v, device, state: "active", prefix: "filterBg" });
 }
 
-export function cssStyleElementAccordionFilterActiveBorder({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBorder({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementAccordionFilterActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, state: "active", prefix: "filter" });
 }
 
-export function cssStyleElementAccordionFilterActiveShadow({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBoxShadow({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementAccordionFilterActiveShadow({ v, device }) {
+  return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
 }
 
 export function cssStyleElementAccordionFilterBgColor({ v, device, state }) {
@@ -190,21 +173,19 @@ export function cssStyleElementAccordion3LetterSpacing({ v, device }) {
 }
 
 export function cssStyleElementAccordionActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, prefix: "activeColor" });
+  return cssStyleColor({ v, device, state: "active", prefix: "color" });
 }
 
-export function cssStyleElementAccordionActiveBgColor({ v, device, state }) {
-  const bgColor = styleBgColor({ v, device, state, prefix: "activeBg" });
-
-  return bgColor === undefined ? "" : `background-color:${bgColor};`;
+export function cssStyleElementAccordionActiveBgColor({ v, device }) {
+  return cssStyleBgColor({ v, device, state: "active", prefix: "bg" });
 }
 
 export function cssStyleElementAccordionActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, prefix: "active" });
+  return cssStyleBorder({ v, device, state: "active" });
 }
 
 export function cssStyleElementAccordionActiveShadow({ v, device }) {
-  return cssStyleBoxShadow({ v, device, prefix: "active" });
+  return cssStyleBoxShadow({ v, device, state: "active" });
 }
 
 export function cssStyleElementAccordionAnimDuration({ v }) {

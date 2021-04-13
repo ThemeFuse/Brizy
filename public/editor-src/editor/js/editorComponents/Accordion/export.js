@@ -23,12 +23,8 @@ export default function($node) {
       // need to calculate inner elements height
       // it's needed for animation
       const heights = contents.map(node => {
-        let height = 0;
-        [...node.children].forEach(node => {
-          height += node.scrollHeight;
-        });
-
-        return height;
+        const child = node.firstElementChild;
+        return child ? child.getBoundingClientRect().height : 0;
       });
 
       // when animation is done wee need

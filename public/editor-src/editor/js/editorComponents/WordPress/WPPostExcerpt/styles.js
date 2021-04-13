@@ -2,6 +2,9 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
+    ".brz &&:hover": {
+      standart: ["cssStyleContentAlign"]
+    },
     ".brz &&:hover *": {
       standart: [
         "cssStyleColor",
@@ -9,8 +12,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing",
-        "cssStyleContentAlign"
+        "cssStyleTypography2LetterSpacing"
       ]
     },
     ".brz && > .brz-a.brz-a:not(.brz-btn):hover": {

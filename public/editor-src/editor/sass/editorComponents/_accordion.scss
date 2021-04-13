@@ -33,7 +33,7 @@
     }
 
     // resolve problems with height and animation
-    > .brz-accordion__content > * {
+    &-content > * {
       flex-shrink: 0;
     }
     > .brz-accordion__nav > .brz-accordion--icon-wrapper > .brz-accordion__nav--previewIcon--active {
@@ -49,10 +49,9 @@
     }
     > .brz-accordion__content {
       height: auto;
-
-      &:empty {
-        min-height: 50px;
-      }
+    }
+    > .brz-accordion__content > .brz-accordion__item-content:empty {
+      min-height: 50px;
     }
   }
 }

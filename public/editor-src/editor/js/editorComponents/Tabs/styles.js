@@ -26,12 +26,16 @@ export function styleTabs(v, vs, vd) {
     ".brz && .brz-tabs__items:hover": {
       standart: ["cssStyleColor", "cssStyleBgColor", "cssStyleBorder"]
     },
-    ".brz && .brz-tabs__nav--button:hover": {
+    ".brz && .brz-tabs__nav--item:not(.brz-tabs__nav--active) .brz-tabs__nav--button:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBoxShadow",
+        "cssStyleBoxShadow"
+      ]
+    },
+    ".brz && .brz-tabs__nav--button:hover": {
+      standart: [
         "cssStyleElementTabsBtnIconPosition",
         "cssStyleElementTabsBtnIconJustifyContent"
       ]
@@ -41,7 +45,7 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveColor",
         "cssStyleElementTabsActiveBgColor",
         "cssStyleElementTabsActiveShadow",
-        "cssStyleElementTabsActiveBorderColor"
+        "cssStyleElementTabsActiveBorder"
       ]
     },
     ".brz && .brz-tabs__nav--style-3 .brz-tabs__nav--active .brz-tabs__nav--button": {

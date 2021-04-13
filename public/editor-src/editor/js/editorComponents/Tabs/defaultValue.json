@@ -226,7 +226,6 @@
     "tempActiveBgColorPalette": null,
 
     "boxShadow": "",
-
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
@@ -247,7 +246,6 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverBoxShadow": null,
-
     "tempHoverBoxShadow": null,
 
     "hoverBoxShadowColorHex": null,
@@ -256,13 +254,6 @@
 
     "tempHoverBoxShadowColorPalette": null,
     "tempHoverBoxShadowColorOpacity": null,
-
-    "activeBoxShadowColorHex": null,
-    "activeBoxShadowColorOpacity": null,
-    "activeBoxShadowColorPalette": null,
-
-    "tempActiveBoxShadowColorPalette": null,
-    "tempActiveBoxShadowColorOpacity": null,
 
     "hoverBoxShadowBlur": null,
     "hoverBoxShadowSpread": null,
@@ -273,6 +264,26 @@
     "tempHoverBoxShadowSpread": null,
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
+
+    "activeBoxShadow": null,
+    "tempActiveBoxShadow": null,
+
+    "activeBoxShadowColorHex": null,
+    "activeBoxShadowColorOpacity": null,
+    "activeBoxShadowColorPalette": null,
+
+    "tempActiveBoxShadowColorPalette": null,
+    "tempActiveBoxShadowColorOpacity": null,
+
+    "activeBoxShadowBlur": null,
+    "activeBoxShadowSpread": null,
+    "activeBoxShadowVertical": null,
+    "activeBoxShadowHorizontal": null,
+
+    "tempActiveBoxShadowBlur": null,
+    "tempActiveBoxShadowSpread": null,
+    "tempActiveBoxShadowVertical": null,
+    "tempActiveBoxShadowHorizontal": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",

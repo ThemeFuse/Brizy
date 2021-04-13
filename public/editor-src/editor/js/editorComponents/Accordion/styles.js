@@ -11,14 +11,16 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LetterSpacing"
       ]
     },
-    ".brz && .brz-accordion__item:hover": {
+    ".brz && .brz-accordion__item:not(.brz-accordion__item--active):hover": {
       standart: [
         "cssStyleBoxShadow",
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         "cssStyleColor",
         "cssStyleBgColor"
       ]
+    },
+    ".brz && .brz-accordion__item:hover": {
+      standart: ["cssStyleBorderRadius"]
     },
     ".brz && .brz-accordion__item.brz-accordion__item--active": {
       standart: [
@@ -43,7 +45,7 @@ export function style(v, vs, vd) {
     ".brz && .brz-accordion__item:not(:last-child)": {
       standart: ["cssStyleElementAccordionSpacing"]
     },
-    ".brz &&:hover .brz-accordion__content": {
+    ".brz &&:hover .brz-accordion__item-content": {
       standart: [
         "cssStylePaddingFourFields",
         "cssStyleElementAccordionAnimDuration",
@@ -73,14 +75,16 @@ export function style(v, vs, vd) {
     ".brz && .brz-accordion__filter__item:hover": {
       standart: ["cssStyleElementAccordionFilterColor"]
     },
-    ".brz && .brz-accordion__filter__item--style-1:hover": {
+    ".brz && .brz-accordion__filter__item--style-1:not(.brz-accordion__filter__item--active):hover": {
       standart: [
-        "cssStyleElementAccordionFilterPaddingFourFields",
         "cssStyleElementAccordionFilterBgColor",
         "cssStyleElementAccordionFilterBorder",
         "cssStyleElementAccordionFilterBorderRadius",
         "cssStyleElementAccordionFilterShadow"
       ]
+    },
+    ".brz && .brz-accordion__filter__item--style-1:hover": {
+      standart: ["cssStyleElementAccordionFilterPaddingFourFields"]
     },
     ".brz && .brz-accordion__filter__item--style-1.brz-accordion__filter__item--active": {
       standart: [
