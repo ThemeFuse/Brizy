@@ -1,17 +1,15 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  styleBgColor,
+  styleBorderStyle,
   styleBorderWidthGrouped,
   styleBorderColor
 } from "visual/utils/style2";
-import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
-import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
-
-export function cssStyleElementTabsItemsBorderWidth({ v, device, state }) {
-  return `border-width: ${styleBorderWidthGrouped({ v, device, state })}px;`;
-}
+import {
+  cssStylePaddingFourFields,
+  cssStyleColor,
+  cssStyleBgColor,
+  cssStyleBoxShadow
+} from "visual/utils/cssStyle";
 
 export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -39,44 +37,28 @@ export function cssStyleElementTabsBtnIconSize({ v, device, state }) {
   return `font-size: ${iconCustomSize}px;`;
 }
 
-export function cssStyleElementTabsBtnActiveBorderBottomColor({
-  v,
-  device,
-  state
-}) {
-  return `border-bottom-color: ${styleBgColor({
-    v,
-    device,
-    state
-  })} !important;`;
-}
-export function cssStyleElementTabsBtnActiveBorderRightColor({
-  v,
-  device,
-  state
-}) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+export function cssStyleElementTabsBtnActiveBorderBottomColor({ v }) {
+  const dvv = key => defaultValueValue({ v, key });
   const bgColorHex = dvv("bgColorHex");
+
+  return `border-bottom-color: ${bgColorHex};`;
+}
+export function cssStyleElementTabsBtnActiveBorderRightColor({ v }) {
+  const dvv = key => defaultValueValue({ v, key });
+  const bgColorHex = dvv("bgColorHex");
+
   return `border-right-color: ${bgColorHex};`;
 }
-export function cssStyleElementTabsBtnActiveBorderLeftColor({
-  v,
-  device,
-  state
-}) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+export function cssStyleElementTabsBtnActiveBorderLeftColor({ v }) {
+  const dvv = key => defaultValueValue({ v, key });
   const bgColorHex = dvv("bgColorHex");
+
   return `border-left-color: ${bgColorHex};`;
 }
 
-export function cssStyleElementTabsActiveBeforeAfterColor({
-  v,
-  device,
-  state
-}) {
+export function cssStyleElementTabsActiveBeforeAfterColor({ v, state }) {
   return `background-color: ${styleBorderColor({
     v,
-    device,
     state
   })}; z-index: 1;`;
 }
@@ -103,14 +85,6 @@ export function cssStyleElementTabsBeforeAfterLeftWidth({ v, device, state }) {
     device,
     state
   })}px);`;
-}
-
-export function cssStyleElementTabsBorderColor({ v, device, state }) {
-  return `border-color: ${styleBorderColor({ v, device, state })};`;
-}
-
-export function cssStyleElementTabsBorderWidth({ v, device, state }) {
-  return `border-width: ${styleBorderWidthGrouped({ v, device, state })}px;`;
 }
 
 export function cssStyleElementTabsBorderMobileWidth({ v, device, state }) {
@@ -226,11 +200,11 @@ export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, state, prefix: "active" });
-  const width = styleBorderWidthGrouped({ v, device, state, prefix: "active" });
+  const color = styleBorderColor({ v, device, state: "active" });
+  const width = styleBorderWidthGrouped({ v, device, state: "active" });
 
   if (verticalMode === "off") {
-    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; position: absolute; bottom: 0px; left: 0; z-index: 2;`;
+    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; position: absolute; bottom: 0; left: 0; z-index: 2;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
       return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; position: absolute; right: 0; left: auto; z-index: 2;`;
@@ -240,23 +214,21 @@ export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
   }
 }
 
-export function cssStyleElementTabsActiveColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "activeColor" });
+export function cssStyleElementTabsActiveColor({ v }) {
+  return cssStyleColor({ v, state: "active", prefix: "color" });
 }
 
-export function cssStyleElementTabsActiveBgColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeBg" });
+export function cssStyleElementTabsActiveBgColor({ v }) {
+  return cssStyleBgColor({ v, state: "active", prefix: "bg" });
 }
 
-export function cssStyleElementTabsActiveShadow({ v, device, state }) {
-  return cssStyleBoxShadow({ v, device, state, prefix: "active" });
+export function cssStyleElementTabsActiveShadow({ v }) {
+  return cssStyleBoxShadow({ v, state: "active" });
 }
 
-export function cssStyleElementTabsActiveBorderColor({ v, device, state }) {
-  return `border-color: ${styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "active"
-  })};`;
+export function cssStyleElementTabsActiveBorder({ v }) {
+  const borderWidth = styleBorderWidthGrouped({ v, state: "normal" });
+  const borderStyle = styleBorderStyle({ v, state: "normal" });
+  const borderColor = styleBorderColor({ v, state: "active" });
+  return `border: ${borderWidth}px ${borderStyle} ${borderColor};`;
 }

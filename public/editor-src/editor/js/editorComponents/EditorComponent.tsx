@@ -754,12 +754,6 @@ export class EditorComponent<
       const deps = option.dependencies || _.identity;
 
       if (inDev) {
-        option.id = defaultValueKey({
-          key: option.id,
-          device: optionMode(device, option),
-          state: optionState(state, option)
-        });
-
         option.value = getModel(type)(key => {
           return defaultValueValue({
             v,
@@ -771,11 +765,18 @@ export class EditorComponent<
       }
 
       option.onChange = (value: ElementModel | Literal, meta: Meta): void => {
+        const id = inDev
+          ? defaultValueKey({
+              key: option.id,
+              device: optionMode(device, option),
+              state: optionState(state, option)
+            })
+          : option.id;
         const patch: Partial<Model<M>> = inDev
-          ? deps(setOptionPrefix(option.id, value as ElementModel))
+          ? deps(setOptionPrefix(id, value as ElementModel))
           : oldOnchange
           ? oldOnchange(value, meta)
-          : defaultOnChange(option.id, value as Literal);
+          : defaultOnChange(id, value as Literal);
 
         if (patch) {
           this.patchValue(patch);

@@ -184,6 +184,7 @@ export const globalBlocksAssembledSelector = createSelector(
               obj.value._id &&
               screenshots[obj.value._id]
             ) {
+              obj.meta = obj.meta || {};
               Object.assign(obj.value, screenshots[obj.value._id]);
               Object.assign(obj.meta, screenshots[obj.value._id]);
             }

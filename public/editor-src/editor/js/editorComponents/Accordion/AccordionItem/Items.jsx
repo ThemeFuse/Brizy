@@ -83,11 +83,11 @@ class AccordionItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (IS_PREVIEW) {
-      return items;
-    }
-
     const { className, isActive } = this.props;
+
+    if (IS_PREVIEW) {
+      return <div className={className}>{items}</div>;
+    }
 
     return (
       <Sortable

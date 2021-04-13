@@ -673,7 +673,6 @@ export {
 
 // Tabs
 export {
-  cssStyleElementTabsItemsBorderWidth,
   cssStyleElementTabsBtnSpacing,
   cssStyleElementTabsBtnIconSize,
   cssStyleElementTabsBtnActiveBorderBottomColor,
@@ -684,8 +683,6 @@ export {
   cssStyleElementTabsActiveBeforeWidth,
   cssStyleElementTabsBeforeAfterRightWidth,
   cssStyleElementTabsBeforeAfterLeftWidth,
-  cssStyleElementTabsBorderColor,
-  cssStyleElementTabsBorderWidth,
   cssStyleElementTabsBorderMobileWidth,
   cssStyleElementTabsEmptyContent,
   cssStyleElementTabsBtnIconPosition,
@@ -701,7 +698,7 @@ export {
   cssStyleElementTabsPadding,
   cssStyleElementTabsActiveColor,
   cssStyleElementTabsActiveBgColor,
-  cssStyleElementTabsActiveBorderColor,
+  cssStyleElementTabsActiveBorder,
   cssStyleElementTabsActiveShadow
 } from "./cssStyleElementTabs";
 

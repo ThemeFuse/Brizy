@@ -5,8 +5,11 @@ export function style(v, vs, vd) {
     ".brz &&:hover": {
       standart: ["cssStyleSizeWidth"]
     },
-
-    ".brz && .flex-viewport:hover": {
+    ".brz && .woocommerce-product-gallery > .flex-viewport:hover": {
+      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBorderRadius"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    },
+    ".brz && .woocommerce-product-gallery > .woocommerce-product-gallery__wrapper:hover": {
       standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBorderRadius"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },

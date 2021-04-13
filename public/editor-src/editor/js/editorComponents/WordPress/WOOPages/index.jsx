@@ -55,7 +55,7 @@ export default class WOOPages extends EditorComponent {
       );
 
       if (gallery) {
-        jQuery(gallery).wc_product_gallery();
+        jQuery(gallery).wc_product_gallery?.();
       }
     }
   };

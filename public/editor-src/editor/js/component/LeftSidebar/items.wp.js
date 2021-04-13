@@ -6,9 +6,11 @@ import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_TEMPLATE, IS_STORY } from "visual/utils/models";
+import { printf } from "visual/utils/string";
 
 const urls = Config.get("urls");
 const proEnabled = Boolean(Config.get("pro"));
+const companyName = Config.get("branding").brizy;
 
 export default {
   top: [AddElements, BlocksSortable, Styling],
@@ -54,7 +56,7 @@ export default {
         {
           type: "link",
           icon: "nc-info",
-          label: t("About Brizy"),
+          label: printf(t("About %s"), companyName),
           link: urls.about,
           linkTarget: "_blank"
         },
