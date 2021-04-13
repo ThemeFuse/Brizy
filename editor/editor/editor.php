@@ -948,6 +948,7 @@ class Brizy_Editor_Editor_Editor {
 			'getSidebars'                => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
 			'shortcodeContent'           => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 			'placeholderContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
+			'placeholdersContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
 			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
 			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
 			'getTermsBy'                 => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
