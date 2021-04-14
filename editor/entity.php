@@ -59,14 +59,16 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
         $type = get_post_type($postId);
 
         switch ($type) {
-            case 'page':
-            case 'post':
-            case Brizy_Admin_Popups_Main::CP_POPUP:
-                return Brizy_Editor_Post::get($postId);
 
             case Brizy_Admin_Blocks_Main::CP_GLOBAL:
             case Brizy_Admin_Blocks_Main::CP_SAVED:
                 return Brizy_Editor_Block::get($postId);
+
+            default:
+            case 'page':
+            case 'post':
+            case Brizy_Admin_Popups_Main::CP_POPUP:
+                return Brizy_Editor_Post::get($postId);
         }
     }
 
