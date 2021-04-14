@@ -719,6 +719,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			       p.ID,
 			       p.post_title as title,
 			       p.post_title as post_title,
+			       p.post_status as post_status,
 			       %s as post_type,
 			       %s as post_type_label,
 			       pm.meta_value as 'uid'
