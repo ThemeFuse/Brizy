@@ -989,7 +989,7 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .brz .brz-rich-text .brz-image-gradient,.brz .brz-rich-text .brz-text-mask{caret-color:#000;color:transparent!important;-webkit-background-clip:text;background-clip:text}
 .brz .brz-rich-text>h1,.brz .brz-rich-text>h2,.brz .brz-rich-text>h3,.brz .brz-rich-text>h4,.brz .brz-rich-text>h5,.brz .brz-rich-text>h6{margin-top:0;margin-bottom:0;padding:0;text-transform:initial;text-decoration:initial}
 .brz .brz-rich-text>h1:before,.brz .brz-rich-text>h2:before,.brz .brz-rich-text>h3:before,.brz .brz-rich-text>h4:before,.brz .brz-rich-text>h5:before,.brz .brz-rich-text>h6:before{display:none}
-.brz .brz-rich-text>p,.brz .brz-rich-text>span{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;text-transform:initial;text-decoration:initial}
+.brz .brz-rich-text span,.brz .brz-rich-text>p{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;text-transform:initial;text-decoration:initial}
 .brz .brz-rich-text span{font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;letter-spacing:inherit}
 .brz .brz-rich-text p{display:block}
 .brz .brz-rich-text a,.brz .brz-rich-text em,.brz .brz-rich-text span{display:inline}
@@ -9406,6 +9406,9 @@ to{-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.3);box-shadow:0 0 10px 0 rgba(0,0,0
 .brz-ed .brz-rich-text .link--anchor:not(.is-empty):hover,.brz-ed .brz-rich-text .link--external:not(.is-empty):hover,.brz-ed .brz-rich-text .link--popup:not(.is-empty):hover{text-decoration:underline}
 .brz-ed .brz-rich-text .link--anchor.is-empty,.brz-ed .brz-rich-text .link--external.is-empty,.brz-ed .brz-rich-text .link--popup.is-empty{text-decoration:none}
 .brz-ed .brz-rich-text .link--anchor.is-empty:hover,.brz-ed .brz-rich-text .link--external.is-empty:hover,.brz-ed .brz-rich-text .link--popup.is-empty:hover{text-decoration:none}
+.brz-ed .brz-rich-text [contenteditable=true]>h1,.brz-ed .brz-rich-text [contenteditable=true]>h2,.brz-ed .brz-rich-text [contenteditable=true]>h3,.brz-ed .brz-rich-text [contenteditable=true]>h4,.brz-ed .brz-rich-text [contenteditable=true]>h5,.brz-ed .brz-rich-text [contenteditable=true]>h6{margin-top:0;margin-bottom:0;padding:0;text-transform:initial;text-decoration:initial}
+.brz-ed .brz-rich-text [contenteditable=true]>h1:before,.brz-ed .brz-rich-text [contenteditable=true]>h2:before,.brz-ed .brz-rich-text [contenteditable=true]>h3:before,.brz-ed .brz-rich-text [contenteditable=true]>h4:before,.brz-ed .brz-rich-text [contenteditable=true]>h5:before,.brz-ed .brz-rich-text [contenteditable=true]>h6:before{display:none}
+.brz-ed .brz-rich-text [contenteditable=true]>p{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;text-transform:initial;text-decoration:initial}
 .brz-ed .fb-comments,.brz-ed .fb-group,.brz-ed .fb-like,.brz-ed .fb-page,.brz-ed .fb-post,.brz-ed .fb-video{pointer-events:none}
 .brz-ed .brz-fb-comments,.brz-ed .brz-fb-embed,.brz-ed .brz-fb-page{width:100%}
 .brz-ed .brz-breadcrumbs .brz-li .brz-a,.brz-ed .brz-breadcrumbs .brz-li .brz-span{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}

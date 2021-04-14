@@ -5835,7 +5835,7 @@ img.mfp-img {
       .brz .brz-rich-text > h6:before {
         display: none; }
     .brz .brz-rich-text > p,
-    .brz .brz-rich-text > span {
+    .brz .brz-rich-text span {
       margin-top: 0;
       margin-bottom: 0;
       padding-top: 0;
