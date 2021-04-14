@@ -17,4 +17,31 @@
       }
     }
   }
+
+  // Text Reset
+  [contenteditable="true"] > h1,
+  [contenteditable="true"] > h2,
+  [contenteditable="true"] > h3,
+  [contenteditable="true"] > h4,
+  [contenteditable="true"] > h5,
+  [contenteditable="true"] > h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    text-transform: initial;
+    text-decoration: initial;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  [contenteditable="true"] > p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-transform: initial;
+    text-decoration: initial;
+  }
 }
