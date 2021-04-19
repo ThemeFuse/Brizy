@@ -654,3 +654,201 @@ box-shadow: 0px 2px 0px 0px #e3e3e3;
     cursor: default;
     opacity: 0.5;
 }
+
+/* Demo Import Page */
+
+.brz-demo-filter {
+    background-color: #fff;
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.brz-demo-filter-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+.brz-demo-filter-right {
+    margin-left: auto;
+    padding-right: 40px;
+}
+.brz-demo-filter-right a {
+    text-decoration: none;
+    color: #1c242b;
+    font-weight: bold;
+    background-color: #dadada;
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    border-radius: 50%;
+}
+.brz-demo-filter-right a:hover {
+    opacity: .8;
+}
+.brz-demo-filter-terms {
+    padding-right: 10px;
+}
+.brz-demo-filter-center input {
+    font-size: 14px;
+    width: 500px;
+    padding: 1px 8px 2px 8px;
+    border: 1px solid #dadada;
+    color: #1c242b;
+}
+.brz-demo-filter-search i {
+    position: absolute;
+    right: 15px;
+    color: #8d9195;
+    line-height: 30px;
+    transition: all 2s linear;
+}
+.brz-demo-filter-center select {
+    width: 230px;
+}
+.brz-demo-filter-center .select2-selection__rendered {
+    line-height: 33px !important;
+}
+.brz-demo-filter-center .select2-container .select2-selection--single {
+    height: 33px !important;
+    border: 1px solid #dadada;
+    color: #1c242b;
+    font-size: 14px;
+}
+.brz-demo-filter-center .select2-selection__arrow {
+    height: 33px !important;
+}
+.brz-demo-filter-center {
+    position:relative;
+}
+
+.brz-demo-items {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: auto auto auto auto;
+}
+.brz-demo-item {
+    position: relative;
+}
+.brz-demo-item-link {
+    text-decoration: none;
+}
+.brz-demo-item-link:hover .brz-demo-item-details {
+    opacity: 1;
+}
+.brz-demo-item-details {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%,-50%);
+    width: 60%;
+    background: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 15px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.6);
+    font-weight: 600;
+    padding: 15px 12px;
+    text-align: center;
+    border-radius: 3px;
+    border: none;
+    transition: opacity 0.1s ease-in-out;
+}
+.brz-demo-item-details:hover {
+    opacity: 0.95 !important;
+}
+.brz-demo-item-link:hover img,
+.brz-demo-item-link:hover .brz-demo-badge {
+    opacity: 0.4;
+}
+.brz-demo-img {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    transition: opacity .2s ease-in-out;
+}
+.brz-demo-img:after {
+    padding-top: 350px;
+    content: "";
+    display: block;
+}
+.brz-demo-img img {
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transition: opacity .2s ease-in-out;
+}
+.brz-demo-badge {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 15px;
+    right: 15px;
+    border-radius: 5px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+.brz-demo-is-pro .brz-demo-badge {
+    background-color: #d62c64;
+    color: #fff;
+}
+.brz-demo-is-free .brz-demo-badge {
+    background-color: #ffffff;
+    color: #9094a6;
+    border: 1px solid #9094a6;
+}
+.brz-demo-item-title {
+    font-size: 15px;
+    font-weight: 600;
+    height: 18px;
+    margin: 0;
+    padding: 15px;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,.1);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: #fff;
+    background: rgba(255,255,255,.65);
+}
+.brz-demo-item-actions {
+    position: absolute;
+    opacity: 1;
+    top: auto;
+    bottom: 0;
+    transform: translateY(0);
+    right: 0;
+    padding: 9px 15px;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,.1);
+    transition: opacity .1s ease-in-out;
+    height: auto;
+    background: rgba(246,247,247,.7);
+    border-left: 1px solid rgba(0,0,0,.05);
+}
+.brz-demo-item-actions a {
+    float: none;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+.brz-demo-item-actions .spinner {
+    float: none;
+}
+.brz-demo-item-actions .brz-demo-item-gopro {
+    background: #d62c64;
+    border-color: #d62c64;
+}
+.brz-demo-item-actions .brz-demo-item-gopro:hover {
+    background: #bc2456;
+    border-color: #bc2456;
+}
+/* End Demo Import Page */

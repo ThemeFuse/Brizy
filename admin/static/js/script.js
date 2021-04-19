@@ -227,10 +227,97 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    var DemoImport = {
+
+        registerEvents: function () {
+            var searchInput = $( '.js-demo-input-search' ),
+                selectTerm = $( '.brz-demo-filter-terms select' );
+
+            if ( ! searchInput.length ) {
+                return;
+            }
+
+            searchInput.focus( function () {
+                $( '.js-demo-search-icon' ).hide();
+            } );
+
+            searchInput.hover( function () {
+                if ( $( this ).val() ) {
+                    $( '.js-demo-search-icon' ).hide();
+                }
+            } );
+
+            searchInput.focusout( function () {
+                $( '.js-demo-search-icon' ).show();
+            } );
+
+            searchInput.on('keyup change', function(e) {
+                console.log( 'test search' );
+            });
+
+            selectTerm.select2();
+
+            selectTerm.change( function () {
+                var demos = $( '.brz-demo-item' ),
+                    term  = $( this ).val();
+
+                if ( ! term ) {
+                    demos.fadeIn( 'slow' );
+                    return;
+                }
+
+                demos.each(function() {
+
+                    var terms = String( $( this ).data( 'terms' ) ).split(',');
+
+                    if ( terms.includes( term ) ) {
+                        $( this ).fadeIn( 'slow' );
+                    } else {
+                        $( this ).fadeOut( 'slow' );
+                    }
+                });
+            } );
+
+            $( '.brz-demo-item-actions button:not(.brz-demo-item-gopro)' ).click( function ( e ) {
+                e.preventDefault();
+
+                var container = $( '.brz-demo-items' );
+
+                if ( ! window.confirm( container.data( 'confirm' ) ) ) {
+                    return;
+                }
+
+                alert( container.data( 'alert' ) );
+
+                var btns = $( '.brz-demo-item-actions button:not(.brz-demo-item-gopro)' );
+
+                $( this ).before('<span class="spinner is-active"></span>');
+
+                btns.prop( 'disabled', true );
+
+                $.ajax( {
+                    url: Brizy_Admin_Data.url,
+                    type: 'POST',
+                    data: {
+                        'action': 'brizy-import-demo',
+                        'nonce': Brizy_Admin_Data.nonce,
+                        'demo': $( this ).data( 'demo' )
+                    },
+                    success: function( response ) {
+                        btns.prop( 'disabled', false );
+                        $( '.spinner' ).remove();
+                        alert( response.data );
+                    }
+                } );
+            } );
+        }
+    };
+
     $( function () {
         BrizyGutenberg.init();
         BrizyFeedbackDialog.init();
         BrizyMaintenance.init();
+        DemoImport.registerEvents();
     } );
 });
 

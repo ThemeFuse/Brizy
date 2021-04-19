@@ -1,0 +1,55 @@
+<div class="wrap">
+    <div class="brz-demo-filter">
+        <div class="brz-demo-filter-center">
+            <div class="brz-demo-filter-terms">
+                <select class="select2">
+                    <option value="">{{ translations.allCategories }}</option>
+                    {% for term in terms %}
+                        <option value="{{ term.id }}">{{ term.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="brz-demo-filter-search">
+                <input type="search" placeholder="{{ translations.search }} ..." class="js-demo-input-search">
+                <i class="dashicons dashicons-search js-demo-search-icon"></i>
+            </div>
+        </div>
+        <div class="brz-demo-filter-right">
+            <a href="{{ supportUrl }}" target="_blank">?</a>
+        </div>
+    </div>
+    <div class="brz-demo-items" data-confirm="{{ translations.confirm }}" data-alert="{{ translations.alert }}">
+        {% for demo in demos %}
+            <div class="brz-demo-item {{ demo.pro ? 'brz-demo-is-pro' : 'brz-demo-is-free' }}" data-terms="{{ demo.terms|join(',') }}" data-keywords="{{ demo.keywords }}">
+                <a class="brz-demo-item-link" target="_blank" href="{{ demo.url }}">
+                    <span class="brz-demo-badge">
+                        {{ demo.pro ? translations.pro : translations.free }}
+                    </span>
+                    <div class="brz-demo-img">
+                        <img src="{{ demo.photo }}" alt="Screenshot" loading=lazy>
+                    </div>
+                    <span class="brz-demo-item-details">
+                        {{ translations.livePreview }}
+                    </span>
+                    <h3 class="brz-demo-item-title">
+                        {{ demo.name }}
+                    </h3>
+                </a>
+                <div class="brz-demo-item-actions">
+                    {% set cannot = demo.pro and not isPro %}
+                    <button
+                            class="button button-primary{{ cannot ? ' brz-demo-item-gopro' : '' }}"
+                            data-demo="{{ demo.id }}"
+                            {% if cannot %}
+                                onclick="window.open('{{ goProUrl }}','_blank')"
+                            {% endif %}
+                    >
+                        {{ cannot ? translations.goPro : translations.install }}
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
