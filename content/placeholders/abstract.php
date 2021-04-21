@@ -100,7 +100,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 			'label'       => $this->getLabel(),
 			'placeholder' => $this->getPlaceholder(),
 			'display'     => $this->getDisplay(),
-			'data'        => $this->getOptionValue(),
 		);
 	}
 
@@ -109,7 +108,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 			'label'       => $this->getLabel(),
 			'placeholder' => $this->getReplacePlaceholder(),
 			'display'     => $this->getDisplay(),
-			'data'        => $this->getOptionValue(),
 		);
 	}
 
