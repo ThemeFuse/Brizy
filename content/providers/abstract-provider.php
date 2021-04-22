@@ -23,7 +23,7 @@ abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content
 	public function getAllPlaceholders() {
 		$out = array();
 		foreach ( $this->getGroupedPlaceholders() as $placeholders ) {
-			$out = array_merge( $out, call_user_func_array( 'array_merge', array_values($placeholders) ) );
+			$out = array_merge( $out, $placeholders );
 		}
 		return $out;
 	}
