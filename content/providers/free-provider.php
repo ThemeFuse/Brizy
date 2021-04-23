@@ -96,12 +96,15 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 $post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
 
                 if ( $post ) {
-                    $params             = array();
+	                $twig           = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
+                    $commentsCount  = get_approved_comments( $post->ID, [ 'count' => true ] );
+                    $params         = [];
+
                     $params['author']   = get_the_author_meta( 'display_name', $post->post_author );
                     $params['date']     = get_the_date( '', $post );
                     $params['time']     = get_the_time( '', $post );
-                    $params['comments'] = get_comment_count( $post->ID );
-	                $twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
+                    $params['comments'] = sprintf( _n( '%s comment', '%s comments', $commentsCount, 'brizy' ), number_format_i18n( $commentsCount ) );
+
                     return $twig->render( 'post-info.html.twig', $params );
                 }
 

@@ -1,32 +1,38 @@
-#, fuzzy
+# Copyright (C) 2021 Brizy.io
+# This file is distributed under the same license as the Brizy plugin.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: Brizy\n"
-"POT-Creation-Date: 2021-03-04 16:05+0200\n"
-"PO-Revision-Date: 2021-03-04 16:04+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: Brizy 2.2.13\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/brizy\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-04-23T16:14:33+03:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: brizy\n"
 
-#: admin/blocks/main.php:100
-msgctxt "post type general name"
-msgid "Global blocks"
+#. Plugin Name of the plugin
+msgid "Brizy"
 msgstr ""
 
-#: admin/blocks/main.php:108 admin/blocks/main.php:130
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://brizy.io/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy."
+msgstr ""
+
+#. Author of the plugin
+msgid "Brizy.io"
+msgstr ""
+
+#: admin/blocks/main.php:108
 msgid "global block."
-msgstr ""
-
-#: admin/blocks/main.php:122
-msgctxt "brizy"
-msgid "Saved blocks"
-msgstr ""
-
-#: admin/cloud/cron.php:56
-msgid "Once in 5 minutes"
 msgstr ""
 
 #: admin/dashboard-widget.php:69
@@ -46,15 +52,11 @@ msgid "Filed decode returned json by brizy.io"
 msgstr ""
 
 #: admin/feedback.php:30
-msgid ""
-"Hello! Seems like you are using Brizy to build your website - Thanks a lot!"
+msgid "Hello! Seems like you are using Brizy to build your website - Thanks a lot!"
 msgstr ""
 
 #: admin/feedback.php:32
-msgid ""
-"Could you please do us a BIG favor and give it a 5-star rating on WordPress? "
-"This would boost our motivation and help other users make a comfortable "
-"decision while choosing the Brizy plugin."
+msgid "Could you please do us a BIG favor and give it a 5-star rating on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the Brizy plugin."
 msgstr ""
 
 #: admin/feedback.php:36
@@ -94,9 +96,7 @@ msgid "I have Brizy Pro"
 msgstr ""
 
 #: admin/feedback.php:129
-msgid ""
-"Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy Pro "
-"in order for the plugin to work."
+msgid "Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy Pro in order for the plugin to work."
 msgstr ""
 
 #: admin/feedback.php:132
@@ -115,11 +115,6 @@ msgstr ""
 msgid "If you have a moment, please share why you are deactivating Brizy:"
 msgstr ""
 
-#: admin/fonts/main.php:97
-msgctxt "post type general name"
-msgid "Fonts"
-msgstr ""
-
 #: admin/fonts/main.php:105
 msgid "font"
 msgstr ""
@@ -128,11 +123,13 @@ msgstr ""
 msgid "Leads details"
 msgstr ""
 
-#: admin/form-entries.php:62 languages/texts.php:314
+#: admin/form-entries.php:62
+#: languages/texts.php:314
 msgid "Date"
 msgstr ""
 
-#: admin/form-entries.php:121 admin/form-entries.php:324
+#: admin/form-entries.php:121
+#: admin/form-entries.php:324
 #: admin/form-entries.php:336
 msgid "Leads"
 msgstr ""
@@ -169,6 +166,12 @@ msgctxt "add new on admin bar"
 msgid "Lead"
 msgstr ""
 
+#: admin/form-entries.php:319
+#: admin/templates.php:245
+#: languages/texts.php:74
+msgid "Add New"
+msgstr ""
+
 #: admin/form-entries.php:320
 msgid "Add New Lead"
 msgstr ""
@@ -201,49 +204,37 @@ msgstr ""
 msgid "No Leads found in Trash."
 msgstr ""
 
-#: admin/layouts/main.php:35
-msgctxt "post type general name"
-msgid "Layouts"
-msgstr ""
-
 #: admin/layouts/main.php:43
 msgid "Layout."
 msgstr ""
 
-#: admin/main.php:126
-msgid "Edit or Update Image"
-msgstr ""
-
-#: admin/main.php:253 admin/optimize-images.php:354 admin/settings.php:108
-#: admin/settings.php:109 languages/texts.php:181
+#: admin/main.php:218
+#: admin/optimize-images.php:354
+#: admin/settings.php:108
+#: admin/settings.php:109
+#: languages/texts.php:181
 msgid "Settings"
 msgstr ""
 
-#: admin/main.php:261 admin/settings.php:147
+#: admin/main.php:226
+#: admin/settings.php:147
 msgid "Go Pro"
 msgstr ""
 
-#: admin/main.php:320
+#: admin/main.php:285
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: admin/main.php:321
+#: admin/main.php:286
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: admin/main.php:435
-msgid "Edit with "
+#: admin/main.php:400
+msgid "Edit with %s"
 msgstr ""
 
-#: admin/main.php:491
-msgid "Auto Draft"
-msgstr ""
-
-#: admin/main.php:545
-#, php-format
-msgid ""
-"Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible "
-"version: %s "
+#: admin/main.php:510
+msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
 msgstr ""
 
 #: admin/membership/membership.php:48
@@ -287,7 +278,7 @@ msgstr ""
 msgid "View Role"
 msgstr ""
 
-#: admin/membership/membership.php:57 admin/membership/membership.php:218
+#: admin/membership/membership.php:57
 #: admin/views/settings/maintenance.php:33
 msgid "Roles"
 msgstr ""
@@ -316,17 +307,16 @@ msgstr ""
 msgid "Enter Role Name"
 msgstr ""
 
-#: admin/membership/membership.php:136 admin/membership/membership.php:139
+#: admin/membership/membership.php:136
+#: admin/membership/membership.php:139
 msgid "Role updated."
 msgstr ""
 
-#: admin/membership/membership.php:137 admin/stories/main.php:95
-#: admin/templates.php:164
+#: admin/membership/membership.php:137
 msgid "Custom field updated."
 msgstr ""
 
-#: admin/membership/membership.php:138 admin/stories/main.php:96
-#: admin/templates.php:165
+#: admin/membership/membership.php:138
 msgid "Custom field deleted."
 msgstr ""
 
@@ -342,99 +332,33 @@ msgstr ""
 msgid "Role submitted."
 msgstr ""
 
-#: admin/network-settings.php:79 admin/settings.php:293
-msgid "No Access"
-msgstr ""
-
-#: admin/network-settings.php:82 admin/settings.php:296
+#: admin/network-settings.php:82
+#: admin/settings.php:296
 msgid "Full Access"
 msgstr ""
 
-#: admin/optimize-images.php:45 admin/optimize-images.php:46
-msgid "Optimize Images"
-msgstr ""
-
-#: admin/optimize-images.php:115 admin/optimize-images.php:348
+#: admin/optimize-images.php:115
+#: admin/optimize-images.php:348
 msgid "Optimize"
 msgstr ""
 
-#: admin/optimize-images.php:200 languages/texts.php:500
-msgid "Save"
-msgstr ""
-
-#: admin/popups/main.php:45
-msgctxt "post type general name"
+#: admin/popups/main.php:67
 msgid "Popups"
 msgstr ""
 
-#: admin/popups/main.php:46
-msgctxt "post type singular name"
-msgid "Popup"
-msgstr ""
-
-#: admin/popups/main.php:47
-msgctxt "admin menu"
-msgid "Popups"
-msgstr ""
-
-#: admin/popups/main.php:48
-msgctxt "add new on admin bar"
-msgid "Popup"
-msgstr ""
-
-#: admin/popups/main.php:50
-msgid "Add New Popup"
-msgstr ""
-
-#: admin/popups/main.php:51
-msgid "New Popup"
-msgstr ""
-
-#: admin/popups/main.php:52
-msgid "Edit Popup"
-msgstr ""
-
-#: admin/popups/main.php:53
-msgid "View Popup"
-msgstr ""
-
-#: admin/popups/main.php:54 admin/popups/main.php:67
-msgid "Popups"
-msgstr ""
-
-#: admin/popups/main.php:55
-msgid "Search Popups"
-msgstr ""
-
-#: admin/popups/main.php:56
-msgid "Parent Popups:"
-msgstr ""
-
-#: admin/popups/main.php:57
-msgid "No Popups found."
-msgstr ""
-
-#: admin/popups/main.php:58
-msgid "No Popups found in Trash."
-msgstr ""
-
-#: admin/popups/main.php:59
-msgid "Popup attributes:"
-msgstr ""
-
-#: admin/rules/api.php:460
+#: admin/rules/api.php:463
 msgid "From"
 msgstr ""
 
-#: admin/rules/api.php:472
+#: admin/rules/api.php:475
 msgid "From any child of"
 msgstr ""
 
-#: admin/rules/api.php:531
+#: admin/rules/api.php:534
 msgid "Specific"
 msgstr ""
 
-#: admin/rules/api.php:541
+#: admin/rules/api.php:544
 msgid "Any child of"
 msgstr ""
 
@@ -474,6 +398,7 @@ msgctxt "add new on admin bar"
 msgid "Story"
 msgstr ""
 
+#: admin/stories/main.php:43
 #: admin/stories/main.php:44
 msgid "Add New Story"
 msgstr ""
@@ -486,7 +411,7 @@ msgstr ""
 msgid "Edit Story"
 msgstr ""
 
-#: admin/stories/main.php:47 admin/stories/main.php:117
+#: admin/stories/main.php:47
 msgid "View Story"
 msgstr ""
 
@@ -514,45 +439,6 @@ msgstr ""
 msgid "stories"
 msgstr ""
 
-#: admin/stories/main.php:94 admin/stories/main.php:97
-msgid "Story updated."
-msgstr ""
-
-#: admin/stories/main.php:100
-#, php-format
-msgid "Story restored to revision from %s"
-msgstr ""
-
-#: admin/stories/main.php:103
-msgid "Story published."
-msgstr ""
-
-#: admin/stories/main.php:104
-msgid "Story saved."
-msgstr ""
-
-#: admin/stories/main.php:105
-msgid "Story submitted."
-msgstr ""
-
-#: admin/stories/main.php:107
-#, php-format
-msgid "Story scheduled for: <strong>%1$s</strong>."
-msgstr ""
-
-#. translators: Publish box date format, see http://php.net/date
-#: admin/stories/main.php:109 admin/templates.php:178
-msgid "M j, Y @ G:i"
-msgstr ""
-
-#: admin/stories/main.php:111
-msgid "Story draft updated."
-msgstr ""
-
-#: admin/stories/main.php:126
-msgid "Preview Story"
-msgstr ""
-
 #: admin/templates.php:125
 msgid "Single"
 msgstr ""
@@ -561,50 +447,13 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: admin/templates.php:131 languages/texts.php:56
+#: admin/templates.php:131
+#: languages/texts.php:56
 msgid "Product"
 msgstr ""
 
 #: admin/templates.php:132
 msgid "Product Archive"
-msgstr ""
-
-#: admin/templates.php:163 admin/templates.php:166
-msgid "Template updated."
-msgstr ""
-
-#: admin/templates.php:169
-#, php-format
-msgid "Template restored to revision from %s"
-msgstr ""
-
-#: admin/templates.php:172
-msgid "Template published."
-msgstr ""
-
-#: admin/templates.php:173
-msgid "Template saved."
-msgstr ""
-
-#: admin/templates.php:174
-msgid "Template submitted."
-msgstr ""
-
-#: admin/templates.php:176
-#, php-format
-msgid "Template scheduled for: <strong>%1$s</strong>."
-msgstr ""
-
-#: admin/templates.php:180
-msgid "Template draft updated."
-msgstr ""
-
-#: admin/templates.php:186 admin/templates.php:249
-msgid "View Template"
-msgstr ""
-
-#: admin/templates.php:195
-msgid "Preview Template"
 msgstr ""
 
 #: admin/templates.php:241
@@ -639,6 +488,10 @@ msgstr ""
 msgid "Edit Template"
 msgstr ""
 
+#: admin/templates.php:249
+msgid "View Template"
+msgstr ""
+
 #: admin/templates.php:250
 msgid "Templates"
 msgstr ""
@@ -671,23 +524,27 @@ msgstr ""
 msgid "Unable to show the rule box."
 msgstr ""
 
-#: admin/templates.php:909
+#: admin/templates.php:914
 msgid "Unable to get the rule validator for this post type."
 msgstr ""
 
-#: admin/templates.php:916 admin/templates.php:937
+#: admin/templates.php:921
+#: admin/templates.php:942
 msgid "Invalid data version."
 msgstr ""
 
-#: admin/views/button.php:11 compatibilities/gutenberg.php:91
+#: admin/views/button.php:20
+#: compatibilities/gutenberg.php:91
 msgid "Back to WordPress Editor"
 msgstr ""
 
-#: admin/views/button.php:11 compatibilities/gutenberg.php:109
+#: admin/views/button.php:24
+#: compatibilities/gutenberg.php:109
 msgid "Edit with"
 msgstr ""
 
-#: admin/views/button.php:45 admin/views/editor.php:21
+#: admin/views/button.php:44
+#: admin/views/editor.php:21
 msgid "Continue to edit with"
 msgstr ""
 
@@ -723,19 +580,8 @@ msgstr ""
 msgid "Dismiss this notice"
 msgstr ""
 
-#: admin/views/settings/general.php:12
-msgid "Activate"
-msgstr ""
-
-#: admin/views/settings/general.php:12
-msgid "For"
-msgstr ""
-
-#: admin/views/settings/general.php:24
-msgid "Enable SVG uploads"
-msgstr ""
-
-#: admin/views/settings/general.php:46 admin/views/settings/maintenance.php:76
+#: admin/views/settings/general.php:46
+#: admin/views/settings/maintenance.php:76
 #: admin/views/settings/roles.php:26
 msgid "Save Changes"
 msgstr ""
@@ -764,7 +610,8 @@ msgstr ""
 msgid "Logged In"
 msgstr ""
 
-#: admin/views/settings/maintenance.php:27 languages/texts.php:140
+#: admin/views/settings/maintenance.php:27
+#: languages/texts.php:140
 msgid "Custom"
 msgstr ""
 
@@ -777,7 +624,6 @@ msgid "Select a page"
 msgstr ""
 
 #: admin/views/settings/maintenance.php:60
-#, php-format
 msgid "You have no pages. Please %s create %s one."
 msgstr ""
 
@@ -786,31 +632,29 @@ msgid "Whitelisted IP Addresses"
 msgstr ""
 
 #: brizy.php:64
-#, php-format
-msgid ""
-"%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS "
-"NOT RUNNING.</b>"
+msgid "%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
 msgstr ""
 
 #: compatibilities/gutenberg.php:98
 msgid "Continue to edit with "
 msgstr ""
 
-#: content/providers/free-provider.php:141
+#: content/providers/free-provider.php:106
+msgid "%s comment"
+msgid_plural "%s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: content/providers/free-provider.php:144
 msgid "Please set a valid product"
 msgstr ""
 
-#: editor.php:277
+#: editor.php:278
 msgid " Template"
 msgstr ""
 
 #: editor/asset/cleaner.php:86
 msgid "Every Ten Minutes"
-msgstr ""
-
-#: editor/auto-save-aware.php:42
-msgid ""
-"There is nothing to save. The autosave and the post content are the same."
 msgstr ""
 
 #: editor/block-screenshot-api.php:61
@@ -825,19 +669,11 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: editor/project.php:88
-msgid "Brizy Project."
-msgstr ""
-
-#: editor/rest-extend.php:25
-msgid "Brizy attached media"
-msgstr ""
-
 #: languages/texts.php:9
 msgid "START BUILDING YOUR PAGE"
 msgstr ""
 
-#: languages/texts.php:11
+#: languages/texts.php:10
 msgid "Press the button above to add blocks"
 msgstr ""
 
@@ -845,7 +681,7 @@ msgstr ""
 msgid "SWITCH TO DESKTOP"
 msgstr ""
 
-#: languages/texts.php:16
+#: languages/texts.php:15
 msgid "Switch to desktop to add blocks"
 msgstr ""
 
@@ -853,7 +689,7 @@ msgstr ""
 msgid "Add a new block"
 msgstr ""
 
-#: languages/texts.php:23
+#: languages/texts.php:22
 msgid "Press the button to add blocks"
 msgstr ""
 
@@ -957,7 +793,8 @@ msgstr ""
 msgid "Layouts"
 msgstr ""
 
-#: languages/texts.php:54 languages/texts.php:443
+#: languages/texts.php:54
+#: languages/texts.php:443
 msgid "layouts"
 msgstr ""
 
@@ -1025,12 +862,7 @@ msgstr ""
 msgid "Add new option"
 msgstr ""
 
-#: languages/texts.php:74
-msgid "Add New"
-msgstr ""
-
 #: languages/texts.php:75
-#, php-format
 msgid "New Style #%s"
 msgstr ""
 
@@ -2478,6 +2310,10 @@ msgstr ""
 msgid "Make it Global"
 msgstr ""
 
+#: languages/texts.php:500
+msgid "Save"
+msgstr ""
+
 #: languages/texts.php:501
 msgid "Blocks"
 msgstr ""
@@ -2600,98 +2436,4 @@ msgstr ""
 
 #: maintenance-mode.php:117
 msgid "Edit Page"
-msgstr ""
-
-#: public/main.php:112
-msgid "Preview"
-msgstr ""
-
-#: public/main.php:123
-msgid "View"
-msgstr ""
-
-#: public/main.php:222
-msgid "Edit "
-msgstr ""
-
-#: admin/views/optimizer/optimizer-base.html.twig:2
-msgid "Image Optimization"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-general.html.twig:85
-#, php-format
-msgid "There are <b>%d</b> images that can be optimized."
-msgstr ""
-
-#: admin/views/optimizer/optimizer-general.html.twig:98
-msgid "Please provide an API KEY in the Settings tab."
-msgstr ""
-
-#: admin/views/optimizer/optimizer-general.html.twig:104
-msgid "Don't leave this page until the optimisation process is completed."
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:11
-msgid "Shortpixel API Key"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:17
-msgid "Get an API key"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:21
-msgid "Compression"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:27
-msgid "Lossy"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:27
-msgid ""
-"creates the smallest optimised images you can get. If you want the best "
-"balance between optimisation and picture quality, go with this option. "
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:33
-msgid "Glossy"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:33
-msgid ""
-"the best choice if you believe that a slight loss of page speed is an "
-"acceptable compromise for a top image quality."
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:40
-msgid "Lossless"
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:40
-msgid ""
-"images are pixel-by-pixel identical with the originals. If you want your "
-"images to remain untouched with a small size reduction, go with this option."
-msgstr ""
-
-#: admin/views/optimizer/optimizer-settings.html.twig:51
-msgid "Optimize images"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Brizy"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "https://brizy.io/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"A free drag & drop front-end page builder to help you create WordPress pages "
-"lightning fast. It's easy with Brizy."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Brizy.io"
 msgstr ""
