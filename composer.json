@@ -41,6 +41,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git"
     }
   ],
   "scripts": {

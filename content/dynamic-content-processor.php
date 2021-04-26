@@ -11,15 +11,15 @@ class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_Proc
 	public function process( $content, Brizy_Content_Context $context ) {
 
 		$placeholderProvider = new Brizy_Content_PlaceholderProvider( $context );
-		$extractor           = new Brizy_Content_PlaceholderExtractor( $placeholderProvider );
+		$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 
 		$context->setProvider( $placeholderProvider );
 
-		list( $placeholders, $content ) = $extractor->extract( $content );
+		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $content );
 
 		$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider );
 
-		$content = $replacer->getContent( $placeholders, $content ,$context);
+		$content = $replacer->getContent( $contentPlaceholders, $content ,$context);
 
 		return $content;
 	}

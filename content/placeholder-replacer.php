@@ -1,6 +1,11 @@
 <?php
 
 
+/**
+ * @deprecated
+ * 
+ * Class Brizy_Content_PlaceholderReplacer
+ */
 class Brizy_Content_PlaceholderReplacer {
 
 	/**

@@ -1,6 +1,9 @@
 <?php
 
-class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_AbstractProvider
+use BrizyPlaceholders\PlaceholderInterface;
+use BrizyPlaceholders\RegistryInterface;
+
+class Brizy_Content_PlaceholderProvider implements RegistryInterface
 {
 
     /**
@@ -45,10 +48,10 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
             foreach ($provider->getGroupedPlaceholders() as $provider_group => $provider_placeholders) {
                 /*$placeholders[ $provider_name ] = $provider_placeholders; - better way; to clean wp provider*/
 
-                if(!isset($placeholders[$provider_group]))
+                if (!isset($placeholders[$provider_group]))
                     $placeholders[$provider_group] = array();
 
-                $placeholders[$provider_group] = array_merge($placeholders[$provider_group],$provider_placeholders);
+                $placeholders[$provider_group] = array_merge($placeholders[$provider_group], $provider_placeholders);
             }
         }
 
@@ -75,17 +78,51 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
         return $out;
     }
 
+    public function getGroupedPlaceholdersForApiResponse() {
+        $groups = $this->getGroupedPlaceholders();
+        $result = [];
+        foreach($groups as $group=>$entries) {
+            $result[$group] = array_map(function($entry){ unset($entry['instance']); return $entry; }, $entries);
+        }
+
+        return $result;
+    }
+
     /**
      * @param $name
-     *
-     * @return Brizy_Content_Placeholders_Abstract
+     * @return \BrizyPlaceholders\PlaceholderInterface
      */
     public function getPlaceholder($name)
     {
+        return $this->getPlaceholderSupportingName($name);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPlaceholdersByGroup($groupName)
+    {
+        $getGroupedPlaceholders = $this->getGroupedPlaceholders();
+
+        if (isset($getGroupedPlaceholders[$groupName])) {
+            return $getGroupedPlaceholders[$groupName];
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPlaceholderSupportingName($name)
+    {
         foreach ($this->getAllPlaceholders() as $placeholder) {
-            if ($placeholder->getPlaceholder() === $name) {
-                return $placeholder;
+            if ($placeholder['instance']->support($name)) {
+                return $placeholder['instance'];
             }
         }
+    }
+
+    public function registerPlaceholder(PlaceholderInterface $instance, $label, $placeholderName, $groupName)
+    {
+        throw new Exception('Try to use a specific registry to register the placeholder');
     }
 }
