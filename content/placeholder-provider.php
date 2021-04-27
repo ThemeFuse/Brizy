@@ -121,7 +121,7 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
     public function getPlaceholderSupportingName($name)
     {
         foreach ($this->getAllPlaceholders() as $placeholder) {
-            if ($placeholder['instance']->support($name)) {
+            if ($placeholder->support($name)) {
                 return $placeholder['instance'];
             }
         }
