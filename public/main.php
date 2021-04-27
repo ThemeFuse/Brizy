@@ -338,10 +338,10 @@ class Brizy_Public_Main {
 
 		if ( ! is_admin() && $post && $post->uses_editor() && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) ) {
 			$isView = true;
-		}
 
-		if ( in_array( get_post_status( $post->getWpPost() ), [ 'future', 'draft', 'pending', 'private' ] ) && ! Brizy_Editor_User::is_user_allowed() ) {
-			$isView = false;
+			if ( in_array( get_post_status( $post->getWpPost() ), [ 'future', 'draft', 'pending', 'private' ] ) && ! Brizy_Editor_User::is_user_allowed() ) {
+				$isView = false;
+			}
 		}
 
 		return $isView;
