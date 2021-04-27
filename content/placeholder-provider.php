@@ -78,11 +78,17 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
         return $out;
     }
 
-    public function getGroupedPlaceholdersForApiResponse() {
+    public function getGroupedPlaceholdersForApiResponse()
+    {
         $groups = $this->getGroupedPlaceholders();
         $result = [];
-        foreach($groups as $group=>$entries) {
-            $result[$group] = array_map(function($entry){ unset($entry['instance']); return $entry; }, $entries);
+        foreach ($groups as $group => $entries) {
+
+            $result[$group] = array_map(function ($entry) {
+                unset($entry['instance']);
+                $entry['placeholder'] = "{{{$entry['placeholder']}}}";
+                return $entry;
+            }, $entries);
         }
 
         return $result;
