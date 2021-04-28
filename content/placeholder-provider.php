@@ -3,7 +3,7 @@
 use BrizyPlaceholders\PlaceholderInterface;
 use BrizyPlaceholders\RegistryInterface;
 
-class Brizy_Content_PlaceholderProvider
+class Brizy_Content_PlaceholderProvider implements RegistryInterface
 {
 
     /**
@@ -33,9 +33,29 @@ class Brizy_Content_PlaceholderProvider
     /**
      * @return array
      */
+    public function getPlaceholders()
+    {
+        $out = array();
+
+        if (self::$cache_all_placeholders) {
+            return self::$cache_all_placeholders;
+        }
+
+        foreach ($this->providers as $provider) {
+            $out = array_merge($out, $provider->getPlaceholders());
+        }
+
+        self::$cache_all_placeholders = $out;
+
+        return $out;
+    }
+
+
+    /**
+     * @return array
+     */
     public function getGroupedPlaceholders()
     {
-
         if (self::$cache_grouped_placeholders) {
             return self::$cache_grouped_placeholders;
         }
@@ -54,26 +74,6 @@ class Brizy_Content_PlaceholderProvider
         }
 
         return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $result);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllPlaceholders()
-    {
-        $out = array();
-
-        if (self::$cache_all_placeholders) {
-            return self::$cache_all_placeholders;
-        }
-
-        foreach ($this->providers as $provider) {
-            $out = array_merge($out, $provider->getPlaceholders());
-        }
-
-        self::$cache_all_placeholders = $out;
-
-        return $out;
     }
 
     public function getGroupedPlaceholdersForApiResponse()
@@ -98,22 +98,22 @@ class Brizy_Content_PlaceholderProvider
      * @param $name
      * @return \BrizyPlaceholders\PlaceholderInterface
      */
-    public function getPlaceholder($name)
-    {
-        return $this->getPlaceholderSupportingName($name);
-    }
+//    public function getPlaceholder($name)
+//    {
+//        return $this->getPlaceholderSupportingName($name);
+//    }
 
     /**
      * @inheritDoc
      */
-    public function getPlaceholdersByGroup($groupName)
-    {
-        $getGroupedPlaceholders = $this->getGroupedPlaceholders();
-
-        if (isset($getGroupedPlaceholders[$groupName])) {
-            return $getGroupedPlaceholders[$groupName];
-        }
-    }
+//    public function getPlaceholdersByGroup($groupName)
+//    {
+//        $getGroupedPlaceholders = $this->getGroupedPlaceholders();
+//
+//        if (isset($getGroupedPlaceholders[$groupName])) {
+//            return $getGroupedPlaceholders[$groupName];
+//        }
+//    }
 
     /**
      * @inheritDoc
@@ -127,7 +127,7 @@ class Brizy_Content_PlaceholderProvider
         }
     }
 
-    public function registerPlaceholder(PlaceholderInterface $instance, $label, $placeholderName, $groupName)
+    public function registerPlaceholder(PlaceholderInterface $instance)
     {
         throw new Exception('Try to use a specific registry to register the placeholder');
     }

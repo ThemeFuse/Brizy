@@ -56,7 +56,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		if(!$provider)
 			return;
 
-		$placeholder = $provider->getPlaceholder( $placeholderName );
+		$placeholder = $provider->getPlaceholderSupportingName( $placeholderName );
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
 			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
