@@ -3,7 +3,7 @@
 use BrizyPlaceholders\PlaceholderInterface;
 use BrizyPlaceholders\RegistryInterface;
 
-class Brizy_Content_PlaceholderProvider implements RegistryInterface
+class Brizy_Content_PlaceholderProvider
 {
 
     /**
@@ -40,22 +40,20 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
             return self::$cache_grouped_placeholders;
         }
 
-        $placeholders = array();
-        $keys = array();
+        $result = array();
 
         foreach ($this->providers as $provider) {
 
-            foreach ($provider->getGroupedPlaceholders() as $provider_group => $provider_placeholders) {
-                /*$placeholders[ $provider_name ] = $provider_placeholders; - better way; to clean wp provider*/
+            foreach ($provider->getPlaceholders() as $placeholder) {
 
-                if (!isset($placeholders[$provider_group]))
-                    $placeholders[$provider_group] = array();
-
-                $placeholders[$provider_group] = array_merge($placeholders[$provider_group], $provider_placeholders);
+                if($placeholder->getGroup())
+                {
+                    $result[ $placeholder->getGroup() ][]  = $placeholder;
+                }
             }
         }
 
-        return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $placeholders);
+        return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $result);
     }
 
     /**
@@ -70,7 +68,7 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
         }
 
         foreach ($this->providers as $provider) {
-            $out = array_merge($out, $provider->getAllPlaceholders());
+            $out = array_merge($out, $provider->getPlaceholders());
         }
 
         self::$cache_all_placeholders = $out;
@@ -85,9 +83,11 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
         foreach ($groups as $group => $entries) {
 
             $result[$group] = array_map(function ($entry) {
-                unset($entry['instance']);
-                $entry['placeholder'] = "{{{$entry['placeholder']}}}";
-                return $entry;
+                return [
+                    'placeholder'=>'{{'.$entry->getPlaceholder().'}}',
+                    'label'=>$entry->getLabel(),
+                    'display'=>$entry->getDisplay()
+                ];
             }, $entries);
         }
 
@@ -120,9 +120,9 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
      */
     public function getPlaceholderSupportingName($name)
     {
-        foreach ($this->getAllPlaceholders() as $placeholder) {
-            if ($placeholder->support($name)) {
-                return $placeholder['instance'];
+        foreach ($this->providers as $provider) {
+            if($instance = $provider->getPlaceholderSupportingName($name)) {
+                return $instance;
             }
         }
     }

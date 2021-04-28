@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e7c1561befa63616ac05ca9dce5db4b",
+    "content-hash": "cc7c35dfc8fc2320fc8ff750c4de1350",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -85,6 +85,46 @@
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
             "time": "2020-05-12T15:14:00+00:00"
+        },
+        {
+            "name": "bagrinsergiu/content-placeholder",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
+                "reference": "3c971c18c06f7e7949538f27c2c1e745845b2cc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/3c971c18c06f7e7949538f27c2c1e745845b2cc3",
+                "reference": "3c971c18c06f7e7949538f27c2c1e745845b2cc3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrizyPlaceholders\\": "lib/",
+                    "BrizyPlaceholdersTests\\": "tests/"
+                }
+            },
+            "description": "Brizy content placeholders SDK",
+            "keywords": [
+                "brizy",
+                "content",
+                "placeholders"
+            ],
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/2.0.0",
+                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
+            },
+            "time": "2021-04-28T06:42:17+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -1222,12 +1262,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "6587715d0f8cae0cd39073b3bc5f018d0e6b84fe"
+                "reference": "40c7a725e1e3e644f90825b44dc156e78c0f9b0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/6587715d0f8cae0cd39073b3bc5f018d0e6b84fe",
-                "reference": "6587715d0f8cae0cd39073b3bc5f018d0e6b84fe",
+                "url": "https://api.github.com/repos/composer/composer/zipball/40c7a725e1e3e644f90825b44dc156e78c0f9b0e",
+                "reference": "40c7a725e1e3e644f90825b44dc156e78c0f9b0e",
                 "shasum": ""
             },
             "require": {
@@ -1313,7 +1353,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-20T20:05:32+00:00"
+            "time": "2021-04-27T11:06:49+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -2314,12 +2354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "359b1f4a6fc1f3b97f8ea8ffd5a576f4f5151cff"
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/359b1f4a6fc1f3b97f8ea8ffd5a576f4f5151cff",
-                "reference": "359b1f4a6fc1f3b97f8ea8ffd5a576f4f5151cff",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc960a912984efb74d0a90222870c72c87f10c91",
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91",
                 "shasum": ""
             },
             "require": {
@@ -2381,7 +2421,7 @@
                 "issues": "https://github.com/guzzle/psr7/issues",
                 "source": "https://github.com/guzzle/psr7/tree/1.x"
             },
-            "time": "2021-03-21T17:21:22+00:00"
+            "time": "2021-04-26T09:17:50+00:00"
         },
         {
             "name": "hautelook/phpass",
@@ -5079,23 +5119,30 @@
         },
         {
             "name": "rmccue/requests",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rmccue/Requests.git",
-                "reference": "87932f52ffad70504d93f04f15690cf16a089546"
+                "url": "https://github.com/WordPress/Requests.git",
+                "reference": "afbe4790e4def03581c4a0963a1e8aa01f6030f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmccue/Requests/zipball/87932f52ffad70504d93f04f15690cf16a089546",
-                "reference": "87932f52ffad70504d93f04f15690cf16a089546",
+                "url": "https://api.github.com/repos/WordPress/Requests/zipball/afbe4790e4def03581c4a0963a1e8aa01f6030f1",
+                "reference": "afbe4790e4def03581c4a0963a1e8aa01f6030f1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
             "require-dev": {
-                "requests/test-server": "dev-master"
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "php-parallel-lint/php-console-highlighter": "^0.5.0",
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "phpcompatibility/php-compatibility": "^9.0",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5",
+                "requests/test-server": "dev-master",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-coding-standards/wpcs": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -5114,7 +5161,7 @@
                 }
             ],
             "description": "A HTTP library written in PHP, for human beings.",
-            "homepage": "http://github.com/rmccue/Requests",
+            "homepage": "http://github.com/WordPress/Requests",
             "keywords": [
                 "curl",
                 "fsockopen",
@@ -5125,10 +5172,10 @@
                 "sockets"
             ],
             "support": {
-                "issues": "https://github.com/rmccue/Requests/issues",
-                "source": "https://github.com/rmccue/Requests/tree/master"
+                "issues": "https://github.com/WordPress/Requests/issues",
+                "source": "https://github.com/WordPress/Requests/tree/v1.8.0"
             },
-            "time": "2016-10-13T00:11:37+00:00"
+            "time": "2021-04-27T11:05:25+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -5920,12 +5967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "62e6e0696bd03773fd551ec766aad765607303da"
+                "reference": "fde816c3c3229af6440ed542df00d37a7bc6a261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/62e6e0696bd03773fd551ec766aad765607303da",
-                "reference": "62e6e0696bd03773fd551ec766aad765607303da",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/fde816c3c3229af6440ed542df00d37a7bc6a261",
+                "reference": "fde816c3c3229af6440ed542df00d37a7bc6a261",
                 "shasum": ""
             },
             "require": {
@@ -5969,7 +6016,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-04-23T05:37:51+00:00"
+            "time": "2021-04-28T03:23:55+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -6048,12 +6095,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "5874dde40b5ff54e5fe1aff622905c606b00ae25"
+                "reference": "28c3b17accd1c9cf2bd180b828df56e93d30188f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/5874dde40b5ff54e5fe1aff622905c606b00ae25",
-                "reference": "5874dde40b5ff54e5fe1aff622905c606b00ae25",
+                "url": "https://api.github.com/repos/symfony/config/zipball/28c3b17accd1c9cf2bd180b828df56e93d30188f",
+                "reference": "28c3b17accd1c9cf2bd180b828df56e93d30188f",
                 "shasum": ""
             },
             "require": {
@@ -6119,7 +6166,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-21T09:08:36+00:00"
+            "time": "2021-04-27T12:08:31+00:00"
         },
         {
             "name": "symfony/console",
@@ -6281,12 +6328,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "d11a6dfd80e37c9b83d42a896ae598e6a7dd9adb"
+                "reference": "2cd25f2ff771ebe23e39541da17965ad984bb1a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/d11a6dfd80e37c9b83d42a896ae598e6a7dd9adb",
-                "reference": "d11a6dfd80e37c9b83d42a896ae598e6a7dd9adb",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/2cd25f2ff771ebe23e39541da17965ad984bb1a3",
+                "reference": "2cd25f2ff771ebe23e39541da17965ad984bb1a3",
                 "shasum": ""
             },
             "require": {
@@ -6362,7 +6409,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-21T10:45:36+00:00"
+            "time": "2021-04-24T17:19:31+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -7365,12 +7412,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "65f647b5289013dc94b4f75c5827e7c1f8342988"
+                "reference": "2b8295765754434477e90221fbd5432c67a6e04c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/65f647b5289013dc94b4f75c5827e7c1f8342988",
-                "reference": "65f647b5289013dc94b4f75c5827e7c1f8342988",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/2b8295765754434477e90221fbd5432c67a6e04c",
+                "reference": "2b8295765754434477e90221fbd5432c67a6e04c",
                 "shasum": ""
             },
             "require": {
@@ -7453,7 +7500,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-22T17:08:11+00:00"
+            "time": "2021-04-27T15:24:37+00:00"
         },
         {
             "name": "symfony/translation-contracts",

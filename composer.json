@@ -24,6 +24,7 @@
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4.2",
     "bagrinsergiu/brizy-merge-page-assets": "^1.0",
+    "bagrinsergiu/content-placeholder": "^2.0",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
     "shortpixel/shortpixel-php": "dev-master",

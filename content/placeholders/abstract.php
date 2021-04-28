@@ -25,6 +25,8 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 	 */
 	protected $display = self::DISPLAY_INLINE;
 
+	protected $group = '';
+
     /**
      * It should return an unique identifier of the placeholder
      *
@@ -85,6 +87,24 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 
 		return $this;
 	}
+
+    /**
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     * @return Brizy_Content_Placeholders_Abstract
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+        return $this;
+    }
 
 	/**
 	 * @return mixed
