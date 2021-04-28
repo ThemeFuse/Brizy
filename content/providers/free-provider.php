@@ -29,14 +29,8 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     }
                 }
 
-                $placeholderProvider = new Brizy_Content_PlaceholderProvider();
-                $extractor = new Brizy_Content_PlaceholderExtractor($placeholderProvider);
-
-                list($placeholders, $content) = $extractor->extract($contentPlaceholder->getContent());
-
-                $replacer = new Brizy_Content_PlaceholderReplacer($context, $placeholderProvider);
-
-                return $replacer->getContent($placeholders, $content, $context);
+                $replacer = new \BrizyPlaceholders\Replacer($context->getProvider());
+                return $replacer->replacePlaceholders($contentPlaceholder->getContent(), $context);
             }) );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title') );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt') );
