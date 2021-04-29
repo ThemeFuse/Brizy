@@ -80,7 +80,7 @@ class Brizy_Content_Context implements ContextInterface {
 	/**
 	 * @return array
 	 */
-	public function getPlaceholders(): array {
+	public function getPlaceholders() {
 		return $this->placeholders;
 	}
 
@@ -89,7 +89,7 @@ class Brizy_Content_Context implements ContextInterface {
 	 *
 	 * @return Brizy_Content_Context
 	 */
-	public function setPlaceholders( array $placeholders ): Brizy_Content_Context {
+	public function setPlaceholders( array $placeholders ) {
 		$this->placeholders = $placeholders;
 
 		return $this;
@@ -115,6 +115,8 @@ class Brizy_Content_Context implements ContextInterface {
 	 * @throws Exception
 	 */
 	public function getPlaceholdersByAttrValue( $key, $value ) {
+
+	    if(is_null($value)) return null;
 
 		$results = [];
 		if ( isset( $this->placeholders ) ) {
