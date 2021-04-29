@@ -126,6 +126,8 @@ class Brizy_Content_Context implements ContextInterface
 	 */
 	public function getPlaceholdersByAttrValue( $key, $value ) {
 
+	    if(is_null($value)) return null;
+
 		$results = [];
 		if ( isset( $this->placeholders ) ) {
 			foreach ( $this->placeholders as $placeholder ) {
