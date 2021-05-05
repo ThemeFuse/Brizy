@@ -86,7 +86,7 @@ class Brizy_Public_Main
 
         } elseif (self::is_view_page( $this->post)) {
 
-            
+
 
             $this->preparePost();
 
@@ -432,17 +432,31 @@ class Brizy_Public_Main
         return isset($_REQUEST['post']) && $_REQUEST['post'] == $post->getWpPostId();
     }
 
-    /**
-     * @return bool
-     */
-    public static function is_view_page( Brizy_Editor_Post $post = null )
-    {
-        return ! is_admin() && $post && $post->uses_editor() && ! isset(
+	/**
+	 * @return bool
+	 */
+	public static function is_view_page( Brizy_Editor_Post $post = null ) {
+
+	    /* this was the old code before merging master in develop
+	     return ! is_admin() && $post && $post->uses_editor() && ! isset(
                 $_GET[Brizy_Editor::prefix(
                     '-edit-iframe'
                 )]
             ) && ! isset($_GET[Brizy_Editor::prefix('-edit')]);
-    }
+	     */
+
+		$isView = false;
+
+		if ( ! is_admin() && $post && $post->uses_editor() && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) ) {
+			$isView = true;
+
+			if ( in_array( get_post_status( $post->getWpPost() ), [ 'future', 'draft', 'pending', 'private' ] ) && ! Brizy_Editor_User::is_user_allowed() ) {
+				$isView = false;
+			}
+		}
+
+		return $isView;
+	}
 
     /**
      * @param $content
