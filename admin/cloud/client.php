@@ -724,7 +724,6 @@ class Brizy_Admin_Cloud_Client extends WP_Http
                 'attachment' => base64_encode(file_get_contents($file)),
                 'name' => $uid,
                 'filename' => basename($file),
-                'project' => $this->brizyProject->getCloudProject() // ???? what type has this property
             )
         ));
 
