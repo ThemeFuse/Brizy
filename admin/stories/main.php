@@ -40,7 +40,7 @@ class Brizy_Admin_Stories_Main
             'singular_name'      => _x('Story', 'post type singular name', 'brizy'),
             'menu_name'          => _x('Stories', 'admin menu', 'brizy'),
             'name_admin_bar'     => _x('Story', 'add new on admin bar', 'brizy'),
-            'add_new'            => _x('Add New Story', self::CP_STORY, 'brizy'),
+            'add_new'            => __('Add New Story', 'brizy'),
             'add_new_item'       => __('Add New Story', 'brizy'),
             'new_item'           => __('New Story', 'brizy'),
             'edit_item'          => __('Edit Story', 'brizy'),
