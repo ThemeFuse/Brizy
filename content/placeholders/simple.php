@@ -1,56 +1,48 @@
 <?php
 
-class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstract {
+use BrizyPlaceholders\ContentPlaceholder;
+use BrizyPlaceholders\ContextInterface;
 
-	/**
-	 * @return string|callable
-	 */
-	protected $value;
+class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstract
+{
 
-	/**
-	 * Brizy_Content_Placeholders_Simple constructor.
-	 *
-	 * @param $label
-	 * @param $placeholder
-	 * @param $value
-	 * @param string $display
-	 */
-	public function __construct( $label, $placeholder, $value, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE ) {
-		$this->setLabel( $label );
-		$this->setPlaceholder( $placeholder );
-		$this->setDisplay( $display );
+    /**
+     * @return string|callable
+     */
+    protected $value;
 
-		$this->value = $value;
-	}
+    /**
+     * Brizy_Content_Placeholders_Simple constructor.
+     *
+     * @param $label
+     * @param $placeholder
+     * @param $value
+     * @param string $display
+     */
+    public function __construct($label, $placeholder, $value, $group = null, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE)
+    {
+        $this->setLabel($label);
+        $this->setPlaceholder($placeholder);
+        $this->setDisplay($display);
+        $this->setGroup($group);
 
-	/**
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
-	 * @param Brizy_Content_Context $context
-	 *
-	 * @return mixed|string
-	 */
-	public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
+        $this->value = $value;
+    }
 
-		$method = $this->value;
+    /**
+     * @param ContextInterface $context
+     * @param ContentPlaceholder $placeholder
+     *
+     * @return mixed
+     */
+    public function getValue(ContextInterface $context, ContentPlaceholder $placeholder)
+    {
+        $method = $this->value;
 
-		if ( is_object( $method ) && ( $method instanceof Closure ) ) {
-			return call_user_func( $method, $context, $contentPlaceholder );
-		}
+        if (is_object($method) && ($method instanceof Closure)) {
+            return call_user_func($method, $context, $placeholder);
+        }
 
-		return $this->value;
-	}
-
-	/**
-	 * @return mixed|string
-	 */
-	protected function getOptionValue() {
-
-		$method = $this->value;
-
-		if ( is_callable( $method ) ) {
-			return $this->getReplacePlaceholder();
-		}
-
-		return $this->value;
-	}
+        return $this->value;
+    }
 }

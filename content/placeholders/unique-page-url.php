@@ -1,5 +1,7 @@
 <?php
 
+use BrizyPlaceholders\ContentPlaceholder;
+
 class Brizy_Content_Placeholders_UniquePageUrl extends Brizy_Content_Placeholders_Simple {
 
 
@@ -20,12 +22,12 @@ class Brizy_Content_Placeholders_UniquePageUrl extends Brizy_Content_Placeholder
 	}
 
 	/**
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
+	 * @param ContentPlaceholder $contentPlaceholder
 	 * @param Brizy_Content_Context $context
 	 *
 	 * @return mixed|string
 	 */
-	public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
+    public function getValue(\BrizyPlaceholders\ContextInterface $context, ContentPlaceholder $contentPlaceholder) {
 
 		global $wp;
 

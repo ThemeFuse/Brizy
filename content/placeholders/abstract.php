@@ -1,7 +1,11 @@
 <?php
 
-abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializable {
+use \BrizyPlaceholders\ContentPlaceholder;
+use BrizyPlaceholders\ContextInterface;
+use \BrizyPlaceholders\PlaceholderInterface;
 
+abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializable implements PlaceholderInterface
+{
 
 	const DISPLAY_INLINE = 'inline';
 	const DISPLAY_BLOCK = 'block';
@@ -21,24 +25,34 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 	 */
 	protected $display = self::DISPLAY_INLINE;
 
-	/**
-	 * @param Brizy_Content_Context $context
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
-	 * @param null $display
-	 *
-	 * @return mixed
-	 */
-	abstract public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder );
+	protected $group = '';
 
-	/**
-	 * This must return the option value that will be passed to the editor
-	 *
-	 *
-	 * @return mixed
-	 */
-	abstract protected function getOptionValue();
+    /**
+     * It should return an unique identifier of the placeholder
+     *
+     * @return mixed
+     */
+    public function getUid()
+    {
+        return md5(microtime());
+    }
 
-	/**
+    public function support($placeholderName) {
+        return $this->getPlaceholder()==$placeholderName;
+    }
+
+    public function shouldFallbackValue($value, ContextInterface $context, ContentPlaceholder $placeholder)
+    {
+        return empty($value);
+    }
+
+    public function getFallbackValue(ContextInterface $context, ContentPlaceholder $placeholder)
+    {
+        $attributes = $placeholder->getAttributes();
+        return isset($attributes[PlaceholderInterface::FALLBACK_KEY]) ? $attributes[PlaceholderInterface::FALLBACK_KEY] : '';
+    }
+
+    /**
 	 * @return mixed
 	 */
 	public function getLabel() {
@@ -74,6 +88,24 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 		return $this;
 	}
 
+    /**
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     * @return Brizy_Content_Placeholders_Abstract
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+        return $this;
+    }
+
 	/**
 	 * @return mixed
 	 */
@@ -100,7 +132,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 			'label'       => $this->getLabel(),
 			'placeholder' => $this->getPlaceholder(),
 			'display'     => $this->getDisplay(),
-			'data'        => $this->getOptionValue(),
 		);
 	}
 
@@ -109,7 +140,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 			'label'       => $this->getLabel(),
 			'placeholder' => $this->getReplacePlaceholder(),
 			'display'     => $this->getDisplay(),
-			'data'        => $this->getOptionValue(),
 		);
 	}
 
@@ -126,15 +156,4 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 		return "";
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getData() {
-		$value = $this->getValue( null );
-		if ( is_callable( $value ) ) {
-			return $this->getReplacePlaceholder();
-		}
-
-		return $value;
-	}
 }

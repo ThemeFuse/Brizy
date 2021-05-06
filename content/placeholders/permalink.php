@@ -1,5 +1,7 @@
 <?php
 
+use BrizyPlaceholders\ContentPlaceholder;
+
 class Brizy_Content_Placeholders_Permalink extends Brizy_Content_Placeholders_Simple {
 
 
@@ -16,12 +18,12 @@ class Brizy_Content_Placeholders_Permalink extends Brizy_Content_Placeholders_Si
 	}
 
 	/**
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
+	 * @param ContentPlaceholder $contentPlaceholder
 	 * @param Brizy_Content_Context $context
 	 *
 	 * @return mixed|string
 	 */
-	public function getValue( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
+    public function getValue(\BrizyPlaceholders\ContextInterface $context, ContentPlaceholder $contentPlaceholder) {
 		$attributes = $contentPlaceholder->getAttributes();
 		if ( isset( $attributes['post_id'] ) && (int) $attributes['post_id'] > 0 ) {
 			return get_permalink( (int) $attributes['post_id'] );
