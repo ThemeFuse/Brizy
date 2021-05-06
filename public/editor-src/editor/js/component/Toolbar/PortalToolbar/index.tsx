@@ -82,53 +82,17 @@ export default class PortalToolbar
     }
 
     if (!this.props.manualControl) {
-      this.node.addEventListener(
-        "click",
-        event => {
-          if (
-            this.node === null ||
-            (event as ToolbarClickEvent).brzToolbarHandled
-          ) {
-            return;
-          }
+      this.makeComponentControlled();
+    }
+  }
 
-          if (this.props.selector === undefined) {
-            if (monitor.getActive() === this) {
-              return;
-            }
-
-            (event as ToolbarClickEvent).brzToolbarHandled = true;
-            this.show();
-          } else {
-            const search =
-              this.props.selectorSearchStrategy === "dom-tree"
-                ? selectorSearchDomTree
-                : selectorSearchCoordinates;
-            const target = search(
-              this.node,
-              this.props.selector,
-              event as MouseEvent
-            );
-
-            if (target) {
-              (event as ToolbarClickEvent).brzToolbarHandled = true;
-
-              if (this.state.opened === false) {
-                this.selectorNode = target;
-                this.show();
-              } else if (target !== this.selectorNode) {
-                this.hide(() => {
-                  this.selectorNode = target;
-                  this.show();
-                });
-              }
-            } else {
-              this.hide();
-            }
-          }
-        },
-        false
-      );
+  componentDidUpdate({ manualControl = false }): void {
+    if (manualControl !== this.props.manualControl) {
+      if (manualControl === true) {
+        this.makeComponentControlled();
+      } else {
+        this.makeComponentUnControlled();
+      }
     }
   }
 
@@ -137,6 +101,63 @@ export default class PortalToolbar
     this.node = null;
     this.selectorNode = null;
   }
+
+  makeComponentUnControlled = (): void => {
+    if (this.node === null) {
+      return;
+    }
+
+    this.node.removeEventListener("click", this.handleNodeClick);
+  };
+
+  makeComponentControlled = (): void => {
+    if (this.node === null) {
+      return;
+    }
+
+    this.node.addEventListener("click", this.handleNodeClick, false);
+  };
+
+  handleNodeClick = (event: Event): void => {
+    if (this.node === null || (event as ToolbarClickEvent).brzToolbarHandled) {
+      return;
+    }
+
+    if (this.props.selector === undefined) {
+      if (monitor.getActive() === this) {
+        return;
+      }
+
+      (event as ToolbarClickEvent).brzToolbarHandled = true;
+      this.show();
+    } else {
+      const search =
+        this.props.selectorSearchStrategy === "dom-tree"
+          ? selectorSearchDomTree
+          : selectorSearchCoordinates;
+      const target = search(
+        this.node,
+        this.props.selector,
+        event as MouseEvent
+      );
+
+      if (target) {
+        (event as ToolbarClickEvent).brzToolbarHandled = true;
+
+        if (this.state.opened === false) {
+          this.selectorNode = target;
+          this.show();
+        } else if (target !== this.selectorNode) {
+          this.hide(() => {
+            this.selectorNode = target;
+            this.show();
+          });
+        }
+      } else {
+        this.hide();
+      }
+    }
+  };
 
   handleClick = (e: React.MouseEvent<HTMLElement>): void => {
     e.stopPropagation();

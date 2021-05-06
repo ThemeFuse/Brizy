@@ -83,24 +83,29 @@ class RegisterField extends EditorComponent {
       </>
     );
   };
-
   renderForEdit(v, vs, vd) {
-    const { showLabel, toolbarExtendLabel } = this.props;
-
+    const {
+      showLabel,
+      toolbarExtendLabel,
+      toolbarRegisterInfo,
+      showRegisterInfo
+    } = this.props;
     const className = classnames(
       "brz-form-login__field",
       `brz-form-login__field-${v.type}`,
+      {
+        "brz-form-login__field-registerInfo-off":
+          showRegisterInfo === "off" && v.type === "RegisterInfo"
+      },
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
         style(v, vs, vd)
       )
     );
-
     const styleLabel = {
       height: v.label === "" ? 0 : "auto"
     };
-
     return (
       <div className={className}>
         {v.type === "Name" && (
@@ -108,7 +113,7 @@ class RegisterField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label " htmlFor="nameInput">
+                  <label className="brz-label " htmlFor="user_login">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -121,7 +126,7 @@ class RegisterField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    name="nameInput"
+                    name="user_login"
                     ref={this.input}
                     className="brz-input brz-login__field-name"
                     type="text"
@@ -136,7 +141,7 @@ class RegisterField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    name="nameInput"
+                    name="user_login"
                     ref={this.input}
                     className="brz-input brz-login__field-name"
                     type="text"
@@ -160,7 +165,7 @@ class RegisterField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label " htmlFor="emailInput">
+                  <label className="brz-label " htmlFor="user_email">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -173,7 +178,7 @@ class RegisterField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    name="emailInput"
+                    name="user_email"
                     ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
@@ -188,7 +193,7 @@ class RegisterField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    name="emailInput"
+                    name="user_email"
                     ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
@@ -207,106 +212,14 @@ class RegisterField extends EditorComponent {
             </Toolbar>
           </div>
         )}
-        {v.type === "RegisterPassword" && (
+        {v.type === "RegisterInfo" && showRegisterInfo === "on" && (
           <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label" htmlFor="passwordInput">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field brz-login__field-password"
-                    type="password"
-                    name="passwordInput"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    required
-                    ref={this.input}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field brz-login__field-password"
-                    type="password"
-                    name="passwordInput"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    required
-                    ref={this.input}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "ConfirmPassword" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label" htmlFor="confirmPasswordInput">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field brz-login__field-password"
-                    type="password"
-                    name="confirmPasswordInput"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    required
-                    ref={this.input}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field brz-login__field-password"
-                    type="password"
-                    name="confirmPasswordInput"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    required
-                    ref={this.input}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
+            <Toolbar {...toolbarRegisterInfo}>
+              <div className="brz-login__register-info">
+                <TextEditor
+                  value={this.getLabel(v)}
+                  onChange={this.handleLabelChange}
+                />
               </div>
             </Toolbar>
           </div>
@@ -314,31 +227,31 @@ class RegisterField extends EditorComponent {
       </div>
     );
   }
-
   renderForView(v, vs, vd) {
-    const { showLabel } = this.props;
-
+    const { showLabel, showRegisterInfo } = this.props;
     const className = classnames(
       "brz-form-login__field",
       `brz-form-login__field-${v.type}`,
+      {
+        "brz-form-login__field-registerInfo-off":
+          showRegisterInfo === "off" && v.type === "RegisterInfo"
+      },
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
         style(v, vs, vd)
       )
     );
-
     const styleLabel = {
       height: v.label === "" ? 0 : "auto"
     };
-
     return (
       <div className={className}>
         {v.type === "Name" && (
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label " htmlFor="nameInput">
+                <label className="brz-label " htmlFor="user_login">
                   {this.getLabel(v)}
                 </label>
               </div>
@@ -347,7 +260,7 @@ class RegisterField extends EditorComponent {
               <input
                 ref={this.input}
                 type="text"
-                name="nameInput"
+                name="user_login"
                 className="brz-input brz-login__field-name"
                 placeholder={this.getPlaceholder(v)}
                 value=""
@@ -360,7 +273,7 @@ class RegisterField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label " htmlFor="emailInput">
+                <label className="brz-label " htmlFor="user_email">
                   {this.getLabel(v)}
                 </label>
               </div>
@@ -369,7 +282,7 @@ class RegisterField extends EditorComponent {
               <input
                 ref={this.input}
                 type="email"
-                name="emailInput"
+                name="user_email"
                 className="brz-input brz-login__field-email"
                 placeholder={this.getPlaceholder(v)}
                 value=""
@@ -378,53 +291,13 @@ class RegisterField extends EditorComponent {
             </div>
           </div>
         )}
-        {v.type === "RegisterPassword" && (
+        {v.type === "RegisterInfo" && showRegisterInfo === "on" && (
           <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label" htmlFor="passwordInput">
-                  {this.getLabel(v)}
-                </label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                ref={this.input}
-                type="password"
-                name="passwordInput"
-                className="brz-input brz-login__field brz-login__field-password"
-                placeholder={this.getPlaceholder(v)}
-                value=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {v.type === "ConfirmPassword" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label" htmlFor="confirmPasswordInput">
-                  {this.getLabel(v)}
-                </label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                ref={this.input}
-                type="password"
-                name="confirmPasswordInput"
-                className="brz-input brz-login__field brz-login__field-password"
-                placeholder={this.getPlaceholder(v)}
-                value=""
-                required
-              />
-            </div>
+            <div className="brz-login__register-info">{this.getLabel(v)}</div>
           </div>
         )}
       </div>
     );
   }
 }
-
 export default RegisterField;

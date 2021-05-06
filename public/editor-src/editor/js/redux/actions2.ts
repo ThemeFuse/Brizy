@@ -11,7 +11,7 @@ import {
   GoogleFont,
   UploadedFont
 } from "visual/types";
-import { fontSelector } from "visual/redux/selectors2";
+import { fontSelector } from "visual/redux/selectors";
 
 type UIState = ReduxState["ui"];
 

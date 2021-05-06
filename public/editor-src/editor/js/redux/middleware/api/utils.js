@@ -14,23 +14,34 @@ import {
   deleteSavedBlock as apiDeleteSavedBlock,
   updatePopupRules as apiUpdatePopupRules,
   sendHeartBeat as apiSendHeartBeat
-} from "visual/utils/api/editor";
-import Config from "visual/global/Config";
+} from "visual/utils/api";
+import { IS_WP, IS_PAGE, IS_SINGLE, IS_ARCHIVE } from "visual/utils/env";
 import {
   IS_INTERNAL_STORY,
   IS_EXTERNAL_STORY,
-  IS_PAGE,
-  IS_INTERNAL_POPUP
+  IS_INTERNAL_POPUP,
+  IS_EXTERNAL_POPUP
 } from "visual/utils/models/modes";
 
-const updateFn =
-  IS_INTERNAL_STORY || IS_PAGE || Config.get("wp")
-    ? apiUpdatePage
-    : IS_INTERNAL_POPUP
-    ? apiUpdateInternalPopup
-    : IS_EXTERNAL_STORY
-    ? apiUpdateExternalStories
-    : apiUpdateExternalPopup;
+const updateFn = (() => {
+  if (IS_WP) {
+    return apiUpdatePage;
+  } else {
+    const err = () => {
+      throw new Error("unknown editor mode");
+    };
+
+    return IS_PAGE || IS_SINGLE || IS_ARCHIVE || IS_INTERNAL_STORY
+      ? apiUpdatePage
+      : IS_INTERNAL_POPUP
+      ? apiUpdateInternalPopup
+      : IS_EXTERNAL_POPUP
+      ? apiUpdateExternalPopup
+      : IS_EXTERNAL_STORY
+      ? apiUpdateExternalStories
+      : err();
+  }
+})();
 
 export {
   apiUpdateProject,

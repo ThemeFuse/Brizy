@@ -75,3 +75,22 @@ export const getHref = (type: Type, _href: string): string => {
 
   return href;
 };
+
+export const getRel = (
+  _rel: string,
+  target: MValue<"_blank">
+): MValue<string> => {
+  const rel = [];
+
+  if (_rel === "on") {
+    rel.push("nofollow");
+  }
+
+  if (target === "_blank") {
+    rel.push("noopener");
+  }
+
+  if (rel.length) {
+    return rel.join(" ");
+  }
+};

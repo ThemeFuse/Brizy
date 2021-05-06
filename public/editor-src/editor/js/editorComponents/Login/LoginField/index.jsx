@@ -233,6 +233,7 @@ class LoginField extends EditorComponent {
     const className = classnames(
       "brz-form-login__field",
       `brz-form-login__field-${v.type}`,
+      `brz-form-login__field-remember-${remember}`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,

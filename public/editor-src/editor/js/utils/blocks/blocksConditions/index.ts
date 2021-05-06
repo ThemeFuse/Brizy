@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors2";
+import { pageSelector } from "visual/redux/selectors";
+import { IS_CMS } from "visual/utils/env";
 import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
 
-import { IS_TEMPLATE, IS_WP } from "visual/utils/models";
-import { GlobalBlock, GlobalBlockPosition } from "visual/types";
+import { IS_WP } from "visual/utils/env";
+import { IS_TEMPLATE } from "visual/utils/models";
+import { GlobalBlock, GlobalBlockPosition, Page } from "visual/types";
 import { Config as ConfigType } from "./config";
 
 export const PAGES_GROUP_ID = 1;
-export const POST_GROUP_ID = 1;
 export const CATEGORIES_GROUP_ID = 2;
 export const TEMPLATES_GROUP_ID = 16;
 
-export const PAGE_TYPE = "page";
+// take a look where we can move this constantes
+
 export const POST_TYPE = "post";
 export const TEMPLATE_TYPE = "brizy_template";
 
@@ -291,10 +293,12 @@ function turnPositionsIntoObject(
 // we can't get pageId from config because -
 // if there is are not pages we create one on client side.
 export const getCurrentRule = (
-  pageId = Number(pageSelector(getStore().getState()).id)
+  page = pageSelector(getStore().getState())
 ): Rule => {
   let group: Rule["group"] = PAGES_GROUP_ID;
-  let type: Rule["type"] = PAGE_TYPE;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  let type: Rule["type"] = IS_CMS ? page.collectionType.id : "page";
 
   if (IS_WP) {
     const { ruleMatches }: ConfigType["wp"] = Config.get("wp");
@@ -303,7 +307,7 @@ export const getCurrentRule = (
       group = TEMPLATES_GROUP_ID;
       type = TEMPLATE_TYPE;
     } else if (ruleMatches && ruleMatches[0].entityType === POST_TYPE) {
-      group = POST_GROUP_ID;
+      group = PAGES_GROUP_ID;
       type = POST_TYPE;
     }
   }
@@ -311,7 +315,7 @@ export const getCurrentRule = (
   return {
     group,
     type,
-    id: pageId
+    id: page.id
   };
 };
 
@@ -383,16 +387,16 @@ export const getBlockAlignment = (
 export const changeRule = (
   globalBlock: GlobalBlock,
   shouldAddIncludeCondition: boolean,
-  pageId?: number
+  page: Page
 ): GlobalBlock => {
-  const currentRule = getCurrentRule(pageId);
+  const currentRule = getCurrentRule(page);
   // when types for getAllowedGBIds will be done replace this line
   const {
     level2,
     level3
   }: { level2: boolean; level3: boolean } = pageSplitRules(
     globalBlock.rules,
-    pageId
+    page
   );
 
   let newGlobalBlock = {

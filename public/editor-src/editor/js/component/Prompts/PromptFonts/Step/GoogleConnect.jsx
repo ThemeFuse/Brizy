@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fontSelector } from "visual/redux/selectors2";
+import { fontSelector } from "visual/redux/selectors";
 import { addFonts } from "visual/redux/actions2";
 import {
   getGoogleFontDetails,
@@ -8,7 +8,7 @@ import {
   getGroupFontsById
 } from "visual/utils/fonts";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import InputFields from "visual/component/Prompts/common/GlobalApps/StepsView/InputFields";
 import { t } from "visual/utils/i18n";
 
@@ -171,7 +171,4 @@ const mapDispatchToProps = {
   addFonts
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GoogleConnect);
+export default connect(mapStateToProps, mapDispatchToProps)(GoogleConnect);

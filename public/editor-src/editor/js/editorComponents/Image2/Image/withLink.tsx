@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import Link from "visual/component/Link";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import { imageUrl2, imagePopulationUrl } from "visual/utils/image";
 import { isSVG, isGIF } from "../utils";
 
 import { ImageProps } from "../types";
@@ -35,7 +35,7 @@ function withLink(
         ? imagePopulationUrl(imagePopulation)
         : isSVG(imageExtension) || isGIF(imageExtension)
         ? ""
-        : imageUrl(imageSrc, { iW: 1200, iH: "any" }),
+        : imageUrl2(imageSrc, { iW: 1200, iH: "any" }),
       action: ""
     };
     if (linkHrefs[linkType] !== "") {

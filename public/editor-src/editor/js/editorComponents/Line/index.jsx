@@ -12,6 +12,40 @@ import { style } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
+const resizerRestrictions = {
+  width: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  // Tablet
+  tabletWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  // Mobile
+  mobileWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  }
+};
 
 class Line extends EditorComponent {
   static get componentId() {
@@ -28,41 +62,6 @@ class Line extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
-    const restrictions = {
-      width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      // Tablet
-      tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      // Mobile
-      mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      }
-    };
-
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -71,10 +70,10 @@ class Line extends EditorComponent {
           <Wrapper {...this.makeWrapperProps({ className })}>
             <BoxResizer
               points={resizerPoints}
+              restrictions={resizerRestrictions}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
-              restrictions={restrictions}
             >
               <hr className="brz-hr" />
             </BoxResizer>

@@ -19,6 +19,11 @@
   margin-right: auto;
   overflow: hidden;
 
+  .dynamic-image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
   .brz-img {
     max-width: none;
     user-select: none;

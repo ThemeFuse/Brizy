@@ -1,4 +1,6 @@
+import { Hex } from "visual/utils/color/Hex";
+
 export type PaletteObject = {
   id: string;
-  hex: string;
+  hex: Hex;
 };

@@ -73,7 +73,7 @@ class ForgotPasswordField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label " htmlFor="emailInput">
+                  <label className="brz-label " htmlFor="user_login">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -86,7 +86,7 @@ class ForgotPasswordField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    name="emailInput"
+                    name="user_login"
                     ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
@@ -101,7 +101,7 @@ class ForgotPasswordField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    name="emailInput"
+                    name="user_login"
                     ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
@@ -147,7 +147,7 @@ class ForgotPasswordField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label " htmlFor="emailInput">
+                <label className="brz-label " htmlFor="user_login">
                   {this.getLabel(v)}
                 </label>
               </div>
@@ -156,7 +156,7 @@ class ForgotPasswordField extends EditorComponent {
               <input
                 ref={this.input}
                 type="email"
-                name="emailInput"
+                name="user_login"
                 className="brz-input brz-login__field-email"
                 placeholder={this.getPlaceholder(v)}
                 value=""

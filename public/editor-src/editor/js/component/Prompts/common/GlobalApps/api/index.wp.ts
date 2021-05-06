@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "../../../common/utils";
-import { request2 } from "visual/utils/api/editor";
+import { request2 } from "visual/utils/api";
 import { AddAccount, DeleteAccount, GetAccount } from "./type";
 
 export const getAccounts: GetAccount = data => {

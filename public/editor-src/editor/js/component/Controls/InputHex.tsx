@@ -7,8 +7,8 @@ import {
   WithValue
 } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
-import { read } from "visual/utils/color/isHex";
 import { debouncedEffect } from "visual/component/hooks";
+import { fromString } from "visual/utils/color/Hex";
 
 export type Props = WithClassName & WithValue<string> & WithOnChange<string>;
 
@@ -18,7 +18,7 @@ export const InputHex: FC<Props> = ({ className, value, onChange }) => {
   debouncedEffect(
     () => {
       if (value !== _value) {
-        mApply(onChange, read(_value));
+        mApply(onChange, fromString(_value));
       }
     },
     1000,

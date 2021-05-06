@@ -4,17 +4,16 @@ import { setIn } from "timm";
 import {
   PAGES_GROUP_ID,
   CATEGORIES_GROUP_ID,
-  TEMPLATES_GROUP_ID,
+  TEMPLATES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
+
+import {
   getUniqRules,
   getRulesListIndexByRule,
   disableAlreadyUsedRules
 } from "./utils";
 
-import {
-  getConditions,
-  getTerms,
-  getPostObjects
-} from "visual/utils/api/editor";
+import { getGroupList, getTerms, getPostObjects } from "visual/utils/api";
 
 export default function useRuleList(rules) {
   const [rulesList, setRulesList] = useState([]);
@@ -24,9 +23,9 @@ export default function useRuleList(rules) {
     async function fetchData() {
       setListLoading(true);
 
-      const conditions = (await getConditions()) || [];
+      const groupList = (await getGroupList()) || [];
 
-      const rulesList = conditions.map(({ items }) => items).flat();
+      const rulesList = groupList.map(({ items }) => items).flat();
 
       setListLoading(false);
       setRulesList(rulesList);
@@ -75,14 +74,18 @@ export default function useRuleList(rules) {
           }
 
           newRulesList = setIn(newRulesList, [ruleIndex, "items"], newItems);
-          setRulesList(newRulesList);
+          setRulesList(disableAlreadyUsedRules(rules, newRulesList));
         }
       });
     }
 
-    // ! is it a good solution?
+    if (rules === null) {
+      // rules from server weren't got yet
+      return;
+    }
+
     rulesList.length && updateRuleList();
   }, [rules, rulesList]);
 
-  return [listLoading, disableAlreadyUsedRules(rules, rulesList)];
+  return [listLoading, rulesList];
 }

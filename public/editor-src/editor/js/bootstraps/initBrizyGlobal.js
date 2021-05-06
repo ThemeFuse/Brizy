@@ -24,10 +24,7 @@ import {
   weightTypes,
   getWeight,
   getWeightChoices,
-  makeSubsetGoogleFontsUrl,
-  makeRichTextFontGoogleCSS,
-  makeRichTextFontUploadCSS,
-  makeRichTextFontStylesCSS
+  makeSubsetGoogleFontsUrl
 } from "visual/utils/fonts";
 import {
   defaultValueValue,
@@ -51,6 +48,7 @@ import {
   toolbarElementAudioIconSize
 } from "visual/utils/toolbar";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/types";
 import {
   IS_POST,
   IS_SINGLE_TEMPLATE,
@@ -95,9 +93,6 @@ global.Brizy = {
     getWeight,
     getWeightChoices,
     makeSubsetGoogleFontsUrl,
-    makeRichTextFontGoogleCSS,
-    makeRichTextFontUploadCSS,
-    makeRichTextFontStylesCSS,
 
     defaultValueValue,
     defaultValueKey,
@@ -105,6 +100,7 @@ global.Brizy = {
     mobileSyncOnChange,
     onChangeTypography,
     onChangeTypographyMobile,
+    DCTypes,
     NORMAL,
     HOVER,
 

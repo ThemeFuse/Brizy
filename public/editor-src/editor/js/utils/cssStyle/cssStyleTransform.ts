@@ -1,16 +1,8 @@
-import { mApply, MValue } from "visual/utils/value";
-import { Literal } from "visual/utils/types/Literal";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
+import { mApply } from "visual/utils/value";
 import { read } from "visual/utils/cssProps/transform/Rotate";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Transform } from "visual/utils/cssProps/transform";
-
-type Data = {
-  v: { [k in string]: MValue<Literal> };
-  device: ResponsiveMode;
-  state: State;
-};
+import { CSSValue } from "../style2/types";
 
 export const buildTransform = (v: Transform): string => {
   return (
@@ -21,7 +13,7 @@ export const buildTransform = (v: Transform): string => {
   );
 };
 
-export const cssStyleRotate = (d: Data): string => {
+export const cssStyleRotate = (d: CSSValue): string => {
   const value = read(defaultValueValue({ key: "rotate", ...d }));
   return mApply(v => buildTransform({ rotate: `${v}deg` }), value) ?? "";
 };

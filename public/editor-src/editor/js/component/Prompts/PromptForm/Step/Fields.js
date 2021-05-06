@@ -5,7 +5,7 @@ import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { SelectFields } from "../../common/GlobalApps/StepsView";
 import { getFields, checkRequiredFields } from "../../common/utils";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 class Fields extends Component {
   static contextType = Context;

@@ -15,7 +15,6 @@ type RBlocksOrder = (
 export const blocksOrder: RBlocksOrder = (state = [], action) => {
   switch (action.type) {
     case "HYDRATE": {
-      const pageId = Number(action.payload.page.id);
       const items = action.payload.page.data?.items || [];
 
       if (IS_STORY && items.length === 0) {
@@ -32,7 +31,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       return generateBlocksList(
         pageBlocksIds,
         action.payload.globalBlocks,
-        pageId
+        action.payload.page
       );
     }
     case "ADD_GLOBAL_BLOCK":

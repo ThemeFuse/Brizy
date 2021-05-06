@@ -16,8 +16,6 @@ import {
   blocksOrderRawSelector
 } from "visual/redux/selectors";
 
-import { pageSelector } from "visual/redux/selectors2";
-
 import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
 
@@ -31,9 +29,6 @@ type RGlobalBlocks = (
 setAutoFreeze(false);
 
 export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
-  // we had to get  pageId here and can't use it from config
-  // because if it's cloud config if may be null
-  const pageId = Number(pageSelector(allState).id);
   switch (action.type) {
     case "HYDRATE": {
       const {
@@ -52,11 +47,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return Object.entries(globalBlocks).reduce((acc, [id, block]) => {
         if (legacyGlobalBlockIds.includes(id) && !isPopup(block.data)) {
           acc[id] = produce(block, draft => {
-            draft.rules = changeRule(
-              block,
-              true,
-              Number(action.payload.page.id)
-            ).rules;
+            draft.rules = changeRule(block, true, action.payload.page).rules;
             draft.data.value._id = id;
           });
         } else {
@@ -74,7 +65,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       if (!isPopup(state[_id].data)) {
         return {
           ...state,
-          [_id]: changeRule(state[_id], true, pageId)
+          [_id]: changeRule(state[_id], true, allState?.page)
         };
       }
 
@@ -103,7 +94,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const { id, data } = action.payload;
 
       if (data.value === null && !isPopup(state[id].data)) {
-        const globalBlock = changeRule(state[id], false, pageId);
+        const globalBlock = changeRule(state[id], false, allState?.page);
         return {
           ...state,
           [id]: globalBlock
@@ -120,7 +111,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const _id = blocks[index];
 
       if (globalBlockIds.includes(blocks[index]) && !isPopup(state[_id].data)) {
-        const globalBlock = changeRule(state[_id], false, pageId);
+        const globalBlock = changeRule(state[_id], false, allState?.page);
         return {
           ...state,
           [_id]: globalBlock
@@ -133,7 +124,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "MAKE_GLOBAL_TO_NORMAL_BLOCK": {
       const { fromBlockId } = action.payload;
 
-      const globalBlock = changeRule(state[fromBlockId], false, pageId);
+      const globalBlock = changeRule(state[fromBlockId], false, allState?.page);
 
       return {
         ...state,
@@ -174,11 +165,15 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           const allowedGBIds: string[] = getAllowedGBIds(
             blocksOrderRawSelector(allState),
             state,
-            pageId
+            allState?.page
           );
 
           if (!allowedGBIds.includes(globalBlockId)) {
-            const globalBlock = changeRule(state[globalBlockId], true, pageId);
+            const globalBlock = changeRule(
+              state[globalBlockId],
+              true,
+              allState?.page
+            );
 
             return {
               ...state,
@@ -199,7 +194,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return produce(state, draft => {
         gbIds.forEach(id => {
           if (!isPopup(draft[id].data)) {
-            draft[id] = changeRule(draft[id], false, pageId);
+            draft[id] = changeRule(draft[id], false, allState?.page);
           }
         });
       });
@@ -213,7 +208,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return produce(state, draft => {
         gbIds.forEach(id => {
           if (draft[id] && !isPopup(draft[id].data)) {
-            draft[id] = changeRule(draft[id], false, pageId);
+            draft[id] = changeRule(draft[id], false, allState?.page);
           }
         });
       });

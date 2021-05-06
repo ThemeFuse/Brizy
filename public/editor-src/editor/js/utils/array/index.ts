@@ -2,8 +2,23 @@ import { findIndex as _findIndex } from "underscore";
 import { mApply, MValue } from "visual/utils/value";
 import { Reader } from "visual/utils/types/Type";
 import { onEmpty as _onEmpty } from "visual/utils/value";
+import { insert, removeAt } from "timm";
 
-export { flatMap } from "./flatMap";
+export const flatMap = <T, U>(
+  arr: T[],
+  callback: (value: T) => U | ReadonlyArray<U>
+): U[] =>
+  arr.reduce<U[]>((acc, el) => {
+    const r = callback(el);
+
+    if (Array.isArray(r)) {
+      acc.push(...r);
+    } else {
+      acc.push(r as U);
+    }
+
+    return acc;
+  }, []);
 
 export const empty = [];
 
@@ -164,3 +179,38 @@ export function orderByKeys<T>(by: number[], items: T[]): T[] {
     return acc;
   }, []);
 }
+
+export function move<T>(from: number, to: number, arr: T[]): T[] {
+  if (
+    // For empty array return everytime the same array back
+    arr.length === 0 ||
+    // If indexes are the same, return same array
+    from === to ||
+    // If 'from' index does not exist, return same array back
+    from < 0 ||
+    from > arr.length - 1 ||
+    // If 'to' index does not exist, return same array back
+    to < 0 ||
+    to > arr.length ||
+    // If 'from' and 'to' indexes have same value, return original array
+    arr[from] === arr[to]
+  ) {
+    return arr;
+  }
+
+  const _to = from > to ? to : to + 1;
+  const at = from < to ? from : from + 1;
+
+  return removeAt(insert(arr, _to, arr[from]), at);
+}
+
+export const fromString = <T>(
+  reader: Reader<T>,
+  v: string
+): Array<T> | undefined => {
+  try {
+    return read(reader, JSON.parse(v));
+  } catch (e) {
+    return undefined;
+  }
+};

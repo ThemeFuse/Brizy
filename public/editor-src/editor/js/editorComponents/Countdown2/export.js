@@ -1,8 +1,7 @@
 import $ from "jquery";
-import "./lib/jquery.countdown.js";
 
-export default function() {
-  $(".brz-countdown2").each(function() {
+export default function($node) {
+  $node.find(".brz-countdown2").each(function() {
     var $this = $(this);
 
     // timer

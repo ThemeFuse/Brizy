@@ -1,17 +1,20 @@
 import { clamp, roundTo } from "visual/utils/math";
-import { ImageSize } from "./types";
+import { ImageSize, Unit } from "./types";
 
-type V = {
+type ImageValue = {
   imageWidth: number;
   imageHeight: number;
   width: number;
   height: number;
+  widthSuffix: Unit;
+  heightSuffix: Unit;
+};
+
+interface V extends ImageValue {
   zoom: number;
   positionX: number;
   positionY: number;
-  widthSuffix: "px" | "%";
-  heightSuffix: "px" | "%";
-};
+}
 
 type WrapperSizes = {
   width: number;
@@ -79,8 +82,15 @@ const calcImageMargin = (sizes: Sizes, isPreview: boolean): ImageMargin => {
   };
 };
 
-export const calcWrapperSizes = (v: V, cW: number): WrapperSizes => {
-  const cH = cW / (v.imageWidth / v.imageHeight);
+const DEFAULT_IMAGE_SIZES = {
+  width: 1440,
+  height: 960
+};
+
+export const calcWrapperSizes = (v: ImageValue, cW: number): WrapperSizes => {
+  const imageWidth = v.imageWidth || DEFAULT_IMAGE_SIZES.width;
+  const imageHeight = v.imageHeight || DEFAULT_IMAGE_SIZES.height;
+  const cH = cW / (imageWidth / imageHeight);
 
   let width = clamp(v.width || cW, 0, cW);
   let height = v.height || cH;
@@ -90,7 +100,7 @@ export const calcWrapperSizes = (v: V, cW: number): WrapperSizes => {
   }
 
   if (v.heightSuffix === "%") {
-    const newcH = width / (v.imageWidth / v.imageHeight);
+    const newcH = width / (imageWidth / imageHeight);
     height = (v.height * newcH) / 100;
   }
 
@@ -145,5 +155,7 @@ export const calcImageSizes = (
   };
 };
 
-export const isSVG = (extension: string): boolean => extension === "svg";
-export const isGIF = (extension: string): boolean => extension === "gif";
+export const isSVG = (extension: string): extension is "svg" =>
+  extension === "svg";
+export const isGIF = (extension: string): extension is "gif" =>
+  extension === "gif";

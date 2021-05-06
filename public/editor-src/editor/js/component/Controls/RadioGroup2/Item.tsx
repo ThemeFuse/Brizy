@@ -3,7 +3,7 @@ import { EditorIcon } from "visual/component/EditorIcon";
 
 export type Props<T> = {
   icon: string;
-  title: string;
+  title?: string;
   value: T;
   active: boolean;
 };

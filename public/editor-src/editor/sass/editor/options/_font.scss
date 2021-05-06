@@ -9,6 +9,7 @@
     border-bottom: 0;
     margin-bottom: 0;
     padding: 6px 10px;
+    min-height: auto;
   }
 
   // Small
@@ -69,6 +70,62 @@
 
     &:last-child {
       padding-bottom: 0;
+    }
+  }
+}
+
+// Size suffix
+.brz-ed-control__typography,
+.brz-ed-grid__typography {
+  .brz-control__typography-suffix {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    min-height: auto;
+
+    .brz-control__select {
+      flex: initial;
+      width: auto;
+
+      &-current {
+        display: flex;
+        align-items: center;
+        height: initial;
+        width: auto;
+
+        cursor: pointer;
+        color: $options-label-color;
+        background-color: transparent;
+
+        &:hover {
+          color: $brand-primary;
+        }
+
+        .brz-control__select-option {
+          height: initial;
+          line-height: 1.3;
+          padding: 0;
+          color: inherit;
+
+          .brz-span {
+            line-height: inherit;
+          }
+        }
+      }
+
+      &--arrow {
+        position: relative;
+        margin: 0;
+        right: unset;
+        font-size: 6px;
+        margin-left: 4px;
+        color: inherit;
+      }
+
+      .brz-control__select-options {
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+        width: auto;
+      }
     }
   }
 }

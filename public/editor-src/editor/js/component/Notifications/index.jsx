@@ -10,7 +10,7 @@ import {
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
-import { sendHearBeatTakeOver } from "visual/utils/api/editor";
+import { sendHearBeatTakeOver } from "visual/utils/api";
 import { ToastNotification } from "./ToastNotifications";
 import EditorIcon from "visual/component/EditorIcon";
 

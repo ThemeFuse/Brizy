@@ -74,6 +74,7 @@ export function getItems({ v, device, component, state }) {
                   v,
                   device,
                   state,
+                  config: component.context.dynamicContent.config,
                   states: [NORMAL, HOVER],
                   devices: "desktop",
                   disabled: dvvh("media") !== "image",
@@ -88,6 +89,7 @@ export function getItems({ v, device, component, state }) {
                   v,
                   device,
                   state,
+                  config: component.context.dynamicContent.config,
                   states: [NORMAL, HOVER],
                   devices: "responsive",
                   disabled:
@@ -488,46 +490,49 @@ export function getItems({ v, device, component, state }) {
           }
         },
         {
-          type: "multiPicker",
+          id: "multiPicker",
+          type: "group-dev",
           devices: "desktop",
-          disabled: inPopup2 || IS_GLOBAL_POPUP,
           position: 90,
-          picker: {
-            id: "columnsHeightStyle",
-            label: t("Height"),
-            type: "select-dev",
-            devices: "desktop",
-            choices: [
-              { title: t("Auto"), value: "auto" },
-              { title: t("Custom"), value: "custom" }
-            ]
-          },
-          choices: {
-            custom: [
-              {
-                id: "columnsHeight",
-                type: "slider-dev",
-                devices: "desktop",
-                config: {
-                  min: 20,
-                  max: 500,
-                  units: [{ value: "px", title: "px" }]
-                }
-              },
-              {
-                id: "verticalAlign",
-                label: t("Content"),
-                type: "radioGroup-dev",
-                devices: "desktop",
-                position: 110,
-                choices: [
-                  { value: "top", icon: "nc-align-top" },
-                  { value: "center", icon: "nc-align-middle" },
-                  { value: "bottom", icon: "nc-align-bottom" }
-                ]
+          disabled: inPopup2 || IS_GLOBAL_POPUP,
+          options: [
+            {
+              id: "columnsHeightStyle",
+              label: t("Height"),
+              type: "select-dev",
+              devices: "desktop",
+              position: 90,
+              choices: [
+                { title: t("Auto"), value: "auto" },
+                { title: t("Custom"), value: "custom" }
+              ]
+            },
+            {
+              id: "columnsHeight",
+              type: "slider-dev",
+              devices: "desktop",
+              disabled: !(v.columnsHeightStyle === "custom"),
+              position: 1100,
+              config: {
+                min: 20,
+                max: 500,
+                units: [{ value: "px", title: "px" }]
               }
-            ]
-          }
+            },
+            {
+              id: "verticalAlign",
+              label: t("Content"),
+              type: "radioGroup-dev",
+              devices: "desktop",
+              disabled: !(v.columnsHeightStyle === "custom"),
+              position: 1100,
+              choices: [
+                { value: "top", icon: "nc-align-top" },
+                { value: "center", icon: "nc-align-middle" },
+                { value: "bottom", icon: "nc-align-bottom" }
+              ]
+            }
+          ]
         },
         {
           id: "advancedSettings",

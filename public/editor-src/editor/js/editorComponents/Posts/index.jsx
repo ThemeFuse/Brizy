@@ -1,23 +1,45 @@
 import React from "react";
 import classnames from "classnames";
 import { noop } from "underscore";
+import { Subject, from } from "rxjs";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap
+} from "rxjs/operators";
+import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
+import Placeholder from "visual/component/Placeholder";
+import EditorIcon from "visual/component/EditorIcon";
+import * as json from "visual/utils/reader/json";
 import contextMenuConfig from "./contextMenu";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParent from "./toolbarExtendParent";
+import toolbarExtendParentFn from "./toolbarExtendParent";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as toolbarExtendPagination from "./toolbarExtendPagination";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
 import * as toolbarExtendFilter from "./toolbarExtendFilter";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
+import { IS_CLOUD } from "visual/utils/env";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
+import { tabletSyncOnChange } from "visual/utils/onChange";
+import {
+  decodeSymbols,
+  encodeSymbols,
+  stringifyAttributes
+} from "./utils.common";
+import { getLoopAttributes } from "./utils";
+import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import { migrations } from "./migrations";
 
-class Posts extends EditorComponent {
+export class Posts extends EditorComponent {
   static get componentId() {
     return "Posts";
   }
@@ -28,13 +50,124 @@ class Posts extends EditorComponent {
     extendParentToolbar: noop
   };
 
-  componentDidMount() {
+  state = {
+    dataLoading: false,
+    data: undefined
+  };
+
+  unmounted = false;
+
+  subject$;
+
+  constructor(props) {
+    super(props);
+
+    if (IS_EDITOR) {
+      this.subject$ = new Subject().pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        tap(() => this.setState({ dataLoading: true })),
+        switchMap(value =>
+          from(
+            DCApiProxyInstance.getDC(
+              [
+                `{{brizy_dc_post_loop ${value}}}`,
+                `{{brizy_dc_post_loop_pagination ${value}}}`
+              ],
+              {
+                postId: Config.get("page").id,
+                cache: false
+              }
+            ).then(r => {
+              const [loop, pagination] = r || [];
+              return {
+                loop: json.read(loop),
+                pagination: json.read(pagination)
+              };
+            })
+          )
+        )
+      );
+
+      this.subject$.subscribe(({ loop, pagination }) => {
+        if (!this.unmounted) {
+          const { collection, config } = loop;
+          const context = collection.map(item => ({
+            dynamicContent: {
+              itemId: item,
+              config: (config[item] || config["*"])?.dynamicContent || {
+                image: [],
+                link: [],
+                richText: []
+              }
+            }
+          }));
+
+          this.setState({
+            dataLoading: false,
+            data: { context, paginationInfo: pagination }
+          });
+        }
+      });
+    }
+  }
+
+  async componentDidMount() {
+    this.reloadData();
+
+    const toolbarContext = await (async () => {
+      try {
+        return IS_CLOUD
+          ? { collectionTypesInfo: await getCollectionTypesInfo() }
+          : undefined;
+      } catch (e) {
+        console.error(e);
+        return undefined;
+      }
+    })();
+    const toolbarExtendParent = toolbarExtendParentFn(toolbarContext);
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParent,
       { allowExtend: false }
     );
+
     this.props.extendParentToolbar(toolbarExtend);
+  }
+
+  componentDidUpdate() {
+    // NOTE: it is possible to check the patch inside handleValueChange
+    // and call this.reloadData() only when the patch contains certain keys that should trigger data refetch
+    // but this seems tedious and error prone, so we'll rely until then on rxjs distinctUntilChanged
+    // to prevent unnecessary api calls
+    this.reloadData();
+  }
+
+  componentWillUnmount() {
+    this.unmounted = true;
+
+    this.subject$.complete();
+    this.subject$ = undefined;
+  }
+
+  reloadData() {
+    const v = this.getValue();
+    this.subject$.next(
+      stringifyAttributes(
+        Object.assign({ content_type: "json" }, getLoopAttributes(v))
+      )
+    );
+  }
+
+  handleValueChange(newValue, meta) {
+    super.handleValueChange(encodeSymbols(newValue), meta);
+  }
+
+  getValue2() {
+    const values = super.getValue2();
+    const v = decodeSymbols(values.v);
+
+    return v === values.v ? values : Object.assign(values, { v });
   }
 
   getMeta(v) {
@@ -59,31 +192,72 @@ class Posts extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      type,
-      taxonomy,
-      taxonomyId,
-      orderBy,
-      order,
-      gridRow,
-      gridColumn,
-      pagination,
-      filter,
-      filterStyle
-    } = v;
+    const { data, dataLoading } = this.state;
+
+    if (data === undefined) {
+      return <Placeholder icon="posts" style={{ height: "300px" }} />;
+    }
+
+    const { type, gridRow, gridColumn, pagination, filter, filterStyle } = v;
     const className = classnames(
       "brz-posts",
       { "brz-posts--masonry": filter === "on" },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
-      )
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
-
     const itemsProps = this.makeSubcomponentProps({
-      type,
       bindWithKey: "items",
+      className,
+      type,
+      data,
+      rowCount: gridRow, // deprecate after done ?
+      columnCount: gridColumn, // deprecate after done ?
+      meta: this.getMeta(v),
+      showPagination: pagination === "on",
+      toolbarExtendPagination: this.makeToolbarPropsFromConfig2(
+        toolbarExtendPagination,
+        sidebarExtendPagination,
+        {
+          allowExtend: false
+        }
+      ),
+      showFilter: filter === "on",
+      filterStyle,
+      toolbarExtendFilter: this.makeToolbarPropsFromConfig2(
+        toolbarExtendFilter,
+        sidebarExtendFilter,
+        {
+          allowExtend: false
+        }
+      ),
+      loopAttributes: IS_EDITOR ? undefined : getLoopAttributes(v)
+    });
+
+    return (
+      <>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            <Items {...itemsProps} />
+          </ContextMenu>
+        </CustomCSS>
+        {dataLoading && (
+          <div className="brz-ed-portal__loading">
+            <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+          </div>
+        )}
+      </>
+    );
+  }
+
+  renderForView(v, vs, vd) {
+    const { type, gridRow, gridColumn, pagination, filter, filterStyle } = v;
+    const className = classnames(
+      "brz-posts",
+      { "brz-posts--masonry": filter === "on" },
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+    );
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      type,
       className,
       rowCount: gridRow,
       columnCount: gridColumn,
@@ -105,31 +279,7 @@ class Posts extends EditorComponent {
           allowExtend: false
         }
       ),
-      loopAttributes: {
-        ...(type === "posts" || type === "products"
-          ? {
-              query: {
-                tax_query: {
-                  0: {
-                    taxonomy,
-                    field: "id",
-                    terms: taxonomyId
-                  }
-                },
-                posts_per_page: gridRow * gridColumn,
-                order,
-                orderby: orderBy
-              }
-            }
-          : type === "upsell"
-          ? {
-              count: gridRow * gridColumn
-            }
-          : {
-              query: "",
-              count: gridRow * gridColumn
-            })
-      }
+      loopAttributes: IS_EDITOR ? undefined : getLoopAttributes(v)
     });
 
     return (
@@ -141,4 +291,5 @@ class Posts extends EditorComponent {
     );
   }
 }
-export default Posts;
+
+export default withMigrations(Posts, migrations);

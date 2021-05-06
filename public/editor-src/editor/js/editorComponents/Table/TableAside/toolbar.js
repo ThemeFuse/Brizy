@@ -9,7 +9,7 @@ export function getItems({ v }) {
         icon: "nc-star"
       },
       title: t("Table"),
-      position: 70,
+      position: 50,
       options: [
         {
           id: "currentShortcodeTabs",

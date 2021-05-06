@@ -1,0 +1,54 @@
+@import "../../variables";
+
+$size: 60px;
+$transition: 0.2s linear;
+
+@mixin fat-icon {
+  text-align: center;
+  width: $size;
+
+  .brz-icon-svg,
+  .brz-ed-label {
+    color: $text-white;
+    transition: color $transition;
+  }
+
+  .brz-ed--icon-wrapper {
+    border: solid 2px $brand-options;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    height: $size;
+    cursor: pointer;
+    transition: border-color $transition;
+  }
+
+  .brz-icon-svg {
+    font-size: $toolbar-font-size;
+  }
+
+  .brz-ed-label {
+    font-size: $toolbar-static-font-size;
+    line-height: 2.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover .brz-ed--icon-wrapper {
+    border-color: $options-border-hover-color;
+  }
+
+  &.brz-ed--active {
+    .brz-icon-svg,
+    .brz-ed-label {
+      color: $brand-primary;
+    }
+
+    .brz-ed--icon-wrapper {
+      border-color: $brand-primary;
+    }
+  }
+}

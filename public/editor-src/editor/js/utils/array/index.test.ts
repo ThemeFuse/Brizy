@@ -1,5 +1,6 @@
 import { identity } from "underscore";
 import {
+  flatMap,
   drop,
   filter,
   findIndex,
@@ -15,8 +16,28 @@ import {
   readIndex,
   succ,
   toArray,
-  orderByKeys
+  orderByKeys,
+  move,
+  fromString
 } from "./index";
+import * as Num from "../math/number";
+
+test("Testing 'flatMap' function", () => {
+  const arr = [1, 2, 3, 4];
+
+  expect(flatMap(arr, x => x * x)).toEqual([1, 4, 9, 16]);
+  expect(flatMap(arr, x => [x * x])).toEqual([1, 4, 9, 16]);
+  expect(flatMap(arr, x => [x / 2, x * x])).toEqual([
+    0.5,
+    1,
+    1,
+    4,
+    1.5,
+    9,
+    2,
+    16
+  ]);
+});
 
 describe("Testing 'toArray' function", () => {
   test("Always return same value if it is an valid array", () => {
@@ -304,5 +325,99 @@ describe("Testing 'orderByKey' function", function() {
 
   test("If the values of the ordering and target do not match exactly. Return intersection", () => {
     expect(orderByKeys([4, 10, 6, 3], items)).toEqual(["e", "d"]);
+  });
+});
+
+describe("Testing 'move' function", () => {
+  test("For empty array return everytime the same array back", () => {
+    const arr: string[] = [];
+
+    expect(move(0, 1, arr)).toBe(arr);
+  });
+
+  test("If indexes are the same, return same array", () => {
+    const arr: string[] = ["a", "b", "c"];
+
+    expect(move(0, 0, arr)).toBe(arr);
+  });
+
+  test("If 'from' index does not exist, return same array back", () => {
+    const arr: string[] = ["a", "b", "c"];
+
+    expect(move(-3, 2, arr)).toBe(arr);
+    expect(move(10, 2, arr)).toBe(arr);
+  });
+
+  test("If 'to' index does not exist, return same array back", () => {
+    const arr: string[] = ["a", "b", "c"];
+
+    expect(move(0, -3, arr)).toBe(arr);
+    expect(move(1, 10, arr)).toBe(arr);
+  });
+
+  describe("Test when 'from' index is lower then 'to'", () => {
+    const arr = [1, 2, 3, 4, 5];
+    const seed = [
+      { from: 0, to: 1, res: [2, 1, 3, 4, 5] },
+      { from: 0, to: 4, res: [2, 3, 4, 5, 1] },
+      { from: 1, to: 2, res: [1, 3, 2, 4, 5] },
+      { from: 3, to: 4, res: [1, 2, 3, 5, 4] },
+      { from: 2, to: 4, res: [1, 2, 4, 5, 3] }
+    ];
+
+    seed.forEach(v => {
+      test(`move(${v.from}, ${v.to}, [${arr}]) to be [${v.res}]`, () => {
+        expect(move(v.from, v.to, arr)).toStrictEqual(v.res);
+      });
+    });
+  });
+
+  describe("Test when 'to' index is lower then 'from'", () => {
+    const arr = [1, 2, 3, 4, 5];
+    const seed = [
+      { from: 1, to: 0, res: [2, 1, 3, 4, 5] },
+      { from: 4, to: 0, res: [5, 1, 2, 3, 4] },
+      { from: 2, to: 1, res: [1, 3, 2, 4, 5] },
+      { from: 4, to: 3, res: [1, 2, 3, 5, 4] },
+      { from: 4, to: 2, res: [1, 2, 5, 3, 4] }
+    ];
+
+    seed.forEach(v => {
+      test(`move(${v.from}, ${v.to}, [${arr}]) to be [${v.res}]`, () => {
+        expect(move(v.from, v.to, arr)).toStrictEqual(v.res);
+      });
+    });
+  });
+
+  test("If 'from' and 'to' indexes have same value, return original array", () => {
+    const v = {};
+    const arr = [1, 2, v, 3, 4, v, 5];
+
+    expect(move(2, 5, arr)).toBe(arr);
+  });
+});
+
+describe("Testing 'fromString' function", () => {
+  test("Return undefined for none json arrays", () => {
+    const seed = ["", "sadfsd", JSON.stringify({ a: test })];
+
+    seed.forEach(v => expect(fromString<any>(f => f, v)).toBe(undefined));
+  });
+
+  test("If the value is an empty array, return empty array, regardless of reader", () => {
+    const reader = (i: unknown): undefined => undefined;
+    expect(fromString(reader, "[]")).toEqual([]);
+  });
+
+  test("If at least one value does not pass the reader, return undefined", () => {
+    expect(fromString(Num.read, JSON.stringify([1, 2, "test", 4]))).toBe(
+      undefined
+    );
+  });
+
+  test("Items in array should be in they original order", () => {
+    const arr = [1, 2, 3, 4, 5];
+
+    expect(fromString(Num.read, JSON.stringify(arr))).toStrictEqual(arr);
   });
 });

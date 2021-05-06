@@ -49,6 +49,12 @@ export {
   toolbarBoxShadowFields2
 } from "./toolbarBoxShadow";
 
+export {
+  toolbarTextShadow,
+  toolbarTextShadowHexField2,
+  toolbarTextShadowFields2
+} from "./toolbarTextShadow";
+
 // Anchor and URL
 export {
   toolbarLinkAnchor,
@@ -137,7 +143,6 @@ export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 export {
   toolbarImageLinkExternal,
   toolbarImageTags,
-  toolbarImageSetter,
   toolbarImageBorderRadius
 } from "./toolbarElementImage";
 
@@ -146,6 +151,7 @@ export {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
   toolbarTypography2FontSize,
+  toolbarTypography2FontSizeSuffix,
   toolbarTypography2LineHeight,
   toolbarTypography2FontWeight,
   toolbarTypography2LetterSpacing

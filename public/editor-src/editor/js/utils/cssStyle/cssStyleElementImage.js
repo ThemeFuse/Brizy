@@ -27,21 +27,6 @@ export function cssStyleElementImageHeightPreview({ device, props = {} }) {
   return height === undefined || height === null ? "" : "height: auto;";
 }
 
-export function cssStyleElementImageBorderRadius({ v, device, props = {} }) {
-  const { borderRadius } = v;
-
-  const { width, height } = props.wrapperSizes
-    ? props.wrapperSizes[device]
-    : props[device];
-
-  const maxBorderRadius = Math.round(Math.min(width, height) / 2);
-
-  return (width === undefined || width === null) &&
-    (height === undefined || height === null)
-    ? ""
-    : `border-radius: ${Math.min(borderRadius, maxBorderRadius)}px;`;
-}
-
 export function cssStyleElementImageMaxWidthEditor({ v, device, props = {} }) {
   const { width } = props[device];
 

@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import classNames from "classnames";
 import {
   WithClassName,
@@ -11,19 +11,19 @@ import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
 
 type Meta = { editing: boolean };
 
-export type Props = WithClassName &
-  WithValue<Value> &
-  WithOnChange2<Value, Meta> & {
+export type Props<U> = WithClassName &
+  WithValue<Value<U>> &
+  WithOnChange2<Value<U>, Meta> & {
     step: number;
     min: number;
     max: number;
     inputMin?: number;
     inputMax?: number;
-    units: Unit[];
+    units: Unit<U>[];
   };
 
-export const NumberSlider: FC<Props> = ({
-  value: { number, unit = "" },
+export function NumberSlider<U>({
+  value: { number, unit },
   onChange,
   className,
   min,
@@ -32,13 +32,13 @@ export const NumberSlider: FC<Props> = ({
   inputMax,
   step,
   units
-}) => {
+}: Props<U>): ReactElement {
   const _sliderChange = useCallback(
     (number: number, m: Meta): void => onChange({ number, unit }, m),
     [onChange, unit]
   );
   const _numberChange = useCallback(
-    (v: Value): void => onChange(v, { editing: false }),
+    (v: Value<U>): void => onChange(v, { editing: false }),
     [onChange]
   );
   return (
@@ -50,7 +50,7 @@ export const NumberSlider: FC<Props> = ({
         min={min}
         max={max}
       />
-      <NumberUnit
+      <NumberUnit<U>
         units={units}
         step={step}
         min={inputMin ? Math.min(min, inputMin) : undefined}
@@ -60,4 +60,4 @@ export const NumberSlider: FC<Props> = ({
       />
     </div>
   );
-};
+}

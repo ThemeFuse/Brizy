@@ -21,9 +21,7 @@ import { getTime, formatDate } from "./utils";
 import BoxResizer from "visual/component/BoxResizer";
 import { capitalize } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
-
-// lib
-import "./lib/jquery.countdown.js";
+import "visual/libs/countdown2/jquery.countdown";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 

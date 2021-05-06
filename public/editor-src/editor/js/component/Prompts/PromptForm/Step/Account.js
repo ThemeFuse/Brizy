@@ -6,7 +6,7 @@ import {
   Account as ViewAccount,
   Disconnect as ViewDisconnect
 } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 class Account extends Component {
   static contextType = Context;

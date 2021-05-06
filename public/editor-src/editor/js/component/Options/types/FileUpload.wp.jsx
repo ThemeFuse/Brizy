@@ -1,7 +1,7 @@
 import React from "react";
 import FileUpload from "./FileUpload.jsx";
 import EditorIcon from "visual/component/EditorIcon";
-import { getAttachmentById } from "visual/utils/api/editor";
+import { getAttachmentById } from "visual/utils/api";
 
 class FileUploadWP extends FileUpload {
   wpMediaFrame = null;

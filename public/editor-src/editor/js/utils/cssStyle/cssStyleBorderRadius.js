@@ -11,7 +11,7 @@ export function cssStyleBorderRadius({ v, device, state, prefix = "" }) {
   let bottomRightRadius = 0;
   let radiusType = styleBorderRadiusType({ v, device, state, prefix });
 
-  if (radiusType === "grouped") {
+  if (radiusType !== "ungrouped") {
     const radius = styleBorderRadiusGrouped({ v, device, state, prefix });
 
     topLeftRadius = radius;

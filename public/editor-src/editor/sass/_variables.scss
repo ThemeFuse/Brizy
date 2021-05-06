@@ -113,7 +113,7 @@ $toolbar-static-font-size: 12px;
 $toolbar-tooltip-sm-width: 171px !default;
 $toolbar-tooltip-md-width: 255px !default;
 $toolbar-tooltip-lg-width: 305px !default;
-$toolbar-tooltip-typo-width: 385px;
+$toolbar-tooltip-typo-width: 420px;
 
 // $popover-item-width: 46px !default;
 $popover-item-height: 50px !default;
@@ -210,6 +210,7 @@ $options-item-font-size: 13px;
 $options-label-color: $gray-light;
 $options-control-height: 30px;
 $options-control-radius: 4px;
+$options-border-hover-color: #818a91;
 
 // Resize
 $resize-blue: $by-block-border-blue;

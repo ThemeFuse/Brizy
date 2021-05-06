@@ -7,7 +7,12 @@
 
   "style": {
     "width": 100,
+    "widthSuffix": "%",
+
     "tabletWidth": null,
-    "mobileWidth": null
+    "tabletWidthSuffix": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null
   }
 }

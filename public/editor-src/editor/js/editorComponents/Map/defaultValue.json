@@ -23,6 +23,8 @@
   },
 
   "style": {
+    "test": "",
+    "testActive": "",
     "className": "",
 
     "brightness": 100,

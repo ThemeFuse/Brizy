@@ -71,6 +71,7 @@
     "fontStyle": "",
     "fontFamilyType": "google",
     "fontSize": 16,
+    "fontSizeSuffix": "px",
     "fontWeight": 400,
     "lineHeight": 1.1,
     "letterSpacing": 0,

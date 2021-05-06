@@ -1,5 +1,5 @@
 import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api/editor";
+import { request2 } from "visual/utils/api";
 import { SignIn, SignUp } from "./types";
 
 export const signIn = (data: SignIn): Promise<Response> => {
@@ -23,7 +23,7 @@ export const signUp = (data: SignUp): Promise<Response> => {
       new_password: password,
       confirm_password: confirmPassword
       /* eslint-enable @typescript-eslint/camelcase */
-  })
+    })
   });
 };
 

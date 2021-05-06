@@ -13,6 +13,40 @@ import BoxResizer from "visual/component/BoxResizer";
 import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
+const resizerRestrictions = {
+  width: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  // Tablet
+  tabletWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  // Mobile
+  mobileWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  }
+};
 
 export default class ProgressBar extends EditorComponent {
   static get componentId() {
@@ -44,7 +78,12 @@ export default class ProgressBar extends EditorComponent {
     return (
       <div className={classNameBar} data-progress={percentage}>
         {showText === "on" && (
-          <Text id="text" v={v} onChange={this.handleTextChange} className="brz-progress-bar__text" />
+          <Text
+            id="text"
+            v={v}
+            className="brz-progress-bar__text"
+            onChange={this.handleTextChange}
+          />
         )}
         {showPercentage === "on" && (
           <span className="brz-span brz-progress-bar__percent">
@@ -121,41 +160,6 @@ export default class ProgressBar extends EditorComponent {
       )
     );
 
-    const restrictions = {
-      width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      // Tablet
-      tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      // Mobile
-      mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      }
-    };
-
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -169,10 +173,10 @@ export default class ProgressBar extends EditorComponent {
           >
             <BoxResizer
               points={resizerPoints}
+              restrictions={resizerRestrictions}
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
-              restrictions={restrictions}
             >
               {progressBarStyle === "style1"
                 ? this.renderStyle1(v, vs, vd)

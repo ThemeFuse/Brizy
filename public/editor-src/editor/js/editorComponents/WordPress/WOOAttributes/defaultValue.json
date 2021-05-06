@@ -7,6 +7,16 @@
 
     "style": "table",
 
+    "title": "off",
+    "titleText": "Additional information",
+
+    "titleSpacing": 10,
+    "titleSpacingSuffix": "px",
+    "tabletTitleSpacing": null,
+    "tabletTitleSpacingSuffix": null,
+    "mobileTitleSpacing": null,
+    "mobileTitleSpacingSuffix": null,
+
     "spacing": 10,
     "spacingSuffix": "px",
 
@@ -19,12 +29,51 @@
     "families": {
       "attributesFontFamily": "lato",
       "tabletAttributesFontFamily": null,
-      "mobileAttributesFontFamily": null
+      "mobileAttributesFontFamily": null,
+      "titleFontFamily": "lato",
+      "tabletTitleFontFamily": null,
+      "mobileTitleFontFamily": null
     },
+
+    "titleFontStyle": "",
+    "titleFontFamilyType": "google",
+    "titleFontSize": 25,
+    "titleFontWeight": 300,
+    "titleLineHeight": 1,
+    "titleLetterSpacing": 1,
+
+    "tabletTitleFontStyle": "",
+    "tabletTitleFontFamilyType": null,
+    "tabletTitleFontSize": 20,
+    "tabletTitleFontWeight": 300,
+    "tabletTitleLineHeight": 1,
+    "tabletTitleLetterSpacing": 1,
+
+    "mobileTitleFontStyle": "",
+    "mobileTitleFontFamilyType": null,
+    "mobileTitleFontSize": 20,
+    "mobileTitleFontWeight": 300,
+    "mobileTitleLineHeight": 1,
+    "mobileTitleLetterSpacing": 0,
+
+    "titleColorHex": "#1c1c1c",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "color2",
+
+    "tempTitleColorOpacity": 1,
+    "tempTitleColorPalette": "color2",
+
+    "hoverTitleColorHex": null,
+    "hoverTitleColorOpacity": null,
+    "hoverTitleColorPalette": null,
+
+    "tempHoverTitleColorOpacity": null,
+    "tempHoverTitleColorPalette": null,
 
     "attributesFontStyle": "",
     "attributesFontFamilyType": "google",
     "attributesFontSize": 20,
+    "attributesFontSizeSuffix": "px",
     "attributesFontWeight": 300,
     "attributesLineHeight": 1.3,
     "attributesLetterSpacing": -0.1,
@@ -79,6 +128,7 @@
     "tabletAttributesFontStyle": "",
     "tabletAttributesFontFamilyType": null,
     "tabletAttributesFontSize": 15,
+    "tabletAttributesFontSizeSuffix": "px",
     "tabletAttributesFontWeight": 300,
     "tabletAttributesLineHeight": 1.3,
     "tabletAttributesLetterSpacing": 0,
@@ -95,6 +145,7 @@
     "mobileAttributesFontStyle": "",
     "mobileAttributesFontFamilyType": null,
     "mobileAttributesFontSize": 15,
+    "mobileAttributesFontSizeSuffix": "px",
     "mobileAttributesFontWeight": 300,
     "mobileAttributesLineHeight": 1.3,
     "mobileAttributesLetterSpacing": 0

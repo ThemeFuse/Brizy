@@ -4,11 +4,11 @@ import Editor from "visual/global/Editor";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { canUseCondition } from "visual/utils/blocks";
 import {
+  pageSelector,
   blocksDataSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
 import { updateGlobalBlock } from "visual/redux/actions2";
-import { pageSelector } from "visual/redux/selectors2";
 
 class GlobalBlock extends EditorComponent {
   static get componentId() {
@@ -61,12 +61,12 @@ class GlobalBlock extends EditorComponent {
 
   renderForEdit() {
     const _id = this.getId();
-    const { blocksData, globalBlocks, pageId } = this.props;
+    const { blocksData, globalBlocks, page } = this.props;
 
     // if all rules was removed in globalBlock - it still exists
     // into pageJson, but shouldn't be shown
 
-    if (!canUseCondition(globalBlocks[_id], pageId)) {
+    if (!canUseCondition(globalBlocks[_id], page)) {
       return null;
     }
 
@@ -120,7 +120,7 @@ class GlobalBlock extends EditorComponent {
 const mapStateToProps = state => ({
   blocksData: blocksDataSelector(state),
   globalBlocks: globalBlocksSelector(state),
-  pageId: pageSelector(state).id
+  page: pageSelector(state)
 });
 
 export default connect(mapStateToProps)(GlobalBlock);

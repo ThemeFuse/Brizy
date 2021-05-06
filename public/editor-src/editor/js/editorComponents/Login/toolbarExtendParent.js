@@ -1,6 +1,21 @@
 import { t } from "visual/utils/i18n";
 
-export function getItems({ v }) {
+export default register => ({ getItems: getItems(register) });
+
+export const getItems = register => ({ v }) => {
+  const typeChoices = register
+    ? [
+        { value: "login", title: "Login" },
+        { value: "authorized", title: "Authorized" },
+        { value: "register", title: "Register" },
+        { value: "forgot", title: "Forgot Password" }
+      ]
+    : [
+        { value: "login", title: "Login" },
+        { value: "authorized", title: "Authorized" },
+        { value: "forgot", title: "Forgot Password" }
+      ];
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -23,12 +38,8 @@ export function getItems({ v }) {
                   id: "type",
                   type: "select-dev",
                   label: "Type",
-                  choices: [
-                    { value: "login", title: "Login" },
-                    { value: "authorized", title: "Authorized" }
-                    // { value: "register", title: "Register" },
-                    // { value: "forgot", title: "Forgot Password" }
-                  ]
+                  devices: "desktop",
+                  choices: typeChoices
                 }
               ]
             },
@@ -44,10 +55,31 @@ export function getItems({ v }) {
                   type: "switch-dev"
                 },
                 {
+                  id: "showRegisterInfo",
+                  label: t("Register Info"),
+                  devices: "desktop",
+                  disabled: v.type !== "register",
+                  type: "switch-dev"
+                },
+                {
                   id: "showLostPassword",
                   label: t("Lost Password"),
                   devices: "desktop",
-                  disabled: v.type !== "login",
+                  disabled: v.type === "forgot",
+                  type: "switch-dev"
+                },
+                {
+                  id: "showRegisterLink",
+                  label: t("Register"),
+                  devices: "desktop",
+                  disabled: v.type === "register" || !register,
+                  type: "switch-dev"
+                },
+                {
+                  id: "showLoginLink",
+                  label: t("Login"),
+                  devices: "desktop",
+                  disabled: v.type === "login",
                   type: "switch-dev"
                 }
               ]
@@ -62,4 +94,4 @@ export function getItems({ v }) {
       disabled: true
     }
   ];
-}
+};

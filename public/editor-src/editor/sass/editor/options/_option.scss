@@ -106,7 +106,7 @@
     align-items: normal;
     text-align: left;
 
-    .brz-ed-option__label {
+    & > .brz-ed-option__label {
       flex-basis: auto;
       margin-right: 0;
       justify-content: space-between;

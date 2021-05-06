@@ -50,14 +50,6 @@
         align-items: stretch !important;
       }
 
-      // Reordering (apply to flex-child)
-      .brz-col-first-#{$breakpoint} {
-        order: -1;
-      }
-      .brz-col-last-#{$breakpoint} {
-        order: 1;
-      }
-
       // Self column align (apply to specific flex-child)
       .brz-align-self-#{$breakpoint}-start {
         align-self: flex-start !important;
@@ -81,26 +73,6 @@
       }
       .brz-flex-#{$breakpoint}-wrap-reverse {
         flex-wrap: wrap-reverse !important;
-      }
-
-      // Align content
-      .brz-align-content-#{$breakpoint}-start {
-        align-content: flex-start !important;
-      }
-      .brz-align-content-#{$breakpoint}-end {
-        align-content: flex-end !important;
-      }
-      .brz-align-content-#{$breakpoint}-center {
-        align-content: center !important;
-      }
-      .brz-align-content-#{$breakpoint}-around {
-        align-content: space-around !important;
-      }
-      .brz-align-content-#{$breakpoint}-stretch {
-        align-content: stretch !important;
-      }
-      .brz-align-content-#{$breakpoint}-between {
-        align-content: space-between !important;
       }
     }
   }

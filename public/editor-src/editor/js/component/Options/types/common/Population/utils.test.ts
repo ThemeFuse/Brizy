@@ -1,15 +1,10 @@
 import { property } from "underscore";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import {
-  bindPopulation,
-  isEnabled
-} from "visual/component/Options/types/common/Population/utils";
-import { PopulationMethod } from "visual/component/Options/types/common/Population/types/PopulationMethod";
+import { bindPopulationEnabled, isOptgroup } from "./utils";
+import { PopulationMethod } from "./types/PopulationMethod";
+import { Choices, OptGroup } from "./types/Choices";
 
-describe("Testing 'bindPopulation' function", function() {
-  // @ts-ignore
-  global.TARGET = "WP";
-
+describe("Testing 'bindPopulationEnabled' function", function() {
   const method: PopulationMethod = { title: "test", value: "test" };
   const option: ToolbarItemType = {
     id: "test",
@@ -17,6 +12,25 @@ describe("Testing 'bindPopulation' function", function() {
     value: { src: "test.jpg", extension: "jpg" }
   };
   const withPopulation = { ...option, population: [method] };
+  const choices: (Choices<string | number> | OptGroup<string | number>)[] = [
+    {
+      value: "1",
+      title: "Title"
+    },
+    {
+      title: "Title 2",
+      optgroup: [
+        {
+          value: "2",
+          title: "Title 2.1"
+        },
+        {
+          value: "3",
+          title: "Title 2.2"
+        }
+      ]
+    }
+  ];
 
   test("If population is not defined, return original option", () => {
     const i: ToolbarItemType = {
@@ -25,7 +39,7 @@ describe("Testing 'bindPopulation' function", function() {
       value: { src: "test.jpg", extension: "jpg" }
     };
 
-    expect(bindPopulation(i)).toEqual(i);
+    expect(bindPopulationEnabled(i)).toEqual(i);
   });
 
   test("If option is not in development, return original option", () => {
@@ -36,7 +50,7 @@ describe("Testing 'bindPopulation' function", function() {
       population: [method]
     };
 
-    expect(bindPopulation(i)).toEqual(i);
+    expect(bindPopulationEnabled(i)).toEqual(i);
   });
 
   test("Wrap option in a population option type", () => {
@@ -54,7 +68,7 @@ describe("Testing 'bindPopulation' function", function() {
       options: [option]
     };
 
-    expect(bindPopulation(withPopulation)).toEqual(result);
+    expect(bindPopulationEnabled(withPopulation)).toEqual(result);
   });
 
   const o: ToolbarItemType = {
@@ -70,7 +84,7 @@ describe("Testing 'bindPopulation' function", function() {
       content: "Test helper"
     }
   };
-  const r = bindPopulation(o);
+  const r = bindPopulationEnabled(o);
 
   test.each([
     "label",
@@ -98,18 +112,9 @@ describe("Testing 'bindPopulation' function", function() {
       property("population")(o)
     );
   });
-});
 
-describe("Testing 'isEnabled' function", function() {
-  test("Return false if TARGET is not WP", () => {
-    // @ts-ignore
-    global.TARGET = "node_local";
-    expect(isEnabled()).toBe(false);
-  });
-
-  test("Return false if TARGET is not WP", () => {
-    // @ts-ignore
-    global.TARGET = "WP";
-    expect(isEnabled()).toBe(true);
+  test("Is optgroup", () => {
+    expect(isOptgroup(choices[0])).toBe(false);
+    expect(isOptgroup(choices[1])).toBe(true);
   });
 });

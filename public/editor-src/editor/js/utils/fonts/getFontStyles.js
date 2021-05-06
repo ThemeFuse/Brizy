@@ -1,6 +1,8 @@
 import { getStore } from "visual/redux/store";
-import { currentStyleSelector } from "visual/redux/selectors";
-import { extraFontStylesSelector } from "visual/redux/selectors2";
+import {
+  currentStyleSelector,
+  extraFontStylesSelector
+} from "visual/redux/selectors";
 
 export function getFontStyles({ includeDeleted = false } = {}) {
   const state = getStore().getState();

@@ -1,4 +1,4 @@
-import { Response } from "visual/utils/api/editor/response";
+import { Response } from "visual/utils/api/response";
 
 export type AccountsResolve = {
   status: Response["status"];

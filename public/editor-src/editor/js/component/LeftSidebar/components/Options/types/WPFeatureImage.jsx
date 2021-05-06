@@ -7,7 +7,7 @@ import {
   updateFeaturedImage,
   updateFeaturedImageFocalPoint,
   removeFeaturedImage
-} from "visual/utils/api/editor";
+} from "visual/utils/api";
 import { getImageFormat } from "visual/utils/image";
 
 const { page } = Config.get("wp");

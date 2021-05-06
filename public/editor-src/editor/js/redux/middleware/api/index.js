@@ -44,6 +44,8 @@ import {
   pollingSendHeartBeat
 } from "./utils";
 import {
+  pageSelector,
+  fontSelector,
   projectSelector,
   projectAssembled,
   stylesSelector,
@@ -53,12 +55,12 @@ import {
   changedGBIdsSelector,
   errorSelector
 } from "../../selectors";
-import { pageSelector, fontSelector } from "../../selectors2";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
+import { IS_STORY } from "visual/utils/models";
 import { UNDO, REDO } from "../../history/types";
 import { historySelector } from "../../history/selectors";
 import { t } from "visual/utils/i18n";
@@ -89,33 +91,40 @@ function handlePublish({ action, state, apiHandler }) {
     const project = projectSelector(state);
     const page = pageSelector(state);
 
-    const changedGBIds = changedGBIdsSelector(state);
-    const globalBlocks = globalBlocksAssembledSelector(state);
+    let gbPromise;
+    if (IS_STORY) {
+      gbPromise = Promise.resolve();
+    } else {
+      const changedGBIds = changedGBIdsSelector(state);
+      const globalBlocks = globalBlocksAssembledSelector(state);
 
-    // cancel possible pending requests
-    debouncedApiUpdatePage.cancel();
-    debouncedApiUpdateProject.cancel();
-    debouncedApiUpdateGlobalBlocksPositions.cancel();
+      // cancel possible pending requests
+      debouncedApiUpdatePage.cancel();
+      debouncedApiUpdateProject.cancel();
+      debouncedApiUpdateGlobalBlocksPositions.cancel();
 
-    const newGlobalBlocks = Object.entries(globalBlocks).reduce(
-      (acc, [id, globalBlock]) => {
-        debouncedApiUpdateGlobalBlock.cancel(id);
+      const newGlobalBlocks = Object.entries(globalBlocks).reduce(
+        (acc, [id, globalBlock]) => {
+          debouncedApiUpdateGlobalBlock.cancel(id);
 
-        // eslint-disable-next-line no-unused-vars
-        const { data, ...rest } = globalBlock;
+          // eslint-disable-next-line no-unused-vars
+          const { data, ...rest } = globalBlock;
 
-        acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
+          acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
 
-        return acc;
-      },
-      {}
-    );
+          return acc;
+        },
+        {}
+      );
+
+      gbPromise = apiUpdateGlobalBlocks(newGlobalBlocks, meta);
+    }
 
     apiHandler(
       Promise.all([
         apiUpdateProject(project, meta),
         apiUpdatePage(page, meta),
-        apiUpdateGlobalBlocks(newGlobalBlocks, meta)
+        gbPromise
       ]),
       onSuccess,
       onError

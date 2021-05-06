@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 export const title = t("Search");
@@ -13,8 +12,6 @@ const helperHTML = `
 </p>`;
 
 export function getItems({ v, device }) {
-  const dvkn = key => defaultValueKey({ key, device });
-
   return [
     {
       id: "settingsTabs",
@@ -45,7 +42,7 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvkn("moreSettingsAdvanced"),
+          id: "moreSettingsAdvanced",
           label: t("Advanced"),
           icon: "nc-cog",
           options: [

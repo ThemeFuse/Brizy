@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 class RecaptchaDisconnect extends Component {
   static contextType = Context;

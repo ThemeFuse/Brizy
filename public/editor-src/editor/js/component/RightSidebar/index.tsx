@@ -14,9 +14,8 @@ import { t } from "visual/utils/i18n";
 import { ReduxState } from "visual/redux/types";
 
 type DeviceModes = ReduxState["ui"]["deviceMode"];
-export type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
-
-export type RightSidebarProps = RightSidebarStore & {
+type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
+type RightSidebarProps = RightSidebarStore & {
   deviceMode: DeviceModes;
   dispatch: Dispatch<ActionUpdateUI>;
 };
@@ -239,9 +238,7 @@ const mapStateToProps: MapStateToProps<
   RightSidebarProps,
   ReduxState
 > = state => {
-  const { isOpen, lock, alignment }: RightSidebarStore = uiSelector(
-    state
-  ).rightSidebar;
+  const { isOpen, lock, alignment } = uiSelector(state).rightSidebar;
 
   return {
     isOpen,

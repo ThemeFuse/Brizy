@@ -3,7 +3,7 @@ import classnames from "classnames";
 import Toolbar from "visual/component/Toolbar";
 import { removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 class AccordionItems extends EditorArrayComponent {
@@ -37,7 +37,8 @@ class AccordionItems extends EditorArrayComponent {
       navIcon,
       collapsible,
       animDuration,
-      animationClassName
+      animationClassName,
+      tagName
     } = this.props;
 
     const { tags = "" } = itemData.value;
@@ -81,6 +82,7 @@ class AccordionItems extends EditorArrayComponent {
       animDuration,
       animationClassName,
       toolbarExtend,
+      tagName,
       activeAccordionItem: activeAccordionItem === itemIndex,
       visibleTag: this.state.visibleTag,
       handleAccordion: () => {

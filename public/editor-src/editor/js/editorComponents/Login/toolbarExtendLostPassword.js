@@ -46,18 +46,8 @@ export function getItems({ v, device }) {
       devices: "desktop",
       options: [
         {
-          id: "color",
-          type: "tabs-dev",
-          tabs: [
-            {
-              options: [
-                {
-                  id: "lostColor",
-                  type: "colorPicker-dev"
-                }
-              ]
-            }
-          ]
+          id: "lostColor",
+          type: "colorPicker-dev"
         }
       ]
     },

@@ -8,11 +8,14 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { FontStyle } from "./FontStyle";
 import { Label } from "visual/component/Label";
 import { FontFamily } from "visual/component/Controls/FontFamily";
+import { IS_STORY } from "visual/utils/models";
 
 export class Typography extends PureComponent {
   onFontFamily = v => this.props.onChange(v, { isChanged: "fontFamily" });
   onFontStyle = v => this.props.onChange(v, { isChanged: "fontStyle" });
   onFontSize = v => this.props.onChange(v, { isChanged: "fontSize" });
+  onFontSizeSuffix = v =>
+    this.props.onChange(v, { isChanged: "fontSizeSuffix" });
   onFontWeight = v => this.props.onChange(v, { isChanged: "fontWeight" });
   onLineHeight = v => this.props.onChange(v, { isChanged: "lineHeight" });
   onLetterSpacing = v => this.props.onChange(v, { isChanged: "letterSpacing" });
@@ -37,7 +40,7 @@ export class Typography extends PureComponent {
           />
         )}
         <div className="brz-ed-control__typography-styles">
-          <div className={"brz-ed__col brz-ed__col-1-1"}>
+          <div className="brz-ed__col brz-ed__col-1-1">
             <Label>{props.styleLabel}</Label>
             <FontStyle
               styles={props.styles}
@@ -46,8 +49,31 @@ export class Typography extends PureComponent {
               value={props.style}
             />
           </div>
-          <div className={"brz-ed__col brz-ed__col-1-2"}>
-            <Label>{props.sizeLabel}</Label>
+          <div className="brz-ed__col brz-ed__col-1-2">
+            {IS_STORY ? (
+              <Label>{props.sizeLabel}</Label>
+            ) : (
+              <div className="brz-control__typography-suffix">
+                <Label>{props.sizeLabel}</Label>
+                <Select
+                  className="brz-control__select--dark"
+                  defaultValue={props.sizeSuffix}
+                  itemHeight={30}
+                  onChange={this.onFontSizeSuffix}
+                >
+                  {props.sizeSuffixes.map(({ value, title }) => (
+                    <SelectItem
+                      key={value}
+                      value={value}
+                      title={title}
+                      active={value === props.sizeSuffix}
+                    >
+                      {title}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            )}
             <Stepper
               min={props.sizeMin}
               max={props.sizeMax}
@@ -56,7 +82,7 @@ export class Typography extends PureComponent {
               onChange={this.onFontSize}
             />
           </div>
-          <div className={"brz-ed__col brz-ed__col-1-2"}>
+          <div className="brz-ed__col brz-ed__col-1-2">
             <Label>{props.weightLabel}</Label>
             <Select
               className="brz-control__select--dark"
@@ -76,7 +102,7 @@ export class Typography extends PureComponent {
               ))}
             </Select>
           </div>
-          <div className={"brz-ed__col brz-ed__col-1-2"}>
+          <div className="brz-ed__col brz-ed__col-1-2">
             <Label>{props.lineHeightLabel}</Label>
             <Stepper
               min={props.lineHeightMin}
@@ -86,7 +112,7 @@ export class Typography extends PureComponent {
               onChange={this.onLineHeight}
             />
           </div>
-          <div className={"brz-ed__col brz-ed__col-1-2"}>
+          <div className="brz-ed__col brz-ed__col-1-2">
             <Label>{props.letterSpacingLabel}</Label>
             <Stepper
               min={props.letterSpacingMin}
@@ -115,6 +141,7 @@ Typography.propTypes = {
   styleLabel: FontStyle.propTypes.label,
   styleOpenSettings: FontStyle.propTypes.openSettings,
   size: T.number.isRequired,
+  sizeSuffix: T.string.isRequired,
   sizeMin: T.number,
   sizeMax: T.number,
   sizeStep: T.number,

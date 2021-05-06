@@ -5,8 +5,10 @@ import { t } from "visual/utils/i18n";
 import { getStore } from "visual/redux/store";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
-import { GlobalBlock } from "visual/types";
-import { getRulesList } from "visual/utils/api/editor";
+import Config from "visual/global/Config";
+import { GlobalBlock, Rule } from "visual/types";
+import { getRulesList } from "visual/utils/api";
+import { IS_CMS } from "visual/utils/env";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -27,8 +29,8 @@ type Options = {
   icon: string;
   label: string;
   title: string;
-  asyncGetValue?: () => Promise<unknown>;
-  value?: GlobalBlock["rules"];
+  asyncGetValue?: () => Promise<Rule[]>;
+  value?: Rule[];
   onChange?: (data: ChangeCallbackData) => void;
 }[];
 
@@ -95,13 +97,21 @@ export const ConditionsComponent: React.FC<{
         ];
 
         if (!IS_EXTERNAL_POPUP) {
+          // ts-ignore added because cms's getRulesList method is expecting
+          // CollectionItemId, but old cloud & wp is expecting nothing
+          const asyncGetValue = IS_CMS
+            ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
+            : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              (): Promise<Rule[]> => getRulesList();
+
           options.push({
             id: "rules",
             type: "rules",
             icon: "nc-eye-17",
             label: t("Conditions"),
             title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
-            asyncGetValue: getRulesList,
+            asyncGetValue,
             onChange: data => {
               getStore().dispatch(updatePopupRules(data));
             }

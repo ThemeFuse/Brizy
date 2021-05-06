@@ -27,8 +27,16 @@ export const isNullish = (v: unknown): v is Nullish =>
 /**
  * Return orElse if value is null or undefined
  */
-export function onNullish<T>(orElse: T, v: T | Nullish): T {
-  return isNullish(v) ? orElse : v;
+export function onNullish<T>(orElse: T, v: T | Nullish): T;
+export function onNullish<T>(orElse: T): (v: T | Nullish) => T;
+export function onNullish<T>(
+  ...args: [T] | [T, T | Nullish]
+): T | ((v: T | Nullish) => T) {
+  return args.length === 1
+    ? (v: T | Nullish): T => (isNullish(v) ? args[0] : v)
+    : isNullish(args[1])
+    ? args[0]
+    : args[1];
 }
 
 /**
@@ -111,3 +119,13 @@ export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
       v
     );
 }
+
+/**
+ * Check whenever an potential maybe value is empty or not
+ */
+export const isT = <T>(t: MNullish<T>): t is T => !isNullish(t);
+
+/**
+ * Check whenever a list of values has undefined values or not
+ */
+export const isTs = <T>(ts: MNullish<T>[]): ts is T[] => ts.every(isT);

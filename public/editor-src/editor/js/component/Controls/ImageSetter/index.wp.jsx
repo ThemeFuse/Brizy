@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import ImageSetter from "./index.jsx";
 import EditorIcon from "visual/component/EditorIcon";
-import { getImageUid } from "visual/utils/api/editor";
+import { getImageUid } from "visual/utils/api";
 import { getImageFormat, preloadImage } from "visual/utils/image";
 import { imageAttachments } from "visual/utils/image/imageAttachments";
 

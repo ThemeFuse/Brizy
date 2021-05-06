@@ -8,6 +8,7 @@ import { hideToolbar } from "visual/component/Toolbar/index";
 import { IS_STORY } from "visual/utils/models";
 import { getFontById } from "visual/utils/fonts";
 import { getWeightChoices } from "visual/utils/fonts";
+import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
 import { uuid } from "visual/utils/uuid";
 import { printf } from "visual/utils/string";
 import { t } from "visual/utils/i18n";
@@ -17,14 +18,17 @@ class FontStyle extends React.Component {
     title: "Title",
     fontFamily: "",
     fontSize: 12,
+    fontSizeSuffix: "px",
     fontWeight: 300,
     lineHeight: 1,
     letterSpacing: 1,
     tabletFontSize: 12,
+    tabletFontSizeSuffix: "px",
     tabletFontWeight: 300,
     tabletLineHeight: 1,
     tabletLetterSpacing: 1,
     mobileFontSize: 12,
+    mobileFontSizeSuffix: "px",
     mobileFontWeight: 300,
     mobileLineHeight: 1,
     mobileLetterSpacing: 1,
@@ -63,14 +67,17 @@ class FontStyle extends React.Component {
       fontFamily,
       fontFamilyType,
       fontSize,
+      fontSizeSuffix,
       fontWeight,
       lineHeight,
       letterSpacing,
       tabletFontSize,
+      tabletFontSizeSuffix,
       tabletFontWeight,
       tabletLineHeight,
       tabletLetterSpacing,
       mobileFontSize,
+      mobileFontSizeSuffix,
       mobileFontWeight,
       mobileLineHeight,
       mobileLetterSpacing,
@@ -141,9 +148,20 @@ class FontStyle extends React.Component {
                                 width: 50,
                                 options: [
                                   {
-                                    id: "fontSize",
+                                    id: "fontSizeSuffix",
+                                    type: "select",
                                     label: "Size",
+                                    className: "brz-control__typography-suffix",
+                                    disabled: IS_STORY,
+                                    choices: getSuffixChoices,
+                                    value: fontSizeSuffix,
+                                    onChange: fontSizeSuffix =>
+                                      onChange({ fontSizeSuffix })
+                                  },
+                                  {
+                                    id: "fontSize",
                                     type: "stepper",
+                                    label: IS_STORY ? "Size" : "",
                                     display: "block",
                                     min: 1,
                                     max: 300,
@@ -212,8 +230,17 @@ class FontStyle extends React.Component {
                                 width: 50,
                                 options: [
                                   {
-                                    id: "tabletFontSize",
+                                    id: "tabletFontSizeSuffix",
+                                    type: "select",
                                     label: "Size",
+                                    className: "brz-control__typography-suffix",
+                                    choices: getSuffixChoices,
+                                    value: tabletFontSizeSuffix,
+                                    onChange: tabletFontSizeSuffix =>
+                                      onChange({ tabletFontSizeSuffix })
+                                  },
+                                  {
+                                    id: "tabletFontSize",
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
@@ -284,8 +311,17 @@ class FontStyle extends React.Component {
                                 width: 50,
                                 options: [
                                   {
-                                    id: "mobileFontSize",
+                                    id: "mobileFontSizeSuffix",
+                                    type: "select",
                                     label: "Size",
+                                    className: "brz-control__typography-suffix",
+                                    choices: getSuffixChoices,
+                                    value: mobileFontSizeSuffix,
+                                    onChange: mobileFontSizeSuffix =>
+                                      onChange({ mobileFontSizeSuffix })
+                                  },
+                                  {
+                                    id: "mobileFontSize",
                                     type: "stepper",
                                     display: "block",
                                     min: 1,

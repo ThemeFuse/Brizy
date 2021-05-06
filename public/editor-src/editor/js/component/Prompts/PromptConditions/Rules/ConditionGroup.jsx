@@ -35,12 +35,12 @@ class ConditionGroup extends React.Component {
   }
 
   renderTypeOptions(items) {
-    return [{ title: "All", value: "" }, ...items].map((item, i) =>
+    return [{ title: "All", value: "" }, ...items].map(item =>
       !item.items ? (
         renderSelectItem(item)
       ) : (
         <SelectOptgroup
-          key={i}
+          key={item.value}
           title={item.title}
           items={item.items.map(renderSelectItem)}
         >

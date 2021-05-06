@@ -34,6 +34,17 @@ export function style(v, vs, vd) {
     },
     ".brz && table tr:last-child th, .brz && table tr:last-child td": {
       standart: ["cssStyleElementWOOAttributesLastElementBorder"]
+    },
+    ".brz &&:hover .brz-woo-attributes_title ": {
+      standart: [
+        "cssStyleElementWOOAdditionalTitleFontFamily",
+        "cssStyleElementWOOAdditionalTitleFontSize",
+        "cssStyleElementWOOAdditionalTitleLineHeight",
+        "cssStyleElementWOOAdditionalTitleFontWeight",
+        "cssStyleElementWOOAdditionalTitleLetterSpacing",
+        "cssStyleElementWOOAdditionalTitleColor",
+        "cssStyleElementWOOAdditionalTitleSpacing"
+      ]
     }
   };
 

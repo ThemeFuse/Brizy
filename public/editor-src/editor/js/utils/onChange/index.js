@@ -79,6 +79,15 @@ export {
   onChangeBoxShadowOpacity2
 } from "./onChangeBoxShadow";
 
+export {
+  onChangeTextShadowType,
+  onChangeTextShadowHexAndOpacity,
+  onChangeTextShadowHexAndOpacityPalette,
+  onChangeTextShadowPalette,
+  onChangeTextShadowPaletteOpacity,
+  onChangeTextShadowFields
+} from "./onChangeTextShadow";
+
 // Padding
 export {
   onChangePaddingGrouped,
@@ -93,6 +102,9 @@ export {
 
 // Element Section
 export { onChangeElementSectionBoxShadowHexAndOpacityDependencies } from "./onChangeElementSection";
+
+// Element RichText
+export { onChangeElementRichTextBgColorType2 } from "./onChangeElementRichText";
 
 // Element Progress Bar
 export {

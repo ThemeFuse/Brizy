@@ -117,6 +117,7 @@ export function getItems({ v, device, component, state }) {
                   v,
                   device,
                   state,
+                  config: component.context.dynamicContent.config,
                   states: [NORMAL, HOVER],
                   onChange: [
                     "onChangeBgImage",

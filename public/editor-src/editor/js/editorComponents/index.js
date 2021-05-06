@@ -77,6 +77,10 @@ import FacebookGroup from "./FacebookGroup";
 import Twitter from "./Twitter";
 import Lottie from "./Lottie";
 
+import PostTitle from "./PostTitle";
+import PostExcerpt from "./PostExcerpt";
+import Posts from "./Posts";
+
 export default {
   Page,
   PagePopup,
@@ -155,7 +159,12 @@ export default {
   Twitter,
   Lottie,
   StoryWrapper,
-  Shape
+  Shape,
+
+  // DC
+  PostTitle,
+  PostExcerpt,
+  Posts
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

@@ -29,11 +29,11 @@ module.exports = options => {
           options: babelrc.export()
         },
         {
-          test: /quill|isotope-layout|magnific-popup|slick-carousel/,
+          test: /graphql|apollo|@apollo\/client|quill|isotope-layout|magnific-popup|slick-carousel/,
           loader: "null-loader"
         },
         {
-          test: /[\\/]lib[\\/]/,
+          test: /[\\/]libs?[\\/]/,
           include: [path.resolve(__dirname, "editor")],
           loader: "null-loader"
         },

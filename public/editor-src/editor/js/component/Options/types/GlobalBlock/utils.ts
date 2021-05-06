@@ -1,5 +1,5 @@
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
-import { createBlockScreenshot } from "visual/utils/api/editor";
+import { createBlockScreenshot } from "visual/utils/api";
 import { findDeep } from "visual/utils/object";
 import { Block, Screenshot } from "visual/types";
 

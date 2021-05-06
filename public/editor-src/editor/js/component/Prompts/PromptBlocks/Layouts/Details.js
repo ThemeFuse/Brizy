@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
 import Scrollbars from "react-custom-scrollbars";
-import { stylesSelector } from "visual/redux/selectors";
-import { fontSelector } from "visual/redux/selectors2";
+import { stylesSelector, fontSelector } from "visual/redux/selectors";
 import ImageLoad from "../common/ImageLoad";
 import { templateThumbnailUrl } from "visual/utils/templates";
 import { assetUrl } from "visual/utils/asset";
@@ -16,7 +15,7 @@ import {
   getBlocksStylesFonts
 } from "visual/utils/traverse";
 import { t } from "visual/utils/i18n";
-import { normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { flatMap } from "visual/utils/array";
 import { IS_STORY } from "visual/utils/models";
 import { getBlockDataUrl } from "visual/utils/blocks";
@@ -111,7 +110,7 @@ class Details extends Component {
       const dataObj = await data.json();
       const blocks = dataObj[type];
 
-      styles = blocks.find(({ name }) => name === id).styles;
+      styles = normalizeStyles(blocks.find(({ name }) => name === id).styles);
 
       // Check fonts
       const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);

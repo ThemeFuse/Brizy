@@ -9,6 +9,12 @@ export interface PopulationMethod {
   icon?: string;
 }
 
+export interface PopulationOptgroupMethod {
+  title: string;
+  optgroup: PopulationMethod[];
+  icon?: string;
+}
+
 export const read: Reader<PopulationMethod> = v => {
   if (typeof v === "object") {
     const title = String.read(get("title", v as PopulationMethod));

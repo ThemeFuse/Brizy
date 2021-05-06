@@ -39,7 +39,7 @@ export const page: RPage = (state, action, fullState) => {
     }
     case "UPDATE_POPUP_RULES": {
       return produce<Page>(state, draft => {
-        draft.data.rulesAmount = action.payload.length;
+        draft.data.rulesAmount = action.payload.rules.length;
         draft.dataVersion = draft.dataVersion + 1;
       });
     }

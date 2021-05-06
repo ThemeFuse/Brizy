@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
-import { downloadImageFromCloud } from "visual/utils/api/editor";
+import { downloadImageFromCloud } from "visual/utils/api";
 import { objectToQueryString } from "visual/utils/url";
-import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.js";
+import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.ts";
 import { imageAttachments } from "./imageAttachments";
 
 const siteUrl = Config.get("urls").site;

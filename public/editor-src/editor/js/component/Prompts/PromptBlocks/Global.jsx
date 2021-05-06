@@ -11,9 +11,9 @@ import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   globalBlocksAssembledSelector,
-  globalBlocksInPageSelector
+  globalBlocksInPageSelector,
+  fontSelector
 } from "visual/redux/selectors";
-import { fontSelector } from "visual/redux/selectors2";
 import { deleteGlobalBlock } from "visual/redux/actions2";
 import {
   getBlocksStylesFonts,

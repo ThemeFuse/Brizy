@@ -1,6 +1,6 @@
 import produce from "immer";
 import { assetUrl } from "visual/utils/asset";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";
 import { AppData } from "../common/GlobalApps/type";

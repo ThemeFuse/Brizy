@@ -15,8 +15,8 @@ export type Config = WithSize & {
   spinner: boolean;
 };
 
-export type Props = Option.Props<number, SimpleValue<number>> &
+export type Props = Option.Props<SimpleValue<number>> &
   WithConfig<Config> &
   WithClassName;
 
-export type Component = OptionType<number> & FC<Props>;
+export type Component = OptionType<SimpleValue<number>> & FC<Props>;

@@ -8,7 +8,7 @@ import LazyLoadImage from "visual/component/LazyLoadImage";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
-import { authorizedSelector } from "visual/redux/selectors2";
+import { authorizedSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { IS_STORY } from "visual/utils/models";
 

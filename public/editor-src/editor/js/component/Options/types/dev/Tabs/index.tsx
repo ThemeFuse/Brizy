@@ -21,7 +21,7 @@ export type Config = {
   align?: CProps["align"];
 };
 
-export type Props = Option.Props<Literal, SimpleValue<Literal>> &
+export type Props = Option.Props<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName & {
     toolbar: object;
@@ -36,11 +36,11 @@ export type Props = Option.Props<Literal, SimpleValue<Literal>> &
   };
 
 export const Tabs: FC<Props> &
-  Option.OptionType<Literal> &
+  Option.OptionType<SimpleValue<Literal>> &
   Option.SelfFilter<Props> = ({
   tabs,
   onChange,
-  value,
+  value: { value },
   config,
   toolbar,
   className
@@ -87,10 +87,24 @@ export const Tabs: FC<Props> &
   );
 };
 
-export const getModel: Option.GetModel<Literal> = get =>
-  read(get("value")) ?? "";
+export const getModel: Option.GetModel<SimpleValue<Literal>> = get => ({
+  value: read(get("value"))
+});
+
+const getElementModel: Option.GetElementModel<SimpleValue<Literal>> = (
+  values,
+  get
+) => {
+  return {
+    [get("value")]: values.value
+  };
+};
 
 Tabs.getModel = getModel;
+
+Tabs.getElementModel = getElementModel;
+
+Tabs.defaultValue = { value: "" };
 
 Tabs.shouldOptionBeFiltered = ({ tabs = [] }): boolean =>
   tabs.every(tab => filterOptionsData(tab?.options ?? []).length === 0);

@@ -4,8 +4,7 @@ import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { IS_PRO } from "visual/utils/models/modes";
-
+import { IS_PRO } from "visual/utils/env";
 import items from "./items";
 
 const ConfigUrls = Config.get("urls");

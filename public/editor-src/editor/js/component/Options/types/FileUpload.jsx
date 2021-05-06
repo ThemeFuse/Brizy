@@ -2,7 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import { uploadFile } from "visual/utils/api/editor";
+import { uploadFile } from "visual/utils/api";
 
 class FileUpload extends React.Component {
   static defaultProps = {

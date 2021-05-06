@@ -1,6 +1,7 @@
+import produce from "immer";
 import { uuid } from "visual/utils/uuid";
 import { getGoogleFonts } from "visual/utils/fonts";
-import { getUploadedFonts } from "visual/utils/api/editor";
+import { getUploadedFonts } from "visual/utils/api";
 
 const normalizeWeights = weights => {
   return weights.reduce(
@@ -130,4 +131,26 @@ export const normalizeFonts = async newFonts => {
     const [type, fonts] = curr;
     return [...acc, { type, fonts }];
   }, []);
+};
+
+export const normalizeStyles = styles => {
+  return produce(styles, draft => {
+    draft.map(({ fontStyles }) => normalizeFontStyles(fontStyles));
+  });
+};
+
+export const normalizeFontStyles = fontStyles => {
+  return produce(fontStyles, draft => {
+    draft.map(style => {
+      if (!style.fontSizeSuffix) {
+        style.fontSizeSuffix = "px";
+      }
+      if (!style.tabletFontSizeSuffix) {
+        style.tabletFontSizeSuffix = "px";
+      }
+      if (!style.mobileFontSizeSuffix) {
+        style.mobileFontSizeSuffix = "px";
+      }
+    });
+  });
 };

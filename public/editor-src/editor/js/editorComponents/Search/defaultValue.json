@@ -24,6 +24,7 @@
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
     "typographyFontSize": 21,
+    "typographyFontSizeSuffix": "px",
     "typographyFontWeight": 700,
     "typographyLineHeight": 1,
     "typographyLetterSpacing": 1,
@@ -187,6 +188,7 @@
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 13,
+    "tabletTypographyFontSizeSuffix": "px",
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1,
     "tabletTypographyLetterSpacing": 1,
@@ -199,6 +201,7 @@
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
     "mobileTypographyFontSize": 13,
+    "mobileTypographyFontSizeSuffix": "px",
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1,
     "mobileTypographyLetterSpacing": 1

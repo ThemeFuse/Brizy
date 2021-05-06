@@ -1,5 +1,5 @@
 import { getFontById } from "visual/utils/fonts";
-import * as Weight from "./weight";
+import * as Weight from "./Weight.ts";
 import { weightTitle } from "visual/utils/fonts/i10n";
 
 /**

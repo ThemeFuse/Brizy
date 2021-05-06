@@ -53,7 +53,8 @@ class Accordion extends EditorComponent {
       navIcon,
       collapsible,
       animDuration,
-      enableTags
+      enableTags,
+      tagName
     } = v;
 
     const className = classnames(
@@ -76,6 +77,7 @@ class Accordion extends EditorComponent {
       activeAccordionItem,
       navIcon,
       collapsible,
+      tagName,
       animDuration,
       enableTags,
       animationClassName,

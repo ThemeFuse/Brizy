@@ -12,9 +12,7 @@ import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { getTime, formatDate, getLanguage } from "./utils";
 import BoxResizer from "visual/component/BoxResizer";
-
-// lib
-import "./lib/jquery.countdown.js";
+import "visual/libs/countdown/jquery.countdown";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -141,7 +139,9 @@ class Countdown extends EditorComponent {
     const { timeZone, language } = v;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div
             ref={el => {

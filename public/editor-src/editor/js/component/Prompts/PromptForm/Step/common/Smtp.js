@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
 import { updateSmtpIntegration } from "../../api";
 import { InputFields } from "../../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 class Smtp extends Component {
   constructor(props) {

@@ -36,6 +36,24 @@ export function styleTypography2FontSize({ v, device, state, prefix = "" }) {
   );
 }
 
+export function styleTypography2FontSizeSuffix({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
+  const dvk = key => defaultValueKey({ key, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const fontSizeSuffixKey = capByPrefix(prefix, "fontSizeSuffix");
+  const fontStyleKey = capByPrefix(prefix, "fontStyle");
+
+  return getOptionFontByGlobal(
+    dvk("fontSizeSuffix"),
+    dvv(fontSizeSuffixKey),
+    dvv(fontStyleKey)
+  );
+}
+
 export function styleTypography2LineHeight({ v, device, state, prefix = "" }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });

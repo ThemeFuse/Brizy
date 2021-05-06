@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useRef, useEffect } from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { imageUrl } from "visual/utils/image";
+import { imageUrl2 } from "visual/utils/image";
 import { calcImageSizes } from "../utils";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
@@ -13,9 +13,9 @@ import { styleImage } from "../styles";
 import { ImageSizes, ImageProps, Device, Styles } from "../types";
 
 const formatSrc = (imageSrc: string, maxCw: number): string => {
-  const imgUrl_1X = imageUrl(imageSrc, { iW: maxCw, iH: "any" });
+  const imgUrl_1X = imageUrl2(imageSrc, { iW: maxCw, iH: "any" });
 
-  const imgUrl_2X = imageUrl(imageSrc, {
+  const imgUrl_2X = imageUrl2(imageSrc, {
     iW: maxCw * 2,
     iH: "any"
   });
@@ -76,7 +76,7 @@ const SimpleImage: React.FC<ImageProps> = props => {
     desktopSrc: formatSrc(imageSrc, maxDesktopCW),
     tabletSrc: formatSrc(imageSrc, maxTabletCW),
     mobileSrc: formatSrc(imageSrc, maxMobileCW),
-    sourceSrc: imageUrl(imageSrc, { iW: maxMobileCW, iH: "any" })
+    sourceSrc: imageUrl2(imageSrc, { iW: maxMobileCW, iH: "any" })
   };
   // ! find less hacky way
 

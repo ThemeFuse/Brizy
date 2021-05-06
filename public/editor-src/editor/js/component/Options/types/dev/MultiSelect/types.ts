@@ -1,11 +1,12 @@
-import { Props as P } from "visual/component/Options/Type";
+import { Props as OptionType } from "visual/component/Options/Type";
 import { Value } from "./Value";
 import { WithConfig, WithSize } from "visual/utils/options/attributes";
+import { Literal } from "visual/utils/types/Literal";
 
-export type InputType = {
+export type Choice = {
   title: string;
   icon?: string;
-  value: Value;
+  value: Literal;
 };
 
 export type Config = WithSize & {
@@ -14,14 +15,14 @@ export type Config = WithSize & {
   scroll: number;
 };
 
-export type ChoicesSync = InputType[];
+export type ChoicesSync = Choice[];
 
 export type ChoicesAsync = {
-  load: (value: Value[], abortSignal?: AbortSignal) => Promise<InputType[]>;
-  search: (search: string, abortSignal?: AbortSignal) => Promise<InputType[]>;
+  load: (value: Value["value"], abortSignal?: AbortSignal) => Promise<Choice[]>;
+  search: (search: string, abortSignal?: AbortSignal) => Promise<Choice[]>;
 };
 
-export type Props = P<Value[], { value: Value }> &
+export type Props = OptionType<Value> &
   WithConfig<Config> & {
     choices: ChoicesSync | ChoicesAsync;
     placeholder?: string;

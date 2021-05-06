@@ -1,24 +1,25 @@
-import { MRead, Reader } from "visual/utils/types/Type";
-import { mCompose } from "visual/utils/value";
-import { NumberSpec } from "visual/utils/math/number";
 import { Append, Concat } from "visual/utils/types/Monoid";
+import { NewType } from "visual/types/NewType";
+import { pass } from "visual/utils/fp";
 
-/**
- * Convert a value to valid border width instance
- *  - If value is not a valid border width, return undefined
- */
-export const read: Reader<number> = mCompose(
-  n => (n >= 0 ? n : undefined),
-  NumberSpec.read
-);
+enum borderWidth {
+  borderWidth = "borderWidth"
+}
+
+export type Width = NewType<number, borderWidth.borderWidth>;
+
+export const is = (n: number): n is Width => n >= 0;
+
+export const fromNumber = pass(is);
 
 /**
  * Represents board style empty value
  * @type {number}
  */
-export const empty = 0;
+export const empty: Width = 0 as Width;
 
-export const append: Append<number> = (a, b) => (a === empty ? b : a);
-export const concat: Concat<number> = as => as.reduce(append, empty);
+export const append: Append<Width> = (a, b) => (a === empty ? b : a);
 
-export const mRead: MRead<number> = v => read(v) ?? empty;
+export const concat: Concat<Width> = as => as.reduce(append, empty);
+
+export const unsafe = (n: number): Width => n as Width;

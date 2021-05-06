@@ -1,0 +1,19 @@
+@import "../../variables";
+
+// Cloneable Order
+.brz-ed-option__cloneable-order {
+  svg {
+    transition: color 0.2s linear;
+    color: #fff;
+    font-size: 13px;
+
+    &:not(.brz-ed__disabled):hover {
+      color: $brand-primary;
+    }
+
+    &.brz-ed__disabled {
+      color: $gray-light;
+      cursor: default;
+    }
+  }
+}

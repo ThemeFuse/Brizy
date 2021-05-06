@@ -7,42 +7,6 @@
 .brz-visible {
   visibility: visible !important;
 }
-
-// Responsive visibility utilities
-@each $bp in map-keys($grid-breakpoints) {
-  .brz-hidden-#{$bp}-up {
-    @include media-breakpoint-up($bp) {
-      display: none !important;
-    }
-  }
-  .brz-hidden-#{$bp}-down {
-    @include media-breakpoint-down($bp) {
-      display: none !important;
-    }
-  }
-  .brz-invisible-#{$bp}-up {
-    @include media-breakpoint-up($bp) {
-      visibility: hidden !important;
-    }
-  }
-  .brz-invisible-#{$bp}-down {
-    @include media-breakpoint-down($bp) {
-      visibility: hidden !important;
-    }
-  }
-  .brz-invisible-blur-#{$bp}-up .brz-bg-content {
-    @include media-breakpoint-up($bp) {
-      filter: blur(3px);
-      opacity: 0.9;
-    }
-  }
-  .brz-invisible-blur-#{$bp}-down .brz-bg-content {
-    @include media-breakpoint-down($bp) {
-      filter: blur(3px);
-      opacity: 0.9;
-    }
-  }
-}
 .brz-hidden {
   display: none !important;
 }

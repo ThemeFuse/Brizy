@@ -9,7 +9,7 @@ import React, {
 import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
 import * as Str from "visual/utils/string/specs";
-import { getAttr, getHref, getTarget } from "./utils";
+import { getAttr, getHref, getRel, getTarget } from "./utils";
 import { Type, empty as defaultType } from "./types/Type";
 import { Target, empty as defaultTarget } from "./types/Target";
 
@@ -47,13 +47,14 @@ const _Link = (
   const _href = getHref(type, Str.mRead(href));
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
+  const _rel = getRel(Str.mRead(rel), _target);
 
   return (
     <a
       className={_className}
       href={_href}
       target={_target}
-      rel={rel === "on" ? "nofollow" : undefined}
+      rel={_rel}
       style={style}
       data-brz-link-type={type}
       onClick={preventDefault}

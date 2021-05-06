@@ -1,24 +1,5 @@
-import "@babel/polyfill";
-import jQuery from "jquery";
 import { createNanoEvents } from "nanoevents";
 import initExports from "./initExports";
-
-if (!window.jQuery) {
-  window.jQuery = jQuery;
-} else {
-  const plugins = [
-    "scrollPane",
-    "backgroundVideo",
-    "parallax",
-    "brzSticky",
-    "countdown",
-    "countdown2"
-  ];
-
-  plugins.forEach(plugin => {
-    window.jQuery.fn[plugin] = jQuery.fn[plugin];
-  });
-}
 
 window.Brizy = {
   emitter: createNanoEvents(),

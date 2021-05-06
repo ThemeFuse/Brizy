@@ -18,15 +18,15 @@ describe("Testing 'getModel' function", function() {
       const m: { [k: string]: MValue<Literal> } = { value: v };
       const get = (k: string): MValue<Literal> => m[k];
 
-      expect(getModel(get)).toEqual([]);
+      expect(getModel(get)).toEqual({ value: [] });
     });
   });
 
   test.each([
-    ["[1,2,3]", [1, 2, 3]],
-    ['["1","2","3"]', ["1", "2", "3"]],
-    ['["1",2,"3"]', ["1", 2, "3"]],
-    ['["1","2","3",{}]', ["1", "2", "3"]]
+    ["[1,2,3]", { value: [1, 2, 3] }],
+    ['["1","2","3"]', { value: ["1", "2", "3"] }],
+    ['["1",2,"3"]', { value: ["1", 2, "3"] }],
+    ['["1","2","3",{}]', { value: ["1", "2", "3"] }]
   ])("%s to %s", (a, b) => {
     const m: { [k: string]: MValue<Literal> } = { value: a };
     const get = (k: string): MValue<Literal> => m[k];
@@ -46,7 +46,7 @@ describe("Testing 'toElement' function", function() {
   });
 });
 
-test.each<[Value[], ChoicesSync, ChoicesSync]>([
+test.each<[Value["value"], ChoicesSync, ChoicesSync]>([
   [
     [],
     [

@@ -1,9 +1,9 @@
 import { IsEqual } from "visual/utils/types/Eq";
 
 export type Value = {
-  number: number;
+  value: number;
   unit: string;
 };
 
 export const eq: IsEqual<Value> = (a, b) =>
-  a.number === b.number && a.unit === b.unit;
+  a.value === b.value && a.unit === b.unit;

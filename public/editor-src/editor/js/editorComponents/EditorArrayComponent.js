@@ -24,6 +24,7 @@ import {
   mapModels
 } from "visual/utils/models";
 import { symbolsToItems } from "visual/editorComponents/Menu";
+import { move } from "visual/utils/array";
 const menusConfig = Config.get("menuData");
 
 const emptyTarget = value => (Array.isArray(value) ? [] : {});
@@ -111,6 +112,14 @@ export default class EditorArrayComponent extends EditorComponent {
     }
 
     this.insertItem(toIndex, dbValue[itemIndex]); // the object will be cloned there
+  }
+
+  reorderItem(from, to) {
+    const dbValue = this.getDBValue() || [];
+
+    this.handleValueChange(move(from, to, dbValue), {
+      arrayOperation: "moveItem"
+    });
   }
 
   handleKeyDown = (e, { keyName, id }) => {

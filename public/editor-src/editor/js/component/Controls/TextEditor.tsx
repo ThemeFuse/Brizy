@@ -41,8 +41,9 @@ export class TextEditor extends Component<Props, State> {
 
   shouldComponentUpdate(nextProps: Props): boolean {
     return (
-      this.lastNotifiedValue !== undefined &&
-      this.lastNotifiedValue !== nextProps.value
+      (this.lastNotifiedValue !== undefined &&
+        this.lastNotifiedValue !== nextProps.value) ||
+      this.props.tagName !== nextProps.tagName
     );
   }
 
@@ -122,7 +123,7 @@ export class TextEditor extends Component<Props, State> {
     e.preventDefault();
     const text = e.clipboardData.getData("text/plain");
     document.execCommand("insertHTML", false, text);
-  }
+  };
 
   render(): React.ReactElement {
     const { tagName, value, className: className_ } = this.props as Props &

@@ -20,9 +20,9 @@ export default class SidebarIcon extends React.Component {
     );
 
     return (
-      <li className={className} title={title} onClick={onClick}>
+      <div className={className} title={title} onClick={onClick}>
         <EditorIcon icon={icon} />
-      </li>
+      </div>
     );
   }
 }

@@ -135,6 +135,9 @@ export {
   cssStyleBoxShadowSection
 } from "./cssStyleBoxShadow";
 
+//Box Shadow
+export { cssStyleTextShadow } from "./cssStyleTextShadow";
+
 // Shape
 export {
   cssStyleShapeTopType,
@@ -182,6 +185,14 @@ export {
   cssStyleSizeProgressBarMaxWidthPercent,
   cssStyleElementProgressBarPropertyHoverTransition
 } from "./cssStyleElementProgressBar";
+
+// Element RichTExt
+export {
+  cssStyleElementRichTextMartinTop,
+  cssStyleElementRichTextMartinBottom,
+  cssStyleElementRichTextGradient,
+  cssStyleElementRichTextFontSize
+} from "./cssStyleElementRichText";
 
 //Element Button
 export {
@@ -419,7 +430,28 @@ export {
   cssStyleElementLoginTextTypography2FontWeight,
   cssStyleElementLoginTextTypography2LetterSpacing,
   cssStyleElementLoginTextColor,
-  cssStyleElementLoginLinkColor
+  cssStyleElementLoginLinkColor,
+  cssStyleElementLoginRegisterInfoTypography2FontFamily,
+  cssStyleElementLoginRegisterInfoTypography2FontSize,
+  cssStyleElementLoginRegisterInfoTypography2LineHeight,
+  cssStyleElementLoginRegisterInfoTypography2FontWeight,
+  cssStyleElementLoginRegisterInfoTypography2LetterSpacing,
+  cssStyleElementRegisterInfoColor,
+  cssStyleElementRegisterInfoAlign,
+  cssStyleElementLoginRegisterLinkTypography2FontFamily,
+  cssStyleElementLoginRegisterLinkTypography2FontSize,
+  cssStyleElementLoginRegisterLinkTypography2LineHeight,
+  cssStyleElementLoginRegisterLinkTypography2FontWeight,
+  cssStyleElementLoginRegisterLinkTypography2LetterSpacing,
+  cssStyleElementLoginRegisterLinkColor,
+  cssStyleElementLoginRegisterLinkAlign,
+  cssStyleElementLoginLoginLinkTypography2FontFamily,
+  cssStyleElementLoginLoginLinkTypography2FontSize,
+  cssStyleElementLoginLoginLinkTypography2LineHeight,
+  cssStyleElementLoginLoginLinkTypography2FontWeight,
+  cssStyleElementLoginLoginLinkTypography2LetterSpacing,
+  cssStyleElementLoginLoginLinkColor,
+  cssStyleElementLoginLoginLinkAlign
 } from "./cssStyleElementLogin";
 
 // Element Post Info
@@ -591,6 +623,13 @@ export {
 
 // Element Additional
 export {
+  cssStyleElementWOOAdditionalTitleFontFamily,
+  cssStyleElementWOOAdditionalTitleFontSize,
+  cssStyleElementWOOAdditionalTitleLineHeight,
+  cssStyleElementWOOAdditionalTitleFontWeight,
+  cssStyleElementWOOAdditionalTitleLetterSpacing,
+  cssStyleElementWOOAdditionalTitleColor,
+  cssStyleElementWOOAdditionalTitleSpacing,
   cssStyleElementWOOAttributesAttributesFontFamily,
   cssStyleElementWOOAttributesAttributesFontSize,
   cssStyleElementWOOAttributesAttributesLineHeight,
@@ -607,7 +646,6 @@ export {
   cssStyleElementPostsItemWidth,
   cssStyleElementPostsItemSpacing,
   cssStyleElementPostsPaginationSpacing,
-  cssStyleElementPostsPaginationLinksOff,
   cssStyleElementPostsPaginationFontFamily,
   cssStyleElementPostsPaginationFontSize,
   cssStyleElementPostsPaginationLineHeight,
@@ -616,6 +654,9 @@ export {
   cssStyleElementPostsPaginationColor,
   cssStyleElementPostsPaginationBgColor,
   cssStyleElementPostsPaginationBorder,
+  cssStyleElementPostsPaginationActiveColor,
+  cssStyleElementPostsPaginationActiveBgColor,
+  cssStyleElementPostsPaginationActiveBorder,
   cssStyleElementPostsPaginationBorderRadius,
   cssStyleElementPostsFilterDisplay,
   cssStyleElementPostsFilterHorizontalAlign,
@@ -947,7 +988,6 @@ export {
   cssStyleElementImageHeightPreview,
   cssStyleElementImageMaxWidthEditor,
   cssStyleElementImageHeightEditor,
-  cssStyleElementImageBorderRadius,
   cssStyleElementImageWidthWrapper,
   cssStyleElementImageHeightWrapper,
   cssStyleElementImageMarginLeft,
@@ -1024,3 +1064,6 @@ export {
   cssStyleElementWOOGallerySpacingStyleLeftRigth,
   cssStyleElementWOOGalleryZoomReposition
 } from "./cssStyleElementWOOGallery";
+
+//WP Title
+export { cssStyleElementTitleTextShadow } from "./cssStyleElementWPTitle";

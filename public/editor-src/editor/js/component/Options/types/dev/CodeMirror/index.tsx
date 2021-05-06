@@ -13,7 +13,7 @@ export type Config = {
   language: "html" | "css" | "javascript" | "markdown" | "xml";
 };
 export type Model = Option.SimpleValue<string>;
-export type Props = Option.Props<Model, Model> &
+export type Props = Option.Props<Model> &
   WithConfig<Config> &
   WithClassName &
   WithPlaceholder;
@@ -23,7 +23,8 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
   onChange,
   value: { value },
   config = {},
-  placeholder
+  placeholder,
+  label
 }) => {
   const [_value, setValue] = useState(value);
   const ref = useRef<string>();
@@ -52,18 +53,33 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
   }
 
   return (
-    <Control
-      className={className}
-      onChange={setValue}
-      value={_value}
-      language={language}
-      placeholder={placeholder}
-    />
+    <>
+      {label}
+      <Control
+        className={className}
+        onChange={setValue}
+        value={_value}
+        language={language}
+        placeholder={placeholder}
+      />
+    </>
   );
 };
 
 const getModel: Option.GetModel<Model> = get => ({
-  value: String.read(get("value")) || ""
+  value: String.read(get("value"))
 });
 
+const getElementModel: Option.GetElementModel<Model> = (values, get) => {
+  return {
+    [get("value")]: values.value
+  };
+};
+
+CodeMirror.defaultValue = {
+  value: ""
+};
+
 CodeMirror.getModel = getModel;
+
+CodeMirror.getElementModel = getElementModel;

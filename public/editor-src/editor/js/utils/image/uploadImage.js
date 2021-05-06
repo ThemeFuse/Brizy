@@ -1,5 +1,5 @@
 import _ from "underscore";
-import { uploadImage as apiUploadImage } from "visual/utils/api/editor";
+import { uploadImage as apiUploadImage } from "visual/utils/api";
 
 /* eslint-disable no-console, no-unused-vars */
 const defaultOptions = {

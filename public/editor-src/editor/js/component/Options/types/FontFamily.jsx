@@ -7,7 +7,8 @@ import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
 import { Roles } from "visual/component/Roles";
 import { fontTransform } from "visual/utils/fonts";
-import { projectSelector, unDeletedFontSelector } from "visual/redux/selectors";
+import { projectSelector } from "visual/redux/selectors";
+import { unDeletedFontSelector } from "visual/redux/selectors-new";
 import { t } from "visual/utils/i18n";
 
 const fontSizeMap = {
@@ -123,7 +124,4 @@ const mapStateToProps = state => ({
   defaultFont: projectSelector(state).data.font
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(FontFamily);
+export default connect(mapStateToProps, null)(FontFamily);

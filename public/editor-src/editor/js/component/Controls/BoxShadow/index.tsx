@@ -22,14 +22,15 @@ import {
   Value
 } from "visual/component/Controls/BoxShadow/types";
 
-type Props = WithClassName &
-  WithValue<Value> &
-  WithOnChange2<Value, Meta> & {
-    opacity: boolean;
-    types: TypeObject[];
-    palette: PaletteObject[];
-    paletteOpenSettings: () => void;
-  };
+export interface Props
+  extends WithClassName,
+    WithValue<Value>,
+    WithOnChange2<Value, Meta> {
+  opacity: boolean;
+  types: TypeObject[];
+  palette: PaletteObject[];
+  paletteOpenSettings: () => void;
+}
 
 export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
   const className = classNames("brz-ed-control__boxShadow", props.className);

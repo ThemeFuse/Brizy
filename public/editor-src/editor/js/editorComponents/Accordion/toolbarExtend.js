@@ -37,6 +37,23 @@ export function getItems({ v, device }) {
               label: t("Accordion"),
               options: [
                 {
+                  id: "tagName",
+                  label: t("HTML Tag"),
+                  type: "select-dev",
+                  choices: [
+                    { title: t("SPAN"), value: "span" },
+                    { title: t("DIV"), value: "div" },
+                    { title: t("P"), value: "p" },
+                    { title: t("H1"), value: "h1" },
+                    { title: t("H2"), value: "h2" },
+                    { title: t("H3"), value: "h3" },
+                    { title: t("H4"), value: "h4" },
+                    { title: t("H5"), value: "h5" },
+                    { title: t("H6"), value: "h6" },
+                    { title: t("PRE"), value: "pre" }
+                  ]
+                },
+                {
                   id: "collapsible",
                   label: t("Collapsible"),
                   devices: "desktop",

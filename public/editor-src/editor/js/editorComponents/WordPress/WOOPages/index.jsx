@@ -7,7 +7,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { DynamicContentHelper } from "../common/DynamicContentHelper";
-import { getTerms } from "visual/utils/api/editor/index";
+import { getTerms } from "visual/utils/api";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";

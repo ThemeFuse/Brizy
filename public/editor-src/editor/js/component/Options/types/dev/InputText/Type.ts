@@ -12,7 +12,7 @@ export interface Model {
 }
 
 export interface Props
-  extends Option.Props<Model, Model>,
+  extends Option.Props<Model>,
     WithConfig<Config>,
     WithClassName {
   placeholder?: string;

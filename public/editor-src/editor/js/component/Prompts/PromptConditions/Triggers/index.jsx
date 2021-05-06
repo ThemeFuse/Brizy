@@ -13,7 +13,7 @@ import { triggersSelector } from "visual/redux/selectors";
 import { updateTriggers } from "visual/redux/actions";
 
 import items from "./items";
-import { IS_PRO } from "visual/utils/models/modes";
+import { IS_PRO } from "visual/utils/env";
 
 class Triggers extends React.Component {
   constructor(props) {

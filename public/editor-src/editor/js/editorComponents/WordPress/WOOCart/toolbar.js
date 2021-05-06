@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -109,7 +109,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabsTypographyPrice",

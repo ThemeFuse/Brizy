@@ -1,4 +1,4 @@
-import {isHex as _isHex} from "visual/utils/color/isHex";
+import { is as _isHex } from "visual/utils/color/Hex";
 
 const rgbRegex = /^rgb\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*[)]$/;
 const rgbaRegex = /^rgba\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0*(?:\.\d+)?|1(?:\.0*)?)\s*[)]$/;
@@ -30,7 +30,7 @@ export function parseColorString(colorString) {
   return null;
 }
 
-export const isHex = _isHex;
+export const isHex = v => _isHex(v ?? "");
 
 export function hexToRgba(hex, opacity) {
   if (isHex(hex)) {

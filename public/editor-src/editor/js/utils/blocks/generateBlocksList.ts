@@ -26,13 +26,13 @@ const generateConditionBlocks = (
 export const generateBlocksList = (
   pageBlocksIds: string[],
   globalBlocks: ReduxState["globalBlocks"],
-  pageId: number
+  page: ReduxState["page"]
 ): string[] => {
   if (IS_GLOBAL_POPUP || IS_STORY) {
     return pageBlocksIds;
   }
 
-  const allowedGBIds = getAllowedGBIds(pageBlocksIds, globalBlocks, pageId);
+  const allowedGBIds = getAllowedGBIds(pageBlocksIds, globalBlocks, page);
 
   const topAlignedConditionBlocks = generateConditionBlocks(
     allowedGBIds,
@@ -58,7 +58,6 @@ export function getBlocksInPage(
   page: ReduxState["page"],
   globalBlocks: ReduxState["globalBlocks"]
 ): Block[] {
-  const pageId = Number(page.id);
   const items = page.data?.items || [];
 
   const transformedPageBlocks = items.reduce((acc, block) => {
@@ -71,11 +70,7 @@ export function getBlocksInPage(
 
   const pageBlocksIds = Object.keys(transformedPageBlocks);
 
-  const blocksIdsInPage = generateBlocksList(
-    pageBlocksIds,
-    globalBlocks,
-    pageId
-  );
+  const blocksIdsInPage = generateBlocksList(pageBlocksIds, globalBlocks, page);
 
   const allBlocks = { ...transformedPageBlocks, ...globalBlocks };
 

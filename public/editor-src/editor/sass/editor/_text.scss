@@ -45,3 +45,14 @@
     text-decoration: initial;
   }
 }
+
+.brz-story {
+  .brz-rich-text {
+    p {
+      width: 100%;
+    }
+    .brz-ed-box__resizer {
+      font-size: inherit;
+    }
+  }
+}

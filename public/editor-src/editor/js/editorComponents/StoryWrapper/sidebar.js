@@ -6,9 +6,13 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
+import { DCTypes } from "visual/types";
 
-export function getItems({ v, device }) {
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText");
+export function getItems({ v, device, context }) {
+  const cssIDDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   const dvv = key => defaultValueValue({ v, key, device });
   const isRelative = dvv("elementPosition") === "relative";

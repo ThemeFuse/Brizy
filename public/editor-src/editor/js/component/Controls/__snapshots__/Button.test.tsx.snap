@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Button Snapshots If not label or icon provided, do not render anything 1`] = `null`;
+
+exports[`Test Button Snapshots Reversed 1`] = `
+<div
+  class="brz-ed-control__button reverse"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg"
+  >
+    <use
+      xlink:href="//icons.svg#nc-cog"
+    />
+  </svg>
+  <span
+    class="brz-ed-control__label"
+  >
+    Test
+  </span>
+</div>
+`;
+
+exports[`Test Button Snapshots With icon 1`] = `
+<div
+  class="brz-ed-control__button"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg"
+  >
+    <use
+      xlink:href="//icons.svg#nc-cog"
+    />
+  </svg>
+  <span
+    class="brz-ed-control__label"
+  />
+</div>
+`;
+
+exports[`Test Button Snapshots With label 1`] = `
+<div
+  class="brz-ed-control__button"
+>
+  <span
+    class="brz-ed-control__label"
+  >
+    Test
+  </span>
+</div>
+`;
+
+exports[`Test Button Snapshots With label add icon 1`] = `
+<div
+  class="brz-ed-control__button"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg"
+  >
+    <use
+      xlink:href="//icons.svg#nc-cog"
+    />
+  </svg>
+  <span
+    class="brz-ed-control__label"
+  >
+    Test
+  </span>
+</div>
+`;

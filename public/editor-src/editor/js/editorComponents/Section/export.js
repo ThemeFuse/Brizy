@@ -1,5 +1,4 @@
 import $ from "jquery";
-import "slick-carousel";
 
 export default function($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
