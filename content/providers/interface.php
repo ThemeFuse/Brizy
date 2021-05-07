@@ -8,11 +8,4 @@ interface Brizy_Content_Providers_Interface {
 	const CONFIG_KEY_OEMBED   = 'oembed';
 	const CONFIG_KEY_VIDEO    = 'video';
 	const CONFIG_KEY_SNDCLOUD = 'sndcloud';
-
-	/**
-	 * @return mixed
-	 */
-	public function getGroupedPlaceholders();
-
-	public function getAllPlaceholders();
 }

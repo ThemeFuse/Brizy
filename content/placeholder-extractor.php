@@ -1,6 +1,11 @@
 <?php
 
 
+/**
+ * @deprecated
+ *
+ * Class Brizy_Content_PlaceholderExtractor
+ */
 class Brizy_Content_PlaceholderExtractor
 {
 
@@ -59,7 +64,7 @@ class Brizy_Content_PlaceholderExtractor
                 continue;
             }
 
-	        $placeholder = new Brizy_Content_ContentPlaceholder(
+	        $placeholder = new \BrizyPlaceholders\ContentPlaceholder(
 		        $matches['placeholderName'][$i],
 		        $matches['placeholder'][$i],
 		        $this->getPlaceholderAttributes($matches['attributes'][$i]),

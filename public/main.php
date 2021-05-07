@@ -437,8 +437,8 @@ class Brizy_Public_Main
 	 */
 	public static function is_view_page( Brizy_Editor_Post $post = null ) {
 
-	    /* this was the old code before merging master in develop
-	     return ! is_admin() && $post && $post->uses_editor() && ! isset(
+	    /* old code
+	       return ! is_admin() && $post && $post->uses_editor() && ! isset(
                 $_GET[Brizy_Editor::prefix(
                     '-edit-iframe'
                 )]
