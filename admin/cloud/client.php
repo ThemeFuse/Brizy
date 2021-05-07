@@ -720,7 +720,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
     {
         $body = array(
             'attachment' => base64_encode(file_get_contents($file)),
-            'name' => $uid,
+            'uid' => $uid,
             'filename' => basename($file),
             'container' => $this->brizyProject->getCloudContainer(),
         );
