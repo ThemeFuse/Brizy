@@ -718,13 +718,15 @@ class Brizy_Admin_Cloud_Client extends WP_Http
 
     public function uploadCustomFile($uid, $file)
     {
+        $body = array(
+            'attachment' => base64_encode(file_get_contents($file)),
+            'name' => $uid,
+            'filename' => basename($file),
+            'container' => $this->brizyProject->getCloudContainer(),
+        );
         $response = $this->http->post(Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_CUSTOM_FILES, array(
             'headers' => $this->getHeaders(),
-            'body' => array(
-                'attachment' => base64_encode(file_get_contents($file)),
-                'name' => $uid,
-                'filename' => basename($file),
-            )
+            'body' => $body
         ));
 
         $code = wp_remote_retrieve_response_code($response);
