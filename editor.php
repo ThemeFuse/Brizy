@@ -81,14 +81,9 @@ class Brizy_Editor {
 	private function __construct() {
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
-		try {
-			add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );
-			add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->critical( 'Migration process ERROR', [ $e ] );
 
-			return;
-		}
+		add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );
+		add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
 
 		add_action( 'init', array( 'Brizy_MaintenanceMode', 'init' ), - 4000 );
 		add_action( 'init', array( $this, 'resetPermalinks' ), - 2000 );
@@ -113,6 +108,14 @@ class Brizy_Editor {
 	}
 
 	public function runMigrations() {
+
+		try {
+			if ( ! Brizy_Editor_Project::get()->getWpPost() ) {
+				return;
+			}
+		} catch (Exception $e) {
+			Brizy_Admin_Flash::instance()->add_error( 'On run migrations, get project throw the message: ' . $e->getMessage() );
+		}
 
 		try {
 			$migrationManager = new Brizy_Admin_Migrations();
