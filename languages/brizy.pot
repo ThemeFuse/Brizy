@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-04-23T16:14:33+03:00\n"
+"POT-Creation-Date: 2021-05-05T16:10:49+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: brizy\n"
@@ -167,6 +167,7 @@ msgid "Lead"
 msgstr ""
 
 #: admin/form-entries.php:319
+#: admin/popups/main.php:49
 #: admin/templates.php:245
 #: languages/texts.php:74
 msgid "Add New"
@@ -342,8 +343,65 @@ msgstr ""
 msgid "Optimize"
 msgstr ""
 
+#: admin/popups/main.php:45
+msgctxt "post type general name"
+msgid "Popups"
+msgstr ""
+
+#: admin/popups/main.php:46
+msgctxt "post type singular name"
+msgid "Popup"
+msgstr ""
+
+#: admin/popups/main.php:47
+msgctxt "admin menu"
+msgid "Popups"
+msgstr ""
+
+#: admin/popups/main.php:48
+msgctxt "add new on admin bar"
+msgid "Popup"
+msgstr ""
+
+#: admin/popups/main.php:50
+msgid "Add New Popup"
+msgstr ""
+
+#: admin/popups/main.php:51
+msgid "New Popup"
+msgstr ""
+
+#: admin/popups/main.php:52
+msgid "Edit Popup"
+msgstr ""
+
+#: admin/popups/main.php:53
+msgid "View Popup"
+msgstr ""
+
+#: admin/popups/main.php:54
 #: admin/popups/main.php:67
 msgid "Popups"
+msgstr ""
+
+#: admin/popups/main.php:55
+msgid "Search Popups"
+msgstr ""
+
+#: admin/popups/main.php:56
+msgid "Parent Popups:"
+msgstr ""
+
+#: admin/popups/main.php:57
+msgid "No Popups found."
+msgstr ""
+
+#: admin/popups/main.php:58
+msgid "No Popups found in Trash."
+msgstr ""
+
+#: admin/popups/main.php:59
+msgid "Popup attributes:"
 msgstr ""
 
 #: admin/rules/api.php:463
@@ -631,7 +689,7 @@ msgstr ""
 msgid "Whitelisted IP Addresses"
 msgstr ""
 
-#: brizy.php:64
+#: brizy.php:108
 msgid "%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
 msgstr ""
 

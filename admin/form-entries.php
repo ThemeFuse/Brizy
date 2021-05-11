@@ -316,7 +316,7 @@ class Brizy_Admin_FormEntries {
 			'singular_name'      => _x( 'Lead', 'post type singular name', 'brizy' ),
 			'menu_name'          => _x( 'Leads', 'admin menu', 'brizy' ),
 			'name_admin_bar'     => _x( 'Lead', 'add new on admin bar', 'brizy' ),
-			'add_new'            => _x( 'Add New', self::CP_FORM_ENTRY, 'brizy' ),
+			'add_new'            => __( 'Add New', 'brizy' ),
 			'add_new_item'       => __( 'Add New Lead', 'brizy' ),
 			'new_item'           => __( 'New Lead', 'brizy' ),
 			'edit_item'          => __( 'Edit Lead', 'brizy' ),
