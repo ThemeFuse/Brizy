@@ -42,21 +42,21 @@ class Brizy_Admin_Popups_Main {
 	static public function registerCustomPosts() {
 
 		$labels = array(
-			'name'               => _x( 'Popups', 'post type general name' ),
-			'singular_name'      => _x( 'Popup', 'post type singular name' ),
-			'menu_name'          => _x( 'Popups', 'admin menu' ),
-			'name_admin_bar'     => _x( 'Popup', 'add new on admin bar' ),
-			'add_new'            => _x( 'Add New', self::CP_POPUP ),
-			'add_new_item'       => __( 'Add New Popup' ),
-			'new_item'           => __( 'New Popup' ),
-			'edit_item'          => __( 'Edit Popup' ),
-			'view_item'          => __( 'View Popup' ),
-			'all_items'          => __( 'Popups' ),
-			'search_items'       => __( 'Search Popups' ),
-			'parent_item_colon'  => __( 'Parent Popups:' ),
-			'not_found'          => __( 'No Popups found.' ),
-			'not_found_in_trash' => __( 'No Popups found in Trash.' ),
-			'attributes'         => __( 'Popup attributes:' )
+			'name'               => _x( 'Popups', 'post type general name', 'brizy' ),
+			'singular_name'      => _x( 'Popup', 'post type singular name', 'brizy' ),
+			'menu_name'          => _x( 'Popups', 'admin menu', 'brizy' ),
+			'name_admin_bar'     => _x( 'Popup', 'add new on admin bar', 'brizy' ),
+			'add_new'            => __( 'Add New', 'brizy' ),
+			'add_new_item'       => __( 'Add New Popup', 'brizy' ),
+			'new_item'           => __( 'New Popup', 'brizy' ),
+			'edit_item'          => __( 'Edit Popup', 'brizy' ),
+			'view_item'          => __( 'View Popup', 'brizy' ),
+			'all_items'          => __( 'Popups', 'brizy' ),
+			'search_items'       => __( 'Search Popups', 'brizy' ),
+			'parent_item_colon'  => __( 'Parent Popups:', 'brizy' ),
+			'not_found'          => __( 'No Popups found.', 'brizy' ),
+			'not_found_in_trash' => __( 'No Popups found in Trash.', 'brizy' ),
+			'attributes'         => __( 'Popup attributes:', 'brizy' )
 		);
 
 		register_post_type( self::CP_POPUP,
