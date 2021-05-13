@@ -227,7 +227,6 @@ export function getItems({ v, device, component }) {
         {
           id: "toolbarContainerTypeAndHeight",
           type: "group-dev",
-          devices: "desktop",
           position: 100,
           options: [
             {
@@ -243,7 +242,7 @@ export function getItems({ v, device, component }) {
             {
               id: "sectionHeight",
               type: "slider-dev",
-              disabled: v.fullHeight !== "custom",
+              disabled: dvv("fullHeight") !== "custom",
               config: {
                 min: 20,
                 max: dvv("sectionHeightSuffix") === "px" ? 500 : 100,
@@ -259,7 +258,6 @@ export function getItems({ v, device, component }) {
           id: "verticalAlign",
           label: t("Content"),
           type: "radioGroup-dev",
-          devices: "desktop",
           disabled: dvv("fullHeight") === "off",
           position: 110,
           choices: [

@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_179Wp_Texts {
+class Brizy_Public_EditorBuild_182Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -50,8 +50,10 @@ class Brizy_Public_EditorBuild_179Wp_Texts {
 			"Add To Cart" => __("Add To Cart", "brizy"),
 			"Add To Cart Input" => __("Add To Cart Input", "brizy"),
 			"Add a new block" => __("Add a new block", "brizy"),
+			"Add new display condition" => __("Add new display condition", "brizy"),
 			"Add new font variation" => __("Add new font variation", "brizy"),
 			"Add new option" => __("Add new option", "brizy"),
+			"Add new trigger condition" => __("Add new trigger condition", "brizy"),
 			"Add to cart" => __("Add to cart", "brizy"),
 			"Additionals" => __("Additionals", "brizy"),
 			"Address" => __("Address", "brizy"),
@@ -755,6 +757,7 @@ class Brizy_Public_EditorBuild_179Wp_Texts {
 			"Total" => __("Total", "brizy"),
 			"Trash" => __("Trash", "brizy"),
 			"Travel" => __("Travel", "brizy"),
+			"Trigger Popup Only Once" => __("Trigger Popup Only Once", "brizy"),
 			"Triggers" => __("Triggers", "brizy"),
 			"Try Again" => __("Try Again", "brizy"),
 			"Tweet" => __("Tweet", "brizy"),

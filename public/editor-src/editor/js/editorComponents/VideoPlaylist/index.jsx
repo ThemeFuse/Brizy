@@ -95,13 +95,13 @@ class VideoPlaylist extends EditorComponent {
     return (
       <div className="brz-video-playlist__cover">
         <div className="brz-video-playlist__cover-icon">
-          <a
-            className="brz-a"
-            href={videoSrc}
+          <span
+            className="brz-play-button"
+            data-video-url={videoSrc}
             onClick={this.handleCoverIconClick}
           >
             <ThemeIcon name="play" type="editor" />
-          </a>
+          </span>
         </div>
       </div>
     );

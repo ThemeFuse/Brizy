@@ -76,7 +76,7 @@ export default function($node) {
     // Cover
     if ($cover.length) {
       e.preventDefault();
-      const src = $cover.find(".brz-a").attr("href");
+      const src = $cover.find(".brz-play-button").attr("data-video-url");
 
       $cover.addClass("brz-d-none");
       $video.removeClass("brz-d-none");

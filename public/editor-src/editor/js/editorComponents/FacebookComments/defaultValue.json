@@ -7,7 +7,7 @@
     "numPostsSuffix": null,
     "darkScheme": "off",
 
-    "disqusShortname": "brizy-disqus",
+    "disqusShortname": "disqusforum",
 
     "skin": "skin1"
   },
@@ -31,7 +31,7 @@
     "width": 100,
     "widthSuffix": null,
 
-    "logoSize": 50, 
+    "logoSize": 50,
     "logoSizeSuffix": null,
 
     "starsSize": 16,
@@ -337,7 +337,7 @@
 
     "mobileLogoSize": null,
     "mobileLogoSizeSuffix": null,
-    
+
     "mobileStarsSize": null,
     "mobileStarsSizeSuffix": null,
 

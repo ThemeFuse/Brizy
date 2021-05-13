@@ -108,6 +108,9 @@ export default class WPPostExcerpt extends EditorComponent {
         placeholder="{{brizy_dc_post_excerpt}}"
         placeholderIcon="wp-excerpt"
         tagName={v.tagName}
+        props={{
+          className: "brz-wp-post-excerpt-content"
+        }}
       />
     );
 

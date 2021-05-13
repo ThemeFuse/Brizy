@@ -2,11 +2,11 @@ import { Append, Concat } from "visual/utils/types/Monoid";
 import { MRead, Reader } from "visual/utils/types/Type";
 import { IsEqual } from "visual/utils/types/Eq";
 
-export type ResponsiveMode = "desktop" | "tablet" | "mobile";
-
 export const DESKTOP = "desktop";
 export const TABLET = "tablet";
 export const MOBILE = "mobile";
+
+export type ResponsiveMode = "desktop" | "tablet" | "mobile";
 
 export const types: ResponsiveMode[] = ["desktop", "tablet", "mobile"];
 

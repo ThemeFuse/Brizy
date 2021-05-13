@@ -128,6 +128,8 @@
     "sectionHeightSuffix": "px",
 
     "verticalAlign": "center",
+    "tabletVerticalAlign": null,
+    "mobileVerticalAlign": null,
 
     "marginType": "grouped",
     "margin": 0,

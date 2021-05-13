@@ -1174,7 +1174,7 @@ export function getItemsForDesktop(v, component) {
 export function getItemsForTablet(v, component) {
   return [
     {
-      id: "tabletToolbarCurrentShortcode",
+      id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
         icon: "nc-star",
@@ -1294,7 +1294,7 @@ export function getItemsForTablet(v, component) {
 export function getItemsForMobile(v, component) {
   return [
     {
-      id: "mobileToolbarCurrentShortcode",
+      id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
         icon: "nc-star",

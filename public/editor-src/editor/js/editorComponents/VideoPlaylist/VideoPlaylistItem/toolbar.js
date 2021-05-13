@@ -1,6 +1,67 @@
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v }) {
+  const disabledZoomPlaySize = v.coverImageSrc
+    ? []
+    : [
+        {
+          id: "coverZoom",
+          type: "slider-dev",
+          disabled: true
+        },
+        {
+          id: "iconSize",
+          type: "slider",
+          disabled: true
+        }
+      ];
+  const disabledPlayIconColor = v.coverImageSrc
+    ? {}
+    : {
+        id: "toolbarColor",
+        type: "popover-dev",
+        config: {
+          size: "auto",
+          title: t("Colors"),
+          icon: {}
+        },
+        devices: "desktop",
+        roles: ["admin"],
+        position: 90,
+        options: [
+          {
+            id: "tabsColor",
+            type: "tabs-dev",
+            tabs: [
+              {
+                id: "tabPlay",
+                label: t("Play"),
+                position: 20,
+                options: [
+                  {
+                    id: "iconBgColor",
+                    type: "colorPicker-dev",
+                    disabled: true
+                  }
+                ]
+              },
+              {
+                id: "tabIcon",
+                label: t("Icon"),
+                position: 30,
+                options: [
+                  {
+                    id: "iconColor",
+                    type: "colorPicker-dev",
+                    disabled: true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      };
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -114,13 +175,15 @@ export function getItems({ v }) {
                   id: "cover",
                   type: "imageUpload-dev",
                   devices: "desktop"
-                }
+                },
+                ...disabledZoomPlaySize
               ]
             }
           ]
         }
       ]
     },
+    disabledPlayIconColor,
     {
       id: "toolbarSettings",
       type: "popover-dev",
