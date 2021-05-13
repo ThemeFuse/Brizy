@@ -23,7 +23,6 @@ export function getItems({ device }) {
                   id: "iconSpacing",
                   label: t("Spacing"),
                   type: "slider-dev",
-                  devices: "desktop",
                   position: 70,
                   config: {
                     min: 0,

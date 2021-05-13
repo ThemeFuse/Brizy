@@ -37,9 +37,7 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
   }, [status]);
 
   if (IS_PREVIEW || (status === "success" && !dataIsEmpty(innerHtml))) {
-    const className = classnames(props?.className, {
-      "brz-blocked": blocked
-    });
+    const className = classnames(props?.className, { "brz-blocked": blocked });
     return React.createElement(tagName, {
       ...props,
       className: className !== "" ? className : undefined,

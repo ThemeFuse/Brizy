@@ -75,10 +75,10 @@ export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
  */
 export function defaultValueKey2({ key, device, state }) {
   const _state = State.mRead(state);
-  const _device = Responsive.toMode(device);
+  const _device = Responsive.mRead(device);
 
   const statePrefix = _state === State.empty ? "" : _state;
-  const devicePrefix = _device === Responsive.defaultMode() ? "" : _device;
+  const devicePrefix = _device === Responsive.empty ? "" : _device;
 
   return camelCase([statePrefix, devicePrefix, key]);
 }
@@ -90,8 +90,14 @@ export function defaultValueValue({
   state = "normal"
 }) {
   const deviceKey = defaultValueKey({ key, device, state });
+  const _key = defaultValueKey({ key, device: Responsive.empty, state });
+  const __key = defaultValueKey({
+    key,
+    device: Responsive.empty,
+    state: State.empty
+  });
 
-  return onNullish(v[key], v[deviceKey]);
+  return onNullish(v[__key], onNullish(v[_key], v[deviceKey]));
 }
 
 /**
@@ -118,7 +124,7 @@ export function defaultValueValue2({ v, key, device, state }) {
  * @return {({device: string, state: StateMode}[])}
  */
 const states = memoize(() => {
-  return Responsive.modes().reduce((acc, device) => {
+  return Responsive.types.reduce((acc, device) => {
     const item = State.states().reduce((acc, state) => {
       acc.push({ device, state });
       return acc;

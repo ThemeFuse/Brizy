@@ -26,6 +26,12 @@
     "iconSpacing": 20,
     "iconSpacingSuffix": null,
 
+    "tabletIconSpacing": null,
+    "tabletIconSpacingSuffix": null,
+
+    "mobileIconSpacing": null,
+    "mobileIconSpacingSuffix": null,
+
     "customCSS": ""
   }
 }
