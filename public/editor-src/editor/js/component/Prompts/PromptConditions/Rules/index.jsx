@@ -9,6 +9,7 @@ import ConditionChoices from "./ConditionChoices";
 import { filterRules, PAGES_GROUP_ID, PAGE_TYPE } from "./utils";
 
 import useRuleList from "./useRuleList";
+import { t } from "visual/utils/i18n";
 
 export default function Rules({
   value = [],
@@ -94,7 +95,7 @@ export default function Rules({
             className="brz-ed-popup-conditions__add-condition"
             onClick={handleAdd}
           >
-            <EditorIcon icon="nc-add" /> Add new display condition
+            <EditorIcon icon="nc-add" /> {t("Add new display condition")}
           </div>
         </ScrollPane>
       )}

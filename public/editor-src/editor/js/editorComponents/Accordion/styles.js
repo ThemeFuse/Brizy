@@ -17,6 +17,10 @@ export function style(v, vs, vd) {
         "cssStyleBorder",
         "cssStyleColor",
         "cssStyleBgColor"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementAccordionPropertyHoverTransition"
       ]
     },
     ".brz && .brz-accordion__item:hover": {
@@ -28,6 +32,10 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionActiveBgColor",
         "cssStyleElementAccordionActiveBorder",
         "cssStyleElementAccordionActiveShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementAccordionPropertyHoverTransition"
       ]
     },
     ".brz && .brz-accordion__nav": {

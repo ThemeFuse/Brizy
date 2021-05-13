@@ -41,7 +41,7 @@ export function styleContents(v, vs, vd) {
       standart: ["cssStyleElementVideoPlaylistGridItemWidth"]
     },
 
-    ".brz && .brz-video-playlist-video-item:hover": {
+    ".brz && .brz-video-playlist-video-item:not(.brz-video-playlist-video-item--active):hover": {
       standart: ["cssStyleBgColor", "cssStyleElementVideoPlaylistBorderItem"]
     },
     ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active": {
@@ -98,7 +98,7 @@ export function styleContents(v, vs, vd) {
         "cssStyleDisplayFlex"
       ]
     },
-    ".brz &&:hover .brz-video-playlist__cover .brz-a": {
+    ".brz &&:hover .brz-video-playlist__cover .brz-play-button": {
       standart: ["cssStyleCoverIconColor"]
     },
     ".brz &&:hover .brz-video-playlist__cover::before": {

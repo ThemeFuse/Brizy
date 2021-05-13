@@ -24,6 +24,10 @@ export const getAllowedGBIds = (pageBlocksIds, globalBlocks, pageId) => {
 };
 
 export function canUseCondition(globalBlock, pageId) {
+  if (isPopup(globalBlock.data)) {
+    return true;
+  }
+
   return IS_TEMPLATE
     ? canUseConditionInTemplates(globalBlock)
     : canUseConditionInPage(globalBlock, pageId);
@@ -158,11 +162,7 @@ export function canUseConditionInPage(globalBlock, pageId) {
     }
   }
 
-  const { rules, data } = globalBlock;
-
-  if (isPopup(data)) {
-    return true;
-  }
+  const { rules } = globalBlock;
 
   const { level1, level2, level3 } = pageSplitRules(rules, pageId);
 

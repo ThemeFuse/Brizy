@@ -89,7 +89,7 @@ export default class WPPostsTitle extends EditorComponent {
       linkUpload
     } = v;
     const className = classnames(
-      "brz-wp-shortcode",
+      "brz-wp-title",
       className_,
       css(
         `${this.constructor.componentId}`,
@@ -108,6 +108,9 @@ export default class WPPostsTitle extends EditorComponent {
         placeholder="{{brizy_dc_post_title}}"
         placeholderIcon="wp-title"
         tagName={v.tagName}
+        props={{
+          className: "brz-wp-title-content"
+        }}
       />
     );
 

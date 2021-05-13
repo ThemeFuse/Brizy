@@ -1,43 +1,68 @@
+const easeInOutQuad = (t: number, b: number, c: number, d: number): number => {
+  t /= d / 2;
+  if (t < 1) return (c / 2) * t * t + b;
+  t--;
+  return (-c / 2) * (t * (t - 2) - 1) + b;
+};
+
 const scrollTo = (config: {
-  node: HTMLElement;
+  endLocation: number;
   duration: number;
-  onComplete?: VoidFunction;
-}): void => {
-  const { node, duration, onComplete } = config;
-  const startLocation = window.pageYOffset;
-  const windowInnerHeight = window.innerHeight;
-  const bodyHeight = node.ownerDocument.body.offsetHeight;
-  const endLocation = node.getBoundingClientRect().top + window.scrollY;
-  const distance = endLocation - startLocation;
-  const increments = distance / (duration / 16);
-  const direction = distance < 0 ? "toUp" : "toDown";
-  let stopAnimation: undefined | VoidFunction = undefined;
+  targetNode?: HTMLElement;
+}): Promise<void> =>
+  new Promise(resolve => {
+    const { endLocation, duration, targetNode } = config;
 
-  const animateScroll = (): void => {
-    window.scrollBy(0, increments);
-    stopAnimation?.();
-  };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-expect-error
+    window.Brizy.emit("elements.anchor.startScrolled", targetNode);
 
-  const runAnimation = setInterval(animateScroll, 16);
+    const element = document.scrollingElement;
 
-  stopAnimation = (): void => {
-    const travelled = window.pageYOffset;
+    if (element) {
+      const startLocation = element.scrollTop;
+      const distance = endLocation - startLocation;
+      const increment = 20;
 
-    if (direction === "toDown") {
-      if (
-        travelled >= endLocation - increments ||
-        windowInnerHeight + travelled >= bodyHeight
-      ) {
-        clearInterval(runAnimation);
-        onComplete?.();
-      }
-    } else {
-      if (travelled <= endLocation - increments || travelled >= startLocation) {
-        clearInterval(runAnimation);
-        onComplete?.();
-      }
+      let currentTime = 0;
+
+      const animateScroll = (): void => {
+        currentTime += increment;
+
+        const val = easeInOutQuad(
+          currentTime,
+          startLocation,
+          distance,
+          duration
+        );
+
+        element.scrollTop = val;
+
+        if (currentTime < duration) {
+          setTimeout(animateScroll, increment);
+        } else {
+          resolve();
+        }
+      };
+
+      animateScroll();
     }
-  };
+  });
+
+const getEndLocation = (
+  root: HTMLElement,
+  hash: string,
+  scrollingElement: Element | null
+): number => {
+  const node: HTMLElement | null = root.querySelector(
+    `[id="${hash.slice(1)}"]`
+  );
+
+  if (node && scrollingElement) {
+    return node.getBoundingClientRect().top + scrollingElement.scrollTop;
+  }
+
+  return 0;
 };
 
 export default function($node: JQuery): void {
@@ -45,59 +70,41 @@ export default function($node: JQuery): void {
   const anchorSelector =
     ".brz-a[href^='#'], .brz-anchor, .link--anchor, .brz-menu__ul a.menu-item";
 
-  const handleGoTo = (hash: string, targetNode?: HTMLElement): void => {
-    const node: HTMLElement | null = root.querySelector(hash);
-
-    if (node) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      window.Brizy.emit("elements.anchor.startScrolled", targetNode);
-
-      const handleComplete = (): void => {
-        location.hash = hash;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        window.Brizy.emit("elements.anchor.scrolled", targetNode);
-      };
-
-      scrollTo({ node, duration: 600, onComplete: handleComplete });
-    }
-  };
+  const scrollingElement = root.ownerDocument.scrollingElement;
 
   // specific situation when anchor is animated
   // then go back from browser
   // we need to go on top of the page
-  const handleHashChange = (): void => {
+  const handleHashChange = (e: Event): void => {
+    e.preventDefault();
+
     const anchorHash = location.hash;
 
-    if (anchorHash.trim()) {
-      handleGoTo(anchorHash);
-
-      setTimeout(() => {
-        // run it a bit later also for browser compatibility
-        handleGoTo(anchorHash);
-      }, 1);
-    } else {
-      // go to top of page if don't have hash
-      root.ownerDocument.documentElement.scrollTop = 0;
-
-      setTimeout(() => {
-        // run it a bit later also for browser compatibility
-        root.ownerDocument.documentElement.scrollTop = 0;
-      }, 1);
-    }
+    scrollTo({
+      endLocation: getEndLocation(root, anchorHash, scrollingElement),
+      duration: 600
+    });
   };
 
   const handleRootClick = (e: Event): void => {
     if (e.target instanceof Element) {
-      const anchorNode: HTMLAnchorElement | null = e.target.closest(
+      const targetNode: HTMLAnchorElement | null = e.target.closest(
         anchorSelector
       );
-      const anchorHash = anchorNode?.hash.trim();
+      const anchorHash = targetNode?.hash.trim();
 
-      if (anchorNode && anchorHash) {
+      if (targetNode && anchorHash) {
         e.preventDefault();
-        handleGoTo(anchorHash, anchorNode);
+
+        const handleComplete = (): void => {
+          history.pushState(null, "", anchorHash);
+        };
+
+        scrollTo({
+          endLocation: getEndLocation(root, anchorHash, scrollingElement),
+          duration: 600,
+          targetNode
+        }).then(handleComplete);
       }
     }
   };
