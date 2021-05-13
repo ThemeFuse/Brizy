@@ -162,7 +162,10 @@ async function getPageBlocks({
   // ===========
 
   const $pageHTML = cheerio.load(
-    `<html><head><style class="brz-style">${glamorCSS}</style><style class="brz-style">${brzCss}</style></head><body>${html}</body></html>`
+    `<html><head><style class="brz-style">${glamorCSS}</style><style class="brz-style">${brzCss}</style></head><body>${html}</body></html>`,
+    // was added because of this issue
+    // https://github.com/bagrinsergiu/blox-editor/issues/13929
+    { decodeEntities: false }
   );
 
   // get all Fonts from page

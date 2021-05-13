@@ -5395,6 +5395,8 @@ img.mfp-img {
     width: 100%;
     display: inline-block;
     vertical-align: middle; }
+    .brz .brz-video-playlist .brz-play-button {
+      line-height: 0; }
     .brz .brz-video-playlist:before {
       content: "";
       width: 100%;
@@ -9908,6 +9910,12 @@ b {
       margin-bottom: 1em; }
   .brz .brz-wp-post-excerpt {
     width: 100%; }
+    .brz .brz-wp-post-excerpt-content {
+      margin: 0; }
+  .brz .brz-wp-title {
+    width: 100%; }
+    .brz .brz-wp-title-content {
+      margin: 0; }
   .brz .brz-woo-stock {
     display: -webkit-box;
     display: -ms-flexbox;

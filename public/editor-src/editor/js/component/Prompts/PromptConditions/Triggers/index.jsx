@@ -14,6 +14,7 @@ import { updateTriggers } from "visual/redux/actions";
 
 import items from "./items";
 import { IS_PRO } from "visual/utils/models/modes";
+import { t } from "visual/utils/i18n";
 
 class Triggers extends React.Component {
   constructor(props) {
@@ -233,7 +234,7 @@ class Triggers extends React.Component {
     return (
       <>
         <div className="brz-ed-popup-conditions__trigger-once">
-          <div>Trigger Popup Only Once</div>
+          <div>{t("Trigger Popup Only Once")}</div>
           <Switch
             defaultValue={triggerOnce}
             onChange={this.handleTriggerOnceChange}
@@ -251,7 +252,7 @@ class Triggers extends React.Component {
             className="brz-ed-popup-conditions__add-condition"
             onClick={this.handleAdd}
           >
-            <EditorIcon icon="nc-add" /> Add new trigger condition
+            <EditorIcon icon="nc-add" /> {t("Add new trigger condition")}
           </div>
         </ScrollPane>
         <Buttons

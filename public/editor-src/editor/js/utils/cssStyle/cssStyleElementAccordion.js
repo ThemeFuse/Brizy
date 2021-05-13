@@ -191,3 +191,7 @@ export function cssStyleElementAccordionActiveShadow({ v, device }) {
 export function cssStyleElementAccordionAnimDuration({ v }) {
   return `transition: height ${v.animDuration}s ease-out;`;
 }
+
+export function cssStyleElementAccordionPropertyHoverTransition() {
+  return "transition-property: color, box-shadow, background, border;";
+}

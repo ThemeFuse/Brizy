@@ -94,7 +94,7 @@ export function getItems({ v, device }) {
                     min: 0,
                     step: 0.2,
                     max: 10,
-                    units: [{ value: "sec", title: "sec" }]
+                    units: [{ value: "s", title: "s" }]
                   }
                 }
               ]

@@ -178,13 +178,14 @@ class Login extends EditorComponent {
 
   renderLostYourPassword(v) {
     const { lostPassword } = v;
+    const classname = IS_EDITOR ? "brz-p-events--none" : "";
     return (
       <React.Fragment>
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarExtendLostPasswordConfig)}
         >
           <div className="brz-form-login__field brz-form-login__field-lost-password">
-            <a href="{{editor_lostpassword_url}}">
+            <a className={classname} href="{{editor_lostpassword_url}}">
               <TextEditor
                 value={lostPassword}
                 onChange={this.handleLinkChange}
@@ -275,34 +276,32 @@ class Login extends EditorComponent {
             attributes: { "data-islogged": "{{editor_is_user_logged_in}}" }
           })}
         >
-            {IS_EDITOR ? (
-              type === "authorized" ? (
-                this.renderAuthorized(v)
-              ) : (
-                <form className="brz-form-login">
-                  {this.renderLoginForm(v)}
-                </form>
-              )
+          {IS_EDITOR ? (
+            type === "authorized" ? (
+              this.renderAuthorized(v)
             ) : (
-              <>
-                {this.renderAuthorized(v)}
-                <form
-                  className="brz-form-login"
-                  noValidate
-                  onSubmit={this.handleSubmit}
-                  action="{{editor_login_url}}"
-                  method="post"
-                >
-                  <input
-                    type="hidden"
-                    name="redirect_to"
-                    data-redirect={v.redirectType}
-                    value={v.messageRedirect === "" ? "/" : v.messageRedirect}
-                  />
-                  {this.renderLoginForm(v)}
-                </form>
-              </>
-            )}
+              <form className="brz-form-login">{this.renderLoginForm(v)}</form>
+            )
+          ) : (
+            <>
+              {this.renderAuthorized(v)}
+              <form
+                className="brz-form-login"
+                noValidate
+                onSubmit={this.handleSubmit}
+                action="{{editor_login_url}}"
+                method="post"
+              >
+                <input
+                  type="hidden"
+                  name="redirect_to"
+                  data-redirect={v.redirectType}
+                  value={v.messageRedirect === "" ? "/" : v.messageRedirect}
+                />
+                {this.renderLoginForm(v)}
+              </form>
+            </>
+          )}
         </Wrapper>
       </CustomCSS>
     );

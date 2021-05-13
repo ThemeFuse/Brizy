@@ -35,7 +35,7 @@ function withLink(
         ? imagePopulationUrl(imagePopulation)
         : isSVG(imageExtension) || isGIF(imageExtension)
         ? ""
-        : imageUrl(imageSrc, { iW: 1200, iH: "any" }),
+        : imageUrl(imageSrc),
       action: ""
     };
     if (linkHrefs[linkType] !== "") {

@@ -668,7 +668,8 @@ export {
   cssStyleElementAccordionActiveBgColor,
   cssStyleElementAccordionActiveBorder,
   cssStyleElementAccordionActiveShadow,
-  cssStyleElementAccordionAnimDuration
+  cssStyleElementAccordionAnimDuration,
+  cssStyleElementAccordionPropertyHoverTransition
 } from "./cssStyleElementAccordion";
 
 // Tabs
