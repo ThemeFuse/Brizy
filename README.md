@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.13<br>
+Stable tag: 2.2.14<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,27 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.14 - 2021-05-13
+* New: Added file upload to Post Title & excerpt
+* New: Added spacing option for the Icon Box element on responsive
+* Improved: Translate global blocks conditions
+* Improved: Updated the .pot file
+* Fixed: Accordion Hover Transition
+* Fixed: Scroll animation for anchor
+* Fixed: Section height and alignment on responsive
+* Fixed: UI minors styles
+* Fixed: Disabled extra option in toolbar for playlist elements
+* Fixed: Hover effect for play button in playlist elements
+* Fixed: Disqus shortname
+* Fixed: RichText symbols transform
+* Fixed: Global popups inside WP templates
+* Fixed: Headings margin in WP Post and WP Excerpt elements
+* Fixed: Lost Password link in builder loads a 404 page inside the builder
+* Fixed: Avoid html_entity_decode for the post content
+* Fixed: Hide draft pages for non logged users
+* Fixed: Update translations
+
 
 ### 2.2.13 - 2021-04-14
 * Fixed: Text spacing
