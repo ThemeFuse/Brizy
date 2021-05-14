@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.14<br>
+Stable tag: 2.2.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.15 - 2021-05-14
+* Fixed: html encode for the post content
 
 ### 2.2.14 - 2021-05-13
 * New: Added file upload to Post Title & excerpt
