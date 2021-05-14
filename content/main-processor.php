@@ -46,10 +46,7 @@ class Brizy_Content_MainProcessor {
 	 */
 	public function process( $content ) {
 
-		if ( apply_filters( 'brizy_html_entity_decode', true ) ) {
-			$content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) );
-		}
-
+		$content    = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) );
 		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
 
 		foreach ( $processors as $processor ) {
