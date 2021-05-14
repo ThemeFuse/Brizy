@@ -114,7 +114,6 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		}
 
 		try {
-			$wp_post = null;
 			if ( is_null( $wp_post_id ) ) {
 				$wp_post = self::getPost();
 			} else {
