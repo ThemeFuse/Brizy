@@ -19,7 +19,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.2.15' );
+define( 'BRIZY_VERSION', '2.2.16' );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '183-wp' );
 define( 'BRIZY_SYNC_VERSION', '183' );
 define( 'BRIZY_FILE', __FILE__ );
