@@ -8,21 +8,21 @@ trait Brizy_Admin_Migrations_PostsTrait {
 	 * @return |null
 	 */
 	public function getProjectPost() {
+		global $wpdb;
 
-		if ( self::$project ) {
-			return self::$project;
-		}
+        if ( self::$project ) {
+            return self::$project;
+        }
 
-		$projects = get_posts( [
-			'post_type'      => Brizy_Editor_Project::BRIZY_PROJECT,
-			'posts_per_page' => 1,
-			'order'          => 'ASC'
-		] );
+		$row = $wpdb->get_results(
+			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p
+									WHERE p.post_type = %s and p.post_status='publish' 
+									ORDER BY ID DESC LIMIT 1 ", Brizy_Editor_Project::BRIZY_PROJECT ),
+			OBJECT
+		);
 
-		if ( isset( $projects[0] ) ) {
-			self::$project = $projects[0];
-
-			return $projects[0];
+		if ( isset( $row[0] ) ) {
+			return self::$project = $row[0];
 		}
 
 		return null;

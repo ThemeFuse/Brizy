@@ -1,9 +1,4 @@
-const easeInOutQuad = (t: number, b: number, c: number, d: number): number => {
-  t /= d / 2;
-  if (t < 1) return (c / 2) * t * t + b;
-  t--;
-  return (-c / 2) * (t * (t - 2) - 1) + b;
-};
+import { easeInOutQuad, toSamePage } from "./utils";
 
 const scrollTo = (config: {
   endLocation: number;
@@ -68,7 +63,7 @@ const getEndLocation = (
 export default function($node: JQuery): void {
   const root = $node.get(0);
   const anchorSelector =
-    ".brz-a[href^='#'], .brz-anchor, .link--anchor, .brz-menu__ul a.menu-item";
+    ".brz-a:not([data-brz-link-type='popup']), .brz-anchor, .link--anchor, .link--external, .brz-menu__ul a.menu-item";
 
   const scrollingElement = root.ownerDocument.scrollingElement;
 
@@ -91,20 +86,24 @@ export default function($node: JQuery): void {
       const targetNode: HTMLAnchorElement | null = e.target.closest(
         anchorSelector
       );
-      const anchorHash = targetNode?.hash.trim();
+      if (targetNode) {
+        const anchorHash = targetNode.hash.trim();
+        const targetHref = targetNode.href;
+        const targetPath = targetHref.replace(anchorHash, "");
 
-      if (targetNode && anchorHash) {
-        e.preventDefault();
+        if (anchorHash && toSamePage(targetPath, location)) {
+          e.preventDefault();
 
-        const handleComplete = (): void => {
-          history.pushState(null, "", anchorHash);
-        };
+          const handleComplete = (): void => {
+            history.pushState(null, "", anchorHash);
+          };
 
-        scrollTo({
-          endLocation: getEndLocation(root, anchorHash, scrollingElement),
-          duration: 600,
-          targetNode
-        }).then(handleComplete);
+          scrollTo({
+            endLocation: getEndLocation(root, anchorHash, scrollingElement),
+            duration: 600,
+            targetNode
+          }).then(handleComplete);
+        }
       }
     }
   };

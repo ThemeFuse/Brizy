@@ -23,7 +23,7 @@ class Brizy_Admin_Migrations_FixGlobalsToDataMigration implements Brizy_Admin_Mi
 			$projectPost = $this->getProjectPost();
 
 			if ( ! $projectPost ) {
-				Brizy_Logger::instance()->critical( 'Filed migration Brizy_Admin_Migrations_GlobalsToDataMigration. We did not found any projects.', [] );
+				Brizy_Logger::instance()->critical( 'Filed migration Brizy_Admin_Migrations_FixGlobalsToDataMigration. We did not found any projects.', [] );
 				return;
 			}
 

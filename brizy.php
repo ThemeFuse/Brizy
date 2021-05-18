@@ -19,9 +19,9 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', true );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.2.15' );
-define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '182-wp' );
-define( 'BRIZY_SYNC_VERSION', '182' );
+define( 'BRIZY_VERSION', '2.2.16' );
+define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '183-wp' );
+define( 'BRIZY_SYNC_VERSION', '183' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
