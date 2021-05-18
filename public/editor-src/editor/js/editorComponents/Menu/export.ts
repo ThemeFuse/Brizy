@@ -150,11 +150,13 @@ const setOpen = (
         const diffHeight = tooltipRect.top - windowHeight;
         const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
         tooltip.style.maxHeight = `${maxHeight}px`;
+        tooltip.style.overflow = "auto";
       }
       if (windowHeight < tooltipRect.bottom) {
         const diffHeight = tooltipRect.bottom - windowHeight;
         const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
         tooltip.style.maxHeight = `${maxHeight}px`;
+        tooltip.style.overflow = "auto";
       }
 
       // show tooltip
@@ -173,6 +175,7 @@ const setClose = (megaMenuUid: string): void => {
     tooltip.classList.remove("brz-mega-menu__portal--opened");
     tooltip.style.maxHeight = "none";
     tooltip.style.display = "none";
+    tooltip.style.overflow = "visible";
 
     const openedItem = document.querySelector(
       `[data-mega-menu-open-uid="${megaMenuUid}"]`

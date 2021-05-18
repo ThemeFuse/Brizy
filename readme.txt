@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.15
+Stable tag: 2.2.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.16 - 2021-05-18
+* Fixed: Anchor scroll in menu
+* Fixed: Run migrations after the project data is created
 
 = 2.2.15 - 2021-05-14 =
 * Fixed: html encode for the post content
