@@ -45,27 +45,27 @@ class Brizy_Admin_Rules_Manager {
 			$applyFor = Brizy_Admin_Rule::DAY_ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$entityType = $wp_query->queried_object->name;
-			}
+			} else $entityType = 'post';
 		} elseif ( is_month() ) {
 			$applyFor = Brizy_Admin_Rule::MONTH_ARCHIVE;
-			if ( $wp_query->queried_object ) {
-				$entityType = $wp_query->queried_object->name;
-			}
+            if ( $wp_query->queried_object ) {
+                $entityType = $wp_query->queried_object->name;
+            } else $entityType = 'post';
 		} elseif ( is_year() ) {
 			$applyFor = Brizy_Admin_Rule::YEAR_ARCHIVE;
-			if ( $wp_query->queried_object ) {
-				$entityType = $wp_query->queried_object->name;
-			}
+            if ( $wp_query->queried_object ) {
+                $entityType = $wp_query->queried_object->name;
+            } else $entityType = 'post';
 		} elseif ( is_date() ) {
 			$applyFor = Brizy_Admin_Rule::DATE_ARCHIVE;
-			if ( $wp_query->queried_object ) {
-				$entityType = $wp_query->queried_object->name;
-			}
+            if ( $wp_query->queried_object ) {
+                $entityType = $wp_query->queried_object->name;
+            } else $entityType = 'post';
 		} elseif ( is_archive() || isset($_REQUEST['post_type']) ) {
 			$applyFor = Brizy_Admin_Rule::ARCHIVE;
-			if ( $wp_query->queried_object ) {
-				$entityType = $wp_query->queried_object->name;
-			}
+            if ( $wp_query->queried_object ) {
+                $entityType = $wp_query->queried_object->name;
+            } else $entityType = 'post';
 		} elseif ( ( $wp_query->queried_object instanceof WP_Post || $wp_query->post instanceof WP_Post ) && get_queried_object() ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
 			$entityType     = get_queried_object()->post_type;
