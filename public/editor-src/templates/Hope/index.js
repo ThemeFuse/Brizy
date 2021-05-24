@@ -10,7 +10,7 @@ const HopeStyles = require("./styles/Hope");
 module.exports = {
   name: "Hope",
   color: "#2C4C44",
-  cat: [0, 12],
+  cat: [0, 9, 12],
   pages: [Homepage, About, Join, Press, Projects, ProjectDetails, Contact],
   styles: [HopeStyles]
 };

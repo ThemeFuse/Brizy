@@ -7,7 +7,7 @@ const Recipes = require("./pages/Recipes");
 const HomefeastStyle = require("./styles/Homefeast");
 
 module.exports = {
-  name: "Homefeast",
+  name: "Home Feast",
   color: "#DAA236",
   cat: [0, 10, 100],
   pages: [Homepage, About, Contact, RecipeDetails, Recipes],
