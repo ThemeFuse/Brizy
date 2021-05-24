@@ -9,7 +9,7 @@ const Services = require("./pages/Services");
 const ThePracticeStyle = require("./styles/ThePractice");
 
 module.exports = {
-  name: "ThePractice",
+  name: "The Practice",
   color: "#4C4C4C",
   cat: [0, 1, 100],
   pages: [Homepage, About, Contact, Careers, CaseStudies, Pricing, Services],

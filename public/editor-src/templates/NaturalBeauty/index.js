@@ -6,7 +6,7 @@ const Contact = require("./pages/Contact");
 const NaturalBeautyStyle = require("./styles/NaturalBeauty");
 
 module.exports = {
-  name: "NaturalBeauty",
+  name: "Natural Beauty",
   color: "#D25C33",
   cat: [0, 12],
   pages: [Homepage, Services, Therapies, Contact],

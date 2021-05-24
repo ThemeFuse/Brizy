@@ -1,6 +1,6 @@
 module.exports = {
   id: "ocwgkqexdmthxdkxswwuenrdgoanmbjfahkq",
-  title: "NaturalBeauty",
+  title: "Natural Beauty",
   colorPalette: [
     {
       id: "color1",

@@ -11,7 +11,7 @@ const InShapeStyles = require("./styles/InShape");
 module.exports = {
   name: "In Shape",
   color: "#303E67",
-  cat: [0, 13, 14],
+  cat: [0, 12, 13],
   pages: [
     Homepage,
     Nutrition,

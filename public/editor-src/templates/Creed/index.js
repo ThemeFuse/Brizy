@@ -9,7 +9,7 @@ const CreedStyles = require("./styles/Creed");
 module.exports = {
   name: "Creed",
   color: "#A27F6E",
-  cat: [0, 7, 8, 12],
+  cat: [0, 7, 8, 9],
   pages: [Homepage, About, Gallery, Ministries, Sermons, Contact],
   styles: [CreedStyles]
 };

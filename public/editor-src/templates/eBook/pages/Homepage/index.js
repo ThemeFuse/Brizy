@@ -7989,7 +7989,7 @@ module.exports = {
                                         _id:
                                           "lrspnkbnnpfyyccqvafaufsuyvgjoyplxjqa",
                                         text:
-                                          '<p class="brz-text-sm-center brz-tp-paragraph"><span class="brz-cp-color2" style="opacity: 1;">© 2020 eBook Layout Design. All Rights Reserved.</span></p>'
+                                          '<p class="brz-text-sm-center brz-tp-paragraph"><span class="brz-cp-color2" style="opacity: 1;">© 2021 eBook Layout Design. All Rights Reserved.</span></p>'
                                       }
                                     }
                                   ],
