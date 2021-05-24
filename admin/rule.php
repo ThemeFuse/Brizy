@@ -172,13 +172,16 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		// matching archive rules
 		if ( isset( $ruleValues[1] ) && isset( $checkValues[1] ) && ( $ruleValues[1] & self::ARCHIVE ) && ( $checkValues[1] & self::ARCHIVE ) ) {
 
-			if ( $checkValues[1] == $ruleValues[1] ) {
-				return true;
-			} elseif ( $ruleValues[1] == self::DATE_ARCHIVE ) {
-				return true;
-			} elseif ( $ruleValues[1] == self::ARCHIVE ) {
-				return true;
+			if ($checkValues[1] == $ruleValues[1] ||
+                $ruleValues[1] == self::DATE_ARCHIVE ||
+                $ruleValues[1] == self::ARCHIVE) {
+				if($ruleValues[2]==$entityType) {
+				    return true;
+                }
 			}
+
+
+
 		}
 
 		foreach ( $ruleValues as $i => $value ) {
