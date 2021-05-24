@@ -8,7 +8,7 @@ const YogaStyles = require("./styles/Yoga");
 module.exports = {
   name: "Yoga",
   color: "#887D9E",
-  cat: [0, 13, 14],
+  cat: [0, 12, 13],
   pages: [Homepage, About, Classes, Pricing, Contact],
   styles: [YogaStyles]
 };

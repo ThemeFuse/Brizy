@@ -9,7 +9,7 @@ const WellnessStyles = require("./styles/Wellness");
 module.exports = {
   name: "Wellness",
   color: "#A7D6DE",
-  cat: [0, 13],
+  cat: [0, 12],
   pages: [Homepage, About, Appointments, Location, Services, Contact],
   styles: [WellnessStyles]
 };

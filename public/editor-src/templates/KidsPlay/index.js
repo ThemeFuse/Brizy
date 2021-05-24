@@ -9,7 +9,7 @@ const Services = require("./pages/Services");
 const KidsPlayStyle = require("./styles/KidsPlay");
 
 module.exports = {
-  name: "KidsPlay",
+  name: "Kids Play",
   color: "#622A14",
   cat: [0, 16],
   pages: [Homepage, About, Contact, Gallery, Pricing, ProjectDetails, Services],
