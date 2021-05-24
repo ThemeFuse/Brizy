@@ -13,7 +13,7 @@ const PhilanthropyStyles = require("./styles/Philanthropy");
 module.exports = {
   name: "Philanthropy",
   color: "#2C4C44",
-  cat: [0, 12],
+  cat: [0, 9],
   pages: [
     Homepage,
     Join,

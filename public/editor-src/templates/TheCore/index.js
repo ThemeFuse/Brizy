@@ -8,7 +8,7 @@ const Contact = require("./pages/Contact");
 const TheCoreStyle = require("./styles/TheCore");
 
 module.exports = {
-  name: "TheCore",
+  name: "The Core",
   color: "#D12A5C",
   cat: [0, 1, 3],
   pages: [Homepage, About, Pricing, ProjectDetails, Gallery, Contact],

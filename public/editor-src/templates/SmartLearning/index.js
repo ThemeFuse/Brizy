@@ -7,7 +7,7 @@ const Contact = require("./pages/Contact");
 const SmartLearningStyle = require("./styles/SmartLearning");
 
 module.exports = {
-  name: "SmartLearning",
+  name: "Smart Learning",
   color: "#7703EF",
   cat: [0, 6],
   pages: [Homepage, About, Resources, Pricing, Contact],

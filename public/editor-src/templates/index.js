@@ -1,3 +1,43 @@
+const Agens = require("./Agens");
+const Atorno = require("./Atorno");
+const Beauty = require("./Beauty");
+const Bizgo = require("./Bizgo");
+const Black = require("./Black");
+const Booky = require("./Booky");
+const BrickAndMortar = require("./BrickAndMortar");
+const Copyrits = require("./Copyrits");
+const Course = require("./Course");
+const Cribs = require("./Cribs");
+const Dieting = require("./Dieting");
+const Medico = require("./Medico");
+const DigitalWork = require("./DigitalWork");
+const Ditox = require("./Ditox");
+// const DroneX = require("./DroneX");
+// const Eladio = require("./Eladio");
+const Fitness = require("./Fitness");
+const Florin = require("./Florin");
+const Guide = require("./Guide");
+const Houziz = require("./Houziz");
+const Instom = require("./Instom");
+const ITGroup = require("./ITGroup");
+const Marketr = require("./Marketr");
+const Motion = require("./Motion");
+const Okloos = require("./Okloos");
+const PetCare = require("./PetCare");
+const Riston = require("./Riston");
+// const Sintix = require("./Sintix");
+const SmartLearning = require("./SmartLearning");
+const Solting = require("./Solting");
+const Soofer = require("./Soofer");
+const Spotless = require("./Spotless");
+const Timon = require("./Timon");
+const Trainer = require("./Trainer");
+// const Travely = require("./Travely");
+// const Trefon = require("./Trefon");
+const Vopril = require("./Vopril");
+const Webno = require("./Webno");
+const Winery = require("./Winery");
+const Zarbin = require("./Zarbin");
 const Advisors = require("./Advisors");
 const AlpineLodge = require("./AlpineLodge");
 const Architekt = require("./Architekt");
@@ -40,17 +80,12 @@ const Formstyle = require("./Formstyle");
 const DesignLoft = require("./DesignLoft");
 const Summit = require("./Summit");
 const Fixit = require("./Fixit");
-const SmartLearning = require("./SmartLearning");
 const eBook = require("./eBook");
-const DigitalWork = require("./DigitalWork");
 const Moon = require("./Moon");
 const AppSide = require("./AppSide");
-const Agens = require("./Agens");
 const TheCore = require("./TheCore");
 const Kaufman = require("./Kaufman");
-const Cribs = require("./Cribs");
 const Pathfinder = require("./Pathfinder");
-const Spotless = require("./Spotless");
 const KidsPlay = require("./KidsPlay");
 const Homefeast = require("./Homefeast");
 const ThePractice = require("./ThePractice");
@@ -71,6 +106,46 @@ const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
+    Agens,
+    Atorno,
+    Beauty,
+    Bizgo,
+    Black,
+    Booky,
+    BrickAndMortar,
+    Copyrits,
+    Course,
+    Cribs,
+    DigitalWork,
+    Dieting,
+    Medico,
+    Ditox,
+    // DroneX,
+    // Eladio,
+    Fitness,
+    Florin,
+    Guide,
+    Houziz,
+    Instom,
+    ITGroup,
+    Marketr,
+    Motion,
+    Okloos,
+    PetCare,
+    Riston,
+    // Sintix,
+    SmartLearning,
+    Solting,
+    Soofer,
+    Spotless,
+    Timon,
+    Trainer,
+    // Travely,
+    // Trefon,
+    Vopril,
+    Webno,
+    Winery,
+    Zarbin,
     Advisors,
     AlpineLodge,
     Architekt,
@@ -113,17 +188,12 @@ module.exports = {
     DesignLoft,
     Summit,
     Fixit,
-    // SmartLearning,
-    // eBook,
-    // DigitalWork,
+    eBook,
     Moon,
     AppSide,
-    // Agens,
     TheCore,
     Kaufman,
-    // Cribs,
     Pathfinder,
-    // Spotless,
     KidsPlay,
     Homefeast,
     ThePractice,
@@ -134,14 +204,15 @@ module.exports = {
     Ekstra,
     Bebio,
     Krowd,
-    // NaturalBeauty,
+    NaturalBeauty,
     Yachter,
     Politiko,
     Refix,
     Uplyft,
-    Workspace
+    Workspace,
   ],
   categories: [
+    { id: 100, title: "Free" },
     { id: 1, title: "Business" },
     { id: 2, title: "Travel" },
     { id: 3, title: "Portfolio" },
@@ -153,11 +224,10 @@ module.exports = {
     { id: 9, title: "Non Profit" },
     { id: 10, title: "Food" },
     { id: 11, title: "One Page" },
-    { id: 12, title: "Health & Beauty" },
+    { id: 12, title: "Health / Beauty" },
     { id: 13, title: "Sport" },
-    { id: 14, title: "Personal" },
     { id: 15, title: "Repair" },
     { id: 16, title: "Children" },
-    { id: 100, title: "Free" }
+    { id: 17, title: "Gaming" },
   ]
 };

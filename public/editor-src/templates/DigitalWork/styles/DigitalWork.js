@@ -1,6 +1,6 @@
 module.exports = {
   id: "kgawnbjohsnziytgxwvzqmrcmsjscqsapiqm",
-  title: "DigitalWork",
+  title: "Digital Work",
   colorPalette: [
     {
       id: "color1",
