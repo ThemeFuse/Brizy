@@ -37,6 +37,15 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			}
 		}
 
+        $bridge = new Brizy_Admin_Cloud_MediaUploadsBridge( $this->client );
+        foreach ( $media->uploads as $uid ) {
+            try {
+                $bridge->export( $uid );
+            } catch (Exception $e) {
+                Brizy_Logger::instance()->critical( 'Failed to export popup uploads: '.$e->getMessage(),[$e] );
+            }
+        }
+
 		$bridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 		foreach ( $media->fonts as $fontUid ) {
 			try {
@@ -84,6 +93,47 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge {
 				$brizyPost->set_needs_compile( true );
 				$brizyPost->setDataVersion( 1 );
 				$brizyPost->save();
+
+
+                // import fonts
+                if ( isset( $layout['media'] ) ) {
+                    $blockMedia = json_decode( $popup['media'] );
+
+                    $fontBridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
+                    if ( isset( $blockMedia->fonts ) ) {
+                        foreach ( $blockMedia->fonts as $cloudFontUid ) {
+                            try {
+                                $fontBridge->import( $cloudFontUid );
+                            } catch ( Exception $e ) {
+
+                            }
+                        }
+                    }
+
+                    $mediaBridge = new Brizy_Admin_Cloud_MediaBridge( $this->client );
+                    $mediaBridge->setBlockId( $post );
+                    if ( isset( $blockMedia->images ) ) {
+                        foreach ( $blockMedia->images as $mediaUid ) {
+                            try {
+                                $mediaBridge->import( $mediaUid );
+                            } catch ( Exception $e ) {
+
+                            }
+                        }
+                    }
+
+                    $mediaUploadBridge = new Brizy_Admin_Cloud_MediaUploadsBridge( $this->client );
+                    $mediaUploadBridge->setBlockId( $post );
+                    if ( isset( $blockMedia->uploads ) ) {
+                        foreach ( $blockMedia->uploads as $mediaUid ) {
+                            try {
+                                $mediaUploadBridge->import( $mediaUid );
+                            } catch ( Exception $e ) {
+                                Brizy_Logger::instance()->critical( 'Failed to import layout uploads: '.$e->getMessage(),[$e] );
+                            }
+                        }
+                    }
+                }
 			}
 			$wpdb->query( 'COMMIT' );
 		} catch ( Exception $e ) {
