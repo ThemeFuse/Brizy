@@ -38,6 +38,16 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 			}
 		}
 
+        $bridge = new Brizy_Admin_Cloud_MediaUploadsBridge( $this->client );
+        foreach ( $media->uploads as $uid ) {
+            try {
+                $bridge->export( $uid );
+            } catch (Exception $e) {
+                Brizy_Logger::instance()->critical( 'Failed to export layout uploads: '.$e->getMessage(),[$e] );
+            }
+        }
+
+
 		$bridge = new Brizy_Admin_Cloud_FontBridge( $this->client );
 		foreach ( $media->fonts as $fontUid ) {
 			try {
@@ -131,6 +141,18 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge {
 							}
 						}
 					}
+
+                    $mediaUploadBridge = new Brizy_Admin_Cloud_MediaUploadsBridge( $this->client );
+                    $mediaUploadBridge->setBlockId( $post );
+                    if ( isset( $blockMedia->uploads ) ) {
+                        foreach ( $blockMedia->uploads as $mediaUid ) {
+                            try {
+                                $mediaUploadBridge->import( $mediaUid );
+                            } catch ( Exception $e ) {
+                                Brizy_Logger::instance()->critical( 'Failed to import layout uploads: '.$e->getMessage(),[$e] );
+                            }
+                        }
+                    }
 				}
 			}
 			$wpdb->query( 'COMMIT' );

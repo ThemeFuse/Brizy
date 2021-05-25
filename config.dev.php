@@ -45,6 +45,7 @@ class Brizy_Config {
 	const CLOUD_LAYOUTS = '/api/layouts';
 	const CLOUD_SCREENSHOT = '/screenshot/%s';
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
+    const CLOUD_CUSTOM_FILES = '/api/custom_files';
 	const WP_HTTP_TIMEOUT = 600;
 
 	static public function getCompilerUrls() {
