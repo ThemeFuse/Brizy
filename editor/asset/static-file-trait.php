@@ -198,6 +198,7 @@ trait Brizy_Editor_Asset_StaticFileTrait {
 			'tif'  => 'image/tiff',
 			'svg'  => 'image/svg+xml',
 			'svgz' => 'image/svg+xml',
+			'webp' => 'image/webp',
 
 			// archives
 			'zip'  => 'application/zip',
