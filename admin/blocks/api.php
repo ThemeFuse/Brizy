@@ -138,7 +138,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-
 	public function actionUpdateGlobalBlock() {
 		$this->verifyNonce( self::nonce );
 
@@ -154,10 +153,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			if ( ! $this->param( 'meta' ) ) {
 				$this->error( 400, 'Invalid meta data' );
-			}
-
-			if ( $this->param( 'dataVersion' ) === null ) {
-				$this->error( '400', 'Invalid data version' );
 			}
 
 			$status = stripslashes( $this->param( 'status' ) );
@@ -181,8 +176,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->save( 1 );
 			} else {
-
-				$block->setDataVersion( $this->param( 'dataVersion' ) );
+                // issue: #14271
+				//$block->setDataVersion( $this->param( 'dataVersion' ) );
 				$block->getWpPost()->post_status = $status;
 
 				// position
@@ -234,10 +229,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$this->error( 400, 'Invalid meta data' );
 				}
 
-				if ( $this->param( 'dataVersion' )[ $i ] === null ) {
-					$this->error( '400', 'Invalid data version' );
-				}
-
 				$status = stripslashes( $this->param( 'status' )[ $i ] );
 
 				if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
@@ -270,7 +261,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$block->save( 1 );
 				} else {
 
-					$block->setDataVersion( $this->param( 'dataVersion' )[ $i ] );
+				    // issue: #14271
+					//$block->setDataVersion( $this->param( 'dataVersion' )[ $i ] );
 					$block->getWpPost()->post_status = $status;
 
 					// position
