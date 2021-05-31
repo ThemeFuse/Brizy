@@ -403,4 +403,19 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_MEDIA, $this->media );
 	}
 
+    /**
+     * @return $this|Brizy_Editor_Block
+     * @throws Brizy_Editor_Exceptions_DataVersionMismatch
+     */
+    protected function saveDataVersion()
+    {
+        // cyheck data version except for global blocks
+        // issue: #14271
+        if(Brizy_Admin_Blocks_Main::CP_GLOBAL !== $this->getWpPost()->post_type) {
+            parent::saveDataVersion();
+        }
+
+        return $this;
+    }
+
 }
