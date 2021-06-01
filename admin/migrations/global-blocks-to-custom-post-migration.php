@@ -36,9 +36,9 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 		$postMigrationStorage = new Brizy_Admin_Migrations_PostStorage( $projectPost->ID );
 		$globals              = json_decode( base64_decode( $projectStorage->get( 'globals', false ) ) );
 
-		if ( $globals && ! isset( $globals->project ) ) {
-			return;
-		}
+        if ( is_null($globals) || ! isset( $globals->project ) ) {
+            return;
+        }
 
 		if ( ! $globals || ( isset( $globals->project ) && empty( $globals->project ) ) ) {
 			$projectStorage->set( 'globals', base64_encode( json_encode( (object) array() ) ) );
