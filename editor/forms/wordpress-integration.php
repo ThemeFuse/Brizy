@@ -384,7 +384,11 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 
 			if ( isset( $json_obj->emailTo ) ) {
 				$instance->setEmailTo( trim( $json_obj->emailTo ) );
-			}
+			} else {
+			    // set the default email
+                $current_user   = wp_get_current_user();
+                $instance->setEmailTo( $current_user->user_email );;
+            }
 			if ( isset( $json_obj->subject ) ) {
 				$instance->setSubject( trim( $json_obj->subject ) );
 			}
