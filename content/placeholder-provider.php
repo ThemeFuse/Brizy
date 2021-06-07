@@ -5,7 +5,7 @@ class Brizy_Content_PlaceholderProvider extends Brizy_Content_Providers_Abstract
 	/**
 	 * @var array of implements Brizy_Editor_Content_PlaceholdersProviderInterface
 	 */
-	private $providers = array();
+	protected $providers = array();
 
 	/**
 	 * @var array
