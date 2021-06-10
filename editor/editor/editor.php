@@ -7,10 +7,10 @@ class Brizy_Editor_Editor_Editor {
 	const COMPILE_CONTEXT = 'compile';
 	const EDITOR_CONTEXT = 'editor';
 
-	/**
-	 * @var self
-	 */
-	static private $insance;
+    /**
+     * @var self
+     */
+    static private $insance;
 
 	/**
 	 * @var array
@@ -99,7 +99,8 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	public function config( $context = self::COMPILE_CONTEXT ) {
-		do_action( 'brizy_create_editor_config_before' );
+		do_action( 'brizy_create_editor_config_before')
+    ;
 
 		$cachePostId = ( $this->post ? $this->post->getWpPostId() : 0 ) . '_' . $context;
 		if ( isset( self::$config[ $cachePostId ] ) ) {
@@ -217,10 +218,10 @@ class Brizy_Editor_Editor_Editor {
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
-		do_action( 'brizy_create_editor_config_after' );
+        do_action( 'brizy_create_editor_config_after');
 
-		return self::$config[ $cachePostId ];
-	}
+        return self::$config[$cachePostId] ;
+    }
 
 	private function addUIConfig( $config, $context ) {
 
@@ -580,7 +581,26 @@ class Brizy_Editor_Editor_Editor {
 			$postTermsByKeys[ $term->term_id ] = $term;
 		}
 
-		$config['wp']['postTerms']       = $postTerms;
+		$config['wp']['post_terms'] = $postTerms;
+        $config['wp']['post_term_parents'] = array_diff_key($this->getAllParents($postTermsByKeys),$postTermsByKeys);
+        $config['wp']['post_author'] = (int)$this->post->getWpPost()->post_author;
+        return $config;
+    }
+
+    private function addGlobalBlocksData($config) {
+
+        $postTaxonomies = get_post_taxonomies($wp_post_id = (int)$config['wp']['page']);
+        $postTerms = [];
+        foreach ($postTaxonomies as $tax) {
+            $postTerms = array_merge($postTerms, wp_get_post_terms($wp_post_id, $tax));
+        }
+
+        $postTermsByKeys = [];
+        foreach ($postTerms as $term) {
+            $postTermsByKeys[$term->term_id] = $term;
+        }
+
+        $config['wp']['postTerms']       = $postTerms;
 		$config['wp']['postTermParents'] = array_diff_key( $this->getAllParents( $postTermsByKeys ), $postTermsByKeys );
 		$config['wp']['postAuthor']      = (int) $this->post->getWpPost()->post_author;
 
@@ -1011,7 +1031,7 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	private function fileUploadMaxSize() {
+    private function fileUploadMaxSize() {
 		static $max_size = - 1;
 
 		if ( $max_size < 0 ) {
@@ -1044,7 +1064,8 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	private function getOneArchiveLink( $args = '' ) {
+
+    private function getOneArchiveLink($args = ''){
 		global $wpdb, $wp_locale;
 
 		$defaults = array(
@@ -1160,7 +1181,8 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $brizy_public_editor_build_texts::get_editor_texts();
 	}
 
-	private function addTemplateFields( $config, $is_template, $wp_post_id, $context ) {
+    private function addTemplateFields($config, $is_template, $wp_post_id, $context)
+    {
 
 		$template_rules = [];
 		if ( $is_template ) {
@@ -1187,24 +1209,23 @@ class Brizy_Editor_Editor_Editor {
 
 		if ( $isTemplate ) {
 
-			foreach ( $templateRules as $rule ) {
-				/**
-				 * @var Brizy_Admin_Rule $rule ;
-				 */
-				$ruleMatches[] = array(
-					'type'       => $rule->getType(),
-					'group'      => $rule->getAppliedFor(),
-					'entityType' => $rule->getEntityType(),
-					'values'     => $rule->getEntityValues(),
-				);
-			}
-			$ruleMatches[] = array(
-				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-				'group'      => Brizy_Admin_Rule::BRIZY_TEMPLATE,
-				'entityType' => $this->post->getWpPost()->post_type,
-				'values'     => array( $wpPostId ),
-			);
-		} else {
+            foreach ($templateRules as $rule) {
+                /**
+                 * @var Brizy_Admin_Rule $rule ;
+                 */
+                $ruleMatches[] = array(
+                    'type' => $rule->getType(),
+                    'group' => $rule->getAppliedFor(),
+                    'entityType' => $rule->getEntityType(),
+                    'values' => $rule->getEntityValues(),
+                );
+            }
+        $ruleMatches[] = array(
+                'type' => Brizy_Admin_Rule::TYPE_INCLUDE,
+                'group' => Brizy_Admin_Rule::BRIZY_TEMPLATE,
+                'entityType' => $this->post->getWpPost()->post_type,
+                'values' => array($wpPostId),
+            );} else {
 			$ruleMatches[] = array(
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
 				'group'      => Brizy_Admin_Rule::POSTS,
@@ -1308,8 +1329,8 @@ class Brizy_Editor_Editor_Editor {
 		$pref = Brizy_Editor::prefix();
 
 		$actions = array(
-			'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+            'hash' => wp_create_nonce(Brizy_Editor_API::nonce),
+            'url' => set_url_scheme(admin_url('admin-ajax.php')),
 			'heartBeat'                  => $pref . Brizy_Editor_API::AJAX_HEARTBEAT,
 			'takeOver'                   => $pref . Brizy_Editor_API::AJAX_TAKE_OVER,
 			'lockProject'                => $pref . Brizy_Editor_API::AJAX_LOCK_PROJECT,
