@@ -34,6 +34,16 @@
                 </label>
             </td>
         </tr>
+        <?php if ( $showPostponeBtn ): ?>
+            <tr>
+                <th scope="row"><?php echo __( 'Allow me to update to the latest version.' ); ?></th>
+                <td>
+                    <label>
+                        <a href="<?php echo $disablePostponeUpdateUrl; ?>" class="button button-primary">Allow</a>
+                    </label>
+                </td>
+            </tr>
+        <?php endif; ?>
         </tbody>
     </table>
 
