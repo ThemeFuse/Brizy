@@ -470,7 +470,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			return $wp_post;
 		}
 
-
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$rules       = $ruleManager->getRules( $wp_post->ID );
 		$rule        = null;
@@ -611,7 +610,22 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 					break;
 				case Brizy_Admin_Rule::YEAR_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) );
 					$wp_query->is_year = true;
+
+					return null;
+				case Brizy_Admin_Rule::MONTH_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) . '&monthnum=' . date( 'm' ) );
+					$wp_query->is_month = true;
+
+					return null;
+				case Brizy_Admin_Rule::DAY_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) . '&monthnum=' . date( 'm' ) . '&day=' . date( 'd' ) );
+					$wp_query->is_day = true;
+
 					return null;
 			}
 
