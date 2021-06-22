@@ -127,10 +127,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 'public' => $taxonomy->public,
                 'hierarchical' => $taxonomy->hierarchical,
             ];
-        }, array_values(array_filter($taxonomies, function (WP_Taxonomy $taxonomy) {
-            // return only public
-            return $taxonomy->public && !$taxonomy->hierarchical;
-        })));
+        }, array_values($taxonomies));
 
         $this->success($post_taxonomies);
     }
