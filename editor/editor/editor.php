@@ -235,7 +235,7 @@ class Brizy_Editor_Editor_Editor
         }
 
         $config['wp']['post_terms'] = $postTerms;
-        $config['wp']['post_term_parents'] = array_diff_key($this->getAllParents($postTermsByKeys),$postTermsByKeys);
+        $config['wp']['post_term_parents'] = array_values(array_diff_key($this->getAllParents($postTermsByKeys),$postTermsByKeys));
         $config['wp']['post_author'] = (int)$this->post->getWpPost()->post_author;
         return $config;
     }
