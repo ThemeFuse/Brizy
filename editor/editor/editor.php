@@ -2,6 +2,9 @@
 
 class Brizy_Editor_Editor_Editor {
 
+    const COMPILE_CONTEXT = 'compile';
+    const EDITOR_CONTEXT = 'editor';
+
 	/**
 	 * @var self
 	 */
@@ -74,18 +77,14 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @throws Exception
 	 */
-	public function config() {
+	public function config($context = self::COMPILE_CONTEXT) {
 
-		$cachePostId = $this->post ? $this->post->getWpPostId() : 0;
+		$cachePostId = ($this->post ? $this->post->getWpPostId() : 0).'_'.$context;
 		if ( isset( self::$config[ $cachePostId ] ) ) {
 			return self::$config[ $cachePostId ];
 		}
 
 		global $wp_registered_sidebars;
-
-		$wp_post_id          = null;
-		$preview_post_link   = null;
-		$change_template_url = null;
 
 		$parent_post_type  = get_post_type( $this->post->getWpPostId() );
 		$wp_post_id        = $this->post->getWpPostId();
@@ -148,11 +147,10 @@ class Brizy_Editor_Editor_Editor {
 				'pluginPrefix'     => Brizy_Editor::prefix(),
 				'permalink'        => get_permalink( $wp_post_id ),
 				'page'             => $wp_post_id,
-'post_type'       => get_post_type( $wp_post_id ),
+                'post_type'       => get_post_type( $wp_post_id ),
 				'featuredImage'    => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments'  => array( 'images' => $this->get_page_attachments() ),
 				'templates'        => $this->post->get_templates(),
-				'api'              => $this->getApiActions(),
 				'plugins'          => array(
 					'dummy'       => true,
 					'woocommerce' => self::get_woocomerce_plugin_info(),
@@ -182,14 +180,12 @@ class Brizy_Editor_Editor_Editor {
 
 		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
-		$config = $this->addRecaptchaAccounts( $manager, $config );
-		$config = $this->addSocialAccounts( $manager, $config );
-		$config = $this->addWpPostTypes( $config );
-
-
-		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id );
-
-		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config );
+		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
+		$config = $this->addSocialAccounts( $manager, $config, $context );
+		$config = $this->addWpPostTypes( $config, $context );
+		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
+        $config = $this->getApiActions($config,$context);
+		return self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 	}
 
 	/**
@@ -197,7 +193,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return string[]|WP_Post_Type[]
 	 */
-	private function addWpPostTypes( $config ) {
+	private function addWpPostTypes( $config, $context ) {
 		$types = get_post_types( [ 'public' => true ] );
 		$result = [];
 		foreach ( $types as $type ) {
@@ -558,7 +554,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return array
 	 */
-	private function addRecaptchaAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config ) {
+	private function addRecaptchaAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config, $context ) {
 		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP );
 
 		if ( isset( $accounts[0] ) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount ) {
@@ -574,7 +570,7 @@ class Brizy_Editor_Editor_Editor {
 	 *
 	 * @return array
 	 */
-	private function addSocialAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config ) {
+	private function addSocialAccounts( Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config, $context ) {
 		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::SOCIAL_GROUP );
 
 		foreach ( $accounts as $account ) {
@@ -585,7 +581,6 @@ class Brizy_Editor_Editor_Editor {
 
 		return $config;
 	}
-
 
 	private function fileUploadMaxSize() {
 		static $max_size = - 1;
@@ -756,7 +751,7 @@ class Brizy_Editor_Editor_Editor {
 		return (object) $brizy_public_editor_build_texts::get_editor_texts();
 	}
 
-	private function addTemplateFields( $config, $is_template, $wp_post_id ) {
+	private function addTemplateFields( $config, $is_template, $wp_post_id, $context ) {
 
 		$template_rules = [];
 		if ( $is_template ) {
@@ -893,10 +888,13 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @return array
 	 */
-	public function getApiActions() {
-		$pref = Brizy_Editor::prefix();
+	public function getApiActions($config, $context) {
 
-		return array(
+	    if($context!=self::EDITOR_CONTEXT) return $config;
+
+	    $pref = Brizy_Editor::prefix();
+
+        $config['wp']['api'] =  array(
 			'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 			'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
@@ -948,7 +946,8 @@ class Brizy_Editor_Editor_Editor {
 			'getSidebars'                => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
 			'shortcodeContent'           => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
 			'placeholderContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
-			'placeholdersContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
+			'placeholdersContent'        => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
+			'getPostTaxonomies'          => $pref . Brizy_Editor_API::AJAX_GET_POST_TAXONOMIES,
 			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
 			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
 			'getTermsBy'                 => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
@@ -979,6 +978,8 @@ class Brizy_Editor_Editor_Editor {
 			'ruleArchiveGroupList'       => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
 			'ruleTemplateGroupList'      => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
 		);
+
+        return $config;
 	}
 
 	/**
