@@ -241,6 +241,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $this->getWpPost(), null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
+            $context->setProvider( $placeholderProvider );
 			$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 
             list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content );
@@ -248,7 +249,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
             $replacer = new \BrizyPlaceholders\Replacer( $placeholderProvider );
             $content = $replacer->replaceWithExtractedData( $placeholders, $placeholderInstances, $content ,$context);
 
-			$content  = \BrizyPlaceholders\Extractor::stripPlaceholders( $content );
+			$content  = $extractor->stripPlaceholders( $content );
 			$content  = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost() );
 
 			$wpdb->update(
