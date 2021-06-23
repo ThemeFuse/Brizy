@@ -213,8 +213,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function savePost( $createRevision = false ) {
 
-		$content = $this->get_compiled_page()->get_body() ? $this->get_compiled_page()->get_body() : '<div class="brz-root__container"></div>';
-		$content .= '<!-- version:' . time() . ' -->';
+		$version = '<!-- version:' . time() . ' -->';
 
 		$this->deleteOldAutosaves( $this->getWpPostId() );
 
@@ -222,16 +221,15 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			$post_type        = $this->getWpPost()->post_type;
 			$post_type_object = get_post_type_object( $post_type );
-			$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
-			$post_status      = $this->getWpPost()->post_status;
+			$content          = $this->getWpPost()->post_content ? preg_replace('/<!-- version:\d+ -->/', '', $this->getWpPost()->post_content ) : '<div class="brz-root__container"></div>';
 
 			$params = [
 				'ID'           => $this->getWpPostId(),
-				'post_content' => $content
+				'post_content' => $content . $version
 			];
 
-			if ( $can_publish ) {
-				$params['post_status'] = $post_status;
+			if ( current_user_can( $post_type_object->cap->publish_posts ) ) {
+				$params['post_status'] = $this->getWpPost()->post_status;
 			}
 
 			wp_update_post( $params );
@@ -239,9 +237,22 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		} else {
 			global $wpdb;
 
+			$content = $this->get_compiled_page()->getPageContent();
+
+			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $this->getWpPost(), null );
+			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
+			$extractor           = new Brizy_Content_PlaceholderExtractor( $placeholderProvider );
+
+			list( $placeholders, $content ) = $extractor->extract( $content );
+
+			$replacer = new Brizy_Content_PlaceholderReplacer( $context, $placeholderProvider );
+			$content  = $replacer->getContent( $placeholders, $content, $context );
+			$content  = Brizy_Content_PlaceholderExtractor::stripPlaceholders( $content );
+			$content  = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost() );
+
 			$wpdb->update(
 				$wpdb->posts,
-				[ 'post_content' => $content ],
+				[ 'post_content' => $content . $version ],
 				[ 'ID' => $this->getWpPostId() ],
 				[ '%s' ]
 			);
