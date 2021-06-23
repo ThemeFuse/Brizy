@@ -9,7 +9,7 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
     /**
      * @var array of implements Brizy_Editor_Content_PlaceholdersProviderInterface
      */
-    private $providers = array();
+    protected $providers = array();
 
     /**
      * @var array

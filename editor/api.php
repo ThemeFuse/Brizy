@@ -531,7 +531,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     private function getPostSample($templateId)
     {
-        $wp_post = get_post($templateId);
+        global $wp_query;$wp_post = get_post($templateId);
         if ($wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE) {
             return $wp_post;
         }
@@ -567,23 +567,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                         $posts = get_posts($args);
                         $post = isset($posts[0]) ? $posts[0] : null;
 
-                        if ($post && !Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
-                            return $post;
-                        } else {
-                            return null;
-                        }
-                        $post = isset($posts[0]) ? $posts[0] : null;
-
-                        try {
-                            if ($post && !Brizy_Editor_Post::get($post)->uses_editor()) {
-                                return $post;
-                            } else {
-                                return null;
-                            }
-                        } catch (Exception $e) {
-                            return $post;
-                        }
-                    }
+						if ( $post && !Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
+							return $post;
+						} else {
+							return null;
+						}
+					}
 
                     $filter = $values[0];
 
@@ -619,36 +608,55 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                         return $post;
                     }
 
-                    break;
+
                 case Brizy_Admin_Rule::TAXONOMY :
                     $args = array(
                         'taxonomy' => $rule->getEntityType(),
-                        'hide_empty' => false,
-                    );
+                        'hide_empty' => false,);
+
                     if (count($rule->getEntityValues())) {
                         $args['term_taxonomy_id'] = $rule->getEntityValues();
                     }
 
-                    $array = get_terms($args);
+                    $terms = get_terms($args);
+					$term  = array_pop( $terms );
 
-                    return array_pop($array);
-                    break;
+					if ( $term ) {
+						$wp_query = new WP_Query(
+							[
+								'tax_query' => [
+									[
+										'taxonomy' => $rule->getEntityType(),
+										'field'    => 'term_id',
+										'terms'    => $term->term_id,
+									]
+								]
+							]
+						);
+
+                    $wp_query->is_tax = true;
+					}return array_pop($terms);
+
                 case  Brizy_Admin_Rule::ARCHIVE :
                     return null;
-                    break;
+
                 case  Brizy_Admin_Rule::TEMPLATE :
 
                     switch ($rule->getEntityType()) {
                         case 'author':
                             $authors = get_users();
+							$wp_query = new WP_Query( [ 'author_name' => get_userdata( get_current_user_id() )->data->user_nicename ] );
+							$wp_query->is_author = true;
 
                             return array_pop($authors);
-                            break;
+
 
                         case '404':
-                        case 'search':
-                            return null;
-                            break;
+                        $wp_query->is_404 = true;
+
+							return null;case 'search':
+                            $wp_query->is_search = true;return null;
+
                         case 'home_page':
                             $get_option = get_option('page_for_posts');
 
@@ -666,7 +674,25 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                     }
 
                     break;
-            }
+            case Brizy_Admin_Rule::YEAR_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) );
+					$wp_query->is_year = true;
+
+					return null;
+				case Brizy_Admin_Rule::MONTH_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) . '&monthnum=' . date( 'm' ) );
+					$wp_query->is_month = true;
+
+					return null;
+				case Brizy_Admin_Rule::DAY_ARCHIVE:
+
+					$wp_query = new WP_Query( 'year=' . date( 'Y' ) . '&monthnum=' . date( 'm' ) . '&day=' . date( 'd' ) );
+					$wp_query->is_day = true;
+
+					return null;
+			}
 
         }
     }
