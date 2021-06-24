@@ -503,6 +503,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if ($post instanceof WP_Post) {
                 setup_postdata($post);
                 $wp_query->is_single = true;
+
+	            if ( function_exists( 'wc_get_product' ) ) {
+		            global $product;
+
+		            $product = wc_get_product( $post->ID );
+	            }
             }
 
             $contents = [];
