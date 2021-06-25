@@ -346,7 +346,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$groups[] = array(
 				'title' => 'Pages',
 				'value' => Brizy_Admin_Rule::POSTS,
-				'items' => array_map( $closure, $this->getCustomPostsList( Brizy_Admin_Rule::POSTS, $templateType ) )
+				'items' => array_map( $closure, $this->getCustomPostsList( Brizy_Admin_Rule::POSTS, $templateType, $context ) )
 			);
 		}
 
@@ -584,13 +584,13 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		wp_send_json_success( $groups, 200 );
 	}
 
-	private function getCustomPostsList( $groupValue, $templateType ) {
+	private function getCustomPostsList( $groupValue, $templateType, $context ) {
 		$postTypes = get_post_types( [ 'public' => true ], 'objects' );
 		$postTypes = array_diff_key( $postTypes, array_flip( [ 'attachment', 'elementor_library', Brizy_Admin_Stories_Main::CP_STORY ] ) );
 
-		return array_values( array_filter( $postTypes, function ( $type ) use ( $groupValue, $templateType ) {
+		return array_values( array_filter( $postTypes, function ( $type ) use ( $groupValue, $templateType, $context ) {
 			$type->groupValue = $groupValue;
-			if ( $templateType == 'single_product' ) {
+			if ( $templateType == 'single_product' || $context=='popup-rules' ) {
 				return $type->name == 'product' && $type->public && $type->show_ui;
 			} else {
 				return $type->name != 'product' && $type->public && $type->show_ui;
