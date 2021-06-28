@@ -216,7 +216,7 @@ class Brizy_Editor_Editor_Editor
 
         }
 
-        $config['wp']['post_types'] = $result;
+        $config['wp']['postTypes'] = $result;
 
         return $config;
     }
