@@ -36,7 +36,6 @@ if ( BRIZY_DEVELOPMENT ) {
 	$dotenv->loadEnv( __DIR__ . '/.env' );
 }
 
-add_action( 'plugins_loaded', 'Brizy_Update::init' );
 add_action( 'plugins_loaded', 'brizy_load' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
