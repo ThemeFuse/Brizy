@@ -197,15 +197,12 @@ class Brizy_Admin_Settings {
 		$list_post_types = $this->list_post_types();
 		$prepared_types  = array_map( array( $this, 'is_selected' ), $list_post_types );
 		$svgEnabled      = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
-		$time            = get_option( Brizy_Update::KEY );
 
 		return Brizy_Admin_View::render(
 			'settings/general',
 			[
 				'types'                    => $prepared_types,
-				'svgUploadEnabled'         => $svgEnabled,
-				'disablePostponeUpdateUrl' => add_query_arg( 'disable-postpone-update', 'true', admin_url( 'plugins.php' ) ),
-                'showPostponeBtn'          => $time > time()
+				'svgUploadEnabled'         => $svgEnabled
             ]
 		);
 	}
