@@ -588,14 +588,13 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$postTypes = get_post_types( [ 'public' => true ], 'objects' );
 		$postTypes = array_diff_key( $postTypes, array_flip( [ 'attachment', 'elementor_library', Brizy_Admin_Stories_Main::CP_STORY ] ) );
 
-		return array_values( array_filter( $postTypes, function ( $type ) use ( $groupValue, $templateType, $context ) {
-			$type->groupValue = $groupValue;
-			if ( $templateType == 'single_product' || $context=='popup-rules' ) {
-				return $type->name == 'product' && $type->public && $type->show_ui;
-			} else {
-				return $type->name != 'product' && $type->public && $type->show_ui;
-			}
-		} ) );
+        return array_values(array_filter($postTypes, function ($type) use ($groupValue, $templateType, $context) {
+            $type->groupValue = $groupValue;
+            if ($type->name == 'product' && ($templateType == 'single_product' || $context == 'popup-rules')) {
+                return true;
+            }
+            return $type->public && $type->show_ui;
+        }));
 	}
 
 	private function getWooPageList( $groupValue, $templateType ) {
