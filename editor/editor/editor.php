@@ -182,6 +182,7 @@ class Brizy_Editor_Editor_Editor
 			'editorVersion'   => BRIZY_EDITOR_VERSION,
 		);
 
+
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
 		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
@@ -859,6 +860,14 @@ class Brizy_Editor_Editor_Editor
                     'values' => $rule->getEntityValues(),
                 );
             }
+
+            $ruleMatches[] = array(
+                'type' => Brizy_Admin_Rule::TYPE_INCLUDE,
+                'group' => Brizy_Admin_Rule::BRIZY_TEMPLATE,
+                'entityType' => $this->post->getWpPost()->post_type,
+                'values' => array($wpPostId),
+            );
+
         } else {
             $ruleMatches[] = array(
                 'type' => Brizy_Admin_Rule::TYPE_INCLUDE,
