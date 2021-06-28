@@ -25,7 +25,7 @@ class Brizy_Admin_PanelPostContent {
 			return $data;
 		}
 
-		$data['post_content'] = $this->get_compiled_html( $postarr['ID'], $data['post_content'], false );
+		$data['post_content'] = $this->get_compiled_html( $postarr['ID'], $data['post_content'] );
 
 		return $data;
 	}
@@ -79,29 +79,35 @@ class Brizy_Admin_PanelPostContent {
 		return $this->get_compiled_html( $postId, $content );
 	}
 
-	private function get_compiled_html( $postId, $content, $applyFilters = true ) {
+	private function get_compiled_html( $postId, $content ) {
 
 		if ( ! Brizy_Editor_Entity::isBrizyEnabled( $postId ) ) {
 			return $content;
 		}
 
 		try {
-			$editor  = Brizy_Editor_Post::get( $postId );
-			$project = Brizy_Editor_Project::get();
+			$editor = Brizy_Editor_Post::get( $postId );
+
+			if ( ! $editor->isCompiledWithCurrentVersion() || $editor->get_needs_compile() ) {
+				$editor->compile_page();
+				$editor->saveStorage();
+				$editor->savePost();
+
+				global $wpdb;
+
+				$query = $wpdb->get_col( "SELECT post_content FROM $wpdb->posts WHERE ID = $postId" );
+
+				if ( ! isset( $query[0] ) ) {
+					return $content;
+				}
+
+				$content = $query[0];
+			}
+
 		} catch ( Exception $e ) {
 			return $content;
 		}
 
-		if ( ! $editor->isCompiledWithCurrentVersion() || $editor->get_needs_compile() ) {
-			try {
-				$editor->compile_page();
-				$editor->saveStorage();
-				$editor->savePost();
-			} catch ( Exception $e ) {}
-		}
-
-		$content = $editor->get_compiled_page()->getPageContent();
-
-		return $applyFilters ? apply_filters( 'brizy_content', $content, $project, $editor->getWpPost() ) : $content;
+		return $content;
 	}
 }
