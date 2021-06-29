@@ -641,7 +641,7 @@ class Brizy_Public_Main
 			$content       = $compiled_page->get_body();
 		}
 
-		echo apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' );
+		echo apply_filters( 'the_content', apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body' ) );
 	}/**
      * @param string $rel
      *
