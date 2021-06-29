@@ -85,10 +85,14 @@ class Brizy_Compatibilities_Init {
 
 		if ( class_exists( 'WooCommerce' ) ) {
 			new Brizy_Compatibilities_Woocommerce();
-    }
+        }
     
 		if ( class_exists( 'bbPress' ) ) {
 			new Brizy_Compatibilities_Bbpress();
+		}
+
+		if ( class_exists( 'Tribe__Events__Main' ) ) {
+			new Brizy_Compatibilities_TheEventsCalendar();
 		}
   }
 
