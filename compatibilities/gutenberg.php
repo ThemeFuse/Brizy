@@ -93,7 +93,7 @@ class Brizy_Compatibilities_Gutenberg {
                 </script>
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
                     <div class="brizy-buttons brizy-buttons-gutenberg">
-                        <a href="<?php echo $edit_url;?>" class="">
+                        <a href="<?php echo $continueUrl; ?>" class="">
                             <div class="button button-primary button-large">
 	                            <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
                             </div>
@@ -125,13 +125,10 @@ class Brizy_Compatibilities_Gutenberg {
 		echo
 			'<style>
 			    .brizy-buttons .button::before {
-			        background-color: white;
-				    content: "\00a0";
-				    width: 16px;
-				    height: 16px;
 				    -webkit-mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) . ') no-repeat center;
 				    mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) . ') no-repeat center;
-				    margin-right: 7px;
+				    mask-size: contain;
+                    -webkit-mask-size: contain;
 			    }' .
 		    '</style>';
 	}

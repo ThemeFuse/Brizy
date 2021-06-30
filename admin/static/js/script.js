@@ -158,7 +158,7 @@ jQuery(document).ready(function ($) {
 
         insertBrizyBtn: function () {
 
-        	if ( $( '.brizy-buttons' ).length ) {
+        	if ( $( '.edit-post-header-toolbar .brizy-buttons' ).length ) {
         		return;
 	        }
 
