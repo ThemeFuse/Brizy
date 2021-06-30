@@ -42,10 +42,7 @@ class Brizy_Admin_Main {
 				'action_change_template'
 			) ); // action to change template from editor
 
-			add_action( 'edit_form_after_title', array(
-				$this,
-				'action_add_enable_disable_buttons'
-			) ); // add button to enable disable editor
+			add_action( 'edit_form_after_title', [ $this, 'action_add_enable_disable_buttons' ], -1 ); // add button to enable disable editor
 		}
 
 		add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
