@@ -125,8 +125,8 @@ class Brizy_Compatibilities_Gutenberg {
 		echo
 			'<style>
 			    .brizy-buttons .button::before {
-				    -webkit-mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) . ') no-repeat center;
-				    mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) . ') no-repeat center;
+				    -webkit-mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy-logo.svg', __FILE__ ) ) . ') no-repeat center;
+				    mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy-logo.png', __FILE__ ) ) . ') no-repeat center;
 				    mask-size: contain;
                     -webkit-mask-size: contain;
 			    }' .
