@@ -42,10 +42,7 @@ class Brizy_Admin_Main {
 				'action_change_template'
 			) ); // action to change template from editor
 
-			add_action( 'edit_form_after_title', array(
-				$this,
-				'action_add_enable_disable_buttons'
-			) ); // add button to enable disable editor
+			add_action( 'edit_form_after_title', [ $this, 'action_add_enable_disable_buttons' ], -1 ); // add button to enable disable editor
 		}
 
 		add_action( 'before_delete_post', array( $this, 'action_delete_page' ) );
@@ -55,6 +52,7 @@ class Brizy_Admin_Main {
 		add_filter( 'admin_body_class', array( $this, 'filter_add_body_class' ), 10, 2 );
 
 		add_action( 'admin_head', array( $this, 'hide_editor' ) );
+		add_action( 'admin_head', array( $this, 'custom_css_btns' ) );
 		add_action( 'brizy_global_data_updated', array( $this, 'global_data_updated' ) );
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
@@ -212,6 +210,38 @@ class Brizy_Admin_Main {
 				} );
 			}
 		}
+	}
+
+	public function custom_css_btns() {
+
+		$prefix = 'brizy';
+
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			$prefix = method_exists( 'BrizyPro_Admin_WhiteLabel', 'getPrefix' ) ? BrizyPro_Admin_WhiteLabel::_init()->getPrefix() : get_option( 'brizy_prefix', 'brizy' );
+		}
+
+		$cssId = '#toplevel_page_' . $prefix . '-settings';
+		$svg   = __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy-logo.svg', __FILE__ ) );
+
+		echo
+			'<style>' .
+				$cssId . ' .wp-menu-image::before {
+			        background-color: rgba(240,246,252,.6);
+				    content: "\00a0";
+				    -webkit-mask: url(' . $svg . ') no-repeat center;
+				    mask: url(' . $svg . ') no-repeat center;
+				    mask-size: contain;
+				    -webkit-mask-size: contain;
+			    }' .
+
+				$cssId . '.wp-has-current-submenu .wp-menu-image::before {
+				    background-color: white;
+				}' .
+
+				$cssId . '.wp-not-current-submenu:hover .wp-menu-image::before {
+				    background-color: #72aee6;
+				}
+		    </style>';
 	}
 
 	public function plugin_action_links( $links ) {

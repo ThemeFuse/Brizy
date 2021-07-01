@@ -7,6 +7,7 @@ class Brizy_Compatibilities_Gutenberg {
 		add_action( 'admin_print_scripts-edit.php', array( $this, 'add_edit_button_to_gutenberg' ), 12 );
 		add_action( 'admin_init', array( $this, 'action_disable_gutenberg' ) );
 		add_action( 'admin_footer', array( $this, 'print_admin_footer_tpls' ) );
+		add_action( 'admin_head', [ $this, 'admin_head' ] );
 	}
 
 
@@ -85,17 +86,17 @@ class Brizy_Compatibilities_Gutenberg {
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                     <div class="brizy-buttons">
-                        <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button"
-                           href="<?php echo $edit_url ?>">
-                            <img src="<?php echo plugins_url( '../admin/static/img/arrow.png', __FILE__ ) ?>"
-                             class="brizy-button--arrow" /> <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
+                        <a class="brizy-button brizy-button--primary enable-brizy-editor" href="<?php echo $edit_url ?>">
+                            <span class="brizy-go-editor-back-arrow">&#8592;</span> <span><?php echo __( 'Back to WordPress Editor', 'brizy' ) ?></span>
                         </a>
                     </div>
                 </script>
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
-                    <div class="brizy-buttons-gutenberg">
-                        <a class="brizy-button brizy-button--primary " type="button" href="<?php echo $continueUrl; ?>"
-                           style="padding:5px 27px 5px;"><?php echo __( 'Continue to edit with ', 'brizy' ); ?><img src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>" class="brizy-logo"/><?php echo __bt( 'brizy', 'Brizy' ); ?>
+                    <div class="brizy-buttons brizy-buttons-gutenberg">
+                        <a href="<?php echo $continueUrl; ?>" class="">
+                            <div class="button button-primary button-large">
+	                            <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
+                            </div>
                         </a>
                     </div>
                 </script>
@@ -103,20 +104,32 @@ class Brizy_Compatibilities_Gutenberg {
 				<?php
 			} else {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
+
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
-                        <div class="brizy-buttons" >
-                            <a class="brizy-button brizy-button--primary enable-brizy-editor" type="button" href="<?php echo $edit_url;?>"><?php echo esc_html__( 'Edit with', 'brizy' ) ?>
-                                <img width="16" src="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ); ?>"
-                                     srcset="<?php echo __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy.png', __FILE__ ) ) ?> 1x, <?php echo __bt( 'brizy-logo-2x', plugins_url( '../admin/static/img/brizy-2x.png', __FILE__ ) );?> 2x"
-                                     class="brizy-logo"><?php echo __bt( 'brizy', 'Brizy' ); ?>
-                             </a>
-                        </div>
-                    </script>
+                    <div class="brizy-buttons" >
+                        <a href="<?php echo $edit_url;?>" class="button button-primary button-large">
+                            <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
+                        </a>
+                    </div>
+                </script>
                 <?php
 			}
 		} catch ( Exception $e ) {
 
 		}
+	}
+
+	public function admin_head() {
+
+		echo
+			'<style>
+			    .brizy-buttons .button::before {
+				    -webkit-mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy-logo.svg', __FILE__ ) ) . ') no-repeat center;
+				    mask: url(' . __bt( 'brizy-logo', plugins_url( '../admin/static/img/brizy-logo.png', __FILE__ ) ) . ') no-repeat center;
+				    mask-size: contain;
+                    -webkit-mask-size: contain;
+			    }' .
+		    '</style>';
 	}
 }
