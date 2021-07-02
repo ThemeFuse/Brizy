@@ -593,20 +593,39 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private function roleList() {
 		$editable_roles = apply_filters( 'editable_roles', wp_roles()->roles );
-		$roles          = [];
+		$wpRoles        = [ 'customer', 'shop_manager', 'subscriber', 'contributor', 'author', 'editor', 'administrator' ];
+		$out            = [];
 
 		if ( ! Brizy_Admin_Membership_Membership::is_pro() ) {
-			$editable_roles = array_intersect_key( $editable_roles, array_flip( [ 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager' ] ) );
+			$editable_roles = array_intersect_key( $editable_roles, array_flip( $wpRoles ) );
 		}
 
-		foreach ( $editable_roles as $role => $details ) {
-			$roles[] = [
+		$roles = array_filter( $editable_roles, function( $key ) {
+			if ( ! strpos( $key, '-' ) ) {
+				return false;
+			}
+
+			$parts = explode( '-', $key );
+
+			return get_post_type( end( $parts ) ) == Brizy_Admin_Membership_Membership::CP_ROLE;
+		}, ARRAY_FILTER_USE_KEY );
+
+		foreach ( $wpRoles as $role ) {
+			if ( isset( $editable_roles[ $role ] ) ) {
+				$roles[ $role ] = $editable_roles[ $role ];
+			}
+		}
+
+		$roles = array_merge( $roles, array_diff_key( $editable_roles, $roles ) );
+
+		foreach ( $roles as $role => $details ) {
+			$out[] = [
 				'role' => esc_attr( $role ),
 				'name' => translate_user_role( $details['name'] )
 			];
 		}
 
-		return $roles;
+		return $out;
 	}
 
 	private function getOneArchiveLink( $args = '' ) {
