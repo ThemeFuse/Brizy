@@ -28,6 +28,8 @@ class Brizy_Admin_Membership_Membership {
 		add_action( 'edit_user_profile',                  [ $this, 'output_checklist' ] );
 		add_action( 'user_new_form',                      [ $this, 'output_checklist' ] );
 		add_action( 'profile_update',                     [ $this, 'profile_update' ] );
+		add_action( 'admin_bar_menu',                     [ $this, 'admin_bar_menu' ], 10000 );
+
 
 		if ( is_multisite() ) {
 			add_action( 'after_signup_user',  [ $this, 'after_signup_user' ], 10, 4 );
@@ -390,6 +392,75 @@ class Brizy_Admin_Membership_Membership {
 		}
 
 		return $final_roles;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function roleList() {
+		$editable_roles = apply_filters( 'editable_roles', wp_roles()->roles );
+		$wpRoles        = [ 'customer', 'shop_manager', 'subscriber', 'contributor', 'author', 'editor', 'administrator' ];
+		$out            = [];
+
+		if ( ! self::is_pro() ) {
+			$editable_roles = array_intersect_key( $editable_roles, array_flip( $wpRoles ) );
+		}
+
+		$roles = array_filter( $editable_roles, function( $key ) {
+			if ( ! strpos( $key, '-' ) ) {
+				return false;
+			}
+
+			$parts = explode( '-', $key );
+
+			return get_post_type( end( $parts ) ) == Brizy_Admin_Membership_Membership::CP_ROLE;
+		}, ARRAY_FILTER_USE_KEY );
+
+		foreach ( $wpRoles as $role ) {
+			if ( isset( $editable_roles[ $role ] ) ) {
+				$roles[ $role ] = $editable_roles[ $role ];
+			}
+		}
+
+		$roles = array_merge( $roles, array_diff_key( $editable_roles, $roles ) );
+
+		foreach ( $roles as $role => $details ) {
+			$out[] = [
+				'role' => esc_attr( $role ),
+				'name' => translate_user_role( $details['name'] )
+			];
+		}
+
+		return $out;
+	}
+
+	public function admin_bar_menu( &$wp_admin_bar ) {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		$id = Brizy_Editor::prefix( '-membership-admin-bar-menu' );
+
+		$wp_admin_bar->add_menu( array(
+			'id'    => $id,
+			'title' => 'View Page As Default',
+		) );
+
+		$roles = self::roleList();
+
+		global $wp;
+
+		foreach ( $roles as $role ) {
+			$admin_bar_menu_args = [
+				'parent' => $id,
+				'id'     => Brizy_Editor::prefix( '-membership-view-as-' . $role['role'] ),
+				'title'  => $role['name'],
+				'href'   =>  add_query_arg( 'role', $role['role'], home_url( add_query_arg( [ $_GET ], $wp->request ) ) ),
+			];
+
+			$wp_admin_bar->add_node( $admin_bar_menu_args );
+		}
 	}
 
 	static function is_pro() {
