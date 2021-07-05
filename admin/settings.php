@@ -94,8 +94,7 @@ class Brizy_Admin_Settings {
 			'read',
 			self::menu_slug(),
 			array( $this, 'render' ),
-			__bt( 'brizy-logo', plugins_url( 'static/img/brizy-logo.svg', __FILE__ ) ),
-			//plugins_url( '/static/img/brizy-logo.svg', __FILE__ ),
+			'',
 			'58'
 		);
 	}
