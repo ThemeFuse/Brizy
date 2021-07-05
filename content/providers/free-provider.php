@@ -25,6 +25,10 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 					$roles = explode( ',', $attrs['roles'] );
 					$user  = wp_get_current_user();
 
+					if ( Brizy_Editor::is_user_allowed() && isset( $user->roles ) ) {
+					    $user->roles[] = empty( $_GET['role'] ) ? 'default' : $_GET['role'];
+                    }
+
 					if ( in_array( 'not_logged', $roles ) ) {
 
 						$roles = array_diff( $roles, [ 'not_logged' ] );
