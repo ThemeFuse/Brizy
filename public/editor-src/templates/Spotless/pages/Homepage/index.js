@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1508,
   title: "Homepage",
-  keywords: "homepage, about, quote, testimonials, faq, steps, process",
+  keywords: "Spotless, homepage, about, quote, testimonials, faq, steps, process",
   cat: [0, 15, 100],
   pro: false,
   resolve: {

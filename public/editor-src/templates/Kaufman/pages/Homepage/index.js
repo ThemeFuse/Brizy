@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2630,
   title: "Homepage",
   keywords:
-    "homepage, features, icons, about, history, team, blog, testimonials, map, ",
+    "Kaufman, homepage, features, icons, about, history, team, blog, testimonials, map, ",
   cat: [0, 1, 100],
   pro: false,
   resolve: {

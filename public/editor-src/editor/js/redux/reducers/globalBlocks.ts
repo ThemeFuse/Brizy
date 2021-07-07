@@ -90,8 +90,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           data,
           status,
           rules,
-          position,
-          dataVersion: 1
+          position
         };
       });
     }
@@ -224,7 +223,6 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       return produce(state, draft => {
         draft[id].rules = rules;
-        draft[id].dataVersion = draft[id].dataVersion + 1;
       });
     }
     case "DELETE_GLOBAL_BLOCK": {
@@ -232,7 +230,6 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       return produce(state, draft => {
         draft[id].data.deleted = true;
-        draft[id].dataVersion = draft[id].dataVersion + 1;
       });
     }
 
@@ -248,7 +245,6 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return Object.entries(allGlobalBlocks).reduce((acc, [key, block]) => {
         acc[key] = produce(block, draft => {
           draft.position = positions[key] || null;
-          draft.dataVersion = draft.dataVersion + 1;
 
           const isPopup =
             block.data.type === "SectionPopup" ||

@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2538,
   title: "Homepage2",
   keywords:
-    "homepage, form, charter, yachts, posts, video, destinations, team, crew, news, articles",
+    "Yachter, homepage, form, charter, yachts, posts, video, destinations, team, crew, news, articles",
   cat: [0, 13, 100],
   pro: false,
   resolve: {

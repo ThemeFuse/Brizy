@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1739,
   title: "Homepage",
   keywords:
-    "homepage, form, editor, video, features, logos, testimonials, cta, landing",
+    "Motion, homepage, form, editor, video, features, logos, testimonials, cta, landing",
   cat: [0, 3, 11],
   pro: true,
   resolve: {

@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1624,
   title: "Homepage",
   keywords:
-    "homepage, instagram, form, video, logos, cta, testimonials",
+    "Instom, homepage, instagram, form, video, logos, cta, testimonials",
   cat: [0, 1, 3, 11],
   pro: true,
   resolve: {

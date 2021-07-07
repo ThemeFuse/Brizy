@@ -7,7 +7,7 @@ export { default as Section } from "./Section/export.js";
 export { default as Tabs } from "./Tabs/export.js";
 export { default as Video } from "./Video/export.js";
 export { default as VideoPlaylist } from "./VideoPlaylist/export.js";
-export { default as Audio } from "./Audio/export.js";
+export { default as Audio } from "./Audio/export.ts";
 export { default as Accordion } from "./Accordion/export.js";
 export { default as Countdown } from "./Countdown/export.js";
 export { default as Countdown2 } from "./Countdown2/export.js";

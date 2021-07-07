@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2302,
   title: "Homepage",
   keywords:
-    "homepage, traveling, destinations, location, pricing, tourism, testimonials",
+    "Pathfinder, homepage, traveling, destinations, location, pricing, tourism, testimonials",
   cat: [0, 2],
   pro: true,
   resolve: {

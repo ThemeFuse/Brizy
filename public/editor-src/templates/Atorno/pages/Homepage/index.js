@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1780,
   title: "Homepage",
   keywords:
-    "homepage, lawyer, form, attorney, cta, contact, video, logos, testimonials, landing",
+    "Atorno, homepage, lawyer, form, attorney, cta, contact, video, logos, testimonials, landing",
   cat: [0, 1, 11],
   pro: true,
   resolve: {

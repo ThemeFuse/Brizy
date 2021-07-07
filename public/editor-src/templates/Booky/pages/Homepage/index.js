@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1801,
   title: "Homepage",
   keywords:
-    "homepage, books, library, logos, quote, landing",
+    "Booky, homepage, books, library, logos, quote, landing",
   cat: [0, 1, 6, 11],
   pro: true,
   resolve: {

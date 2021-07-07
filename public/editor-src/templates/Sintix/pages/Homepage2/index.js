@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2550,
   title: "Homepage 2",
   keywords:
-    "homepage, logos, video, awards, reviews, testimonials, gallery, listing, accordion, blog",
+    "Sintix, homepage, logos, video, awards, reviews, testimonials, gallery, listing, accordion, blog",
   cat: [0, 13, 17, 100],
   pro: false,
   resolve: {

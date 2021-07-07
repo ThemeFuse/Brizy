@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1843,
   title: "Homepage",
   keywords:
-    "homepage, training, athletics, form, features, logos, cta",
+    "Fitness, homepage, training, athletics, form, features, logos, cta",
   cat: [0, 12, 13, 11],
   pro: true,
   resolve: {

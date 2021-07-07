@@ -10,7 +10,6 @@ import {
   wInFullPage
 } from "visual/config/columns";
 import { css } from "visual/utils/cssStyle";
-import { getContainerW } from "visual/utils/meta";
 import { cloneItem } from "visual/utils/models";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
@@ -35,46 +34,16 @@ export default class Section extends EditorComponent {
   getMeta(v) {
     const { meta } = this.props;
     const { slider } = v;
-    const {
-      w: desktopFullW,
-      wNoSpacing: desktopFullWNoSpacing
-    } = getContainerW({
-      v,
-      w: wInFullPage,
-      wNoSpacing: wInFullPage,
-      device: "desktop"
-    });
-    const {
-      w: desktopBoxedW,
-      wNoSpacing: desktopBoxedWNoSpacing
-    } = getContainerW({
-      v,
-      w: wInBoxedPage,
-      wNoSpacing: wInBoxedPage,
-      device: "desktop"
-    });
-    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
-      v,
-      w: wInTabletPage,
-      wNoSpacing: wInTabletPage,
-      device: "tablet"
-    });
-    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
-      v,
-      w: wInMobilePage,
-      wNoSpacing: wInMobilePage,
-      device: "mobile"
-    });
 
     return Object.assign({}, meta, {
-      desktopFullW,
-      desktopFullWNoSpacing,
-      desktopBoxedW,
-      desktopBoxedWNoSpacing,
-      tabletW,
-      tabletWNoSpacing,
-      mobileW,
-      mobileWNoSpacing,
+      desktopFullW: wInFullPage,
+      desktopFullWNoSpacing: wInFullPage,
+      desktopBoxedW: wInBoxedPage,
+      desktopBoxedWNoSpacing: wInBoxedPage,
+      tabletW: wInTabletPage,
+      tabletWNoSpacing: wInTabletPage,
+      mobileW: wInMobilePage,
+      mobileWNoSpacing: wInMobilePage,
       section: {
         isSlider: slider === "on"
       }

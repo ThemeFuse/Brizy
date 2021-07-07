@@ -20,7 +20,6 @@ import * as sidebarConfig from "./sidebar";
 import { styleSection, styleContainer, styleAnimation } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
-import { getContainerW } from "visual/utils/meta";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
@@ -82,36 +81,20 @@ class SectionFooter extends EditorComponent {
     const size = styleSizeContainerSize({ v, device: "desktop" });
     const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
     const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
-      v,
-      w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
-      wNoSpacing: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,
-      width: size,
-      device: "desktop"
-    });
-    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
-      v,
-      w: wInTabletPage,
-      wNoSpacing: wInTabletPage,
-      width: tabletSize,
-      device: "tablet"
-    });
-    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
-      v,
-      w: wInMobilePage,
-      wNoSpacing: wInMobilePage,
-      width: mobileSize,
-      device: "mobile"
-    });
+
+    const wInPage = containerType === "fullWidth" ? wInFullPage : wInBoxedPage;
+    const desktopW = Math.round(wInPage * (size / 100) * 10) / 10;
+    const tabletW = Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10;
+    const mobileW = Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10;
 
     return {
       ...meta,
       desktopW,
-      desktopWNoSpacing,
+      desktopWNoSpacing: desktopW,
       tabletW,
-      tabletWNoSpacing,
+      tabletWNoSpacing: tabletW,
       mobileW,
-      mobileWNoSpacing
+      mobileWNoSpacing: mobileW
     };
   }
 

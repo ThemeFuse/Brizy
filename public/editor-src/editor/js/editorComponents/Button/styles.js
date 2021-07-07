@@ -29,6 +29,9 @@ export function style(v, vs, vd, hasSizing) {
         "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
+    ".brz &&.brz-btn.brz-btn-submit:hover": {
+      standart: ["cssStyleColor", "cssStyleBgColor"]
+    },
     ".brz &&:hover:after": {
       standart:
         (hasSizing && IS_EDITOR) || v.type === "submit"

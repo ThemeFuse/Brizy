@@ -4,7 +4,7 @@ module.exports = {
     thumbnailHeight: 3426,
     title: "Homepage",
     keywords:
-        "homepage, business, agency, features, video, work, gallery, showcase, counter, team, logos, listing, cta",
+        "Eladio, homepage, business, agency, features, video, work, gallery, showcase, counter, team, logos, listing, cta",
     cat: [0, 1, 3, 100],
     pro: false,
     resolve: {

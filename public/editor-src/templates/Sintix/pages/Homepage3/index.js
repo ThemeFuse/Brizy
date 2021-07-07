@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2755,
   title: "Homepage 3",
-  keywords: "homepage, games, listing, rating, gallery, counter, reviews, testimonials, video, team, blog",
+  keywords: "Sintix, homepage, games, listing, rating, gallery, counter, reviews, testimonials, video, team, blog",
   cat: [0, 13, 17, 100],
   pro: false,
   resolve: {

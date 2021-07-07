@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1805,
   title: "Homepage",
   keywords:
-    "homepage, timer, video, features, testimonials, logos, form, reservation, webinar, seminar, landing",
+    "Webno, homepage, timer, video, features, testimonials, logos, form, reservation, webinar, seminar, landing",
   cat: [0, 1, 8, 100, 11],
   pro: false,
   resolve: {

@@ -17,3 +17,7 @@ export const fontSelector = (state: ReduxState): ReduxState["fonts"] =>
 export const extraFontStylesSelector = (
   state: ReduxState
 ): ReduxState["extraFontStyles"] => state.extraFontStyles;
+
+export const projectVersionSelector = (
+  state: ReduxState
+): ReduxState["projectVersion"] => state.projectVersion;
