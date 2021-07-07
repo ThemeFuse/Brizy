@@ -27,11 +27,10 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 					if ( Brizy_Editor::is_user_allowed() && isset( $user->roles ) ) {
 
-//					    $roles = [ 'subscriber', 'not_logged' ];
-//					    $user->roles = [ 'administrator', 'subscriber' ];
-//					    $_GET['role'] = 'not_logged';
-
 					    if ( ! empty( $_GET['role'] ) && $_GET['role'] != 'default' ) {
+
+					        $user->roles = [];
+
 					        if ( $_GET['role'] == 'not_logged' ) {
 
 						        if ( in_array( 'not_logged', $roles ) ) {
