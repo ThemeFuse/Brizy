@@ -26,16 +26,36 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 					$user  = wp_get_current_user();
 
 					if ( Brizy_Editor::is_user_allowed() && isset( $user->roles ) ) {
-					    $user->roles[] = empty( $_GET['role'] ) ? 'default' : $_GET['role'];
+
+//					    $roles = [ 'subscriber', 'not_logged' ];
+//					    $user->roles = [ 'administrator', 'subscriber' ];
+//					    $_GET['role'] = 'not_logged';
+
+					    if ( ! empty( $_GET['role'] ) && $_GET['role'] != 'default' ) {
+					        if ( $_GET['role'] == 'not_logged' ) {
+
+						        if ( in_array( 'not_logged', $roles ) ) {
+							        $roles[] = 'default';
+							        $user->roles[] = 'default';
+						        }
+                            } else {
+						        $user->roles[] = $_GET['role'];
+                            }
+                        } else {
+						    $roles[] = 'default';
+						    $user->roles[] = 'default';
+                        }
                     }
 
 					if ( in_array( 'not_logged', $roles ) ) {
 
 						$roles = array_diff( $roles, [ 'not_logged' ] );
 
-						if ( $user->ID && ! array_intersect( $roles, (array) $user->roles ) ) {
-							return '';
-						}
+					    if ( is_user_logged_in() ) {
+						    if ( ! array_intersect( $roles, (array) $user->roles ) ) {
+							    return '';
+						    }
+                        }
 					} else {
 						if ( ! array_intersect( $roles, (array) $user->roles ) ) {
 							return '';
