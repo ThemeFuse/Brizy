@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2424,
   title: "Homepage", 
-  keywords: "homepage, Health & Beauty, Medical, Hospital, Clinic, Doctor, Dentist, Wellness",
+  keywords: "Gourmet, homepage, Health & Beauty, Medical, Hospital, Clinic, Doctor, Dentist, Wellness",
   cat: [0, 10],
   pro: true,
   resolve: { blocks:[

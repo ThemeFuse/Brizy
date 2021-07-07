@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 3141,
   title: "Homepage",
   keywords:
-    "homepage, virtual, advisors, assistance, testimonials, pricing, plans, team, form",
+    "Oktane, homepage, virtual, advisors, assistance, testimonials, pricing, plans, team, form",
   cat: [0, 1, 3],
   pro: true,
   resolve: {

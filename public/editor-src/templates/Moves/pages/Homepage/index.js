@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2724,
   title: "Homepage", 
-  keywords: "Health & Beauty, Sport, Events, One Page, Homepage, Dancing, Dance, Tango, HipHop, Street style, cha cha, jive, samba, trainer",
+  keywords: "Moves, Health & Beauty, Sport, Events, One Page, Homepage, Dancing, Dance, Tango, HipHop, Street style, cha cha, jive, samba, trainer",
   cat: [0, 12, 13, 8, 11],
   pro: true,
   resolve: { blocks:[

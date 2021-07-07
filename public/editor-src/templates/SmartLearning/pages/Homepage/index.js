@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1973,
   title: "Homepage",
-  keywords: "homepage, teachers, education, learning, testimonials, team",
+  keywords: "Smart Learning, homepage, teachers, education, learning, testimonials, team",
   cat: [0, 6],
   pro: true,
   resolve: {

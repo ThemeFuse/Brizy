@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1745,
   title: "Homepage",
   keywords:
-    "homepage, form, detox, logos, gallery, team, cta",
+    "Ditox, homepage, form, detox, logos, gallery, team, cta",
   cat: [0, 12, 11],
   pro: true,
   resolve: {

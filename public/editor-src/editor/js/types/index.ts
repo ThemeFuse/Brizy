@@ -1,3 +1,4 @@
+import { Palette as ColorPalette } from "visual/utils/color/toPalette";
 // blocks
 
 export type BlockMetaType = "normal" | "popup";
@@ -11,7 +12,6 @@ export type Block = {
 export type GlobalBlock = {
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
-  dataVersion: number;
   rules: {
     type: 1 | 2;
     appliedFor: number | null;
@@ -21,7 +21,7 @@ export type GlobalBlock = {
   position: GlobalBlockPosition | null;
   meta: {
     type: BlockMetaType;
-    extraFontStyles: Array<{ id: string }>;
+    extraFontStyles: ExtraFontStyle[];
     _thumbnailSrc?: string;
     _thumbnailWidth?: number;
     _thumbnailHeight?: number;
@@ -34,7 +34,7 @@ export type SavedBlock = {
   dataVersion: number;
   meta: {
     type: BlockMetaType;
-    extraFontStyles: Array<{ id: string }>;
+    extraFontStyles: ExtraFontStyle[];
     _thumbnailSrc?: string;
     _thumbnailWidth?: number;
     _thumbnailHeight?: number;
@@ -47,7 +47,7 @@ export type SavedLayout = {
   dataVersion: number;
   meta: {
     type: BlockMetaType;
-    extraFontStyles: Array<{ id: string }>;
+    extraFontStyles: ExtraFontStyle[];
     _thumbnailSrc?: string;
     _thumbnailWidth?: number;
     _thumbnailHeight?: number;
@@ -129,6 +129,44 @@ export type Screenshot = {
   _thumbnailHeight: number;
   _thumbnailTime: number;
 };
+
+// style
+
+export interface FontStyle {
+  deletable: "off" | "on";
+  id: string;
+  title: string;
+  fontFamily: string;
+  fontFamilyType: string;
+  fontSize: number;
+  fontWeight: number;
+  lineHeight: number;
+  letterSpacing: number;
+  tabletFontSize: number;
+  tabletFontWeight: number;
+  tabletLineHeight: number;
+  tabletLetterSpacing: number;
+  mobileFontSize: number;
+  mobileFontWeight: number;
+  mobileLineHeight: number;
+  mobileLetterSpacing: number;
+}
+
+export interface Palette {
+  id: ColorPalette;
+  hex: string;
+}
+
+export interface Style {
+  id: string;
+  title: string;
+  fontStyles: FontStyle[];
+  colorPalette: Palette[];
+}
+
+export interface ExtraFontStyle {
+  id: string;
+}
 
 // Jquery libs
 

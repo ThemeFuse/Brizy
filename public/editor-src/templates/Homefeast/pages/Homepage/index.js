@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2255,
   title: "Homepage",
   keywords:
-    "homepage, blog, recipes, food, team, story, about, testimonials, form, map, social",
+    "Homefeast, homepage, blog, recipes, food, team, story, about, testimonials, form, map, social",
   cat: [0, 10, 100],
   pro: false,
   resolve: {

@@ -5160,8 +5160,8 @@ img.mfp-img {
       height: 100%;
       border: none; }
     .brz .brz-video .brz-iframe {
-      height: 101%;
-      width: 101%; }
+      height: 100%;
+      width: 100%; }
     .brz .brz-video .brz-video__cover {
       display: -webkit-box;
       display: -ms-flexbox;

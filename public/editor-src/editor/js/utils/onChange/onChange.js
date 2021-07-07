@@ -679,9 +679,9 @@ export function onChangeDependeciesUngrouped({
               ((childs.length > 0 &&
                 childs.filter(p => p !== current).every(z => v[z] === 0)) ||
                 childs.length === 0) &&
-              ((params.nullValue.length > 0 &&
+              ((params.nullValue?.length > 0 &&
                 params.nullValue.every(p => v[p] === "" || v[p] === 0)) ||
-                params.nullValue.length === 0)
+                params.nullValue?.length === 0)
                 ? params.type === "string"
                   ? ""
                   : 0

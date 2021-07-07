@@ -414,36 +414,27 @@ export function getGlobalBlocks() {
   }).then(r => {
     return r
       .map(parseGlobalBlock)
-      .reduce(
-        (
-          acc,
-          { id, uid, data, meta, rules, position, status, dataVersion }
-        ) => {
-          // map uids to ids to use them in updates
-          uidToApiId[uid] = id;
+      .reduce((acc, { id, uid, data, meta, rules, position, status }) => {
+        // map uids to ids to use them in updates
+        uidToApiId[uid] = id;
 
-          acc[uid] = {
-            id: uid,
-            data,
-            meta,
-            rules,
-            position,
-            status,
-            dataVersion
-          };
+        acc[uid] = {
+          id: uid,
+          data,
+          meta,
+          rules,
+          position,
+          status
+        };
 
-          return acc;
-        },
-        {}
-      );
+        return acc;
+      }, {});
   });
 }
 
 export function createGlobalBlock(globalBlock) {
   const uid = globalBlock.data.value._id;
-  const { data, rules, meta, status, dataVersion } = stringifyGlobalBlock(
-    globalBlock
-  );
+  const { data, rules, meta, status } = stringifyGlobalBlock(globalBlock);
   const projectId = Config.get("project").id;
   const requestData = {
     project: projectId,
@@ -451,7 +442,6 @@ export function createGlobalBlock(globalBlock) {
     uid,
     status,
     data,
-    dataVersion,
     rules,
     meta
   };
@@ -471,14 +461,13 @@ export function createGlobalBlock(globalBlock) {
 export function updateGlobalBlock(uid, globalBlock, extraMeta = {}) {
   // const uid = globalBlock.data.value._id;
 
-  const { data, rules, meta, dataVersion } = stringifyGlobalBlock(globalBlock);
+  const { data, rules, meta } = stringifyGlobalBlock(globalBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = extraMeta;
     const requestData = {
       uid,
       data,
       rules,
-      dataVersion,
       meta,
       is_autosave
     };
@@ -499,21 +488,15 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
   const { is_autosave = 1 } = extraMeta;
   const data = Object.entries(globalBlocks).reduce(
     (acc, [uid, globalBlock]) => {
-      const {
-        data,
-        rules,
-        position,
-        dataVersion,
-        meta,
-        status
-      } = stringifyGlobalBlock(globalBlock);
+      const { data, rules, position, meta, status } = stringifyGlobalBlock(
+        globalBlock
+      );
 
       acc.push({
         id: uidToApiId[uid],
         status,
         data,
         position: JSON.stringify(position),
-        dataVersion,
         rules,
         meta
       });
