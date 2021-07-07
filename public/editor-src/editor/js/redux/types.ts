@@ -7,14 +7,44 @@ import {
   Authorized,
   DeviceMode,
   Block,
-  SyncAllowed
+  SyncAllowed,
+  Style,
+  ExtraFontStyle
 } from "visual/types";
 import { HistoryEnhancerState } from "./history/types";
+
+export interface Fonts {
+  config?: {
+    data: GoogleFont[];
+  };
+  blocks?: {
+    data: GoogleFont[];
+  };
+  google?: {
+    data: GoogleFont[];
+  };
+  upload?: {
+    data: UploadedFont[];
+  };
+}
 
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
-  project: {};
+  project: {
+    id: string;
+    dataVersion: number;
+    data: {
+      selectedKit: string;
+      selectedStyle: string;
+      styles: ReduxState["styles"];
+      extraFontStyles: ReduxState["extraFontStyles"];
+      font: string;
+      fonts: ReduxState["fonts"];
+      disabledElements: string[];
+    };
+  };
+  projectVersion: number;
   page: PageWP | PageCloud;
   globalBlocks: {
     [key: string]: GlobalBlock;
@@ -24,25 +54,12 @@ export type ReduxState = {
   blocksData: {
     [key: string]: Block;
   };
-  fonts: {
-    config?: {
-      data: GoogleFont[];
-    };
-    blocks?: {
-      data: GoogleFont[];
-    };
-    google?: {
-      data: GoogleFont[];
-    };
-    upload?: {
-      data: UploadedFont[];
-    };
-  };
+  fonts: Fonts;
   ui: {
     deviceMode: DeviceMode;
     leftSidebar: {
       isOpen: boolean;
-      drawerContentType: string | undefined; // TODO: converted to a union of actual drawer type later
+      drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later
     };
     rightSidebar: {
       isOpen: boolean;
@@ -51,6 +68,16 @@ export type ReduxState = {
     };
     showHiddenElements: boolean;
     currentRole: string;
+  };
+  styles: Style[];
+  extraFontStyles: ExtraFontStyle[];
+  authorized: Authorized;
+  syncAllowed: SyncAllowed;
+  copiedElement: {
+    path: (string | number)[];
+    value: {
+      items: Block[];
+    };
   };
 
   // below any are temporary and needed for ReduxStateWithHistory
@@ -61,13 +88,6 @@ export type ReduxState = {
   currentStyle: any;
   globalBlocksUpdates: any;
   /* eslint-enable  @typescript-eslint/no-explicit-any */
-  extraFontStyles: Array<{ id: string }>;
-  authorized: Authorized;
-  syncAllowed: SyncAllowed;
-  copiedElement: {
-    path: [];
-    value: {};
-  };
 };
 
 // this is temporary and will be automatically infered after

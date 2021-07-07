@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2208,
   title: "Homepage", 
-  keywords: "homepage, Hotel, Spa, Restaurant, Travel, Vacation, apartments, rooms, suites, houses",
+  keywords: "Beach Resort, homepage, Hotel, Spa, Restaurant, Travel, Vacation, apartments, rooms, suites, houses",
   cat: [0, 2],
   pro: true,
   resolve: { blocks:[

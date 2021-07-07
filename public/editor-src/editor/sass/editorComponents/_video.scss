@@ -31,11 +31,9 @@
     height: 100%;
     border: none;
   }
-  // 101% because have problems with chrome
-  // have 1px white after iframe
   .brz-iframe {
-    height: 101%;
-    width: 101%;
+    height: 100%;
+    width: 100%;
   }
   .brz-video__cover {
     display: flex;

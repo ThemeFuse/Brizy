@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 3145,
   title: "Homepage2",
   keywords:
-    "homepage2, donation, charity, volunteers, features, news, events, donate, team, volunteers, testimonials, map",
+    "Azino, homepage2, donation, charity, volunteers, features, news, events, donate, team, volunteers, testimonials, map",
   cat: [0, 9],
   pro: true,
   resolve: {

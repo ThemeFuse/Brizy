@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2361,
   title: "Homepage", 
-  keywords: "homepage, hope, NGO, charity, Non Profit",
+  keywords: "Hope, homepage, hope, NGO, charity, Non Profit",
   cat: [0, 9],
   pro: true,
   resolve: { blocks:[

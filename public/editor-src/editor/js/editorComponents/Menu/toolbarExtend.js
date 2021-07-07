@@ -799,8 +799,8 @@ export function getItemsMMenu({ v, device, state }) {
             max: 100,
             units: [
               {
-                title: "%",
-                value: "%"
+                title: "px",
+                value: "px"
               }
             ]
           }
@@ -816,8 +816,8 @@ export function getItemsMMenu({ v, device, state }) {
             max: 100,
             units: [
               {
-                title: "%",
-                value: "%"
+                title: "px",
+                value: "px"
               }
             ]
           }

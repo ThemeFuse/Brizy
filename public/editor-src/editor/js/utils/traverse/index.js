@@ -5,3 +5,4 @@ export {
   getUsedStylesFonts,
   getBlocksStylesFonts
 } from "./fonts";
+export { getUsedModelsUpload } from "./upload";

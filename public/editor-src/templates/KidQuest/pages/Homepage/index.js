@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1553,
   title: "Homepage", 
-  keywords: "homepage, kids play, Education, Teaching, Kindergarten",
+  keywords: "Kid Quest, homepage, kids play, Education, Teaching, Kindergarten",
   cat: [0, 6],
   pro: true,
   resolve: { blocks:[

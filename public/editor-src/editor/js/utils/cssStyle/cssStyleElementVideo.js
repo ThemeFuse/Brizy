@@ -9,12 +9,17 @@ import {
   styleElementVideoIconSizeWidth,
   styleElementVideoIconSizeHeight,
   styleElementVideoIconCustomSize,
+  styleElementVideoBoxShadowOpacity,
+  styleElementVideoBoxShadowColorHex,
+  styleElementVideoBorderOpacity,
+  styleElementVideoBorderColorHex,
   styleFilterBrightness,
   styleFilterHue,
   styleFilterSaturation,
   styleFilterContrast
 } from "visual/utils/style2";
 import { cssStyleColor, cssStyleBgColor } from "visual/utils/cssStyle";
+import { hexToRgba } from "visual/utils/color";
 
 export function cssStyleElementVideoPaddingRatio({ v, device, state }) {
   const paddingRatio = styleElementVideoPaddingRatio({ v, device, state });
@@ -43,6 +48,32 @@ export function cssStyleElementVideoBgSize({ v, device, state }) {
   const coverZoom = styleElementVideoCoverZoom({ v, device, state });
 
   return coverZoom === undefined ? "" : `background-size:${coverZoom}%;`;
+}
+
+export function cssStyleElementVideoIframeFix({ v, device, state }) {
+  const boxShadowColorOpacity = styleElementVideoBoxShadowOpacity({
+    v,
+    device,
+    state
+  });
+  const borderOpacity = styleElementVideoBorderOpacity({ v, device, state });
+  const boxShadowColorHex = styleElementVideoBoxShadowColorHex({
+    v,
+    device,
+    state
+  });
+  const borderColorHex = styleElementVideoBorderColorHex({ v, device, state });
+
+  if (borderOpacity > 0) {
+    return `background-color:${hexToRgba(borderColorHex, borderOpacity)};`;
+  } else if (boxShadowColorOpacity > 0) {
+    return `background-color:${hexToRgba(
+      boxShadowColorHex,
+      boxShadowColorOpacity
+    )};`;
+  } else {
+    return "background-color:transparent;";
+  }
 }
 
 export function cssStyleElementVideoIconFontSize({ v, device, state }) {

@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2142,
   title: "Homepage",
   keywords:
-    "homepage, services, repairs, refrigerators, fixers, testimonials, features, blog, news, articles, form",
+    "Creatic, Refix, homepage, services, repairs, refrigerators, fixers, testimonials, features, blog, news, articles, form",
   cat: [0, 1, 15, 100],
   pro: false,
   resolve: {

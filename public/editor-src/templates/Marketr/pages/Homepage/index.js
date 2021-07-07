@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1499,
   title: "Homepage",
   keywords:
-    "homepage, form, features, logos, testimonials, cta, landing",
+    "Marketr, homepage, form, features, logos, testimonials, cta, landing",
   cat: [0, 1, 11],
   pro: true,
   resolve: {

@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1862,
   title: "Homepage",
   keywords:
-    "homepage, form, features, services, loan, logos, testimonials, cta, landing",
+    "Zarbin, homepage, form, features, services, loan, logos, testimonials, cta, landing",
   cat: [0, 1, 11],
   pro: true,
   resolve: {

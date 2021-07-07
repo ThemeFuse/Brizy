@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 3011,
   title: "Homepage",
   keywords:
-    "homepage, children, care, kindergarten, baby, school, programs, offers, newsletter, play, games, teachers, team, testimonials, cta, news, blog, posts, articles, gallery",
+    "Bebio, homepage, children, care, kindergarten, baby, school, programs, offers, newsletter, play, games, teachers, team, testimonials, cta, news, blog, posts, articles, gallery",
   cat: [0, 16],
   pro: true,
   resolve: {

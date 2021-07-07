@@ -131,10 +131,10 @@ export function pollingSendHeartBeat(heartBeat) {
         setTimeout(() => {
           apiSendHeartBeat()
             .then(r => {
-              if (!r || r.locked === false) {
-                polling();
-              } else {
+              if (r?.locked === true) {
                 rej({ heartBeat: true, data: r });
+              } else {
+                polling();
               }
             })
             .catch(polling);

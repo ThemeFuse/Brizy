@@ -104,6 +104,9 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMMenuBorderColor"
       ]
     },
+    ".brz nav.brz-mm-menu&&": {
+      standart: ["cssStyleElementMMenuBackgroundColor"]
+    },
     ".brz &&.brz-mm-menu .brz-mm-menu__item .brz-mm-listitem__text": {
       standart: ["cssStyleElementMMenuPadding"]
     },

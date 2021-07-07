@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 4111,
   title: "Homepage",
   keywords:
-    "homepage, application, features, counter, pricing, testimonial, team, video, faq, blog, contact, form, email",
+    "App side, homepage, application, features, counter, pricing, testimonial, team, video, faq, blog, contact, form, email",
   cat: [0, 11, 100],
   pro: false,
   resolve: {

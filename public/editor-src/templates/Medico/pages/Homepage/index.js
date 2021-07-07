@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1710,
   title: "Homepage",
   keywords:
-    "homepage, form, logos, features, services, video, testimonials, cta, landing",
+    "Medico, homepage, form, logos, features, services, video, testimonials, cta, landing",
   cat: [0, 11, 12],
   pro: true,
   resolve: {

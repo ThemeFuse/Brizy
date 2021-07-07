@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2117,
   title: "Homepage3",
   keywords:
-    "homepage3, skills, business, services, business, cases, testimonials, cta",
+    "Avalon, homepage3, skills, business, services, business, cases, testimonials, cta",
   cat: [0, 1],
   pro: true,
   resolve: {

@@ -1,6 +1,10 @@
 export * from "./adapter-legacy";
 
-import { getUsedModelsFonts, getUsedStylesFonts } from "visual/utils/traverse";
+import {
+  getUsedModelsFonts,
+  getUsedModelsUpload,
+  getUsedStylesFonts
+} from "visual/utils/traverse";
 import { getUsedModelsImages } from "visual/utils/traverse/images";
 import { SavedBlocksError, SavedLayoutError } from "visual/utils/errors";
 import { GlobalBlock, SavedBlock, SavedLayout } from "visual/types";
@@ -134,6 +138,7 @@ export const makeBlockMeta = (
   const fonts = getUsedModelsFonts({ models: data });
   const images = getUsedModelsImages({ models: data });
   const fontsStyles = getUsedStylesFonts(extraFontStyles);
+  const uploads = getUsedModelsUpload({ models: data });
   const fontsSet = new Set();
 
   // Added only font upload
@@ -143,6 +148,7 @@ export const makeBlockMeta = (
 
   return JSON.stringify({
     images,
+    uploads,
     fonts: [...fontsSet]
   });
 };

@@ -20,8 +20,8 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '2.2.18' );
-define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '184-wp' );
-define( 'BRIZY_SYNC_VERSION', '184' );
+define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '189-wp' );
+define( 'BRIZY_SYNC_VERSION', '189' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );

@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1819,
   title: "Homepage3",
-  keywords: "homepage, projects, about, details, categories, cta",
+  keywords: "Krowd, homepage, projects, about, details, categories, cta",
   cat: [0, 1, 9],
   pro: true,
   resolve: {
