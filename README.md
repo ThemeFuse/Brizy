@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.18<br>
+Stable tag: 2.2.19<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,19 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.19 - 2021-07-07
+* Improved: Project update project if was changed
+* Improved: Added new name for layouts tab
+* Fixed: Dynamic content UI
+* Fixed: Sync uploaded files
+* Fixed: Corner option crashing the editor
+* Fixed: Polling request 500
+* Fixed: Image blurred in sections
+* Fixed: Styles for video iFrame
+* Fixed: Membership View as Roles Order
+* Fixed: Changed design buttons admin
+
 
 ### 2.2.18 - 2021-06-28
 * Fixed:  Update the post content on compile page
