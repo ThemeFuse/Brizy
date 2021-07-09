@@ -292,6 +292,7 @@ export {
 export {
   cssStyleElementVideoPaddingRatio,
   cssStyleElementVideoFilter,
+  cssStyleElementVideoIframeFix,
   cssStyleElementVideoBgSize,
   cssStyleElementVideoIconFontSize,
   cssStyleElementVideoIconWidth,

@@ -67,11 +67,13 @@ export default store => next => {
   const apiHandler = apiCatch.bind(null, next);
 
   return action => {
+    const oldState = store.getState();
+
     next(action);
 
     const state = store.getState();
 
-    handlePublish({ action, state, apiHandler });
+    handlePublish({ action, state, oldState, apiHandler });
     handleProject({ action, state, apiHandler });
     handlePage({ action, state, apiHandler });
     handleGlobalBlocks({ action, state, apiHandler });
@@ -79,14 +81,17 @@ export default store => next => {
   };
 };
 
-function handlePublish({ action, state, apiHandler }) {
+function handlePublish({ action, state, oldState, apiHandler }) {
   if (action.type === PUBLISH) {
     const { onSuccess = _.noop, onError = _.noop } = action.meta;
 
     // update
     const meta = { is_autosave: 0 };
 
+    const oldProject = projectSelector(oldState);
     const project = projectSelector(state);
+
+    const oldPage = pageSelector(oldState);
     const page = pageSelector(state);
 
     const changedGBIds = changedGBIdsSelector(state);
@@ -111,15 +116,19 @@ function handlePublish({ action, state, apiHandler }) {
       {}
     );
 
-    apiHandler(
-      Promise.all([
-        apiUpdateProject(project, meta),
-        apiUpdatePage(page, meta),
-        apiUpdateGlobalBlocks(newGlobalBlocks, meta)
-      ]),
-      onSuccess,
-      onError
-    );
+    const allApi = [];
+
+    if (project !== oldProject) {
+      allApi.push(apiUpdateProject(project, meta));
+    }
+
+    if (page !== oldPage) {
+      allApi.push(apiUpdatePage(page, meta));
+    }
+
+    allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
+
+    apiHandler(Promise.all(allApi), onSuccess, onError);
   }
 }
 

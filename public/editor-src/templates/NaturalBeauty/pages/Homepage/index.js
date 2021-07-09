@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2511,
   title: "Homepage",
   keywords:
-    "homepage, gallery, services, skin, care, therapy, cosmetology, massage",
+    "Natural Beauty, homepage, gallery, services, skin, care, therapy, cosmetology, massage",
   cat: [0, 12],
   pro: true,
   resolve: {

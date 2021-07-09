@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 3019,
   title: "Homepage",
   keywords:
-    "homepage, web, marketing, traffic, tools, services, pricing, packages, testimonials, counters, news, articles, blog",
+    "Uplyft, homepage, web, marketing, traffic, tools, services, pricing, packages, testimonials, counters, news, articles, blog",
   cat: [0, 1, 3],
   pro: true,
   resolve: {

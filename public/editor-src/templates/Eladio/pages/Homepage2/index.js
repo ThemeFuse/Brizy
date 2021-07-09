@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 3426,
   title: "Homepage 2",
-  keywords: "homepage, business, agency, digital, features, video, map, tabs",
+  keywords: "Eladio, homepage, business, agency, digital, features, video, map, tabs",
   cat: [0, 1, 3, 100],
   pro: false,
   resolve: {

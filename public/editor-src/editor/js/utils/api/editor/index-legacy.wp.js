@@ -235,31 +235,27 @@ export function getGlobalBlocks() {
   }).then(({ data }) => {
     return data
       .map(parseGlobalBlock)
-      .reduce(
-        (acc, { uid, data, status, dataVersion, rules, position, meta }) => {
-          if (status === "draft") return acc;
+      .reduce((acc, { uid, data, status, rules, position, meta }) => {
+        if (status === "draft") return acc;
 
-          acc[uid] = {
-            data,
-            status,
-            dataVersion,
-            meta,
-            rules,
-            position,
-            id: uid
-          };
+        acc[uid] = {
+          data,
+          status,
+          meta,
+          rules,
+          position,
+          id: uid
+        };
 
-          return acc;
-        },
-        {}
-      );
+        return acc;
+      }, {});
   });
 }
 
 export function createGlobalBlock(globalBlock) {
   const { createGlobalBlock } = Config.get("wp").api;
   const uid = globalBlock.data.value._id;
-  const { data, rules, dataVersion, meta } = stringifyGlobalBlock(globalBlock);
+  const { data, rules, meta } = stringifyGlobalBlock(globalBlock);
   const media = makeBlockMeta(globalBlock);
 
   return persistentRequest({
@@ -269,7 +265,6 @@ export function createGlobalBlock(globalBlock) {
       uid,
       status: "draft",
       data,
-      dataVersion,
       rules,
       meta,
       media,
@@ -282,9 +277,7 @@ export function updateGlobalBlock(uid, globalBlock, extraMeta = {}) {
   const { updateGlobalBlock } = Config.get("wp").api;
   const { is_autosave = 1 } = extraMeta;
   // const uid = globalBlock.data.value._id;
-  const { data, rules, dataVersion, meta, status } = stringifyGlobalBlock(
-    globalBlock
-  );
+  const { data, rules, meta, status } = stringifyGlobalBlock(globalBlock);
 
   return persistentRequest({
     type: "POST",
@@ -293,7 +286,6 @@ export function updateGlobalBlock(uid, globalBlock, extraMeta = {}) {
       uid,
       status,
       data,
-      dataVersion,
       rules,
       is_autosave,
       meta,
@@ -308,20 +300,14 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
 
   const data = Object.entries(globalBlocks).reduce(
     (acc, [uid, globalBlock]) => {
-      const {
-        data,
-        position,
-        rules,
-        dataVersion,
-        meta,
-        status
-      } = stringifyGlobalBlock(globalBlock);
+      const { data, position, rules, meta, status } = stringifyGlobalBlock(
+        globalBlock
+      );
 
       acc.uid.push(uid);
       acc.status.push(status);
       acc.data.push(data);
       acc.position.push(JSON.stringify(position));
-      acc.dataVersion.push(dataVersion);
       acc.rules.push(rules);
       acc.meta.push(meta);
 
@@ -332,7 +318,6 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
       status: [],
       data: [],
       position: [],
-      dataVersion: [],
       rules: [],
       meta: []
     }
@@ -346,7 +331,6 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
       status: data.status,
       data: data.data,
       position: data.position,
-      dataVersion: data.dataVersion,
       rules: data.rules,
       is_autosave,
       meta: data.meta,

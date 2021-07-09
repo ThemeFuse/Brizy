@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2124,
   title: "Homepage",
   keywords:
-    "homepage, newsletter, schedule, testimonials, services, app, counter",
+    "Pearl Dent, homepage, newsletter, schedule, testimonials, services, app, counter",
   cat: [0, 12],
   pro: true,
   resolve: {

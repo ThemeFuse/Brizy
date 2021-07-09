@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1636,
   title: "Homepage",
   keywords:
-    "homepage, restaurant, form, services, logos, testimonial, dishes, food, cta, landing",
+    "Riston, homepage, restaurant, form, services, logos, testimonial, dishes, food, cta, landing",
   cat: [0, 9, 11],
   pro: true,
   resolve: {

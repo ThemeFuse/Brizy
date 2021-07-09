@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2104,
   title: "Homepage",
   keywords:
-    "homepage, categories, icons, projects, posts, carousel, counter, cta, testimonials, newsletter",
+    "Krowd, homepage, categories, icons, projects, posts, carousel, counter, cta, testimonials, newsletter",
   cat: [0, 1, 9],
   pro: true,
   resolve: {

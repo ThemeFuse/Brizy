@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 3077,
   title: "Homepage",
   keywords:
-    "homepage, slider, about, farming, services, video, quote, testimonials, projects, news, blog, cta",
+    "Agrikol, homepage, slider, about, farming, services, video, quote, testimonials, projects, news, blog, cta",
   cat: [0, 1],
   pro: true,
   resolve: {

@@ -58,6 +58,6 @@ export const encodeToString = (value: string): string => {
   return encodeURIComponent(JSON.stringify(value));
 };
 
-export const decodeFromString = (value: string): object => {
+export const decodeFromString = <T>(value: string): T => {
   return JSON.parse(decodeURIComponent(value));
 };

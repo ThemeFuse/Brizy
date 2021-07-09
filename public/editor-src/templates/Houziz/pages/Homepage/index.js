@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1682,
   title: "Homepage",
   keywords:
-    "homepage, housing, real, estate, form, features, quote, testimonials, logos, ",
+    "Houzizz, homepage, housing, real, estate, form, features, quote, testimonials, logos, ",
   cat: [0, 1, 11],
   pro: true,
   resolve: {

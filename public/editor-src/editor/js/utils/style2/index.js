@@ -223,7 +223,11 @@ export {
   styleElementVideoIconSizeHeight,
   styleElementVideoIconCustomSize,
   styleSidebarSizeWidthPixed,
-  styleElementVideoImageSize
+  styleElementVideoImageSize,
+  styleElementVideoBoxShadowOpacity,
+  styleElementVideoBoxShadowColorHex,
+  styleElementVideoBorderOpacity,
+  styleElementVideoBorderColorHex
 } from "./styleElementVideo";
 
 // Element Audio

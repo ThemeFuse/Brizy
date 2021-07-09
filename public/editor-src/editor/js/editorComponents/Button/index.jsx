@@ -72,6 +72,7 @@ export default class Button extends EditorComponent {
     const device = deviceModeSelector(getStore().getState());
     const className = classnames(
       "brz-btn",
+      "brz-btn-submit",
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,

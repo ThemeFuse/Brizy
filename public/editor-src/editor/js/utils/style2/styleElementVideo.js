@@ -131,3 +131,39 @@ export function styleElementVideoImageSize({ v, device, state, prefix = "" }) {
 
   return dvv(capByPrefix(prefix, "widthImage"));
 }
+
+export function styleElementVideoBoxShadowOpacity({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "boxShadowColorOpacity",
+    device,
+    state
+  });
+}
+
+export function styleElementVideoBoxShadowColorHex({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "boxShadowColorHex",
+    device,
+    state
+  });
+}
+
+export function styleElementVideoBorderOpacity({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "borderColorOpacity",
+    device,
+    state
+  });
+}
+
+export function styleElementVideoBorderColorHex({ v, device, state }) {
+  return defaultValueValue({
+    v,
+    key: "borderColorHex",
+    device,
+    state
+  });
+}

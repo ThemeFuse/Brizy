@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2094,
   title: "Homepage",
   keywords:
-    "homepage, repair, fix, computer, laptop, prices, team, testimonial",
+    "Fixit, homepage, repair, fix, computer, laptop, prices, team, testimonial",
   cat: [0, 15],
   pro: true,
   resolve: {

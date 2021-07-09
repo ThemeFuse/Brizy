@@ -21,6 +21,9 @@ export function styleContent(v, vs, vd) {
     },
     ".brz &&:hover.brz-custom-video video": {
       standart: ["cssStyleElementVideoFilter"]
+    },
+    ".brz &&:hover .brz-iframe": {
+      standart: ["cssStyleElementVideoIframeFix"]
     }
   };
   return renderStyles({ v, vs, vd, styles });

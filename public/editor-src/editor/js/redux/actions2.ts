@@ -22,12 +22,12 @@ type SyncAllowed = ReduxState["syncAllowed"];
 export type ActionHydrate = {
   type: "HYDRATE";
   payload: {
-    project: {
-      data: {
-        extraFontStyles: Array<{ id: string }>;
-      };
+    project: ReduxState["project"];
+    projectStatus: {
+      locked: boolean;
+      lockedBy: boolean | string;
     };
-    projectStatus: {};
+    projectVersion: ReduxState["projectVersion"];
     blocksThumbnailSizes: [];
     globalBlocks: ReduxState["globalBlocks"];
     fonts: ReduxState["fonts"];

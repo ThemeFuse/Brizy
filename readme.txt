@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.18
+Stable tag: 2.2.19
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,19 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.19 - 2021-07-07 =
+* Improved: Project update project if was changed
+* Improved: Added new name for layouts tab
+* Fixed: Dynamic content UI
+* Fixed: Sync uploaded files
+* Fixed: Corner option crashing the editor
+* Fixed: Polling request 500
+* Fixed: Image blurred in sections
+* Fixed: Styles for video iFrame
+* Fixed: Membership View as Roles Order
+* Fixed: Changed design buttons admin
+
 
 = 2.2.18 - 2021-06-28 =
 * Fixed:  Update the post content on compile page

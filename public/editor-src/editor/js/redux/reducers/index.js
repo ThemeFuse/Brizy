@@ -4,10 +4,12 @@ import {
   blocksOrderSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
+import { projectVersionSelector } from "visual/redux/selectors2";
 import { objectTraverse2 } from "visual/utils/object";
 import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
 import { historyReducerEnhancer } from "../history/reducers";
 
+import { projectVersion } from "./project";
 import { page } from "./page";
 import { blocksOrder } from "./blocksOrder";
 import { blocksData } from "./blocksData";
@@ -49,6 +51,12 @@ export function project(state = {}, action, fullState) {
       return project;
     }
     case PUBLISH: {
+      const projectVersion = projectVersionSelector(fullState);
+
+      if (state.dataVersion === projectVersion) {
+        return state;
+      }
+
       return produce(projectAssembled(fullState), draft => {
         draft.dataVersion = draft.dataVersion + 1;
       });
@@ -378,6 +386,7 @@ export default historyReducerEnhancer(
       page,
       blocksOrder,
       project,
+      projectVersion,
       styles,
       ui
     },
@@ -392,7 +401,8 @@ export default historyReducerEnhancer(
       "currentStyleId",
       "currentStyle",
       "extraFontStyles",
-      "globalBlocksUpdates"
+      "globalBlocksUpdates",
+      "projectVersion"
     ],
     onBeforeUpdate: (state, action, history) => {
       if (

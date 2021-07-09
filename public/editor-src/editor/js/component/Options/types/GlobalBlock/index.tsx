@@ -162,8 +162,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
                 }
               ]
             : [],
-          position: null,
-          dataVersion: 1
+          position: null
         };
 
         await createGlobalBlock(globalBlock)

@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1625,
   title: "Homepage",
   keywords:
-    "homepage, business, form, features, testimonials, cta, landing",
+    "Vopril, homepage, business, form, features, testimonials, cta, landing",
   cat: [0, 1, 3, 11],
   pro: true,
   resolve: {

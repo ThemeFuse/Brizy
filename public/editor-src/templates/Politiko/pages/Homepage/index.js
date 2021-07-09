@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 2203,
   title: "Homepage",
-  keywords: "homepage, politics, features, counter, campaign, cta",
+  keywords: "Politiko, homepage, politics, features, counter, campaign, cta",
   cat: [0, 9],
   pro: true,
   resolve: {

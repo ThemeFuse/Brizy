@@ -3,7 +3,7 @@ module.exports = {
   thumbnailWidth: 680,
   thumbnailHeight: 1955,
   title: "Homepage", 
-  keywords: "homepage, car clinic, Car, Service, Auto, Moto, Transportation",
+  keywords: "Car Clinic, homepage, car clinic, Car, Service, Auto, Moto, Transportation",
   cat: [0, 5],
   pro: true,
   resolve: { blocks:[

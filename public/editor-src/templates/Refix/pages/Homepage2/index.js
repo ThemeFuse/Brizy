@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2521,
   title: "Homepage2",
   keywords:
-    "homepage, form, services, repairs, experts, crew, refrigerators, prices",
+    "Refix, homepage, form, services, repairs, experts, crew, refrigerators, prices",
   cat: [0, 1, 15, 100],
   pro: false,
   resolve: {

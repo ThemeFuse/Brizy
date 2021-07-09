@@ -18,8 +18,8 @@ import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
-import { getContainerW } from "visual/utils/meta";
 import { hasMembership } from "visual/utils/membership";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -66,42 +66,34 @@ class SectionItem extends EditorComponent {
   getMeta(v) {
     const { meta } = this.props;
     const containerType = styleElementSectionContainerType({ v });
-    const size = styleSizeContainerSize({ v, device: "desktop" });
-    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
-    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
-    const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
-      v,
-      w: containerType === "fullWidth" ? meta.desktopFullW : meta.desktopBoxedW,
-      wNoSpacing:
-        containerType === "fullWidth"
-          ? meta.desktopFullWNoSpacing
-          : meta.desktopBoxedWNoSpacing,
-      width: size,
-      device: "desktop"
-    });
-    const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
-      v,
-      w: meta.tabletW,
-      wNoSpacing: meta.tabletWNoSpacing,
-      width: tabletSize,
-      device: "tablet"
-    });
-    const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
-      v,
-      w: meta.mobileW,
-      wNoSpacing: meta.mobileWNoSpacing,
-      width: mobileSize,
-      device: "mobile"
-    });
+    const size = styleSizeContainerSize({ v, device: DESKTOP });
+    const tabletSize = styleSizeContainerSize({ v, device: TABLET });
+    const mobileSize = styleSizeContainerSize({ v, device: MOBILE });
+
+    const _desktopW =
+      containerType === "fullWidth" ? meta.desktopFullW : meta.desktopBoxedW;
+    const _desktopWNoSpacing =
+      containerType === "fullWidth"
+        ? meta.desktopFullWNoSpacing
+        : meta.desktopBoxedWNoSpacing;
+
+    const desktopW = _desktopW * (size / 100);
+    const desktopWNoSpacing = _desktopWNoSpacing * (size / 100);
+
+    const tabletW = meta.tabletW * (tabletSize / 100);
+    const tabletWNoSpacing = meta.tabletWNoSpacing * (tabletSize / 100);
+
+    const mobileW = meta.mobileW * (mobileSize / 100);
+    const mobileWNoSpacing = meta.mobileWNoSpacing * (mobileSize / 100);
 
     return {
       ...meta,
-      mobileW,
-      mobileWNoSpacing,
-      tabletW,
-      tabletWNoSpacing,
-      desktopW,
-      desktopWNoSpacing
+      desktopW: Math.round(desktopW * 10) / 10,
+      desktopWNoSpacing: Math.round(desktopWNoSpacing * 10) / 10,
+      tabletW: Math.round(tabletW * 10) / 10,
+      tabletWNoSpacing: Math.round(tabletWNoSpacing * 10) / 10,
+      mobileW: Math.round(mobileW * 10) / 10,
+      mobileWNoSpacing: Math.round(mobileWNoSpacing * 10) / 10
     };
   }
 
