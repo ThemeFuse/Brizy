@@ -291,7 +291,6 @@ class Brizy_Editor {
         Brizy_Admin_Popups_Main::registerCustomPosts();
         Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
-		Brizy_Admin_Membership_Membership::registerCustomPostRoles();
 	}
 
 	/**
