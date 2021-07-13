@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.19
+Stable tag: 2.2.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,14 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.2.20 - 2021-07-13 =
+* New: error messages in Form element for Number and File input
+* Fixed: change Row background for Section slider 
+* Fixed: styles for Table element
+* Fixed: button Drag and Drop when position is set to fixed or absolute
+* Fixed: display rules popup for global blocks
+* Fixed: Miscellaneous Editor fixes
 
 = 2.2.19 - 2021-07-07 =
 * Improved: Project update project if was changed

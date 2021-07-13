@@ -22,6 +22,6 @@ export function cssStyleElementMenuSimpleWidth({ v }) {
   return v.menuName ? "width: auto" : "width: 100%";
 }
 
-export function cssStyleElementMenuSimpleActiveColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "activeColor" });
+export function cssStyleElementMenuSimpleActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "color" });
 }

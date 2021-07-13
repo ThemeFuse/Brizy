@@ -5,6 +5,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
+import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { getWrapperContainerW } from "visual/utils/meta";
 import * as Str from "visual/utils/string/specs";
 import Items from "./items";
@@ -159,6 +160,23 @@ export default class Cloneable extends EditorComponent {
     return <Items {...itemsProps} />;
   }
 
+  containerSize = () => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const meta = this.getMeta(v);
+    const innerWidth = window.innerWidth;
+    const innerHeight = window.innerHeight;
+    return getContainerSizes(v, device, meta, innerWidth, innerHeight);
+  };
+
+  dvv = key => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
     const { customClassName, cssClassPopulation, customAttributes } = v;
@@ -185,27 +203,22 @@ export default class Cloneable extends EditorComponent {
       propsClassName
     );
 
-    const dvv = key => {
-      const state = State.mRead(v.tabsState);
-      const device = deviceModeSelector(getStore().getState());
-
-      return defaultValueValue({ v, key, device, state });
-    };
-    const isRelative = Position.getPosition(dvv) === "relative";
+    const isRelative = Position.getPosition(this.dvv) === "relative";
 
     if (showBorder) {
       return (
         <Draggable
           active={!isRelative}
           onChange={this.handleDraggable}
-          hAlign={Position.getHAlign(dvv) ?? "left"}
-          vAlign={Position.getVAlign(dvv) ?? "top"}
-          xSuffix={Position.getHUnit(dvv) ?? "px"}
-          ySuffix={Position.getVUnit(dvv) ?? "px"}
+          hAlign={Position.getHAlign(this.dvv) ?? "left"}
+          vAlign={Position.getVAlign(this.dvv) ?? "top"}
+          xSuffix={Position.getHUnit(this.dvv) ?? "px"}
+          ySuffix={Position.getVUnit(this.dvv) ?? "px"}
           getValue={() => ({
-            x: Position.getHOffset(dvv) ?? 0,
-            y: Position.getVOffset(dvv) ?? 0
+            x: Position.getHOffset(this.dvv) ?? 0,
+            y: Position.getVOffset(this.dvv) ?? 0
           })}
+          getContainerSizes={this.containerSize}
         >
           {(ref, draggableClassName) => {
             return (
@@ -249,13 +262,13 @@ export default class Cloneable extends EditorComponent {
       <Draggable
         active={!isRelative}
         onChange={this.handleDraggable}
-        hAlign={Position.getHAlign(dvv) ?? "left"}
-        vAlign={Position.getVAlign(dvv) ?? "top"}
-        xSuffix={Position.getHUnit(dvv) ?? "px"}
-        ySuffix={Position.getVUnit(dvv) ?? "px"}
+        hAlign={Position.getHAlign(this.dvv) ?? "left"}
+        vAlign={Position.getVAlign(this.dvv) ?? "top"}
+        xSuffix={Position.getHUnit(this.dvv) ?? "px"}
+        ySuffix={Position.getVUnit(this.dvv) ?? "px"}
         getValue={() => ({
-          x: Position.getHOffset(dvv) ?? 0,
-          y: Position.getVOffset(dvv) ?? 0
+          x: Position.getHOffset(this.dvv) ?? 0,
+          y: Position.getVOffset(this.dvv) ?? 0
         })}
       >
         {(ref, draggableClassName) => {

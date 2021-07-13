@@ -234,18 +234,23 @@ export function cssStyleElementPostsFilterPaddingFourFields({
   return cssStylePaddingFourFields({ v, device, state, prefix: "filter" });
 }
 
-export function cssStyleElementPostsFilterActiveColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "activeFilterColor" });
+export function cssStyleElementPostsFilterActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "filterColor" });
 }
 
-export function cssStyleElementPostsFilterActiveBgColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeFilterBg" });
+export function cssStyleElementPostsFilterActiveBgColor({ v, device }) {
+  return cssStyleBgColor({
+    v,
+    device,
+    state: "active",
+    prefix: "filterBg"
+  });
 }
 
-export function cssStyleElementPostsFilterActiveBorder({ v, device, state }) {
-  return cssStyleBorder({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementPostsFilterActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, state: "active", prefix: "filter" });
 }
 
-export function cssStyleElementPostsFilterActiveShadow({ v, device, state }) {
-  return cssStyleBoxShadow({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementPostsFilterActiveShadow({ v, device }) {
+  return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
 }

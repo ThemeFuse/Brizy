@@ -115,6 +115,18 @@ export type ToolbarExtend = {
   onMouseLeave?: () => void;
 };
 
+export interface ComponentsMeta {
+  desktopW?: number;
+  desktopWNoSpacing?: number;
+  tabletW?: number;
+  tabletWNoSpacing?: number;
+  mobileW?: number;
+  mobileWNoSpacing?: number;
+  sectionPopup?: boolean;
+  sectionPopup2?: boolean;
+  [k: string]: unknown;
+}
+
 export type Props<M extends ElementModel, P> = WithClassName & {
   _id: string;
   dbValue: Model<M>;
@@ -122,17 +134,7 @@ export type Props<M extends ElementModel, P> = WithClassName & {
   path: string[];
   reduxState: ReduxState;
   reduxDispatch: unknown;
-  meta: {
-    desktopW?: number;
-    desktopWNoSpacing?: number;
-    tabletW?: number;
-    tabletWNoSpacing?: number;
-    mobileW?: number;
-    mobileWNoSpacing?: number;
-    sectionPopup?: boolean;
-    sectionPopup2?: boolean;
-    [k: string]: unknown;
-  };
+  meta: ComponentsMeta;
   onChange: {
     (v: M | null, meta: OnChangeMeta<M>): void;
   };

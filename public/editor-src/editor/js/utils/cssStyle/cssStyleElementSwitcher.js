@@ -16,8 +16,8 @@ export function cssStyleElementSwitcherNav2Height({ v, device, state }) {
   return `height: ${size}px;`;
 }
 
-export function cssStyleElementSwitcherNavBeforeBg({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeBg" });
+export function cssStyleElementSwitcherNavBeforeBg({ v, device }) {
+  return cssStyleBgColor({ v, device, state: "active", prefix: "bg" });
 }
 
 export function cssStyleElementSwitcherNavSpacing({ v, device, state }) {
@@ -25,8 +25,8 @@ export function cssStyleElementSwitcherNavSpacing({ v, device, state }) {
   return `margin-bottom:${spacing}px;`;
 }
 
-export function cssStyleElementSwitcherActiveTextColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "activeColor" });
+export function cssStyleElementSwitcherActiveTextColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "color" });
 }
 
 export function cssStyleElementSwitcherWidth({ v, device, state }) {

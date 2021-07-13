@@ -16,6 +16,31 @@ class Form2Field extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  getError(v) {
+    const {
+      type,
+      fileSizeErrorMessage,
+      fileTypeErrorMessage,
+      numberMinMessage,
+      numberMaxMessage
+    } = v;
+    switch (type) {
+      case "FileUpload":
+        return {
+          fileMaxSizeError: fileSizeErrorMessage,
+          fileTypeError: fileTypeErrorMessage
+        };
+
+      case "Number":
+        return {
+          minNumError: numberMinMessage,
+          maxNumError: numberMaxMessage
+        };
+      default:
+        return {};
+    }
+  }
+
   renderForEdit(v, vs, vd) {
     const {
       labelType,
@@ -91,6 +116,7 @@ class Form2Field extends EditorComponent {
         )}
         <Component
           {...v}
+          error={this.getError(v)}
           showPlaceholder={showPlaceholder}
           selectClassName={selectClassName}
           labelType={labelType}
