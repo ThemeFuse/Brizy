@@ -96,30 +96,26 @@ export function cssStyleBgIconCoverColor({ v, device, state }) {
   return cssStyleBgColor({ v, device, state, prefix: "iconBg" });
 }
 
-export function cssStyleElementVideoPlaylistItemActiveBg({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeBg" });
+export function cssStyleElementVideoPlaylistItemActiveBg({ v, device }) {
+  return cssStyleBgColor({ v, device, state: "active", prefix: "bg" });
 }
 
-export function cssStyleElementVideoPlaylistBorderItemActive({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBorder({ v, device, state, prefix: "activeItem" });
+export function cssStyleElementVideoPlaylistBorderItemActive({ v, device }) {
+  return cssStyleBorder({ v, device, state: "active", prefix: "item" });
 }
 
-export function cssStyleElementVideoPlaylistItemActiveColor({
-  v,
-  device,
-  state
-}) {
-  return cssStyleColor({ v, device, state, prefix: "activeColor" });
+export function cssStyleElementVideoPlaylistItemActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "color" });
 }
 
 export function cssStyleElementVideoPlaylistItemSubtitleActiveColor({
   v,
-  device,
-  state
+  device
 }) {
-  return cssStyleColor({ v, device, state, prefix: "activeSubTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state: "active",
+    prefix: "subTitleColor"
+  });
 }

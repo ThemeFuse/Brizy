@@ -1059,7 +1059,6 @@ to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translat
 .slick-vertical .brz .slick-slide{display:block;height:auto;border:1px solid transparent}
 .brz .slick-arrow.slick-hidden{display:none}
 .brz .brz-slick-slider .brz-icon-svg,.brz .brz-slick-slider .brz-rich-text *{-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.brz .brz-slick-slider .brz-bg{width:calc(100% + 1px)}
 .brz .brz-slick-slider .brz-bg-color{-webkit-transform:translateZ(0);transform:translateZ(0)}
 .brz .brz-slick-slider .brz-section__content,.brz .brz-slick-slider .slick-slide>div{outline:0}
 .brz .brz-slick-slider--fade .slick-slide{height:auto;visibility:hidden}

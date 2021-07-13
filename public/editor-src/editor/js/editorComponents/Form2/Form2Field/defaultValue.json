@@ -11,7 +11,13 @@
 
     "fileTypes": ".jpg, .jpeg, .png, .gif, .pdf",
     "fileMaxSize": "1mb",
-    "fileText": "Choose File"
+    "fileText": "Choose File",
+
+    "fileSizeErrorMessage": "This file exceeds the maximum allowed size.",
+    "fileTypeErrorMessage": "File Type Not Accepted",
+
+    "numberMinMessage": "Selected quantity is less than stock status, min:",
+    "numberMaxMessage": "Selected quantity is more than stock status, max: "
   },
 
   "style": {

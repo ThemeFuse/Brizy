@@ -21,6 +21,7 @@ import defaultValue from "./defaultValue.json";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
+import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import * as Position from "visual/utils/position/element";
 import { MValue } from "visual/utils/value";
@@ -90,22 +91,6 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   handleExtendParentToolbar = (childToolbarExtend: ToolbarExtend): void => {
     this.childToolbarExtend = childToolbarExtend;
-  };
-
-  getContainerSizes = (): { width: number; height: number } => {
-    const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
-
-    const value = defaultValueValue({ key: "elementPosition", device, v });
-    const isAbsolute = value === "absolute";
-    const meta = this.props.meta;
-
-    return {
-      width: isAbsolute
-        ? (meta[`${device}WNoSpacing`] as number)
-        : window.innerWidth,
-      height: window.innerHeight
-    };
   };
 
   getMeta(v: ElementModel): ElementModel {
@@ -251,15 +236,25 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     );
   }
 
+  containerSize = (): { width: number; height: number } => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const meta = this.getMeta(v);
+    const innerWidth = window.innerWidth;
+    const innerHeight = window.innerHeight;
+    return getContainerSizes(v, device, meta, innerWidth, innerHeight);
+  };
+
+  dvv = (key: string): MValue<Literal> => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const dvv = (key: string): MValue<Literal> => {
-      const state = State.mRead(v.tabsState);
-      const device = deviceModeSelector(getStore().getState());
-
-      return defaultValueValue({ v, key, device, state });
-    };
-
-    const isRelative = Position.getPosition(dvv) === "relative";
+    const isRelative = Position.getPosition(this.dvv) === "relative";
 
     return (
       <SortableElement type="shortcode">
@@ -268,18 +263,18 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             <Draggable
               active={!isRelative}
               onChange={this.handleDraggable}
-              hAlign={Position.getHAlign(dvv) ?? "left"}
-              vAlign={Position.getVAlign(dvv) ?? "top"}
-              xSuffix={Position.getHUnit(dvv) ?? "px"}
-              ySuffix={Position.getVUnit(dvv) ?? "px"}
+              hAlign={Position.getHAlign(this.dvv) ?? "left"}
+              vAlign={Position.getVAlign(this.dvv) ?? "top"}
+              xSuffix={Position.getHUnit(this.dvv) ?? "px"}
+              ySuffix={Position.getVUnit(this.dvv) ?? "px"}
               getValue={(): {
                 x: number;
                 y: number;
               } => ({
-                x: Position.getHOffset(dvv) ?? 0,
-                y: Position.getVOffset(dvv) ?? 0
+                x: Position.getHOffset(this.dvv) ?? 0,
+                y: Position.getVOffset(this.dvv) ?? 0
               })}
-              getContainerSizes={this.getContainerSizes}
+              getContainerSizes={this.containerSize}
             >
               {(ref, className): ReactNode =>
                 isRelative

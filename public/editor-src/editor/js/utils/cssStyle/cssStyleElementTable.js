@@ -92,13 +92,13 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
   return `width: calc(100% / ${columns});`;
 }
 
-export function cssStyleElementTableEvenBgColor({ v, device, state }) {
-  const bgColor = styleBgColor({ v, device, state, prefix: "activeBg" });
+export function cssStyleElementTableEvenBgColor({ v, device }) {
+  const bgColor = styleBgColor({ v, device, state: "active", prefix: "bg" });
   return `background-color:  ${bgColor};`;
 }
 
-export function cssStyleElementTableEvenColor({ v, device, state }) {
-  const color = styleColor({ v, device, state, prefix: "activeColor" });
+export function cssStyleElementTableEvenColor({ v, device }) {
+  const color = styleColor({ v, device, state: "active", prefix: "color" });
   return `color:  ${color};`;
 }
 
