@@ -141,13 +141,13 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
-		Brizy_Admin_Membership_Membership::_init();
         //Brizy_Admin_Stories_Main::_init();
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
 			Brizy_Admin_OptimizeImages::_init();
 			Brizy_Admin_Layouts_Main::_init();
+			Brizy_Admin_Membership_Membership::_init();
 
 			// the cloud will be always initialized with the exception when the white label is enabled
 			if ( !(class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled()) ) {
@@ -288,7 +288,6 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
         //Brizy_Admin_Stories_Main::registerCustomPosts();
-		Brizy_Admin_Membership_Membership::registerCustomPostRoles();
         Brizy_Admin_Popups_Main::registerCustomPosts();
         Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
