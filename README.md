@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.2.19<br>
+Stable tag: 2.2.20<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.2.20 - 2021-07-13
+* New: error messages in Form element for Number and File input
+* Fixed: change Row background for Section slider 
+* Fixed: styles for Table element
+* Fixed: button Drag and Drop when position is set to fixed or absolute
+* Fixed: display rules popup for global blocks
+* Fixed: Miscellaneous Editor fixes
 
 ### 2.2.19 - 2021-07-07
 * Improved: Project update project if was changed

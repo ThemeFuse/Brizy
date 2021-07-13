@@ -3,6 +3,7 @@ import classnames from "classnames";
 import TextField from "../common/TextField";
 import { t } from "visual/utils/i18n";
 import Upload from "./Upload";
+import { encodeToString } from "visual/utils/string";
 
 export default class FileUpload extends TextField {
   static get componentTitle() {
@@ -20,11 +21,12 @@ export default class FileUpload extends TextField {
   }
 
   getAttributes() {
-    const { fileTypes, fileMaxSize } = this.props;
+    const { fileTypes, fileMaxSize, error } = this.props;
 
     return {
       accept: fileTypes,
-      "data-file-max-size": fileMaxSize
+      "data-file-max-size": fileMaxSize,
+      "data-error": encodeToString(error)
     };
   }
 

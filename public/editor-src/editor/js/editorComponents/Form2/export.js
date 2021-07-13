@@ -2,6 +2,7 @@ import flatpickr from "flatpickr";
 import Scrollbars from "perfect-scrollbar";
 import $ from "jquery";
 import "select2";
+import { decodeFromString } from "visual/utils/string";
 
 export default function($node) {
   const root = $node.get(0);
@@ -148,10 +149,11 @@ export default function($node) {
 function validateFormItem(node) {
   const form = node.closest(".brz-form");
   const parentElem = node.closest(".brz-forms2__item");
-  const value = node.value;
-  const data = node.dataset;
-  const type = data.type;
-  const isRequired = node.required;
+  const { value, dataset: data, required: isRequired } = node;
+  const { type, error, fileMaxSize } = data;
+
+  const _error = error ? decodeFromString(error) : null;
+
   const pattern =
     (node.getAttribute("pattern") || "") &&
     decodeURI(node.getAttribute("pattern"));
@@ -187,7 +189,8 @@ function validateFormItem(node) {
     if (Boolean(value) && toNum < min && min !== "") {
       const messages = getFormMessage(
         "error",
-        `Selected quantity is more than stock status, min: ${min}`
+        `${_error?.minNumError ||
+          "Selected quantity is less than stock status, min:"} ${min}`
       );
 
       showFormMessage(form, messages);
@@ -200,7 +203,8 @@ function validateFormItem(node) {
     if (Boolean(value) && toNum > max && max !== "") {
       const messages = getFormMessage(
         "error",
-        `Selected quantity is more than stock status max: ${max}`
+        `${_error?.maxNumError ||
+          "Selected quantity is more than stock status, max:"} ${max}`
       );
 
       showFormMessage(form, messages);
@@ -243,7 +247,8 @@ function validateFormItem(node) {
       );
       const messages = getFormMessage(
         "error",
-        `This file exceeds the maximum allowed size. ${node.dataset.fileMaxSize}`
+        `${_error?.fileMaxSizeError ||
+          "This file exceeds the maximum allowed size."} ${fileMaxSize}`
       );
 
       showFormMessage(form, messages);
@@ -257,7 +262,8 @@ function validateFormItem(node) {
       const ext = accepts.map(ext => ext.replace(".", "")).join(", ");
       const messages = getFormMessage(
         "error",
-        `Only files with the following extensions are allowed: ${ext}`
+        `${_error?.fileTypeError ||
+          "Only files with the following extensions are allowed:"} ${ext}`
       );
 
       showFormMessage(form, messages);
