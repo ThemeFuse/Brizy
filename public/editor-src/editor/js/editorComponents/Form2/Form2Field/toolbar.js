@@ -59,6 +59,42 @@ export function getItems({ v, device }) {
                     value: item.componentType
                   }))
                 },
+                {
+                  id: "fileSizeErrorMessage",
+                  type: "inputText-dev",
+                  position: 15,
+                  label: "File size error message",
+                  placeholder: "..type error message",
+                  devices: "desktop",
+                  disabled: v.type !== "FileUpload"
+                },
+                {
+                  id: "fileTypeErrorMessage",
+                  type: "inputText-dev",
+                  position: 15,
+                  label: "File type error message",
+                  placeholder: "..type error message",
+                  devices: "desktop",
+                  disabled: v.type !== "FileUpload"
+                },
+                {
+                  id: "numberMinMessage",
+                  type: "inputText-dev",
+                  position: 15,
+                  label: "Min number error message",
+                  placeholder: "..type error message",
+                  devices: "desktop",
+                  disabled: v.type !== "Number"
+                },
+                {
+                  id: "numberMaxMessage",
+                  type: "inputText-dev",
+                  position: 15,
+                  label: "Max number error message",
+                  placeholder: "..type error message",
+                  devices: "desktop",
+                  disabled: v.type !== "Number"
+                },
                 ...(isDateOrTime
                   ? [
                       {

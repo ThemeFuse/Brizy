@@ -6094,8 +6094,6 @@ img.mfp-img {
   .brz .brz-slick-slider .brz-icon-svg {
     -webkit-backface-visibility: hidden;
             backface-visibility: hidden; }
-  .brz .brz-slick-slider .brz-bg {
-    width: calc(100% + 1px); }
   .brz .brz-slick-slider .brz-bg-color {
     -webkit-transform: translateZ(0);
             transform: translateZ(0); }

@@ -164,34 +164,18 @@ export function cssStyleElementImageGallery3LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "filter" });
 }
 
-export function cssStyleElementImageGalleryFilterActiveColor({
-  v,
-  device,
-  state
-}) {
-  return cssStyleColor({ v, device, state, prefix: "activeFilterColor" });
+export function cssStyleElementImageGalleryFilterActiveColor({ v, device }) {
+  return cssStyleColor({ v, device, state: "active", prefix: "filterColor" });
 }
 
-export function cssStyleElementImageGalleryFilterActiveBgColor({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBgColor({ v, device, state, prefix: "activeFilterBg" });
+export function cssStyleElementImageGalleryFilterActiveBgColor({ v, device }) {
+  return cssStyleBgColor({ v, device, state: "active", prefix: "filterBg" });
 }
 
-export function cssStyleElementImageGalleryFilterActiveBorder({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBorder({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementImageGalleryFilterActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, state: "active", prefix: "filter" });
 }
 
-export function cssStyleElementImageGalleryFilterActiveShadow({
-  v,
-  device,
-  state
-}) {
-  return cssStyleBoxShadow({ v, device, state, prefix: "activeFilter" });
+export function cssStyleElementImageGalleryFilterActiveShadow({ v, device }) {
+  return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
 }
