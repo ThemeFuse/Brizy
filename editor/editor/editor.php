@@ -949,8 +949,6 @@ class Brizy_Editor_Editor_Editor
 	 */
 	public function getApiActions($config, $context) {
 
-	    if($context!=self::EDITOR_CONTEXT) return $config;
-
 	    $pref = Brizy_Editor::prefix();
 
         $config['wp']['api'] =  array(
