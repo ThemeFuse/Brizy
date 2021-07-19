@@ -22,15 +22,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 21,
-                      offsetX: 11,
+                      offsetX: 1,
                       text:
                         '<p class="brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-text-lg-center brz-fs-lg-55 brz-fs-sm-im-54 brz-fs-xs-im-54 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-permanent_marker"><span style="color: rgb(255, 255, 255);">ADVENTURE</span></p>',
-                      width: 79,
-                      _id: "qrxgjwvjsknvliyamwuausqjvxeedwmltvip"
+                      width: 98,
+                      _id: "alamsnindrrucnkucjokidioctdwpnbneexv"
                     }
                   }
                 ],
-                _id: "krlhptmuzxlmpzqcswrgifdfrxutjxmmrzil",
+                _id: "uyjievfdpxqomzkymkfmgqqnopitylwckqdt",
                 rotate: -4,
                 rotateSuffix: ""
               }
@@ -48,13 +48,13 @@ module.exports = {
                         '<p class="brz-text-lg-center brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3 brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14"><span style="color: rgb(255, 214, 129);">THE PERFECT WATCH FOR</span></p>',
                       offsetY: 15,
                       offsetX: 4,
-                      _id: "gowrxhpkytiycdnvaywrgkchmuezfmvajvpd"
+                      _id: "ejvpupmascphnwjeyxnqqmjjaavhcxppyabd"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "qcyuuifduqtfawtyzavwwgfdwglkixurodfj"
+                _id: "mpidjwtvabqbwsbqfgzdgrwparhzmgebxfoe"
               }
             },
             {
@@ -69,15 +69,15 @@ module.exports = {
                       text:
                         '<p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-center brz-fs-lg-14 brz-fs-sm-im-13 brz-fs-xs-im-13 brz-lh-lg-1_7 brz-lh-sm-im-1_4 brz-lh-xs-im-1_4"><span style="color: rgb(255, 255, 255); opacity: 0.74;">STRONG, WATER RESISTANT GENEVA RETRO W34</span></p>',
                       offsetY: 34,
-                      offsetX: 20,
-                      _id: "qfxhmgwmfcgphrbijuozepwomqxrgtfhtyvv",
-                      width: 62
+                      offsetX: 12,
+                      _id: "aoxnmpsqejlkjpmaiqywhuibnkqvohtoyeej",
+                      width: 76
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "wkkfzyhkvivsgnaluwxtphiiwavkrlznmzlq"
+                _id: "lxxcrvyltflppvtnlmtwcsqjkscejqwslexp"
               }
             },
             {
@@ -89,8 +89,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 81,
-                      offsetX: 17,
+                      offsetY: 80,
+                      offsetX: 12,
                       bgColorPalette: "color8",
                       tempBgColorPalette: "color8",
                       bgColorOpacity: 1,
@@ -109,8 +109,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP RUGGED WATCHES",
-                      width: 68,
-                      height: 19,
+                      width: 75,
+                      height: 20.85,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -139,11 +139,11 @@ module.exports = {
                       iconSize: "custom",
                       iconCustomSize: 14,
                       iconSpacing: 12,
-                      _id: "zjhwjghiprwwjehchwejtsgnamaasjfxungb"
+                      _id: "oiegmsshlqjlaykyoyehglpbawlabqztwbml"
                     }
                   }
                 ],
-                _id: "oxsvsdgjrwrmmeuaousnbbqnczezrogjjccw"
+                _id: "nxycqmstlmxhhytfqmyxraxprclkclbabbdp"
               }
             }
           ],
@@ -180,7 +180,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 50,
           bgPositionY: 26,
-          _id: "ftchewfmlswmjvfjgwqpdelrfnfzocfjpbvw"
+          _id: "icnyjpzpcvrxbrbxjwkgyixqgbcltcoqpzcb"
         }
       }
     ]

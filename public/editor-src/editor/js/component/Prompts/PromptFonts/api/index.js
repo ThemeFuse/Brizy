@@ -1,7 +1,7 @@
 import produce from "immer";
 import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import { request2 } from "visual/utils/api/editor";
+import { request2 } from "visual/utils/api";
 
 // uid for cloud is id in editor
 const normalizeFonts = res => {

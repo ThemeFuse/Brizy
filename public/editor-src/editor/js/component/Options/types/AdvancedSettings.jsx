@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector, deviceModeSelector } from "visual/redux/selectors";
+import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
 import { DESKTOP } from "visual/utils/responsiveMode";
 
 export default class AdvancedSettingsOptionType extends React.Component {

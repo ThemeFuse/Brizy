@@ -1,5 +1,5 @@
 import { getStore } from "visual/redux/store";
-import { unDeletedFontSelector } from "visual/redux/selectors";
+import { unDeletedFontSelector } from "visual/redux/selectors-new";
 
 export function getUsedFontsDetails() {
   const {

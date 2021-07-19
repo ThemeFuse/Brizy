@@ -7,8 +7,9 @@ import {
 } from "visual/utils/options";
 import { toolbarElementSoundCloudStyle } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -19,7 +20,10 @@ export function getItems({ v, device }) {
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
-  const linkDC = getDynamicContentChoices("link", true);
+  const linkDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.link
+  );
 
   return [
     {

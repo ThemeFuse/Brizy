@@ -21,16 +21,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "jzzssmodoszipyvdsfsejzmpeorpafdeosuf",
+                      _id: "iriwlomgovddreztpmxjaaikflggehnhngwd",
                       text:
                         '<p class="brz-text-lg-center brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-ff-fira_sans brz-ft-google brz-fw-lg-600 brz-fw-sm-im-600 brz-fw-xs-im-600 brz-ls-lg-5 brz-ls-sm-im-11 brz-ls-xs-im-11 brz-fs-lg-14 brz-fs-sm-im-13 brz-fs-xs-im-13"><span style="color: rgb(84, 200, 171);">THE FRESH PRESENTS</span></p>',
                       offsetY: 18,
-                      offsetX: 17,
-                      width: 69
+                      offsetX: 15,
+                      width: 73
                     }
                   }
                 ],
-                _id: "anuphltwmnzmcdstngffpspdmxtmweokzlrj"
+                _id: "tgzphrifahykeslzbqzbimqpjikbeegvhjvt"
               }
             },
             {
@@ -45,13 +45,13 @@ module.exports = {
                       text:
                         '<p class="brz-fs-xs-im-13 brz-fs-sm-im-13 brz-fs-lg-14 brz-ls-xs-im-11 brz-ls-sm-im-11 brz-ls-lg-5 brz-fw-xs-im-600 brz-fw-sm-im-600 brz-fw-lg-600 brz-ft-google brz-ff-fira_sans brz-lh-xs-im-1_6 brz-lh-sm-im-1_6 brz-lh-lg-1_9 brz-text-lg-center"><span style="color: rgb(84, 200, 171);">CHILLPOP MUSIC FESTIVAL</span></p>',
                       offsetY: 55,
-                      offsetX: 10,
-                      width: 84,
-                      _id: "vuwtgfnotdyoevasopvmtftgquxiwkrgrrjc"
+                      offsetX: 6,
+                      width: 89,
+                      _id: "xnunwjkmxmgiwjzuaejitlkocdqtovpbkovi"
                     }
                   }
                 ],
-                _id: "jirvjsuzudppeaphlxugdssgnzocqckhkdyq",
+                _id: "klnedsnlfmofouvukyjwbiyifpbkitpiisod",
                 zIndex: 18,
                 zIndexSuffix: ""
               }
@@ -65,7 +65,7 @@ module.exports = {
                     type: "Line",
                     value: {
                       _styles: ["story-line"],
-                      _id: "poqgmqrbakgkbcvyyintvncdqxynsulbgtlj",
+                      _id: "clxfcmaouwisdoizjljuocwejilcpkcljzct",
                       width: 62,
                       offsetX: 20,
                       offsetY: 23,
@@ -90,7 +90,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "znmqnlpcmmuysunxcqxmeqrmshfazbmacnky"
+                _id: "sfpmvvohfvbwgbtyknotieefasgrdsoeyqmq"
               }
             },
             {
@@ -123,11 +123,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      _id: "inicvgzcnwbieccqggpbqbvpaucfopjsztyf"
+                      _id: "ssaounjpenhlhfhkglcwdshddfartsmghqsy"
                     }
                   }
                 ],
-                _id: "qwsjpktdelbclgyqggkqhalfolcdznjpwggc"
+                _id: "uqjfzghwxegwbuwfxlhswnjfunwhfncrxljr"
               }
             },
             {
@@ -139,16 +139,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "rqjlzahvqucxeuyrozewjwwaesnszxdblyao",
+                      _id: "muhltjxhncdxmatqjfodndvngteartnmxycu",
                       text:
                         '<p class="brz-text-lg-center brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-68 brz-fs-sm-im-67 brz-fs-xs-im-67 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_6"><span style="opacity: 1; color: rgb(255, 255, 255);">Nightjam</span></p>',
-                      width: 67,
+                      width: 71,
                       offsetY: 27,
-                      offsetX: 16
+                      offsetX: 14
                     }
                   }
                 ],
-                _id: "dhmqfddpxnvgasdwhcnufwtqmnaapppwopgs"
+                _id: "zkfuqbiawbdxgshcgditwsfbpeqjqsbjtffv"
               }
             },
             {
@@ -165,11 +165,11 @@ module.exports = {
                       width: 67,
                       offsetY: 65,
                       offsetX: 15,
-                      _id: "mdvfzwsgkwncgyzsndfycolbzqfofiguybcm"
+                      _id: "cokpaaulltjipplsbpguhgbzanvvvdefafhm"
                     }
                   }
                 ],
-                _id: "fmlocfqrvgpoidpaghfterxybydddbfapyil"
+                _id: "gjcaggyrgtmxnwchpqnsrpjfjcdrziauarsl"
               }
             },
             {
@@ -186,11 +186,11 @@ module.exports = {
                       width: 67,
                       offsetY: 72,
                       offsetX: 15,
-                      _id: "axylcfgmgdwyyuwqqzwmslllgxziuwkhxxou"
+                      _id: "opvznukgnpsqrxqybvavkxnjogdbwpiykrax"
                     }
                   }
                 ],
-                _id: "nwmoelkzxzyddgtsnfoeuzilhtwidjlagsek"
+                _id: "nufgymtiiwjdlzxudrlarsnhqxvjkrzlyyhe"
               }
             },
             {
@@ -202,7 +202,7 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      _id: "rrhsrzzoikbspwrtqujnbfyzofrymfyevfvu",
+                      _id: "xbzauzmegpugsdkwnodpiltiwfcxhzmjmiln",
                       offsetY: 78,
                       offsetX: 45,
                       name: "tail-right",
@@ -214,7 +214,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "afiayudhydopruddpgasftubsnmuxgimkefd"
+                _id: "ytrrerkedhdnsnzziddhlcvawsznjnjahsyg"
               }
             },
             {
@@ -227,15 +227,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-68 brz-fs-sm-im-67 brz-fs-xs-im-67 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_6 brz-text-lg-right"><span style="opacity: 1; color: rgb(255, 255, 255);">Garden</span></p>',
-                      width: 51,
+                        '<p class="brz-ls-lg-m_6 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_1 brz-fs-xs-67 brz-fs-sm-67 brz-fs-lg-68 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-text-lg-left" data-uniq-id="twvxu" data-generated-css="brz-css-ntqev"><span style="color: rgb(255, 255, 255); opacity: 1;">Garden</span></p>',
+                      width: 59,
                       offsetY: 38,
-                      offsetX: 29,
-                      _id: "rvawgwyedeeepondultrwjqzusxnilxebjcn"
+                      offsetX: 41,
+                      _id: "jkjlrnxmkwgwqkmfvmsnnifkejpnbdcxeaku"
                     }
                   }
                 ],
-                _id: "tqyvvwmyvqlasfqzqsdsyygjxmajekcazknj"
+                _id: "napsxnrquxhxednncarlhlkfglennkuqfzsa"
               }
             },
             {
@@ -248,19 +248,19 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-fs-lg-38 brz-fs-sm-im-37 brz-fs-xs-im-37 brz-ls-lg-m_3_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-text-lg-center"><span style="color: rgb(255, 255, 255); opacity: 1;">at the</span></p>',
-                      width: 21,
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ls-lg-m_3_5 brz-fs-xs-37 brz-fs-sm-37 brz-fs-lg-38 brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-lh-lg-1_1 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-left" data-uniq-id="cjnwe" data-generated-css="brz-css-ofwyy"><span style="opacity: 1; color: rgb(255, 255, 255);">at the</span></p>',
+                      width: 24,
                       offsetY: 40,
-                      offsetX: 18,
-                      _id: "cucpktbgorelffzzfbsvmssrpcifhxoyuoqz"
+                      offsetX: 17,
+                      _id: "xakzuevlhjxneorcykzmduxvqwxyjmdkqxzp"
                     }
                   }
                 ],
-                _id: "ysyxtdhqjhmuaqckeekoxrsqzakgkezmrdjs"
+                _id: "itybvhqbjriskmsbdgxhivtgtzfynnuovmto"
               }
             }
           ],
-          _id: "zuidzssvewhgcjfldzbokmbyiuzsjriqjvly",
+          _id: "nxpopkyrnzpwshfcmzahzhqomeflhndpwiuc",
           bgImageWidth: 1080,
           bgImageHeight: 1760,
           bgImageExtension: "jpg",

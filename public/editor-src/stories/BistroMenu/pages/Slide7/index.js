@@ -22,14 +22,14 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-m_0_5 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fs-xs-im-45 brz-fs-sm-im-45 brz-fs-lg-46 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-abril_fatface brz-text-lg-center"><span style="color: rgb(255, 255, 255);">Order now</span></p>',
+                        '<p class="brz-text-lg-center brz-ff-abril_fatface brz-ft-google brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-45 brz-fs-xs-45 brz-lh-sm-1 brz-lh-xs-1 brz-ls-sm-0 brz-ls-xs-0 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_0_5 brz-lh-lg-1_1 brz-fs-lg-42" data-uniq-id="tokhd" data-generated-css="brz-css-rfkwh"><span style="color: rgb(255, 255, 255);">Order now</span></p>',
                       offsetY: 34,
                       offsetX: 5,
-                      _id: "lvrosqkaumnshlqieiuubdytjqlqyimvadzj"
+                      _id: "kluxebovbrymqgszgiulsbbcpqopapwqtrhq"
                     }
                   }
                 ],
-                _id: "ctkuwigdkkuqzzjkubllwsbvswiqsvqohlro"
+                _id: "kufzwobgptoqboxivqoynnmfbwwsbrrvjdoj"
               }
             },
             {
@@ -44,12 +44,12 @@ module.exports = {
                       offsetY: 44,
                       offsetX: 5,
                       text:
-                        '<p class="brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-text-lg-center brz-ff-caveat brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-35 brz-fs-sm-im-34 brz-fs-xs-im-34 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1"><span class="brz-cp-color8">Call us @ +555 653 64</span></p>',
-                      _id: "xputipjnnvikribpuclnjngvdyamffimrlhs"
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-text-lg-center brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-34 brz-fs-xs-34 brz-lh-sm-1 brz-lh-xs-1 brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-kayeu" data-uniq-id="uqbxx"><span class="brz-cp-color8">Call us @ +555 653 64</span></p>',
+                      _id: "cuxsiyaoouicvxauvzkkkitohsgnwumjbane"
                     }
                   }
                 ],
-                _id: "kgpyguiqqlbftarcfbzogiraqsfulvupuxbt"
+                _id: "otbgziyfbrrkfkegrcvlqqcjjbxciktbxbnu"
               }
             },
             {
@@ -61,9 +61,9 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      _id: "phfqdzyczetxvuqioxasmtlgukdprfdftfgr",
+                      _id: "ymvafotczzxvdrwgitmosbhelxrovlfjbdne",
                       offsetY: 56,
-                      offsetX: 24,
+                      offsetX: 17,
                       bgColorHex: "#071e36",
                       bgColorOpacity: 1,
                       bgColorPalette: "",
@@ -71,9 +71,9 @@ module.exports = {
                       tempBgColorOpacity: 1,
                       borderRadiusType: "square",
                       fillType: "filled",
-                      borderWidth: 2,
+                      borderWidth: 0,
                       borderColorHex: "#071e36",
-                      borderColorPalette: "",
+                      borderColorPalette: 0,
                       tempBorderColorPalette: "",
                       borderColorOpacity: 0,
                       hoverBgColorOpacity: 0.8,
@@ -93,19 +93,20 @@ module.exports = {
                       gradientColorOpacity: 0.8,
                       gradientColorPalette: "",
                       text: "Order Online Now",
-                      width: 53,
-                      height: 24,
-                      fontFamily: "caveat",
+                      width: 66,
+                      height: 23.48,
+                      fontFamily: "abril_fatface",
                       fontFamilyType: "google",
                       fontStyle: "",
-                      fontSize: 24,
+                      fontSize: 17,
                       fontWeight: 400,
                       letterSpacing: 0,
-                      lineHeight: 1.6
+                      lineHeight: 1.6,
+                      fontSizeSuffix: "px"
                     }
                   }
                 ],
-                _id: "hotkqxbgxqkkxzcuovevmuxqqxpuuahenjtk"
+                _id: "ubsppkwtdjdwuejxvdzorlocfnumaqdxfqse"
               }
             }
           ],
@@ -142,7 +143,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 42,
           bgPositionY: 39,
-          _id: "cdwasggpytyqerobcjwocwzfykujojvgqphb"
+          _id: "dbrsbiipwesizbqunfkxdyrmupyyksrpswzr"
         }
       }
     ]

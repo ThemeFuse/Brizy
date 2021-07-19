@@ -133,6 +133,32 @@ class Items extends EditorArrayComponent {
               this.cloneItem(itemIndex);
             }
           },
+          {
+            id: "order",
+            type: "cloneable-order",
+            devices: "desktop",
+            position: 95,
+            roles: ["admin"],
+            disabled: items.length < 2,
+            config: {
+              disable:
+                itemIndex === 0
+                  ? "left"
+                  : itemIndex === items.length - 1
+                  ? "right"
+                  : undefined,
+              onChange: v => {
+                switch (v) {
+                  case "left":
+                    this.reorderItem(itemIndex, itemIndex - 1);
+                    break;
+                  case "right":
+                    this.reorderItem(itemIndex, itemIndex + 1);
+                    break;
+                }
+              }
+            }
+          },
           ...(items.length > slidesToShow
             ? [
                 {

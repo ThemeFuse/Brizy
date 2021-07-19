@@ -22,15 +22,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-36 brz-fs-sm-im-36 brz-fs-lg-37 brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_3 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400"><span style="color: rgb(239, 73, 13);">"Jane knows her craft. After working with her my business sky-rocketed. I highly recommend her.</span></p>',
+                        '<p class="brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-m_1 brz-ls-xs-m_1 brz-lh-sm-1_3 brz-lh-xs-1_3 brz-fs-sm-36 brz-fs-xs-36 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-34" data-uniq-id="jytjs" data-generated-css="brz-css-pwhqx"><span style="color: rgb(239, 73, 13);">"Jane knows her craft. After working with her my business sky-rocketed. I highly recommend her"</span></p>',
                       width: 80,
                       offsetY: 6,
                       offsetX: 10,
-                      _id: "opvlalycfbhyybtplixinbpnmajlegwwnqvq"
+                      _id: "jndbcciybsvnkdlyuyhqujayversmvyzywka"
                     }
                   }
                 ],
-                _id: "mwnekdbcdtzlepystzkzcxbevqultkdmumdj"
+                _id: "ncqvzmifyjswktgovdvfujtuusbtuwlkcpgt"
               }
             },
             {
@@ -42,8 +42,8 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "lxzmeulqkyjhouitkpdjglydhagzbhsohkxf",
-                      offsetY: 45,
+                      _id: "ifsnnfnzzbzpgyffoilyzlryjcahcqcfzddy",
+                      offsetY: 52,
                       offsetX: 10,
                       width: 18,
                       height: 105,
@@ -60,7 +60,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "ixkeoyrkbxyfyfpkoftrvcrhramupodtzpre"
+                _id: "hjaotpeadnihsdsgekcswlbxxunzqjrljpkd"
               }
             },
             {
@@ -75,13 +75,13 @@ module.exports = {
                       text:
                         '<p class="brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3 brz-fs-lg-31 brz-fs-sm-im-30 brz-fs-xs-im-30"><span style="color: rgb(16, 16, 16);">Rick E.</span></p>',
                       width: 53,
-                      offsetY: 46,
-                      offsetX: 32,
-                      _id: "cqxjckjdltnqfiwjomexdlkzrketgdkonfvw"
+                      offsetY: 52,
+                      offsetX: 33,
+                      _id: "oakestumvpuzwprxdgsvxqojdeqhuunbomxn"
                     }
                   }
                 ],
-                _id: "hgjeqfkbyhgfvxpekzaymqsdwcpqbcmomfcf"
+                _id: "mmkzvudyjthmdireahvgdtvwrukygouxyjho"
               }
             },
             {
@@ -93,12 +93,12 @@ module.exports = {
                     type: "StarRating",
                     value: {
                       _styles: ["story-starRating"],
-                      _id: "wrgffgjfcpiummjonmoqwrisfkhrfytfbzbu",
+                      _id: "krodpgnamlqfylhxwsviucoihzvbtlwgretj",
                       label: "off",
                       rating: 5,
                       ratingSuffix: "",
-                      offsetY: 52,
-                      offsetX: 32,
+                      offsetY: 59,
+                      offsetX: 33,
                       ratingColorHex: "#101010",
                       ratingColorOpacity: 1,
                       ratingColorPalette: "",
@@ -107,7 +107,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "tggulnswdwblhnfglzjykuzgpssjjzzmjcgx"
+                _id: "qdjbickdeyvtmckslklfggcybuokpgqsrgow"
               }
             }
           ],
@@ -142,7 +142,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "lpnvjtypnfpokgazmeyfvniticezzyhdzpgu"
+          _id: "sjptoizcbngiesexuiefqlknqjrrzrzsqfdk"
         }
       }
     ]

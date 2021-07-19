@@ -13,6 +13,7 @@ import { styleAlignHorizontal } from "visual/utils/style2";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
+import { ACTIVE } from "../stateMode";
 
 // Grid
 
@@ -37,10 +38,6 @@ export function cssStyleElementPostsPaginationSpacing({ v, device, state }) {
     state
   });
   return `margin-top: ${paginationSpacing}px;`;
-}
-
-export function cssStyleElementPostsPaginationLinksOff() {
-  return "pointer-events: none; cursor: default;";
 }
 
 export function cssStyleElementPostsPaginationFontFamily({ v, device, state }) {
@@ -102,6 +99,28 @@ export function cssStyleElementPostsPaginationBgColor({ v, device, state }) {
 
 export function cssStyleElementPostsPaginationBorder({ v, device, state }) {
   return cssStyleBorder({ v, device, state, prefix: "pagination" });
+}
+
+export function cssStyleElementPostsPaginationActiveColor({ v, device }) {
+  return cssStyleColor({
+    v,
+    device,
+    state: ACTIVE,
+    prefix: "paginationColor"
+  });
+}
+
+export function cssStyleElementPostsPaginationActiveBgColor({ v, device }) {
+  return cssStyleBgColor({
+    v,
+    device,
+    state: ACTIVE,
+    prefix: "paginationBg"
+  });
+}
+
+export function cssStyleElementPostsPaginationActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "pagination" });
 }
 
 export function cssStyleElementPostsPaginationBorderRadius({
@@ -235,22 +254,20 @@ export function cssStyleElementPostsFilterPaddingFourFields({
 }
 
 export function cssStyleElementPostsFilterActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: "active", prefix: "filterColor" });
+  return cssStyleColor({ v, device, state: ACTIVE, prefix: "filterColor" });
 }
 
 export function cssStyleElementPostsFilterActiveBgColor({ v, device }) {
-  return cssStyleBgColor({
-    v,
-    device,
-    state: "active",
-    prefix: "filterBg"
-  });
+  return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "filterBg" });
 }
 
 export function cssStyleElementPostsFilterActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: "active", prefix: "filter" });
+  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "filter" });
 }
 
 export function cssStyleElementPostsFilterActiveShadow({ v, device }) {
-  return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
+  return cssStyleBoxShadow({ v, device, state: ACTIVE, prefix: "filter" });
+}
+export function cssStyleElementPostsHoverTransition() {
+  return "transition-property: color, box-shadow, background, border;";
 }

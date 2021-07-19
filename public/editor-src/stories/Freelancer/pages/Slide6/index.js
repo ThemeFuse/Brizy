@@ -23,14 +23,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_3 brz-fs-xs-im-40 brz-fs-sm-im-40 brz-fs-lg-41 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400"><span style="color: rgb(239, 73, 13);">Let\'s get</span></p><p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_3 brz-fs-xs-im-40 brz-fs-sm-im-40 brz-fs-lg-41 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-text-lg-right"><span style="color: rgb(239, 73, 13);">in touch! </span></p>',
-                      width: 53,
+                      width: 58,
                       offsetY: 55,
-                      offsetX: 24,
-                      _id: "sdniibpvencdbohhckkzvpoyweakewdctuye"
+                      offsetX: 21,
+                      _id: "plgjpyjoersdjuycpmlfhfvfdlcpaecmnonl"
                     }
                   }
                 ],
-                _id: "uiyrsfnaraupfrgybsuctiaovmizsratjsra"
+                _id: "qascyjjdmyjccekyprweaiaorhrwgckmhawy"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      _id: "oscqoymndoxozdeihcyxfcbsfazyndagwvri",
+                      _id: "jfpajgbmjzzgiflajnhfuooysgwfxgjzfztw",
                       offsetY: 74,
                       offsetX: 24,
                       borderRadiusType: "rounded",
@@ -87,7 +87,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "uysxhnxvuicfwmadckkfuiaoxwebkttjvwwx"
+                _id: "cglgrxqryzopsldzlqcpdneqlimfclcyjmva"
               }
             }
           ],
@@ -122,7 +122,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "mxqpjlxqqedtyfxjjajqglsqhjvxwpezrszh"
+          _id: "neiokppmzzfjdbayedhptnctdyvuayqenszl"
         }
       }
     ]

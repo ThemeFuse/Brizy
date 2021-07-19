@@ -60,7 +60,7 @@ class AppList extends Component {
           target="_blank"
         >
           <EditorIcon icon="nc-lock" />
-          {t("Get Brizy PRO")}
+          {t("Get a PRO plan")}
         </a>
       </div>
     );

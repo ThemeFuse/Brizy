@@ -1,78 +1,81 @@
 import {
-  styleColor,
   styleElementWOOAttributesSpacing,
-  styleTypography2FontFamily,
-  styleTypography2FontSize,
-  styleTypography2LineHeight,
-  styleTypography2FontWeight,
-  styleTypography2LetterSpacing,
   styleElementWOOAttributesBetween,
   styleBorderWidthUngrouped,
   styleBorderStyle,
   styleBorderColor,
   styleElementWOOAttributesStyleBorder
 } from "visual/utils/style2";
+import { cssStyleColor } from "visual/utils/cssStyle";
+import {
+  cssStyleTypography2FontFamily,
+  cssStyleTypography2FontSize,
+  cssStyleTypography2FontWeight,
+  cssStyleTypography2LetterSpacing,
+  cssStyleTypography2LineHeight
+} from "visual/utils/cssStyle/cssStyleTypography2";
+import { defaultValueValue } from "visual/utils/onChange";
+
+export function cssStyleElementWOOAdditionalTitleFontFamily({ v, device }) {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleFontSize({ v, device }) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleLineHeight({ v, device }) {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleFontWeight({ v, device }) {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleLetterSpacing({ v, device }) {
+  return cssStyleTypography2LetterSpacing({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+}
+
+export function cssStyleElementWOOAdditionalTitleSpacing({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+
+  return `padding-bottom: ${dvv("titleSpacing")}px;`;
+}
 
 export function cssStyleElementWOOAttributesAttributesFontFamily({
   v,
-  device,
-  prefix = "attributes"
+  device
 }) {
-  return device === "desktop"
-    ? `font-family:${styleTypography2FontFamily({
-        v,
-        device,
-        prefix
-      })};`
-    : "";
+  return cssStyleTypography2FontFamily({ v, device, prefix: "attributes" });
 }
 
-export function cssStyleElementWOOAttributesAttributesFontSize({
-  v,
-  device,
-  prefix = "attributes"
-}) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix
-  })}px;`;
+export function cssStyleElementWOOAttributesAttributesFontSize({ v, device }) {
+  return cssStyleTypography2FontSize({ v, device, prefix: "attributes" });
 }
 
 export function cssStyleElementWOOAttributesAttributesLineHeight({
   v,
-  device,
-  prefix = "attributes"
+  device
 }) {
-  return `line-height:${styleTypography2LineHeight({
-    v,
-    device,
-    prefix
-  })};`;
+  return cssStyleTypography2LineHeight({ v, device, prefix: "attributes" });
 }
 
 export function cssStyleElementWOOAttributesAttributesFontWeight({
   v,
-  device,
-  prefix = "attributes"
+  device
 }) {
-  return `font-weight:${styleTypography2FontWeight({
-    v,
-    device,
-    prefix
-  })};`;
+  return cssStyleTypography2FontWeight({ v, device, prefix: "attributes" });
 }
 
 export function cssStyleElementWOOAttributesAttributesLetterSpacing({
   v,
-  device,
-  prefix = "attributes"
+  device
 }) {
-  return `letter-spacing:${styleTypography2LetterSpacing({
-    v,
-    device,
-    prefix
-  })}px;`;
+  return cssStyleTypography2LetterSpacing({ v, device, prefix: "attributes" });
 }
 
 export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {
@@ -90,16 +93,9 @@ export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {
 export function cssStyleElementWOOAttributesAttributeColor({
   v,
   device,
-  prefix = "attributeColor",
   state
 }) {
-  const color = styleColor({
-    v,
-    device,
-    prefix,
-    state
-  });
-  return color === undefined ? "" : `color:${color};`;
+  return cssStyleColor({ v, device, state, prefix: "attributeColor" });
 }
 
 export function cssStyleElementWOOAttributesBorder({ v, device, state }) {

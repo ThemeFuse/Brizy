@@ -11,6 +11,7 @@
     "fontStyle": "paragraph",
     "fontFamilyType": "google",
     "fontSize": 12,
+    "fontSizeSuffix": "px",
     "fontWeight": 700,
     "lineHeight": 1.8,
     "letterSpacing": 3,
@@ -25,6 +26,7 @@
     "tabletFontStyle": "paragraph",
     "tabletFontFamilyType": null,
     "tabletFontSize": 11,
+    "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
     "tabletLetterSpacing": 1,
@@ -32,6 +34,7 @@
     "mobileFontStyle": "paragraph",
     "mobileFontFamilyType": null,
     "mobileFontSize": 11,
+    "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,
     "mobileLetterSpacing": 1

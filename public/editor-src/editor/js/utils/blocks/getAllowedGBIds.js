@@ -1,5 +1,6 @@
 import _ from "underscore";
 import Config from "visual/global/Config";
+import { IS_CMS } from "visual/utils/env";
 import {
   getCurrentRule,
   TEMPLATES_GROUP_ID,
@@ -8,12 +9,12 @@ import {
 import { isPopup } from "./isPopup";
 import { IS_TEMPLATE } from "visual/utils/models";
 
-export const getAllowedGBIds = (pageBlocksIds, globalBlocks, pageId) => {
+export const getAllowedGBIds = (pageBlocksIds, globalBlocks, page) => {
   return Object.entries(globalBlocks).reduce(
     (acc, [currentGlobalBlockId, globalBlock]) => {
       const isInPage = pageBlocksIds.includes(currentGlobalBlockId);
 
-      if (!isInPage && canUseCondition(globalBlock, pageId)) {
+      if (!isInPage && canUseCondition(globalBlock, page)) {
         acc.push(currentGlobalBlockId);
       }
 
@@ -23,24 +24,25 @@ export const getAllowedGBIds = (pageBlocksIds, globalBlocks, pageId) => {
   );
 };
 
-export function canUseCondition(globalBlock, pageId) {
+export function canUseCondition(globalBlock, page) {
   if (isPopup(globalBlock.data)) {
     return true;
   }
 
   return IS_TEMPLATE
-    ? canUseConditionInTemplates(globalBlock)
-    : canUseConditionInPage(globalBlock, pageId);
+    ? canUseConditionInTemplates(globalBlock, page)
+    : canUseConditionInPage(globalBlock, page);
 }
 
-export function canUseConditionInTemplates({ rules }) {
-  const { ruleMatches, page } = Config.get("wp");
+export function canUseConditionInTemplates({ rules }, page) {
+  const { ruleMatches } = Config.get("wp");
 
   const templateCondition = rules.find(
     ({ entityType, appliedFor, entityValues }) =>
       appliedFor === TEMPLATES_GROUP_ID &&
       entityType === TEMPLATE_TYPE &&
-      entityValues.includes(page)
+      //String(v) - for old users where entityValue can store as number
+      entityValues.some(v => String(v) === page.id)
   );
 
   if (templateCondition) {
@@ -120,14 +122,14 @@ export function templateSplitRules(rules) {
   );
 }
 
-export function pageSplitRules(rules = [], pageId) {
-  const currentRule = getCurrentRule(pageId);
+export function pageSplitRules(rules = [], page) {
+  const currentRule = getCurrentRule(page);
 
   const level1 = rules.find(
     ({ appliedFor, entityType, entityValues }) =>
       appliedFor === currentRule.group &&
       entityType === currentRule.type &&
-      entityValues.includes(currentRule.id)
+      entityValues.some(v => String(v) === String(currentRule.id))
   );
 
   const level2 = rules.find(
@@ -149,7 +151,20 @@ export function pageSplitRules(rules = [], pageId) {
   };
 }
 
-export function canUseConditionInPage(globalBlock, pageId) {
+function pageCMSSplitRules(rules = [], refs = []) {
+  return rules.find(({ entityType, entityValues }) => {
+    let equalRules = false;
+    refs.forEach(ref => {
+      if (ref.entityType === entityType) {
+        equalRules = _.intersection(ref.entityValues, entityValues);
+      }
+    });
+
+    return equalRules.length;
+  });
+}
+
+export function canUseConditionInPage(globalBlock, page) {
   if (!globalBlock) {
     // Normally it should never happen.
     // Some projects has globalBlock into pageJson and doesn't have it into globalBlocks
@@ -164,18 +179,34 @@ export function canUseConditionInPage(globalBlock, pageId) {
 
   const { rules } = globalBlock;
 
-  const { level1, level2, level3 } = pageSplitRules(rules, pageId);
+  const {
+    level1: level1Rule,
+    level2: level2Rule,
+    level3: level3Rule
+  } = pageSplitRules(rules, page);
 
-  if (level1) {
-    return isIncludeCondition(level1);
+  let cmsRule = false;
+  if (IS_CMS) {
+    const { fields } = page;
+
+    const refs = getFieldsReferences(fields);
+    cmsRule = pageCMSSplitRules(rules, refs);
   }
 
-  if (level2) {
-    return isIncludeCondition(level2);
+  if (level1Rule) {
+    return isIncludeCondition(level1Rule);
   }
 
-  if (level3) {
-    return isIncludeCondition(level3);
+  if (cmsRule) {
+    return isIncludeCondition(cmsRule);
+  }
+
+  if (level2Rule) {
+    return isIncludeCondition(level2Rule);
+  }
+
+  if (level3Rule) {
+    return isIncludeCondition(level3Rule);
   }
 
   return false;
@@ -183,4 +214,36 @@ export function canUseConditionInPage(globalBlock, pageId) {
 
 export function isIncludeCondition(condition) {
   return condition.type === 1;
+}
+
+function getFieldsReferences(fields) {
+  return fields
+    .filter(
+      ({ __typename }) =>
+        __typename === "CollectionItemFieldReference" ||
+        __typename === "CollectionItemFieldMultiReference"
+    )
+    .map(field => {
+      if (field.__typename === "CollectionItemFieldReference") {
+        const entityType = field.type.collectionType.id;
+        const entityValues = field.values.collectionItem.id;
+
+        return {
+          appliedFor: 1,
+          entityType,
+          entityValues
+        };
+      } else if (field.__typename === "CollectionItemFieldMultiReference") {
+        const entityType = field.type.collectionType.id;
+        const entityValues = field.values.collectionItems.map(({ id }) => id);
+
+        return {
+          appliedFor: 1,
+          entityType,
+          entityValues
+        };
+      } else {
+        return undefined;
+      }
+    });
 }

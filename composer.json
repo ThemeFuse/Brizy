@@ -23,6 +23,8 @@
     "twig/twig": "1.42.5",
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4.2",
+    "bagrinsergiu/brizy-merge-page-assets": "^1.0",
+    "bagrinsergiu/content-placeholder": "^2.0",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
     "shortpixel/shortpixel-php": "dev-master",
@@ -36,6 +38,14 @@
     {
       "type": "vcs",
       "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git"
     }
   ],
   "scripts": {

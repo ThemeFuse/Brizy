@@ -187,7 +187,7 @@ export function styleClassName(v) {
         width: IS_STORY ? "100%" : `${iconSize}px`,
         height: IS_STORY ? "unset" : `${iconSize}px`,
         fontSize: IS_STORY ? "unset" : `${customSize}px`,
-        padding: `${padding}px`,
+        padding: `${padding}${IS_STORY ? "%" : "px"}`,
         borderRadius,
         strokeWidth,
         boxShadow: shadowDesktopNormal !== "" ? shadowDesktopNormal : null,

@@ -7,6 +7,7 @@ import deepMerge from "deepmerge";
 import { insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
+import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
 import { Block } from "visual/types";
 import { ReduxState } from "visual/redux/types";
 import { hideToolbar } from "visual/component/Toolbar";
@@ -155,11 +156,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
     });
   };
 
-  handleAddSavedBlock = (data: {
-    blocks: Block[];
-    fonts: FontsPayload;
-    extraFontStyles?: Array<{ id: string }>;
-  }): void => {
+  handleAddSavedBlock = (data: PromptBlockTemplate): void => {
     const { fonts, blocks, extraFontStyles = [] } = data;
     const {
       value: { popups },

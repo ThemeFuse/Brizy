@@ -25,14 +25,14 @@ module.exports = {
                         '<p class="brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ls-lg-m_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-text-lg-center brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-fs-lg-64 brz-fs-sm-im-63 brz-fs-xs-im-63"><span class="brz-cp-color2">Stay</span></p>',
                       offsetY: 8,
                       offsetX: 11,
-                      _id: "pzmgffhuiaqhtvotyjglgeglqpetoogacjef",
+                      _id: "pzdxewysqdoqzsfxpcsllfjvctaokbmngjgc",
                       width: 65
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "napetdpmprjpxdgluuvvaczmpnohqqiytuqr"
+                _id: "xogptwclcnargzgfhrfkihxlwuhylttmrnro"
               }
             },
             {
@@ -48,14 +48,14 @@ module.exports = {
                         '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-26 brz-fs-sm-im-25 brz-fs-xs-im-25 brz-ls-lg-m_1 brz-ls-sm-im-3 brz-ls-xs-im-3"><span class="brz-pre-population-visible" style="color: rgb(255, 255, 255);">#01</span></p>',
                       offsetY: 2,
                       offsetX: 1,
-                      width: 21,
-                      _id: "ihaynpyzurucideaztdnqhllcvvoswfawrny"
+                      width: 26,
+                      _id: "awvdjokhwftldlmewjcxwunizjjvdwqsnjrq"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "arpnlztkhlelvuwqcowymmluspadmvjgxlqk"
+                _id: "znffvfpmpdryxkwvwgmsagfslerrexiwhfbb"
               }
             },
             {
@@ -72,13 +72,13 @@ module.exports = {
                       offsetY: 19,
                       offsetX: 29,
                       width: 65,
-                      _id: "crlykpntpabpbyudkbbhunmzeldymljsfbvj"
+                      _id: "lbgskoanbrohobssxgqyszeatrduxwlyfwxw"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "mvbwntrrpoafovslrqyhrvdrilcshffjzvuw"
+                _id: "eujjmsvzohdkwkwoddfhxkblsjklgnkhiodb"
               }
             },
             {
@@ -90,16 +90,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 79,
+                      offsetY: 75,
                       offsetX: 5,
                       text:
                         '<p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_6 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_text brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-fs-xs-im-15 brz-fs-sm-im-15 brz-fs-lg-16 brz-text-lg-center"><span class="brz-cp-color2">Follow your hobby. Create from home. Be happy!</span></p>',
                       width: 93,
-                      _id: "mnxkvyhykvgzgacxeahgvtfcddobptyumrvk"
+                      _id: "vxiciojgxwtzhnhjunfbvilpyncnihzdxlvh"
                     }
                   }
                 ],
-                _id: "opweayzuqfohcsogltrrubzvdnakivnuiivu"
+                _id: "mbdzawdvkjjhhnjilugvrjvjjdttbdumhfiz"
               }
             },
             {
@@ -147,11 +147,11 @@ module.exports = {
                       tempBoxShadowColorPalette: "color2",
                       boxShadowColorHex: "#163452",
                       tempBoxShadowColorOpacity: 0.2,
-                      _id: "taxbjejkpdwxdjeexcaeyswrugwyhzxpxcij"
+                      _id: "gmpmrzkxltqwxsgpvdisrdkavbzgkjuddpig"
                     }
                   }
                 ],
-                _id: "ugpcjpqyciwllsncgmxfbgztyuwgafyefayv"
+                _id: "xhmkqqbpdojrprwjtlvtrafezygbhaptwxxd"
               }
             },
             {
@@ -190,11 +190,11 @@ module.exports = {
                       tempBoxShadowVertical: 12,
                       boxShadowHorizontal: 12,
                       tempBoxShadowHorizontal: 12,
-                      _id: "scowswcviuymnreicufipmbksuzsdogdfahc"
+                      _id: "jfbnwwfcjfybbortsytfcvzwljsrwldkfvrc"
                     }
                   }
                 ],
-                _id: "vmgoskwfjtzffxdouvyprcerplkszcsavrka"
+                _id: "cvpmngfakzeqfbtbtplfijznzhvcuwrapukz"
               }
             }
           ],
@@ -234,7 +234,7 @@ module.exports = {
           tempBorderBottomWidth: 15,
           borderLeftWidth: 0,
           tempBorderLeftWidth: 15,
-          _id: "mkuovphqvaupyajhycwqfqjhiokosxfueuzm",
+          _id: "zjpdgayptbburwrosnaykhnzdjzcosqiyhef",
           bgImageWidth: 1080,
           bgImageHeight: 1920,
           bgImageExtension: "jpg",

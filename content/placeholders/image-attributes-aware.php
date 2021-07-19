@@ -1,5 +1,6 @@
 <?php
 
+use \BrizyPlaceholders\ContentPlaceholder;
 
 trait Brizy_Content_Placeholders_ImageAttributesAware {
 
@@ -8,9 +9,9 @@ trait Brizy_Content_Placeholders_ImageAttributesAware {
 	 * Ex: alt="image alt attribute" title="Image title"
 	 *
 	 * @param Brizy_Content_Context $context
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
+	 * @param ContentPlaceholder $contentPlaceholder
 	 *
 	 * @return
 	 */
-	abstract public function getAttachmentId( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder );
+	abstract public function getAttachmentId( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder );
 }

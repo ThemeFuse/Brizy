@@ -66,7 +66,7 @@ class Prompts extends Component<{}, PromptsState> {
   static open<K extends PromptKey>(data: {
     prompt: K;
     mode: PromptsMode;
-    props: ComponentProps<PromptTypes[K]>;
+    props?: ComponentProps<PromptTypes[K]>;
   }): void {
     UIState.set("prompt", data);
   }

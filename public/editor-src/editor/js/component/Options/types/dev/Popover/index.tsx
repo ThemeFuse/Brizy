@@ -19,7 +19,7 @@ export type Config = {
   title: string;
 };
 
-export type Props = Option.Props<undefined, {}> &
+export type Props = Option.Props<undefined> &
   WithConfig<Config> &
   WithClassName & {
     options: OptionDefinition[];
@@ -62,8 +62,14 @@ export const Popover: FC<Props> &
 };
 
 const getModel: Option.GetModel<undefined> = () => undefined;
+const getElementModel: Option.GetElementModel<undefined> = () => ({});
 
 Popover.getModel = getModel;
+Popover.getElementModel = getElementModel;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+Popover.defaultValue = undefined;
 
 Popover.shouldOptionBeFiltered = ({ options }): boolean =>
   filterOptionsData(options ?? []).length === 0;

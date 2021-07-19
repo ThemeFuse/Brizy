@@ -2,6 +2,7 @@ import {
   clamp,
   inRange,
   isNumber,
+  isNumeric,
   roundTo,
   toNumber,
   toPositive,
@@ -42,6 +43,39 @@ describe("Testing 'isNumber' function", function() {
   });
 });
 
+describe("Testing 'isNumeric' function", function() {
+  test("Boolean value", () => {
+    expect(isNumeric(true)).toBe(false);
+  });
+  test("Number value", () => {
+    expect(isNumeric(5.4)).toBe(true);
+  });
+
+  test("Numeric valid string value", () => {
+    expect(isNumeric("5.4")).toBe(true);
+  });
+
+  test("Numeric invalid string value", () => {
+    expect(isNumeric("5.4k")).toBe(false);
+  });
+
+  test("NaN value", () => {
+    expect(isNumeric(NaN)).toBe(false);
+  });
+
+  test("Obj value", () => {
+    expect(isNumeric({})).toBe(false);
+  });
+
+  test("undefined value", () => {
+    expect(isNumeric(undefined)).toBe(false);
+  });
+
+  test("null value", () => {
+    expect(isNumeric(null)).toBe(false);
+  });
+});
+
 describe("Testing 'inRange' function", function() {
   test("Return false if n is lower then min", () => {
     expect(inRange(1, 5, 0)).toBe(false);
@@ -71,26 +105,17 @@ describe("Testing 'toNumber' function", function() {
 });
 
 describe("Testing 'toPositive' function", function() {
-  testToValue(toNonNegative, times(100, i => i + 1), [
-    undefined,
-    null,
-    "",
-    "0",
-    {},
-    -1,
-    -2
-  ]);
+  testToValue(
+    toNonNegative,
+    times(100, i => i + 1),
+    [undefined, null, "", "0", {}, -1, -2]
+  );
 });
 
 describe("Testing 'toPositive' function", function() {
-  testToValue(toPositive, times(100, i => i + 1), [
-    undefined,
-    null,
-    "",
-    "0",
-    {},
-    0,
-    -1,
-    -2
-  ]);
+  testToValue(
+    toPositive,
+    times(100, i => i + 1),
+    [undefined, null, "", "0", {}, 0, -1, -2]
+  );
 });

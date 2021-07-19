@@ -2,12 +2,17 @@
 
 trait Brizy_Admin_Migrations_PostsTrait {
 
+	private static $project;
 
 	/**
 	 * @return |null
 	 */
 	public function getProjectPost() {
 		global $wpdb;
+
+        if ( self::$project ) {
+            return self::$project;
+        }
 
 		$row = $wpdb->get_results(
 			$wpdb->prepare( "SELECT * FROM {$wpdb->posts} p
@@ -16,8 +21,10 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			OBJECT
 		);
 
+		$projectPost = null;
+
 		if ( isset( $row[0] ) ) {
-			return $row[0];
+			return self::$project = $row[0];
 		}
 
 		return null;

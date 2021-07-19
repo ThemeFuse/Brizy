@@ -1,0 +1,54 @@
+.brz-protected {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  &-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &__input {
+      outline: none;
+      display: flex;
+      align-items: center;
+
+      .brz-input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+
+        &::placeholder {
+          opacity: 0.5;
+          color: inherit;
+        }
+      }
+    }
+    &__button {
+      flex: auto;
+
+      .brz-btn {
+        width: 100%;
+      }
+    }
+  }
+
+  &__alert {
+    min-height: 55px;
+    width: 100%;
+    padding: 17px 30px;
+    margin-top: 15px;
+
+    font-family: $font-family-1;
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #f00;
+  }
+}

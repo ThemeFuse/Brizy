@@ -2,11 +2,14 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { useDynamicContent } from "visual/component/DynamicContent/useDynamicContent";
+import * as str from "visual/utils/reader/string";
+import { dcSupported } from "visual/utils/env";
+import { hasDC } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { V } from "visual/types";
 
 type Props = {
   id: string;
-  v: { [k: string]: string };
+  v: V;
   tagName?: keyof JSX.IntrinsicElements;
   className?: string;
 
@@ -16,7 +19,7 @@ type Props = {
 };
 
 export const Text: React.FC<Props> = props => {
-  return TARGET === "WP" ? <TextWithDC {...props} /> : <TextNoDC {...props} />;
+  return dcSupported ? <TextWithDC {...props} /> : <TextNoDC {...props} />;
 };
 
 export const TextWithDC: React.FC<Props> = ({
@@ -26,41 +29,26 @@ export const TextWithDC: React.FC<Props> = ({
   className: className_,
   onChange = _.noop
 }) => {
-  const value = v[id] ?? "";
-  const dcValue = v[`${id}Population`] ?? "";
   const className = classnames(className_, `brz-${tagName}`);
+  const hasDC_ = hasDC(v, id);
 
-  const dcState = useDynamicContent(dcValue);
+  return hasDC_ ? (
+    React.createElement(tagName, {
+      className,
 
-  switch (dcState.status) {
-    case "empty":
-      return (
-        <TextEditor
-          // TextEditor puts brz-${tagName} class itself
-          className={className_}
-          tagName={tagName}
-          value={value}
-          onChange={(value: string): void => onChange({ [id]: value })}
-        />
-      );
-    case "success":
-      return React.createElement(tagName, {
-        className,
-
-        // WordPress can send contents with encoded html entities
-        // (e.g. Brizy&#8217;s Dynamic Content)
-        // making us resort for dangerouslySetInnerHTML for now
-        dangerouslySetInnerHTML: { __html: dcState.data || "" }
-      });
-    // not sure yet what to do here
-    case "failed":
-      if (process.env.NODE_ENV === "development") {
-        console.error(dcState.error);
-      }
-      return React.createElement(tagName, { className }, dcValue);
-    default:
-      return React.createElement(tagName, { className }, dcValue);
-  }
+      // WordPress can send contents with encoded html entities
+      // (e.g. Brizy&#8217;s Dynamic Content)
+      // making us resort for dangerouslySetInnerHTML for now
+      dangerouslySetInnerHTML: { __html: v[id] || "" }
+    })
+  ) : (
+    <TextEditor
+      className={className_} // TextEditor puts brz-${tagName} class itself
+      tagName={tagName}
+      value={str.read(v[id])}
+      onChange={(value: string): void => onChange({ [id]: value })}
+    />
+  );
 };
 
 export const TextNoDC: React.FC<Props> = ({
@@ -70,13 +58,11 @@ export const TextNoDC: React.FC<Props> = ({
   className,
   onChange = _.noop
 }) => {
-  const value = v[id] ?? "";
-
   return (
     <TextEditor
       className={className}
       tagName={tagName}
-      value={value}
+      value={str.read(v[id])}
       onChange={(value: string): void => onChange({ [id]: value })}
     />
   );

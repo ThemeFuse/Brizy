@@ -11,8 +11,9 @@ import {
 } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, context }) {
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "borderColorHex", device, state }),
     defaultValueValue({ v, key: "borderColorPalette", device, state })
@@ -21,7 +22,10 @@ export function getItems({ v, device, state }) {
     defaultValueValue({ v, key: "boxShadowColorHex", device, state }),
     defaultValueValue({ v, key: "boxShadowColorPalette", device, state })
   );
-  const linkDC = getDynamicContentChoices("link", true);
+  const linkDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.link
+  );
   const labelTab = {
     button: t("Button"),
     embed: t("Embed"),

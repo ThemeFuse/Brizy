@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = function(argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
-  const TARGET = argv_.target || argv_.t || "node_local";
+  const TARGET = argv_.target || argv_.t || "Cloud-localhost";
   const IS_PRODUCTION = Boolean(argv_.production);
   const IS_EXPORT = Boolean(argv_.export || argv_.e);
   const IS_PRO = Boolean(argv_.pro || argv_.p);

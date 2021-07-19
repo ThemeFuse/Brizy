@@ -26,13 +26,13 @@ module.exports = {
                       offsetY: 5,
                       offsetX: -1,
                       width: 55,
-                      _id: "fjnogbhtbbbevpnbbbsytenxqlvjjgascval"
+                      _id: "wtawzvhuhmtbktjrknytwbbwdnjngptsjokw"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "mkasylimchzeflfygmhmyvvtnzzqavoqopiz"
+                _id: "bqtbinqvcoswbkusrzpwcyrzccxiysfgugah"
               }
             },
             {
@@ -49,13 +49,13 @@ module.exports = {
                       offsetY: 88,
                       offsetX: 6,
                       width: 21,
-                      _id: "vfwmomybgrifqugyzlnffszdqoyoxokebiak"
+                      _id: "oxlzsrnrfwucqiezbbyczlmhjdzuquzhbkhl"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "kfwieecqirbabrpmmtuplmadmcizygcqpkpg"
+                _id: "lxuxubqcunfduqpcmzkharsywrpzzjcfpwrm"
               }
             },
             {
@@ -103,7 +103,7 @@ module.exports = {
                       tempBoxShadowColorPalette: "color2",
                       boxShadowColorHex: "#163452",
                       tempBoxShadowColorOpacity: 0.2,
-                      _id: "feydazhrdpgoerleqrueuiubryyuhtqlpaln",
+                      _id: "xojvpurttzylumjsbvxlwoirjfydscvlpdoz",
                       tempFillType: "filled",
                       paddingRL: 0,
                       paddingRight: 0,
@@ -134,7 +134,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "kxmsadalaiknaposhraijhsgcxgmrmswccdd"
+                _id: "ntuexycjkgyygisjjgcqhgwlieekupyqxrfr"
               }
             },
             {
@@ -151,13 +151,13 @@ module.exports = {
                       offsetY: 19,
                       offsetX: 11,
                       width: 38,
-                      _id: "zuzqhjchwdltttzsttbkbogniftgpwpeyygc"
+                      _id: "vgemcoxdtpnocknndogwqmtctjvggexikqwv"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "eznwkbjfvfnvyhwnufahynwnagussbcfwied"
+                _id: "tmjcbkjpsiwxbqsybvuxqbnlwnaljghkkuae"
               }
             },
             {
@@ -174,13 +174,13 @@ module.exports = {
                       text:
                         '<p class="brz-text-lg-center brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_6 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3"><span class="brz-cp-color2">Great recipes for simple dishes. </span><span class="brz-cp-color1">Learn More</span></p>',
                       width: 93,
-                      _id: "cukpwiotpcgnpvjpnfzmjywdtoodiwinafoo"
+                      _id: "gkopfmweexihymkddoslkhwtypvaqtngstit"
                     }
                   }
                 ],
                 rotate: -90,
                 rotateSuffix: "",
-                _id: "finekbssbzmvbekjovblwvyxyhjfurdqqkjr"
+                _id: "rvkhykbdzkflrqhbvhwyvzoyninwwqlfsqxy"
               }
             },
             {
@@ -219,11 +219,11 @@ module.exports = {
                       tempBoxShadowVertical: 12,
                       boxShadowHorizontal: 12,
                       tempBoxShadowHorizontal: 12,
-                      _id: "qvblkomjpyrekzfldqmeazfbtbuvmkxanbts"
+                      _id: "pznqlxarcjughrsjfnhrvphwsjtwsozzmpav"
                     }
                   }
                 ],
-                _id: "rgqeunthuogfjsolfpelhnruvebzasyxfpzb"
+                _id: "uinxlsjffkkdffivtptgeeiidawljdaccwao"
               }
             },
             {
@@ -239,12 +239,12 @@ module.exports = {
                       offsetX: 8,
                       text:
                         '<p class="brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_6 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3 brz-text-lg-left brz-fs-lg-22 brz-fs-sm-im-21 brz-fs-xs-im-21"><span class="brz-cp-color2">Best ideas for fitness trainingwithout going to the gym</span></p>',
-                      width: 52,
-                      _id: "kaznfvplsxuxtiyuzkbigctzwodpiiilupwf"
+                      width: 59,
+                      _id: "fkpkpmtjmioaxeijasagzngxirpmmzisardd"
                     }
                   }
                 ],
-                _id: "nduvvasvvactgjomnihrsphstofmhkwyczvo"
+                _id: "wedyxhgzmnyztgsiyhylexgowlbzzjhqivws"
               }
             }
           ],
@@ -296,7 +296,7 @@ module.exports = {
           tempBorderTopRightRadius: 0,
           tempBorderBottomLeftRadius: 0,
           tempBorderBottomRightRadius: 0,
-          _id: "deccutlxxhuprvnxeopqqcmthnklbsdjbnyz",
+          _id: "tppkgkepljprcelsttmqnkiharomxsakluvt",
           bgImageExtension: "jpg"
         },
         blockId: "StoryBlank0001"

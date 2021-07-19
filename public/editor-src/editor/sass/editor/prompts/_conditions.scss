@@ -129,7 +129,7 @@
     }
     &-exclude {
       .brz-ed-popup-conditions__type-text {
-        background-color: #d62c64;
+        background-color: $brand-primary-pro;
         &:hover {
           background-color: #c12659;
         }
@@ -163,6 +163,9 @@
       &-options {
         background: #fff;
         width: 170px;
+      }
+      &-optgroup {
+        border-bottom: 1px solid #e6e6e6;
       }
     }
   }

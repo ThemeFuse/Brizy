@@ -5,7 +5,7 @@ module.exports = {
   title: "About",
   keywords: "about, team, history",
   cat: [0, 3, 100],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

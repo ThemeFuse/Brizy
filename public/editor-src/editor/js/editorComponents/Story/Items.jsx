@@ -255,7 +255,6 @@ class StoryItems extends EditorArrayComponent {
           infinite={false}
           slidesToScroll={1}
           initialSlide={0}
-          lazyLoad={"ondemand"}
           swipe={false}
           draggable={false}
           accessibility={false}
@@ -277,25 +276,9 @@ class StoryItems extends EditorArrayComponent {
         {
           breakpoint: 767,
           settings: {
-            variableWidth: true,
-            lazyLoad: "ondemand",
-            arrows: true,
-            centerMode: true,
             centerPadding: "40px",
             slidesToShow: 1,
-            swipe: true
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            variableWidth: true,
-            arrows: true,
-            lazyLoad: "ondemand",
-            centerMode: true,
-            centerPadding: "40px",
-            slidesToShow: 1,
-            swipe: true
+            speed: 180
           }
         }
       ];
@@ -310,7 +293,6 @@ class StoryItems extends EditorArrayComponent {
           data-infinite={false}
           data-touch-threshold={15}
           data-slides-to-scroll={1}
-          data-lazy-load="ondemand"
           data-arrows={true}
           data-dots={true}
           data-dots-class="brz-slick-slider__dots"
@@ -319,6 +301,7 @@ class StoryItems extends EditorArrayComponent {
           data-auto-play={false}
           data-swipe={true}
           data-responsive={encodeURIComponent(JSON.stringify(responsive))}
+          data-speed={300}
         >
           {items}
           <ThemeIcon

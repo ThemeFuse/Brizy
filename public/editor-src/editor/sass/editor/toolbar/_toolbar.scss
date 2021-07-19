@@ -81,10 +81,12 @@
     }
   }
   &__option {
-    padding: $toolbar-item-padding;
+    padding: $toolbar-item-padding 3px;
+    min-width: $toolbar-item-height;
     font-size: $toolbar-font-size;
     display: block;
     cursor: pointer;
+    text-align: center;
   }
   &--active {
     color: $brand-primary !important;

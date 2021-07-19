@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { toolbarImageBorderRadius } from "visual/utils/toolbar";
-import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/env";
 
 export const title = t("Image");
 
-export function getItems({ v, device, state }) {
+export function getItems() {
   return [
     {
       id: "settingsTabs",
@@ -19,12 +18,11 @@ export function getItems({ v, device, state }) {
           label: t("Styling"),
           icon: "nc-styling",
           options: [
-            toolbarImageBorderRadius({
-              v,
-              device,
-              state,
-              devices: "desktop"
-            })
+            {
+              id: "border",
+              label: t("Corner"),
+              type: "corners-dev"
+            }
           ]
         },
         {

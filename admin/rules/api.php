@@ -605,13 +605,13 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi
         $postTypes = array_diff_key($postTypes, array_flip(['attachment', 'elementor_library', Brizy_Admin_Stories_Main::CP_STORY]));
 
         if ($context == 'template-rules') {
-            $postTypes = array_filter($postTypes, function ($type) use ($groupValue, $templateType, $context) {
-                if ($templateType == 'single_product') {
-                    return $type->name == 'product' && $type->public && $type->show_ui;
-                } else {
-                    return $type->name != 'product' && $type->public && $type->show_ui;
-                }
-            });
+            $postTypes =array_filter($postTypes, function ($type) use ($groupValue, $templateType, $context) {
+
+            if ($type->name == 'product' && ($templateType == 'single_product')) {
+                return true;
+            }
+            return $type->public && $type->show_ui;
+        });
         }
 
         return array_map(function ($t) use ($groupValue) {

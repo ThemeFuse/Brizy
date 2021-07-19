@@ -21,8 +21,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 64,
-                      offsetX: 20,
+                      offsetY: 60,
+                      offsetX: 14,
                       fontFamily: "fira_sans",
                       fontFamilyType: "google",
                       fontStyle: "",
@@ -33,8 +33,8 @@ module.exports = {
                       text: "EARLY BIRD | $49",
                       iconName: "",
                       iconType: "",
-                      width: 57,
-                      height: 21.05,
+                      width: 66,
+                      height: 23.32,
                       borderColorPalette: "",
                       tempBorderColorPalette: "color4",
                       borderRadiusType: "square",
@@ -55,11 +55,11 @@ module.exports = {
                       hoverBorderColorOpacity: 0,
                       colorPalette: "",
                       colorHex: "#3c26b3",
-                      _id: "mumucbdfoyqxrplexemgdkrjgwixhqvbdrjq"
+                      _id: "hrsnwylzgrmfyknsijebenkrgxbsrhwfutet"
                     }
                   }
                 ],
-                _id: "rifmzamgfdxzaunrbwavwphpbizfaertirhj"
+                _id: "uzjwanenzuyhjjfiyjvtsrhohvktvlifkkdm"
               }
             },
             {
@@ -71,8 +71,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 75,
-                      offsetX: 20,
+                      offsetY: 70,
+                      offsetX: 14,
                       fontFamily: "fira_sans",
                       fontFamilyType: "google",
                       fontStyle: "",
@@ -83,8 +83,8 @@ module.exports = {
                       text: "VIP PASS | $129",
                       iconName: "",
                       iconType: "",
-                      width: 57,
-                      height: 21.05,
+                      width: 66,
+                      height: 23.35,
                       borderColorPalette: "",
                       tempBorderColorPalette: "color4",
                       borderRadiusType: "square",
@@ -105,11 +105,11 @@ module.exports = {
                       hoverBorderColorOpacity: 0,
                       colorPalette: "",
                       colorHex: "#b322bb",
-                      _id: "wthmebdkdgjyelbfczmxdmtfuwyoscfwvjul"
+                      _id: "qppfmgnytstlpqmzittewgzzdmfzzlemobta"
                     }
                   }
                 ],
-                _id: "dorziixxcqrxovcqfsjevggpfwiikyugxqac"
+                _id: "stibvguheznutthclmagfhxvjadmsrymctke"
               }
             },
             {
@@ -121,12 +121,12 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      _id: "xcnhmfatibldsnukpewhigaebtporfhdvlaa",
-                      offsetY: 20,
-                      offsetX: 39,
+                      _id: "nirmpiyphxenrpgdvirhzhlzgxpefdiaeqim",
+                      offsetY: 18,
+                      offsetX: 36,
                       name: "owl",
                       type: "outline",
-                      customSize: 18,
+                      customSize: 23,
                       size: "custom",
                       colorHex: "#ffffff",
                       colorOpacity: 1,
@@ -137,7 +137,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "vggrnxmpbuskatwnnlirecnsjruaclpjjxrg"
+                _id: "fafpfgawzeychdvbpkrzkcikpkddimgvtpgc"
               }
             },
             {
@@ -151,14 +151,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-fs-xs-im-42 brz-fs-sm-im-42 brz-fs-lg-43 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-text-lg-center brz-ls-lg-m_4 brz-ls-sm-im-m_2 brz-ls-xs-im-m_2"><span style="color: rgb(2, 33, 81);">Grab Your Ticket  Early Bird is now </span><span style="color: rgb(60, 38, 179);">20% off</span></p>',
-                      width: 67,
-                      offsetY: 34,
-                      offsetX: 15,
-                      _id: "smmdweqzaoewfyeddjtjucedkmdzpyvrusyp"
+                      width: 81,
+                      offsetY: 33,
+                      offsetX: 8,
+                      _id: "xvtlpziahttwlmkbusixqiuynsiicxifjyur"
                     }
                   }
                 ],
-                _id: "mtiozievgpjilqryssnbgqqxeslnsqontlye"
+                _id: "wfdtkzvltvegetzekbvnoqgfjprvucafgsqc"
               }
             }
           ],
@@ -195,7 +195,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 96,
           bgPositionY: 48,
-          _id: "njpvxnwuhvpmstzenjdjyvsqnklobglkdghm"
+          _id: "fcuveqscewcugnqiiyrscflakrfdxbcxpnwm"
         },
         blockId: "StoryBlank0001"
       }

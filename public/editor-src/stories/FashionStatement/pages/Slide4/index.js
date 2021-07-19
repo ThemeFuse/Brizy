@@ -25,7 +25,7 @@ module.exports = {
                         '<p class="brz-fw-xs-im-700 brz-fw-sm-im-700 brz-fw-lg-700 brz-ft-google brz-ff-playfair_display brz-lh-xs-im-1_6 brz-lh-sm-im-1_6 brz-lh-lg-1_9 brz-text-lg-center brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-fs-lg-47 brz-fs-sm-im-46 brz-fs-xs-im-46"><span style="color: rgb(0, 0, 0);">Sunglasses</span></p>',
                       offsetY: 10,
                       offsetX: 11,
-                      _id: "qjhuygmcbrctccfejtykrzbxmgauxyhtsgfs",
+                      _id: "heswomfirtlmezupopohiiolnwgokdfhmjwm",
                       width: 77
                     }
                   }
@@ -34,7 +34,7 @@ module.exports = {
                 zIndexSuffix: "",
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "cczbafaqoullpkqaxtzylzymjcrtjsmyxxto"
+                _id: "bvvivbtkcbfcrvyazotuongvlxmnpyveteou"
               }
             },
             {
@@ -46,16 +46,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "cbbbibgwgeavwnyuqnphjhhzmjglkfbzzkwn",
+                      _id: "srqujykhrnxkveuexpsrbtcuhfnnvmsijxui",
                       offsetY: 25,
-                      offsetX: 14,
+                      offsetX: 5,
                       text:
                         '<p class="brz-ft-google brz-ff-montserrat brz-fw-lg-500 brz-fw-sm-im-500 brz-fw-xs-im-500 brz-text-lg-center brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3 brz-lh-lg-1_7 brz-lh-sm-im-1_4 brz-lh-xs-im-1_4 brz-fs-lg-13 brz-fs-sm-im-12 brz-fs-xs-im-12"><span style="color: rgb(0, 0, 0);">UNISEX SUNGLASSES ARE TIMELESS. SEE THE COLLECTION!</span></p>',
-                      width: 72
+                      width: 90
                     }
                   }
                 ],
-                _id: "ozknbsfuwykrjlukizrsdtejbzhpfqueysiu"
+                _id: "ubnopauiajscazokcglfkjnibpopotqaftyg"
               }
             },
             {
@@ -82,11 +82,11 @@ module.exports = {
                       borderRadiusType: "custom",
                       borderRadius: 40,
                       tempBorderRadius: 40,
-                      _id: "brzjqfxusobiusugcxrnztkwpvyhpmgrrnxz"
+                      _id: "gicamtqokbanofpqordpdlxuguwnezdcwoli"
                     }
                   }
                 ],
-                _id: "shrfmbruajrzavebtpjndzhqrvlutwqesyad"
+                _id: "hyfhhmticukfflpranerzetqrwxbgfomlxrd"
               }
             }
           ],
@@ -121,7 +121,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "pkgurfklnfpkptinlicshzetyyridvipjecd"
+          _id: "hupdtkbuubgiphkbbpmkzxuiptvnykmoxilt"
         }
       }
     ]

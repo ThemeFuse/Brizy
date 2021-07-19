@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import classnames from "classnames";
-import { useDynamicContent } from "visual/component/DynamicContent/useDynamicContent";
+import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 import Placeholder from "visual/component/Placeholder";
 
 type Props<T extends keyof JSX.IntrinsicElements> = {
@@ -26,7 +26,7 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
   onSuccess,
   blocked = IS_EDITOR
 }: Props<T>): React.ReactElement {
-  const state = useDynamicContent(placeholder, 2000);
+  const state = useDC(placeholder);
   const innerHtml = state.status === "success" ? state.data : placeholder;
   const status = state.status;
 

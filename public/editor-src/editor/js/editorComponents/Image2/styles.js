@@ -8,7 +8,7 @@ export function style(v, vs, vd, props) {
         "cssStyleElementImageHeightPreview",
         "cssStyleBoxShadow|||preview",
         "cssStyleBorder|||preview",
-        "cssStyleElementImageBorderRadius|||preview"
+        "cssStyleBorderRadius|||preview"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -54,7 +54,7 @@ export function styleWrapper(v, vs, vd, props) {
         "cssStyleBorder|||editor",
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper",
-        "cssStyleElementImageBorderRadius|||editor",
+        "cssStyleBorderRadius|||editor",
         "cssStyleBoxShadow|||editor"
       ],
       interval: [

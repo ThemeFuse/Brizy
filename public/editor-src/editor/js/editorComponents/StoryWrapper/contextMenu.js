@@ -68,13 +68,7 @@ function getItems(v) {
 
   const { icon = "" } =
     base.find(
-      ({
-        resolve: {
-          value: {
-            items: [{ type }]
-          }
-        }
-      }) => type === v.items[0].type
+      item => item.component.resolve.value.items?.type === v.items[0].type
     ) || {};
 
   return [

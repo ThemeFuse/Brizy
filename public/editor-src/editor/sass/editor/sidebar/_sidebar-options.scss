@@ -29,9 +29,13 @@
       }
     }
   }
-  .brz-ed-control__tab__content > {
-    .brz-ed-options-field {
-      margin-bottom: 15px;
+  .brz-ed-control__tab__content {
+    width: 100%;
+
+    > {
+      .brz-ed-options-field {
+        margin-bottom: 15px;
+      }
     }
   }
   .brz-ed-options-tabs-helpers {

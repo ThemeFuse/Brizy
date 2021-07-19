@@ -1115,7 +1115,10 @@ export function getItemsForDesktop(v, component) {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({ v }),
+                toolbarLinkExternal({
+                  v,
+                  config: component.context.dynamicContent.config
+                }),
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

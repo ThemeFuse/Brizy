@@ -116,14 +116,10 @@ class Brizy_Editor_User {
 
 		$editor_data = $post->get_editor_data();
 
-		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config();
+		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
 		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post->getWpPostId() );
 
-
-		$page_html = $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
-
-		return $page_html;
-
+		return  $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
 	}
 
 	public static function is_administrator() {

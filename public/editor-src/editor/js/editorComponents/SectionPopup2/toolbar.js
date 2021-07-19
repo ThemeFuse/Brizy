@@ -134,6 +134,7 @@ export function getItems({ v, device, component }) {
                 toolbarBgImage({
                   v,
                   device,
+                  config: component.context.dynamicContent.config,
                   state: "normal",
                   onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
                 })

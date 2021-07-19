@@ -1,7 +1,9 @@
 &:not(.brz-ed) {
-  .brz-form-login.brz-form-login,
-  .brz-login__autorized {
-    display: none;
+  .brz-login {
+    .brz-form-login.brz-form-login,
+    .brz-login__autorized {
+      display: none;
+    }
   }
 }
 .brz-login {
@@ -75,14 +77,14 @@
       text-decoration: none;
     }
   }
-  .brz-form-login__field-lost-password {
+  .brz-form-login__field-lost-password,
+  .brz-form-login__field-register-link,
+  .brz-form-login__field-login-link {
     width: 100%;
-
-    a {
-      display: block;
-    }
+    cursor: pointer;
   }
-  .brz-form-login__field-remember-off.brz-form-login__field-Remember {
+  .brz-form-login__field-remember-off.brz-form-login__field-Remember,
+  .brz-form-login__field-registerInfo-off {
     padding: 0 !important;
   }
 }

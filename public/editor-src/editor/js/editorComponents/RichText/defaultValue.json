@@ -1,6 +1,7 @@
 {
   "content": {
     "text": "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>",
+    "textPopulation": "",
 
     "popups": [],
 
@@ -11,6 +12,93 @@
   "style": {
     "customCSS": "",
     "width": 100,
-    "widthSuffix": "%"
+    "widthSuffix": "%",
+
+    "media": "image",
+    "bgImageWidth": 0,
+    "bgImageHeight": 0,
+    "bgImageExtension": "",
+    "bgImageSrc": "",
+    "bgPositionX": 50,
+    "bgPositionY": 50,
+    "bgPopulation": "",
+
+    "contentHorizontalAlign": "left",
+    "tabletContentHorizontalAlign": null,
+    "mobileContentHorizontalAlign": null,
+
+    "typographyFontFamily": "lato",
+    "tabletTypographyFontFamily": null,
+    "mobileTypographyFontFamily": null,
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 16,
+    "typographyFontSizeSuffix": "px",
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.3,
+    "typographyLetterSpacing": 0,
+
+    "colorHex": "",
+    "colorOpacity": 1,
+    "colorPalette": "color7",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color7",
+    "tempGradientColorOpacity": 1,
+    "tempGradientColorPalette": "",
+
+    "colorType": "solid",
+
+    "textShadow": "",
+
+    "tempTextShadow": "on",
+
+    "textShadowColorHex": "",
+    "textShadowColorOpacity": 1,
+    "textShadowColorPalette": "color3",
+
+    "tempTextShadowColorOpacity": 1,
+    "tempTextShadowColorPalette": "",
+
+    "textShadowBlur": 4,
+    "textShadowVertical": 2,
+    "textShadowHorizontal": 1,
+
+    "tempTextShadowBlur": 4,
+    "tempTextShadowVertical": 2,
+    "tempTextShadowHorizontal": 1
+  },
+
+  "link": {
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPopulation": "",
+    "linkUpload": "",
+    "linkPopup": "",
+    "actionClosePopup": "off",
+
+    "tabletLinkType": null,
+    "tabletLinkPopup": null,
+
+    "mobileLinkType": null,
+    "mobileLinkPopup": null
   }
 }

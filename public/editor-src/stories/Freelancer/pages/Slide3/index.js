@@ -23,14 +23,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3 brz-fs-lg-39 brz-fs-sm-im-38 brz-fs-xs-im-38"><span style="color: rgb(239, 73, 13);">I can help</span></p><p class="brz-lh-xs-im-1_1 brz-lh-sm-im-1_1 brz-lh-lg-1_1 brz-text-lg-right brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-fs-lg-39 brz-fs-sm-im-38 brz-fs-xs-im-38"><span style="color: rgb(239, 73, 13);">you with</span></p>',
-                      width: 51,
+                      width: 56,
                       offsetY: 9,
-                      offsetX: 19,
-                      _id: "asfauysvduktqrrniaccichpdaxramvcljba"
+                      offsetX: 16,
+                      _id: "sfyuawxxlnbrorwansvidqnyldtsaorqvdfe"
                     }
                   }
                 ],
-                _id: "nubalgljxrkduskoojymxrsfzecdtfbkhynb"
+                _id: "hynkirqfrmdhxqhcwtzlgfybkmleueduulau"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      _id: "nhvkrvxwjbszungsfznqsrlpmciwamhbspgt",
+                      _id: "kaymedqkfqoequkkvflzzriiuiuxxvglepnr",
                       colorPalette: "",
                       colorHex: "#101010",
                       name: "crown",
@@ -54,7 +54,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "aokmwgfoopkbqnkdsjkethgwwzugcodkgpxy"
+                _id: "axxzigmsvxbdnidjutvtnkudxpkojkjyuiak"
               }
             },
             {
@@ -74,11 +74,11 @@ module.exports = {
                       size: "custom",
                       offsetY: 55,
                       offsetX: 18,
-                      _id: "jxlfwndnimoedowlxwckpsevkfsputtiifpz"
+                      _id: "ochbfxtexldieixwxqknqvnifqpunbrqzuut"
                     }
                   }
                 ],
-                _id: "tlcgmmnytflcqepmoumuypeacahcuamwlfwt"
+                _id: "wrfadspmwhwgfcgyrbcipxxqanmrgbdukbqz"
               }
             },
             {
@@ -95,11 +95,11 @@ module.exports = {
                       width: 53,
                       offsetY: 42,
                       offsetX: 22,
-                      _id: "cweczguojfadjbykfkntsbcjnhpokwytrzrq"
+                      _id: "xdlujbappccuqzgjzkzmjgwlzhnwsztpstwo"
                     }
                   }
                 ],
-                _id: "bszwvoagivrugvafyqvbcszznmstddggctvf"
+                _id: "mympikhtvylonbamuhbpozirfgotoptenjql"
               }
             },
             {
@@ -116,11 +116,11 @@ module.exports = {
                       width: 53,
                       offsetY: 54,
                       offsetX: 30,
-                      _id: "ciksxcmwspmewsemvtfifbajctwkclsmzjxw"
+                      _id: "skdqgqbckglkdfbuafzdkhsmvwhtvnauyuqc"
                     }
                   }
                 ],
-                _id: "vjqvfgikhbhlejazijkcqntqscdwtpyrllty"
+                _id: "kgnuwxxlsstqdsvdbwjzbpicjkbqaxgbyjow"
               }
             }
           ],
@@ -155,7 +155,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "yjbfickxtyxcfgejozupmbxtjmrmrwbblpwh"
+          _id: "btceghnmewhntlwwlryrttfaoollvhzdfbmf"
         }
       }
     ]

@@ -1,13 +1,10 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 import {
   toolbarElementCloneableSpacing,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
-
   return [
     {
       id: "horizontalAlign",
@@ -38,7 +35,7 @@ export function getItems({ v, device }) {
       devices: "responsive"
     }),
     {
-      id: dvk("toolbarCurrentShortcode"),
+      id: "toolbarCurrentShortcode",
       type: "popover-dev",
       options: [
         {

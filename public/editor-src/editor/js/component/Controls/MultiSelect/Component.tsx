@@ -132,10 +132,17 @@ export function Component<T extends Literal>({
                           />
                         )}
                         {!editable && (
-                          <EditorIcon
-                            icon="nc-stre-down"
-                            className="brz-control__select--arrow"
-                          />
+                          <>
+                            {tags.length === 0 && (
+                              <span className="brz-ed-control__multiSelect--placeholder">
+                                {placeholder}
+                              </span>
+                            )}
+                            <EditorIcon
+                              icon="nc-stre-down"
+                              className="brz-control__select--arrow"
+                            />
+                          </>
                         )}
                       </div>
                     )}

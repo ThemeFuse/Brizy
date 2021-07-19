@@ -1,60 +1,31 @@
-import React, { FC, ReactElement, useCallback } from "react";
-import { Select2 } from "visual/component/Controls/Select2";
+import React, { FC } from "react";
+import { Props, StaticProps } from "./types";
+import { Sync } from "./Sync";
+import { Async } from "./Async";
 import {
-  Item,
-  Props as ItemProps
-} from "visual/component/Controls/MultiSelect/Item";
-import EditorIcon from "visual/component/EditorIcon";
-import {
-  GetModel,
-  OnChange,
-  OptionType,
-  SimpleValue
-} from "visual/component/Options/Type";
-import { Literal, read } from "visual/utils/types/Literal";
-import { mCompose } from "visual/utils/value";
-import {
-  Props as P,
-  ChoicesSync
-} from "visual/component/Options/types/dev/MultiSelect/types";
+  getModel,
+  getElementModel,
+  defaultValue,
+  isChoicesSync
+} from "./utils";
 
-const wrap = (value: Literal): SimpleValue<Literal> => ({ value });
-
-type ItemInstance = ReactElement<ItemProps<Literal>>;
-export type Props = Exclude<P, "choices" | "value" | "onChange"> & {
-  choices: ChoicesSync;
-  value: Literal;
-  onChange: OnChange<SimpleValue<Literal>>;
+export const Select: FC<Props> & StaticProps = props => {
+  if (isChoicesSync(props.choices)) {
+    return (
+      <>
+        {props.label}
+        <Sync {...props} choices={props.choices} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        {props.label}
+        <Async {...props} choices={props.choices} />
+      </>
+    );
+  }
 };
-
-export const Select: FC<Props> & OptionType<Literal> = ({
-  onChange,
-  config,
-  value,
-  placeholder,
-  choices
-}) => {
-  const _onChange = useCallback(mCompose(onChange, wrap), [onChange, choices]);
-  return (
-    <Select2<Literal>
-      onChange={_onChange}
-      placeholder={placeholder}
-      size={config?.size}
-      value={value}
-      editable={config?.search ?? false}
-    >
-      {choices.map(
-        ({ title, icon, value }, i): ItemInstance => (
-          <Item key={i} value={value}>
-            {icon && <EditorIcon icon={icon} className={"brz--space-right"} />}
-            {title}
-          </Item>
-        )
-      )}
-    </Select2>
-  );
-};
-
-const getModel: GetModel<Literal> = get => read(get("value")) ?? "";
-
 Select.getModel = getModel;
+Select.getElementModel = getElementModel;
+Select.defaultValue = defaultValue;

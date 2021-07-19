@@ -5,8 +5,9 @@ import {
   toolbarDisabledToolbarSettings,
   toolbarDisabledAdvancedSettings
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, context }) {
   const choicesTwitterType =
     v.twitter === "embed"
       ? [
@@ -25,7 +26,10 @@ export function getItems({ v, device, state }) {
             value: "mentionButton"
           }
         ];
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

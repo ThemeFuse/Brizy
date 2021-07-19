@@ -21,16 +21,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "jvvaocgeyqmblpqlpcyzcovfdiwbygfuxurf",
+                      _id: "rzwgeaomtujwbwvsyojjnofyxqqeivjvrwjf",
                       offsetY: 6,
-                      offsetX: 11,
+                      offsetX: 3,
                       text:
-                        '<p class="brz-text-lg-center brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-40 brz-fs-sm-im-39 brz-fs-xs-im-39 brz-lh-lg-1_4 brz-lh-sm-im-1_1 brz-lh-xs-im-1_1 brz-ls-lg-m_1_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1"><span style="color: rgb(255, 255, 255);">TOP WATHCES 2020 COLLECTION</span></p>',
-                      width: 79
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-lh-xs-1_1 brz-lh-sm-1_1 brz-fs-xs-39 brz-fs-sm-39 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-center brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1_5 brz-lh-lg-1_4 brz-fs-lg-36" data-uniq-id="oludk" data-generated-css="brz-css-pzlog"><span style="color: rgb(255, 255, 255);">TOP WATHCES 2020 COLLECTION</span></p>',
+                      width: 94
                     }
                   }
                 ],
-                _id: "kfkstxujdsezzyovbklxvbsibujjfpkargnq"
+                _id: "symhvcyowuucuitxkqdgdtbcgmxvuiabsiqo"
               }
             },
             {
@@ -46,13 +46,13 @@ module.exports = {
                         '<p class="brz-text-lg-center brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3 brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14"><span style="color: rgb(0, 216, 255);">PRE-OWNED CERTIFIED WATCHES</span></p>',
                       offsetY: 25,
                       offsetX: 5,
-                      _id: "sczikykaqznvvkewcdxmchokowynrejhknwg"
+                      _id: "kotgcuanhrktswfnrhnutcmrvgkhaemklbhb"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "zvfvhewycpigdjnvbvlfxxbuqmcqqxvhhnou"
+                _id: "kgrtdarzfifqoeceqswyhrezchfmrirwxnxh"
               }
             },
             {
@@ -64,9 +64,9 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      _id: "witiyqxkrjpxvdsvdzzcpkumboqwlvfazilf",
-                      offsetY: 81,
-                      offsetX: 17,
+                      _id: "evptdakfaarpqwnockwnfjqqknnlibxzryhj",
+                      offsetY: 80,
+                      offsetX: 12,
                       bgColorPalette: "color8",
                       tempBgColorPalette: "color8",
                       bgColorOpacity: 1,
@@ -85,8 +85,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SWIPE FOR BEST SELLERS",
-                      width: 68,
-                      height: 19,
+                      width: 78,
+                      height: 20.05,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -118,11 +118,11 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "uovyikfgirnlhdlaytlcvanqmskwohwjeoby"
+                _id: "opptfuatvmyxcobmbwtufodjjlzueeiqmbla"
               }
             }
           ],
-          _id: "ckoukxjmuwvksnewlauwrblcvflsmuzpunwy",
+          _id: "gibuysonhlhkavyzjtavmjgeuuzqbupfymlz",
           bgImageWidth: 1080,
           bgImageHeight: 1592,
           bgImageExtension: "jpg",

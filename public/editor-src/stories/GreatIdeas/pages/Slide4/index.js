@@ -23,16 +23,16 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-fs-xs-im-63 brz-fs-sm-im-63 brz-fs-lg-64 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1"><span class="brz-cp-color2">Read</span></p>',
-                      offsetY: 12,
-                      offsetX: 10,
+                      offsetY: 9,
+                      offsetX: 8,
                       width: 65,
-                      _id: "hcqggwzllqhgbibreityahgmojelsunpgegg"
+                      _id: "ybekatyobfkproagyzvduhbpylskyeorsgpu"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "oajboubizbqrfumkohpvyvgtwhbsrlrvcokw"
+                _id: "oiirotacmuprmoxyoehoredsrzawbefukpzf"
               }
             },
             {
@@ -45,17 +45,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-m_1 brz-fs-xs-im-25 brz-fs-sm-im-25 brz-fs-lg-26 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-text-lg-center brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1"><span style="color: rgb(255, 255, 255);" class="brz-pre-population-visible">#03</span></p>',
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_3 brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-fs-lg-26 brz-fs-sm-25 brz-fs-xs-25 brz-ls-lg-m_1 brz-ls-sm-3 brz-ls-xs-3 brz-text-lg-right" data-uniq-id="otqss" data-generated-css="brz-css-ybwsf"><span class="brz-pre-population-visible" style="color: rgb(255, 255, 255);">#03</span></p>',
                       offsetY: 5,
-                      offsetX: 70,
-                      width: 21,
-                      _id: "yfokabjojnakpwkczflbqtdducivsysklklv"
+                      offsetX: 55,
+                      width: 36,
+                      _id: "rxunfnssvucfwwhpxjozklidffhzeyqisnrl"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "iyrdumixsatgvtrmkoshzatsyxktchdvdknp"
+                _id: "srekscyfgndfdedkelkajnpeyepeigsrlxkb"
               }
             },
             {
@@ -69,16 +69,16 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_1 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-fs-lg-47 brz-fs-sm-im-46 brz-fs-xs-im-46"><span class="brz-cp-color3">Books</span></p>',
-                      offsetY: 60,
-                      offsetX: 10,
+                      offsetY: 61,
+                      offsetX: 17,
                       width: 65,
-                      _id: "sujbskfcayyrwqyyybcouyklphudzhbdzgfu"
+                      _id: "bobdypgjsobhpnjmiktoklcwvqawgygdiunp"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "yzsokvfjpfilxujwevrjlmhahyzedifjkdak"
+                _id: "srsstgzhllxinmimpqoschwxrsrpmwrnilfu"
               }
             },
             {
@@ -94,12 +94,12 @@ module.exports = {
                       offsetX: 13,
                       text:
                         '<p class="brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_6 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3 brz-text-lg-left"><span class="brz-cp-color2">Staying at home doesn’t mean boredom.It means time for your hobbies &amp; passions.</span></p>',
-                      width: 60,
-                      _id: "zkmljqlzxawebgaeyjtwhfaehsjeexebkmxn"
+                      width: 71,
+                      _id: "gjjrbfpblcsflhgkjapdoseibfaobaysdmmk"
                     }
                   }
                 ],
-                _id: "tukyeaoxkavdkrdiovlmlrrrlhjwklkzipud"
+                _id: "rzkbitjcsbolswgzkehstgcpbbhqtufasppw"
               }
             },
             {
@@ -147,13 +147,13 @@ module.exports = {
                       tempBoxShadowColorPalette: "color2",
                       boxShadowColorHex: "#163452",
                       tempBoxShadowColorOpacity: 0.2,
-                      _id: "pljthjihcoklcfpiqjxqfutgitjyrgisebvz",
+                      _id: "tplohjfdwemeszmssyggtufwcfvpsjdxlyub",
                       iconName: "",
                       iconType: ""
                     }
                   }
                 ],
-                _id: "zgvxrnnmfyhqmoggzxvzeuriwcvcebqtdglq"
+                _id: "epwjubajwnrxdsjkjywgazvorykozgebuubq"
               }
             },
             {
@@ -192,11 +192,11 @@ module.exports = {
                       tempBoxShadowVertical: 12,
                       boxShadowHorizontal: 12,
                       tempBoxShadowHorizontal: 12,
-                      _id: "hhdrehfhatdbnlffavacmjjbscncllfnwquo"
+                      _id: "xxyxbjkvwvvpkxllrktkgjygwynwshezivto"
                     }
                   }
                 ],
-                _id: "vdrdtbcbbujkenjdyqxhxyvdoihnvcwhgdkf"
+                _id: "lolkywndtwtnxksqywhrolvmamgvqauxmkdl"
               }
             }
           ],
@@ -248,7 +248,7 @@ module.exports = {
           tempBorderTopRightRadius: 0,
           tempBorderBottomLeftRadius: 0,
           tempBorderBottomRightRadius: 0,
-          _id: "egfhmhnobqejpaogqkfsbudlgyudvfmytlox"
+          _id: "ozcmmndckvrwffikcerltliqyvqnwhvkzksr"
         },
         blockId: "StoryBlank0001"
       }

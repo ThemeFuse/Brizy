@@ -1,6 +1,5 @@
 import {
-  PageWP,
-  PageCloud,
+  Page,
   GlobalBlock,
   GoogleFont,
   UploadedFont,
@@ -45,7 +44,7 @@ export type ReduxState = {
     };
   };
   projectVersion: number;
-  page: PageWP | PageCloud;
+  page: Page;
   globalBlocks: {
     [key: string]: GlobalBlock;
   };

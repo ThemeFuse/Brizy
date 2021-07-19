@@ -86,7 +86,7 @@ class Brizy_Admin_FormEntries {
 
 		if ( $column_name == 'created_date' ) {
 			$post = get_post( $post_ID );
-			echo $post->post_date;
+			echo get_the_date( '', $post );
 		}
 
 	}

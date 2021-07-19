@@ -17,26 +17,28 @@ export type Config = {
   updateRate: number;
   inputMin?: number;
   inputMax?: number;
-  units?: Unit[];
+  units?: Unit<string>[];
 };
 
-export type Props = Option.Props<Value, { value: number; suffix: string }> &
-  WithConfig<Config> &
-  WithClassName;
+export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
 
 export const Slider: FC<Props> & Option.OptionType<Value> = ({
   className,
   onChange,
   value,
-  config = {}
+  config = {},
+  label
 }) => {
   const onEdit = config.debounceUpdate ?? false;
   const ref = useRef<Value>();
   const [_value, setValue] = useState<Value>(value);
   const [editing, setEdit] = useState<boolean>(false);
   const _onChange = useCallback(
-    (v: Value, m: { editing: boolean }): void => {
-      setValue(v);
+    (
+      v: Omit<Value, "value"> & { number: number },
+      m: { editing: boolean }
+    ): void => {
+      setValue({ value: v.number, unit: v.unit });
       setEdit(m.editing);
     },
     [setValue, setEdit]
@@ -50,33 +52,52 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
       }
     },
     Math.max(0, config?.updateRate ?? 16),
-    [_value.number, _value.unit, onEdit, editing]
+    [_value.value, _value.unit, onEdit, editing]
   );
 
   useEffect(() => {
     if (!ref.current || !eq(value, ref.current)) {
       setValue(value);
     }
-  }, [value.number, value.unit]);
+  }, [value.value, value.unit]);
 
   return (
-    <NumberSlider
-      className={className}
-      min={config.min ?? 0}
-      max={config.max ?? 100}
-      inputMin={config?.inputMin}
-      inputMax={config?.inputMax}
-      step={config.step ?? 1}
-      value={_value}
-      onChange={_onChange}
-      units={config.units ?? []}
-    />
+    <>
+      {label}
+      <NumberSlider
+        className={className}
+        min={config.min ?? 0}
+        max={config.max ?? 100}
+        inputMin={config?.inputMin}
+        inputMax={config?.inputMax}
+        step={config.step ?? 1}
+        value={{ number: _value.value, unit: _value.unit }}
+        onChange={_onChange}
+        units={config.units ?? []}
+      />
+    </>
   );
 };
 
-const getModel: Option.GetModel<Value> = (get): Value => ({
-  number: NumberSpec.read(get("value")) ?? 0,
-  unit: String.read(get("suffix")) ?? ""
-});
+const getModel: Option.GetModel<Value> = get => {
+  return {
+    value: NumberSpec.read(get("value")),
+    unit: String.read(get("suffix"))
+  };
+};
+
+const getElementModel: Option.GetElementModel<Value> = (values, get) => {
+  return {
+    [get("value")]: values.value,
+    [get("suffix")]: values.unit
+  };
+};
 
 Slider.getModel = getModel;
+
+Slider.getElementModel = getElementModel;
+
+Slider.defaultValue = {
+  value: 0,
+  unit: ""
+};

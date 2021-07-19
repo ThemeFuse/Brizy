@@ -22,17 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 16,
-                      offsetX: 7,
+                      offsetX: 9,
                       text:
-                        '<p class="brz-text-lg-left brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ff-caveat brz-ft-google brz-ls-lg-m_2 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700 brz-fs-lg-60 brz-fs-sm-im-59 brz-fs-xs-im-59"><span style="color: rgb(255, 255, 255);">Urban Nomad</span></p>',
-                      width: 85,
-                      _id: "katriijszsvyuphzhkltwzwvuzxqzdejgcef"
+                        '<p class="brz-fs-xs-59 brz-fs-sm-59 brz-fw-xs-700 brz-fw-sm-700 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ft-google brz-ff-caveat brz-lh-xs-1 brz-lh-sm-1 brz-text-lg-left brz-fs-lg-60 brz-fss-lg-px brz-fw-lg-700 brz-ls-lg-m_2 brz-lh-lg-1_1" data-uniq-id="mgkrj" data-generated-css="brz-css-oveif"><span style="color: rgb(255, 255, 255);">Urban Nomad</span></p>',
+                      width: 82,
+                      _id: "mzeodykrzirgaxlfdhcscyndijrkqwxvtumn"
                     }
                   }
                 ],
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "oqmnipdsxndizbnswwxoekywblcnylwnbcsk"
+                _id: "vxkvnmgobanmszbwnlkoobinifrmyyrdspek"
               }
             },
             {
@@ -45,17 +45,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-text-lg-left brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3 brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14"><span style="color: rgb(0, 191, 225);">THE ONE FOR</span></p>',
+                        '<p class="brz-text-lg-left brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1 brz-ls-lg-1_5 brz-ls-sm-3 brz-ls-xs-3 brz-fs-lg-15 brz-fs-sm-14 brz-fs-xs-14" data-generated-css="brz-css-qpfii" data-uniq-id="fhvot"><span style="color: rgb(0, 191, 225);">THE WATCH FOR THE</span></p>',
                       offsetY: 10,
                       offsetX: 10,
-                      _id: "oencpzrcmbavahgttvqupsiigzjnchwbwksi",
+                      _id: "bltoseqgbvmifnlkpfnpkldosyivvrruhxjj",
                       width: 82
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "jxizewugkssnjeavhpheetrruncdkobsvycv"
+                _id: "jlisckbfqhgdjomuhdakdzoiriypnghbyoau"
               }
             },
             {
@@ -68,17 +68,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-left brz-fs-lg-14 brz-fs-sm-im-13 brz-fs-xs-im-13"><span style="color: rgb(9, 34, 55);">APPLE WATCH SERIES 6</span></p>',
-                      offsetY: 28,
-                      offsetX: 9,
-                      _id: "sbborjucfkqrqeycbxcwlfrnecxhnweuhebi",
+                        '<p class="brz-fs-xs-13 brz-fs-sm-13 brz-fs-lg-14 brz-text-lg-left brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1 brz-ls-lg-1_5 brz-ls-sm-3 brz-ls-xs-3" data-uniq-id="vjdqr" data-generated-css="brz-css-oguoj"><span style="color: rgb(9, 34, 55);">APPLE WATCH SERIES 8</span></p>',
+                      offsetY: 36,
+                      offsetX: 10,
+                      _id: "lknuwwcobafklpwdturabvkoebgdruhrkzhy",
                       width: 79
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "rlfrilwzwxxtuddxdxljyqkoyxbguxdmelou"
+                _id: "cwtrjbyciyxzxxxjkeubcsbvmsazqikequfj"
               }
             },
             {
@@ -91,7 +91,7 @@ module.exports = {
                     value: {
                       _styles: ["story-button"],
                       offsetY: 78,
-                      offsetX: 17,
+                      offsetX: 14,
                       bgColorPalette: "",
                       tempBgColorPalette: "color8",
                       borderRadiusType: "custom",
@@ -109,8 +109,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP SMARTWATCHES",
-                      width: 68,
-                      height: 19,
+                      width: 75,
+                      height: 20.85,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -139,13 +139,13 @@ module.exports = {
                       iconSize: "custom",
                       iconCustomSize: 14,
                       iconSpacing: 12,
-                      _id: "cahzawojdodqabpfjnwgmkxqsnhhorusqxal",
+                      _id: "cwtycyjgawfqohswcchbeuqcteeokdxdnsuw",
                       bgColorHex: "#00bfe1",
                       colorOpacity: 1
                     }
                   }
                 ],
-                _id: "dvoweeovqbhyebeqepgmimsnnltvafcawhzi"
+                _id: "gtaplylazlyfrnlrivdenlinabgphzdhtwjj"
               }
             },
             {
@@ -158,15 +158,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 88,
-                      offsetX: 15,
+                      offsetX: 6,
                       text:
                         '<p class="brz-text-lg-center brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ff-lato brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-0_5 brz-ls-sm-im-1 brz-ls-xs-im-1"><em style="color: rgb(255, 255, 255); opacity: 1;">Swipe for more pre-owned watches</em></p>',
-                      width: 73,
-                      _id: "vbopobfaufnadolpigbpanxtqsthzqwjkoig"
+                      width: 87,
+                      _id: "fdehujgiwbdlwjdtrcutcylzsocbajgghrzq"
                     }
                   }
                 ],
-                _id: "zoslrnhowuamamvexutplermcxogrwxixsae"
+                _id: "xpdfttbmpsvwlbmnckbocaujonzjhyrohanw"
               }
             }
           ],
@@ -203,7 +203,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 60,
           bgPositionY: 84,
-          _id: "dfbyunksxgochdimkjblpgxqrlvzdbyyimmo"
+          _id: "nmiteiybcicvppslrmqbrngxcusptkwbamyu"
         }
       }
     ]

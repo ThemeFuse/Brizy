@@ -1,6 +1,8 @@
 <?php
 
-class Brizy_Content_Context {
+use BrizyPlaceholders\ContextInterface;
+
+class Brizy_Content_Context implements ContextInterface {
 
 	private $data = array();
 

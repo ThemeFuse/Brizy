@@ -1,5 +1,5 @@
 import produce from "immer";
-import { parsePage, parseProject } from "visual/utils/api/editor/adapter";
+import { parsePage, parseProject } from "visual/utils/api/adapter";
 
 export default function importLog(data, log) {
   return produce(data, draft => {

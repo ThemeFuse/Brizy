@@ -2,6 +2,9 @@ import { modelTraverse, styleTraverse } from "visual/utils/traverse";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
 import { getComponentDefaultValue, splitFont, unSplitFont } from "./common";
 
+import { mapBlockElements } from "visual/editorComponents/RichText/utils";
+import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
+
 export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
   const fontFamilies = new Set();
 
@@ -23,46 +26,33 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
     },
     RichText({ type, value }) {
       const defaultValue = getComponentDefaultValue(type).content || {};
-      const classRgx = /class="(.+?)">/g;
-      const familyTypeRgx = /.*?brz-(f(?:[f|t]))-(\w+)+.*?/g;
-      let classes;
       const text = value.text || defaultValue.text;
 
-      while ((classes = classRgx.exec(text))) {
-        /* eslint-disable no-unused-vars */
-        let [_, classList] = classes;
-        /* eslint-enabled no-unused-vars */
-        let familyTypes;
-        let font = {};
+      mapBlockElements(text, elem => {
+        const v = classNamesToV(elem);
+        const { typographyFontFamily, typographyFontFamilyType } = v;
 
-        while ((familyTypes = familyTypeRgx.exec(classList))) {
-          /* eslint-disable no-unused-vars */
-          const [_, type, name] = familyTypes;
-          /* eslint-enabled no-unused-vars */
-
-          if (type === "ft") {
-            font.type = name;
-          }
-          if (type === "ff") {
-            font.family = name;
-          }
-        }
-        if (font.family) {
-          if (font.type) {
-            fontFamilies.add(splitFont(font));
+        if (typographyFontFamily) {
+          if (typographyFontFamilyType) {
+            fontFamilies.add(
+              splitFont({
+                type: typographyFontFamilyType,
+                family: typographyFontFamily
+              })
+            );
           } else {
             // if type doesn't exist
             // set it to unknowns
             // and parse all fonts
             fontFamilies.add(
               splitFont({
-                family: font.family,
+                family: typographyFontFamily,
                 type: "unknowns"
               })
             );
           }
         }
-      }
+      });
     },
     GlobalBlock({ value: { _id } }) {
       const globalBlockValue = globalBlocks[_id];

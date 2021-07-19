@@ -53,6 +53,7 @@ const translationsMap = {
   Login: t("Login"),
   Lottie: t("Lottie"),
   StarRating: t("Rating"),
+  ProtectedPage: t("Protected Page"),
 
   // WP
   WPSidebar: t("Sidebar"),
@@ -86,19 +87,14 @@ export default {
 
 function getItems(v) {
   const shortcodes = Editor.getShortcodes();
-const items = v.items;
+  const { items } = v;
   const { icon = "" } =
     Object.values(shortcodes)
       .flat()
       .find(
-        ({
-          resolve: {
-            value: {
-              items: [{ type }]
-            }
-          }
-        }) => type === items[0]?.type
+        item => item.component.resolve.value.items?.type === items[0]?.type
       ) || {};
+
   let title = translationsMap[items[0]?.type]; // TODO: See if we'll need icons & prop
 
   if (typeof title === "function") {

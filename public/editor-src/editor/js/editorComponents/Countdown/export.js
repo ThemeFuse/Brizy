@@ -1,5 +1,4 @@
 import $ from "jquery";
-import "./lib/jquery.countdown.js";
 import * as languages from "./languages";
 
 export default function($node) {

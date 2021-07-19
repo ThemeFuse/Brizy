@@ -1,6 +1,7 @@
 <?php
+use \BrizyPlaceholders\Registry;
 
-abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content_Providers_Interface {
+abstract class Brizy_Content_Providers_AbstractProvider extends Registry implements Brizy_Content_Providers_Interface {
 
 	/**
 	 * @return array
@@ -15,17 +16,6 @@ abstract class Brizy_Content_Providers_AbstractProvider implements Brizy_Content
 			self::CONFIG_KEY_SNDCLOUD =>array(),
 
 		);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAllPlaceholders() {
-		$out = array();
-		foreach ( $this->getGroupedPlaceholders() as $placeholders ) {
-			$out = array_merge( $out, call_user_func_array( 'array_merge', array_values($placeholders) ) );
-		}
-		return $out;
 	}
 
 	/**

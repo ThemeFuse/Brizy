@@ -22,7 +22,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	 * @param string|array $value
 	 */
 	public function __construct( $label, $placeholder ) {
-		parent::__construct( $label, $placeholder, function ( Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder ) {
+		parent::__construct( $label, $placeholder, function ( Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder ) {
 			$attributes = $contentPlaceholder->getAttributes();
 
 			$attachmentId = null;
@@ -44,11 +44,11 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	/**
 	 * @param $placeholderName
 	 * @param Brizy_Content_Context $context
-	 * @param Brizy_Content_ContentPlaceholder $contentPlaceholder
+	 * @param \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder
 	 *
 	 * @return int|mixed|null|string
 	 */
-	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, Brizy_Content_ContentPlaceholder $contentPlaceholder  ) {
+	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
 		$attachmentId = null;
 
 		$provider = $context->getProvider();
@@ -56,7 +56,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		if(!$provider)
 			return;
 
-		$placeholder = $provider->getPlaceholder( $placeholderName );
+		$placeholder = $provider->getPlaceholderSupportingName( $placeholderName );
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
 			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );

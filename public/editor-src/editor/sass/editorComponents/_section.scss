@@ -230,7 +230,7 @@
 &:not(.brz-ed) {
   .brz-story {
     .brz-container {
-      font-size: 45vh;
+      font-size: 37.5vh;
     }
 
     .brz-wrapper {
@@ -241,7 +241,9 @@
     .brz-map,
     .brz-video,
     .brz-story-linked,
-    .brz-forms2 {
+    .brz-forms2,
+    .brz-embed-code,
+    .brz-richtext a {
       pointer-events: initial;
     }
 
@@ -254,7 +256,7 @@
 
       & > .brz-section__content {
         height: 75vh;
-        max-width: 45vh;
+        max-width: 37.5vh;
         min-width: 320px;
         min-height: 533px;
         max-height: 100%;
@@ -267,7 +269,7 @@
     > .slick-slider {
       > .slick-list > .slick-track > .slick-slide {
         height: 75vh;
-        max-width: 45vh;
+        max-width: 37.5vh;
         min-width: 320px;
         min-height: 533px;
         max-height: 100%;

@@ -6,7 +6,7 @@ import { updateAuthorization } from "visual/redux/actions2";
 import {
   authorizedSelector,
   syncAllowedSelector
-} from "visual/redux/selectors2";
+} from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";

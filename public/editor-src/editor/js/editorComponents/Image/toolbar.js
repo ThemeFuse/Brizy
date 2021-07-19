@@ -20,6 +20,7 @@ import {
   toolbarImageTags
 } from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const getMinSize = () => 5;
 export const getMaxSize = () => 100;
@@ -31,8 +32,6 @@ export const getMaxHeight = (cW, v) => {
 
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
-
-const imageDynamicContentChoices = getDynamicContentChoices("image");
 
 const isSVG = extension => extension === "svg";
 
@@ -71,6 +70,10 @@ export const getItemsForDesktop = (wrapperSizes, cW, gallery) => (
   const device = "desktop";
   const maxBorderRadius = Math.round(
     Math.min(wrapperSizes.width, wrapperSizes.height) / 2
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    component.context.dynamicContent.config,
+    DCTypes.image
   );
 
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
@@ -538,6 +541,10 @@ export const getItemsForTablet = (wrapperSizes, cW, gallery) => (
   component
 ) => {
   const { inGallery = false } = gallery || {};
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    component.context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     {
@@ -679,6 +686,10 @@ export const getItemsForMobile = (wrapperSizes, cW, gallery) => (
   component
 ) => {
   const { inGallery = false } = gallery || {};
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    component.context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     {

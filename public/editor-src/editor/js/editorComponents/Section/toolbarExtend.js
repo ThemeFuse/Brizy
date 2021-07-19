@@ -1,4 +1,5 @@
 import Config from "visual/global/Config";
+import { IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import {
   toolbarShowOnResponsive,
@@ -6,8 +7,6 @@ import {
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
-import { IS_WP } from "visual/utils/models";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, component }) {

@@ -12,20 +12,16 @@ export type ImageDataPatch = {
   imageHeight: number;
 };
 
-export interface PositionPatch {
+export type PositionPatch = {
   positionX: number;
   positionY: number;
-}
+};
 
 export interface Config {
   pointer: boolean;
   edit: boolean;
 }
 
-type Partial = ImageDataPatch | PositionPatch;
-
-export type Props = Option.Props<Value, Partial> &
-  WithConfig<Config> &
-  WithClassName;
+export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
 
 export type Component = React.FC<Props> & Option.OptionType<Value>;

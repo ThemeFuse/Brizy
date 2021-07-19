@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { ReactElement } from "react";
 import classNames from "classnames";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import { Props } from "./types";
@@ -6,7 +6,7 @@ import { Props } from "./types";
 const inputWidth = (v: number): number =>
   Math.min(1, Math.max(1, String(v).length - 4)) * 24;
 
-export const NumberUnit: FC<Props> = ({
+export function NumberUnit<U>({
   value: { number, unit },
   onChange,
   className,
@@ -14,8 +14,8 @@ export const NumberUnit: FC<Props> = ({
   max = 99999,
   step,
   units
-}) => {
-  const onUnitChange = (u: string): void => {
+}: Props<U>): ReactElement {
+  const onUnitChange = (u: U): void => {
     if (u !== unit) {
       onChange({ number, unit: u });
     }
@@ -59,4 +59,4 @@ export const NumberUnit: FC<Props> = ({
       })}
     </div>
   );
-};
+}

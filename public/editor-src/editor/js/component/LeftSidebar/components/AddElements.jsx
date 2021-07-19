@@ -12,6 +12,12 @@ import { setIds, IS_STORY } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
 import { updateDisabledElements } from "visual/redux/actions";
 import { disabledElementsSelector } from "visual/redux/selectors";
+import { IS_PRO } from "visual/utils/env";
+import Tooltip from "visual/component/Controls/Tooltip";
+import { ProInfo } from "visual/component/ProInfo";
+import Config from "visual/global/Config";
+
+const { upgradeToPro } = Config.get("urls");
 
 const sortableBlindZone = {
   left: 0,
@@ -56,7 +62,7 @@ class DrawerComponent extends Component {
   handleSortableSort = (data, shortcodes) => {
     const { from, to } = data;
 
-    const { resolve } = shortcodes[from.elementIndex];
+    const { resolve } = shortcodes[from.elementIndex].component;
     const itemData = setIds(resolve);
 
     const toContainerPath = to.sortableNode
@@ -81,34 +87,39 @@ class DrawerComponent extends Component {
   };
 
   handleClick = (shortcodes, elementIndex) => {
-    const { resolve } = shortcodes[elementIndex];
-    const itemData = setIds(resolve);
+    const { component, pro } = shortcodes[elementIndex];
 
-    const slickContainer = document.querySelector(".slick-list .slick-active");
-    const sortableContainer = slickContainer.querySelector(
-      "[data-sortable-type='section']"
-    );
+    if (!pro || IS_PRO) {
+      const itemData = setIds(component.resolve);
 
-    const containerPath = sortableContainer
-      .getAttribute("data-sortable-path")
-      .split(".");
-    const containerType = "section";
-    const itemIndex = slickContainer.getAttribute("data-index");
-    const toItemPath = [...containerPath, String(itemIndex)];
+      const slickContainer = document.querySelector(
+        ".slick-list .slick-active"
+      );
+      const sortableContainer = slickContainer.querySelector(
+        "[data-sortable-type='section']"
+      );
 
-    // notify React to actually change state accordingly
-    UIEvents.emit("dnd.sort", {
-      from: {
-        itemData,
-        itemType: "addable"
-      },
-      to: {
-        containerPath,
-        containerType,
-        itemIndex,
-        itemPath: toItemPath
-      }
-    });
+      const containerPath = sortableContainer
+        .getAttribute("data-sortable-path")
+        .split(".");
+      const containerType = "section";
+      const itemIndex = slickContainer.getAttribute("data-index");
+      const toItemPath = [...containerPath, String(itemIndex)];
+
+      // notify React to actually change state accordingly
+      UIEvents.emit("dnd.sort", {
+        from: {
+          itemData,
+          itemType: "addable"
+        },
+        to: {
+          containerPath,
+          containerType,
+          itemIndex,
+          itemPath: toItemPath
+        }
+      });
+    }
   };
 
   handleDisabledElementsChange = id => {
@@ -135,24 +146,45 @@ class DrawerComponent extends Component {
     const { disabledElements, inputValue } = this.state;
     const filteredShortcodes = shortcodes.filter(
       shortcode =>
-        isEditMode || (!isEditMode && !disabledElements[shortcode.id])
+        isEditMode || (!isEditMode && !disabledElements[shortcode.component.id])
     );
-    const searcher = new FuzzySearch(filteredShortcodes, ["title"]);
+    const searcher = new FuzzySearch(filteredShortcodes, ["component.title"]);
 
     return searcher.search(inputValue);
   }
 
-  renderIcon(title, icon) {
-    return (
-      <Fragment>
+  renderIcon(title, icon, proElement) {
+    const iconNode = (
+      <>
         <div className="brz-ed-sidebar__add-elements__icon">
           <EditorIcon icon={icon} />
         </div>
         <span className="brz-span brz-ed-sidebar__add-elements__text">
           {title}
         </span>
+      </>
+    );
+
+    return proElement ? (
+      <Tooltip
+        overlayClassName="brz-ed-tooltip--delay-1"
+        size="small"
+        openOnClick={false}
+        overlay={
+          <ProInfo
+            text={t("Upgrade to PRO to use this element")}
+            url={upgradeToPro}
+          />
+        }
+        offset={10}
+      >
+        {iconNode}
+      </Tooltip>
+    ) : (
+      <>
+        {iconNode}
         <div className="brz-ed-sidebar__add-elements__tooltip">{title}</div>
-      </Fragment>
+      </>
     );
   }
 
@@ -160,22 +192,41 @@ class DrawerComponent extends Component {
     const { disabledElements } = this.state;
     const { isEditMode } = this.props;
 
-    return shortcodes.map(({ id, title, icon }, index) => {
-      const iconElem = this.renderIcon(title, icon);
+    return shortcodes.map(({ component, pro }, index) => {
       const clickFn = IS_STORY
         ? () => this.handleClick(shortcodes, index)
         : () => {};
 
+      const clickEditMode = () =>
+        this.handleDisabledElementsChange(component.id);
+
+      const iconElem = this.renderIcon(
+        component.title,
+        component.icon,
+        !IS_PRO && pro
+      );
+      const iconContainer = (
+        <div
+          className={classnames("brz-ed-sidebar__add-elements__item", {
+            "brz-ed-sidebar__add-elements__item-pro": pro && !IS_PRO
+          })}
+          onClick={clickFn}
+          key={component.id}
+        >
+          {iconElem}
+        </div>
+      );
+
       return isEditMode ? (
         <div
           className="brz-ed-sidebar__add-elements__item brz-ed-sidebar__add-elements__item-edit"
-          key={id}
+          key={component.id}
         >
           <div
             className={classnames("brz-ed-sidebar__edit", {
-              "brz-ed-sidebar__edit--checked": !disabledElements[id]
+              "brz-ed-sidebar__edit--checked": !disabledElements[component.id]
             })}
-            onClick={() => this.handleDisabledElementsChange(id)}
+            onClick={clickEditMode}
           >
             <span className="brz-ed-sidebar__checked">
               <EditorIcon icon="nc-check-circle" />
@@ -183,11 +234,15 @@ class DrawerComponent extends Component {
           </div>
           {iconElem}
         </div>
+      ) : pro && !IS_PRO ? (
+        iconContainer
       ) : (
-        <SortableElement key={id} type="addable" subtype={id}>
-          <div className="brz-ed-sidebar__add-elements__item" onClick={clickFn}>
-            {iconElem}
-          </div>
+        <SortableElement
+          key={component.id}
+          type="addable"
+          subtype={component.id}
+        >
+          {iconContainer}
         </SortableElement>
       );
     });
@@ -209,7 +264,7 @@ class DrawerComponent extends Component {
     // new list of shortcodes
 
     return (
-      <Fragment>
+      <>
         <div className="brz-ed-sidebar__search">
           <input
             type="text"
@@ -263,7 +318,7 @@ class DrawerComponent extends Component {
               </Fragment>
             );
           })}
-      </Fragment>
+      </>
     );
   }
 }
@@ -326,6 +381,7 @@ const mapDispatchToProps = dispatch => ({
 export const AddElements = {
   id: "addElements",
   icon: "nc-add",
+  type: "drawer",
   drawerTitle: t("Add Elements"),
   showInDeviceModes: ["desktop"],
   drawerComponent: connect(

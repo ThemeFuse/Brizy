@@ -144,7 +144,7 @@ class AccordionItem extends EditorComponent {
   }
 
   renderNav(v) {
-    const { navIcon, collapsible, activeAccordionItem } = this.props;
+    const { navIcon, collapsible, activeAccordionItem, tagName } = this.props;
     const activeIcon =
       collapsible === "off" ? this.state.active : activeAccordionItem;
 
@@ -155,7 +155,11 @@ class AccordionItem extends EditorComponent {
           data-collapsible={collapsible}
           onClick={this.handleClick}
         >
-          <TextEditor value={v.labelText} onChange={this.handleTextChange} />
+          <TextEditor
+            value={v.labelText}
+            tagName={tagName}
+            onChange={this.handleTextChange}
+          />
           {navIcon !== "none" && this.getIcon(activeIcon, navIcon)}
         </div>
       </Toolbar>

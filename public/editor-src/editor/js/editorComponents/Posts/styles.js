@@ -37,6 +37,10 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsFilterBorder",
         "cssStyleElementPostsFilterBorderRadius",
         "cssStyleElementPostsFilterShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementPostsHoverTransition"
       ]
     },
     ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active": {
@@ -45,6 +49,10 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsFilterActiveBgColor",
         "cssStyleElementPostsFilterActiveBorder",
         "cssStyleElementPostsFilterActiveShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementPostsHoverTransition"
       ]
     },
     ".brz && .brz-posts__filter__item--style-1:first-child": {
@@ -88,21 +96,23 @@ export function style(v, vs, vd) {
     ".brz && .brz-posts__pagination ul.page-numbers span.page-numbers:hover": {
       standart: ["cssStyleElementPostsPaginationColor"]
     },
-    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers": {
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers:hover": {
       standart: [
-        ...(IS_EDITOR ? ["cssStyleElementPostsPaginationLinksOff"] : []),
         "cssStyleElementPostsPaginationFontFamily",
         "cssStyleElementPostsPaginationFontSize",
         "cssStyleElementPostsPaginationLineHeight",
         "cssStyleElementPostsPaginationFontWeight",
-        "cssStyleElementPostsPaginationLetterSpacing"
+        "cssStyleElementPostsPaginationLetterSpacing",
+        "cssStyleElementPostsPaginationBorderRadius",
+        "cssStyleElementPostsPaginationBgColor",
+        "cssStyleElementPostsPaginationBorder"
       ]
     },
-    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover::before": {
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover": {
       standart: [
-        "cssStyleElementPostsPaginationBgColor",
-        "cssStyleElementPostsPaginationBorder",
-        "cssStyleElementPostsPaginationBorderRadius"
+        "cssStyleElementPostsPaginationActiveColor",
+        "cssStyleElementPostsPaginationActiveBgColor",
+        "cssStyleElementPostsPaginationActiveBorder"
       ]
     }
   };

@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import Config from "visual/global/Config";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import { ProInfo } from "visual/component/ProInfo";
+import { IS_PRO } from "visual/utils/env";
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
-const IS_PRO = Config.get("pro");
-const ConfigUrl = Config.get("urls");
+const { upgradeToPro } = Config.get("urls");
 
 export default class GridItem extends Component {
   static defaultProps = {
@@ -37,27 +38,6 @@ export default class GridItem extends Component {
     });
   };
 
-  renderProInfo() {
-    return (
-      <div className="brz-ed-tooltip-content__pro">
-        <p className="brz-p brz-ed-tooltip-content__pro-title">
-          {t("You’ll need Brizy PRO to use this integration")}
-        </p>
-        <p className="brz-p brz-ed-tooltip-content__pro-body">
-          <a
-            className="brz-a"
-            href={ConfigUrl.upgradeToPro}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <EditorIcon icon="nc-lock" />
-            {t("Get Brizy PRO")}
-          </a>
-        </p>
-      </div>
-    );
-  }
-
   renderPro() {
     const { img, title } = this.props;
     const className = classnames(
@@ -73,7 +53,12 @@ export default class GridItem extends Component {
           offset="5"
           openOnClick={false}
           nodeRef={this.iconRef}
-          overlay={this.renderProInfo()}
+          overlay={
+            <ProInfo
+              text={t("Upgrade to PRO to use this integration")}
+              url={upgradeToPro}
+            />
+          }
           onOpen={this.handleTooltipOpen}
           onClose={this.handleTooltipClose}
         >

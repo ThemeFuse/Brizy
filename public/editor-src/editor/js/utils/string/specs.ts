@@ -15,7 +15,9 @@ export const read: Reader<string> = a => {
 
 export const toString: ToValue<string> = toValue(read);
 
-export const empty = "";
+export type Empty = "";
+
+export const empty: Empty = "";
 
 export const append = (a: string, b: string): string => a + b;
 

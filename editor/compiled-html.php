@@ -1,22 +1,24 @@
-<?php if (!defined( 'ABSPATH' ) ) {
-	die( 'Direct access forbidden.' );
+<?php if (!defined('ABSPATH')) {
+    die('Direct access forbidden.');
 }
 
-class Brizy_Editor_CompiledHtml {
+class Brizy_Editor_CompiledHtml
+{
 
-	/**
-	 * @var Brizy_Editor_Helper_Dom
-	 */
-	private $dom;
+    /**
+     * @var Brizy_Editor_Helper_Dom
+     */
+    private $dom;
 
     /**
      * Brizy_Editor_CompiledHtml constructor.
      *
-     * @param $html
+     * @param $content
      */
-	public function __construct( $html ) {
-		$this->dom = new Brizy_Editor_Helper_Dom( $html );
-	}
+    public function __construct($content)
+    {
+        $this->dom  = new Brizy_Editor_Helper_Dom($content);
+    }
 
     /**
      * @return string

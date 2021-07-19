@@ -1,6 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function toolbarLinkAnchor({
   v,
@@ -39,8 +40,11 @@ export function toolbarLinkUpload({
   };
 }
 
-export function toolbarLinkExternal({ v, devices = "all" }) {
-  const linkDynamicContentChoices = getDynamicContentChoices("link");
+export function toolbarLinkExternal({ v, config, devices = "all" }) {
+  const linkDynamicContentChoices = getDynamicContentChoices(
+    config,
+    DCTypes.link
+  );
 
   return {
     id: "linkExternal",

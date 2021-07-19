@@ -112,8 +112,29 @@
     "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "square",
+    
     "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+    
     "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+    
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
 
     "boxShadow": "",
 

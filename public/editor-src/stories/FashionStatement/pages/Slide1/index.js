@@ -21,15 +21,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "zmeikgffijsfkivhkewisrlidfupolyjbtjl",
+                      _id: "gqwtctflrfmdwjpslpbbzotxbbqxncrocntz",
                       text:
-                        '<p class="brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-ff-playfair_display brz-ft-google brz-fs-lg-35 brz-fs-sm-im-34 brz-fs-xs-im-34 brz-ls-lg-m_1_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700"><span style="color: rgb(0, 0, 0);">New Fashion Statement</span></p>',
+                        '<p class="brz-lh-lg-1_9 brz-lh-sm-1_6 brz-lh-xs-1_6 brz-ff-playfair_display brz-ft-google brz-fs-sm-34 brz-fs-xs-34 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-fw-sm-700 brz-fw-xs-700 brz-fs-lg-32 brz-fss-lg-px brz-fw-lg-700 brz-ls-lg-m_1" data-generated-css="brz-css-znfry" data-uniq-id="aokhd"><span style="color: rgb(0, 0, 0);">New Fashion Statement</span></p>',
                       offsetY: 43,
-                      offsetX: -33
+                      offsetX: -37,
+                      width: 100
                     }
                   }
                 ],
-                _id: "dursfvnjmlvxyfwusgpwcduhjwqhoyndepqi",
+                _id: "cxrmioxjxcqcuhnacrrpercpvcyvalaklrtu",
                 zIndex: 32,
                 zIndexSuffix: "",
                 rotate: -90,
@@ -45,9 +46,9 @@ module.exports = {
                     type: "Line",
                     value: {
                       _styles: ["story-line"],
-                      _id: "ulfhxlhbqiabbdmllrfbphwndzaiccvvhdav",
+                      _id: "kenbdywwnbguuwfozfudkxatdcninckpgfcm",
                       offsetY: 13,
-                      offsetX: 65,
+                      offsetX: 70,
                       borderStyle: "solid",
                       tempBorderStyle: "solid",
                       borderColorHex: "#092237",
@@ -66,11 +67,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      width: 24
+                      width: 19
                     }
                   }
                 ],
-                _id: "ernqkhpellieziiepvoijwdkddflshashjrv"
+                _id: "rihdcdojafwuaczfiumzwasfqmssqrsriinf"
               }
             },
             {
@@ -82,16 +83,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "iwjleffszeoxqsifaxosibeuvzyvrgskoutz",
+                      _id: "eqbhlwlmpjstfmtqgczhmxzoubtbjjahvqfq",
                       offsetY: 12,
                       offsetX: 28,
                       text:
                         '<p class="brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-montserrat brz-ft-google brz-fw-lg-600 brz-fw-sm-im-600 brz-fw-xs-im-600 brz-fs-lg-14 brz-fs-sm-im-13 brz-fs-xs-im-13"><span style="color: rgb(9, 34, 55);">BROWSE STORY 01</span></p>',
-                      width: 35
+                      width: 44
                     }
                   }
                 ],
-                _id: "wmyihnebmtbbekotjxpcubthignzsyvattnk"
+                _id: "qaqihdjobarjvyisnfwhmhvlhujxpfjnnudl"
               }
             },
             {
@@ -103,7 +104,7 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "wwlfblszaaltcrnvqunbryiidawzxsbfylud",
+                      _id: "iqzsecqphcbdtnimxqupyvblpbbkjecyuayf",
                       imageWidth: 800,
                       imageHeight: 1067,
                       imageSrc: "32d1d08732fa8f59fa09333436e61aed.jpg",
@@ -122,11 +123,11 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "qkwrxgezkzopgcsuwpfckmroyoptvrawvcqn"
+                _id: "tgbvnnxwruwimhvvkwdmhoriqjgfbwmqojck"
               }
             }
           ],
-          _id: "woawqbddgpyroxoqmgvzqoqqapaurhlvskct",
+          _id: "qzqvsmezlpzqzecpsoalvjfkrzfmlzxkvmoy",
           bgImageWidth: 1200,
           bgImageHeight: 2132,
           bgImageExtension: "jpg",

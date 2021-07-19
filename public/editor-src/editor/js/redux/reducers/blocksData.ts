@@ -33,14 +33,6 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
                     items: [],
                     _id: "dfmwxzkwbiaezltvsxhdinhplvimzenkiqto"
                   }
-                },
-                {
-                  type: "StoryItem",
-                  value: {
-                    _styles: ["story-item"],
-                    items: [],
-                    _id: "dfmwxzkwbieezltvsxhdinhplvimzenkiq1"
-                  }
                 }
               ],
               _id: "ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr"

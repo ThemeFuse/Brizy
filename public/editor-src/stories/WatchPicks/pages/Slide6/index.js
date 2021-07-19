@@ -26,13 +26,13 @@ module.exports = {
                       text:
                         '<p class="brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ls-lg-m_2 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-left brz-ff-arvo brz-ft-google brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700 brz-fs-lg-40 brz-fs-sm-im-39 brz-fs-xs-im-39"><span style="color: rgb(9, 34, 55);">Urban Nomad</span></p>',
                       width: 79,
-                      _id: "pxbtvztryzfilzbqfqleuawbzbjhheyiuijd"
+                      _id: "tdcsfhzqulppddbyqnmoojybfottxzfgwhhb"
                     }
                   }
                 ],
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "dzpudsgmcnzyxvafxqbucadjtickwfolcpvn"
+                _id: "quuqaoajemfylguuaurzhoxdiezrlxnmjgdm"
               }
             },
             {
@@ -49,13 +49,13 @@ module.exports = {
                       offsetY: 7,
                       offsetX: 8,
                       width: 72,
-                      _id: "vokshtoqzxicwowgrbdixkxwhtsznupnspfj"
+                      _id: "wgaehycbcwdjamjpizriayaiwfijstyiglix"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "nzjolermmysajuuijpbealqdwqcfszgzxpvo"
+                _id: "yfawyvcfkeistvggyfixtkpvooohiewtagbr"
               }
             },
             {
@@ -71,13 +71,13 @@ module.exports = {
                         '<p class="brz-fs-xs-im-13 brz-fs-sm-im-13 brz-fs-lg-14 brz-text-lg-left brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3"><span style="color: rgb(9, 34, 55); opacity: 0.7;">CASIO F-91W</span></p>',
                       offsetY: 21,
                       offsetX: 9,
-                      _id: "bpefccdermchhjarroycjeeaeomvohwsxqkk"
+                      _id: "mobiqyztzumkzfhezazcasztgumduffgygaa"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "toipnmfkmtgluuhnvrtajxhtxsuttqsvhpbg"
+                _id: "fawonxdnpeeieuanzmzugrdghmdvciiculgn"
               }
             },
             {
@@ -90,7 +90,7 @@ module.exports = {
                     value: {
                       _styles: ["story-button"],
                       offsetY: 76,
-                      offsetX: 17,
+                      offsetX: 12,
                       bgColorPalette: "",
                       tempBgColorPalette: "color8",
                       borderRadiusType: "custom",
@@ -108,8 +108,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP RETRO WATCHES",
-                      width: 68,
-                      height: 19,
+                      width: 76,
+                      height: 19.68,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -140,11 +140,11 @@ module.exports = {
                       iconSpacing: 12,
                       bgColorHex: "#092237",
                       colorOpacity: 1,
-                      _id: "jiwczfojidkwwjuiizjqqusilfativotself"
+                      _id: "ydzkzijddluhdsakczpavchuzvddyxustdbu"
                     }
                   }
                 ],
-                _id: "vlvnsydcbfqkqwjuwkilnbxqrbozqarhjvbs"
+                _id: "vnhyuyyttgmdlagoccnjleikiwfmoqqfcrmp"
               }
             },
             {
@@ -157,15 +157,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 87,
-                      offsetX: 15,
+                      offsetX: 6,
                       text:
                         '<p class="brz-ls-xs-im-1 brz-ls-sm-im-1 brz-ls-lg-0_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-lato brz-fs-xs-im-15 brz-fs-sm-im-15 brz-fs-lg-16 brz-lh-xs-im-1_6 brz-lh-sm-im-1_6 brz-lh-lg-1_9 brz-text-lg-center"><em style="color: rgb(100, 105, 112);">Swipe for discount promo - 20% off</em></p>',
-                      width: 73,
-                      _id: "engvyzatkpriqtirnyahfewacxboprtwcghx"
+                      width: 86,
+                      _id: "nchzbybckrustdvhttjsnmqkmagznfyxuzfx"
                     }
                   }
                 ],
-                _id: "hqjqzqzmvndadqyrerliizcckaysvzezttgz"
+                _id: "fpcejkbhspuegxirxcbxmkrsltpnzwrveefm"
               }
             }
           ],
@@ -202,7 +202,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 48,
           bgPositionY: 0,
-          _id: "wxkwdbdxwfgulthklvkudpsxwudovvszibeg"
+          _id: "rgnkvtlbmndhcoswayldvsqevvuzilezyzno"
         }
       }
     ]

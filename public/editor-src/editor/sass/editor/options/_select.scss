@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // --- Select Option
 .brz-ed-option__select {
   &__after {
@@ -125,10 +127,23 @@
   }
 }
 
-.brz-ed-option-type__select {
-  &-dev {
-    .brz-ed-control__multiSelect--tag--value .brz-icon-svg {
-      font-size: 10px;
-    }
+.brz-ed-option-type__select-dev {
+  &__spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 112px;
+    height: $control-height;
+    border-radius: $control-border-radius;
+    background-color: $options-control-background;
+  }
+
+  &__spinner {
+    font-size: 12px;
+    color: #818a91;
+  }
+
+  .brz-ed-control__multiSelect--tag--value .brz-icon-svg {
+    font-size: 10px;
   }
 }

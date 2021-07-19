@@ -44,6 +44,8 @@ import {
   pollingSendHeartBeat
 } from "./utils";
 import {
+  pageSelector,
+  fontSelector,
   projectSelector,
   projectAssembled,
   stylesSelector,
@@ -53,12 +55,12 @@ import {
   changedGBIdsSelector,
   errorSelector
 } from "../../selectors";
-import { pageSelector, fontSelector } from "../../selectors2";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
+import { IS_STORY } from "visual/utils/models";
 import { UNDO, REDO } from "../../history/types";
 import { historySelector } from "../../history/selectors";
 import { t } from "visual/utils/i18n";
@@ -94,29 +96,33 @@ function handlePublish({ action, state, oldState, apiHandler }) {
     const oldPage = pageSelector(oldState);
     const page = pageSelector(state);
 
-    const changedGBIds = changedGBIdsSelector(state);
-    const globalBlocks = globalBlocksAssembledSelector(state);
-
-    // cancel possible pending requests
-    debouncedApiUpdatePage.cancel();
-    debouncedApiUpdateProject.cancel();
-    debouncedApiUpdateGlobalBlocksPositions.cancel();
-
-    const newGlobalBlocks = Object.entries(globalBlocks).reduce(
-      (acc, [id, globalBlock]) => {
-        debouncedApiUpdateGlobalBlock.cancel(id);
-
-        // eslint-disable-next-line no-unused-vars
-        const { data, ...rest } = globalBlock;
-
-        acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
-
-        return acc;
-      },
-      {}
-    );
-
     const allApi = [];
+
+    if (!IS_STORY) {
+      const changedGBIds = changedGBIdsSelector(state);
+      const globalBlocks = globalBlocksAssembledSelector(state);
+
+      // cancel possible pending requests
+      debouncedApiUpdatePage.cancel();
+      debouncedApiUpdateProject.cancel();
+      debouncedApiUpdateGlobalBlocksPositions.cancel();
+
+      const newGlobalBlocks = Object.entries(globalBlocks).reduce(
+        (acc, [id, globalBlock]) => {
+          debouncedApiUpdateGlobalBlock.cancel(id);
+
+          // eslint-disable-next-line no-unused-vars
+          const { data, ...rest } = globalBlock;
+
+          acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
+
+          return acc;
+        },
+        {}
+      );
+
+      allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
+    }
 
     if (project !== oldProject) {
       allApi.push(apiUpdateProject(project, meta));
@@ -125,8 +131,6 @@ function handlePublish({ action, state, oldState, apiHandler }) {
     if (page !== oldPage) {
       allApi.push(apiUpdatePage(page, meta));
     }
-
-    allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
 
     apiHandler(Promise.all(allApi), onSuccess, onError);
   }

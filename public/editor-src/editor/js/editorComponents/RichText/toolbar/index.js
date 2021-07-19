@@ -1,17 +1,9 @@
 import Config from "visual/global/Config";
-import { getWeight } from "visual/utils/fonts";
-import { encodeToString, capitalize } from "visual/utils/string";
-import { getFontStyles, getFontStyle } from "visual/utils/fonts";
+import { encodeToString } from "visual/utils/string";
 import getColorToolbar from "./color";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import {
-  toolbarTypography2FontFamily,
-  toolbarTypography2FontStyle,
-  toolbarTypography2FontSize,
-  toolbarTypography2LineHeight,
-  toolbarTypography2FontWeight,
-  toolbarTypography2LetterSpacing,
   toolbarLinkExternal,
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
@@ -19,107 +11,20 @@ import {
   toolbarLinkPopup,
   toolbarLinkUpload
 } from "visual/utils/toolbar";
+import { getDynamicContentChoices } from "visual/utils/options";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 const proEnabled = Boolean(Config.get("pro"));
-
-const getBlockTag = value => {
-  switch (value) {
-    case "p":
-      return {
-        pre: false,
-        header: null
-      };
-    case "pre":
-      return {
-        header: false,
-        pre: value
-      };
-    default:
-      return {
-        pre: false,
-        header: value
-      };
-  }
-};
-
-const getFont = (value, settings) => {
-  return {
-    fontFamily: String(value),
-    fontFamilyType: settings.type,
-    fontWeight: String(getWeight(settings.fontWeight, settings.weights))
-  };
-};
-
-const getDesktopFontStyles = (fontStyle, value) => {
-  if (!fontStyle) {
-    return value;
-  }
-
-  const styles = getFontStyles().find(item => item.id === fontStyle);
-
-  return {
-    lineHeight: String(styles.lineHeight).replace(".", "_"),
-    intermediateTabletLineHeight: String(styles.tabletLineHeight).replace(
-      ".",
-      "_"
-    ),
-    intermediateMobileLineHeight: String(styles.mobileLineHeight).replace(
-      ".",
-      "_"
-    ),
-    fontSize: String(styles.fontSize),
-    intermediateTabletFontSize: String(styles.tabletFontSize),
-    intermediateMobileFontSize: String(styles.mobileFontSize),
-    letterSpacing: String(styles.letterSpacing)
-      .replace(".", "_")
-      .replace("-", "m_"),
-    intermediateTabletLetterSpacing: String(styles.tabletLetterSpacing)
-      .replace(".", "_")
-      .replace("-", "m_"),
-    intermediateMobileLetterSpacing: String(styles.mobileLetterSpacing)
-      .replace(".", "_")
-      .replace("-", "m_"),
-    fontFamily: String(styles.fontFamily),
-    fontFamilyType: String(styles.fontFamilyType),
-    fontWeight: String(styles.fontWeight),
-    intermediateTabletWeight: String(styles.tabletFontWeight),
-    intermediateMobileWeight: String(styles.mobileFontWeight),
-    fontStyle: null,
-    ...value
-  };
-};
-
-const calcIntermediateStyle = (
-  oldValue,
-  value,
-  intermediateValue,
-  { toDec = false, min = 1, max = 100 }
-) => {
-  const round = number => Math.round(number * 10) / 10;
-  // it's only for situations when intermediateValue doesn't exist(normally it should never happen)
-  intermediateValue = intermediateValue || value || "";
-
-  const newValue =
-    Number(intermediateValue) + (Number(value) - Number(oldValue));
-  const roundedValue = toDec ? round(newValue) : Math.round(newValue);
-
-  return Math.min(Math.max(min, roundedValue), max);
-};
-
-const MIN_SIZE = 6;
-const MAX_SIZE = 300;
-
-const MIN_HEIGHT = 1;
-const MAX_HEIGHT = 5;
-
-const MIN_LETTER_SPACING = -5;
-const MAX_LETTER_SPACING = 15;
 
 export default function(v, onChange) {
   return { getItems: getItems(v, onChange) };
 }
 
-const getItems = (v, onChange) => ({ device, component }) => {
+const dependenciesOption = (v, onChange) => {
+  return v.textPopulation ? {} : { dependencies: v => onChange(v) };
+};
+
+const getItems = (v, onChange) => ({ device, component, context }) => {
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const isPopulationBlock = v.population && v.population.display === "block";
@@ -133,6 +38,19 @@ const getItems = (v, onChange) => ({ device, component }) => {
 
   const disableLink =
     isPopulationBlock || (device === "desktop" ? false : disablePopup);
+
+  const disableButtons = !!(
+    device !== "desktop" ||
+    isPopulationBlock ||
+    v.textPopulation
+  );
+
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
+
+  const dependencies = dependenciesOption(v, onChange);
 
   return [
     {
@@ -148,396 +66,35 @@ const getItems = (v, onChange) => ({ device, component }) => {
       disabled: isPopulationBlock,
       options: [
         {
+          id: "gridTypography",
           type: "grid",
-          className: "brz-ed-grid__typography",
           columns: [
             {
-              width: 54,
+              width: 95,
+              vAlign: "center",
               options: [
                 {
-                  ...toolbarTypography2FontFamily({
-                    v,
-                    device,
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  onChange: ({ id, weights, type }) => {
-                    const { fontFamily, fontWeight } = v;
-                    const mewFont = getDesktopFontStyles(
-                      v.fontStyle,
-                      getFont(id, { type, fontFamily, fontWeight, weights })
-                    );
-
-                    let newWeight = {};
-                    if (!v.mobileFontWeight) {
-                      newWeight = {
-                        intermediateTabletWeight: mewFont.fontWeight,
-                        intermediateMobileWeight: mewFont.fontWeight
-                      };
-                    }
-
-                    onChange({
-                      ...mewFont,
-                      ...newWeight
-                    });
-                  }
+                  id: "typography",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: "desktop" === device
+                  },
+                  ...dependencies
                 }
               ]
             },
             {
-              width: 46,
-              className: "brz-ed-popover__typography",
+              width: 5,
+              vAlign: "center",
               options: [
                 {
-                  ...toolbarTypography2FontStyle({
-                    v,
-                    device,
-                    devices: "desktop",
-                    state: "normal"
-                  }),
-                  onChange: value => {
-                    if (!value) {
-                      onChange(getDesktopFontStyles(v.fontStyle, {}));
-
-                      return;
-                    }
-
-                    onChange({
-                      fontStyle: value.toLowerCase(),
-                      fontFamily: null,
-                      fontFamilyType: null,
-                      fontSize: null,
-                      lineHeight: null,
-                      fontWeight: null,
-                      letterSpacing: null,
-                      intermediateTabletFontSize: null,
-                      intermediateMobileFontSize: null,
-                      intermediateTabletLineHeight: null,
-                      intermediateMobileLineHeight: null,
-                      intermediateTabletLetterSpacing: null,
-                      intermediateMobileLetterSpacing: null,
-                      intermediateTabletWeight: null,
-                      intermediateMobileWeight: null
-                    });
-                  }
-                },
-                {
-                  type: "grid",
-                  className: "brz-ed-grid__typography",
-                  columns: [
-                    {
-                      width: 50,
-                      options: [
-                        {
-                          ...toolbarTypography2FontSize({
-                            v,
-                            device,
-                            state: "normal"
-                          }),
-                          min: MIN_SIZE,
-                          max: MAX_SIZE,
-                          onChange: value => {
-                            if (device !== "desktop") {
-                              onChange({
-                                [`${device}FontSize`]: String(value),
-                                [`intermediate${capitalize(
-                                  device
-                                )}FontSize`]: null
-                              });
-
-                              return;
-                            }
-                            const cfs = getFontStyle(v.fontStyle) || {};
-
-                            const styles = getDesktopFontStyles(v.fontStyle, {
-                              fontSize: String(value)
-                            });
-
-                            let newSize = {
-                              intermediateTabletFontSize: null,
-                              intermediateMobileFontSize: null
-                            };
-                            if (
-                              !v.mobileFontSize ||
-                              (v.mobileFontSize &&
-                                cfs.mobileFontSize === v.mobileFontSize)
-                            ) {
-                              const intermediateMobileFontSize =
-                                v.intermediateMobileFontSize ||
-                                styles.intermediateMobileFontSize;
-
-                              newSize.intermediateMobileFontSize = calcIntermediateStyle(
-                                v.fontSize,
-                                value,
-                                intermediateMobileFontSize,
-                                {
-                                  min: MIN_SIZE,
-                                  max: MAX_SIZE
-                                }
-                              );
-                            }
-                            if (
-                              !v.tabletFontSize ||
-                              (v.tabletFontSize &&
-                                cfs.tabletFontSize === v.tabletFontSize)
-                            ) {
-                              const intermediateTabletFontSize =
-                                v.intermediateTabletFontSize ||
-                                styles.intermediateTabletFontSize;
-
-                              newSize.intermediateTabletFontSize = calcIntermediateStyle(
-                                v.fontSize,
-                                value,
-                                intermediateTabletFontSize,
-                                {
-                                  min: MIN_SIZE,
-                                  max: MAX_SIZE
-                                }
-                              );
-                            }
-
-                            onChange({
-                              ...styles,
-                              ...newSize
-                            });
-                          }
-                        },
-                        {
-                          ...toolbarTypography2LineHeight({
-                            v,
-                            device,
-                            state: "normal"
-                          }),
-                          min: MIN_HEIGHT,
-                          max: MAX_HEIGHT,
-                          onChange: value => {
-                            if (device !== "desktop") {
-                              onChange({
-                                [`${device}LineHeight`]: String(value).replace(
-                                  ".",
-                                  "_"
-                                ),
-                                [`intermediate${capitalize(
-                                  device
-                                )}LineHeight`]: null
-                              });
-
-                              return;
-                            }
-
-                            const cfs = getFontStyle(v.fontStyle) || {};
-                            const styles = getDesktopFontStyles(v.fontStyle, {
-                              lineHeight: String(value).replace(".", "_")
-                            });
-
-                            let newHeight = {
-                              intermediateTabletLineHeight: null,
-                              intermediateMobileLineHeight: null
-                            };
-                            if (
-                              !v.mobileLineHeight ||
-                              (v.mobileLineHeight &&
-                                cfs.mobileLineHeight === v.mobileLineHeight)
-                            ) {
-                              const intermediateMobileLineHeight =
-                                v.intermediateMobileLineHeight ||
-                                styles.intermediateMobileLineHeight ||
-                                "";
-                              newHeight.intermediateMobileLineHeight = String(
-                                calcIntermediateStyle(
-                                  v.lineHeight,
-                                  value,
-                                  intermediateMobileLineHeight.replace(
-                                    "_",
-                                    "."
-                                  ),
-                                  {
-                                    toDec: true,
-                                    min: MIN_HEIGHT,
-                                    max: MAX_HEIGHT
-                                  }
-                                )
-                              ).replace(".", "_");
-                            }
-                            if (
-                              !v.tabletLineHeight ||
-                              (v.tabletLineHeight &&
-                                cfs.tabletLineHeight === v.tabletLineHeight)
-                            ) {
-                              const intermediateTabletLineHeight =
-                                v.intermediateTabletLineHeight ||
-                                styles.intermediateTabletLineHeight ||
-                                "";
-                              newHeight.intermediateTabletLineHeight = String(
-                                calcIntermediateStyle(
-                                  v.lineHeight,
-                                  value,
-                                  intermediateTabletLineHeight.replace(
-                                    "_",
-                                    "."
-                                  ),
-                                  {
-                                    toDec: true,
-                                    min: MIN_HEIGHT,
-                                    max: MAX_HEIGHT
-                                  }
-                                )
-                              ).replace(".", "_");
-                            }
-                            onChange({
-                              ...styles,
-                              ...newHeight
-                            });
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      width: 50,
-                      options: [
-                        {
-                          ...toolbarTypography2FontWeight({
-                            v,
-                            device,
-                            state: "normal"
-                          }),
-                          onChange: fontWeight => {
-                            if (device !== "desktop") {
-                              onChange({
-                                [`${device}FontWeight`]: String(fontWeight),
-                                [`intermediate${capitalize(
-                                  device
-                                )}FontWeight`]: null
-                              });
-
-                              return;
-                            }
-
-                            let newWeight = {
-                              intermediateTabletWeight: null,
-                              intermediateMobileWeight: null
-                            };
-                            const cfs = getFontStyle(v.fontStyle) || {};
-
-                            if (
-                              !v.mobileFontWeight ||
-                              (v.mobileFontWeight &&
-                                cfs.mobileFontWeight === v.mobileFontWeight)
-                            ) {
-                              newWeight.intermediateMobileWeight = fontWeight;
-                            }
-                            if (
-                              !v.tabletFontWeight ||
-                              (v.tabletFontWeight &&
-                                cfs.tabletFontWeight === v.tabletFontWeight)
-                            ) {
-                              newWeight.intermediateTabletWeight = fontWeight;
-                            }
-
-                            onChange(
-                              getDesktopFontStyles(v.fontStyle, {
-                                fontWeight,
-                                ...newWeight
-                              })
-                            );
-                          }
-                        },
-                        {
-                          ...toolbarTypography2LetterSpacing({
-                            v,
-                            device,
-                            state: "normal"
-                          }),
-                          onChange: value => {
-                            const toNumber = value =>
-                              Number(
-                                String(value)
-                                  .replace("m_", "-")
-                                  .replace("_", ".")
-                              );
-                            const toString = value =>
-                              String(value)
-                                .replace(".", "_")
-                                .replace("-", "m_");
-
-                            if (device !== "desktop") {
-                              onChange({
-                                [`${device}LetterSpacing`]: toString(value),
-                                [`intermediate${capitalize(
-                                  device
-                                )}LetterSpacing`]: null
-                              });
-
-                              return;
-                            }
-
-                            const cfs = getFontStyle(v.fontStyle) || {};
-                            const styles = getDesktopFontStyles(v.fontStyle, {
-                              letterSpacing: toString(value)
-                            });
-
-                            let newLetterSpacing = {
-                              intermediateTabletLetterSpacing: null,
-                              intermediateMobileLetterSpacing: null
-                            };
-
-                            if (
-                              !v.mobileLetterSpacing ||
-                              (v.mobileLetterSpacing &&
-                                cfs.mobileLetterSpacing ===
-                                  v.mobileLetterSpacing)
-                            ) {
-                              const intermediateMobileLetterSpacing =
-                                v.intermediateMobileLetterSpacing ||
-                                styles.intermediateMobileLetterSpacing ||
-                                "";
-                              const newNumberLetterSpacing = calcIntermediateStyle(
-                                v.letterSpacing,
-                                value,
-                                toNumber(intermediateMobileLetterSpacing),
-                                {
-                                  min: MIN_LETTER_SPACING,
-                                  max: MAX_LETTER_SPACING
-                                }
-                              );
-                              newLetterSpacing.intermediateMobileLetterSpacing = toString(
-                                newNumberLetterSpacing
-                              );
-                            }
-
-                            if (
-                              !v.tabletLetterSpacing ||
-                              (v.tabletLetterSpacing &&
-                                cfs.tabletLetterSpacing ===
-                                  v.tabletLetterSpacing)
-                            ) {
-                              const intermediateTabletLetterSpacing =
-                                v.intermediateTabletLetterSpacing ||
-                                styles.intermediateTabletLetterSpacing ||
-                                "";
-                              const newNumberLetterSpacing = calcIntermediateStyle(
-                                v.letterSpacing,
-                                value,
-                                toNumber(intermediateTabletLetterSpacing),
-                                {
-                                  min: MIN_LETTER_SPACING,
-                                  max: MAX_LETTER_SPACING
-                                }
-                              );
-                              newLetterSpacing.intermediateTabletLetterSpacing = toString(
-                                newNumberLetterSpacing
-                              );
-                            }
-
-                            onChange({
-                              ...styles,
-                              ...newLetterSpacing
-                            });
-                          }
-                        }
-                      ]
-                    }
-                  ]
+                  id: "text",
+                  type: "population-dev",
+                  config: {
+                    iconOnly: true,
+                    choices: richTextDC
+                  },
+                  devices: "desktop"
                 }
               ]
             }
@@ -547,11 +104,10 @@ const getItems = (v, onChange) => ({ device, component }) => {
     },
     getColorToolbar(
       { ...v, isPopulationBlock },
-      { device, component },
+      { device, component, context },
       onChange
     ),
-    // disable Wrapper's horizontalAlign because it is toggle-dev
-    // and we can't migrate to it yet (because of custom onChange)
+    // is needed to disabled wrapper align
     {
       id: "horizontalAlign",
       type: "toggle-dev",
@@ -559,9 +115,8 @@ const getItems = (v, onChange) => ({ device, component }) => {
     },
     {
       // put a different id to not conflict with `horizontalAlign` from Wrapper
-      id: "richTextHorizontalAlign",
-      label: t("Align"),
-      type: "toggle",
+      id: "contentHorizontalAlign",
+      type: "toggle-dev",
       position: 30,
       disabled: isPopulationBlock,
       choices: [
@@ -586,18 +141,13 @@ const getItems = (v, onChange) => ({ device, component }) => {
           value: "justify"
         }
       ],
-      value:
-        device === "desktop"
-          ? v.horizontalAlign
-          : v[`${device}HorizontalAlign`],
-      onChange: value =>
-        onChange({ [`${device}HorizontalAlign`]: String(value) })
+      ...dependencies
     },
     {
       id: "list",
-      type: "toggle",
+      type: "toggle-dev",
       position: 40,
-      disabled: device !== "desktop" || isPopulationBlock,
+      disabled: disableButtons,
       choices: [
         {
           icon: "nc-list-numbers",
@@ -612,11 +162,10 @@ const getItems = (v, onChange) => ({ device, component }) => {
         {
           icon: "nc-list-default",
           title: t("List"),
-          value: null
+          value: ""
         }
       ],
-      value: v.list,
-      onChange: list => onChange({ list })
+      ...dependencies
     },
     {
       id: "bold",
@@ -624,7 +173,7 @@ const getItems = (v, onChange) => ({ device, component }) => {
       icon: "nc-bold",
       title: t("Bold"),
       position: 50,
-      disabled: device !== "desktop" || isPopulationBlock,
+      disabled: disableButtons,
       value: v.bold,
       onChange: bold => onChange({ bold })
     },
@@ -634,9 +183,39 @@ const getItems = (v, onChange) => ({ device, component }) => {
       icon: "nc-italic",
       title: t("Italic"),
       position: 60,
-      disabled: device !== "desktop" || isPopulationBlock,
+      disabled: disableButtons,
       value: v.italic,
       onChange: italic => onChange({ italic })
+    },
+    {
+      id: "underline",
+      type: "button",
+      icon: "nc-tp-underline",
+      title: t("Underline"),
+      position: 65,
+      disabled: disableButtons,
+      value: v.underline,
+      onChange: underline => onChange({ underline })
+    },
+    {
+      id: "strike",
+      type: "button",
+      icon: "nc-tp-strike",
+      title: t("Strike"),
+      position: 70,
+      disabled: disableButtons,
+      value: v.strike,
+      onChange: strike => onChange({ strike })
+    },
+    {
+      id: "capitalize",
+      type: "button",
+      icon: "nc-tp-capitalize",
+      title: t("Capitalize"),
+      position: 75,
+      disabled: disableButtons,
+      value: v.capitalize,
+      onChange: value => onChange({ capitalize: value ? "on" : null })
     },
     {
       id: "toolbarLink",
@@ -661,65 +240,85 @@ const getItems = (v, onChange) => ({ device, component }) => {
               label: t("URL"),
               options: [
                 {
-                  ...toolbarLinkExternal({ v }),
+                  ...toolbarLinkExternal({
+                    v,
+                    config: context.dynamicContent.config
+                  }),
                   disabled: device !== "desktop",
-                  onChange: (
-                    { value: linkExternal, population: linkPopulation },
-                    { changed, changeEvent }
-                  ) => {
-                    if (changeEvent === "blur" || changed === "population") {
-                      onChange({
-                        link: encodeToString({
-                          type: v.linkType,
-                          anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                          external: linkExternal,
-                          externalBlank: v.linkExternalBlank,
-                          externalRel: v.linkExternalRel,
-                          externalType:
-                            changed === "value" ? "external" : "population",
-                          population: linkPopulation,
-                          popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                          upload: v.linkUpload
-                        })
-                      });
-                    }
-                  }
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: (
+                          { value: linkExternal, population: linkPopulation },
+                          { changed, changeEvent }
+                        ) => {
+                          if (
+                            changeEvent === "blur" ||
+                            changed === "population"
+                          ) {
+                            onChange({
+                              link: encodeToString({
+                                type: v.linkType,
+                                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                                external: linkExternal,
+                                externalBlank: v.linkExternalBlank,
+                                externalRel: v.linkExternalRel,
+                                externalType:
+                                  changed === "value"
+                                    ? "external"
+                                    : "population",
+                                population: linkPopulation,
+                                popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                                upload: v.linkUpload
+                              })
+                            });
+                          }
+                        }
+                      })
                 },
                 {
                   ...toolbarLinkExternalBlank({ v }),
                   disabled: device !== "desktop",
-                  onChange: linkExternalBlank =>
-                    onChange({
-                      link: encodeToString({
-                        type: v.linkType,
-                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: linkExternalBlank,
-                        externalRel: v.linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                        upload: v.linkUpload
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: linkExternalBlank =>
+                          onChange({
+                            link: encodeToString({
+                              type: v.linkType,
+                              anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                              external: v.linkExternal,
+                              externalBlank: linkExternalBlank,
+                              externalRel: v.linkExternalRel,
+                              externalType: v.linkExternalType,
+                              population: v.linkPopulation,
+                              popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                              upload: v.linkUpload
+                            })
+                          })
                       })
-                    })
                 },
                 {
                   ...toolbarLinkExternalRel({ v }),
                   disabled: device !== "desktop",
-                  onChange: linkExternalRel =>
-                    onChange({
-                      link: encodeToString({
-                        type: v.linkType,
-                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: v.linkExternalBlank,
-                        externalRel: linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                        upload: v.linkUpload
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: linkExternalRel =>
+                          onChange({
+                            link: encodeToString({
+                              type: v.linkType,
+                              anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                              external: v.linkExternal,
+                              externalBlank: v.linkExternalBlank,
+                              externalRel: linkExternalRel,
+                              externalType: v.linkExternalType,
+                              population: v.linkPopulation,
+                              popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                              upload: v.linkUpload
+                            })
+                          })
                       })
-                    })
                 }
               ]
             },
@@ -730,20 +329,24 @@ const getItems = (v, onChange) => ({ device, component }) => {
                 {
                   ...toolbarLinkAnchor({ v }),
                   disabled: device !== "desktop" || IS_GLOBAL_POPUP || IS_STORY,
-                  onChange: linkAnchor =>
-                    onChange({
-                      link: encodeToString({
-                        type: v.linkType,
-                        anchor: linkAnchor ? `#${linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: v.linkExternalBlank,
-                        externalRel: v.linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                        upload: v.linkUpload
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: linkAnchor =>
+                          onChange({
+                            link: encodeToString({
+                              type: v.linkType,
+                              anchor: linkAnchor ? `#${linkAnchor}` : "",
+                              external: v.linkExternal,
+                              externalBlank: v.linkExternalBlank,
+                              externalRel: v.linkExternalRel,
+                              externalType: v.linkExternalType,
+                              population: v.linkPopulation,
+                              popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                              upload: v.linkUpload
+                            })
+                          })
                       })
-                    })
                 }
               ]
             },
@@ -755,20 +358,24 @@ const getItems = (v, onChange) => ({ device, component }) => {
                 {
                   ...toolbarLinkUpload({ v, component }),
                   disabled: !proEnabled || device !== "desktop",
-                  onChange: upload =>
-                    onChange({
-                      link: encodeToString({
-                        type: v.linkType,
-                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: v.linkExternalBlank,
-                        externalRel: v.linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                        upload
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: upload =>
+                          onChange({
+                            link: encodeToString({
+                              type: v.linkType,
+                              anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                              external: v.linkExternal,
+                              externalBlank: v.linkExternalBlank,
+                              externalRel: v.linkExternalRel,
+                              externalType: v.linkExternalType,
+                              population: v.linkPopulation,
+                              popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                              upload
+                            })
+                          })
                       })
-                    })
                 }
               ]
             },
@@ -783,42 +390,59 @@ const getItems = (v, onChange) => ({ device, component }) => {
                     canDelete: device === "desktop"
                   }),
                   disabled: disablePopup || IS_STORY,
-                  onChange: ({ value: linkPopup, popups }) =>
-                    onChange({
-                      link: encodeToString({
-                        type: v.linkType,
-                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: v.linkExternalBlank,
-                        externalRel: v.linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        popup: linkPopup ? `#${linkPopup}` : "",
-                        upload: v.linkUpload
-                      }),
-                      popups
-                    })
+                  ...(v.textPopulation
+                    ? {}
+                    : {
+                        onChange: ({ value: linkPopup, popups }) =>
+                          onChange({
+                            link: encodeToString({
+                              type: v.linkType,
+                              anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                              external: v.linkExternal,
+                              externalBlank: v.linkExternalBlank,
+                              externalRel: v.linkExternalRel,
+                              externalType: v.linkExternalType,
+                              population: v.linkPopulation,
+                              popup: linkPopup ? `#${linkPopup}` : "",
+                              upload: v.linkUpload
+                            }),
+                            popups
+                          })
+                      })
                 }
               ]
             }
           ],
           value: v.linkType,
-          onChange: linkType =>
-            onChange({
-              link: encodeToString({
-                type: linkType,
-                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                external: v.linkExternal,
-                externalBlank: v.linkExternalBlank,
-                externalRel: v.linkExternalRel,
-                externalType: v.linkExternalType,
-                population: v.linkPopulation,
-                popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                upload: v.linkUpload
+          ...(v.textPopulation
+            ? {}
+            : {
+                onChange: linkType => {
+                  onChange({
+                    link: encodeToString({
+                      type: linkType,
+                      anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                      external: v.linkExternal,
+                      externalBlank: v.linkExternalBlank,
+                      externalRel: v.linkExternalRel,
+                      externalType: v.linkExternalType,
+                      population: v.linkPopulation,
+                      popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                      upload: v.linkUpload
+                    })
+                  });
+                }
               })
-            })
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      icon: "nc-cog",
+      disabled: !v.textPopulation,
+      title: t("Settings"),
+      position: 110
     },
     {
       id: "toolbarSettings",
@@ -828,69 +452,33 @@ const getItems = (v, onChange) => ({ device, component }) => {
       },
       roles: ["admin"],
       position: 110,
+      disabled: Boolean(v.textPopulation),
       options: [
         {
           id: "marginTop",
           label: t("Gap Above"),
-          type: "slider",
+          type: "slider-dev",
           disabled: IS_STORY,
-          slider: {
+          config: {
             min: 0,
-            max: 100
+            max: 100,
+            step: 1,
+            units: [{ value: "px", title: "px" }]
           },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [{ title: "px", value: "px" }]
-          },
-          value: {
-            value: v.marginTop
-          },
-          onChange: ({ value: marginTop }) =>
-            onChange({ [`${device}MarginTop`]: String(marginTop) })
+          ...dependencies
         },
         {
           id: "marginBottom",
           label: t("Gap Below"),
-          type: "slider",
+          type: "slider-dev",
           disabled: IS_STORY,
-          slider: {
+          config: {
             min: 0,
-            max: 100
+            max: 100,
+            step: 1,
+            units: [{ value: "px", title: "px" }]
           },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [{ title: "px", value: "px" }]
-          },
-          value: {
-            value: v.marginBottom
-          },
-          onChange: ({ value: marginBottom }) =>
-            onChange({ [`${device}MarginBottom`]: String(marginBottom) })
-        },
-        {
-          id: "tag",
-          label: t("HTML Tag"),
-          type: "select",
-          className: "brz-control__select--small",
-          disabled: isPopulationBlock,
-          choices: [
-            { title: t("P"), value: "p" },
-            { title: t("H1"), value: "h1" },
-            { title: t("H2"), value: "h2" },
-            { title: t("H3"), value: "h3" },
-            { title: t("H4"), value: "h4" },
-            { title: t("H5"), value: "h5" },
-            { title: t("H6"), value: "h6" },
-            { title: t("PRE"), value: "pre" }
-          ],
-          onChange: tagName => onChange(getBlockTag(tagName)),
-          value: v.tagName
+          ...dependencies
         },
         {
           id: "advancedSettings",

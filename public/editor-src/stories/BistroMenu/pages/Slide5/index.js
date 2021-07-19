@@ -22,17 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-text-lg-left brz-ff-abril_fatface brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-46 brz-fs-sm-im-45 brz-fs-xs-im-45 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0"><span style="color: rgb(255, 255, 255);">Thursday</span></p>',
+                        '<p class="brz-ls-xs-0 brz-ls-sm-0 brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-45 brz-fs-sm-45 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-abril_fatface brz-text-lg-left brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_0_5 brz-lh-lg-1_1 brz-fs-lg-41" data-uniq-id="cauys" data-generated-css="brz-css-eallv"><span style="color: rgb(255, 255, 255);">Thursday</span></p>',
                       offsetY: 3,
-                      offsetX: 5,
-                      width: 48,
-                      _id: "yivupazcpwoqnmpqawcuubscotxaupjhlswh"
+                      offsetX: 6,
+                      width: 57,
+                      _id: "bvbbqvxujisvrwnwtyojgnneprtsgwvfzhom"
                     }
                   }
                 ],
                 zIndex: 28,
                 zIndexSuffix: "",
-                _id: "lpkwabhbsifgcoeylsldlgwfacyhsvvhitkl"
+                _id: "detttflxkycomavhdkdhyzokvhastnrbigcb"
               }
             },
             {
@@ -44,18 +44,18 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 11,
+                      offsetY: 9,
                       offsetX: 6,
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-left"><span style="color: rgb(255, 214, 129);">only $13 .50 </span></p>',
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-34 brz-fs-sm-34 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-left brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-vuwfj" data-uniq-id="duogd"><span style="color: rgb(255, 214, 129);">only $13 .50 </span></p>',
                       width: 45,
-                      _id: "avceenlbcpggzxjqqsiezzdsmmlxczujzsla"
+                      _id: "sgkwxebabwifnmafzoljewsitxahozhwbxvs"
                     }
                   }
                 ],
                 zIndex: 37,
                 zIndexSuffix: "",
-                _id: "jifwetuawfubjeezmpkabwjtsmnxpohfgyho"
+                _id: "mqnhuvlicqjkjllzihmdaamldnkejxzdkxiz"
               }
             },
             {
@@ -67,64 +67,64 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 7,
+                      offsetY: 5,
+                      offsetX: 60,
+                      text:
+                        '<p class="brz-fs-xs-32 brz-fs-sm-32 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-fw-sm-400 brz-fw-xs-400 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-right brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-dqquc" data-uniq-id="qbris"><span class="brz-cp-color8">Bruschette</span></p>',
+                      width: 35,
+                      _id: "evtxxuiwgrjizdvkatfjgkakjbbveseoldoh"
+                    }
+                  }
+                ],
+                zIndex: 68,
+                zIndexSuffix: "",
+                _id: "wbadqdrosauudsgmnimdurnxplpekcfytmdp"
+              }
+            },
+            {
+              type: "StoryWrapper",
+              value: {
+                _styles: ["wrapper--story", "wrapper--story-richText"],
+                items: [
+                  {
+                    type: "RichText",
+                    value: {
+                      _styles: ["story-richText"],
+                      offsetY: 15,
+                      offsetX: 48,
+                      text:
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-fs-sm-32 brz-fs-xs-32 brz-text-lg-right brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1 brz-fs-lg-30" data-generated-css="brz-css-hdzkp" data-uniq-id="sriev"><span class="brz-cp-color8">Paprika Salad</span></p>',
+                      width: 48,
+                      _id: "eydebpaxkjqvihukjvjmorhqppakgqathfep"
+                    }
+                  }
+                ],
+                zIndex: 68,
+                zIndexSuffix: "",
+                _id: "lythgyjoaxrsouxyhorsdcrkgoitrzjafjlv"
+              }
+            },
+            {
+              type: "StoryWrapper",
+              value: {
+                _styles: ["wrapper--story", "wrapper--story-richText"],
+                items: [
+                  {
+                    type: "RichText",
+                    value: {
+                      _styles: ["story-richText"],
+                      offsetY: 24,
                       offsetX: 56,
                       text:
-                        '<p class="brz-fs-xs-im-32 brz-fs-sm-im-32 brz-fs-lg-33 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-caveat brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-text-lg-right"><span class="brz-cp-color8">Bruschette</span></p>',
-                      width: 36,
-                      _id: "itycyjkknfomdvmicfadlfxeuwhqgaxewlkj"
-                    }
-                  }
-                ],
-                zIndex: 68,
-                zIndexSuffix: "",
-                _id: "yukgixlirdedbdchvjmbyvxcdlhkcfyzasio"
-              }
-            },
-            {
-              type: "StoryWrapper",
-              value: {
-                _styles: ["wrapper--story", "wrapper--story-richText"],
-                items: [
-                  {
-                    type: "RichText",
-                    value: {
-                      _styles: ["story-richText"],
-                      offsetY: 19,
-                      offsetX: 53,
-                      text:
-                        '<p class="brz-lh-lg-1 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-fs-lg-33 brz-fs-sm-im-32 brz-fs-xs-im-32 brz-text-lg-right"><span class="brz-cp-color8">Paprika Salad</span></p>',
+                        '<p class="brz-fs-xs-32 brz-fs-sm-32 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-fw-sm-400 brz-fw-xs-400 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-right brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1 brz-fs-lg-30" data-generated-css="brz-css-eeeqo" data-uniq-id="uhgqb"><span class="brz-cp-color8">Mousakka with eggplant</span></p>',
                       width: 40,
-                      _id: "gwlrqjywjfhgpxyoyzugmasfqvygolphblrq"
+                      _id: "pytuwfjpvoqdwxucvxakbkdcslbmxgbemzxi"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "umwgttxpzfqbdjhwdrfjbszawblowvcqazxq"
-              }
-            },
-            {
-              type: "StoryWrapper",
-              value: {
-                _styles: ["wrapper--story", "wrapper--story-richText"],
-                items: [
-                  {
-                    type: "RichText",
-                    value: {
-                      _styles: ["story-richText"],
-                      offsetY: 29,
-                      offsetX: 54,
-                      text:
-                        '<p class="brz-fs-xs-im-32 brz-fs-sm-im-32 brz-fs-lg-33 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-caveat brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-lh-lg-1 brz-text-lg-right"><span class="brz-cp-color8">Mousakka with eggplant</span></p>',
-                      width: 40,
-                      _id: "bcvudzasonkscnhgcynaoyunvsjmvjabpmqc"
-                    }
-                  }
-                ],
-                zIndex: 68,
-                zIndexSuffix: "",
-                _id: "yxmlfgftrzkztqqcudtkoqysnxqhtogpqbmw"
+                _id: "xjdgmnhfxpzwncenxnfikiutsesdkogmdazp"
               }
             },
             {
@@ -148,13 +148,13 @@ module.exports = {
                       heightSuffix: "%",
                       zoom: 100,
                       zoomSuffix: "",
-                      offsetX: 51,
+                      offsetX: 52,
                       offsetY: -22,
-                      _id: "ieqveagqvdyrnxcggqsffnyurcoafwjohkjv"
+                      _id: "utiawquocixcdserxqoirtplwzmpgxpvigmd"
                     }
                   }
                 ],
-                _id: "bwumekvwtfmtjwmhyykrocswdvpbqmtyinpx"
+                _id: "rvvhddoxqjeyfcypdwtmlurfrcdzjvmkjrbv"
               }
             }
           ],
@@ -191,7 +191,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 42,
           bgPositionY: 39,
-          _id: "afpisdplenhecerinyezsbsyihukihkbypvx"
+          _id: "vouwvnhyizqthdinnfovqcqzuvecytgrgoip"
         }
       }
     ]

@@ -22,15 +22,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1_1 brz-lh-sm-im-1_1 brz-lh-lg-1_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ls-lg-m_2 brz-fs-xs-im-49 brz-fs-sm-im-49 brz-fs-lg-50 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_display brz-text-lg-left"><span style="color: rgb(52, 46, 54);">Unhappy with the service provided? </span></p>',
-                      width: 73,
+                        '<p class="brz-text-lg-left brz-ff-dm_serif_display brz-ft-google brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-49 brz-fs-xs-49 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-lh-sm-1_1 brz-lh-xs-1_1 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_2 brz-lh-lg-1_1 brz-fs-lg-44" data-uniq-id="bfulm" data-generated-css="brz-css-rnxoh"><span style="color: rgb(52, 46, 54);">Unhappy with the service provided? </span></p>',
+                      width: 78,
                       offsetY: 11,
                       offsetX: 10,
-                      _id: "uxmftqoowoezenohugiwyededywtzvarjega"
+                      _id: "fgainjqbbhvfyiwvrhgrsxmnezctbulbhhey"
                     }
                   }
                 ],
-                _id: "jyrmyyidyaenfceyrcodhngmbswezjessziv"
+                _id: "htdvbeauhitdospxirxqtctdiffjzpabxvfn"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "Shape",
                     value: {
                       _styles: ["story-shape"],
-                      _id: "afacboeauojzsgoobvgwsluurjnhhojpusuj",
+                      _id: "cusndgqgdmznwazvzfoxcxltdubrzykwcwfw",
                       offsetY: 47.56,
                       offsetX: 10,
                       width: 80,
@@ -68,7 +68,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "lwywppyvtoxoayqktdkjdsgavgwicgaphhbd"
+                _id: "wtwrnsioytwrxomsnavcxahfwigfnthscnjb"
               }
             },
             {
@@ -82,14 +82,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-ff-dm_serif_display brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-27 brz-fs-sm-im-26 brz-fs-xs-im-26 brz-lh-lg-1_4 brz-lh-sm-im-1_4 brz-lh-xs-im-1_4 brz-text-lg-center brz-ls-lg-m_1 brz-ls-sm-im-0 brz-ls-xs-im-0"><span class="brz-cp-color8">30 Days Money Back </span><span style="color: rgb(255, 97, 88);">Guaranteed</span></p>',
-                      width: 50,
-                      offsetY: 56,
-                      offsetX: 24,
-                      _id: "azcsdrsgohfupcqnmbbdkibqvafcmbccxmdi"
+                      width: 62,
+                      offsetY: 53,
+                      offsetX: 18,
+                      _id: "lqwgzmgpfuafiuhlmhhdtzfaykpavxkvusaj"
                     }
                   }
                 ],
-                _id: "mmblrmjizudjhysetbsnzqdgibytmmtkolaj"
+                _id: "eztxefjuvhrzmpjgrvpkxqiwuuyyqdywkfgl"
               }
             },
             {
@@ -101,8 +101,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 70,
-                      offsetX: 24,
+                      offsetY: 67,
+                      offsetX: 18,
                       bgColorPalette: "",
                       bgColorHex: "#ffffff",
                       fontFamily: "lato",
@@ -113,8 +113,8 @@ module.exports = {
                       letterSpacing: 2.5,
                       lineHeight: 1.6,
                       text: "CONTACT US NOW",
-                      width: 51,
-                      height: 24,
+                      width: 63,
+                      height: 21.86,
                       borderRadiusType: "custom",
                       tempBorderRadiusType: "custom",
                       paddingRight: 0,
@@ -127,7 +127,7 @@ module.exports = {
                       hoverBgColorOpacity: 0.8,
                       hoverBorderColorOpacity: 0.8,
                       tempBorderWidth: 2,
-                      _id: "fexlzzdwhcupyusmbqnihblkqqukxwkqfgzq",
+                      _id: "ddfjrwtidwgenidfmtkeskgmknqadwvihhgs",
                       bgColorOpacity: 0.15,
                       tempBgColorPalette: "",
                       tempBgColorOpacity: 0.15,
@@ -137,7 +137,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "xbobmuspwsrrpcyqwqkqxihiuyvjhushcvhf"
+                _id: "cxesdmwqteodggalqbpkpboaoiaeylyxxfwv"
               }
             },
             {
@@ -153,12 +153,12 @@ module.exports = {
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-fs-xs-im-16 brz-fs-sm-im-16 brz-fs-lg-17 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_display brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0"><span style="color: rgb(255, 97, 88);">No risks  • Money back guaranteed</span></p>',
                       offsetY: 4,
                       offsetX: 10,
-                      _id: "dmwavmxyexycffvhufgttkjklfdntatzagvh",
-                      width: 73
+                      _id: "wdctinpiporwrlbxbfqtiopgzncmgcqczkjz",
+                      width: 87
                     }
                   }
                 ],
-                _id: "hyvihoaylrsroktwsslojeodsartbmhkhulm"
+                _id: "jsxzgveabhuvtmwdhlhfiadkoetohakkjszv"
               }
             }
           ],
@@ -198,7 +198,7 @@ module.exports = {
           contrast: 106,
           saturation: 109,
           brightness: 102,
-          _id: "vtwvoliygvyaabthxzagrrvjimkmdlnbunpx"
+          _id: "eafzkhabxubnxutbmxsljeycsnrjjgswavtb"
         }
       }
     ]

@@ -8,8 +8,9 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { IS_STORY } from "visual/utils/models";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const { hex: numberColor } = getOptionColorHexByPalette(
@@ -17,8 +18,14 @@ export function getItems({ v, device, state }) {
     dvv("numberColorPalette")
   );
   const noBorder = v.bgColorOpacity === 0 && v.borderColorOpacity === 0;
-  const richTextDC = getDynamicContentChoices("richText", true);
-  const linkDC = getDynamicContentChoices("link", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
+  const linkDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.link
+  );
 
   return [
     {

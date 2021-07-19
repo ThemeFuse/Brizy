@@ -1,5 +1,5 @@
 import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
-import { getPostObjects } from "visual/utils/api/editor";
+import { getPostObjects } from "visual/utils/api";
 import { toPosts } from "visual/component/Options/types/dev/InternalLink/utils";
 import { MValue } from "visual/utils/value";
 

@@ -27,6 +27,41 @@
       }
 
       function appendFonts(data) {
+        var googleFontsOptimizations = new Promise(function(res) {
+          var hostGoogleOptimization = hostDocument.querySelectorAll(
+            "link.brz-link-google-preconnect, link.brz-link-google-prefetch"
+          );
+          var guestGoogleOptimization = hostDocument.querySelectorAll(
+            "link.brz-link-google-preconnect, link.brz-link-google-prefetch"
+          );
+
+          if (
+            hostGoogleOptimization.length === 0 &&
+            guestGoogleOptimization.length
+          ) {
+            guestGoogleOptimization.onload = res;
+            hostDocument.head.appendChild(guestGoogleOptimization);
+          } else {
+            res();
+          }
+        });
+
+        var brizyCDN = new Promise(function(res) {
+          var hostCDN = hostDocument.querySelector(
+            "link.brz-link-cdn-preconnect"
+          );
+          var guestCDN = guestDocument.querySelector(
+            "link.brz-link-cdn-preconnect"
+          );
+
+          if (!hostCDN && guestCDN) {
+            guestCDN.onload = res;
+            hostDocument.head.appendChild(guestCDN);
+          } else {
+            res();
+          }
+        });
+
         var googleFonts = new Promise(function(res) {
           var hostGoogleFonts = hostDocument.querySelector(
             "link.brz-link-google"
@@ -70,7 +105,12 @@
           }
         });
 
-        return Promise.all([googleFonts, uploadFonts]).then(function() {
+        return Promise.all([
+          googleFontsOptimizations,
+          brizyCDN,
+          googleFonts,
+          uploadFonts
+        ]).then(function() {
           return data;
         });
       }
