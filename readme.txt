@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.2.20
+Stable tag: 2.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,32 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.0 - 2021-07-19 =
+* New: All PRO elements are now visible but locked
+* New: Added an API action to obtain the post taxonomies
+* Improved: Preview assets JS, CSS
+* Improved: RichText element
+* Improved: Global Block Conditions
+* Fixed: Compile page in the back-end when Rank Math plugin is installed
+* Fixed: Save user roles when adding new user
+* Fixed: Do not include JS on the profile if the user has no rights of changing roles
+* Fixed: Removed the 3 character constraint from search field
+* Fixed: Date format of leads by settings format of WP
+* Fixed: Disabled start_excerpt and end_excerpt
+* Fixed: Warning when no block provided on upload blocks
+* Fixed: Return empty content when there are no sample posts for dynamic content placeholders
+* Fixed: Do not throw error on get sample post data
+* Fixed: The asset insertion for templates for single posts
+* Fixed: Method that searches the placeholders that supports a placeholder name
+* Fixed: Template rule match for product archive matches all archives
+* Fixed: Refactored Brizy_Editor_Compiled HTML
+* Fixed: Search placeholder in all placeholder providers
+* Fixed: Block to custom post migration trigger check
+* Fixed: Removed taxonomy filter from post taxonomies
+* Fixed: Show Products post type in global block rules
+* Fixed: Product include in rule group list
+* Fixed: Added specific template rule match
 
 = 2.2.20 - 2021-07-13 =
 * New: error messages in Form element for Number and File input
