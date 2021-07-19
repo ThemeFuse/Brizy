@@ -81,7 +81,7 @@ export function toolbarBgColor2({
       hex,
       opacity,
       palette,
-      select: bgColorType,
+      select: colorType,
       opacityDragEnd,
       startPointer,
       finishPointer,
@@ -91,7 +91,7 @@ export function toolbarBgColor2({
       const valuesBgColorType = {
         ...{ v, device, state, prefix, onChange: onChangeType },
         ...{
-          bgColorType
+          [capByPrefix(prefix, "colorType")]: colorType
         }
       };
 

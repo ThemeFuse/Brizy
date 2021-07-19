@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import classNames from "classnames";
 import EditorComponent, {
+  OnChangeMeta,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -88,6 +89,14 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   childToolbarExtend?: ToolbarExtend;
 
   toolbarRef = createRef<PortalToolbar>();
+
+  handleValueChange(value: Value, meta: OnChangeMeta<Value>): void {
+    if (value.items.length === 0) {
+      this.selfDestruct();
+    } else {
+      super.handleValueChange(value, meta);
+    }
+  }
 
   handleExtendParentToolbar = (childToolbarExtend: ToolbarExtend): void => {
     this.childToolbarExtend = childToolbarExtend;

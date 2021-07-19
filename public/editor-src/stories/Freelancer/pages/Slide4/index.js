@@ -29,11 +29,11 @@ module.exports = {
                       size: "custom",
                       offsetY: 21,
                       offsetX: 41,
-                      _id: "znhpuumtgcnwymdzczlqzugkdwcjeconufko"
+                      _id: "wkxrjaqsmmwdceskpikdrkzrrtovqcapgmjr"
                     }
                   }
                 ],
-                _id: "mgzotvcbsiwqfocaqaqpuxvxyyodiccilind"
+                _id: "nefakunwvbmykwnykftjnfsbqnhnlngmypsu"
               }
             },
             {
@@ -53,11 +53,11 @@ module.exports = {
                       size: "custom",
                       offsetY: 35,
                       offsetX: 41,
-                      _id: "qtcqvsjukbphjkzlqnmgjussyzvsydayfnno"
+                      _id: "zjtptxygaqmmsbjeofzmqqpgtnrvvzgqkmhg"
                     }
                   }
                 ],
-                _id: "bqwfondwkujfxvczjgjpjdeanpybyyroxxpu"
+                _id: "gtjkupwtodqvyutolzyiydrnlsuunvtfijdh"
               }
             },
             {
@@ -77,11 +77,11 @@ module.exports = {
                       size: "custom",
                       offsetY: 50,
                       offsetX: 41,
-                      _id: "jyimaebyztdqtzikivtkavtgcpzqcpbipjxo"
+                      _id: "zuxqfounpxdfxwmvigfuvymjqdjvexzzpwos"
                     }
                   }
                 ],
-                _id: "urdetnpinujcyqsqlesbwlceiopnrzqwlsjr"
+                _id: "quuiqyymctpawamlizebbcuqawogbksqovhf"
               }
             },
             {
@@ -94,15 +94,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_3 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-36 brz-fs-sm-im-35 brz-fs-xs-im-35"><span style="color: rgb(16, 16, 16);">consulting</span></p>',
+                        '<p class="brz-fs-xs-35 brz-fs-sm-35 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-m_1 brz-ls-xs-m_1 brz-lh-sm-1_3 brz-lh-xs-1_3 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-31" data-uniq-id="rbxfp" data-generated-css="brz-css-uyfxb"><span style="color: rgb(16, 16, 16);">consulting</span></p>',
                       width: 42,
                       offsetY: 20,
                       offsetX: 53,
-                      _id: "mlhtxtabwvumczbnwjvonnmiiowejlcegroi"
+                      _id: "camdsdwvychrlbgexltwxboeohmdmhtjbajf"
                     }
                   }
                 ],
-                _id: "rxrdsuzmfehfzksuexdfnkqikezecynjxqdc"
+                _id: "enadwlvjbsoiiphxsvltokleltfikktposmr"
               }
             },
             {
@@ -115,15 +115,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-35 brz-fs-sm-im-35 brz-fs-lg-36 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3"><span style="color: rgb(16, 16, 16);">marketing</span></p>',
+                        '<p class="brz-lh-xs-1_3 brz-lh-sm-1_3 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-35 brz-fs-xs-35 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-31" data-uniq-id="wlwem" data-generated-css="brz-css-ikvlk"><span style="color: rgb(16, 16, 16);">marketing</span></p>',
                       width: 42,
                       offsetY: 34,
                       offsetX: 53,
-                      _id: "tlklwnxzjpxqlniloupyiwdcktrmlxbgbalk"
+                      _id: "honcssrkmonxraymnbvqgzapknjzujshsiht"
                     }
                   }
                 ],
-                _id: "zrpeppwcidwyugxqabnmlqjncnnpbcntiqnz"
+                _id: "wqbhctupybdrpekwpobhoimezfoacficwsve"
               }
             },
             {
@@ -136,15 +136,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_3 brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-36 brz-fs-sm-im-35 brz-fs-xs-im-35"><span style="color: rgb(16, 16, 16);">copy</span></p>',
+                        '<p class="brz-fs-xs-35 brz-fs-sm-35 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-m_1 brz-ls-xs-m_1 brz-lh-sm-1_3 brz-lh-xs-1_3 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-31" data-uniq-id="pkaqk" data-generated-css="brz-css-vaeii"><span style="color: rgb(16, 16, 16);">copy</span></p>',
                       width: 42,
                       offsetY: 49,
                       offsetX: 53,
-                      _id: "aqgsgdeleotmtcbnvmknzjvbulthgfqzflqr"
+                      _id: "gsiqwvcpmccmdihqegjallfgtsycfulkubhx"
                     }
                   }
                 ],
-                _id: "qakojgdlvpgrlpzbnvvylqrsjrwmqbgcsuaa"
+                _id: "cbiqfskligxmrstjhxhbkshljxvxyjdsxelc"
               }
             }
           ],
@@ -179,7 +179,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "whogolyhrxchbnohbmyiekezynitmbahfgck",
+          _id: "yrjigwnzvjdclncwaoupudlhtqlgxupflqdk",
           bgPositionX: 51,
           bgPositionY: 49
         }

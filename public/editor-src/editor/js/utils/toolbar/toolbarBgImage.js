@@ -5,6 +5,7 @@ import {
   saveOnChanges
 } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function toolbarBgImage({
   v,
@@ -13,12 +14,16 @@ export function toolbarBgImage({
   states,
   devices = "all",
   disabled = false,
+  config,
   onChange
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
-  const imageDynamicContentChoices = getDynamicContentChoices("image");
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    config,
+    DCTypes.image
+  );
 
   return {
     id: dvk("bgImage"),

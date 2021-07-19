@@ -1,6 +1,8 @@
 import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
 import { capByPrefix } from "visual/utils/string";
 import { getWeightChoices } from "visual/utils/fonts";
+import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import {
   defaultValueKey,
@@ -63,7 +65,7 @@ export function toolbarTypography2FontStyle({
   device,
   state,
   disabled = false,
-  devices = "all",
+  devices = "all"
 }) {
   const fontStyleKey = defaultValueKey({
     key: capByPrefix(prefix, "fontStyle"),
@@ -110,34 +112,25 @@ export function toolbarTypography2FontSize({
     state
   });
 
-  let fontSizeValue = defaultValueValue({
-    v,
-    key: capByPrefix(prefix, "fontSize"),
-    device,
-    state
-  });
-
-  // getOptionFontByGlobal - was writen for shortcodes where elements can't
-  // have fontStyle and fontSize simultaneously(RichText works now another way), this way this condition is needed.
-  // When this changes will be merged with dev branch - remove this condition, because there(in dev branch)
-  // richText was rewritten and works as other elements
-  if (!fontSizeValue) {
-    fontSizeValue = getOptionFontByGlobal(
-      fontSizeKey,
-      fontSizeValue,
-      defaultValueValue({
-        v,
-        key: capByPrefix(prefix, "fontStyle"),
-        device,
-        state
-      })
-    );
-  }
-  
+  const fontSizeValue = getOptionFontByGlobal(
+    fontSizeKey,
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontSize"),
+      device,
+      state
+    }),
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontStyle"),
+      device,
+      state
+    })
+  );
 
   return {
     id: fontSizeKey,
-    label: t("Size"),
+    label: IS_STORY ? t("Size") : "",
     type: "stepper",
     devices,
     disabled,
@@ -150,6 +143,56 @@ export function toolbarTypography2FontSize({
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: fontSizeKey, value: fontSize }
+      };
+
+      return saveOnChanges(values);
+    }
+  };
+}
+
+export function toolbarTypography2FontSizeSuffix({
+  v,
+  prefix = "",
+  device,
+  state,
+  devices = "all",
+  onChange
+}) {
+  const fontSizeSuffixKey = defaultValueKey({
+    key: capByPrefix(prefix, "fontSizeSuffix"),
+    device,
+    state
+  });
+
+  const fontSizeSuffixValue = getOptionFontByGlobal(
+    fontSizeSuffixKey,
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontSizeSuffix"),
+      device,
+      state
+    }),
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontStyle"),
+      device,
+      state
+    })
+  );
+
+  return {
+    id: "fontSizeSuffix",
+    type: "select",
+    label: "Size",
+    devices,
+    className: "brz-control__typography-suffix",
+    disabled: IS_STORY,
+    choices: getSuffixChoices,
+    value: fontSizeSuffixValue,
+    onChange: fontSizeSuffix => {
+      const values = {
+        ...{ v, prefix, device, state, onChange },
+        ...{ current: fontSizeSuffixKey, value: fontSizeSuffix }
       };
 
       return saveOnChanges(values);
@@ -172,25 +215,21 @@ export function toolbarTypography2LineHeight({
     state
   });
 
-  let lineHeightValue = defaultValueValue({
-    v,
-    key: capByPrefix(prefix, "lineHeight"),
-    device,
-    state
-  });
-
-  if (!lineHeightValue) {
-    lineHeightValue = getOptionFontByGlobal(
-      lineHeightKey,
-      lineHeightValue,
-      defaultValueValue({
-        v,
-        key: capByPrefix(prefix, "fontStyle"),
-        device,
-        state
-      })
-    );
-  }
+  const lineHeightValue = getOptionFontByGlobal(
+    lineHeightKey,
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "lineHeight"),
+      device,
+      state
+    }),
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontStyle"),
+      device,
+      state
+    })
+  );
 
   return {
     id: lineHeightKey,
@@ -261,25 +300,21 @@ export function toolbarTypography2FontWeight({
     })
   );
 
-  let fontWeightValue = defaultValueValue({
-    v,
-    key: capByPrefix(prefix, "fontWeight"),
-    device,
-    state
-  });
-
-  if (!fontWeightValue) {
-    fontWeightValue = getOptionFontByGlobal(
-      fontWeightKey,
-      fontWeightValue,
-      defaultValueValue({
-        v,
-        key: capByPrefix(prefix, "fontStyle"),
-        device,
-        state
-      })
-    );
-  }
+  const fontWeightValue = getOptionFontByGlobal(
+    fontWeightKey,
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontWeight"),
+      device,
+      state
+    }),
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontStyle"),
+      device,
+      state
+    })
+  );
 
   return {
     id: fontWeightKey,
@@ -319,25 +354,21 @@ export function toolbarTypography2LetterSpacing({
     state
   });
 
-  let letterSpacingValue = defaultValueValue({
-    v,
-    key: capByPrefix(prefix, "letterSpacing"),
-    device,
-    state
-  });
-
-  if (!letterSpacingValue) {
-    letterSpacingValue = getOptionFontByGlobal(
-      letterSpacingKey,
-      letterSpacingValue,
-      defaultValueValue({
-        v,
-        key: capByPrefix(prefix, "fontStyle"),
-        device,
-        state
-      })
-    );
-  }
+  const letterSpacingValue = getOptionFontByGlobal(
+    letterSpacingKey,
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "letterSpacing"),
+      device,
+      state
+    }),
+    defaultValueValue({
+      v,
+      key: capByPrefix(prefix, "fontStyle"),
+      device,
+      state
+    })
+  );
 
   return {
     id: letterSpacingKey,

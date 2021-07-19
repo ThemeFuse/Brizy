@@ -22,17 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-63 brz-fs-sm-im-63 brz-fs-lg-64 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1"><span class="brz-cp-color2">Shop</span></p>',
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ls-lg-m_5 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1 brz-fs-lg-64 brz-fs-sm-63 brz-fs-xs-63 brz-text-lg-left" data-uniq-id="gpkvz" data-generated-css="brz-css-jhmov"><span class="brz-cp-color2">Shop</span></p>',
                       offsetY: 46,
-                      offsetX: -2,
+                      offsetX: 9,
                       width: 65,
-                      _id: "xvwnqgidsxutqgtstjvmcgzmbtqwzwibobzw"
+                      _id: "zwxbjcpcznmbbiktegzxcncghoqfmawphitd"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "jjwubznvbwvzbcfozvaitpqtrlxacjwjdotb"
+                _id: "pxmkmeblslozilvknddstcyripcojaewkjdm"
               }
             },
             {
@@ -45,17 +45,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-m_1 brz-fs-xs-im-25 brz-fs-sm-im-25 brz-fs-lg-26 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-text-lg-center brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1"><span class="brz-pre-population-visible" style="color: rgb(255, 255, 255);">#05</span></p>',
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_3 brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-fs-lg-26 brz-fs-sm-25 brz-fs-xs-25 brz-ls-lg-m_1 brz-ls-sm-3 brz-ls-xs-3 brz-text-lg-right" data-uniq-id="altxv" data-generated-css="brz-css-zgdsm"><span class="brz-pre-population-visible" style="color: rgb(255, 255, 255);">#05</span></p>',
                       offsetY: 50,
-                      offsetX: 73,
-                      width: 21,
-                      _id: "adcctrkvmshxvjdrclljuglsfqtvqqprncrk"
+                      offsetX: 65,
+                      width: 29,
+                      _id: "qcggzlbsugwdupmlxgwksjykaiqgsolwiute"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "llbknbpzwcxlcifgzjskybulweagkkccgglh"
+                _id: "viysiohybhzqsretcfsxqtuwrwgiicvaqwzt"
               }
             },
             {
@@ -72,13 +72,13 @@ module.exports = {
                       offsetY: 59,
                       offsetX: 14,
                       width: 65,
-                      _id: "wrqsfwgbgskoxskpanjllwypbsvrevkfeijh"
+                      _id: "ekiziaxwnacsccyshferqxvotxmjczqetidv"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "zvikrzekvsepvwmtqaheyvvmghmotnyccesd"
+                _id: "ysnefestikhtdelloubkebpbnqawtnmowmms"
               }
             },
             {
@@ -94,12 +94,12 @@ module.exports = {
                       offsetX: 10,
                       text:
                         '<p class="brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-text-lg-left brz-fs-lg-18 brz-fs-sm-im-17 brz-fs-xs-im-17 brz-lh-lg-1_7 brz-lh-sm-im-1_4 brz-lh-xs-im-1_4"><span class="brz-cp-color2">New Fashion Stories. Best Ideas for Your Style. Just view our collections!</span></p>',
-                      width: 74,
-                      _id: "oylqoqsodigbvevxqgnasxpkiebzppiiygbp"
+                      width: 82,
+                      _id: "gehzbwkdxhelssenmtutpqqcdedyawszkwwj"
                     }
                   }
                 ],
-                _id: "ijaxajyycfxdsdnewkhysqpjhtcygtwskfmp"
+                _id: "arixbfzbmacfeidtzsjvkgqoiggmgrtximma"
               }
             },
             {
@@ -111,8 +111,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 83,
-                      offsetX: 42,
+                      offsetY: 85,
+                      offsetX: 43,
                       text: "Start Shopping",
                       width: 47,
                       height: 25.53,
@@ -146,12 +146,12 @@ module.exports = {
                       tempBoxShadowColorPalette: "color2",
                       boxShadowColorHex: "#163452",
                       tempBoxShadowColorOpacity: 0.2,
-                      _id: "cawdcfrjrgwydbhwnnguabuhzmewwwaciwfx",
+                      _id: "oymqwuabhsuiurjfmnsfraunhcdfibsdankd",
                       colorHex: "#5f247d"
                     }
                   }
                 ],
-                _id: "hrudgqrwhewybqqqllfktqrejzwxsbsqryec"
+                _id: "pzplmlrnxuvxsvqbpqyebqqwsssupkokfnhb"
               }
             },
             {
@@ -190,11 +190,11 @@ module.exports = {
                       tempBoxShadowVertical: 12,
                       boxShadowHorizontal: 0,
                       tempBoxShadowHorizontal: 12,
-                      _id: "obyiiisgxzpiwwlkogwemkekjycwdfgosxvd"
+                      _id: "jwkprugvrepbbrzjkybdntaoqyjdypnkxejq"
                     }
                   }
                 ],
-                _id: "aachmoyvtfwugxfkwnznlqadytyvfonkqclx"
+                _id: "jxhzljpmjgojorwnkpcwrwdrorqzikpghoiu"
               }
             }
           ],
@@ -247,7 +247,7 @@ module.exports = {
           tempBorderTopRightRadius: 0,
           tempBorderBottomLeftRadius: 0,
           tempBorderBottomRightRadius: 0,
-          _id: "qkcpteeebkrqhyoipdsmokfocodicypknpud"
+          _id: "pipepfryijwctdghqaznravsbhhitklhlhed"
         },
         blockId: "StoryBlank0001"
       }

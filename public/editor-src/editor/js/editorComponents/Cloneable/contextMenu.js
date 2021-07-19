@@ -14,15 +14,8 @@ function getItems(v) {
   const { base } = Editor.getShortcodes();
 
   const { icon = "" } =
-    base.find(
-      ({
-        resolve: {
-          value: {
-            items: [{ type }]
-          }
-        }
-      }) => type === v[0].type
-    ) || {};
+    base.find(item => item.component.resolve.value.items?.type === v[0].type) ||
+    {};
 
   return [
     {

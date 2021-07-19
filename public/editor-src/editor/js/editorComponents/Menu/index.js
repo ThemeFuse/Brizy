@@ -14,7 +14,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import ClickOutside from "visual/component/ClickOutside";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors2";
+import { pageSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
 import { css } from "visual/utils/cssStyle";
 import ContextMenu from "visual/component/ContextMenu";

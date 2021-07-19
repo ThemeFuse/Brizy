@@ -7,15 +7,18 @@ import {
 } from "visual/component/Controls/MultiSelect";
 import { OptionType } from "visual/component/Options/Type";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Literal } from "visual/utils/types/Literal";
 import {
+  DEFAULT_VALUE,
   getModel,
+  getElementModel,
   toElement,
   isChoicesSync,
   searchChoices,
   mergeChoices,
   selectedChoices
 } from "./utils";
-import { Props, InputType, ChoicesSync, ChoicesAsync } from "./types";
+import { Props, Choice, ChoicesSync, ChoicesAsync } from "./types";
 import { Value } from "./Value";
 import { t } from "visual/utils/i18n";
 
@@ -59,36 +62,49 @@ function choiceToItem({
   value,
   title,
   icon
-}: ChoicesSync[number]): ControlItemType<Value> {
+}: ChoicesSync[number]): ControlItemType<Value["value"]> {
   return (
-    <Item<Value> value={value} key={value}>
+    <Item<Literal> value={value} key={value}>
       {icon && <EditorIcon icon={icon} className={"brz--space-right"} />}
       {title}
     </Item>
   );
 }
 
-export const MultiSelect: FC<Props> & OptionType<Value[]> = props => {
+export const MultiSelect: FC<Props> & OptionType<Value> = props => {
   const choices = props.choices;
 
   if (isChoicesSync(choices)) {
-    return <Sync {...props} choices={choices} />;
+    return (
+      <>
+        {props.label}
+        <Sync {...props} choices={choices} />
+      </>
+    );
   } else {
-    return <Async {...props} choices={choices} />;
+    return (
+      <>
+        {props.label}
+        <Async {...props} choices={choices} />
+      </>
+    );
   }
 };
 
 const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
   placeholder,
   choices,
-  value = [],
+  value: { value = [] },
   onChange,
   config
 }) => {
   const [inputValue, setInputValue] = useState("");
 
   return (
-    <Control<Value>
+    // to find out what wrong is here
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    <Control<Literal>
       placeholder={placeholder}
       size={config?.size ?? "medium"}
       value={value}
@@ -114,15 +130,15 @@ const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
 const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   placeholder,
   choices,
-  value = [],
+  value: { value = [] },
   onChange,
   config
 }) => {
   const [stage, setStage] = useState<CurrentStage>(LOADING);
   const [inputValue, setInputValue] = useState("");
   const debouncedInputValue = useDebounce(inputValue, 1000);
-  const [selectedChoices, setSelectedChoices] = useState<InputType[]>([]);
-  const [searchChoices, setSearchChoices] = useState<InputType[]>([]);
+  const [selectedChoices, setSelectedChoices] = useState<Choice[]>([]);
+  const [searchChoices, setSearchChoices] = useState<Choice[]>([]);
   const currentSearchController = useRef<AbortController>();
 
   useEffect(() => {
@@ -192,14 +208,17 @@ const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
     }
   } else {
     items.push(
-      <Item<Value> value="" disabled={true} key="disabled">
+      <Item<Literal> value="" disabled={true} key="disabled">
         {stageTitle.get(stage)}
       </Item>
     );
   }
 
   return (
-    <Control<Value>
+    // to find out what wrong is here
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    <Control<Literal>
       placeholder={placeholder}
       size={config?.size ?? "medium"}
       value={value}
@@ -211,7 +230,7 @@ const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
               item => item.value === vv
             )
           )
-          .filter(item => item !== undefined) as InputType[];
+          .filter(item => item !== undefined) as Choice[];
         setSelectedChoices(selectedItems);
 
         const n = config?.items || 999;
@@ -231,3 +250,6 @@ const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
 };
 
 MultiSelect.getModel = getModel;
+MultiSelect.getElementModel = getElementModel;
+
+MultiSelect.defaultValue = DEFAULT_VALUE;

@@ -1,1 +1,1 @@
-export type ElementModel = { [k: string]: unknown | undefined | null };
+export type ElementModel = Record<string, unknown>;

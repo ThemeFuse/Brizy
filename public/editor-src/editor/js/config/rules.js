@@ -17,6 +17,9 @@ export default {
   "wrapper--table": {
     showToolbar: "on"
   },
+  "wrapper--protected-page": {
+    showToolbar: "on"
+  },
   "wrapper--accordion": {
     showToolbar: "on"
   },
@@ -69,21 +72,6 @@ export default {
   },
   search: {
     type: "search"
-  },
-  "posts--column": {
-    width: 100
-  },
-  "posts--archives": {
-    type: "archives",
-    taxonomy: "template",
-    taxonomyId: "main_query",
-    pagination: "on"
-  },
-  "posts--archives-product": {
-    type: "archives-product",
-    taxonomy: "template",
-    taxonomyId: "main_query",
-    pagination: "on"
   },
   "image--dynamic": {
     imagePopulation: "{{brizy_dc_img_featured_image}}"
@@ -348,5 +336,26 @@ export default {
     offsetY: 20,
     offsetYSuffix: "%",
     offsetYAlignment: "top"
+  },
+  "posts--column": {
+    width: 100
+  },
+  "postTitle-posts": {
+    fontStyle: "custom",
+    fontSize: 20,
+    tabletFontStyle: "custom",
+    tabletFontSize: 16,
+    mobileFontStyle: "custom",
+    mobileFontSize: 16,
+    contentHorizontalAlign: "center"
+  },
+  "postExcerpt-posts": {
+    contentHorizontalAlign: "center"
+  },
+  "posts-archive": {
+    pagination: "on"
+  },
+  "posts-productArchive": {
+    pagination: "on"
   }
 };

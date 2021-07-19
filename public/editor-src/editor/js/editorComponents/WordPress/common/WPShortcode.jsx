@@ -4,7 +4,7 @@ import classnames from "classnames";
 import Placeholder from "visual/component/Placeholder";
 import BoxResizer from "visual/component/BoxResizer";
 import { uuid } from "visual/utils/uuid";
-import { shortcodeContent } from "visual/utils/api/editor";
+import { shortcodeContent } from "visual/utils/api";
 
 export class WPShortcode extends Component {
   static defaultProps = {

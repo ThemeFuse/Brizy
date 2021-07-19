@@ -6,8 +6,9 @@ import { capitalize } from "visual/utils/string";
 import { getDynamicContentChoices } from "visual/utils/options";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
   const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -20,7 +21,10 @@ export function getItems({ v, device }) {
     dvv("style2BgColorHex"),
     dvv("style2BgColorPalette")
   );
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

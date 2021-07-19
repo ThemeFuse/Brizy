@@ -23,10 +23,10 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-ff-playfair_display brz-ft-google brz-fs-lg-35 brz-fs-sm-im-34 brz-fs-xs-im-34 brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700 brz-lh-lg-1_4 brz-lh-sm-im-1_1 brz-lh-xs-im-1_1 brz-text-lg-center brz-ls-lg-m_1 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1"><span style="color: rgb(0, 0, 0);">Not just for her. Him too...</span></p>',
-                      offsetY: 77,
-                      offsetX: 23,
-                      width: 57,
-                      _id: "ioinnypjfcxsdmdtguscflhmudgnijwbgwlw"
+                      offsetY: 72,
+                      offsetX: 13,
+                      width: 74,
+                      _id: "znyhznbxusxopgpcsutehwrvbwksuphnseak"
                     }
                   }
                 ],
@@ -34,7 +34,7 @@ module.exports = {
                 zIndexSuffix: "",
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "snbdiomxirdbwaeotvjkyjmivtxfrrwncuke"
+                _id: "wtyidtiszkiwplaunstqyqrqwuysidynsfdo"
               }
             },
             {
@@ -67,11 +67,11 @@ module.exports = {
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
                       width: 40,
-                      _id: "wsmivutilgyxevcjnzmeblrdgcxfedmbhpws"
+                      _id: "xogiozbsirxvaqhdxxjzuzrjgemqdhwuwcqc"
                     }
                   }
                 ],
-                _id: "jvcvlipedjmyolrddqrhjsucbwxiajvjddsf"
+                _id: "utgchmyxubgqvlbrilstgpojqmdpqfzxtgyg"
               }
             },
             {
@@ -86,13 +86,13 @@ module.exports = {
                       offsetY: 6,
                       offsetX: 45,
                       text:
-                        '<p class="brz-text-lg-justify brz-fs-xs-im-13 brz-fs-sm-im-13 brz-fs-lg-14 brz-fw-xs-im-600 brz-fw-sm-im-600 brz-fw-lg-600 brz-ft-google brz-ff-montserrat brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-lh-xs-im-1_6 brz-lh-sm-im-1_6 brz-lh-lg-1_9"><span style="color: rgb(9, 34, 55);">TAILOR STORY 03</span></p>',
-                      width: 35,
-                      _id: "afpqhdepgtjptsrnjramhssfxctoqhilkvgu"
+                        '<p class="brz-lh-lg-1_9 brz-lh-sm-1_6 brz-lh-xs-1_6 brz-ls-lg-0 brz-ls-sm-0 brz-ls-xs-0 brz-ff-montserrat brz-ft-google brz-fw-lg-600 brz-fw-sm-600 brz-fw-xs-600 brz-fs-lg-14 brz-fs-sm-13 brz-fs-xs-13 brz-text-lg-justify" data-uniq-id="jgmqp" data-generated-css="brz-css-tmrdj"><span style="color: rgb(9, 34, 55);">STORY 03</span></p>',
+                      width: 40,
+                      _id: "uhevtrxkpxzwhfgjgweubbxcywkyduqiurnn"
                     }
                   }
                 ],
-                _id: "siedwlxeisbknadlvhdhvbdonpgyvfihuxqp"
+                _id: "pascbnohkwuzlxstpyaiupyamfxsmqkufqks"
               }
             },
             {
@@ -119,11 +119,11 @@ module.exports = {
                       borderRadiusType: "custom",
                       borderRadius: 40,
                       tempBorderRadius: 40,
-                      _id: "ffhxbicldnlstgfzetvobgivsrqjpvdiixnp"
+                      _id: "duyossagsoicgvctwpkvsqiodrvbcrqxhkdc"
                     }
                   }
                 ],
-                _id: "dkkkxcekscoyndpbfnmyicsiqbexdhicxglm"
+                _id: "xynpojuhjkmtbmbsheiyjydeawjhdqthuhcj"
               }
             }
           ],
@@ -158,7 +158,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "zoxesghplpplhxbbgbablgzvmpyamrnstaar"
+          _id: "mcghgqabyejfbpmcjbpqofmcrwkqmdsjfntf"
         }
       }
     ]

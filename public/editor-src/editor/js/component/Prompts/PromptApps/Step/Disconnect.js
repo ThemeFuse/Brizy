@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { Disconnect as ViewDisconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
 import { Context } from "../../common/GlobalApps/Context";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 class Disconnect extends Component {
   static contextType = Context;

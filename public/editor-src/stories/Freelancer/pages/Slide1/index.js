@@ -21,7 +21,7 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "fqajvquimogspgzfrjldntprekmozcwmbbok",
+                      _id: "dwcuhaawmbcpjagnxrxjdryvjfglibocwhfa",
                       text:
                         '<p class="brz-fs-xs-im-66 brz-fs-sm-im-66 brz-fs-lg-67 brz-lh-xs-im-1_1 brz-lh-sm-im-1_1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1"><span style="color: rgb(239, 73, 13);">Hi</span></p><p class="brz-fs-xs-im-66 brz-fs-sm-im-66 brz-fs-lg-67 brz-lh-xs-im-1_1 brz-lh-sm-im-1_1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1"><span style="color: rgb(239, 73, 13);">I\'m Jane </span></p>',
                       width: 68,
@@ -30,7 +30,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "vckacnouatlnqpubjrhvdnhqafgckfqzatgz"
+                _id: "evcqdznausuepiduvvmafwjojxdvbedxmmdd"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "Line",
                     value: {
                       _styles: ["story-line"],
-                      _id: "trbsjmrarszdhwsevidaxqepgwmcpijbqrnv",
+                      _id: "mynxvlnvrejqvxirtnnjpmomtwfliticcnrf",
                       offsetY: 29,
                       offsetX: -46,
                       borderStyle: "solid",
@@ -66,7 +66,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "eapycyhwyiuxabktcefdduopqsokypotxodf"
+                _id: "gjyauyzxpkqgjqwjekhuuzjhtjbgnmtigtpn"
               }
             }
           ],
@@ -101,7 +101,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "drkwfaqtelssnyitchovvcfewgfdtjxjafuk"
+          _id: "ndxikjoemjqtylwlzavbjlibskxcqfzitqmp"
         }
       }
     ]

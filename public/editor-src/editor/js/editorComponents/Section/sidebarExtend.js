@@ -1,8 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { toolbarEntranceAnimation, toolbarMargin } from "visual/utils/toolbar";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
+  console.log("Section context", context);
+
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
     { title: t("Header"), value: "header" },
@@ -13,7 +16,10 @@ export function getItems({ v, device }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

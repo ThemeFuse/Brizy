@@ -1,7 +1,5 @@
 import { ReduxState } from "visual/redux/types";
-import { GlobalBlock, GlobalBlockPosition } from "visual/types";
-
-import { Config } from "./config";
+import { GlobalBlock, GlobalBlockPosition, Rule as GbRule } from "visual/types";
 
 export type PB = ReduxState["blocksOrder"];
 export type GB = ReduxState["globalBlocks"];
@@ -21,11 +19,11 @@ export type SortedGBPositions = {
 }[];
 
 export type Rule = {
-  group: 1 | 16;
+  group: GbRule["appliedFor"];
 
-  type: "page" | "post" | "brizy_template";
+  type: GbRule["entityType"];
 
-  id: Config["wp"]["page"];
+  id: string | number;
 };
 
 export type SurroundedConditionsIds = {

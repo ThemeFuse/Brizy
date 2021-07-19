@@ -1,7 +1,7 @@
 import produce from "immer";
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { AppData } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";

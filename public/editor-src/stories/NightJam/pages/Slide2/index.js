@@ -21,9 +21,9 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      _id: "aulrmxkreyadaeynyjajjgrkebuvtidwsjqw",
-                      offsetY: 20,
-                      offsetX: 22,
+                      _id: "oxatdqiezwlwjktzcgwgydbeydurbxidbqrd",
+                      offsetY: 15,
+                      offsetX: 21,
                       fontFamily: "fira_sans",
                       fontFamilyType: "google",
                       fontStyle: "",
@@ -59,7 +59,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "iddeotruggugoidlvkydijbmpsmjupytljyr"
+                _id: "ctvfudujvurmpwjueduvwodemqxgfkvdrwri"
               }
             },
             {
@@ -73,14 +73,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-text-lg-center brz-fs-lg-49 brz-fs-sm-im-48 brz-fs-xs-im-48 brz-ls-lg-m_4 brz-ls-sm-im-m_2 brz-ls-xs-im-m_2"><span style="color: rgb(2, 33, 81);">Eye See Eeew</span></p>',
-                      width: 67,
-                      offsetY: 32,
-                      offsetX: 15,
-                      _id: "ebdcfkorqjuzeiwvtzkwgbsyzdgjmwdkcwio"
+                      width: 85,
+                      offsetY: 23,
+                      offsetX: 6,
+                      _id: "htlaxmjpyfslpzyijqvrggyfmmdyawutfbon"
                     }
                   }
                 ],
-                _id: "tdqtmpznshpnazfatdchzmwpbirpybpjmzbw"
+                _id: "dyvkpldkcifjmtocbpneqfwhfypqjsijvivi"
               }
             },
             {
@@ -94,14 +94,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-ls-xs-im-m_2 brz-ls-sm-im-m_2 brz-ls-lg-m_4 brz-fs-xs-im-48 brz-fs-sm-im-48 brz-fs-lg-49 brz-text-lg-center brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1"><span style="color: rgb(2, 33, 81);">Tents On Fire</span></p>',
-                      width: 67,
-                      offsetY: 41,
-                      offsetX: 15,
-                      _id: "qcfpjrcwhwyukvmpzyemgkfhakosditzvftv"
+                      width: 96,
+                      offsetY: 32,
+                      offsetX: 2,
+                      _id: "aamgbilkidpromhvnyyygbzigtudoeaqxmsf"
                     }
                   }
                 ],
-                _id: "kggppdbputizhpbgkvcquabhbihmnodehxod"
+                _id: "uribjkabvysfyctmvisshfrpmtwwgcykdtep"
               }
             },
             {
@@ -115,14 +115,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-text-lg-center brz-fs-lg-49 brz-fs-sm-im-48 brz-fs-xs-im-48 brz-ls-lg-m_4 brz-ls-sm-im-m_2 brz-ls-xs-im-m_2"><span style="color: rgb(2, 33, 81);">Steekin Badgers </span></p>',
-                      width: 67,
-                      offsetY: 50,
-                      offsetX: 17,
-                      _id: "nsqehzoprkgrkszzdyhlzzulakxgrtpxymeh"
+                      width: 92,
+                      offsetY: 41,
+                      offsetX: 4,
+                      _id: "lmieewxmppbizjptyjnpegwrodkbtjaepint"
                     }
                   }
                 ],
-                _id: "icfxdzizazsjxwhjerqkvifelrsilgpgxxth"
+                _id: "nptgfgaezgnvbmllzmkufvxsmfstidgcvduc"
               }
             },
             {
@@ -136,7 +136,7 @@ module.exports = {
                       _styles: ["story-line"],
                       width: 62,
                       offsetX: 19,
-                      offsetY: 60,
+                      offsetY: 58,
                       borderStyle: "solid",
                       tempBorderStyle: "solid",
                       borderColorHex: "#ffffff",
@@ -155,11 +155,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      _id: "wgwghqjnvfwllhsqrjbcvjmvevpocmiiapuq"
+                      _id: "bcnzxlqbfqtpjavgfuaypnzdqwyfdptnpoyc"
                     }
                   }
                 ],
-                _id: "csdaepbgziyvnkmbcfmzjlitvaiiprkekjwd"
+                _id: "razzyxobpknexmzviqnighwjyrofjbrqswbp"
               }
             },
             {
@@ -176,13 +176,13 @@ module.exports = {
                       offsetY: 64,
                       offsetX: 8,
                       width: 84,
-                      _id: "ajcsyzietsukerdkeozhwmrxqkmlktxngroi"
+                      _id: "nrzaqcoqqmqraynepufjmtfpbaqcrljcuagy"
                     }
                   }
                 ],
                 zIndex: 18,
                 zIndexSuffix: "",
-                _id: "qkxjiremqwsujqfiisgpqkdnwonwaifdrbek"
+                _id: "eitvjactygrjnjfdtjohcbjzgykurjwvfaaz"
               }
             },
             {
@@ -199,13 +199,13 @@ module.exports = {
                       offsetY: 70,
                       offsetX: 8,
                       width: 84,
-                      _id: "xeckuueynjgircvpdpxolqbeteytczrxvtwg"
+                      _id: "ueatnhlthwytvhvmymcogttreasdiwanuwsp"
                     }
                   }
                 ],
                 zIndex: 18,
                 zIndexSuffix: "",
-                _id: "covjeggnseleddwansncenyijwzbafdhiimb"
+                _id: "qaguifbyiyvydhwkrlqxgxsuyjifaeuvrasc"
               }
             },
             {
@@ -222,13 +222,13 @@ module.exports = {
                       offsetY: 76,
                       offsetX: 7,
                       width: 84,
-                      _id: "xugrvgjgwglivwktzyhghltumkaazlvsnher"
+                      _id: "xklpvfabzvgmcxdsznceaxiwfgxiivkkwpzg"
                     }
                   }
                 ],
                 zIndex: 18,
                 zIndexSuffix: "",
-                _id: "ylopqcddclqgdbdhuoqxkgbdbtwkegwtsnzh"
+                _id: "vlrvbnheabhwqzocifarjjytfsyamhwlbsoo"
               }
             },
             {
@@ -240,7 +240,7 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      offsetY: 82,
+                      offsetY: 86,
                       offsetX: 42,
                       name: "tail-right",
                       type: "outline",
@@ -248,15 +248,15 @@ module.exports = {
                       size: "custom",
                       colorPalette: "",
                       colorHex: "#b322bb",
-                      _id: "anhyexlwfohhijuchgbqcxiyyatayfafrqwh"
+                      _id: "hqvjqpqappeyduzgffzmlnfbqhskkbctfkyh"
                     }
                   }
                 ],
-                _id: "olluchulwkafigrufjvfitwzhytsbmdevhpv"
+                _id: "wxstkmmojoxymeifyiyqpqwrzinxaemawdsi"
               }
             }
           ],
-          _id: "uyrvpnntljmpakyxwnkvibykeaklahfmdddh",
+          _id: "mdznrxpnrpfnllgodtbycnszaxfnumjfdhox",
           bgImageWidth: 1080,
           bgImageHeight: 1760,
           bgImageExtension: "jpg",

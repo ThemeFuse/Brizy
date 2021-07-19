@@ -5,7 +5,7 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/env";
 
 export function getItems({ v, device, component }) {
   const membershipRoles = Config.get("wp")?.availableRoles || [];

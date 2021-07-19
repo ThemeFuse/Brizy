@@ -1,16 +1,16 @@
 import React, { FC } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
-import { empty } from "visual/utils/string/specs";
+import { Empty, empty } from "visual/utils/string/specs";
 
 export type Props = {
   value: string;
-  onChange: OnChange<string>;
+  onChange: OnChange<Empty>;
 };
 
 export const PopulationInput: FC<Props> = ({ value, onChange }) => {
   return (
-    <div className="brz-ed-control__population__input">
+    <div className="brz-ed-control__population__input" title={value}>
       <span className="brz-span">{value}</span>
       <EditorIcon
         icon="nc-circle-remove"

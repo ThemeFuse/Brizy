@@ -39,7 +39,6 @@ export type Props<T extends {}> = WithClassName & {
   animationClass?: string;
   ref?: Ref<Element>;
   meta: { sectionPopup?: boolean; sectionPopup2?: boolean };
-  plugins?: Plugin[];
   renderContent?: (children: React.ReactNode) => React.ReactNode;
   v: ElementModel;
   vs: ElementModel;

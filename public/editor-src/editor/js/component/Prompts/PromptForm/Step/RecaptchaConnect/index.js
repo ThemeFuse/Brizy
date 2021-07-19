@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import ViewFields from "./ViewFields";
 import { Context } from "../../../common/GlobalApps/Context";
 import { deleteAccount } from "../../../common/GlobalApps/api";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 import { validation } from "./validation";
 
 const apiKeys = [

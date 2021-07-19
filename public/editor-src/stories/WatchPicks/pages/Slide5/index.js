@@ -26,13 +26,13 @@ module.exports = {
                       text:
                         '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-playfair_display brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_1_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fs-lg-50 brz-fs-sm-im-49 brz-fs-xs-im-49"><em style="color: rgb(9, 34, 55);">Glamorous </em></p>',
                       width: 79,
-                      _id: "bwrmiqlyngstjwlczhtuygagqjfbocnexbap"
+                      _id: "yncmiexbwexpcacmybnwkjggbvbfgkuiqujp"
                     }
                   }
                 ],
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "uqwxjujdnzzahzwfxltnxmkhrcizwyhsbojo"
+                _id: "qotdlacolyvxszpqkidzjidphghsmipdiqqm"
               }
             },
             {
@@ -48,13 +48,13 @@ module.exports = {
                         '<p class="brz-fs-xs-im-14 brz-fs-sm-im-14 brz-fs-lg-15 brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-center"><span style="color: rgb(192, 66, 155);">THE ONE FOR THE</span></p>',
                       offsetY: 15,
                       offsetX: 4,
-                      _id: "veypvvsqzxyjpzgnbjpkcpyrizbdtwbilyvt"
+                      _id: "nsmjjengomfkjclcsoxmvhrlsbwzyjoommrs"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "bcsafjntaqaosxevolegxjgbvjbshazqxrse"
+                _id: "pzbesxygguykxecctseppzmbvqstipkbjvct"
               }
             },
             {
@@ -69,15 +69,15 @@ module.exports = {
                       text:
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-text-lg-center brz-ff-playfair_display brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-17 brz-fs-sm-im-16 brz-fs-xs-im-16 brz-ls-lg-0 brz-ls-sm-im-5 brz-ls-xs-im-5"><em style="color: rgb(9, 34, 55); opacity: 0.78;">Movado Rose-Gold 32MM</em></p>',
                       offsetY: 30,
-                      offsetX: 20,
-                      width: 62,
-                      _id: "yfaeaehykoytnkwwdokpsnjnvhdhimevukdi"
+                      offsetX: 12,
+                      width: 75,
+                      _id: "gqodowzvhqnerwhqnkndvekwsjmvmkvjgfgn"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "xamcenrglvcfkdutiqletldcejzqjymbmnsn"
+                _id: "xupftrkbuiatrixqxbbcjejerrchmxzyabtk"
               }
             },
             {
@@ -90,7 +90,7 @@ module.exports = {
                     value: {
                       _styles: ["story-button"],
                       offsetY: 77,
-                      offsetX: 17,
+                      offsetX: 13,
                       bgColorPalette: "color8",
                       tempBgColorPalette: "color8",
                       bgColorOpacity: 1,
@@ -109,8 +109,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP RUGGED WATCHES",
-                      width: 68,
-                      height: 19,
+                      width: 75,
+                      height: 20.85,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -15,
@@ -139,11 +139,11 @@ module.exports = {
                       iconSize: "custom",
                       iconCustomSize: 14,
                       iconSpacing: 12,
-                      _id: "aceffkdievmuvyligqtuuuabffrfvbdgedeo"
+                      _id: "bftbhxlqfiasdhvvtfthpubvnbbrskoiauhs"
                     }
                   }
                 ],
-                _id: "zndkckvmvgkaphbztlawhnyawzmvgjxzymli"
+                _id: "wptfocrjughgjjqngbmgbbwnfqeyibvienlg"
               }
             },
             {
@@ -156,15 +156,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 87,
-                      offsetX: 13,
+                      offsetX: 11,
                       text:
                         '<p class="brz-text-lg-center brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ff-lato brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-0_5 brz-ls-sm-im-1 brz-ls-xs-im-1"><em style="color: rgb(100, 105, 112); opacity: 0.7;">Swipe for more pre-owned watches</em></p>',
-                      width: 73,
-                      _id: "hfjcfkainmzecajpcctayhpkzpnfjfuibkee"
+                      width: 80,
+                      _id: "eowhntclcjbszellwmfckknuxzpcsygjqdga"
                     }
                   }
                 ],
-                _id: "bvvijpmbailruzubgmwkcjwxidxzkyagdytn"
+                _id: "dkutpfgkaaowljjnpewdgrqwusbkseuvqwca"
               }
             }
           ],
@@ -201,7 +201,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 49,
           bgPositionY: 14,
-          _id: "vnsdvjpwlshtnmnkatbtvamxscsyjfpptjzx"
+          _id: "gnabhtvfivtgdmkjsvuyuechydtehpfwidey"
         }
       }
     ]

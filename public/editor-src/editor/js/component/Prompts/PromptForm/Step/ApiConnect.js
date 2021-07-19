@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { getIntegrationAccountApiKey, createIntegrationAccount } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { Connect } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 const getMessage = (data, keys) => {
   const keysTitle = keys.map(el => el.title).join(" & ");

@@ -12,9 +12,9 @@ import { Item } from "visual/component/Controls/MultiSelect/Item";
 import { trimTitle, toElementValue } from "./utils";
 import { getPosts } from "./store";
 import { Post, read } from "./types/Post";
-import { ElementValue, empty } from "./types/ElementValue";
+import { empty } from "./types/ElementValue";
 
-export type Props = Option.Props<MValue<Post>, ElementValue> &
+export type Props = Option.Props<MValue<Post>> &
   WithConfig<WithSize> &
   WithClassName;
 
@@ -24,7 +24,8 @@ export const InternalLink: Component = ({
   className,
   onChange,
   value,
-  config
+  config,
+  label
 }) => {
   // Use this flag in order to track if the element is mounted, as there is
   // no way to cancel promises
@@ -61,20 +62,23 @@ export const InternalLink: Component = ({
   );
 
   return (
-    <Select2<number>
-      className={className}
-      onChange={_onChange}
-      size={config?.size ?? "auto"}
-      editable={true}
-      value={value?.id ?? 0}
-      onOpen={loadPosts}
-    >
-      {items.map(({ id, title }) => (
-        <Item<number> value={id} key={id}>
-          {trimTitle(title)}
-        </Item>
-      ))}
-    </Select2>
+    <>
+      {label}
+      <Select2<number>
+        className={className}
+        onChange={_onChange}
+        size={config?.size ?? "auto"}
+        editable={true}
+        value={value?.id ?? 0}
+        onOpen={loadPosts}
+      >
+        {items.map(({ id, title }) => (
+          <Item<number> value={id} key={id}>
+            {trimTitle(title)}
+          </Item>
+        ))}
+      </Select2>
+    </>
   );
 };
 
@@ -84,4 +88,21 @@ const getModel: GetModel<MValue<Post>> = get =>
     title: get("title")
   });
 
+const getElementModel: Option.GetElementModel<MValue<Post>> = (values, get) => {
+  return {
+    [get("value")]: values?.id,
+    [get("title")]: values?.title
+  };
+};
+
 InternalLink.getModel = getModel;
+
+InternalLink.getElementModel = getElementModel;
+
+// TODO. What default value(id) should be?
+InternalLink.defaultValue = {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  id: null,
+  title: ""
+};

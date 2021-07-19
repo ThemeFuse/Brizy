@@ -1,19 +1,20 @@
 import React from "react";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import Sortable from "visual/component/Sortable";
 import Toolbar from "visual/component/Toolbar";
-import { stringifyAttributes } from "./utils";
+import { IS_WP } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { stringifyAttributes } from "./utils.common";
 
-class Items extends EditorArrayComponent {
+export default class Items extends EditorArrayComponent {
   static get componentId() {
     return "Posts.Items";
   }
 
   static defaultProps = {
     className: "",
-    rowCount: 1,
-    columnCount: 2,
     showPagination: false,
     toolbarExtendPagination: {},
     showFilter: false,
@@ -31,6 +32,10 @@ class Items extends EditorArrayComponent {
 
   getLoopAttributesString() {
     return stringifyAttributes(this.props.loopAttributes);
+  }
+
+  getLoopTagsAttributesString() {
+    return stringifyAttributes(this.props.loopTagsAttributes);
   }
 
   handleSortableAcceptElements = from => {
@@ -68,7 +73,7 @@ class Items extends EditorArrayComponent {
       <div
         key={itemKey}
         className="brz-posts__item"
-        data-filter={showFilter ? "{{ brizy_dc_post_tags }}" : undefined}
+        data-filter={showFilter ? "{{brizy_dc_post_tags}}" : undefined}
       >
         {item}
       </div>
@@ -76,7 +81,10 @@ class Items extends EditorArrayComponent {
   }
 
   renderTagsForEdit() {
-    const { toolbarExtendFilter, filterStyle } = this.props;
+    const { toolbarExtendFilter, filterStyle, data } = this.props;
+    const { tags = [] } = data;
+    // In preview the All tag is translatable with backend
+    const allTags = [{ name: t("All") }, ...tags];
     const listClassName = classnames(
       "brz-ul brz-posts__filter",
       `brz-posts__filter--${filterStyle}`
@@ -85,18 +93,19 @@ class Items extends EditorArrayComponent {
       "brz-li brz-posts__filter__item",
       `brz-posts__filter__item--${filterStyle}`
     );
-    const tags = ["All", "art", "sport", "food"]; // tags are hardcoded (fake) in the editor
 
     return (
-      <div className="brz-posts__filter-wrapper">
-        <ul className={listClassName}>
-          {tags.map((tag, index) => (
-            <Toolbar key={index} {...toolbarExtendFilter}>
-              <li className={itemClassName}>{tag}</li>
-            </Toolbar>
-          ))}
-        </ul>
-      </div>
+      allTags.length > 1 && (
+        <div className="brz-posts__filter-wrapper">
+          <ul className={listClassName}>
+            {allTags.map((tag, index) => (
+              <Toolbar key={index} {...toolbarExtendFilter}>
+                <li className={itemClassName}>{tag.name}</li>
+              </Toolbar>
+            ))}
+          </ul>
+        </div>
+      )
     );
   }
 
@@ -140,15 +149,20 @@ class Items extends EditorArrayComponent {
   }
 
   renderForEdit(v) {
-    const {
-      className,
-      rowCount,
-      columnCount,
-      showFilter,
-      showPagination
-    } = this.props;
+    const { className, showFilter, showPagination, data } = this.props;
     const item = super.renderForEdit(v);
-    const items = Array(rowCount * columnCount).fill(item);
+    const items = Array(
+      Math.min(data.paginationInfo.itemsPerPage, data.paginationInfo.totalCount)
+    )
+      .fill(item)
+      .map((item, index) => (
+        <EditorComponentContext.Provider
+          key={data.context[index].dynamicContent.itemId}
+          value={data.context[index]}
+        >
+          {item}
+        </EditorComponentContext.Provider>
+      ));
 
     return (
       <Sortable
@@ -166,35 +180,47 @@ class Items extends EditorArrayComponent {
   }
 
   renderForView(v) {
-    const {
-      type,
-      className,
-      style,
-      showPagination,
-      showFilter,
-      filterStyle
-    } = this.props;
-    const item = v.map(this.renderItem);
-    const filterClassName = `brz-posts__filter--${filterStyle}`;
-    const filterItemClassName = `brz-posts__filter__item--${filterStyle}`;
+    return IS_WP ? this.renderForViewWP(v) : this.renderForViewCloud(v);
+  }
 
-    const brizy_dc_name =
+  renderForViewWP(v) {
+    const { type, className, style, showPagination, showFilter } = this.props;
+    const item = v.map(this.renderItem);
+
+    const postLoopName =
       type === "upsell" ? "editor_product_upsells" : "brizy_dc_post_loop";
+    const loopAttributes = this.getLoopAttributesString();
 
     return (
       <div className={className} style={style}>
         {showFilter &&
-          `{{ brizy_dc_post_loop_tags ulClassName='${filterClassName}' liClassName='${filterItemClassName}' }}`}
+          `{{brizy_dc_post_loop_tags ${this.getLoopTagsAttributesString()}}}`}
         <div className="brz-posts__wrapper">
-          {`{{ ${brizy_dc_name} ${this.getLoopAttributesString()} }}`}
+          {`{{${postLoopName} ${loopAttributes}}}`}
           {super.renderItemsContainer(item)}
-          {`{{end_${brizy_dc_name}}}`}
+          {`{{end_${postLoopName}}}`}
         </div>
         {showPagination &&
-          `{{ brizy_dc_post_loop_pagination ${this.getLoopAttributesString()} }}`}
+          `{{brizy_dc_post_loop_pagination ${loopAttributes}}}`}
+      </div>
+    );
+  }
+
+  renderForViewCloud(v) {
+    const { className, style, showPagination } = this.props;
+    const item = v.map(this.renderItem);
+    const loopAttributes = this.getLoopAttributesString();
+
+    return (
+      <div className={className} style={style}>
+        <div className="brz-posts__wrapper">
+          {`{{brizy_dc_post_loop ${loopAttributes}}}`}
+          {super.renderItemsContainer(item)}
+          {"{{end_brizy_dc_post_loop}}"}
+        </div>
+        {showPagination &&
+          `{{brizy_dc_post_loop_pagination ${loopAttributes}}}`}
       </div>
     );
   }
 }
-
-export default Items;

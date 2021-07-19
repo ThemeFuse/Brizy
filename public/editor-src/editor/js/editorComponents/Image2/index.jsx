@@ -7,8 +7,12 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import {
+  tabletSyncOnChange,
+  mobileSyncOnChange,
+  defaultValueKey
+} from "visual/utils/onChange";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import toolbarConfigFn from "./toolbar";
@@ -22,6 +26,8 @@ import { isNumber } from "visual/utils/math";
 import ImageWrapper from "./Wrapper";
 import ImageContent from "./Image";
 import { IS_STORY } from "visual/utils/models";
+import * as ImagePatch from "./types/ImagePatch";
+import { elementModelToValue, patchOnImageChange } from "./imageChange";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -34,6 +40,13 @@ class Image extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
+
+  prevWrapperSizes = {
+    cW: 0,
+    cH: 0
+  };
 
   constructor(props) {
     super(props);
@@ -56,8 +69,58 @@ class Image extends EditorComponent {
     this.mounted = false;
   }
 
+  patchValue(patch, meta) {
+    const image = this.handleImageChange(patch);
+    super.patchValue(
+      {
+        ...patch,
+        ...image
+      },
+      meta
+    );
+  }
+
+  handleImageChange(patch) {
+    const device = deviceModeSelector(getStore().getState());
+    const image = ImagePatch.fromImageElementModel(patch);
+
+    const imageDC = ImagePatch.fromImageDCElementModel(patch);
+
+    if (image) {
+      const { v } = this.getValue2();
+      const value = elementModelToValue(v);
+      const wrapperSize = this.getWrapperSizes(v)[device];
+
+      return (
+        (value &&
+          patchOnImageChange(
+            this.state.containerWidth,
+            value,
+            wrapperSize,
+            image
+          )) ??
+        {}
+      );
+    }
+
+    if (imageDC) {
+      const { v } = this.getValue2();
+      const wrapperSize = this.getWrapperSizes(v)[device];
+      const dvk = key => defaultValueKey({ key, device });
+
+      return {
+        [dvk("height")]: wrapperSize.height,
+        [dvk("heightSuffix")]: "px"
+      };
+    }
+
+    return {};
+  }
+
   handleResize = () => {
-    this.updateContainerWidth();
+    if (!IS_STORY) {
+      this.updateContainerWidth();
+    }
     this.props.onResize();
   };
 
@@ -262,6 +325,41 @@ class Image extends EditorComponent {
     };
   }
 
+  getDCValueHook(dcKeys, v) {
+    const wrapperSizes = this.getWrapperSizes(v);
+    const { deviceMode } = getStore().getState().ui;
+
+    return dcKeys.map(dcKey => {
+      if (dcKey.key === "image") {
+        let { width, height } = wrapperSizes[deviceMode];
+        let { cW, cH } = this.prevWrapperSizes;
+
+        if (width > cW || height > cH) {
+          cW = width;
+          cH = height;
+
+          this.prevWrapperSizes = {
+            cW: width,
+            cH: height
+          };
+        }
+
+        return {
+          ...dcKey,
+          key: "imageSrc",
+          attr: {
+            ...dcKey.attr,
+            cW: Math.round(cW),
+            cH: Math.round(cH),
+            disableCrop: IS_EDITOR
+          }
+        };
+      }
+
+      return dcKey;
+    });
+  }
+
   renderPopups(v) {
     const { popups, linkLightBox, linkPopup } = v;
     const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
@@ -360,7 +458,8 @@ class Image extends EditorComponent {
 
     const meta = {
       ...this.props.meta,
-      desktopW: containerWidth
+      desktopW: containerWidth,
+      _dc: this._dc
     };
 
     return (

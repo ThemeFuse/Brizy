@@ -5,7 +5,7 @@ module.exports = {
   title: "Contact",
   keywords: "contact, form, information, phone, email",
   cat: [0, 1, 3, 100],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

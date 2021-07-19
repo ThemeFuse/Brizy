@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { RadioFields } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api/editor";
+import { pendingRequest } from "visual/utils/api";
 
 /**
  * @info

@@ -5,7 +5,7 @@ import { categories as ncCats } from "visual/config/icons/categories/nc";
 import { categories as faCats } from "visual/config/icons/categories/fa";
 import { types as freeTypes } from "visual/config/icons/types/free";
 import { types as proTypes } from "visual/config/icons/types/pro";
-import { IS_PRO, IS_WP } from "visual/utils/models/modes";
+import { IS_WP, IS_PRO } from "visual/utils/env";
 import * as Arr from "visual/utils/array";
 import { getTypeIcons } from "visual/config/icons/icons";
 

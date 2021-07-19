@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EditorGlobal from "visual/global/Editor";
-import {
-  pageDataDraftBlocksSelector
-  // globalBlocksPositionsSelector
-} from "visual/redux/selectors";
+import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { updateBlocks } from "visual/redux/actions2";
 
 class EditorPage extends Component {
@@ -15,41 +12,7 @@ class EditorPage extends Component {
   render() {
     const { Page } = EditorGlobal.getComponents();
     const { reduxState, reduxDispatch } = this.props;
-
-    // const positions = globalBlocksPositionsSelector(reduxState);
     const pageData = pageDataDraftBlocksSelector(reduxState);
-
-    // console.clear();
-    // console.group();
-    // pageData.items.map(({ type, value, blockId }) => {
-    //   if (type === "GlobalBlock" && positions[value._id]) {
-    //     const { align, top, bottom } = positions[value._id];
-    //     const cutGlobalBlockId = value._id.substr(0, 4);
-    //     if (align === "top") {
-    //       console.log(
-    //         `%c${cutGlobalBlockId}...%c align - %c${align}:%c top - %c${top}%c, bottom - ${bottom}`,
-    //         "color: #3870ED;",
-    //         null,
-    //         "color: #bada55;font-weight:bold;",
-    //         null,
-    //         "color: #bada55;font-weight:bold;",
-    //         null
-    //       );
-    //     } else {
-    //       console.log(
-    //         `%c${cutGlobalBlockId}...%c align - %c${align}%c: top - ${top}, bottom - %c${bottom}`,
-    //         "color: #3870ED;",
-    //         null,
-    //         "color: #bada55;font-weight:bold;",
-    //         null,
-    //         "color: #bada55;font-weight:bold;"
-    //       );
-    //     }
-    //   } else {
-    //     console.log(`${blockId} - Simple block`);
-    //   }
-    // });
-    // console.groupEnd();
 
     return (
       <Page

@@ -15,10 +15,11 @@ import {
   toolbarEntranceAnimation,
   toolbarMargin
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const title = t("Footer");
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
@@ -40,7 +41,10 @@ export function getItems({ v, device }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

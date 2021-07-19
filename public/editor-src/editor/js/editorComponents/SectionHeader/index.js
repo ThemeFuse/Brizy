@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { validateKeyByProperty } from "visual/utils/onChange";
 import ResizeAware from "react-resize-aware";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -14,9 +15,10 @@ import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
-import { styleSection } from "./styles";
+import { styleSection, styleAnimation } from "./styles";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
+import Animation from "visual/component/Animation";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -288,7 +290,8 @@ export default class SectionHeader extends EditorComponent {
       className,
       customClassName,
       cssClassPopulation,
-      customAttributes
+      customAttributes,
+      tagName
     } = v;
 
     const classNameSection = classnames(
@@ -302,16 +305,31 @@ export default class SectionHeader extends EditorComponent {
       )
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      id: this.getId(),
+      style: this.getStyle(v),
+      ref: this.sectionNode,
+      className: classNameSection
+    };
+
     return (
-      <section
-        id={this.getId()}
-        className={classNameSection}
-        style={this.getStyle(v)}
-        ref={this.sectionNode}
-        {...parseCustomAttributes(customAttributes)}
+      <Animation
+        component={tagName}
+        componentProps={props}
+        animationClass={animationClassName}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
-      </section>
+      </Animation>
     );
   }
 
@@ -333,6 +351,7 @@ export default class SectionHeader extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const {
+      tagName,
       className,
       customClassName,
       cssIDPopulation,
@@ -351,19 +370,33 @@ export default class SectionHeader extends EditorComponent {
       )
     );
 
+    const animationClassName = classnames(
+      validateKeyByProperty(v, "animationName", "none") &&
+        css(
+          `${this.constructor.componentId}-wrapper-animation,`,
+          `${this.getId()}-animation`,
+          styleAnimation(v, vs, vd)
+        )
+    );
+
+    const props = {
+      ...parseCustomAttributes(customAttributes),
+      id:
+        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
+      style: this.getStyle(v),
+      ref: this.sectionNode,
+      className: classNameSection,
+      "data-uid": this.getId()
+    };
+
     const content = (
-      <section
-        id={
-          cssIDPopulation === ""
-            ? v.anchorName || this.getId()
-            : cssIDPopulation
-        }
-        className={classNameSection}
-        data-uid={this.getId()}
-        {...parseCustomAttributes(customAttributes)}
+      <Animation
+        component={tagName}
+        componentProps={props}
+        animationClass={animationClassName}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
-      </section>
+      </Animation>
     );
 
     return this.renderMemberShipWrapper(content, v);

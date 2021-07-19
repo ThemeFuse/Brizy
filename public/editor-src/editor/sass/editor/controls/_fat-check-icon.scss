@@ -1,0 +1,16 @@
+@import "../../variables";
+@import "../mixins/fat-icon";
+
+.brz-ed--fat-check-icon {
+  @include fat-icon;
+
+  .brz-ed--icon-wrapper {
+    position: relative;
+  }
+
+  .check {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+  }
+}

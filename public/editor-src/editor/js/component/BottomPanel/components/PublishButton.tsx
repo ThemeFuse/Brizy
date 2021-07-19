@@ -10,15 +10,15 @@ import { ToastNotification } from "visual/component/Notifications";
 import { removeBlocks } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { updatePageStatus, fetchPageSuccess } from "visual/redux/actions2";
-import { extraFontStylesSelector, pageSelector } from "visual/redux/selectors2";
 import { SavedLayout } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import {
-  createBlockScreenshot,
-  createSavedLayout
-} from "visual/utils/api/editor";
+  pageSelector,
+  pageDataNoRefsSelector,
+  extraFontStylesSelector
+} from "visual/redux/selectors";
+import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
+import { createBlockScreenshot, createSavedLayout } from "visual/utils/api";
 import { uuid } from "visual/utils/uuid";
 import { IS_STORY } from "visual/utils/models";
 import { isNumber } from "visual/utils/math";

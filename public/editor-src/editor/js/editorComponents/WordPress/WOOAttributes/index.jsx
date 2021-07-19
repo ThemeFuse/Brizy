@@ -11,6 +11,7 @@ import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/D
 import { Wrapper } from "../../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
+import { Text } from "visual/component/ContentOptions/types";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -21,6 +22,7 @@ export default class WOOAttributes extends EditorComponent {
 
   static defaultValue = defaultValue;
   handleResizerChange = patch => this.patchValue(patch);
+  handleTextChange = patch => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const { className: className_ } = v;
@@ -59,6 +61,14 @@ export default class WOOAttributes extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
+              {v.title === "on" && (
+                <Text
+                  className="brz-woo-attributes_title"
+                  id="titleText"
+                  v={v}
+                  onChange={this.handleTextChange}
+                />
+              )}
               <DynamicContentHelper
                 placeholder="{{editor_product_additional_info}}"
                 placeholderIcon="woo-attributes"

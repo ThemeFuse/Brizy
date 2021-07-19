@@ -1,6 +1,8 @@
 import { MRead, Reader } from "visual/utils/types/Type";
 import { Append, Concat } from "visual/utils/types/Monoid";
 import { MValue } from "visual/utils/value";
+import { mPipe, pass } from "visual/utils/fp";
+import * as Str from "visual/utils/string/specs";
 
 /**
  * @typedef {"none"|"solid"|"dashed"|"dotted"} Style
@@ -18,12 +20,17 @@ export type Style = "none" | "solid" | "dashed" | "dotted";
  */
 export const styles: Style[] = ["none", "solid", "dashed", "dotted"];
 
+export const is = (s: string): s is Style => styles.includes(s as Style);
+
+export const fromString = pass(is);
+
 /**
  * Convert a value to valid border style instance
  *  - If value is not a valid boarder style, return undefined
+ *
+ *  @deprecated, use fromString
  */
-export const read: Reader<Style> = v =>
-  styles.includes(v as Style) ? (v as Style) : undefined;
+export const read: Reader<Style> = mPipe(Str.read, fromString);
 
 /**
  * Represents board style empty value
@@ -34,6 +41,8 @@ export const empty: Style = "none";
 /**
  * Convert a value to valid border style instance
  *  - If value is not a valid boarder style, return empty
+ *
+ *  @deprecated, use fromString
  */
 export const mRead: MRead<Style> = v => read(v) ?? empty;
 

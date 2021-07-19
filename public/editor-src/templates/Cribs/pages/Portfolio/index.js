@@ -5,7 +5,7 @@ module.exports = {
   title: "Portfolio",
   keywords: "portfolio, projects, work, listing, testimonials",
   cat: [0, 3, 100],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

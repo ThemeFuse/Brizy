@@ -3,14 +3,18 @@ import _ from "underscore";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Config from "visual/global/Config";
 import LazyLoadImage from "visual/component/LazyLoadImage";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { imageWrapperSize } from "visual/utils/image";
-import { authorizedSelector } from "visual/redux/selectors2";
+import { authorizedSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { IS_STORY } from "visual/utils/models";
+import { ProInfo } from "visual/component/ProInfo";
+import { IS_PRO } from "visual/utils/env";
+import Config from "visual/global/Config";
+
+const { upgradeToPro } = Config.get("urls");
 
 const MAX_CONTAINER_WIDTH = 292;
 
@@ -20,8 +24,6 @@ const animationStyle = {
   animationDelay: "200ms",
   animationDuration: "200ms"
 };
-const IS_PRO = Config.get("pro");
-const ConfigUrl = Config.get("urls");
 
 class Thumbnail extends Component {
   static defaultProps = {
@@ -84,27 +86,6 @@ class Thumbnail extends Component {
     onSync(data);
   };
 
-  renderProInfo() {
-    return (
-      <div className="brz-ed-tooltip-content__pro">
-        <p className="brz-p brz-ed-tooltip-content__pro-title">
-          {t("You’ll need Brizy PRO to use this block")}
-        </p>
-        <p className="brz-p brz-ed-tooltip-content__pro-body">
-          <a
-            className="brz-a"
-            href={ConfigUrl.upgradeToPro}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <EditorIcon icon="nc-lock" />
-            {t("Get Brizy PRO")}
-          </a>
-        </p>
-      </div>
-    );
-  }
-
   renderBlank() {
     const {
       data: { pro }
@@ -126,7 +107,12 @@ class Thumbnail extends Component {
           offset="5"
           openOnClick={false}
           nodeRef={this.iconRef}
-          overlay={this.renderProInfo()}
+          overlay={
+            <ProInfo
+              text={t("Upgrade to PRO to use this block")}
+              url={upgradeToPro}
+            />
+          }
           onOpen={this.handleTooltipOpen}
           onClose={this.handleTooltipClose}
         >
@@ -192,7 +178,12 @@ class Thumbnail extends Component {
         offset="5"
         openOnClick={false}
         nodeRef={this.iconRef}
-        overlay={this.renderProInfo()}
+        overlay={
+          <ProInfo
+            text={t("Upgrade to PRO to use this block")}
+            url={upgradeToPro}
+          />
+        }
         onOpen={this.handleTooltipOpen}
         onClose={this.handleTooltipClose}
       >

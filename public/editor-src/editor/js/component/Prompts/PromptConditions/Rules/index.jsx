@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-
+import { getStore } from "visual/redux/store";
+import { pageSelector } from "visual/redux/selectors";
 import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
-import { IS_PRO } from "visual/utils/models/modes";
+import { IS_CMS, IS_PRO } from "visual/utils/env";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import Buttons from "../Buttons";
-// import { getRulesList } from "visual/utils/api/editor";
 import ConditionChoices from "./ConditionChoices";
-import { filterRules, PAGES_GROUP_ID, PAGE_TYPE } from "./utils";
+import { filterRules } from "./utils";
+
+import { PAGES_GROUP_ID } from "visual/utils/blocks/blocksConditions";
 
 import useRuleList from "./useRuleList";
 import { t } from "visual/utils/i18n";
 
 export default function Rules({
-  value = [],
+  value = null,
   asyncGetValue,
   onClose = () => {},
   onChange = () => {}
@@ -24,7 +27,20 @@ export default function Rules({
 
   useEffect(() => {
     async function fetchData() {
-      const rules = (await asyncGetValue()) || [];
+      let rules = await asyncGetValue();
+
+      if (IS_CMS && !rules) {
+        rules = [
+          {
+            type: 1,
+            appliedFor: null,
+            entityType: "",
+            entityValues: []
+          }
+        ];
+      } else if (!rules) {
+        rules = [];
+      }
 
       setRules(rules);
     }
@@ -34,15 +50,25 @@ export default function Rules({
 
   function handleAdd() {
     if (IS_PRO) {
-      setRules([
-        ...rules,
-        {
-          type: 1,
-          appliedFor: PAGES_GROUP_ID,
-          entityType: PAGE_TYPE,
-          entityValues: []
-        }
-      ]);
+      let newRule = {
+        type: 1,
+        appliedFor: PAGES_GROUP_ID,
+        entityType: "page",
+        entityValues: []
+      };
+
+      if (IS_CMS) {
+        newRule.entityType = pageSelector(
+          getStore().getState()
+        ).collectionType.id;
+      }
+
+      if (IS_GLOBAL_POPUP) {
+        newRule.appliedFor = null;
+        newRule.entityType = "";
+      }
+
+      setRules([...rules, newRule]);
     }
   }
 
@@ -86,11 +112,13 @@ export default function Rules({
           }}
           className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
         >
-          <ConditionChoices
-            rules={rules}
-            rulesList={rulesList}
-            onChange={handleConditionChange}
-          />
+          {rules !== null && (
+            <ConditionChoices
+              rules={rules}
+              rulesList={rulesList}
+              onChange={handleConditionChange}
+            />
+          )}
           <div
             className="brz-ed-popup-conditions__add-condition"
             onClick={handleAdd}

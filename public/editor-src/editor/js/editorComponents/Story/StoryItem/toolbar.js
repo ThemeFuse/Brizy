@@ -48,6 +48,7 @@ export function getItems({ v, component, device }) {
                 toolbarBgImage({
                   v,
                   device,
+                  config: component.context.dynamicContent.config,
                   state: "normal",
                   disabled: dvv("media") !== "image",
                   onChange: [

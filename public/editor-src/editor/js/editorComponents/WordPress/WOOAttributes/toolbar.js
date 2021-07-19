@@ -22,6 +22,29 @@ export function getItems({ v, device }) {
       position: 60,
       options: [
         {
+          id: "titleGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "title",
+              label: t("Title"),
+              devices: "desktop",
+              type: "switch-dev"
+            },
+            {
+              id: "titleSpacing",
+              label: t("Spacing"),
+              type: "slider-dev",
+              disabled: v.title === "odd",
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ value: "px", title: "px" }]
+              }
+            }
+          ]
+        },
+        {
           id: "style",
           label: t("Style"),
           type: "radioGroup-dev",
@@ -64,11 +87,40 @@ export function getItems({ v, device }) {
       position: 70,
       options: [
         {
-          id: "attributes",
-          type: "typography-dev",
+          id: "tabsTypography",
+          type: "tabs-dev",
           config: {
-            fontFamily: device === "desktop"
-          }
+            showSingle: true
+          },
+          tabs: [
+            {
+              id: "tabTypographyTitle",
+              label: t("Title"),
+              options: [
+                {
+                  id: "title",
+                  type: "typography-dev",
+                  disabled: v.titleDisabled === "on",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: "tabTypographyAttributes",
+              label: t("Attributes"),
+              options: [
+                {
+                  id: "attributes",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -91,6 +143,18 @@ export function getItems({ v, device }) {
           id: "tabsColor",
           type: "tabs-dev",
           tabs: [
+            {
+              id: "tabTitle",
+              label: t("Title"),
+              options: [
+                {
+                  id: "titleColor",
+                  type: "colorPicker-dev",
+                  disabled: v.titleDisabled === "on",
+                  devices: "desktop"
+                }
+              ]
+            },
             {
               id: "tabAttribute",
               label: t("Attributes"),

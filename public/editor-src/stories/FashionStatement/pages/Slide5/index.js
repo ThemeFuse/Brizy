@@ -21,9 +21,9 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      _id: "yxhqjackvodtkuymbomwfbltsibtklozcitf",
-                      offsetY: 24,
-                      offsetX: 43,
+                      _id: "ofwwvmgkppyvssccrsunyrnrsjzmkgiozeed",
+                      offsetY: 12,
+                      offsetX: 42,
                       colorPalette: "",
                       colorHex: "#0be6b6",
                       name: "time-alarm",
@@ -33,7 +33,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "mswgqaayhuttjsdgocwdpydiqrgbfcgfqeez"
+                _id: "kpndgikdpsavpasiztxqgttudqfmugqlkemv"
               }
             },
             {
@@ -47,10 +47,10 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-ff-playfair_display brz-ft-google brz-ls-lg-m_1_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700 brz-text-lg-center brz-lh-lg-1_4 brz-lh-sm-im-1_1 brz-lh-xs-im-1_1 brz-fs-lg-39 brz-fs-sm-im-38 brz-fs-xs-im-38"><span style="color: rgb(0, 0, 0);">Limited 30% off. 24 hours left...</span></p>',
-                      offsetY: 37,
-                      offsetX: 16,
-                      width: 69,
-                      _id: "lyxtyrutdvdcmtbdhrydultfugotmxzplyzo"
+                      offsetY: 28,
+                      offsetX: 8,
+                      width: 85,
+                      _id: "xhuomseqqapvoemjzrrnocpvroevubbyghii"
                     }
                   }
                 ],
@@ -58,7 +58,7 @@ module.exports = {
                 zIndexSuffix: "",
                 rotate: 0,
                 rotateSuffix: "",
-                _id: "fmbcuzsygpskevkfazhxhkgcdcacflpxpifl"
+                _id: "fufaupiiewokapcpywycjyevvfpewbjcovvt"
               }
             },
             {
@@ -70,16 +70,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 56,
+                      offsetY: 48,
                       offsetX: 8,
                       text:
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-fs-xs-im-16 brz-fs-sm-im-16 brz-fs-lg-17 brz-fw-xs-im-300 brz-fw-sm-im-300 brz-fw-lg-300 brz-ft-google brz-ff-montserrat brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-text-lg-center"><span style="color: rgb(0, 0, 0);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt.</span></p>',
                       width: 86,
-                      _id: "dpjqkylaxtlhvohvgxazabumlqkwijecklvf"
+                      _id: "kvldxulhtudlwvnqkvneqiifnvqtkmxttcfb"
                     }
                   }
                 ],
-                _id: "pycotdaoohcoxrdwmiqvoawhtddjkfbvjzap"
+                _id: "bzultfuhlmwpzhschyijgtoppjzdmhvmgohv"
               }
             },
             {
@@ -91,7 +91,7 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 71,
+                      offsetY: 67,
                       offsetX: 30,
                       borderRadiusType: "custom",
                       tempBorderRadiusType: "custom",
@@ -109,12 +109,13 @@ module.exports = {
                       tempBgColorPalette: "color4",
                       tempBorderColorPalette: 0,
                       tempBorderRadius: 65,
-                      _id: "oylymmqhnvpmaqgxexwpqholsfphradostgt",
-                      bgColorHex: "#0be6b6"
+                      _id: "hakoiuzukrlkzgspmzeqsjsnomvwmvuhfijc",
+                      bgColorHex: "#0be6b6",
+                      text: "BUY NOW"
                     }
                   }
                 ],
-                _id: "lvtxxwsitzwyhtenbsopbrspivxymorgobli"
+                _id: "wcjbgsbmbukqfdwrfaknrxrwsewvwzioewmd"
               }
             }
           ],
@@ -149,7 +150,9 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "qftrwspfnmwxchwnsccjkcpbemdllhkwyfcy"
+          _id: "yxirjhezohtawwqtqsqucrlasdsbmufrhvpj",
+          bgPositionX: 0,
+          bgPositionY: 60
         }
       }
     ]

@@ -3,6 +3,7 @@ import {
   isNullish,
   onEmpty,
   onNullish,
+  throwOnNullish,
   onUndefined,
   mApply,
   mCompose
@@ -65,14 +66,36 @@ describe("Testing 'onNullish' function", function() {
     [undefined, 1],
     [null, 2],
     [NaN, 3]
-  ])("If value is %s, return %i", (v, orElse) =>
-    expect(onNullish(orElse, v)).toBe(orElse)
-  );
-
-  test("If value is not null, NAN, or undefined, return it", () => {
-    const orElse = {};
-    [0, "", "test", {}, []].map(v => expect(onNullish(orElse, v)).toBe(v));
+  ])("If value is %s, return %i", (v, orElse) => {
+    expect(onNullish(orElse, v)).toBe(orElse);
+    expect(onNullish(orElse)(v)).toBe(orElse);
   });
+
+  test.each([[0], [""], ["test"], [{}], [[]]])(
+    "If value is not null, NAN, or undefined, return it",
+    v => {
+      const orElse = {};
+      expect(onNullish(orElse, v)).toBe(v);
+      expect(onNullish(orElse)(v)).toBe(v);
+    }
+  );
+});
+
+describe("Testing 'throwOnNullish' function", function() {
+  test.each([
+    [undefined, "smth. go wrong"],
+    [null, "smth. go wrong"],
+    [NaN, "smth. go wrong"]
+  ])("If value is %s, return %s", (v, errorMsg) => {
+    expect(() => throwOnNullish(errorMsg)(v)).toThrow(errorMsg);
+  });
+
+  test.each([[0], [""], ["test"], [{}], [[]]])(
+    "If value is not null, NAN, or undefined, return it",
+    v => {
+      expect(throwOnNullish("")(v)).toBe(v);
+    }
+  );
 });
 
 describe("Testing 'mApply' function", function() {

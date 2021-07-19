@@ -8,31 +8,19 @@
     <meta charset="utf-8">
     <title>{{ meta.title }}</title>
     <meta name="description" content="{{ meta.description }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link class="brz-link brz-link-preview" href="{{ assetsUrl }}/editor/css/preview.css" rel="stylesheet">
-
-    {% if PRO is defined and PRO %}
-    {% set assetsUrlPro = editorData.pro.urls.assets %}
-      <link class="brz-link brz-link-preview-pro" href="{{ assetsUrlPro }}/css/preview.pro.css" rel="stylesheet">
-    {% endif %}
 
     {{ blocks.head | raw }}
+
+    {% for style in styles %}
+      {{ style | raw }}
+    {% endfor %}
   </head>
-  <body class="brz">{% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
+  <body class="brz">
+    {% endspaceless %}{{ blocks.body | raw }}{% spaceless %}
 
-    <script class="brz-script brz-script-polyfill" src="{{ assetsUrl }}/editor/js/polyfill.js"></script>
-    <script class="brz-script brz-script-preview" src="{{ assetsUrl }}/editor/js/preview.js"></script>
-  {% if PRO is defined and PRO %}
-  {% set assetsUrlPro = editorData.pro.urls.assets %}
-    <script class="brz-script brz-script-preview-pro" src="{{ assetsUrlPro }}/js/preview.pro.js"></script>
-  {% endif %}
-
-  <script class="brz-script brz-script-emit">
-    jQuery(document).ready(function() {
-      window.Brizy.emit("init.dom", jQuery(document.body));
-    });
-  </script>
+    {% for script in scripts %}
+      {{ script | raw }}
+    {% endfor %}
   </body>
 </html>
 {% endspaceless %}

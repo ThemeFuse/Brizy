@@ -62,6 +62,7 @@ import Carousel from "./Carousel";
 import StarRating from "./StarRating";
 import MenuSimple from "./MenuSimple";
 import Login from "./Login";
+import ProtectedPage from "./ProtectedPage";
 import LoginField from "./Login/LoginField";
 import RegisterField from "./Login/RegisterField";
 import ForgotPasswordField from "./Login/ForgotPasswordField";
@@ -76,6 +77,10 @@ import FacebookPage from "./FacebookPage";
 import FacebookGroup from "./FacebookGroup";
 import Twitter from "./Twitter";
 import Lottie from "./Lottie";
+
+import PostTitle from "./PostTitle";
+import PostExcerpt from "./PostExcerpt";
+import Posts from "./Posts";
 
 export default {
   Page,
@@ -98,6 +103,7 @@ export default {
   Form2Fields,
   Form2Field,
   Wrapper,
+  ProtectedPage,
   Cloneable,
   RichText,
   Audio,
@@ -155,7 +161,12 @@ export default {
   Twitter,
   Lottie,
   StoryWrapper,
-  Shape
+  Shape,
+
+  // DC
+  PostTitle,
+  PostExcerpt,
+  Posts
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

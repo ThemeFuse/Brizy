@@ -3,6 +3,7 @@ import { toArray } from "visual/utils/array";
 import { toObject } from "visual/utils/object";
 
 export type Getter<V, M> = (m: M, orElse?: V) => MValue<V>;
+export type Getter2<V, M> = (m: M) => V;
 export type Setter<V, M> = (v: V, m: M) => M;
 
 /**
@@ -83,6 +84,8 @@ export function apply<V, M>(fs: Array<[Setter<V, M>, V]>, m: M): M {
  * @param {function(model:M, orElse:V):V} getter
  * @param {function(v:V, model:M):M} setter
  * @return {function(v:V, model:M):M}
+ *
+ * @deprecated, use setter2
  */
 export function setter<V, M>(
   toValue: ToValue<V>,
@@ -91,6 +94,19 @@ export function setter<V, M>(
 ): Setter<V, M> {
   return (v, m): M => {
     if (toValue(v) === undefined || getter(m) === v) {
+      return m;
+    }
+
+    return setter(v, m);
+  };
+}
+
+export function setter2<V, M>(
+  getter: (m: M) => V,
+  setter: (v: V, m: M) => M
+): (v: V, m: M) => M {
+  return (v, m): M => {
+    if (getter(m) === v) {
       return m;
     }
 

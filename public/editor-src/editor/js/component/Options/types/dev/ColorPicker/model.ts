@@ -1,6 +1,4 @@
-import * as Hex from "visual/utils/color/isHex";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import { _apply, Getter, set, setter } from "visual/utils/model";
+import { _apply, set, setter2 } from "visual/utils/model";
 import * as Palette from "./entities/palette";
 import { Value } from "./entities/Value";
 
@@ -18,8 +16,7 @@ import { Value } from "./entities/Value";
  * Return coloPicker option model opacity
  * - If the value is not a valid opacity value, return the orElse value
  */
-export const getOpacity: Getter<number, Value> = (m, orElse) =>
-  Opacity.read(m.opacity) ?? orElse;
+export const getOpacity = <V extends Value>(m: V): V["opacity"] => m.opacity;
 
 /**
  * Set opacity value in the colorPicker model.
@@ -30,11 +27,8 @@ export const getOpacity: Getter<number, Value> = (m, orElse) =>
  *  - If opacity == 0, tempOpacity takes current opacity value
  *  - If opacity > 0 and palette == '', palette takes temptPalette value
  */
-export const setOpacity = setter(Opacity.read, getOpacity, (v, m) => {
-  // This makes no sense in this specific case,
-  // as `getPalette` is initialized before `setOpacity` being called
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  const p = Palette.append(getPalette(m) ?? Palette.empty, m.tempPalette);
+export const setOpacity = setter2(getOpacity, (v, m) => {
+  const p = Palette.append(m.palette, m.tempPalette);
 
   return _apply(
     [
@@ -51,8 +45,7 @@ export const setOpacity = setter(Opacity.read, getOpacity, (v, m) => {
  * Return coloPicker option model hex
  * - If the value is not a valid hex value, return the orElse value
  */
-export const getHex: Getter<string, Value> = (m, orElse) =>
-  Hex.read(m.hex) ?? orElse;
+export const getHex = <V extends Value>(m: V): V["hex"] => m.hex;
 
 /**
  * Set hex value in the colorPicker model.
@@ -62,7 +55,7 @@ export const getHex: Getter<string, Value> = (m, orElse) =>
  *  - If palette has value, set to "",
  *  - If palette has value, tempPalette takes palette value
  */
-export const setHex = setter(Hex.read, getHex, (v, m) => {
+export const setHex = setter2(getHex, (v, m) => {
   return _apply(
     [
       [set, "hex", v],
@@ -79,9 +72,7 @@ export const setHex = setter(Hex.read, getHex, (v, m) => {
  * Return color model palette
  * If value is empty, return orElse value
  */
-export const getPalette: Getter<Palette.Palette, Value> = (m, orElse) =>
-  Palette.read(m.palette) ?? orElse;
-
+export const getPalette = <V extends Value>(m: V): V["palette"] => m.palette;
 /**
  * Set palette value in the colorPicker model.
  *  - If value is not a valid palette, return the original model
@@ -89,7 +80,7 @@ export const getPalette: Getter<Palette.Palette, Value> = (m, orElse) =>
  *  - If value == '', tempPalette takes palette current value
  *  - If opacity == 0, opacity takes tempOpacity value
  */
-export const setPalette = setter(Palette.read, getPalette, (v, m) => {
+export const setPalette = setter2(getPalette, (v, m) => {
   const tempPalette = getPalette(m) || m.tempPalette;
   const tempOpacity = getOpacity(m) || m.tempOpacity;
 
@@ -97,7 +88,7 @@ export const setPalette = setter(Palette.read, getPalette, (v, m) => {
     [
       [set, "tempPalette", !v ? tempPalette : undefined],
       [set, "palette", v],
-      [set, "opacity", v ? getOpacity(m, 0) || tempOpacity : undefined]
+      [set, "opacity", v ? getOpacity(m) || tempOpacity : undefined]
     ],
     m
   );

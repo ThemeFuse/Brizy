@@ -1,5 +1,6 @@
 import { getOr } from "visual/utils/object/get";
 import { GetModel, OptionType } from "visual/component/Options/Type";
+import { ElementModel } from "visual/component/Elements/Types";
 
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
@@ -51,16 +52,20 @@ import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/de
 import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
 import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
 import { Border } from "visual/component/Options/types/dev/Border";
+import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
 import { Group } from "visual/component/Options/types/dev/Group";
 import { Typography } from "visual/component/Options/types/dev/Typography";
 import { ImageUpload } from "visual/component/Options/types/dev/ImageUpload";
 import { Population } from "visual/component/Options/types/common/Population/Population";
 import { InputText } from "visual/component/Options/types/dev/InputText";
+import { Margin } from "./dev/Margin";
 import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect";
+import { MultiSelect as MultiSelect2 } from "visual/component/Options/types/dev/MultiSelect2";
 import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
 import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
 import { Slider as SliderDev } from "./dev/Slider";
 import { Toggle as ToggleDev } from "./dev/Toggle";
+import { Padding } from "./dev/Padding";
 import { Popover as PopoverDev } from "./dev/Popover";
 import { Tabs as TabsDev } from "./dev/Tabs";
 import { Textarea as TextareaDev } from "./dev/Textarea";
@@ -69,49 +74,70 @@ import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
 import { Number } from "./dev/Number";
 import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
 import { Alert } from "./dev/Alert";
+import { Corners } from "visual/component/Options/types/dev/Corners";
+import { CloneableOrder } from "visual/component/Options/types/dev/CloneableOrder";
+import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
+import { IconsPicker } from "visual/component/Options/types/dev/IconsPicker";
 
-export const types = {
-  advancedSettings: AdvancedSettings,
+const newTypes = {
   "alert-dev": Alert,
   "backgroundColor-dev": BackgroundColor,
+  "button-dev": ButtonDev,
+  "cloneable-order": CloneableOrder,
+  "codeMirror-dev": CodeMirrorDev,
+  "colorPicker-dev": ColorPickerDev,
+  "corners-dev": Corners,
+  "boxShadow-dev": BoxShadow,
+  "border-dev": Border,
+  "group-dev": Group,
+  "imageUpload-dev": ImageUpload,
+  "iconPicker-dev": IconPicker,
+  "iconsPicker-dev": IconsPicker,
+  "inputText-dev": InputText,
+  "internalLink-dev": InternalLink,
+  "margin-dev": Margin,
+  "multiSelect-dev": MultiSelect,
+  "multiSelect2-dev": MultiSelect2,
+  "number-dev": Number,
+  "textarea-dev": TextareaDev,
+  "radioGroup-dev": RadioGroupDev,
+  "padding-dev": Padding,
+  "popover-dev": PopoverDev,
+  "population-dev": Population,
+  "select-dev": SelectDev,
+  "slider-dev": SliderDev,
+  "switch-dev": SwitchDev,
+  "tabs-dev": TabsDev,
+  "toggle-dev": ToggleDev,
+  "typography-dev": Typography
+};
+
+const oldTypes = {
+  advancedSettings: AdvancedSettings,
   blockThumbnail: BlockThumbnail,
   button: Button,
   savedBlock: SavedBlock,
   globalBlock: GlobalBlock,
   codeMirror: CodeMirror,
-  "codeMirror-dev": CodeMirrorDev,
   colorFields: ColorFields,
   colorPaletteEditor: ColorPaletteEditor,
   colorPalette: ColorPalette,
   colorPalette2: ColorPalette2,
   colorPicker: ColorPicker,
-  "colorPicker-dev": ColorPickerDev,
-  "boxShadow-dev": BoxShadow,
-  "border-dev": Border,
   colorPicker2: ColorPicker2,
   fontFamily: FontFamily,
   fontStyle: FontStyle,
   fontStyleEditor: FontStyleEditor,
   formApps: FormApps,
   grid: Grid,
-  "group-dev": Group,
   iconSetter: IconSetter,
   imageSetter: ImageSetter,
-  "imageUpload-dev": ImageUpload,
   input: Input,
-  "inputText-dev": InputText,
-  "internalLink-dev": InternalLink,
   multiInput: MultiInput,
   multiInputPicker: MultiInputPickerOptionType,
   multiPicker: MultiPicker,
-  "multiSelect-dev": MultiSelect,
-  "number-dev": Number,
   textarea: Textarea,
-  "textarea-dev": TextareaDev,
-  "radioGroup-dev": RadioGroupDev,
   popover: Popover,
-  "popover-dev": PopoverDev,
-  "population-dev": Population,
   popupConditions: PopupConditions,
   gbConditions: GBConditions,
   promptAddPopup: PromptAddPopup,
@@ -119,33 +145,88 @@ export const types = {
   radioGroup: RadioGroup,
   checkGroup: CheckGroup,
   select: Select,
-  "select-dev": SelectDev,
   slider: Slider,
-  "slider-dev": SliderDev,
   stepper: Stepper,
   switch: Switch,
-  "switch-dev": SwitchDev,
   tabs: Tabs,
-  "tabs-dev": TabsDev,
   toggle: Toggle,
-  "toggle-dev": ToggleDev,
-  "typography-dev": Typography,
   inputNumber: InputNumber,
   range: Range,
   range2: Range2,
   integrationsApps: IntegrationsApps,
   fileUpload: FileUpload,
   stateMode: StateMode
-};
+} as const;
+
+export const types = { ...oldTypes, ...newTypes };
 
 export type OptionTypes = typeof types;
-
 export type OptionName = keyof OptionTypes;
+
+export type NewOptionTypes = typeof newTypes;
+export type NewOptionName = keyof NewOptionTypes;
+
+export type NewOptionValue<
+  T extends NewOptionName
+> = NewOptionTypes[T] extends OptionType<infer M> ? M : unknown;
+
+export function applyDefaultValueToOption<T>(
+  values: T,
+  type: keyof NewOptionTypes
+): T {
+  const option = (types[type] as unknown) as OptionType<Partial<T>>;
+
+  if (!option.defaultValue) return values;
+
+  const valueEntries = Object.entries(option.defaultValue) as [
+    keyof T,
+    T[keyof T]
+  ][];
+
+  return valueEntries.reduce((acc, [key, defaultOptionValue]) => {
+    return {
+      ...acc,
+      [key]: values?.[key] ?? defaultOptionValue
+    };
+  }, {} as T);
+}
 
 /**
  * Returns a function that creates the option model object from element model
  */
-export const getModel = (type: keyof OptionTypes): GetModel<unknown> =>
-  getOr(() => ({}), "getModel", types[type] as OptionType<unknown>);
+export const getOptionModel = <T extends NewOptionName>(
+  type: T
+): GetModel<NewOptionValue<T>> => {
+  return (getFn): Partial<NewOptionValue<T>> => {
+    // TODO: remove this when all options will be written in typescript
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const option = types[type] as OptionType<NewOptionValue<T>>;
+    const model = getOr(() => ({}), "getModel", option);
+
+    return applyDefaultValueToOption<Partial<NewOptionValue<T>>>(
+      model(getFn),
+      type
+    );
+  };
+};
+
+/**
+ * Returns a function that creates the element model object from element model
+ */
+export const getElementModel = <T extends NewOptionName>(
+  type: T,
+  values: NewOptionValue<T>
+): ((get: (k: string) => string) => ElementModel) => {
+  return (getFn = (k: string): string => k): ElementModel => {
+    // TODO: remove this when all options will be written in typescript
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-expect-error
+    const option = types[type] as OptionType<NewOptionValue<T>>;
+    const model = getOr(() => ({}), "getElementModel", option);
+
+    return model(values, getFn);
+  };
+};
 
 export default types;

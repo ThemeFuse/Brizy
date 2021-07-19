@@ -135,7 +135,11 @@ export default class PromptIcon extends Component {
 
   filterIcons(icons) {
     const { typeId, categoryId, search } = this.state;
-    const searchRegex = new RegExp(search, "i");
+
+    const searchRegex = new RegExp(
+      search.replace(/[.*+?^${}()|[\]\\]/g, ""),
+      "i"
+    );
 
     return icons.filter(
       ({ type, cat, title }) =>

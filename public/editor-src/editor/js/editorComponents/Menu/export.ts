@@ -1,14 +1,13 @@
 import $ from "jquery";
-import MMenu from "../../libs/mmenu/custom-build/mmenu";
 import { debounce } from "underscore";
 import {
-  createPopper,
   Options as PopperOptions,
   Instance as PopperInstance,
   Placement as PopperPlacement
 } from "@popperjs/core";
 import { uuid } from "visual/utils/uuid";
 import { DeviceMode } from "visual/types";
+import { LibsPro } from "visual/libs";
 
 interface Settings {
   widths?: {
@@ -255,6 +254,13 @@ const appendItemToRoot = (item: HTMLElement, root: HTMLElement): void => {
 };
 
 const init = (item: HTMLElement, root: HTMLElement): void => {
+  // @ts-expect-error
+  const { CreatePopper } = LibsPro;
+
+  if (!CreatePopper) {
+    return;
+  }
+
   let megaMenu = item.querySelector<HTMLElement>(".brz-mega-menu__portal");
   const device = lastCurrentDevice;
 
@@ -318,7 +324,7 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
         placement: getPopperPlacement(item, settings, device),
         modifiers: getPopperModifiers(item, settings, device)
       };
-      const popper: PopperInstance = createPopper(
+      const popper: PopperInstance = CreatePopper(
         reference,
         megaMenu,
         popperSettings
@@ -382,6 +388,13 @@ const resize = (root: HTMLElement): VoidFunction => (): void => {
 };
 
 export default function($node: JQuery): void {
+  // @ts-expect-error
+  const { MMenu } = LibsPro;
+
+  if (!MMenu) {
+    return;
+  }
+
   const root = $node.get(0);
 
   // normalize current menu item
@@ -468,10 +481,8 @@ export default function($node: JQuery): void {
           }
         }
       };
-      // @ts-expect-error
       menu = new MMenu(mmenuId, options, config);
     } else {
-      // @ts-expect-error
       menu = new MMenu(mmenuId, options);
     }
 

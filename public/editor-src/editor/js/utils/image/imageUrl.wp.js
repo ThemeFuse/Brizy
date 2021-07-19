@@ -1,7 +1,8 @@
 import Config from "visual/global/Config";
-import { downloadImageFromCloud } from "visual/utils/api/editor";
-import { objectToQueryString } from "visual/utils/url";
-import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.js";
+import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { downloadImageFromCloud } from "visual/utils/api";
+import { objectToQueryString, isAbsoluteUrl } from "visual/utils/url";
+import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.ts";
 import { imageAttachments } from "./imageAttachments";
 
 const siteUrl = Config.get("urls").site;
@@ -9,12 +10,14 @@ const imageUrlPrefix = siteUrl.includes("?") ? `${siteUrl}&` : `${siteUrl}/?`;
 const pendingRequests = {};
 
 export default function imageUrl(
-  imageSrc,
+  src,
   options = {
     iW: 5000,
     iH: "any"
   }
 ) {
+  const imageSrc = isAbsoluteUrl(src) || isPlaceholderStr(src) ? src : src;
+
   if (!imageSrc) {
     return null;
   }

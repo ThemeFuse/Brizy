@@ -4,16 +4,16 @@ export const title = ({ v }) => {
   switch (v.type) {
     case "posts":
       return t("Posts");
-    case "relatedProducts":
-      return t("Related Products");
-    case "upsell":
-      return t("Upsell");
+    case "archives":
+      return t("Archive");
     case "products":
       return t("Products");
-    case "categories":
-      return t("Categories");
+    case "archives-product":
+      return t("Archive");
+    case "upsell":
+      return t("Upsell");
     default:
-      return t("Posts");
+      throw new Error(`unknown Posts type ${v.type}`);
   }
 };
 

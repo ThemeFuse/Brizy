@@ -1,18 +1,25 @@
 import { setIn } from "timm";
 import { hexToRgba, getColorPaletteColor } from "visual/utils/color";
 import { encodeToString } from "visual/utils/string";
-import { getDynamicContentChoices } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 
 import {
+  toolbarBgImage,
   toolbarBgColor2,
+  toolbarTextShadowHexField2,
+  toolbarTextShadow,
+  toolbarTextShadowFields2,
   toolbarBgColorHexField2,
   toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree
 } from "visual/utils/toolbar";
-
-const imageDynamicContentChoices = getDynamicContentChoices("image");
+import { defaultValueValue } from "visual/utils/onChange";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -365,7 +372,7 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   ];
 }
 
-function getSimpleColorOptions(v, { device }, onChange) {
+function getSimpleColorOptions(v, { device, context }, onChange) {
   const {
     src = null,
     population = null,
@@ -442,6 +449,11 @@ function getSimpleColorOptions(v, { device }, onChange) {
   const gradientType = {
     gradientType: type === "linear-gradient" ? "linear" : "radial"
   };
+
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     {
@@ -665,8 +677,218 @@ function getSimpleColorOptions(v, { device }, onChange) {
   ];
 }
 
-const getColorToolbar = (v, { device }, onChange) => {
+function getTextPopulationOptions(v, { device }) {
+  return [
+    {
+      id: "tabsColor",
+      className: "",
+      type: "tabs-dev",
+      tabs: [
+        {
+          id: "tabBg",
+          label: t("Bg"),
+          options: [
+            toolbarBgColor2({
+              v,
+              device,
+              prefix: "",
+              state: "normal",
+              onChangeType: ["onChangeElementRichTextBgColorType2"],
+              onChangeHex: [
+                "onChangeBgColorHexAndOpacity2",
+                "onChangeBgColorHexAndOpacityPalette2"
+              ],
+              onChangePalette: [
+                "onChangeBgColorPalette2",
+                "onChangeBgColorPaletteOpacity2"
+              ],
+              onChangeGradientHex: [
+                "onChangeBgColorHexAndOpacity2",
+                "onChangeBgColorHexAndOpacityPalette2"
+              ],
+              onChangeGradientPalette: [
+                "onChangeBgColorPalette2",
+                "onChangeBgColorPaletteOpacity2"
+              ],
+              onChangeGradient: ["onChangeGradientRange2"]
+            }),
+            {
+              type: "grid",
+              className: "brz-ed-grid__color-fileds",
+              columns: [
+                {
+                  width: 30,
+                  options: [
+                    toolbarBgColorHexField2({
+                      v,
+                      device,
+                      state: "normal",
+                      prefix:
+                        defaultValueValue({
+                          v,
+                          key: "gradientActivePointer",
+                          device,
+                          state: "normal"
+                        }) === "startPointer"
+                          ? ""
+                          : "gradient",
+                      onChange: [
+                        "onChangeBgColorHexAndOpacity2",
+                        "onChangeBgColorHexAndOpacityPalette2"
+                      ]
+                    })
+                  ]
+                },
+                {
+                  width: 52,
+                  options: [
+                    toolbarGradientType({
+                      v,
+                      prefix: "",
+                      device,
+                      state: "normal",
+                      className:
+                        "brz-ed__select--transparent brz-ed__select--align-right",
+                      disabled:
+                        defaultValueValue({
+                          v,
+                          key: "colorType",
+                          device,
+                          prefix: "",
+                          state: "normal"
+                        }) === "solid"
+                    })
+                  ]
+                },
+                {
+                  width: 18,
+                  options: [
+                    toolbarGradientLinearDegree({
+                      v,
+                      prefix: "",
+                      device,
+                      state: "normal",
+                      disabled:
+                        defaultValueValue({
+                          v,
+                          key: "colorType",
+                          prefix: "",
+                          device,
+                          state: "normal"
+                        }) === "solid" ||
+                        defaultValueValue({
+                          v,
+                          key: "gradientType",
+                          device,
+                          state: "normal"
+                        }) === "radial"
+                    }),
+                    toolbarGradientRadialDegree({
+                      v,
+                      prefix: "",
+                      device,
+                      state: "normal",
+                      disabled:
+                        defaultValueValue({
+                          v,
+                          key: "colorType",
+                          prefix: "",
+                          device,
+                          state: "normal"
+                        }) === "solid" ||
+                        defaultValueValue({
+                          v,
+                          key: "gradientType",
+                          device,
+                          state: "normal"
+                        }) === "linear"
+                    })
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "tabShadow",
+          label: t("Shadow"),
+          options: [
+            toolbarTextShadow({
+              v,
+              device,
+              state: "normal",
+              onChangeType: ["onChangeTextShadowType"],
+              onChangeHex: [
+                "onChangeTextShadowHexAndOpacity",
+                "onChangeTextShadowHexAndOpacityPalette"
+              ],
+              onChangePalette: [
+                "onChangeTextShadowPalette",
+                "onChangeTextShadowPaletteOpacity"
+              ]
+            }),
+            {
+              type: "grid",
+              className: "brz-ed-grid__color-fileds",
+              columns: [
+                {
+                  width: 41,
+                  options: [
+                    toolbarTextShadowHexField2({
+                      v,
+                      device,
+                      state: "normal",
+                      onChange: [
+                        "onChangeTextShadowHexAndOpacity",
+                        "onChangeTextShadowHexAndOpacityPalette"
+                      ]
+                    })
+                  ]
+                },
+                {
+                  width: 59,
+                  options: [
+                    toolbarTextShadowFields2({
+                      v,
+                      device,
+                      state: "normal",
+                      onChange: ["onChangeTextShadowFields"]
+                    })
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "mask",
+          label: t("Mask"),
+          options: [
+            toolbarBgImage({
+              v,
+              device,
+              onChange: ["onChangeBgImage"]
+            })
+          ]
+        }
+      ]
+    }
+  ];
+}
+
+const getColorToolbar = (v, { device, context }, onChange) => {
   const { isPopulationBlock, populationColor } = v;
+
+  let backgroundColor;
+  if (v.textPopulation) {
+    const { hex: colorHex } = getOptionColorHexByPalette(
+      defaultValueValue({ v, key: "colorHex", device }),
+      defaultValueValue({ v, key: "colorPalette", device })
+    );
+    backgroundColor = hexToRgba(colorHex, v.colorOpacity);
+  } else {
+    backgroundColor = getColorValue(v.color);
+  }
 
   return {
     id: "toolbarColor",
@@ -676,7 +898,7 @@ const getColorToolbar = (v, { device }, onChange) => {
       title: t("Colors"),
       icon: {
         style: {
-          backgroundColor: getColorValue(v.color)
+          backgroundColor
         }
       }
     },
@@ -685,7 +907,9 @@ const getColorToolbar = (v, { device }, onChange) => {
     position: 20,
     options: isPopulationBlock
       ? getPopulationColorOptions({ populationColor }, onChange)
-      : getSimpleColorOptions(v, { device }, onChange)
+      : v.textPopulation
+      ? getTextPopulationOptions(v, { device }, onChange)
+      : getSimpleColorOptions(v, { device, context }, onChange)
   };
 };
 

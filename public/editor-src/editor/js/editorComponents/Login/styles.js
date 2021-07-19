@@ -61,7 +61,7 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelLineHeight"
       ]
     },
-    ".brz &&:hover .brz-form-login .brz-form-login__field-lost-password a": {
+    ".brz && .brz-form-login .brz-form-login__field-lost-password:hover": {
       standart: [
         "cssStyleElementLoginLostPasswordColor",
         "cssStyleElementLoginLostPasswordTypography2FontFamily",
@@ -72,14 +72,48 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLostPasswordAlign"
       ]
     },
-    ".brz &&:hover .brz-form-login .brz-control__check-group-option": {
+    ".brz && .brz-form-login .brz-control__check-group-option:hover": {
       standart: [
         "cssStyleElementForm2FieldsCheckboxColor",
         "cssStyleElementForm2FieldsCheckboxFontFamily",
         "cssStyleElementForm2FieldsCheckboxFontSize",
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
-        "cssStyleElementForm2FieldsCheckboxLineHeight"
+        "cssStyleElementForm2FieldsCheckboxLineHeight",
+        "cssStyleElementLoginRememberMeAlign"
+      ]
+    },
+    ".brz && .brz-form-login .brz-login__register-info:hover": {
+      standart: [
+        "cssStyleElementLoginRegisterInfoTypography2FontFamily",
+        "cssStyleElementLoginRegisterInfoTypography2FontSize",
+        "cssStyleElementLoginRegisterInfoTypography2LineHeight",
+        "cssStyleElementLoginRegisterInfoTypography2FontWeight",
+        "cssStyleElementLoginRegisterInfoTypography2LetterSpacing",
+        "cssStyleElementRegisterInfoColor",
+        "cssStyleElementRegisterInfoAlign"
+      ]
+    },
+    ".brz && .brz-form-login .brz-form-login__field-register-link:hover": {
+      standart: [
+        "cssStyleElementLoginRegisterLinkTypography2FontFamily",
+        "cssStyleElementLoginRegisterLinkTypography2FontSize",
+        "cssStyleElementLoginRegisterLinkTypography2LineHeight",
+        "cssStyleElementLoginRegisterLinkTypography2FontWeight",
+        "cssStyleElementLoginRegisterLinkTypography2LetterSpacing",
+        "cssStyleElementLoginRegisterLinkColor",
+        "cssStyleElementLoginRegisterLinkAlign"
+      ]
+    },
+    ".brz && .brz-form-login .brz-form-login__field-login-link:hover": {
+      standart: [
+        "cssStyleElementLoginLoginLinkTypography2FontFamily",
+        "cssStyleElementLoginLoginLinkTypography2FontSize",
+        "cssStyleElementLoginLoginLinkTypography2LineHeight",
+        "cssStyleElementLoginLoginLinkTypography2FontWeight",
+        "cssStyleElementLoginLoginLinkTypography2LetterSpacing",
+        "cssStyleElementLoginLoginLinkColor",
+        "cssStyleElementLoginLoginLinkAlign"
       ]
     }
   };

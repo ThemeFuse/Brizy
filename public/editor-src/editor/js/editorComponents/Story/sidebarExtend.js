@@ -1,9 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { toolbarCustomCSSClass } from "visual/utils/toolbar";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
-  const cssIDDynamicContentChoices = getDynamicContentChoices("richText", true);
+export function getItems({ v, device, context }) {
+  const cssIDDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

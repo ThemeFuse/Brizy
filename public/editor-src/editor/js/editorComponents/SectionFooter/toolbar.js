@@ -20,7 +20,7 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { IS_WP } from "visual/utils/models";
+import { IS_WP } from "visual/utils/env";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -117,6 +117,7 @@ export function getItems({ v, device, component, state }) {
                   v,
                   device,
                   state,
+                  config: component.context.dynamicContent.config,
                   states: [NORMAL, HOVER],
                   onChange: [
                     "onChangeBgImage",

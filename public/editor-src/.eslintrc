@@ -12,6 +12,7 @@
     "plugin:react/recommended",
     "prettier"
   ],
+  // "plugins": ["graphql"],
   "rules": {
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
@@ -20,6 +21,14 @@
     "no-prototype-builtins": 0,
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
+    // "graphql/template-strings": [
+    //   "error",
+    //   {
+    //     "env": "apollo",
+    //     "tagName": "gql",
+    //     "schemaJsonFilepath": "./editor/js/utils/api/editor/cms/graphql/schema.json"
+    //   }
+    // ]
   },
   "env": {
     "es6": true,
@@ -33,7 +42,9 @@
     "IS_EDITOR": "readonly",
     "IS_PREVIEW": "readonly",
     "__CONFIG__": "readonly",
-    "YT": "readonly"
+    "YT": "readonly",
+    "BrizyLibs": "readonly",
+    "BrizyProLibs": "readonly"
   },
   "settings": {
     "react": {
