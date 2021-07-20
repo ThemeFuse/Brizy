@@ -3,8 +3,7 @@
 class Brizy_Compatibilities_BrizyProCompatibility {
 
 	public function __construct() {
-		$hasProInstalledAndEnabled = defined('BRIZY_PRO_VERSION');
-		if($hasProInstalledAndEnabled && version_compare(BRIZY_MINIMUM_PRO_VERSION, BRIZY_PRO_VERSION)>0) {
+		if(version_compare(BRIZY_MINIMUM_PRO_VERSION, BRIZY_PRO_VERSION)>0) {
 			$proMain = new BrizyPro_Main();
 			add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
 			add_action( 'admin_notices', [ $this, 'brizypro_upgrade_required' ] );
