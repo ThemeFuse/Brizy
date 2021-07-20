@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
@@ -62,7 +62,7 @@ export function getItems({ v, device }) {
                 {
                   id: "paginationBgColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -73,7 +73,7 @@ export function getItems({ v, device }) {
                 {
                   id: "paginationColor",
                   type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -84,7 +84,7 @@ export function getItems({ v, device }) {
                 {
                   id: "paginationBorder",
                   type: "border-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             }

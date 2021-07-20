@@ -6,7 +6,7 @@ const Slide5 = require("./pages/Slide5");
 const StoryStyle = require("./styles/Story");
 
 module.exports = {
-  name: "NightJam",
+  name: "Night Jam",
   color: "#2a4989",
   cat: [0, 6],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5],

@@ -22,17 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-63 brz-fs-sm-im-63 brz-fs-lg-64 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1"><span class="brz-cp-color2">Eat</span></p>',
-                      offsetY: 78,
-                      offsetX: 8,
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ls-lg-m_5 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1 brz-fs-lg-64 brz-fs-sm-63 brz-fs-xs-63 brz-text-lg-left" data-uniq-id="hiugz" data-generated-css="brz-css-hwniq"><span class="brz-cp-color2">Eat</span></p>',
+                      offsetY: 74,
+                      offsetX: 19,
                       width: 55,
-                      _id: "rscjwvothczbymhwupyixwtskextpwarrxoe"
+                      _id: "ahpxuftgseplqpdsssgyqmihnfenehyvptzq"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "wrxmivyyendqixoonudqipceyinkupxmapbe"
+                _id: "dkgwrexwmsdwxawlsobmoejdvfsrdldpllaa"
               }
             },
             {
@@ -45,17 +45,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-26 brz-fs-sm-im-25 brz-fs-xs-im-25 brz-ls-lg-m_1 brz-ls-sm-im-3 brz-ls-xs-im-3"><span class="brz-cp-color2 brz-pre-population-visible">#02</span></p>',
+                        '<p class="brz-ls-xs-3 brz-ls-sm-3 brz-ls-lg-m_1 brz-fs-xs-25 brz-fs-sm-25 brz-fs-lg-26 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-right" data-uniq-id="czwgx" data-generated-css="brz-css-rpqdi"><span class="brz-pre-population-visible brz-cp-color2">#02</span></p>',
                       offsetY: 7,
-                      offsetX: 79,
-                      width: 21,
-                      _id: "tknlvsfsfwwviedgvqrsilsmqxqjvguoackc"
+                      offsetX: 66,
+                      width: 31,
+                      _id: "ffefstkgytzeghmopoipbzuezigwscgxxiir"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "radruvnvltzyzavmlmwdynptlfzqwuarlozo"
+                _id: "hvebiwwqafolssmwtxymsghkkswomxwwbbwh"
               }
             },
             {
@@ -68,17 +68,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-28 brz-fs-sm-im-28 brz-fs-lg-29 brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-m_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-text-lg-center brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1"><span class="brz-cp-color1">Healthy</span></p>',
-                      offsetY: 89,
-                      offsetX: 34,
+                        '<p class="brz-text-lg-right brz-fs-xs-28 brz-fs-sm-28 brz-fs-lg-29 brz-ls-xs-0 brz-ls-sm-0 brz-ls-lg-m_1 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-rock_salt brz-lh-lg-1_3 brz-lh-sm-1 brz-lh-xs-1" data-generated-css="brz-css-dwhuk" data-uniq-id="igjwf"><span style="color: rgb(243, 37, 109);">Healthy</span></p>',
+                      offsetY: 87,
+                      offsetX: 28,
                       width: 50,
-                      _id: "hmnexqxgssgsesfqjrmnjlnkyzzelrzeylkx"
+                      _id: "jfwuvndnuljoyukdmiwxionbxoyafvvnzjws"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "hmuwrxedsinixfcckqurzcpdvjjfsimtthlj"
+                _id: "jpqzzmfxgqxkctfcefqkkxxaurmrmxybnwrg"
               }
             },
             {
@@ -90,16 +90,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 46,
-                      offsetX: 47,
+                      offsetY: 42,
+                      offsetX: 42,
                       text:
-                        '<p class="brz-text-lg-center brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_6 brz-lh-sm-im-1_3 brz-lh-xs-im-1_3"><span class="brz-cp-color2">Great recipes for simple dishes. </span><span class="brz-cp-color1">Learn More</span></p>',
-                      width: 93,
-                      _id: "ojyuoxkfjogcxzfrcudvnwoisisjhmuguaqx"
+                        '<p class="brz-lh-xs-1_3 brz-lh-sm-1_3 brz-lh-lg-1_6 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_text brz-ls-xs-0 brz-ls-sm-0 brz-ls-lg-0 brz-fs-xs-15 brz-fs-sm-15 brz-fs-lg-16 brz-text-lg-center" data-uniq-id="cwuvm" data-generated-css="brz-css-jwied"><span class="brz-cp-color2">Great recipes for simple dishes. </span><span style="color: rgb(243, 37, 109);">Learn More</span></p>',
+                      width: 100,
+                      _id: "xrozlldhjwzydaaldztkcidoaxwbxxuuoswk"
                     }
                   }
                 ],
-                _id: "esmrdfmdnvlrpjslhkedhblagpvopmgzhzzp",
+                _id: "riqmpxxxthtqeebkiybwwzwhnacseqxjofjy",
                 rotate: -90,
                 rotateSuffix: ""
               }
@@ -140,11 +140,11 @@ module.exports = {
                       tempBoxShadowVertical: 12,
                       boxShadowHorizontal: 12,
                       tempBoxShadowHorizontal: 12,
-                      _id: "zccienpzhohcryjsciermtcqipzrspiigxfv"
+                      _id: "rnhdgdvdzmoqnjznznviokzefjuiqfwrokgg"
                     }
                   }
                 ],
-                _id: "jlhrgtuyxyaparzlfwssptkotnphfwkeayec"
+                _id: "zmgtwvtmemwowpuuqofiafoflwvuoglnvyxm"
               }
             }
           ],
@@ -196,7 +196,7 @@ module.exports = {
           tempBorderTopRightRadius: 0,
           tempBorderBottomLeftRadius: 0,
           tempBorderBottomRightRadius: 0,
-          _id: "dfgyxzewnzmydrqacifzrrcixwmlyjpbctja"
+          _id: "gjlifvzptrkbvcdcjnjrnjrvcswbcxnuzngu"
         },
         blockId: "StoryBlank0001"
       }

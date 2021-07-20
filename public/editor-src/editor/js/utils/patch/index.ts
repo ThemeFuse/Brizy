@@ -1,5 +1,5 @@
 import { toArray } from "visual/utils/array";
-import { MValue, ToValue } from "visual/utils/value";
+import { MValue } from "visual/utils/value";
 import { Getter } from "visual/utils/model";
 
 export type Patcher<V, M extends P, P> = (v: V, m: M) => MValue<P>;
@@ -14,23 +14,15 @@ export type Patcher<V, M extends P, P> = (v: V, m: M) => MValue<P>;
  * @template M
  * @template R
  *
- * @param {function(v: *, orElse:V):V} toValue
  * @param {function(model:M, orElse:V):V} getter
  * @param {function(v:V, model:M):R} patcher
  * @return {function(v: V, m: M):R}
  */
 export function patcher<V, M extends P, P>(
-  toValue: ToValue<V>,
   getter: Getter<V, M>,
   patcher: Patcher<V, M, P>
 ): Patcher<V, M, P> {
-  return (v, m): undefined | P => {
-    if (toValue(v) === undefined || getter(m) === v) {
-      return undefined;
-    }
-
-    return patcher(v, m);
-  };
+  return (v, m): undefined | P => (getter(m) === v ? undefined : patcher(v, m));
 }
 
 // ================= apply function definition =================================

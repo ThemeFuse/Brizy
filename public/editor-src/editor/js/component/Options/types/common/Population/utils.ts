@@ -1,15 +1,16 @@
-import { OptionName } from "visual/component/Options/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { inDevelopment } from "visual/editorComponents/utils";
+import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
+import { IS_CMS } from "visual/utils/env";
+import { Choices, OptGroup } from "./types/Choices";
 
 /**
  * Check if population feature is enabled
  */
-export const isEnabled = (): boolean => TARGET === "WP";
+export const isEnabled = (): boolean => TARGET === "WP" || IS_CMS;
 
-export function bindPopulation<K extends OptionName>(
+export const bindPopulationEnabled = (
   option: ToolbarItemType
-): ToolbarItemType {
+): ToolbarItemType => {
   const {
     population,
     label,
@@ -22,8 +23,8 @@ export function bindPopulation<K extends OptionName>(
     position,
     ...o
   } = option;
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  if (!isEnabled() || population === undefined || !inDevelopment(o.type)) {
+
+  if (population === undefined || !inDevelopment(o.type)) {
     return option;
   }
 
@@ -44,4 +45,16 @@ export function bindPopulation<K extends OptionName>(
     },
     options: [o]
   };
-}
+};
+
+export const bindPopulationDisabled = (
+  option: ToolbarItemType
+): ToolbarItemType => option;
+
+export const bindPopulation = isEnabled()
+  ? bindPopulationEnabled
+  : bindPopulationDisabled;
+
+export const isOptgroup = <T extends string | number>(
+  choice: Choices<T> | OptGroup<T>
+): choice is OptGroup<T> => "optgroup" in choice;

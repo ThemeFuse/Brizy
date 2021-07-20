@@ -6,15 +6,19 @@ import { getDynamicContentChoices } from "visual/utils/options";
 import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

@@ -2,23 +2,30 @@
 import React from "react";
 
 import classnames from "classnames";
+import Placeholder from "visual/component/Placeholder";
 import { css } from "visual/utils/cssStyle";
 import { stylePicture } from "../styles";
 
-import Placeholder from "./Placeholder";
 import SvgImage from "./SvgImage";
 import SimpleImage from "./SimpleImage";
+import Population from "./Population";
 
 import withLink from "./withLink";
 import { ImageProps, Styles } from "../types";
 import { isSVG, isGIF } from "../utils";
 
 const Content: React.FC<ImageProps> = props => {
-  const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes } = props;
+  const {
+    v,
+    vs,
+    vd,
+    _id,
+    componentId,
+    wrapperSizes,
+    extraAttributes,
+    meta
+  } = props;
   const { imageSrc, imageExtension, imagePopulation } = v;
-
-  const showImageInPreview = IS_PREVIEW && (imagePopulation || imageSrc);
-  const showImageInEditor = IS_EDITOR && !imagePopulation && imageSrc;
 
   const pictureClassName = IS_EDITOR
     ? "brz-picture"
@@ -37,7 +44,16 @@ const Content: React.FC<ImageProps> = props => {
         )
       );
 
-  if (showImageInPreview || showImageInEditor) {
+  if (IS_EDITOR && imagePopulation) {
+    return meta._dc?.lastCache?.imageSrc ? (
+      <Population v={v} />
+    ) : (
+      renderPlaceholder()
+    );
+  }
+
+  // imagePopulation is rendering during compilation time as usual Image
+  if (imageSrc || imagePopulation) {
     const content =
       isSVG(imageExtension) || isGIF(imageExtension) ? (
         <SvgImage
@@ -56,11 +72,15 @@ const Content: React.FC<ImageProps> = props => {
     return <picture className={pictureClassName}>{content}</picture>;
   }
 
-  return (
-    <div className={pictureClassName}>
-      <Placeholder imagePopulation={imagePopulation} />
-    </div>
-  );
+  return renderPlaceholder();
+
+  function renderPlaceholder(): JSX.Element {
+    return (
+      <div className={pictureClassName}>
+        <Placeholder icon="img" />
+      </div>
+    );
+  }
 };
 
 export default withLink(Content);

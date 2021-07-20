@@ -1,4 +1,4 @@
-import { Block, BlockMetaType } from "visual/types";
+import { Block, BlockMetaType, ExtraFontStyle, Style } from "visual/types";
 import { FontsPayload } from "visual/redux/actions2";
 
 export type PromptTabsId = "template" | "blocks" | "saved" | "global";
@@ -6,14 +6,16 @@ export type PromptTabsId = "template" | "blocks" | "saved" | "global";
 export type PromptBlock = {
   fonts: FontsPayload;
   block: Block;
-  extraFontStyles?: Array<{ id: string }>;
+  extraFontStyles?: ExtraFontStyle[];
 };
 
-export type PromptBlockTemplate = {
+export interface PromptBlockTemplate {
   fonts: FontsPayload;
   blocks: Block[];
-  extraFontStyles?: Array<{ id: string }>;
-};
+  extraFontStyles?: ExtraFontStyle[];
+  styles?: Style[];
+  currentStyleId?: string;
+}
 
 export type PromptBlocksProps = {
   activeTab?: PromptTabsId;

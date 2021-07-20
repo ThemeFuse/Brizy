@@ -6,22 +6,8 @@ type SelectChoices = {
   optgroup?: SelectChoices[];
 };
 
-type Taxonomies = {
-  id: string;
-  label: string;
-  name: string;
-  terms?: Taxonomies[];
-};
-
-type PostTypes = {
-  id: string;
-  name: string;
-  label: string;
-  taxonomies?: [{ id: string; name: string }];
-};
-
 export const getTaxonomies = (
-  taxonomies: Taxonomies[] | undefined = Config.get("taxonomies")
+  taxonomies = Config.getAll().taxonomies
 ): SelectChoices[] => {
   if (!taxonomies) {
     return [{ title: "-", value: "" }];
@@ -55,25 +41,23 @@ export const getTaxonomies = (
 };
 
 export const getTaxonomiesFilter = (type = ""): SelectChoices[] => {
-  const taxonomies: Taxonomies[] | undefined = Config.get("taxonomies").filter(
-    (item: Taxonomies) => {
-      const { name } = item;
+  const taxonomies = Config.getAll().taxonomies.filter(item => {
+    const { name } = item;
 
-      if (type === "products") {
-        return name.indexOf("product") > -1;
-      }
-      if (type === "posts") {
-        return name.indexOf("product") < 0;
-      }
-      return item;
+    if (type === "products") {
+      return name.indexOf("product") > -1;
     }
-  );
+    if (type === "posts") {
+      return name.indexOf("product") < 0;
+    }
+    return item;
+  });
 
   return getTaxonomies(taxonomies);
 };
 
 export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
-  const postTypesTaxs: PostTypes[] | undefined = Config.get("postTypesTaxs");
+  const postTypesTaxs = Config.getAll().postTypesTaxs;
 
   if (!postTypesTaxs) {
     return [{ title: "-", value: "" }];
@@ -88,7 +72,7 @@ export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
 export const getTaxonomiesMultiOptionsSub = (
   taxonomies: string
 ): SelectChoices[] => {
-  const postTypesTaxs: PostTypes[] | undefined = Config.get("postTypesTaxs");
+  const postTypesTaxs = Config.getAll().postTypesTaxs;
 
   if (!taxonomies || !postTypesTaxs) {
     return [{ title: "-", value: "" }];

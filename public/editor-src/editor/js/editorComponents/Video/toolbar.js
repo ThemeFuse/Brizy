@@ -13,8 +13,9 @@ import {
 import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -27,7 +28,10 @@ export function getItems({ v, device }) {
     dvv("borderColorPalette")
   );
 
-  const videoDynamicContentChoices = getDynamicContentChoices("richText");
+  const videoDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.link
+  );
 
   const IS_PRO = Boolean(Config.get("pro"));
   const noCover = !v.coverImageSrc;
@@ -364,8 +368,7 @@ export function getItems({ v, device }) {
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER],
-                  disabled: v.type === "custom"
+                  states: [NORMAL, HOVER]
                 }
               ]
             }

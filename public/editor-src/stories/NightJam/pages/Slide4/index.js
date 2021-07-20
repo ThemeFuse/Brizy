@@ -23,14 +23,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-ls-xs-im-m_2 brz-ls-sm-im-m_2 brz-ls-lg-m_4 brz-text-lg-center brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-fs-lg-40 brz-fs-sm-im-39 brz-fs-xs-im-39"><span style="color: rgb(2, 33, 81);">In Partnership with</span></p>',
-                      width: 67,
+                      width: 86,
                       offsetY: 24,
-                      offsetX: 15,
-                      _id: "ahrmalmisqxwcupzvailqmlkgcynviznesat"
+                      offsetX: 6,
+                      _id: "rxjokglyvyidszwvcngyksozoyenxubenfym"
                     }
                   }
                 ],
-                _id: "lbzqmczrnxuuahacgyteyrsfrgbzneopveaa"
+                _id: "rnjsecgqoepwdgkxxgzuujtsjddwwcckxgiu"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "waaxpiiniuycxalsgjuldmsjuufkrmddwggi",
+                      _id: "qrcntoyzvamfwktiwyxcigcgabuzievlmxwi",
                       width: 73,
                       height: 98.11366795366796,
                       offsetY: 38,
@@ -58,7 +58,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "njrhcidinmxphzeiubcrvwhicedqcaqbccrk"
+                _id: "fyvvkcltfxuscypymgghdvumsvdizphykqxy"
               }
             }
           ],
@@ -95,7 +95,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 96,
           bgPositionY: 48,
-          _id: "cqleynokexgxodqyjdqpbpszgidvvwdrfcle"
+          _id: "ycnldjdzyscbjhqrqapdibfxsnppsaojecjy"
         },
         blockId: "StoryBlank0001"
       }

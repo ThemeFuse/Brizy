@@ -8,6 +8,17 @@
     max-width: 100%;
   }
 
+  .brz-capitalize-on {
+    text-transform: uppercase;
+
+    // rich-text can have span inside span(usually this happens with DC)
+    // text-transform - doesn't apply for children
+    // this way we use this hack
+    span {
+      text-transform: uppercase;
+    }
+  }
+
   @include word-wrap;
 
   > * {
@@ -121,7 +132,7 @@
     background-color: transparent; // Remove the gray background on active links in IE 10.
     -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
 
-    &[href] {
+    &[href] :not(.brz-ed-content-dc-link) {
       @include hover {
         text-decoration: $link-hover-decoration;
       }
@@ -166,19 +177,8 @@
     background-clip: text;
     color: transparent !important;
   }
-}
 
-.brz-story {
-  .brz-rich-text {
-    p {
-      width: 100%;
-      font-size: calc(16% * 0.23);
-    }
-    .brz-ed-box__resizer {
-      font-size: inherit;
-    }
-    .brz-ed-box__resizer {
-      font-size: inherit;
-    }
+  .brz-story .brz-rich-text > div {
+    width: 100%;
   }
 }

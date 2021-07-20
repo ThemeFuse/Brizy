@@ -18,16 +18,15 @@ import {
   Value
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import { Width } from "./Width";
-
 type Style = BorderStyle.Style;
 
 export type StyleObject = {
   id: Style;
-  title: string;
-  icon: string;
+  title?: string;
+  icon?: string;
 };
 
-type Props = WithClassName & {
+export interface Props extends WithClassName {
   enableOpacity: boolean;
   styles: StyleObject[];
   paletteList: PaletteObject[];
@@ -53,7 +52,7 @@ type Props = WithClassName & {
   onChangeBottomWidth: OnChange<number>;
   leftWidth: number;
   onChangeLeftWidth: OnChange<number>;
-};
+}
 
 export const Border: FC<Props> = ({
   className,

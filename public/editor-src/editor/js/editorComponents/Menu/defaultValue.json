@@ -52,6 +52,7 @@
       "mobileMMenuFontFamily": null
     },
     "fontSize": 12,
+    "fontSizeSuffix": "px",
     "fontWeight": 700,
     "lineHeight": 1.8,
     "letterSpacing": 3,
@@ -243,6 +244,7 @@
 
     "tabletFontStyle": "button",
     "tabletFontSize": 11,
+    "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 700,
     "tabletLineHeight": 1.8,
     "tabletLetterSpacing": 1,
@@ -252,6 +254,7 @@
 
     "mobileFontStyle": "button",
     "mobileFontSize": 11,
+    "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 700,
     "mobileLineHeight": 1.8,
     "mobileLetterSpacing": 1,
@@ -353,6 +356,7 @@
     "subMenuFontStyle": "button",
 
     "subMenuFontSize": 12,
+    "subMenuFontSizeSuffix": "px",
     "subMenuFontWeight": 700,
     "subMenuLineHeight": 1.8,
     "subMenuLetterSpacing": 3,
@@ -431,12 +435,14 @@
 
     "tabletSubMenuFontStyle": "button",
     "tabletSubMenuFontSize": 11,
+    "tabletSubMenuFontSizeSuffix": "px",
     "tabletSubMenuFontWeight": 700,
     "tabletSubMenuLineHeight": 1.8,
     "tabletSubMenuLetterSpacing": 1,
 
     "mobileSubMenuFontStyle": "button",
     "mobileSubMenuFontSize": 11,
+    "mobileSubMenuFontSizeSuffix": "px",
     "mobileSubMenuFontWeight": 700,
     "mobileSubMenuLineHeight": 1.8,
     "mobileSubMenuLetterSpacing": 1,
@@ -445,6 +451,7 @@
     "mMenuSizeSuffix": null,
     "mMenuFontStyle": "button",
     "mMenuFontSize": 12,
+    "mMenuFontSizeSuffix": "px",
     "mMenuFontWeight": 700,
     "mMenuLineHeight": 1.8,
     "mMenuLetterSpacing": 3,
@@ -529,6 +536,7 @@
     "tabletMMenuSizeSuffix": null,
     "tabletMMenuFontStyle": "button",
     "tabletMMenuFontSize": 12,
+    "tabletMMenuFontSizeSuffix": "px",
     "tabletMMenuFontWeight": 700,
     "tabletMMenuLineHeight": 1.8,
     "tabletMMenuLetterSpacing": 3,
@@ -580,6 +588,7 @@
     "mobileMMenuSizeSuffix": null,
     "mobileMMenuFontStyle": "button",
     "mobileMMenuFontSize": 12,
+    "mobileMMenuFontSizeSuffix": "px",
     "mobileMMenuFontWeight": 700,
     "mobileMMenuLineHeight": 1.8,
     "mobileMMenuLetterSpacing": 3,

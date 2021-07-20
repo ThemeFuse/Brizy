@@ -5,7 +5,7 @@ import { Group as Control } from "visual/component/Controls/Group";
 import { WithClassName } from "visual/utils/options/attributes";
 import { OptionDefinition } from "visual/component/Options/Type";
 
-export type Props = Option.Props<undefined, {}> &
+export type Props = Option.Props<undefined> &
   WithClassName & {
     options: OptionDefinition[];
   };
@@ -22,7 +22,15 @@ export const Group: FC<Props> &
 
 const getModel: Option.GetModel<undefined> = () => undefined;
 
+const getElementModel: Option.GetElementModel<undefined> = () => ({});
+
 Group.getModel = getModel;
+
+Group.getElementModel = getElementModel;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+Group.defaultValue = undefined;
 
 Group.shouldOptionBeFiltered = ({ options }): boolean =>
   filterOptionsData(options ?? []).length === 0;

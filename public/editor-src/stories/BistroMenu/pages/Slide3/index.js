@@ -22,17 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ff-abril_fatface brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-46 brz-fs-sm-im-45 brz-fs-xs-im-45 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-text-lg-right"><span style="color: rgb(255, 255, 255);">Tuesday</span></p>',
+                        '<p class="brz-text-lg-right brz-ls-xs-0 brz-ls-sm-0 brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-45 brz-fs-sm-45 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-abril_fatface brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_0_5 brz-lh-lg-1_1 brz-fs-lg-42" data-uniq-id="dxgpf" data-generated-css="brz-css-fddeu"><span style="color: rgb(255, 255, 255);">Tuesday</span></p>',
                       offsetY: 4,
-                      offsetX: 48,
-                      _id: "mrdrifxglhtmgyfuiogkrxnebkoedoskolxv",
-                      width: 48
+                      offsetX: 50,
+                      _id: "buvhnaxnlezgcqxwjasasijjdubvyymiqbdn",
+                      width: 46
                     }
                   }
                 ],
                 zIndex: 28,
                 zIndexSuffix: "",
-                _id: "uqwsdwdlzsulwovjunfzyawfwseynklgpwtw"
+                _id: "glgcwiyabmkallkmcrsaxektmnbgodhqpmea"
               }
             },
             {
@@ -47,15 +47,15 @@ module.exports = {
                       offsetY: 13,
                       offsetX: 50,
                       text:
-                        '<p class="brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-caveat brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-35 brz-fs-sm-im-34 brz-fs-xs-im-34 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-text-lg-right"><span style="color: rgb(255, 214, 129);">only $13 .50 </span></p>',
-                      _id: "ubglvemtcbeuykqhzvygkrhjabwfgwamuwon",
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-34 brz-fs-xs-34 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-right brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-gxpkj" data-uniq-id="spoxa"><span style="color: rgb(255, 214, 129);">only $13 .50 </span></p>',
+                      _id: "vahetucrwpthnezaohbuilhttpgwouazhjdl",
                       width: 45
                     }
                   }
                 ],
                 zIndex: 37,
                 zIndexSuffix: "",
-                _id: "nprxyeexxfaayhyjmhdeijzegassekrurzuo"
+                _id: "enacaiyklnrudpfbhtohwzckukjfkcbxuhzv"
               }
             },
             {
@@ -67,18 +67,18 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 7,
-                      offsetX: 9,
+                      offsetY: 4,
+                      offsetX: 10,
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-left brz-fs-lg-33 brz-fs-sm-im-32 brz-fs-xs-im-32"><span class="brz-cp-color8">Eggs Benedict</span></p>',
-                      width: 40,
-                      _id: "oyofdvhnmfovrxysjwwcfgnctacsfgcxpnnh"
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-left brz-fs-sm-32 brz-fs-xs-32 brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-acont" data-uniq-id="rmgrv"><span class="brz-cp-color8">Eggs Benedict</span></p>',
+                      width: 30,
+                      _id: "uzkxhqhszkpgshiawtogzdwfckghiugotwpd"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "xaehznijbxecpxmdvdbgcwucoduukhifpwcp"
+                _id: "xtcobiqvmveuqljvhqvpzsxhjvvurnbqfbwl"
               }
             },
             {
@@ -93,15 +93,15 @@ module.exports = {
                       offsetY: 20,
                       offsetX: 9,
                       text:
-                        '<p class="brz-fs-xs-im-32 brz-fs-sm-im-32 brz-fs-lg-33 brz-text-lg-left brz-ls-lg-m_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ff-caveat brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-lh-lg-1"><span class="brz-cp-color8">Cream Cheese tarts </span></p>',
+                        '<p class="brz-fs-xs-32 brz-fs-sm-32 brz-text-lg-left brz-ls-xs-m_1 brz-ls-sm-m_1 brz-fw-sm-400 brz-fw-xs-400 brz-lh-sm-1 brz-lh-xs-1 brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1 brz-fs-lg-30" data-generated-css="brz-css-hsnms" data-uniq-id="vycxh"><span class="brz-cp-color8">Cream Cheese tarts </span></p>',
                       width: 40,
-                      _id: "aeqhgxjyenhfguflbdmuiglpbmvkyvqmxiip"
+                      _id: "fcgjzdgmvcyroadpmiiptlxxiivwregbwebb"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "mlytvzopyigjzdjpmopuydubsdgljmxgojyx"
+                _id: "idgstguacbsuijqbtkqdxgjcuhkvkdeczudn"
               }
             },
             {
@@ -113,18 +113,18 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 35,
+                      offsetY: 34,
                       offsetX: 9,
                       text:
-                        '<p class="brz-lh-lg-1 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-left brz-fs-lg-33 brz-fs-sm-im-32 brz-fs-xs-im-32"><span class="brz-cp-color8">Pork Steak &amp; brocolli</span></p>',
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-left brz-fs-sm-32 brz-fs-xs-32 brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1 brz-fs-lg-30" data-generated-css="brz-css-exbdj" data-uniq-id="rszps"><span class="brz-cp-color8">Pork Steak &amp; brocolli</span></p>',
                       width: 40,
-                      _id: "hhkabyiurbdgyzddvixvdlaiwrnvwmfkfpol"
+                      _id: "uslzotedxltieeiistqlhcwozoxnkfecykgo"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "racqdrihhrzyjgjtqdngkxhxtoplblxxcvnw"
+                _id: "xbscnsocfghcplydvyryfqfubltzgvinfxug"
               }
             },
             {
@@ -148,13 +148,13 @@ module.exports = {
                       heightSuffix: "%",
                       zoom: 100,
                       zoomSuffix: "",
-                      offsetX: 4,
-                      offsetY: -23,
-                      _id: "iknykiyizywdpewmdatiuenfzdmdvbajtkvc"
+                      offsetX: 5,
+                      offsetY: -11,
+                      _id: "htmlpjjsecfdbwasvrqschnvklawouduxoja"
                     }
                   }
                 ],
-                _id: "rrweiqzpeokacfkfmfijykwueszjwydxyfrb"
+                _id: "hwwrstcoxcromoqjqfbzhlghmtfevxrunkvb"
               }
             }
           ],
@@ -191,7 +191,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 42,
           bgPositionY: 39,
-          _id: "fztoebmwcnvxhcobbryddrqwotpbelmuzuhd"
+          _id: "sttqtwvpqatrskxlawjwjurcvsmsrahxxrpi"
         }
       }
     ]

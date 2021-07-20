@@ -6,7 +6,7 @@ module.exports = {
   keywords:
     "Agens, homepage, portfolio, projects, services, testimonials, clients, logos",
   cat: [0, 1, 3, 100],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

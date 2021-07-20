@@ -42,11 +42,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      _id: "igdprlsnqyizojpmtxwovymdvlpdbbyasewc"
+                      _id: "ecaszcptaoudotyqqcoxktmjoinesdunslvn"
                     }
                   }
                 ],
-                _id: "vzyaovwufkemxufekmmjjtkcdfrlvmvtavtm"
+                _id: "fjypsscoysgzxvlpeangwwtkxcodejpdmuki"
               }
             },
             {
@@ -79,11 +79,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      _id: "cahcbbjxeckijvsudqbkncqnvukvplvzgmpv"
+                      _id: "kbwsqsfqwwhrnritjrqcoogypyzjeipbjgnw"
                     }
                   }
                 ],
-                _id: "devtexzczekdvxdmfztsdfsycytptazdmxvs"
+                _id: "hnldahdanviukvaypvactbgzeoksgjszmxmh"
               }
             },
             {
@@ -129,11 +129,11 @@ module.exports = {
                       hoverBorderColorOpacity: 0,
                       colorPalette: "",
                       colorHex: "#54c8ab",
-                      _id: "wtifjnxpvqtrsqcdrohvcqssxfcndenzgiwx"
+                      _id: "rdnpvotbttdvcozfezyjpwwsptlnngziuobf"
                     }
                   }
                 ],
-                _id: "mwufbkdozyetymmyfiqvkvtpfqmmsgeqisdr"
+                _id: "rlvjnhwxllcrbvrngdlybojlketeyckkseiq"
               }
             },
             {
@@ -150,11 +150,11 @@ module.exports = {
                       width: 67,
                       offsetY: 22,
                       offsetX: 16,
-                      _id: "hwrggqqwdsmbsrwxbftccammxasyihfatezy"
+                      _id: "sgiumqeqhucedvhfzquwmadwhnrjlahjbjiu"
                     }
                   }
                 ],
-                _id: "mthocgvrwpmohgddpncjutvzdyjfojqkpbre"
+                _id: "wleisjginqawleoxzutiezimzlfplrdrqdhd"
               }
             },
             {
@@ -171,11 +171,11 @@ module.exports = {
                       width: 67,
                       offsetY: 48,
                       offsetX: 15,
-                      _id: "aonjabsfkxlgxjmxwuswnjrpdkysudwyodup"
+                      _id: "coiojhmllmmskwesobszlqlglaazezkwcavn"
                     }
                   }
                 ],
-                _id: "eoxgndlgkyilaqyfpoiqecoaollhbdfrdrlx"
+                _id: "omrxvaybswjorlzaauxjahhcbehilknoubuj"
               }
             },
             {
@@ -192,11 +192,11 @@ module.exports = {
                       width: 67,
                       offsetY: 55,
                       offsetX: 15,
-                      _id: "rvaegzgsxoqvxuulonckcemqiqfabnmbotak"
+                      _id: "wfvzcsvezniqoepkekeopauvwmawglobbwkp"
                     }
                   }
                 ],
-                _id: "napzccfyykidwcaervzbzbbyxfjwdzblzizl"
+                _id: "byzpupckbkjwfmrxoznnmdvcpbmuvqfphkdr"
               }
             },
             {
@@ -209,15 +209,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-68 brz-fs-sm-im-67 brz-fs-xs-im-67 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_6 brz-text-lg-right"><span style="opacity: 1; color: rgb(255, 255, 255);">Garden</span></p>',
-                      width: 51,
-                      offsetY: 32,
-                      offsetX: 29,
-                      _id: "ukrtsvwfkwseyjjrjcmotzyazanbcxfmkhfh"
+                        '<p class="brz-ls-lg-m_6 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_1 brz-fs-xs-67 brz-fs-sm-67 brz-fs-lg-68 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-text-lg-left" data-uniq-id="yswjo" data-generated-css="brz-css-hnjse"><span style="color: rgb(255, 255, 255); opacity: 1;">Garden</span></p>',
+                      width: 58,
+                      offsetY: 33,
+                      offsetX: 42,
+                      _id: "cjylvhyturmzhvxdljdgclyeuemnpxfcgxvb"
                     }
                   }
                 ],
-                _id: "kgocjsbblvlkzhqszzocrlcabgkeryfvldna"
+                _id: "mrqxbqrfcromrozoomkvrtxlfmcsgducydte"
               }
             },
             {
@@ -230,15 +230,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-averia_sans_libre brz-fs-lg-38 brz-fs-sm-im-37 brz-fs-xs-im-37 brz-ls-lg-m_3_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-text-lg-center"><span style="color: rgb(255, 255, 255); opacity: 1;">at the</span></p>',
-                      width: 21,
+                        '<p class="brz-ls-xs-m_1 brz-ls-sm-m_1 brz-ls-lg-m_3_5 brz-fs-xs-37 brz-fs-sm-37 brz-fs-lg-38 brz-ff-averia_sans_libre brz-ft-google brz-fw-lg-400 brz-fw-sm-400 brz-fw-xs-400 brz-lh-lg-1_1 brz-lh-sm-1 brz-lh-xs-1 brz-text-lg-left" data-uniq-id="qighq" data-generated-css="brz-css-itxaz"><span style="opacity: 1; color: rgb(255, 255, 255);">at the</span></p>',
+                      width: 32,
                       offsetY: 34,
                       offsetX: 17,
-                      _id: "nswruitcnjzmrempgbuakozozsascfjnlbap"
+                      _id: "mihjcvharhzflrhoawobyqgcoiraedmgqljh"
                     }
                   }
                 ],
-                _id: "vimcbhelqrtnephfwshfffpfqgesmpbupqhu"
+                _id: "ddxxtafqnpscdwuzvrigguklhiabxbugvklk"
               }
             }
           ],
@@ -273,7 +273,7 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "zbpoeyfizsnbfncbfnkfhnuecurjhewyxgyr",
+          _id: "ptwxfinakvsvjuezgherlksqwyrcmlcckvtj",
           bgPositionX: 0,
           bgPositionY: 41
         }

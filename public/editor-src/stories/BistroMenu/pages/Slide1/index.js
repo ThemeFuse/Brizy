@@ -21,15 +21,15 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "kwlbsmczjbtptcpreqnapqftaffhjzcngzau",
+                      _id: "ywgncczgkgdvowminuolxbanynvcupbixtjg",
                       text:
-                        '<p class="brz-text-lg-center brz-ff-abril_fatface brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-46 brz-fs-sm-im-45 brz-fs-xs-im-45 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0"><span style="color: rgb(255, 255, 255);">Deli Bistro</span></p>',
+                        '<p class="brz-ls-xs-0 brz-ls-sm-0 brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-45 brz-fs-sm-45 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-abril_fatface brz-text-lg-center brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_0_5 brz-lh-lg-1_1 brz-fs-lg-42" data-uniq-id="lsilw" data-generated-css="brz-css-ifvmd"><span style="color: rgb(255, 255, 255);">Deli Bistro</span></p>',
                       offsetY: 19,
                       offsetX: 8
                     }
                   }
                 ],
-                _id: "oitknstovccrpuevwmyrhmapitjgfblkpzpv"
+                _id: "citzbobrptqxwfymdomezsgpwhnogutkxybl"
               }
             },
             {
@@ -45,11 +45,11 @@ module.exports = {
                         '<p class="brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-m_0_5 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_1 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-abril_fatface brz-text-lg-center brz-fs-lg-25 brz-fs-sm-im-24 brz-fs-xs-im-24"><span style="color: rgb(255, 255, 255);">Browse our daily menu</span></p>',
                       offsetY: 75,
                       offsetX: 5,
-                      _id: "qcbqhbddfyhyjlzodsibckfsqtaczrmyswqz"
+                      _id: "rctuhodoffgjxdqoeuvzhorsimhsfnvzdehy"
                     }
                   }
                 ],
-                _id: "pcfxhhoujktclurswradqimkxkzwwocolllj",
+                _id: "hhyezlolmypmfmdpoukcijpnrecuyqkuwioq",
                 zIndex: 60,
                 zIndexSuffix: ""
               }
@@ -63,15 +63,15 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "stflgjjrnvynzmytvxflwjsocsdxzxpzgrwk",
+                      _id: "bqlxuboctarsiylagdtgpfllmcpiwrpzafpu",
                       offsetY: 27,
                       offsetX: 8,
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-text-lg-center brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1"><span class="brz-cp-color8">Daily Menu for delivery</span></p>'
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_3 brz-fs-xs-34 brz-fs-sm-34 brz-fs-lg-35 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-text-lg-center brz-ls-sm-m_1 brz-ls-xs-m_1 brz-ls-lg-m_1 brz-tp-lg-empty brz-ff-kaushan_script" data-generated-css="brz-css-xnrzg" data-uniq-id="phxrz"><span class="brz-cp-color8">Daily Menu for delivery</span></p>'
                     }
                   }
                 ],
-                _id: "gigixsjspiylrgqtsvhorrqpeyratvhvaxzd"
+                _id: "gjcgbtbxdmyrsgulrpqmmdljkqxyxykzewzo"
               }
             },
             {
@@ -83,15 +83,15 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      offsetY: 79,
+                      offsetY: 80,
                       offsetX: 5,
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-text-lg-center brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-fs-lg-32 brz-fs-sm-im-31 brz-fs-xs-im-31"><span class="brz-cp-color8">ready to be delivered</span></p>',
-                      _id: "acaazbmuullhydntypbkdrffpkowbhrgzbtf"
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-lh-lg-1_3 brz-fw-xs-400 brz-fw-sm-400 brz-fw-lg-400 brz-ft-google brz-text-lg-center brz-ls-sm-m_1 brz-ls-xs-m_1 brz-ls-lg-m_1 brz-fs-lg-32 brz-fs-sm-31 brz-fs-xs-31 brz-tp-lg-empty brz-ff-kaushan_script" data-generated-css="brz-css-nkewv" data-uniq-id="qxczi"><span class="brz-cp-color8">ready to be delivered</span></p>',
+                      _id: "yjampgjmfhiistbyddwmytmikghdjtoiuoxx"
                     }
                   }
                 ],
-                _id: "gcyiylugutyqhmdyvaopfbikglztwydhacox",
+                _id: "ldzbgdepuhldngglimalmdhstvmkshiitryz",
                 zIndex: 68,
                 zIndexSuffix: ""
               }
@@ -105,7 +105,7 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "nmrpgotbmlxakkkikswejhmnmzpnxsmkhzcb",
+                      _id: "vjirenokaxzoxiowdszuveflqlbyegujjuyt",
                       imageWidth: 1080,
                       imageHeight: 820,
                       imageSrc: "9bf3d9d9ff49f1c26f36f6c74ffe6827.png",
@@ -123,7 +123,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "qvbjfrjtudukbehaxyvsjxgrluvhqynwvmkz"
+                _id: "hwswehyrcfjstegguzngjqvicewhpmvbmnnj"
               }
             },
             {
@@ -135,12 +135,12 @@ module.exports = {
                     type: "Icon",
                     value: {
                       _styles: ["story-icon"],
-                      _id: "imyucgwzdtkrbrtquafixmjchekdobrbujlg",
+                      _id: "clcalkpkktashizeiubhyrdnvvvbbydnqitm",
                       offsetY: 87,
-                      offsetX: 44,
+                      offsetX: 42,
                       name: "cheeseburger",
                       type: "outline",
-                      customSize: 12,
+                      customSize: 14,
                       size: "custom",
                       colorHex: "#ffd681",
                       colorPalette: "",
@@ -150,13 +150,13 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "ivambzliwrtuitojhkofrrarncmdtpdcdeaf",
+                _id: "ffppvibsjnmwllndtzfpxcbqwcpwqsgdmacv",
                 zIndex: 25,
                 zIndexSuffix: ""
               }
             }
           ],
-          _id: "twnqlnxmmgbvxnhjptbtguwbssppojdtlfcn",
+          _id: "jcugvlexdawzsqoigyckpxpcihxhrdhcolrj",
           bgImageWidth: 1080,
           bgImageHeight: 1577,
           bgImageExtension: "jpg",

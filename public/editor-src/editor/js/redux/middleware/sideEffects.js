@@ -3,8 +3,6 @@ import _ from "underscore";
 import {
   getDefaultFont,
   makeDefaultFontCSS,
-  makeRichTextFontStylesCSS,
-  makeRichTextFontUploadCSS,
   makeUploadFontsUrl,
   projectFontsData
 } from "visual/utils/fonts";
@@ -12,10 +10,9 @@ import { makeRichTextColorPaletteCSS } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
   currentStyleSelector,
-  unDeletedFontSelector,
-  currentRoleSelector
+  currentRoleSelector,
+  unDeletedFontSelector
 } from "../selectors";
-import { fontSelector, extraFontStylesSelector } from "../selectors2";
 import {
   HYDRATE,
   ADD_BLOCK,
@@ -33,12 +30,9 @@ import {
   ADD_FONTS,
   DELETE_FONTS
 } from "../actions";
-import { PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
+import { IMPORT_STORY, PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
-import {
-  makeRichTextFontGoogleCSS,
-  makeSubsetGoogleFontsUrl
-} from "visual/utils/fonts";
+import { makeSubsetGoogleFontsUrl } from "visual/utils/fonts";
 import { UNDO, REDO } from "../history/types";
 import { historySelector } from "../history/selectors";
 
@@ -82,7 +76,8 @@ export default config => store => next => action => {
     action.type === IMPORT_KIT ||
     action.type === ADD_BLOCK ||
     action.type === ADD_FONTS ||
-    action.type === DELETE_FONTS
+    action.type === DELETE_FONTS ||
+    action.type === IMPORT_STORY
   ) {
     handleFontsChange(callbacks);
   }
@@ -91,7 +86,8 @@ export default config => store => next => action => {
     action.type === IMPORT_TEMPLATE ||
     action.type === UPDATE_CURRENT_STYLE_ID ||
     action.type === UPDATE_CURRENT_STYLE ||
-    action.type === UPDATE_EXTRA_FONT_STYLES
+    action.type === UPDATE_EXTRA_FONT_STYLES ||
+    action.type === IMPORT_STORY
   ) {
     handleStylesChange(callbacks);
   }
@@ -99,6 +95,7 @@ export default config => store => next => action => {
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
     handleDeviceModeChange(callbacks);
   }
+
   if (action.type === UPDATE_UI && action.key === "showHiddenElements") {
     handleHiddenElementsChange(callbacks);
   }
@@ -133,9 +130,7 @@ function handleHydrate(callbacks) {
   callbacks.onAfterNext.push(({ state, store, config }) => {
     const { document, parentDocument } = config;
     const currentFonts = projectFontsData(unDeletedFontSelector(state));
-    const allFonts = projectFontsData(fontSelector(state));
-    const { colorPalette, fontStyles } = currentStyleSelector(state);
-    const extraFontStyles = extraFontStylesSelector(state);
+    const { colorPalette } = currentStyleSelector(state);
     const defaultFont = getDefaultFont(state);
 
     // Generate default @fontFace uses in project font
@@ -156,13 +151,6 @@ function handleHydrate(callbacks) {
     jQuery("head", document).append($googleFonts);
     jQuery("head", parentDocument).append($googleFonts.clone());
 
-    // generate classname for richText
-    const $richTextFontFamilies = jQuery("<style>")
-      .attr("id", "brz-rich-text-font-families")
-      .html(makeRichTextFontGoogleCSS(allFonts.google));
-
-    jQuery("head", document).append($richTextFontFamilies);
-
     if (currentFonts.upload && currentFonts.upload.length > 0) {
       const $uploadFonts = jQuery("<link>").attr({
         href: makeUploadFontsUrl(currentFonts.upload),
@@ -172,17 +160,6 @@ function handleHydrate(callbacks) {
       jQuery("head", document).append($uploadFonts);
       jQuery("head", parentDocument).append($uploadFonts.clone());
     }
-    if (allFonts.upload && allFonts.upload.length > 0) {
-      jQuery("#brz-rich-text-font-families").append(
-        makeRichTextFontUploadCSS(allFonts.upload)
-      );
-    }
-
-    // Fonts Styles
-    const $richTextFontStyle = jQuery("<style>")
-      .attr("id", "brz-rich-text-font-styles")
-      .html(makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles]));
-    jQuery("head", document).append($richTextFontStyle);
 
     // ColorPalette
     const $richTextPaletteStyle = jQuery("<style>")
@@ -213,23 +190,6 @@ function handleFontsChange(callbacks) {
     }
 
     const { document, parentDocument } = config;
-    const { fontStyles } = currentStyleSelector(state);
-    const extraFontStyles = extraFontStylesSelector(state);
-    const $families = jQuery("#brz-rich-text-font-families");
-    const { google, upload } = projectFontsData(fontSelector(state));
-
-    // Override current Fonts Styles
-    jQuery("#brz-rich-text-font-styles").html(
-      makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
-    );
-
-    // Override current css Families
-    $families.html(makeRichTextFontGoogleCSS(google));
-
-    // Append Upload css Families
-    if (upload && upload.length > 0) {
-      $families.append(makeRichTextFontUploadCSS(upload));
-    }
 
     // Generate new Link for new Fonts
     if (action.type !== DELETE_FONTS) {
@@ -253,12 +213,7 @@ function handleFontsChange(callbacks) {
 
 function handleStylesChange(callbacks) {
   callbacks.onAfterNext.push(({ state }) => {
-    const { fontStyles, colorPalette } = currentStyleSelector(state);
-    const extraFontStyles = extraFontStylesSelector(state);
-
-    jQuery("#brz-rich-text-font-styles").html(
-      makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
-    );
+    const { colorPalette } = currentStyleSelector(state);
 
     jQuery("#brz-rich-text-colors").html(
       makeRichTextColorPaletteCSS(colorPalette)
@@ -344,20 +299,9 @@ function handleHistoryChange(callbacks) {
     const prevStyleId = prevSnapshot.currentStyleId;
     const currStyle = currSnapshot.currentStyle;
     const prevStyle = prevSnapshot.currentStyle;
-    const currExtraFontStyle = currSnapshot.extraFontStyles;
-    const prevExtraFontStyle = prevSnapshot.extraFontStyles;
 
-    if (
-      currStyleId !== prevStyleId ||
-      currStyle !== prevStyle ||
-      currExtraFontStyle !== prevExtraFontStyle
-    ) {
-      const { fontStyles, colorPalette } = currentStyleSelector(state);
-      const extraFontStyles = extraFontStylesSelector(state);
-
-      jQuery("#brz-rich-text-font-styles").html(
-        makeRichTextFontStylesCSS([...fontStyles, ...extraFontStyles])
-      );
+    if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
+      const { colorPalette } = currentStyleSelector(state);
 
       jQuery("#brz-rich-text-colors").html(
         makeRichTextColorPaletteCSS(colorPalette)

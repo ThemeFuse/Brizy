@@ -1,0 +1,5 @@
+@import "../mixins/fat-icon";
+
+.brz-ed--fat-icon {
+  @include fat-icon;
+}

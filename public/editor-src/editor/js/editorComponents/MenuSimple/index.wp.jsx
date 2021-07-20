@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Toolbar from "visual/component/Toolbar";
-import { getMenus } from "visual/utils/api/editor/index";
+import { getMenus } from "visual/utils/api";
 import toolbarConfigFn from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";

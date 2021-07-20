@@ -47,8 +47,8 @@
 
   .brz-section__content > .brz-container,
   .brz-section__content > .brz-bg {
-    width: 436px;
-    height: 726px;
+    width: 400px;
+    height: 800px;
     margin: 70px auto auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
     transform: translateZ(0);
@@ -74,8 +74,8 @@
 
       > li {
         position: relative;
-        width: 86px;
-        height: 143px;
+        width: 79px;
+        height: 160px;
         padding: 0;
         margin: 0 12px 20px;
         cursor: pointer;
@@ -84,8 +84,8 @@
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
         }
         > .story-slider-dot {
-          width: 436px;
-          height: 726px;
+          width: 400px;
+          height: 800px;
           transform-origin: 0 0;
           transform: scale(0.197);
           overflow: hidden;
@@ -107,8 +107,8 @@
           top: -6px;
           left: -6px;
           z-index: 2;
-          width: 98px;
-          height: 155px;
+          width: 91px;
+          height: 170px;
 
           &:hover {
             border: 3px solid #3dbfe8;

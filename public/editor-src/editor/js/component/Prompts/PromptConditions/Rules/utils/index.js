@@ -1,11 +1,10 @@
 import _ from "underscore";
 import { setIn } from "timm";
 
-export const PAGES_GROUP_ID = 1;
-export const CATEGORIES_GROUP_ID = 2;
-export const TEMPLATES_GROUP_ID = 16;
-
-export const PAGE_TYPE = "page";
+import {
+  PAGES_GROUP_ID,
+  CATEGORIES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
 
 export function getUniqRules(rules) {
   return rules.reduce((acc, item) => {
@@ -35,6 +34,9 @@ export function disableAlreadyUsedRules(rules, rulesList) {
   rules.forEach(rule => {
     const ruleIndex = getRulesListIndexByRule(rulesList, rule);
 
+    if (ruleIndex === -1) return;
+
+    // is 1 level deep
     if (
       rule.appliedFor !== PAGES_GROUP_ID &&
       rule.appliedFor !== CATEGORIES_GROUP_ID
@@ -43,8 +45,8 @@ export function disableAlreadyUsedRules(rules, rulesList) {
     } else {
       const { items } = newRuleList[ruleIndex];
       if (items && rule.entityValues.length) {
-        const itemIndex = items.findIndex(({ value: { _id } }) =>
-          rule.entityValues.includes(_id)
+        const itemIndex = items.findIndex(({ value }) =>
+          rule.entityValues.includes(value)
         );
         if (itemIndex !== -1) {
           newRuleList = setIn(

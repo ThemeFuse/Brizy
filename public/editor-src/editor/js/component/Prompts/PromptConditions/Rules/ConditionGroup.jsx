@@ -35,12 +35,12 @@ class ConditionGroup extends React.Component {
   }
 
   renderTypeOptions(items) {
-    return [{ title: "All", value: "" }, ...items].map((item, i) =>
+    return [{ title: "All", value: "" }, ...items].map(item =>
       !item.items ? (
         renderSelectItem(item)
       ) : (
         <SelectOptgroup
-          key={i}
+          key={item.value}
           title={item.title}
           items={item.items.map(renderSelectItem)}
         >
@@ -51,7 +51,7 @@ class ConditionGroup extends React.Component {
 
     function renderSelectItem({ title, value }) {
       return (
-        <SelectItem key={value} value={value}>
+        <SelectItem key={value} value={String(value)}>
           {title}
         </SelectItem>
       );
@@ -77,7 +77,7 @@ class ConditionGroup extends React.Component {
         </Select>
         {currentRule && currentRule.items && (
           <Select
-            defaultValue={rule.entityValues[0]}
+            defaultValue={String(rule.entityValues[0])}
             className="brz-control__select--light"
             maxItems={6}
             itemHeight={30}

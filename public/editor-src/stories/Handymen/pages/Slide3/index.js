@@ -22,15 +22,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-fs-xs-im-40 brz-fs-sm-im-40 brz-fs-lg-41 brz-text-lg-left brz-ff-dm_serif_display brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_2 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-lh-lg-1_1 brz-lh-sm-im-1_1 brz-lh-xs-im-1_1"><span style="color: rgb(52, 46, 54);">"Top notch services   and prices. Definately recommended"</span></p>',
-                      width: 85,
+                        '<p class="brz-lh-xs-1_1 brz-lh-sm-1_1 brz-ls-xs-m_1 brz-ls-sm-m_1 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-dm_serif_display brz-text-lg-left brz-fs-sm-40 brz-fs-xs-40 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_2 brz-lh-lg-1_1 brz-fs-lg-38" data-uniq-id="nnnqu" data-generated-css="brz-css-uuflu"><span style="color: rgb(52, 46, 54);">"Top notch services and prices. Definately recommended"</span></p>',
+                      width: 86,
                       offsetY: 48,
                       offsetX: 9,
-                      _id: "izvbvwozoxrdqlybwwykzfdyfktjapitmfcf"
+                      _id: "livlzsoqwkdcwvlrbeuusebaaicyleozcwop"
                     }
                   }
                 ],
-                _id: "moxphzgaepunnleqsufidvfvpiwydbzamsdl"
+                _id: "sumpwzmmbjgozesvndddqjibvrxvcweywvdo"
               }
             },
             {
@@ -42,8 +42,8 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "nfsaegvscgwnlvanlugmohkeclyxpnsleend",
-                      offsetY: 74,
+                      _id: "zkysinslbathyustoqccsewqyeynwxfewjfk",
+                      offsetY: 77,
                       offsetX: 9,
                       width: 23,
                       height: 94.96,
@@ -60,7 +60,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "ifbujulvlqyxqghcfrqmmdvoqpvhxzymouuk"
+                _id: "tgcdxwfyealjyinbwgifaogzqnikzpyuwtdf"
               }
             },
             {
@@ -76,12 +76,12 @@ module.exports = {
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-fs-xs-im-16 brz-fs-sm-im-16 brz-fs-lg-17 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_display brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0"><span style="color: rgb(255, 97, 88);">More than 500 happy customers</span></p>',
                       offsetY: 4,
                       offsetX: 10,
-                      _id: "xajhntigijopsmoeoyhtljfilasxomqxhelf",
+                      _id: "wlcnwjrnrpiberrraycfrlkzlqsiklsvkzsy",
                       width: 66
                     }
                   }
                 ],
-                _id: "ecjdpkjzcolaibatemvonbcbqwhszxjjyzuy"
+                _id: "jsqbpahikhatxtkmqwddwqhvebsjmrighxyb"
               }
             },
             {
@@ -95,14 +95,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_display brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-fs-lg-19 brz-fs-sm-im-18 brz-fs-xs-im-18"><span style="color: rgb(255, 97, 88);">Maxim Kawolski</span></p>',
-                      offsetY: 74,
+                      offsetY: 77,
                       offsetX: 35,
                       width: 66,
-                      _id: "yyqvchscgttitjudistwwiflvznuzukafmvh"
+                      _id: "fpgouniazhxkdwhdxdztlcycsdoyrasdlguv"
                     }
                   }
                 ],
-                _id: "ecswvjajtjsfztwzjilgdltlvqaqfhuhtlne"
+                _id: "uiscvhmxncjdhsflwzmmakgrpdimypbwjbjy"
               }
             },
             {
@@ -116,14 +116,14 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1_4 brz-lh-sm-im-1_4 brz-lh-lg-1_7 brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-ff-lato brz-ft-google brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14 brz-fw-lg-700 brz-fw-sm-im-700 brz-fw-xs-im-700"><span style="color: rgb(52, 46, 54);">Home owner</span></p>',
-                      offsetY: 79,
+                      offsetY: 81,
                       offsetX: 35,
                       width: 34,
-                      _id: "lkhogtxmyvwozpfeybjvhtkugmowgqxbvlyx"
+                      _id: "pgtgclymryntvhzmvqusktocnorasxpvxgyr"
                     }
                   }
                 ],
-                _id: "oeiamwxfbyregaovfipvgkepmnqhskcanyln"
+                _id: "dlqevxdopwtrhtashhldapuygtzaeholvdvn"
               }
             },
             {
@@ -135,8 +135,8 @@ module.exports = {
                     type: "StarRating",
                     value: {
                       _styles: ["story-starRating"],
-                      _id: "wgligfvvzyfpkesuaxdncsodapuqvwkmopsi",
-                      offsetY: 84,
+                      _id: "yumbyvwwxsvagowtqqxgspndexrpfdjoamyb",
+                      offsetY: 86,
                       offsetX: 35,
                       label: "off",
                       rating: 5,
@@ -149,7 +149,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "ujbzuzmbzqkpgcagowstjafgvnbtzicgucrf"
+                _id: "tvgyuxuygvymaewpzbceqnrtwftyylmowhdw"
               }
             }
           ],
@@ -189,7 +189,7 @@ module.exports = {
           contrast: 106,
           saturation: 109,
           brightness: 102,
-          _id: "ztuisljxttrbfjspdpcqdfvhbnpssnbzemwv"
+          _id: "hzyaywmlnvtxnfokiqzierpysfztpvxbzspv"
         }
       }
     ]

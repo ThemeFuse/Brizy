@@ -27,11 +27,13 @@ import {
   toolbarBorder2,
   toolbarBorderColorHexField2
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItemsForDesktop(v, component) {
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const device = "desktop";
+  const context = component.context;
   // Typography
   const fontStyle = v.fontStyle;
   const { fontSize, lineHeight } =
@@ -57,7 +59,10 @@ export function getItemsForDesktop(v, component) {
     defaultValueValue({ v, key: "colorPalette", device })
   );
 
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {
@@ -1395,7 +1400,10 @@ export function getItemsForDesktop(v, component) {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({ v }),
+                toolbarLinkExternal({
+                  v,
+                  config: context.dynamicContent.config
+                }),
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

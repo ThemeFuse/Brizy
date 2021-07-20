@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { ECDC } from "visual/editorComponents/EditorComponent/types";
 type sizes = {
   width: number;
   height: number;
@@ -31,6 +32,7 @@ export type Meta = {
   gallery: {
     inGallery: boolean;
   };
+  _dc: ECDC;
   [others: string]: any;
 };
 
@@ -77,3 +79,8 @@ export type ImageProps = {
 export type Styles = [string, string, string];
 
 export type Device = "desktop" | "tablet" | "mobile";
+
+export type Unit = "px" | "%";
+
+export const isUnit = (v: unknown): v is Unit =>
+  ["px", "%"].includes(v as Unit);

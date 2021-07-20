@@ -26,11 +26,11 @@ module.exports = {
                       width: 53,
                       offsetY: 35,
                       offsetX: 41,
-                      _id: "ndfwktspldqyaigutkbihdunlsiojdqgajjp"
+                      _id: "gjyqzulrikcojzuuermwnbaefftecbydhzfe"
                     }
                   }
                 ],
-                _id: "wegackkybmitvykgwqjvxszvwidwdpqoxprv"
+                _id: "iflsbyjvlmorvhtnzmwrxsaxkvxxjuhpwhtx"
               }
             }
           ],
@@ -65,7 +65,9 @@ module.exports = {
           gradientActivePointer: "startPointer",
           gradientLinearDegree: 90,
           gradientRadialDegree: 90,
-          _id: "pfaippizkktvulzdxnpaoteuyuzcqvtqoajp"
+          _id: "eqrjbeajvizcqzljovaoxffurvyfosovqsui",
+          bgPositionX: 48,
+          bgPositionY: 46
         }
       }
     ]

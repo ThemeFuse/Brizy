@@ -5,7 +5,7 @@ module.exports = {
   title: "Homepage",
   keywords: "Cribs, homepage, portfolio, gallery, carousel, projects, testimonials",
   cat: [0, 3, 100],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

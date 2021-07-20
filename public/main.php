@@ -467,15 +467,12 @@ class Brizy_Public_Main
      */
     function _filter_the_content($content)
     {
-
         if (is_main_query()&& ! doing_filter( 'brizy_content' ) ) {
 
             try {
-
-                $config_object = $this->getConfigObject();
-
+                //$config_object = $this->getConfigObject();
                 $context = array(
-                    'editorData'    => $config_object,
+                    //'editorData'    => $config_object,
                     'editorVersion' => BRIZY_EDITOR_VERSION,
                 );
 
@@ -652,10 +649,10 @@ class Brizy_Public_Main
         return dirname(__FILE__)."/$rel";
     }
 
-    private function getConfigObject()
+    private function getConfigObject($context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
     {
         $editor        = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
-        $config_json   = json_encode($editor->config());
+        $config_json   = json_encode($editor->config($context));
         $config_object = json_decode($config_json);
 
         return $config_object;

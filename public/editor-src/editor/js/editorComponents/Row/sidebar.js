@@ -6,10 +6,11 @@ import {
   toolbarMargin,
   toolbarEntranceAnimation
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const title = t("Row");
 
-export function getItems({ v, device, component }) {
+export function getItems({ v, device, component, context }) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
@@ -21,7 +22,10 @@ export function getItems({ v, device, component }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
-  const richTextDC = getDynamicContentChoices("richText", true);
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
   return [
     {

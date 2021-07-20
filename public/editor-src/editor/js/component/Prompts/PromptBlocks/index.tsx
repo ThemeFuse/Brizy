@@ -38,7 +38,7 @@ type TabComponentProps = {
   showSearch: boolean;
   showSidebar: boolean;
   HeaderSlotLeft: ComponentType;
-  onClose: () => void;
+  onClose: VoidFunction;
   onAddBlocks: (block: PromptBlockTemplate | PromptBlock) => void;
   getParentNode?: () => HTMLElement | null;
 };
@@ -49,7 +49,7 @@ const TABS: Tab[] = [
     title: IS_STORY ? t("Stories") : t("Layouts"),
     icon: "nc-pages",
     renderTab(props): ReactElement {
-      return <Layouts {...props} />;
+      return <Layouts {...props} type={IS_STORY ? "stories" : "templates"} />;
     }
   },
   {
@@ -149,19 +149,19 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
     switch (currentTab) {
       case "blocks": {
-        onChangeBlocks && onChangeBlocks(block as PromptBlock);
+        onChangeBlocks?.(block as PromptBlock);
         break;
       }
       case "template": {
-        onChangeTemplate && onChangeTemplate(block as PromptBlockTemplate);
+        onChangeTemplate?.(block as PromptBlockTemplate);
         break;
       }
       case "saved": {
-        onChangeSaved && onChangeSaved(block as PromptBlockTemplate);
+        onChangeSaved?.(block as PromptBlockTemplate);
         break;
       }
       case "global": {
-        onChangeGlobal && onChangeGlobal(block as PromptBlock);
+        onChangeGlobal?.(block as PromptBlock);
         break;
       }
     }
@@ -169,7 +169,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   handleClose = (): void => {
     if (this.mounted) {
-      this.props.onClose && this.props.onClose();
+      this.props.onClose?.();
       // this.setState({ currentTab: defaultActiveTab }, () => {
       //   this.props.onClose && this.props.onClose();
       // });

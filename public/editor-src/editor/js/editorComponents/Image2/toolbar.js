@@ -7,16 +7,16 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 import {
-  toolbarImageTags, 
+  toolbarImageTags,
   toolbarLinkAnchor,
-  toolbarImageLinkExternal,
-  toolbarImageSetter
+  toolbarImageLinkExternal
 } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 import { isSVG, isGIF } from "./utils";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const getMaxHeight = (cW, v) => {
   const { imageWidth: iW, imageHeight: iH } = v;
@@ -26,31 +26,23 @@ export const getMaxHeight = (cW, v) => {
   return maxHeight >= 100 ? Math.round(maxHeight) : 100;
 };
 
-const imageDynamicContentChoices = getDynamicContentChoices("image");
-
 export default ({
-  desktopWrapperSizes,
   desktopContainerWidth,
-  tabletWrapperSizes,
   tabletContainerWidth,
-  mobileWrapperSizes,
   mobileContainerWidth,
   gallery
 }) => ({
   getItems: getItems({
     property: {
       desktop: {
-        wrapperSizes: desktopWrapperSizes,
         cW: desktopContainerWidth,
         gallery
       },
       tablet: {
-        wrapperSizes: tabletWrapperSizes,
         cW: tabletContainerWidth,
         gallery
       },
       mobile: {
-        wrapperSizes: mobileWrapperSizes,
         cW: mobileContainerWidth,
         gallery
       }
@@ -58,10 +50,15 @@ export default ({
   })
 });
 
-export const getItems = ({ property }) => ({ v, device, state, component }) => {
+export const getItems = ({ property }) => ({
+  v,
+  device,
+  component,
+  context
+}) => {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-  const { wrapperSizes, cW, gallery } = property[device];
+  const { cW, gallery } = property[device];
 
   const { inGallery = false, enableTags } = gallery || {};
 
@@ -76,6 +73,11 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
     key: "heightSuffix",
     device
   });
+
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     {
@@ -95,24 +97,35 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
               id: "tabImage",
               label: t("Image"),
               options: [
-                toolbarImageSetter({
-                  v,
-                  cW,
-                  device,
-                  state,
-                  wrapperSizes,
+                // Use population-dev option type instead of using the `population` config for imageUpload-dev,
+                // because the population id and imageUpload-dev id are different.
+                {
+                  id: "image",
+                  label: t("Image"),
+                  type: "population-dev",
                   disabled:
                     (isSVG(v.imageExtension) ||
                       isGIF(v.imageExtension) ||
                       v.imagePopulation) &&
                     device !== "desktop",
-                  onlyPointer: device !== "desktop",
-                  showPointer: !(
-                    isSVG(v.imageExtension) || isGIF(v.imageExtension)
-                  ),
-                  dynamicContent: imageDynamicContentChoices,
-                  gallery
-                }),
+                  config: {
+                    choices:
+                      device === "desktop" &&
+                      !gallery.inGallery &&
+                      imageDynamicContentChoices.length
+                        ? imageDynamicContentChoices
+                        : undefined
+                  },
+                  options: [
+                    {
+                      id: "",
+                      type: "imageUpload-dev",
+                      config: {
+                        edit: device === "desktop"
+                      }
+                    }
+                  ]
+                },
                 {
                   id: "zoom",
                   label: t("Zoom"),
@@ -169,7 +182,7 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs",
+          type: "tabs-dev",
           tabs: [
             {
               id: "tabBorder",
@@ -224,8 +237,9 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
               options: [
                 toolbarImageLinkExternal({
                   v,
-                  devices: "desktop",
-                  inGallery
+                  inGallery,
+                  config: context.dynamicContent.config,
+                  devices: "desktop"
                 }),
                 {
                   id: "linkExternalBlank",
@@ -311,10 +325,12 @@ export const getItems = ({ property }) => ({ v, device, state, component }) => {
           config: {
             min: 5,
             max: heightSuffixValue === "px" ? Math.round(cW * 2) : 100,
-            units: [
-              { value: "px", title: "px" },
-              { value: "%", title: "%" }
-            ]
+            units: v.imagePopulation
+              ? [{ value: "px", title: "px" }]
+              : [
+                  { value: "px", title: "px" },
+                  { value: "%", title: "%" }
+                ]
           }
         },
         {

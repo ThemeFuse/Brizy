@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { updateAuthorization } from "visual/redux/actions2";
-import { authorizedSelector } from "visual/redux/selectors2";
+import { authorizedSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { useDisconnect } from "./common";

@@ -1,21 +1,28 @@
 import { String } from "visual/utils/string/specs";
-import { GetModel, SimpleValue } from "visual/component/Options/Type";
+import { Literal } from "visual/utils/types/Literal";
+import {
+  GetModel,
+  GetElementModel,
+  SimpleValue
+} from "visual/component/Options/Type";
 import { Value, read } from "./Value";
 import { ChoicesSync, ChoicesAsync } from "./types";
 
-export const getModel: GetModel<Value[]> = get => {
-  let value: Value[];
+export const DEFAULT_VALUE: Value = { value: [] };
+
+export const getModel: GetModel<Value> = get => {
+  let value: Literal[];
   try {
-    value = JSON.parse(String.read(get("value")) ?? "");
+    value = JSON.parse(String.read(get("value")) ?? "[]");
   } catch (e) {
-    value = [];
+    value = DEFAULT_VALUE.value;
   }
 
   if (!Array.isArray(value) || !value.length) {
-    return [];
+    return DEFAULT_VALUE;
   }
 
-  return value.reduce((acc: Value[], i) => {
+  const v = value.reduce((acc: Literal[], i) => {
     const value = read(i);
 
     if (value) {
@@ -24,9 +31,17 @@ export const getModel: GetModel<Value[]> = get => {
 
     return acc;
   }, []);
+
+  return { value: v };
 };
 
-export const toElement = (v: Value[]): SimpleValue<Value> => ({
+export const getElementModel: GetElementModel<Value> = (values, get) => {
+  return {
+    [get("value")]: values.value
+  };
+};
+
+export const toElement = (v: Value["value"]): SimpleValue<Literal> => ({
   value: JSON.stringify(v)
 });
 
@@ -37,7 +52,7 @@ export function isChoicesSync(
 }
 
 export function selectedChoices(
-  value: Value[],
+  value: Value["value"],
   choices: ChoicesSync
 ): ChoicesSync {
   return choices.filter(c => value.includes(c.value));

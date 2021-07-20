@@ -37,6 +37,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_USERS = '_get_users';
     const AJAX_GET_TERMS = '_get_terms';
     const AJAX_GET_TERMS_BY = '_get_terms_by';
+    const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
 
 
     /**
@@ -99,6 +100,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
         add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
         add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
+        add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
         add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
     }
@@ -106,6 +108,28 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     protected function getRequestNonce()
     {
         return $this->param('hash');
+    }
+
+    public function addPostTaxonomies() {
+
+        $this->verifyNonce(self::nonce);
+
+        if(empty($postType = $this->param('post_type'))) {
+            $this->error(400, 'Bad request');
+        }
+
+        $taxonomies =get_object_taxonomies($postType,'objects');
+        $post_taxonomies = array_map(function (WP_Taxonomy $taxonomy) {
+            return [
+                'name' => $taxonomy->name,
+                'label' => $taxonomy->label,
+                'labels' => $taxonomy->labels,
+                'public' => $taxonomy->public,
+                'hierarchical' => $taxonomy->hierarchical,
+            ];
+        }, array_values($taxonomies));
+
+        $this->success($post_taxonomies);
     }
 
     public function lock_project()
@@ -479,6 +503,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if ($post instanceof WP_Post) {
                 setup_postdata($post);
                 $wp_query->is_single = true;
+
+	            if ( function_exists( 'wc_get_product' ) ) {
+		            global $product;
+
+		            $product = wc_get_product( $post->ID );
+	            }
             }
 
             $contents = [];
@@ -529,12 +559,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
     }
 
-    private function getPostSample($templateId)
-    {
-        global $wp_query;$wp_post = get_post($templateId);
-        if ($wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE) {
-            return $wp_post;
-        }
+	private function getPostSample( $templateId ) {
+		global $wp_query;
+
+		global $wp_query;$wp_post = get_post( $templateId );
+		if ( $wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE ) {
+			return $wp_post;
+		}
 
 
         $ruleManager = new Brizy_Admin_Rules_Manager();

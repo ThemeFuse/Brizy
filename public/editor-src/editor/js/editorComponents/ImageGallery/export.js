@@ -1,9 +1,13 @@
 import $ from "jquery";
-import ImagesLoaded from "imagesloaded";
-import Isotope from "isotope-layout";
-import "magnific-popup";
+import { LibsPro } from "visual/libs";
 
 export default function($node) {
+  const { Isotope, ImagesLoaded } = LibsPro;
+
+  if (!Isotope || !ImagesLoaded) {
+    return;
+  }
+
   // Isotope
   $node.find(".brz-image__gallery").each(function() {
     const _this = this;

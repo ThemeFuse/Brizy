@@ -36,6 +36,18 @@ export function roundTo(num: number, places: number): number {
  */
 export const isNumber = (n: unknown): boolean => typeof n === "number";
 
+export const isNumeric = (n: unknown): boolean => {
+  switch (typeof n) {
+    case "number": {
+      return isFinite(n);
+    }
+    case "string": {
+      return isNaN(parseFloat(n)) ? false : isFinite(Number(n));
+    }
+  }
+  return false;
+};
+
 /**
  * Converts a value to valid number
  *  - If value is not valid, return orElse value
@@ -44,6 +56,7 @@ export const isNumber = (n: unknown): boolean => typeof n === "number";
  * @param {*} v
  * @return {number}
  */
+
 export const toNumber = (v: unknown, orElse?: number): MValue<number> =>
   typeof v === "number" ? v : orElse;
 

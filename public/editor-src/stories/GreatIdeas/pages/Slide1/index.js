@@ -21,7 +21,7 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "gnzegqhjdiychbbregpdyofsxkdyqwzqcssv",
+                      _id: "hlieliwprcadfnpaufsjdbndqjvooxjhcmlw",
                       text:
                         '<p class="brz-text-lg-center brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_text brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-21 brz-fs-sm-im-20 brz-fs-xs-im-20"><span class="brz-cp-color2" style="opacity: 0.5;">Company.net</span></p>',
                       offsetY: 4,
@@ -30,7 +30,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "bhhottsvtsvoiitjlbzuwrohrumtztjoaoua"
+                _id: "durpizxbvkrnlgjsfzzluybygocscobizdto"
               }
             },
             {
@@ -42,7 +42,7 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "ziiaeapjolhqepalkyarfnndglzcazhsknvr",
+                      _id: "rjfclxeuifjycpsirqoxrqjbapdriundueux",
                       text:
                         '<p class="brz-lh-lg-1_1 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fs-lg-70 brz-fs-sm-im-69 brz-fs-xs-im-69"><span class="brz-cp-color2">Top 5</span></p>',
                       offsetY: 14,
@@ -50,7 +50,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "lufiekwxifgndbcedplgupsqmkafjqgbkthl",
+                _id: "hitzphvxdhrkrxddbixevvmhgraemvblolvq",
                 zIndex: 40,
                 zIndexSuffix: ""
               }
@@ -68,13 +68,13 @@ module.exports = {
                         '<p class="brz-text-lg-center brz-ff-rock_salt brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-m_5 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-fs-lg-70 brz-fs-sm-im-69 brz-fs-xs-im-69 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-lh-lg-1_1"><span class="brz-cp-color2">Ideas</span></p>',
                       offsetY: 59,
                       offsetX: 7,
-                      _id: "clyqlxpcuuqxaoiqvpffpayezhsowlnxghor"
+                      _id: "mdsavyjugtglsmgwbrteaiezmagntbmkvdgk"
                     }
                   }
                 ],
                 zIndex: 40,
                 zIndexSuffix: "",
-                _id: "qpxsqsuxnjulfgnlgpibzelnovjzgxxfoxeq"
+                _id: "jwseerhymophrgxwetebogpjsuypyaonhhtx"
               }
             },
             {
@@ -86,16 +86,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "vtkzifnpjgzoqcdsbibdkdmgwnmoutgfjjgs",
+                      _id: "qwzfecobmhmhnocjgwqfssclebcnjqmefqms",
                       offsetY: 73,
-                      offsetX: 16,
+                      offsetX: 7,
                       text:
                         '<p class="brz-lh-xs-im-1_3 brz-lh-sm-im-1_3 brz-lh-lg-1_6 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_text brz-ls-xs-im-0 brz-ls-sm-im-0 brz-ls-lg-0 brz-text-lg-center brz-fs-lg-18 brz-fs-sm-im-17 brz-fs-xs-im-17"><span class="brz-cp-color2">for being productive &amp; happy while staying at home</span></p>',
-                      width: 72
+                      width: 83
                     }
                   }
                 ],
-                _id: "seaqpotoniihwhzjiwnklkqxujdpeitnmmrs"
+                _id: "vvpbhjtqeyfjtexxftnylvjmhatpzhnxuhej"
               }
             },
             {
@@ -107,7 +107,7 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      _id: "cspfymqxqccupimzfkcqcgvlzxoshwvpbpjx",
+                      _id: "yhqqqxxgtidprrhzigclfoetcdssoumzcfqg",
                       offsetY: 84,
                       offsetX: 22,
                       text: "Start Swiping",
@@ -147,7 +147,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "vxufupbsgxrytfepenldehzxflvibbasbdkj"
+                _id: "abxgpghlltezvuupaffpwltwlhgbxwpgyrty"
               }
             },
             {
@@ -159,7 +159,7 @@ module.exports = {
                     type: "Image",
                     value: {
                       _styles: ["story-image"],
-                      _id: "rirrpjycjpmbpxcttukaptatkpicupznrkzu",
+                      _id: "aymapujzayuchcadwbvmqoutysnkeioouhnp",
                       imageWidth: 900,
                       imageHeight: 900,
                       imageSrc: "6ed434a61821fe814261364c9603525b.jpg",
@@ -190,11 +190,11 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "eocwnzbamgldsxmwqpcrzvrwubcmexgmomdo"
+                _id: "dpjmlpckwybjuwirvqaifxdchijqmqpcbtle"
               }
             }
           ],
-          _id: "wtmypcvngganrylgiquxdrxbwqzlxoeirliw",
+          _id: "tifkxwwsnjczibbqvlstsmwmugjdrihxhphk",
           bgColorType: "solid",
           tempBgColorType: "solid",
           bgColorHex: "#ffffff",

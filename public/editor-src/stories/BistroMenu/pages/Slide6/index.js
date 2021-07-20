@@ -22,16 +22,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-text-lg-center brz-ff-abril_fatface brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-46 brz-fs-sm-im-45 brz-fs-xs-im-45 brz-lh-lg-1_1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-m_0_5 brz-ls-sm-im-0 brz-ls-xs-im-0"><span style="color: rgb(255, 255, 255);">Friday</span></p>',
-                      offsetY: 2,
-                      offsetX: 5,
-                      _id: "aqlmfdxejpjmnsyliwsjlmvezqihmcycndim"
+                        '<p class="brz-ls-xs-0 brz-ls-sm-0 brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-45 brz-fs-sm-45 brz-fw-xs-400 brz-fw-sm-400 brz-ft-google brz-ff-abril_fatface brz-text-lg-center brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_0_5 brz-lh-lg-1_1 brz-fs-lg-42" data-uniq-id="ftnup" data-generated-css="brz-css-dpuvi"><span style="color: rgb(255, 255, 255);">Friday</span></p>',
+                      offsetY: 3,
+                      offsetX: 20,
+                      _id: "kfohucmvrhamgrgijgtqeaokiqqnkdouulvx",
+                      width: 60
                     }
                   }
                 ],
                 zIndex: 28,
                 zIndexSuffix: "",
-                _id: "uwkpgnataptriqasfhzuqvtbrxklpjiireau"
+                _id: "bvcuxusfrfjbmiwnhiswzypqxbzfqwpkhdro"
               }
             },
             {
@@ -44,16 +45,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 10,
-                      offsetX: 4,
+                      offsetX: 19,
                       text:
-                        '<p class="brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-text-lg-center brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1"><span style="color: rgb(255, 214, 129);">only $12 .99</span></p>',
-                      _id: "ncofjcnamcxhqljjjextepeairnniuunfves"
+                        '<p class="brz-lh-xs-1 brz-lh-sm-1 brz-fs-xs-34 brz-fs-sm-34 brz-fw-xs-400 brz-fw-sm-400 brz-text-lg-center brz-ls-sm-m_1 brz-ls-xs-m_1 brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-giumz" data-uniq-id="qfnsg"><span style="color: rgb(255, 214, 129);">only $12 .99</span></p>',
+                      _id: "pwpejgghopptfbnoqlreawwozicavwkqeibw",
+                      width: 63
                     }
                   }
                 ],
                 zIndex: 37,
                 zIndexSuffix: "",
-                _id: "kmkgomqyjslpzmdyyeamxodtxypliesulbsu"
+                _id: "hkxjkdecvmxnjgdrajrjmnalqdeohisklnxl"
               }
             },
             {
@@ -68,15 +70,15 @@ module.exports = {
                       offsetY: 75,
                       offsetX: 10,
                       text:
-                        '<p class="brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-left"><span class="brz-cp-color8">Carrot Soup</span></p>',
+                        '<p class="brz-fs-xs-34 brz-fs-sm-34 brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-left brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-bjfzm" data-uniq-id="spyjm"><span class="brz-cp-color8">Carrot Soup</span></p>',
                       width: 68,
-                      _id: "vsueedahdzupcomyhlyqtmbsleoqnhorebbp"
+                      _id: "jdagrewkbwewbmwfomckaxlsnhvakdltldkb"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "rmgkaiglrqrifnxufudtnjzpewqdiqcqoqzy"
+                _id: "dqbjjeuwipmizkfhntjtwjudcmblhlnkmrks"
               }
             },
             {
@@ -89,17 +91,17 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 82,
-                      offsetX: 22,
+                      offsetX: 19,
                       text:
-                        '<p class="brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-center"><span class="brz-cp-color8">Chicken fingers</span></p>',
+                        '<p class="brz-fs-xs-34 brz-fs-sm-34 brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-center brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-zuzxd" data-uniq-id="isngz"><span class="brz-cp-color8">Chicken fingers</span></p>',
                       width: 53,
-                      _id: "vgszgttigoeaymetyhszptmbuyuqmqowfbuw"
+                      _id: "tkepkzvrrednsyobgwpirtsbdvskffjmehja"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "zkebmxwxmxwvixwuwujauitmaogtqzbapcwe"
+                _id: "lhtlretcuagkmktdyzzdxmqzlwwxyusddwgr"
               }
             },
             {
@@ -114,15 +116,15 @@ module.exports = {
                       offsetY: 89,
                       offsetX: 28,
                       text:
-                        '<p class="brz-fs-xs-im-34 brz-fs-sm-im-34 brz-fs-lg-35 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-caveat brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ls-lg-m_1 brz-text-lg-right"><span class="brz-cp-color8">Strawberry Pie</span></p>',
+                        '<p class="brz-fs-xs-34 brz-fs-sm-34 brz-lh-xs-1 brz-lh-sm-1 brz-fw-xs-400 brz-fw-sm-400 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-text-lg-right brz-tp-lg-empty brz-ff-kaushan_script brz-ft-google brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1 brz-lh-lg-1_3 brz-fs-lg-30" data-generated-css="brz-css-rphnv" data-uniq-id="fcdqe"><span class="brz-cp-color8">Strawberry Pie</span></p>',
                       width: 62,
-                      _id: "foztnrjmqbgkulcnuuekinvrijvuxsqwlnmt"
+                      _id: "kvqkhkjttqiulpxredjvtbnadzgyjdhrevgh"
                     }
                   }
                 ],
                 zIndex: 68,
                 zIndexSuffix: "",
-                _id: "spdcxnsaszidxyshxbhzkihotoosuokpybkw"
+                _id: "eaudosgfqatgodjegqbzhygqaodcqrbltuji"
               }
             },
             {
@@ -147,12 +149,12 @@ module.exports = {
                       zoom: 100,
                       zoomSuffix: "",
                       offsetX: 0,
-                      offsetY: 66,
-                      _id: "ygmepuubfnavwcevbhmvchaednitnacfpxft"
+                      offsetY: 68,
+                      _id: "yjdnakrkqmpqgpavxexddbyjltffochoqgtx"
                     }
                   }
                 ],
-                _id: "khduzvosxfsmwqceyuxdjxvxcfcscnjsjzsa"
+                _id: "fwexwfvuuerwucrfqqfqxllzjyerengotcvi"
               }
             },
             {
@@ -177,12 +179,12 @@ module.exports = {
                       zoom: 100,
                       zoomSuffix: "",
                       offsetX: 0,
-                      offsetY: -16,
-                      _id: "vczbppzvyvbmbmzlqasiazvhggmieaqntdns"
+                      offsetY: -8,
+                      _id: "zkkimsyxgmhhcarejyevqoryzkikintihafy"
                     }
                   }
                 ],
-                _id: "sayzmklafbcyaeebsfztetacdupqsrrsqpcb"
+                _id: "ckjerivltvloixfozgnfynxlgaypacmkyuuo"
               }
             }
           ],
@@ -219,7 +221,7 @@ module.exports = {
           gradientRadialDegree: 90,
           bgPositionX: 42,
           bgPositionY: 39,
-          _id: "qierkweiybaknwlssiqenpicbdiaolvaheht"
+          _id: "psiidtgzcgnhstclefaosyrshynqittvlnox"
         }
       }
     ]

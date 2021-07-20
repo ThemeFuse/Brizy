@@ -21,10 +21,10 @@ module.exports = {
                     type: "Countdown2",
                     value: {
                       _styles: ["story-countdown2"],
-                      _id: "iizheykvilxwfayjnyibtquubygmewblndot",
-                      date: "22/9/2020",
+                      _id: "omojwxahgxzaogizuciiarzyxuoqgkiwnvtf",
+                      date: "22/8/2021",
                       offsetY: 12,
-                      offsetX: 7,
+                      offsetX: 4,
                       showSeconds: "off",
                       numberColorHex: "#00BFE1",
                       numberColorOpacity: 1,
@@ -36,8 +36,8 @@ module.exports = {
                       titleColorPalette: "color8",
                       tempTitleColorOpacity: 1,
                       tempTitleColorPalette: "color7",
-                      width: 85,
-                      height: 10.59,
+                      width: 89,
+                      height: 10.11,
                       numberFontSize: 42,
                       numberFontWeight: 900,
                       numberLetterSpacing: 0,
@@ -48,7 +48,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "synpcirrdlpommjoxmvlljfdiqmdlqlxjuse"
+                _id: "algtlsolroczsqugtuarblanenbrdrxkznlq"
               }
             },
             {
@@ -60,7 +60,7 @@ module.exports = {
                     type: "Line",
                     value: {
                       _styles: ["story-line"],
-                      _id: "dvleeneginqgkvkxzbwiggkoxmokwxbdgfyu",
+                      _id: "mpaxllpwllcedgiwetrbmmwpepqrljjzfjli",
                       offsetY: 28,
                       offsetX: 15,
                       width: 71,
@@ -85,7 +85,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "wapveesyazemtjopkwlkcfehrejcyftkzhae"
+                _id: "dterctrntfvpkbrtmhbzmchmzwuiisngdccd"
               }
             },
             {
@@ -118,11 +118,11 @@ module.exports = {
                       tempBorderBottomWidth: 2,
                       borderLeftWidth: 2,
                       tempBorderLeftWidth: 2,
-                      _id: "cqqvdisqztjnddlpiavnfghuhvghhwaxjgzu"
+                      _id: "wmlxqmibzgjrqytvylscswnkrmhvlrpfutzq"
                     }
                   }
                 ],
-                _id: "oqeqyiehhwpkeifhkyukdryjofdllusbifka"
+                _id: "bxrljjawhahttrgjluxdskuucflixkaakfyx"
               }
             },
             {
@@ -137,15 +137,15 @@ module.exports = {
                       text:
                         '<p class="brz-text-lg-center brz-fs-xs-im-14 brz-fs-sm-im-14 brz-fs-lg-15 brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1_3 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark"><span style="color: rgb(255, 255, 255);">USE CODE:</span><span class="brz-cp-color8"> </span><span style="color: rgb(0, 191, 225);">\'HOLIDAY 20\'</span></p>',
                       offsetY: 68,
-                      offsetX: 14,
-                      width: 72,
-                      _id: "ddgmorjlzruhoxqqxibdgofgqwkhxjqtmhxi"
+                      offsetX: 13,
+                      width: 77,
+                      _id: "nujzqaiiugabswnlgosvwghelplthobbghvg"
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "kssuzzywxizxhlzewxprnezltkbwbiwijzpu"
+                _id: "zogagfawkbhecuktqpmxyytgmnpbioptnjtl"
               }
             },
             {
@@ -158,7 +158,7 @@ module.exports = {
                     value: {
                       _styles: ["story-button"],
                       offsetY: 79,
-                      offsetX: 28,
+                      offsetX: 24,
                       bgColorPalette: "color8",
                       tempBgColorPalette: "color8",
                       bgColorOpacity: 1,
@@ -177,8 +177,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP NOW",
-                      width: 45,
-                      height: 27,
+                      width: 53,
+                      height: 26.32,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -207,11 +207,11 @@ module.exports = {
                       iconSize: "custom",
                       iconCustomSize: 22,
                       iconSpacing: 0,
-                      _id: "czimddzutwdiklcnwcclvajahochmcbpxyuy"
+                      _id: "qhzajmyzxhvkyaodefwklvuqklwiekmkfmgy"
                     }
                   }
                 ],
-                _id: "lfwbdxkjvlfvqifczvhyxszptnskavkibjwt"
+                _id: "vrfptaxkuyfuqhscxoqcltvzagpwohrlyjnt"
               }
             },
             {
@@ -223,16 +223,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "omealzsiwlrcsmiqnowztrxfafqrkbrmceah",
+                      _id: "wabobojepndynvgbddiexoiqutaowtgdmgve",
                       text:
                         '<p class="brz-lh-xs-im-1_2 brz-lh-sm-im-1_2 brz-lh-lg-1_2 brz-text-lg-right brz-ls-lg-m_6 brz-ls-sm-im-m_1 brz-ls-xs-im-m_1 brz-ff-palanquin_dark brz-ft-google brz-fw-lg-600 brz-fw-sm-im-600 brz-fw-xs-im-600 brz-fs-lg-151 brz-fs-sm-im-150 brz-fs-xs-im-150"><span style="color: rgb(255, 255, 255);">20</span></p>',
-                      width: 41,
-                      offsetX: 18,
+                      width: 56,
+                      offsetX: 2,
                       offsetY: 30
                     }
                   }
                 ],
-                _id: "mylutxwkwtfwxroruqfjxmyxzyhhyqunxttk"
+                _id: "tuwomgqqqaqwxtgevxdsxnusxsiowemcrbud"
               }
             },
             {
@@ -249,11 +249,11 @@ module.exports = {
                       width: 19,
                       offsetX: 65,
                       offsetY: 38,
-                      _id: "ymnbuflxotixxqhekxljgcpxvntylszmvrjs"
+                      _id: "fnfuwnuupkwhqjknirbwjlhohspqwatjexit"
                     }
                   }
                 ],
-                _id: "txoyuiicqwybkpkiimpaghzhzmaiwplcefdj"
+                _id: "psidxvbtjokejluwbkmbyhvrhiynidhefgqw"
               }
             },
             {
@@ -267,18 +267,18 @@ module.exports = {
                       _styles: ["story-richText"],
                       text:
                         '<p class="brz-lh-xs-im-1_2 brz-lh-sm-im-1_2 brz-lh-lg-1_2 brz-ff-palanquin_dark brz-ft-google brz-text-lg-left brz-fs-lg-40 brz-fs-sm-im-39 brz-fs-xs-im-39 brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-0 brz-ls-sm-im-1 brz-ls-xs-im-1"><span style="color: rgb(255, 255, 255);">off</span></p>',
-                      width: 19,
+                      width: 25,
                       offsetX: 65,
-                      offsetY: 46,
-                      _id: "xbfjtdbwjpezuuxeddlbjbixkkpcxgrhvciz"
+                      offsetY: 44,
+                      _id: "njmqiysqsubptfllglmfktckpnulcwddimib"
                     }
                   }
                 ],
-                _id: "zlsaaohkmhflhkftievhbcjdjiiwmmqxiknn"
+                _id: "wndbahnqtqzsbcaidnzgfsatbqvxsusbszao"
               }
             }
           ],
-          _id: "zlzxbarbstzwtgdvabpdcqrhaihnakrgxyya",
+          _id: "zrbknbwseuxsbhtbmgsctxxuzaujszenkzum",
           bgImageWidth: 1080,
           bgImageHeight: 1920,
           bgImageExtension: "jpg",

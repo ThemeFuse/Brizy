@@ -27,7 +27,7 @@ export function getItems({ v, device }) {
         icon: "nc-star"
       },
       title: t("Table"),
-      position: 70,
+      position: 50,
       options: [
         {
           id: "currentShortcodeTabs",

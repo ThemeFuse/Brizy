@@ -22,15 +22,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       text:
-                        '<p class="brz-lh-xs-im-1_1 brz-lh-sm-im-1_1 brz-lh-lg-1_1 brz-ls-xs-im-m_1 brz-ls-sm-im-m_1 brz-ls-lg-m_2 brz-fs-xs-im-49 brz-fs-sm-im-49 brz-fs-lg-50 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-dm_serif_display brz-text-lg-center"><span style="color: rgb(255, 255, 255);">Find now a handymen or contractor</span></p>',
-                      width: 71,
-                      offsetY: 29,
-                      offsetX: 15,
-                      _id: "acdsrlnkjmhgapkuqofxnqlqmrsczbkackqe"
+                        '<p class="brz-text-lg-center brz-ff-dm_serif_display brz-ft-google brz-fw-sm-400 brz-fw-xs-400 brz-fs-sm-49 brz-fs-xs-49 brz-ls-sm-m_1 brz-ls-xs-m_1 brz-lh-sm-1_1 brz-lh-xs-1_1 brz-lh-lg-1_1 brz-fs-lg-44 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-m_1" data-uniq-id="vgqpq" data-generated-css="brz-css-rubxm"><span style="color: rgb(255, 255, 255);">Find now a handymen or contractor</span></p>',
+                      width: 85,
+                      offsetY: 32,
+                      offsetX: 6,
+                      _id: "ekcfpvdstlzsarznrmxlrlbwmihzoebbcbzc"
                     }
                   }
                 ],
-                _id: "kshntbicczovmpdqjtpagkstddycqdewkgiq"
+                _id: "ggmgzrajpuzulctndaysddndikjpdxuwykqk"
               }
             },
             {
@@ -42,8 +42,8 @@ module.exports = {
                     type: "Button",
                     value: {
                       _styles: ["story-button"],
-                      offsetY: 61,
-                      offsetX: 18,
+                      offsetY: 58,
+                      offsetX: 12,
                       bgColorPalette: "",
                       bgColorHex: "#342e36",
                       fontFamily: "lato",
@@ -54,8 +54,8 @@ module.exports = {
                       letterSpacing: 2.5,
                       lineHeight: 1.6,
                       text: "DOWNLOAD THE APP",
-                      width: 66,
-                      height: 20,
+                      width: 77,
+                      height: 22.29,
                       borderRadiusType: "custom",
                       tempBorderRadiusType: "custom",
                       paddingRight: 0,
@@ -68,13 +68,13 @@ module.exports = {
                       hoverBgColorOpacity: 0.8,
                       hoverBorderColorOpacity: 0.8,
                       tempBorderWidth: 2,
-                      _id: "sllqqrzwphmfwpxbfvicmbbcpmhdhumoeaiu",
+                      _id: "izwdyseaakptpiaydwvqcespczrjdiieodrc",
                       iconName: "mobile-contact",
                       iconType: "glyph"
                     }
                   }
                 ],
-                _id: "iacfkdyrkjryjboxnnflkwghdqqhpexakflq"
+                _id: "kttjrtgrzdwonuanhuwvgffwlkqbcapuksoi"
               }
             },
             {
@@ -111,7 +111,7 @@ module.exports = {
                       hoverBgColorOpacity: 0.8,
                       hoverBorderColorOpacity: 0,
                       tempBorderWidth: 3,
-                      _id: "ibuiipssznjvfjyexbxnjukprumrwwnzdqps",
+                      _id: "ihkkykavwawxmoawiiljptizijjzgoajnvck",
                       iconName: "phone-call",
                       iconType: "glyph",
                       tempFillType: "outline",
@@ -133,7 +133,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "buamjypplbybfobpkgpkdgjthvvqrbovfntr"
+                _id: "kothcsotbeyzyydtpoelpyjftjyplknchzpa"
               }
             },
             {
@@ -149,11 +149,11 @@ module.exports = {
                         '<p class="brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-dm_serif_display brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-17 brz-fs-sm-im-16 brz-fs-xs-im-16 brz-lh-lg-1_7 brz-lh-sm-im-1_4 brz-lh-xs-im-1_4"><span style="color: rgb(255, 97, 88);">2300+ available professionals</span></p>',
                       offsetY: 4,
                       offsetX: 11,
-                      _id: "abmmhamzoazefpdnptefswpazunpeybnyynp"
+                      _id: "jfbpytzuyevevztdnxbvcqdcvydvrrabzswv"
                     }
                   }
                 ],
-                _id: "wqmczdmgupfmthuitrvemdenkzamykuahodz"
+                _id: "olsbtexohzufcvhgqhlqodyskmesaqpgzbtm"
               }
             },
             {
@@ -173,11 +173,11 @@ module.exports = {
                       size: "custom",
                       colorPalette: "",
                       colorHex: "#342e36",
-                      _id: "zkjdeayruvtluiwpdvhexywcrwlhnimqyeyi"
+                      _id: "rltzztiyuwsnyadamjjykttwyrkxftfquiql"
                     }
                   }
                 ],
-                _id: "qwxrxpnfhjrnxddwfmaiaydxbounnhnsceko"
+                _id: "mzutvexkveeihzonbuwggxfpxxvmjxillbbz"
               }
             }
           ],
@@ -216,7 +216,7 @@ module.exports = {
           contrast: 106,
           saturation: 109,
           brightness: 102,
-          _id: "jbdgeaqzunnqvhlwypmmybsvqtvbtcarqhgt"
+          _id: "bgmgsmkvughiljhrvtzsrbgxriluiicpwczh"
         }
       }
     ]

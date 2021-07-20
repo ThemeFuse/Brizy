@@ -1,4 +1,4 @@
-const { t } = global.Brizy;
+import { t } from "visual/utils/i18n";
 
 export default {
   id: "audio",

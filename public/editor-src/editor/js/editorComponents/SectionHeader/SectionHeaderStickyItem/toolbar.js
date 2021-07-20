@@ -19,7 +19,7 @@ import {
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -49,6 +49,7 @@ export function getItems({ v, device, state }) {
                   v,
                   device,
                   state,
+                  config: context.dynamicContent.config,
                   states: [NORMAL, HOVER],
                   onChange: [
                     "onChangeBgImage",

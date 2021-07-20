@@ -1,9 +1,31 @@
 import { isHex } from "visual/utils/color";
-import { getFontStyle, getUsedFonts } from "visual/utils/fonts";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { decodeFromString } from "visual/utils/string";
+import { classNamesToV } from "./transforms";
+// have problems with cheerio it declared _ as global variables
+const $doc = IS_EDITOR ? require("jquery") : require("cheerio");
 
-const DEFAULT_LINE_HEIGHT = 1.5;
+
+export function mapBlockElements(html, fn) {
+  let $ = getWrapper(html);
+  const nodes = getParagraphsArray($);
+
+  nodes.each((i, elem) => fn($doc(elem)));
+
+  return $.html();
+
+  function getWrapper(html) {
+    return IS_EDITOR
+      ? $doc(`<div class="brz-temp-div">${html}</div>`)
+      : $doc.load(html);
+  }
+
+  function getParagraphsArray($) {
+    const selector = ":header, p, pre, li, div:not(.brz-temp-div)";
+
+    return IS_EDITOR ? $.find(selector) : $(selector);
+  }
+}
 
 const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
   rgba = rgba.match(
@@ -24,14 +46,6 @@ const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
   }
 };
 
-const formatStr = str => {
-  return str
-    .trim()
-    .toLowerCase()
-    .replace(/"|'/g, "")
-    .replace(/ /g, "_");
-};
-
 const flatFormats = format => {
   return Object.entries(format).reduce((acc, [key, value]) => {
     acc[key] = Array.isArray(value) ? value[0] : value;
@@ -39,8 +53,8 @@ const flatFormats = format => {
   }, {});
 };
 
-const parseShadow = str => {
-  const [, rgba, shadow] = str.match(/^(rgb.*\)) (.*)/) || [];
+const parseShadow = (str = "") => {
+  const [, rgba, shadow] = str.split(", rgb")[0].match(/^(rgb.*\)) (.*)/) || [];
 
   if (rgba && shadow) {
     let { hex, opacity } = rgbaTohex(rgba);
@@ -75,32 +89,18 @@ const getTagName = ({ header, pre }, $elem) => {
   return preTagName || headerTagName;
 };
 
-const getCurrentFont = font => {
-  const fontFamilies = getUsedFonts().map(({ family }) => family);
-  const currentFonts = font.split(",");
-
-  const currentFont = currentFonts.find(item =>
-    fontFamilies.includes(item.replace(/"/g, ""))
-  );
-
-  return currentFont ? formatStr(currentFont) : null;
-};
-
-const getCurrentFontStyle = fontStyle => {
-  return getFontStyle(fontStyle) || {};
-};
-
-const getLink = value => {
+// to think how to get rid of this function
+const getLink = (value = "{}") => {
   const {
-    type,
+    type = "external",
     anchor = "",
-    external,
-    externalBlank,
-    externalRel,
-    population,
-    externalType,
+    external = "",
+    externalBlank = "off",
+    externalRel = "off",
+    population = "",
+    externalType = "external",
     popup = "",
-    upload
+    upload = ""
   } = decodeFromString(value);
 
   return {
@@ -117,33 +117,54 @@ const getLink = value => {
 };
 
 export const getFormats = ($elem, format = {}, deviceMode) => {
+  const v = classNamesToV($elem.closest("p, :header, pre, li"));
   format = flatFormats(format);
-  const $blockElement = $elem.closest("p, :header, pre, div");
-  const cssFontSize = parseInt($elem.css("fontSize"));
+
   const cssColor = $elem.css("color");
   const cssOpacity = $elem.css("opacity");
   const cssShadow = $elem.css("text-shadow");
-  const cssMarginTop = parseFloat($blockElement.css("marginTop"));
-  const cssMarginBottom = parseFloat($blockElement.css("marginBottom"));
-  const cssHeight = parseFloat($elem.css("lineHeight"));
-  const cssLetterSpacing = parseFloat($elem.css("letterSpacing"));
-  const cssLineHeight = isNaN(cssHeight)
-    ? DEFAULT_LINE_HEIGHT
-    : cssHeight / cssFontSize;
-  const cssAlign = $elem.css("textAlign");
-  const align = ["left", "center", "right", "justify"].includes(cssAlign)
-    ? cssAlign
-    : "left";
-  const cssFontFamily = $elem.css("fontFamily");
-  const cssFontWeight = parseInt($elem.css("fontWeight"));
 
-  const marginTop = format[`${deviceMode}MarginTop`];
-  const marginBottom = format[`${deviceMode}MarginBottom`];
-
-  const link = format.link ? getLink(format.link) : {};
   const populationColor = format.populationColor
     ? { populationColor: decodeFromString(format.populationColor) }
-    : {};
+    : {
+        populationColor: {
+          p: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h1: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h2: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h3: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h4: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h5: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          },
+          h6: {
+            hex: null,
+            opacity: 1,
+            colorPalette: null
+          }
+        }
+      };
 
   let hex = format.color ? format.color : cssColor;
 
@@ -151,39 +172,19 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     hex = rgbaTohex(hex).hex;
   }
 
-  const cfs = getCurrentFontStyle(format.fontStyle) || {};
-
-  const lineHeight = format.lineHeight
-    ? format.lineHeight.replace("_", ".")
-    : null;
-
-  const tabletLineHeight = format.tabletLineHeight
-    ? format.tabletLineHeight.replace("_", ".")
-    : null;
-
-  const mobileLineHeight = format.mobileLineHeight
-    ? format.mobileLineHeight.replace("_", ".")
-    : null;
-
-  const letterSpacing = format.letterSpacing
-    ? format.letterSpacing.replace("m_", "-").replace("_", ".")
-    : null;
-
-  const tabletLetterSpacing = format.tabletLetterSpacing
-    ? format.tabletLetterSpacing.replace("m_", "-").replace("_", ".")
-    : null;
-
-  const mobileLetterSpacing = format.mobileLetterSpacing
-    ? format.mobileLetterSpacing.replace("m_", "-").replace("_", ".")
-    : null;
-
   const opacity = format.opacity || cssOpacity;
 
   // it's only for situations when colorPalette contain this data - "color2, color3" (normally it should never happen)
   const palette = format.colorPalette ? format.colorPalette.split(",")[0] : "";
 
   return {
-    ...format,
+    ...v,
+
+    bold: format.bold ?? "",
+    italic: format.italic ?? "",
+    underline: format.underline ?? "",
+    strike: format.strike ?? "",
+    capitalize: format.capitalize ?? "",
 
     color: {
       hex,
@@ -194,65 +195,13 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     shadow: parseShadow(format.shadow || cssShadow),
     shadowColorPalette: format.shadowColorPalette || "",
 
-    fontFamily:
-      format.fontFamily || cfs.fontFamily || getCurrentFont(cssFontFamily),
-    tabletFontFamily: null,
-    mobileFontFamily: null,
-    fontFamilyType: cfs.fontFamilyType || format.fontFamilyType || "google",
-    tabletFontFamilyType: null,
-    mobileFontFamilyType: null,
-
-    fontStyle: format.fontStyle || null,
-
-    fontWeight: Number(format.fontWeight) || cfs.fontWeight || cssFontWeight,
-    tabletFontWeight:
-      Number(format.tabletFontWeight) || cfs.tabletFontWeight || null,
-    mobileFontWeight:
-      Number(format.mobileFontWeight) || cfs.mobileFontWeight || null,
-
-    lineHeight: Number(lineHeight) || cfs.lineHeight || cssLineHeight,
-    tabletLineHeight: Number(tabletLineHeight) || cfs.tabletLineHeight || null,
-    mobileLineHeight: Number(mobileLineHeight) || cfs.mobileLineHeight || null,
-
-    fontSize: format.fontSize || cfs.fontSize || cssFontSize,
-    tabletFontSize: format.tabletFontSize || cfs.tabletFontSize || null,
-    mobileFontSize: format.mobileFontSize || cfs.mobileFontSize || null,
-
-    letterSpacing: !isNaN(Number(tabletLetterSpacing))
-      ? Number(letterSpacing)
-      : cfs.letterSpacing || cssLetterSpacing,
-    tabletLetterSpacing:
-      tabletLetterSpacing && !isNaN(Number(tabletLetterSpacing))
-        ? Number(tabletLetterSpacing)
-        : cfs.tabletLetterSpacing || null,
-    mobileLetterSpacing:
-      mobileLetterSpacing && !isNaN(Number(mobileLetterSpacing))
-        ? Number(mobileLetterSpacing)
-        : cfs.mobileLetterSpacing || null,
-
     backgroundImage: format.backgroundImage || null,
     backgroundGradient: format.backgroundGradient || null,
-    horizontalAlign: format.horizontalAlign || align,
-    intermediateTabletLineHeight: format.intermediateTabletLineHeight || null,
-    intermediateMobileLineHeight: format.intermediateMobileLineHeight || null,
-    intermediateTabletFontSize: format.intermediateTabletFontSize || null,
-    intermediateMobileFontSize: format.intermediateMobileFontSize || null,
-    intermediateTabletLetterSpacing:
-      format.intermediateTabletLetterSpacing || null,
-    intermediateMobileLetterSpacing:
-      format.intermediateMobileLetterSpacing || null,
-    intermediateTabletWeight: format.intermediateTabletWeight || null,
-    intermediateMobileWeight: format.intermediateMobileWeight || null,
 
-    ...link,
+    ...getLink(format.link),
     ...populationColor,
 
-    list: format.list ? format.list : null,
-    marginBottom: marginBottom ? marginBottom : cssMarginBottom,
-    marginTop: marginTop ? marginTop : cssMarginTop,
-
-    tabletHorizontalAlign: format.tabletHorizontalAlign || align,
-    mobileHorizontalAlign: format.mobileHorizontalAlign || align,
+    list: format.list ?? "",
 
     population: format.population
       ? {

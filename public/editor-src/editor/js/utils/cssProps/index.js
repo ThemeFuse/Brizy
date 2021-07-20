@@ -9,6 +9,8 @@ import { isNumber, toNumber } from "visual/utils/math";
  * @param {number} orElse
  * @param {*} v
  * @returns {number}
+ *
+ * @deprecated, use utils/cssProps/Blur.fromNumber
  */
 export const toBlur = (v, orElse = undefined) =>
   isNumber(v) && v >= 0 ? v : orElse;
@@ -21,5 +23,7 @@ export const toBlur = (v, orElse = undefined) =>
  * @param {number} orElse
  * @param {*} v
  * @returns {number}
+ *
+ * @deprecated, use utils/cssProps/Spread.fromNumber
  */
 export const toSpread = toNumber;

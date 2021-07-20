@@ -1,6 +1,6 @@
 import React from "react";
 import EditorPage from "./EditorPage";
-import LeftSidebar from "visual/component/LeftSidebar";
+import { LeftSidebar } from "visual/component/LeftSidebar";
 import BottomPanel from "visual/component/BottomPanel";
 import Prompts from "visual/component/Prompts";
 import HotKeys from "visual/component/HotKeys";

@@ -21,7 +21,7 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "tynrqeijgenholnvlckoaoswjztzrhsqqiav",
+                      _id: "wurtjznzozlfurrhujapxwzfbncdenyuubjz",
                       text:
                         '<p class="brz-text-lg-center brz-ff-palanquin_dark brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-17 brz-fs-sm-im-16 brz-fs-xs-im-16 brz-lh-lg-1_3 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-ls-lg-1_5 brz-ls-sm-im-3 brz-ls-xs-im-3"><span style="color: rgb(232, 53, 20);">WATCH OF THE</span></p>',
                       offsetY: 8,
@@ -29,7 +29,7 @@ module.exports = {
                     }
                   }
                 ],
-                _id: "rairguqbojwbuxvloqejkfiiccbnwgkmoayu",
+                _id: "cqehvbrrwdpmqwqtwqovantkhekdfqpbuiva",
                 zIndex: 11,
                 zIndexSuffix: ""
               }
@@ -47,14 +47,14 @@ module.exports = {
                         '<p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-left brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14 brz-lh-lg-1_5 brz-lh-sm-im-1_2 brz-lh-xs-im-1_2"><span style="color: rgb(9, 34, 55); opacity: 0.84;">TIMEX</span></p><p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-left brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14 brz-lh-lg-1_5 brz-lh-sm-im-1_2 brz-lh-xs-im-1_2"><span style="color: rgb(9, 34, 55); opacity: 0.84;">CLASSIC</span></p><p class="brz-ls-xs-im-3 brz-ls-sm-im-3 brz-ls-lg-1_5 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ft-google brz-ff-palanquin_dark brz-text-lg-left brz-fs-lg-15 brz-fs-sm-im-14 brz-fs-xs-im-14 brz-lh-lg-1_5 brz-lh-sm-im-1_2 brz-lh-xs-im-1_2"><span style="color: rgb(9, 34, 55); opacity: 0.84;">CHRONO </span></p>',
                       offsetY: 32,
                       offsetX: 13,
-                      _id: "ildpebmgyhwanaxdodbgcufspjraasgkdcdk",
+                      _id: "wcfnnbkdvxfneciccqzjifxlwaoobooapicb",
                       width: 28
                     }
                   }
                 ],
                 zIndex: 11,
                 zIndexSuffix: "",
-                _id: "qnmovyjfdrcaztjcdusmelvrkmyqactbdmin"
+                _id: "bysliwpgdpqgqmydrvliwqdoxleeggtozqyl"
               }
             },
             {
@@ -71,11 +71,11 @@ module.exports = {
                       text:
                         '<p class="brz-ft-google brz-ff-palanquin_dark brz-fs-lg-100 brz-fs-sm-im-99 brz-fs-xs-im-99 brz-lh-lg-1 brz-lh-sm-im-1 brz-lh-xs-im-1 brz-fw-lg-600 brz-fw-sm-im-600 brz-fw-xs-im-600 brz-ls-lg-19 brz-ls-sm-im-15 brz-ls-xs-im-15 brz-text-lg-left"><span style="color: rgb(9, 34, 55);">WE</span></p>',
                       width: 79,
-                      _id: "vmkszmdovhlrqumweebjkrvatbnqphbszmbi"
+                      _id: "qdfcqxjwhkugdxlyfwckscyykjnqxfkrfigz"
                     }
                   }
                 ],
-                _id: "ogamrsdvmxohgbnbdgszpiwcjjntcaiwpbvl"
+                _id: "wxoawwhqexgynrksnfcxduvmpjkmowfbijmo"
               }
             },
             {
@@ -88,15 +88,15 @@ module.exports = {
                     value: {
                       _styles: ["story-richText"],
                       offsetY: 29,
-                      offsetX: 41,
+                      offsetX: 37,
                       text:
                         '<p class="brz-ls-xs-im-15 brz-ls-sm-im-15 brz-ls-lg-19 brz-fw-xs-im-600 brz-fw-sm-im-600 brz-fw-lg-600 brz-lh-xs-im-1 brz-lh-sm-im-1 brz-lh-lg-1 brz-fs-xs-im-99 brz-fs-sm-im-99 brz-fs-lg-100 brz-ff-palanquin_dark brz-ft-google brz-text-lg-right"><span style="color: rgb(9, 34, 55);">EK</span></p>',
-                      width: 49,
-                      _id: "bmuykrnguyjsdqacjntnkulbwwrcowozkdac"
+                      width: 53,
+                      _id: "ardklddjzrthicbnakrbbdfpobpyxdzonfzl"
                     }
                   }
                 ],
-                _id: "tzcmaiqnlgedltyklgpdlrlcrzvwrhcifpbd"
+                _id: "jvjznagiqvsuzkqrysnxoseniletsssietxe"
               }
             },
             {
@@ -109,7 +109,7 @@ module.exports = {
                     value: {
                       _styles: ["story-button"],
                       offsetY: 77,
-                      offsetX: 22,
+                      offsetX: 15,
                       bgColorPalette: "",
                       tempBgColorPalette: "color8",
                       borderRadiusType: "custom",
@@ -127,8 +127,8 @@ module.exports = {
                       letterSpacing: 2,
                       lineHeight: 1.6,
                       text: "SHOP THIS WATCH",
-                      width: 60,
-                      height: 21.54,
+                      width: 70,
+                      height: 20.57,
                       boxShadowBlur: 20,
                       tempBoxShadowBlur: 20,
                       boxShadowSpread: -10,
@@ -157,13 +157,13 @@ module.exports = {
                       iconSize: "custom",
                       iconCustomSize: 14,
                       iconSpacing: 10,
-                      _id: "mvofluimnlzsvakojnuipuagmtmgynkoahrc",
+                      _id: "rxfhpxofkdhufzutiferycvhlqpmukmhbvvj",
                       bgColorHex: "#e83514",
                       colorOpacity: 1
                     }
                   }
                 ],
-                _id: "scosrlbmpzxoatsgsctwfzqgljbdwnxfcwkw"
+                _id: "kqgdylzrspdfxzjxnuvqxslywwkfsuembbip"
               }
             },
             {
@@ -175,16 +175,16 @@ module.exports = {
                     type: "RichText",
                     value: {
                       _styles: ["story-richText"],
-                      _id: "dhyjypvaanemvmwhkwowmtexmwomgqcjcshd",
+                      _id: "grlnjgtadqzzzdpsidvekpkiuxaxdsizrzne",
                       offsetY: 87,
-                      offsetX: 15,
+                      offsetX: 12,
                       text:
                         '<p class="brz-text-lg-center brz-lh-lg-1_9 brz-lh-sm-im-1_6 brz-lh-xs-im-1_6 brz-fs-lg-16 brz-fs-sm-im-15 brz-fs-xs-im-15 brz-ff-lato brz-ft-google brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-ls-lg-0_5 brz-ls-sm-im-1 brz-ls-xs-im-1"><em style="color: rgb(100, 105, 112); opacity: 0.7;">Swipe for more pre-owned watches</em></p>',
-                      width: 73
+                      width: 80
                     }
                   }
                 ],
-                _id: "yhuqcxxgrcbdnntchkmupzqyogzmwxspzyac"
+                _id: "fwxnaomngxmxszzjldioxpuvogrgzpzxwgpi"
               }
             }
           ],
@@ -219,7 +219,7 @@ module.exports = {
           gradientActivePointer: "finishPointer",
           gradientLinearDegree: 0,
           gradientRadialDegree: 90,
-          _id: "ttgsmewvlkklgpakirlewlllobfdlgcxapqq",
+          _id: "kbhzlcruioxltommwgjmglpkujjmxhfhzaoj",
           bgPositionX: 48,
           bgPositionY: 0
         }
