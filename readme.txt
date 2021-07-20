@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.2 - 2021-07-20 =
+* Fixed: Compile popup if it was not compiled by the current plugin
+* Fixed: Check the assets content before sending to asset grouping library
 
 = 2.3.1 - 2021-07-20 =
 * Fixed: Global styles reset for text 
