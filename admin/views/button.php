@@ -16,7 +16,7 @@ $edit_url  = esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_a
             if ( $is_using_brizy ) {
                 ?>
                 <a class="brizy-button brizy-button--primary enable-brizy-editor" href="<?php echo $edit_url; ?>">
-                    <span class="brizy-go-editor-back-arrow">&#8592;</span> <span><?php echo __( 'Back to WordPress Editor', 'brizy' ) ?></span>
+                    <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                 </a>
                 <?php
             } else {

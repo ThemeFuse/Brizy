@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.3.0<br>
+Stable tag: 2.3.1<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,12 +118,28 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.3.1 - 2021-07-20
+* Fixed: Global styles reset for text 
+* Fixed: Fatal Error cased by loading incompatible PRO plugin versions
+
 ### 2.3.0 - 2021-07-19
 * New: All PRO elements are now visible but locked
 * New: Added an API action to obtain the post taxonomies
+* New: Stories
+* New: Added option to change order for Button and Icon elements
+* New: Added more sizes for text (em, rem, vw)
+* New: Added Underline, Capitalize, Strikethrough options for the Text element
+* New: Added Title HTML Tag option for the Accordion element
+* New: Featured Image element
+* New: Added Title HTML Tag option for the Post element
+* New: Added font sizes (em, rem, vw) in Global Styles
 * Improved: Preview assets JS, CSS
 * Improved: RichText element
 * Improved: Global Block Conditions
+* Improved: Styles for when you Copy/Past text in the Text element
+* Improved: HTML tag option for Text was moved in the right sidebar
+* Improved: Added links to registration and login, fixed spacing, and added a form registration message for the Login element
+* Improved: Google fonts performance optimizations (prefetch Google fonts for faster loading)
 * Fixed: Compile page in the back-end when Rank Math plugin is installed
 * Fixed: Save user roles when adding new user
 * Fixed: Do not include JS on the profile if the user has no rights of changing roles
@@ -143,6 +159,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Show Products post type in global block rules
 * Fixed: Product include in rule group list
 * Fixed: Added specific template rule match
+* Fixed: Color and link for Post Title and Excerpt elements
+* Fixed: Align for excerpt and title
+* Fixed: Global color for bullets in lists
+* Fixed: RichText global styles
+* Fixed: Loading incompatible PRO plugin versions
 
 ### 2.2.20 - 2021-07-13
 * New: error messages in Form element for Number and File input
