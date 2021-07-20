@@ -47,9 +47,9 @@ class Brizy_Admin_Templates
             add_filter('post_row_actions', array($this, 'removeRowActions'), 10, 1);
             add_action('admin_init', array($this, 'addTemplateRoleCaps'), 10000);
             add_action('admin_enqueue_scripts', array($this, 'action_register_static'));
-            add_filter('save_post', array($this, 'save_template_rules'), 10, 2);
+            add_filter('save_post', array($this, 'saveTemplateRules'), 10, 2);
             add_filter('pre_post_update', array($this, 'validate_template_rules'), 10, 2);
-            add_action('admin_notices', array($this, 'save_template_rules_notices'));
+            add_action('admin_notices', array($this, 'saveTemplateRulesNotices'));
         } elseif ( ! defined('DOING_AJAX') &&
                    ! is_admin() &&
                    ! isset($_REQUEST[Brizy_Editor::prefix('_media')]) &&
@@ -866,7 +866,7 @@ class Brizy_Admin_Templates
         }
     }
 
-    public function save_template_rules_notices()
+    public function saveTemplateRulesNotices()
     {
 
         global $pagenow;
@@ -983,7 +983,7 @@ class Brizy_Admin_Templates
         }
     }
 
-    public function save_template_rules($post_id)
+    public function saveTemplateRules($post_id)
     {
         try {
 	        if(!isset($_REQUEST['brizy-template-type'])) {

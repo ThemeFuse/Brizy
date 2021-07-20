@@ -170,7 +170,7 @@ class Brizy_Admin_Popups_Main {
 			 * @var Brizy_Editor_Post $brizyPopup ;
 			 */
 
-			if ( $brizyPopup->get_needs_compile() ) {
+			if ( $brizyPopup->get_needs_compile() || ! $brizyPopup->isCompiledWithCurrentVersion() ) {
 				$brizyPopup->compile_page();
 				$brizyPopup->saveStorage();
 				$brizyPopup->savePost();
