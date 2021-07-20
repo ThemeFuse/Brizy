@@ -87,7 +87,7 @@ class Brizy_Compatibilities_Gutenberg {
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                     <div class="brizy-buttons">
                         <a class="brizy-button brizy-button--primary enable-brizy-editor" href="<?php echo $edit_url ?>">
-                            <span class="brizy-go-editor-back-arrow">&#8592;</span> <span><?php echo __( 'Back to WordPress Editor', 'brizy' ) ?></span>
+                            <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                         </a>
                     </div>
                 </script>
