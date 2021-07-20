@@ -1,0 +1,133 @@
+{% extends "optimizer-base.html.twig" %}
+
+{% block tab_content %}
+    <script>
+        (function ($) {
+
+            var requestQueue = [];
+            var maxRequestCount = 3;
+            var count = {{ count }} ;
+            var currentIndex = 0;
+            var failCount = 0;
+            var links = [
+                {% for url in urls %}
+                "{{ url | raw }}",
+                {% endfor %}
+            ];
+
+            window.startOptimize = function () {
+                currentIndex = 0;
+                updateUI();
+                if (links.length > 0) {
+                    const handle = setInterval(function () {
+                        if (requestQueue.length < maxRequestCount && links[currentIndex]) {
+                            // add request
+                            console.log('Add new request');
+                            requestQueue.push($.ajax({
+                                url: links[currentIndex].replace( /\&amp;/gi, '&' ),
+                                success: function (data) {
+                                    updateUI();
+                                },
+                                error: function () {
+                                    failCount++;
+                                    updateUI();
+                                }
+                            }));
+
+                            currentIndex++;
+
+                        } else {
+                            console.log('Clear done requests');
+                            // check and remove done requests
+                            for (var i = 0; i < maxRequestCount; i++) {
+                                if (requestQueue[i] && requestQueue[i].readyState == 4) {
+                                    requestQueue.splice(i, 1);
+                                }
+                            }
+                        }
+
+                        if (!links[currentIndex]) {
+                            console.log('Clear Interval');
+                            updateUI();
+                            clearInterval(handle);
+                        }
+
+                    }, 500);
+                }
+            };
+
+            function updateUI() {
+
+                var progress = (currentIndex) + "/" + count;
+
+                if (currentIndex < links.length) {
+                    $('#optimize-results').html('<p>Process: ' + progress + '' +
+                        '<svg class="brz-spinner"><use xlink:href="{{ svg }}"></svg>' +
+                        '</p>' +
+                        '<p>Failed: ' + failCount + '</p>');
+
+                    $('#optimize-donotclose').show();
+                    window.onbeforeunload = function (e) {
+                        return '';
+                    };
+                } else {
+                    $('#optimize-results').html('<p>Process: ' + progress + '' +
+                        '</p>' +
+                        '<p>Failed: ' + failCount + '</p>');
+                    $('#optimize-donotclose').hide();
+                    jQuery('#optimize-submit').prop('disabled', false);
+                    window.onbeforeunload = undefined;
+                }
+            }
+        })(jQuery);
+    </script>
+    <div id="optimize-results">
+        <p>{{ sprintf(__('There are <b>%d</b> images that can be optimized.','brizy') ,count) |raw }}</p>
+    </div>
+
+    {% if enabled %}
+        {% if count>0 %}
+            <button type="submit" id="optimize-submit" class="button button-primary"
+                    onclick="startOptimize(); jQuery(this).prop('disabled',true);">
+                {{ submit_label }}
+            </button>
+        {% endif %}
+    {% else %}
+        <div class="notice notice-error is-dismissible">
+            <p>
+                {{ __('Please provide an API KEY in the Settings tab.') }}
+            </p>
+        </div>
+    {% endif %}
+
+    <div id="optimize-donotclose" style="display:none;color:red;">
+        <p><i> {{ __("Don't leave this page until the optimisation process is completed.") }}</i></p>
+    </div>
+
+    <style>
+        .brz-spinner {
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            width: 16px;
+            height: 16px;
+            -webkit-animation-name: brz-pin;
+            animation-name: brz-spin;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+        }
+
+        @keyframes brz-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+{% endblock %}
