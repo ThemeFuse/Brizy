@@ -1,3 +1,3 @@
 <?php if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	die( 'Forbidden' );
+	wp_die( 'Forbidden' );
 }
