@@ -50,7 +50,7 @@ pipeline {
             steps {
                 writeFile file: 'changelog.txt', text: "\n= ${params.buildVersion} - ${releaseDate} =\n"+params.changelog+"\n"
                 writeFile file: 'changelog.md', text: "\n### ${params.buildVersion} - ${releaseDate}\n"+params.changelog+"\n"
-                sh "./jenkins/version-update.sh ${params.buildVersion} ${params.editorVersion} ${params.syncVersion} ./changelog.txt ./changelog.md"
+                sh "./jenkins/version-update.sh ${params.buildVersion} ${params.minProVersion} ${params.editorVersion} ${params.syncVersion} ./changelog.txt ./changelog.md"
                 sh "rm -rf changelog.txt changelog.md"
             }
         }

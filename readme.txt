@@ -136,6 +136,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 = 2.3.0 - 2021-07-19 =
 * New: All PRO elements are now visible but locked
 * New: Added an API action to obtain the post taxonomies
+* New: Stories
 * Improved: Preview assets JS, CSS
 * Improved: RichText element
 * Improved: Global Block Conditions
