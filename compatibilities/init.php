@@ -94,6 +94,10 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'Tribe__Events__Main' ) ) {
 			new Brizy_Compatibilities_TheEventsCalendar();
 		}
+
+		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
+			new Brizy_Compatibilities_BrizyProCompatibility();
+		}
   }
 
 	public function after_setup_theme() {
