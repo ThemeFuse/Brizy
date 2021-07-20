@@ -178,8 +178,9 @@ class Brizy_Admin_Popups_Main {
 
 			if ( $context == 'head' ) {
 				$styles = $brizyPopup->getCompiledStyles();
-
-				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+                if(isset($styles['free']) && !empty($styles['free'])) {
+                    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+                }
 				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
 
 			}
@@ -187,8 +188,9 @@ class Brizy_Admin_Popups_Main {
 			if ( $context == 'body' ) {
 
 				$assets = $brizyPopup->getCompiledScripts();
-
-				$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
+                if(isset($assets['free']) && !empty($assets['free'])) {
+                    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
+                }
 				$assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $brizyPopup);
 
 			}

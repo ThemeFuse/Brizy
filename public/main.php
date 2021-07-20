@@ -524,7 +524,9 @@ class Brizy_Public_Main
         $project = Brizy_Editor_Project::get();
         $styles  = $this->post->getCompiledStyles();
 	    $assetGroups = [];
-        $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+        if(isset($styles['free']) && !empty($styles['free'])) {
+            $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+        }
 	    $assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $this->post);
 
 	    // add popups and popup assets
@@ -594,7 +596,9 @@ class Brizy_Public_Main
         // get all assets needed for this page
         $scripts = $this->post->getCompiledScripts();
 	    $assetGroups = [];
-	    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($scripts['free']);
+        if(isset($scripts['free']) && !empty($scripts['free'])) {
+            $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($scripts['free']);
+        }
 	    $assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $this->post);
 
 	    // add popups and popup assets
