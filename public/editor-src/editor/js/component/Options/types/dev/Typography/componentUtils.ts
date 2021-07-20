@@ -3,8 +3,6 @@ import * as Num from "visual/utils/math/number";
 import * as FontType from "visual/utils/fonts/familyType";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import * as Patcher from "visual/utils/patch";
-import * as Model from "./model";
 import * as Positive from "visual/utils/math/Positive";
 import { getStore } from "visual/redux/store";
 import { deviceModeSelector } from "visual/redux/selectors";
@@ -15,21 +13,16 @@ import { FontFamily, Value } from "./types/Value";
 import { mPipe } from "visual/utils/fp";
 import { MValue } from "visual/utils/value";
 import { Literal } from "visual/utils/types/Literal";
-import { Weight } from "visual/utils/fonts/Weight";
-import {
-  isFontFamily,
-  isFontSettings,
-  isFontStyle,
-  Patch
-} from "./types/Patch";
+import * as Patch from "./types/Patch";
 import { ElementModel } from "visual/component/Elements/Types";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { Font } from "./types/Font";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import { match2, or, pass } from "fp-utilities";
 
 export const DEFAULT_VALUE: Value = {
   fontFamily: "",
   fontFamilyType: FontType.FontFamilyType.google,
-  fontStyle: "",
+  fontStyle: undefined,
   fontSize: Positive.unsafe(17),
   fontSizeSuffix: SizeSuffix.empty,
   fontWeight: FontWeight.empty,
@@ -49,7 +42,8 @@ export const getModel: GetModel<Value> = get => {
       mPipe(() => get("fontFamilyType"), Str.read, FontType.fromString)() ??
       DEFAULT_VALUE.fontFamilyType,
     fontStyle:
-      mPipe(() => get("fontStyle"), Str.read)() ?? DEFAULT_VALUE.fontStyle,
+      mPipe(() => get("fontStyle"), Str.read, pass(NoEmptyString.is))() ??
+      DEFAULT_VALUE.fontStyle,
     fontSize:
       mPipe(() => get("fontSize"), Num.read, Positive.fromNumber)() ??
       DEFAULT_VALUE.fontSize,
@@ -68,34 +62,43 @@ export const getModel: GetModel<Value> = get => {
   };
 };
 
-export const getElementModel: GetElementModel<Patch> = (v, get) => {
-  let patch: ElementModel = {};
-
-  if (isFontStyle(v)) {
-    return { ...patch, [get("fontStyle")]: v.fontStyle };
-  }
-
-  if (isFontFamily(v)) {
-    patch = {
-      ...patch,
-      [get("fontFamily")]: v.fontFamily,
-      [get("fontFamilyType")]: v.fontFamilyType
-    };
-  }
-
-  if (isFontSettings(v)) {
-    patch = {
-      ...patch,
-      [get("fontSize")]: v.fontSize,
-      [get("fontSizeSuffix")]: v.fontSizeSuffix,
-      [get("fontWeight")]: v.fontWeight,
-      [get("letterSpacing")]: v.letterSpacing,
-      [get("lineHeight")]: v.lineHeight
-    };
-  }
-
-  return patch;
-};
+const ifFn = (v: (k: string) => string): v is (k: string) => string => !!v;
+export const getElementModel: GetElementModel<Patch.Patch> = or(
+  match2(
+    [
+      Patch.isFontStyle,
+      ifFn,
+      (v, get): ElementModel => ({ [get("fontStyle")]: v.fontStyle })
+    ],
+    [
+      Patch.isFontFamily,
+      ifFn,
+      (v, get): ElementModel => ({
+        [get("fontFamily")]: v.fontFamily,
+        [get("fontFamilyType")]: v.fontFamilyType,
+        [get("fontSize")]: v.fontSize,
+        [get("fontSizeSuffix")]: v.fontSizeSuffix,
+        [get("fontWeight")]: v.fontWeight,
+        [get("letterSpacing")]: v.letterSpacing,
+        [get("lineHeight")]: v.lineHeight,
+        [get("fontStyle")]: v.fontStyle
+      })
+    ],
+    [
+      Patch.isFontSettings,
+      ifFn,
+      (v, get): ElementModel => ({
+        [get("fontSize")]: v.fontSize,
+        [get("fontSizeSuffix")]: v.fontSizeSuffix,
+        [get("fontWeight")]: v.fontWeight,
+        [get("letterSpacing")]: v.letterSpacing,
+        [get("lineHeight")]: v.lineHeight,
+        [get("fontStyle")]: v.fontStyle
+      })
+    ]
+  ),
+  () => ({})
+);
 
 /**
  * @param {Typography} m
@@ -114,25 +117,19 @@ export const fromGlobal = (m: Value): Value => {
 export const patchFontFamily = (
   { id, type, weights }: Font,
   m: Value
-): FontFamily | undefined => {
+): FontFamily => {
   const weight = weights.includes(m.fontWeight)
     ? m.fontWeight
     : FontWeight.empty;
 
-  return Patcher.apply<
-    string,
-    FontFamilyType,
-    Weight,
-    FontFamily,
-    FontFamily,
-    FontFamily,
-    Value
-  >(
-    [
-      [Model.patchFontFamily, id],
-      [Model.patchFontFamilyType, type],
-      [Model.patchFontWeight2, weight]
-    ],
-    m
-  );
+  return {
+    fontFamily: id,
+    fontFamilyType: type,
+    fontWeight: weight,
+    fontSizeSuffix: m.fontSizeSuffix,
+    fontSize: m.fontSize,
+    letterSpacing: m.letterSpacing,
+    lineHeight: m.lineHeight,
+    fontStyle: undefined
+  };
 };

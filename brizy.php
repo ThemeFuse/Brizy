@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.3.0
+ * Version: 2.3.1
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,9 +19,10 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.3.0' );
-define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '193-wp' );
-define( 'BRIZY_SYNC_VERSION', '193' );
+define( 'BRIZY_VERSION', '2.3.1' );
+define( 'BRIZY_MINIMUM_PRO_VERSION', '2.3.0' );
+define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '194-wp' );
+define( 'BRIZY_SYNC_VERSION', '194' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -36,7 +37,6 @@ if ( BRIZY_DEVELOPMENT ) {
 	$dotenv->loadEnv( __DIR__ . '/.env' );
 }
 
-add_action( 'plugins_loaded', 'Brizy_Update::init' );
 add_action( 'plugins_loaded', 'brizy_load' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
@@ -52,6 +52,12 @@ function brizy_load() {
 	}
 
 	$instance = Brizy_Editor::get();
+
+	$hasProInstalledAndEnabled = defined('BRIZY_PRO_VERSION');
+	if($hasProInstalledAndEnabled && version_compare(BRIZY_PRO_VERSION,BRIZY_MINIMUM_PRO_VERSION)) {
+        add_action( 'admin_notices', 'brizypro_upgrade_required' );
+        return;
+    }
 
 	do_action( 'brizy_plugin_included' );
 }
@@ -72,6 +78,22 @@ function brizy_notices() {
     </div>
 	<?php
 }
+
+/**
+ * @param $upgrader_object
+ * @param $options
+ */
+function brizypro_upgrade_required(  ) {
+    ?>
+    <div class="notice notice-error is-dismissible">
+        <p>
+            <b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> PRO IS NOT RUNNING. </b><br>
+            Please update <?php echo __bt( 'brizy', 'Brizy' ) ?> PRO 2.3.0 or newer.
+        </p>
+    </div>
+    <?php
+}
+
 
 function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {

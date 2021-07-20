@@ -213,7 +213,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function savePost( $createRevision = false ) {
 
-		$version = '<!-- version:' . time() . ' -->';
+		$version      = '<!-- version:' . time() . ' -->';
+		$emptyContent = '<div class="brz-root__container"></div>';
 
 		$this->deleteOldAutosaves( $this->getWpPostId() );
 
@@ -221,7 +222,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			$post_type        = $this->getWpPost()->post_type;
 			$post_type_object = get_post_type_object( $post_type );
-			$content          = $this->getWpPost()->post_content ? preg_replace('/<!-- version:\d+ -->/', '', $this->getWpPost()->post_content ) : '<div class="brz-root__container"></div>';
+			$content          = $this->getWpPost()->post_content;
+			$content          = strpos( $content, 'brz-root__container' ) ? preg_replace('/<!-- version:\d+ -->/', '', $content ) : $emptyContent;
 
 			$params = [
 				'ID'           => $this->getWpPostId(),
@@ -254,7 +256,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			$wpdb->update(
 				$wpdb->posts,
-				[ 'post_content' => $content . $version ],
+				[ 'post_content' => ( $content ? $content : $emptyContent ) . $version ],
 				[ 'ID' => $this->getWpPostId() ],
 				[ '%s' ]
 			);

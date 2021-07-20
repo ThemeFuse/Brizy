@@ -22,17 +22,17 @@ import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
 import * as Model from "./model";
 import { Config } from "./types/Config";
-import { Value } from "./types/Value";
+import { FontSettings, Value } from "./types/Value";
 import * as Option from "visual/component/Options/Type";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { OptionType } from "visual/component/Options/Type";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { FontObject } from "./types/FontObject";
 import { ReduxState } from "visual/redux/types";
-import { Positive } from "visual/utils/math/Positive";
-import { Weight } from "visual/utils/fonts/Weight";
 import { Font } from "./types/Font";
 import { Patch } from "./types/Patch";
+import { NoEmptyString } from "visual/utils/string/NoEmptyString";
+import { pipe } from "visual/utils/fp";
 
 const openFontsUploader = (): void => {
   Prompts.open({
@@ -67,6 +67,7 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
   onChange,
   config
 }) => {
+  const fontFamily = config?.fontFamily ?? true;
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontSelector
   );
@@ -80,42 +81,41 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
     [unDeletedFonts]
   );
 
-  const _onChange = useCallback(
-    (v: Value[keyof Value] | Font, meta: Record<string, string>): void => {
-      let newValue;
-      const isFontStyle = meta.isChanged === "fontStyle";
-      const _value = isFontStyle ? value : fromGlobal(value);
-
-      switch (meta.isChanged) {
-        case "fontFamily":
-          newValue = patchFontFamily(v as Font, _value);
-          break;
+  const patch = useCallback(
+    (
+      v: Value[keyof Value] | Font,
+      { isChanged }: { isChanged: keyof Value }
+    ): Patch => {
+      switch (isChanged) {
         case "fontStyle":
-          newValue = Model.patchFontStyle(v as string, _value);
-          break;
+          return Model.patchFontStyle((v || undefined) as NoEmptyString);
+        case "fontFamily":
+        case "fontFamilyType":
+          return patchFontFamily(v as Font, fromGlobal(value));
         case "fontSize":
-          newValue = Model.patchFontSize(v as Positive, _value);
-          break;
         case "fontSizeSuffix":
-          newValue = Model.patchFontSizeSuffix(
-            v as SizeSuffix.SizeSuffix,
-            _value
-          );
-          break;
         case "fontWeight":
-          newValue = Model.patchFontWeight(v as Weight, _value);
-          break;
         case "letterSpacing":
-          newValue = Model.patchLetterSpacing(v as number, _value);
-          break;
-        case "lineHeight":
-          newValue = Model.patchLineHeight(v as Positive, _value);
-          break;
+        case "lineHeight": {
+          return fontFamily
+            ? Model.patchFontFamily(
+                isChanged as keyof FontSettings,
+                v as FontSettings[keyof FontSettings],
+                fromGlobal(value)
+              )
+            : Model.patchFontSettings(
+                isChanged as keyof FontSettings,
+                v as FontSettings[keyof FontSettings],
+                fromGlobal(value)
+              );
+        }
       }
-
-      newValue && onChange(getElementModel(newValue, k => k));
     },
-    [onChange, value]
+    [onChange, value, fontFamily]
+  );
+  const _onChange = useCallback(
+    pipe(patch, v => getElementModel(v, k => k), onChange),
+    [patch, onChange]
   );
 
   const _value = fromGlobal(value);
@@ -128,13 +128,13 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
   return (
     <Control
       onChange={_onChange}
-      fontFamily={config?.fontFamily}
+      fontFamily={fontFamily}
       fonts={fonts}
       font={_value.fontFamily}
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
       fontAddLabel={t("Add New Font")}
       styles={styles}
-      style={_value.fontStyle}
+      style={_value.fontStyle ?? ""}
       styleOpenSettings={openFontStyle}
       size={_value.fontSize}
       sizeSuffix={_value.fontSizeSuffix}
