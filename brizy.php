@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.3.2
+ * Version: 2.3.3
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,7 +19,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.3.2' );
+define( 'BRIZY_VERSION', '2.3.3' );
 define( 'BRIZY_MINIMUM_PRO_VERSION', '2.3.0' );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '194-wp' );
 define( 'BRIZY_SYNC_VERSION', '194' );
@@ -53,13 +53,9 @@ function brizy_load() {
 
 	$instance = Brizy_Editor::get();
 
-	$hasProInstalledAndEnabled = defined('BRIZY_PRO_VERSION');
-	if($hasProInstalledAndEnabled && version_compare(BRIZY_PRO_VERSION,BRIZY_MINIMUM_PRO_VERSION)) {
-        add_action( 'admin_notices', 'brizypro_upgrade_required' );
-        return;
+	if ( apply_filters( 'brizy_allow_plugin_included', true ) ) {
+		do_action( 'brizy_plugin_included' );
     }
-
-	do_action( 'brizy_plugin_included' );
 }
 
 function brizy_notices() {
@@ -78,22 +74,6 @@ function brizy_notices() {
     </div>
 	<?php
 }
-
-/**
- * @param $upgrader_object
- * @param $options
- */
-function brizypro_upgrade_required(  ) {
-    ?>
-    <div class="notice notice-error is-dismissible">
-        <p>
-            <b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> PRO IS NOT RUNNING. </b><br>
-            Please update <?php echo __bt( 'brizy', 'Brizy' ) ?> PRO 2.3.0 or newer.
-        </p>
-    </div>
-    <?php
-}
-
 
 function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {

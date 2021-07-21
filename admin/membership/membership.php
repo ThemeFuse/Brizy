@@ -94,7 +94,7 @@ class Brizy_Admin_Membership_Membership {
 				'parent' => $this->get_menu_id(),
 				'id'     => Brizy_Editor::prefix( '-membership-view-as-' . $role['role'] ),
 				'title'  => $role['name'],
-				'href'   => add_query_arg( 'role', $role['role'], home_url( add_query_arg( [ $_GET ], $wp->request ) ) ),
+				'href' => add_query_arg( 'role', $role['role'], add_query_arg( [ $_GET ], wp_guess_url() ) ),
 			];
 
 			if ( $role['role'] == $getRole ) {
