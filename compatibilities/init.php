@@ -4,7 +4,7 @@ class Brizy_Compatibilities_Init {
 
 	public function __construct() {
 		$this->load_compatibilites();
-		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ) );
+		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ), 9 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
 	}
 
@@ -93,6 +93,10 @@ class Brizy_Compatibilities_Init {
 
 		if ( class_exists( 'Tribe__Events__Main' ) ) {
 			new Brizy_Compatibilities_TheEventsCalendar();
+		}
+
+		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
+			new Brizy_Compatibilities_BrizyProCompatibility();
 		}
   }
 
