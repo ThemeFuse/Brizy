@@ -58,11 +58,17 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
         list($fileUid, $customFileName) = explode('|||', $mediaUpload);
 
         // enable svg upload
-        $svnUpload = new Brizy_Admin_Svg_Main();
-        $svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get('svg-upload', false);
+        // enable svg upload
+        $svnUpload        = new Brizy_Admin_Svg_Main();
+        $jsonUpload        = new Brizy_Admin_Json_Main();
+        $svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
+        $jsonUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
 
-        if (!$svnUploadEnabled) {
+        if ( ! $svnUploadEnabled ) {
             $svnUpload->enableSvgUpload();
+        }
+        if ( ! $jsonUploadEnabled ) {
+            $jsonUpload->enableJsonUpload();
         }
 
         // download file and store it in wp
@@ -99,8 +105,11 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
         }
 
         // disabled it if was disabled before
-        if (!$svnUploadEnabled) {
+        if ( ! $svnUploadEnabled ) {
             $svnUpload->disableSvgUpload();
+        }
+        if ( ! $jsonUploadEnabled ) {
+            $jsonUpload->disableJsonUpload();
         }
     }
 
