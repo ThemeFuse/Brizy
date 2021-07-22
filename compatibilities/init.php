@@ -98,6 +98,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
 			new Brizy_Compatibilities_BrizyProCompatibility();
 		}
+
+		if ( defined( 'JOB_MANAGER_VERSION' ) ) {
+			new Brizy_Compatibilities_WpJobManager();
+		}
   }
 
 	public function after_setup_theme() {
