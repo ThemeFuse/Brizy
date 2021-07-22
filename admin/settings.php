@@ -196,12 +196,14 @@ class Brizy_Admin_Settings {
 		$list_post_types = $this->list_post_types();
 		$prepared_types  = array_map( array( $this, 'is_selected' ), $list_post_types );
 		$svgEnabled      = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
+		$jsonEnabled      = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
 
 		return Brizy_Admin_View::render(
 			'settings/general',
 			[
 				'types'                    => $prepared_types,
-				'svgUploadEnabled'         => $svgEnabled
+				'svgUploadEnabled'         => $svgEnabled,
+				'jsonUploadEnabled'         => $jsonEnabled
             ]
 		);
 	}
@@ -250,6 +252,7 @@ class Brizy_Admin_Settings {
 		$array_diff         = array_diff( $post_types, $allowed_post_types );
 
 		$svgEnabled = isset( $_POST['svg-upload-enabled'] ) ? (bool) $_POST['svg-upload-enabled'] : false;
+		$jsonEnabled = isset( $_POST['json-upload-enabled'] ) ? (bool) $_POST['json-upload-enabled'] : false;
 
 		if ( count( $array_diff ) > 0 ) {
 			//error
@@ -258,6 +261,7 @@ class Brizy_Admin_Settings {
 		}
 
 		Brizy_Editor_Storage_Common::instance()->set( 'svg-upload', $svgEnabled );
+		Brizy_Editor_Storage_Common::instance()->set( 'json-upload', $jsonEnabled );
 
 		if ( $error_count == 0 ) {
 			$this->selected_post_types = $post_types;
