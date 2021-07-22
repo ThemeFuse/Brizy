@@ -4,48 +4,6 @@ import {
   videoUrl as getVideoUrl
 } from "visual/utils/video";
 
-const FullScreenObserver = function() {
-  var $elem = null;
-  var fullscreen = false;
-
-  var fullScreenChange = function() {
-    if (fullscreen) {
-      closeFullscreen();
-      $elem.removeClass("brz-video-custom-fullScreen-window-show");
-      fullscreen = false;
-
-      document.removeEventListener("fullscreenchange", fullScreenChange);
-      document.removeEventListener("mozfullscreenchange", fullScreenChange);
-      document.removeEventListener("webkitfullscreenchange", fullScreenChange);
-    }
-  }.bind(this);
-
-  return {
-    change($el) {
-      $elem = $el;
-
-      if (fullscreen) {
-        fullScreenChange();
-
-        fullscreen = false;
-      } else {
-        openFullscreen($elem.get(0));
-
-        // inside SetTimeOut because this events throws after requestFullscreen(don't know why)
-        // find more elegant way later
-        setTimeout(function() {
-          document.addEventListener("fullscreenchange", fullScreenChange);
-          document.addEventListener("mozfullscreenchange", fullScreenChange);
-          document.addEventListener("webkitfullscreenchange", fullScreenChange);
-          $elem.addClass("brz-video-custom-fullScreen-window-show");
-        }, 200);
-
-        fullscreen = true;
-      }
-    }
-  };
-};
-
 function hideVideos($node) {
   $node.find(".brz-video .brz-iframe").each(function() {
     $(this).remove();
@@ -82,6 +40,7 @@ function showVideos($node) {
 }
 
 export default function($node) {
+  const root = $node.get(0);
   // we don't use IntersectionObserver because without trackVisibility attribute
   // it doesn't tell you whether the element is covered by any other page content
   // or was modified by opacity, transform, filter...
@@ -168,8 +127,29 @@ export default function($node) {
       changePlayerMute($shortcodeVideo, !muted);
     });
 
+  var fullscreenNode;
+
+  const handleFullscreenChange = () => {
+    const _fullScreenElement =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement ||
+      document.mozFullscreenElement;
+
+    if (fullscreenNode) {
+      if (_fullScreenElement) {
+        fullscreenNode.addClass("brz-video-custom-fullScreen-window-show");
+      } else {
+        fullscreenNode.removeClass("brz-video-custom-fullScreen-window-show");
+      }
+    }
+  };
+
+  root.ownerDocument.onfullscreenchange = handleFullscreenChange;
+  root.ownerDocument.onwebkitfullscreenchange = handleFullscreenChange;
+  root.ownerDocument.onmozfullscreenchange = handleFullscreenChange;
+
   // Function init click FullScreen Video
-  const fullScreenObserver = new FullScreenObserver();
   $node
     .find(".brz-custom-video .brz-video-custom-fullscreen-btn")
     .click(function(event) {
@@ -177,9 +157,20 @@ export default function($node) {
       var $video = $shortcodeVideo.find(".brz-video-elem");
       var video = $video.find("video")[0];
 
+      const _fullScreenElement =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement ||
+        document.mozFullscreenElement;
+
       if (!video.src || !video.duration) return;
 
-      fullScreenObserver.change($video);
+      if (_fullScreenElement) {
+        closeFullscreen();
+      } else {
+        fullscreenNode = $video;
+        openFullscreen($video.get(0));
+      }
     });
 }
 

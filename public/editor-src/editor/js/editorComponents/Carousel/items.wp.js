@@ -1,6 +1,6 @@
 import React from "react";
 import Items from "./items.js";
-import { stringifyAttributes } from "visual/editorComponents/Posts/utils";
+import { stringifyAttributes } from "visual/editorComponents/Posts/utils.common";
 
 export default class ItemsWP extends Items {
   renderForView(v) {

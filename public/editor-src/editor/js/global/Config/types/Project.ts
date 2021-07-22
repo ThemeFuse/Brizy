@@ -6,7 +6,7 @@ interface ProjectCommon {
 interface ProjectCloud extends ProjectCommon {
   id: number;
   apiVersion: 1 | 2 | null;
-  protectedPagePassword?: string;
+  protectedPagePassword: string;
 }
 
 interface ProjectWP extends ProjectCommon {

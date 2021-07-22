@@ -1,4 +1,5 @@
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { ACTIVE } from "visual/utils/stateMode";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -160,21 +161,26 @@ export function cssStyleElementMenuCurrentColor({ v, device }) {
 }
 
 export function cssStyleElementMenuCurrentBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, state: "active", prefix: "menuBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state: ACTIVE,
+    prefix: "menuBg"
+  });
 }
 
 export function cssStyleElementMenuCurrentLinkBgColor({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal") {
-    return cssStyleBgColor({ v, device, state: "active", prefix: "menuBg" });
+    return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
   }
 
   return "background-color: transparent;";
 }
 
 export function cssStyleElementMenuCurrentBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: "active", prefix: "menu" });
+  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "menu" });
 }
 
 // MMenu
@@ -428,7 +434,8 @@ export function cssStyleElementMenuSubMenuCurrentBgColor({ v, device }) {
   const bgColor = styleBgColor({
     v,
     device,
-    prefix: "activeSubMenuBg"
+    state: ACTIVE,
+    prefix: "subMenuBg"
   });
 
   return `background-color: ${bgColor};`;

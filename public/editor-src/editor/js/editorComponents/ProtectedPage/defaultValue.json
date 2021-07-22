@@ -1,10 +1,10 @@
 {
   "content": {
-    "label": "Protected",
+    "label": "Password",
     "items": [],
 
     "emptyMessage": "The field should not be empty!",
-    "failMessage": "An error has occured!",
+    "failMessage": "An error has occurred!",
     "invalidMessage": "Please insert a valid code!"
   },
   "style": {
@@ -19,7 +19,7 @@
     "inputWidth": 70,
     "inputWidthSuffix": "%",
 
-    "inputHeight": 15,
+    "inputHeight": 11,
     "inputHeightSuffix": "px",
 
     "inputSpacing": 15,
@@ -30,7 +30,7 @@
       "tabletTypographyFontFamily": null,
       "mobileTypographyFontFamily": null
     },
-    "typographyFontStyle": "button",
+    "typographyFontStyle": "paragraph",
     "typographyFontFamilyType": "google",
     "typographyFontSize": 15,
     "typographyFontSizeSuffix": "px",

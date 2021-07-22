@@ -10,7 +10,7 @@ export function styleSection(v, vs, vd) {
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
     },
-    ".brz &&:hover .brz-section__content": {
+    ".brz &&:hover.brz-section .brz-section__content": {
       standart: ["cssStyleSectionHeightStyle", "cssStyleDisplayFlex"]
     },
     ".brz &&:hover .brz-container": {

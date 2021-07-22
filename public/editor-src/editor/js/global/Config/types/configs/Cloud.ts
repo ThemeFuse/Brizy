@@ -6,7 +6,6 @@ import { Urls } from "visual/global/Config/types/Urls";
 import { Project } from "visual/global/Config/types/Project";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Config } from "visual/global/Config/types";
-import { WhiteLabel } from "visual/global/Config/types/WhiteLabel";
 
 // region Base
 interface Base<Platform> extends ConfigCommon, WithId<number> {
@@ -45,17 +44,13 @@ export const isLegacy = (c: Cloud): c is Legacy => c.platform === "legacy";
 // endregion
 
 // region CMS
-export interface CMS extends Base<"cms">, WithCMS {
-  whiteLabel?: WhiteLabel;
-}
+export interface CMS extends Base<"cms">, WithCMS {}
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 // endregion
 
 // region Shopify
-export interface Shopify extends Base<"shopify">, WithCMS {
-  whiteLabel?: WhiteLabel;
-}
+export interface Shopify extends Base<"shopify">, WithCMS {}
 
 export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";
 // endregion

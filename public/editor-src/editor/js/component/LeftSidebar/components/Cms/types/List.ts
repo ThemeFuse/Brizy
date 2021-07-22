@@ -1,39 +1,29 @@
-import { WhiteLabel } from "visual/global/Config/types/WhiteLabel";
+import { WhiteLabel } from "./WhiteLabel";
+import { Authorize } from "./Authorize";
 import { WithPayload } from "./Base";
-import { ProjectId } from "./ProjectId";
+import { ProjectId } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 
-enum Types {
-  WithoutToken = "list:WithoutToken",
-  WithToken = "list:WithToken"
+export interface Cloud {
+  __type: "cloud";
+  development: boolean;
+  protectedPagePassword: string;
+  previewUrl: string;
+  settingsUrl: string;
+  user: {
+    isPro: boolean;
+  };
+  whiteLabel: WhiteLabel;
+  projectApi: Authorize;
+  userApi: Authorize;
+  appointmentsApi: Authorize;
+  translationApi: string;
+  mediaUrl: string;
+  shop: Authorize;
+  projectId: ProjectId;
 }
 
-type Payload = {
-  collectionId: number;
-  user: { isPro: boolean };
-  apiUrl: string;
-  previewUrl: string;
-  projectId: ProjectId;
-  projectSettings: string;
-  mediaUrl: string;
-  type: "cloud" | "shopify";
-  protectedPagePassword: string | undefined;
-  whiteLabel: WhiteLabel;
-};
+export type Context = Cloud;
 
-type WithoutToken = WithPayload<Types.WithoutToken, Payload>;
+export type List = WithPayload<"list", Context>;
 
-type WithToken = WithPayload<Types.WithToken, Payload & { token: string }>;
-
-export type List = WithoutToken | WithToken;
-
-export const listWithoutToken = (
-  payload: WithoutToken["payload"]
-): WithoutToken => ({
-  type: Types.WithoutToken,
-  payload
-});
-
-export const listWithToken = (payload: WithToken["payload"]): WithToken => ({
-  type: Types.WithToken,
-  payload
-});
+export const cloud = (payload: Cloud): List => ({ type: "list", payload });

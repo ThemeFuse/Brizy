@@ -53,7 +53,7 @@ const translationsMap = {
   Login: t("Login"),
   Lottie: t("Lottie"),
   StarRating: t("Rating"),
-  ProtectedPage: t("Protected Page"),
+  ProtectedPage: t("Protected Form"),
 
   // WP
   WPSidebar: t("Sidebar"),

@@ -15,14 +15,12 @@ import { t } from "visual/utils/i18n";
 import { mPipe, pass } from "fp-utilities";
 import * as Obj from "visual/utils/reader/object";
 import { IS_PRO } from "visual/utils/env";
-import { pageSelector, uiSelector } from "visual/redux/selectors";
-import { PageCloudCMS } from "visual/types";
+import { uiSelector } from "visual/redux/selectors";
 import { updateUI } from "visual/redux/actions2";
 import Link from "../Options/types/Link";
 import * as Base from "./types/Base";
 import * as Messages from "./types/Messages";
 import * as List from "./types/List";
-import { collectionTypeTrimPrefix } from "visual/utils/api/cms/graphql/convertors";
 import {
   CMS,
   isCloud,
@@ -30,29 +28,17 @@ import {
   isShopify,
   Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { getWhiteLabel } from "./utils";
+import { getWhiteLabel } from "./types/WhiteLabel";
 import { fromNumber } from "./types/ProjectId";
 
 interface Props {
   config: CMS | Shopify;
 }
 
-const fromConfigPlatform = (
-  p: (CMS | Shopify)["platform"]
-): "cloud" | "shopify" => {
-  switch (p) {
-    case "shopify":
-      return "shopify";
-    case "cms":
-      return "cloud";
-  }
-};
-
 const Component = ({ config }: Props): ReactElement => {
   const iframeSrc = config.cms.adminUrl;
   const token = config.tokenV2?.access_token;
   const ref = useRef<HTMLIFrameElement>(null);
-  const page = useSelector(pageSelector) as PageCloudCMS;
   const leftSidebar = useSelector(uiSelector).leftSidebar;
   const opened =
     leftSidebar.drawerContentType === "cmsUi" && leftSidebar.isOpen;
@@ -77,7 +63,7 @@ const Component = ({ config }: Props): ReactElement => {
   const onIframeLoad = useCallback((): void => setIframeLoaded(true), []);
   const onIframeMessage = useCallback(
     mPipe(
-      pass((e: MessageEvent) => e.origin === iframeSrc),
+      pass((e: MessageEvent) => iframeSrc.startsWith(e.origin)),
       Obj.readKey("data"),
       Obj.read,
       Base.fromObject,
@@ -110,32 +96,30 @@ const Component = ({ config }: Props): ReactElement => {
 
   useEffect(() => {
     if (opened && iframeLoaded) {
-      const list = token
-        ? List.listWithToken({
-            token,
-            collectionId: collectionTypeTrimPrefix(page.collectionType.id),
-            user: { isPro: IS_PRO },
-            apiUrl: config.cms.apiUrl,
-            previewUrl: config.urls.pagePreview,
-            mediaUrl: config.urls.image,
-            projectSettings: config.urls.projectSettings,
-            type: fromConfigPlatform(config.platform),
-            protectedPagePassword: config.project.protectedPagePassword,
-            whiteLabel: getWhiteLabel(config),
-            projectId: fromNumber(config.project.id)
-          })
-        : List.listWithoutToken({
-            collectionId: collectionTypeTrimPrefix(page.collectionType.id),
-            user: { isPro: IS_PRO },
-            apiUrl: config.cms.apiUrl,
-            previewUrl: config.urls.pagePreview,
-            mediaUrl: config.urls.image,
-            projectSettings: config.urls.projectSettings,
-            type: fromConfigPlatform(config.platform),
-            protectedPagePassword: config.project.protectedPagePassword,
-            whiteLabel: getWhiteLabel(config),
-            projectId: fromNumber(config.project.id)
-          });
+      const list = List.cloud({
+        __type: "cloud",
+        projectApi: token
+          ? { __type: "withToken", token, uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl },
+        user: { isPro: IS_PRO },
+        previewUrl: config.urls.pagePreview,
+        mediaUrl: config.urls.image,
+        settingsUrl: config.urls.projectSettings,
+        protectedPagePassword: config.project.protectedPagePassword,
+        whiteLabel: getWhiteLabel(config),
+        userApi: token
+          ? { __type: "withToken", token, uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl },
+        shop: token
+          ? { __type: "withToken", token, uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl },
+        development: process.env.NODE_ENV === "development",
+        translationApi: "",
+        appointmentsApi: token
+          ? { __type: "withToken", token, uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl },
+        projectId: fromNumber(config.project.id)
+      });
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);
     }

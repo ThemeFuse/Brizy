@@ -3,6 +3,9 @@ import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { TemplateType } from "visual/global/Config/types/TemplateType";
 
 export interface ConfigCommon {
+  branding: {
+    name: string;
+  };
   editorVersion: string;
   mode?: string; // add literal type "page" | ...smth else
 

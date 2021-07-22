@@ -41,6 +41,13 @@ export function styleContent(v, vs, vd, props) {
         "cssStyleElementImageMaxWidthEditor",
         "cssStyleElementImageHeightEditor"
       ]
+    },
+    ".brz &&:hover .dynamic-image": {
+      standart: ["cssStyleElementImageFilter|||editor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementImageTransitionProperty"
+      ]
     }
   };
 

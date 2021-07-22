@@ -16,9 +16,6 @@ export interface Prop {
 }
 
 export interface WP extends ConfigCommon {
-  branding: {
-    brizy: string;
-  };
   dynamicContent: DynamicContent<"wp">;
   pro: Pro<"wp">;
   user: User<"wp">;
