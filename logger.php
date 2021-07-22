@@ -35,8 +35,15 @@ class Brizy_Logger {
 	static public function install() {
 
 		global $wpdb;
+
+		$tableName = "{$wpdb->prefix}brizy_logs";
+
+		if ( ! function_exists( 'maybe_create_table' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		}
+
 		$create_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}brizy_logs` (
+            CREATE TABLE {$tableName} (
               `id` bigint  PRIMARY KEY AUTO_INCREMENT,
               `type` text NOT NULL,
               `message` text NOT NULL,
@@ -45,8 +52,7 @@ class Brizy_Logger {
               `date` datetime NOT NULL            
             ) DEFAULT CHARSET=utf8;";
 
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta( $create_table_query );
+		maybe_create_table( $tableName, $create_table_query );
 
 		self::clean();
 	}
