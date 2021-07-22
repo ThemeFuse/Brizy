@@ -34,6 +34,20 @@
                 </label>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><?php echo __( 'Enable JSON uploads' ); ?></th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           id="json-upload-enabled"
+                           name="json-upload-enabled"
+                           value="1"
+                        <?php echo $jsonUploadEnabled ? 'checked' : ''; ?>
+                    >
+
+                </label>
+            </td>
+        </tr>
         </tbody>
     </table>
 
