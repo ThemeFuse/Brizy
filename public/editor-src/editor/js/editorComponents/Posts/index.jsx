@@ -116,7 +116,7 @@ export class Posts extends EditorComponent {
             data: {
               context,
               tags: tags ?? [],
-              paginationInfo: pagination
+              paginationInfo: pagination ?? { itemsPerPage: 0, totalCount: 0 }
             }
           });
         }
