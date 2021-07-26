@@ -72,6 +72,16 @@ export function getItemsSimple({ v, device, state }) {
       position: 20,
       options: [
         {
+          id: "iconPosition",
+          label: t("Position"),
+          type: "radioGroup-dev",
+          position: 10,
+          choices: [
+            { value: "left", icon: "nc-align-left" },
+            { value: "right", icon: "nc-align-right" }
+          ]
+        },
+        {
           id: "iconSize",
           type: "slider-dev",
           label: t("Size"),
@@ -116,6 +126,16 @@ export function getItemsSimple({ v, device, state }) {
       },
       position: 20,
       options: [
+        {
+          id: "subMenuIconPosition",
+          label: t("Position"),
+          type: "radioGroup-dev",
+          position: 10,
+          choices: [
+            { value: "left", icon: "nc-align-left" },
+            { value: "right", icon: "nc-align-right" }
+          ]
+        },
         {
           id: "subMenuIconSize",
           type: "slider-dev",
@@ -788,6 +808,16 @@ export function getItemsMMenu({ v, device, state }) {
       },
       position: 20,
       options: [
+        {
+          id: "mMenuIconPosition",
+          label: t("Position"),
+          type: "radioGroup-dev",
+          position: 10,
+          choices: [
+            { value: "left", icon: "nc-align-left" },
+            { value: "right", icon: "nc-align-right" }
+          ]
+        },
         {
           id: "mMenuIconSize",
           type: "slider-dev",

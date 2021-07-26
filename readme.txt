@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,16 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.5 - 2021-07-26 =
+* New: Added option to allow json file upload for the Lottie element
+* Improved: Changed Protected Page element to Protected
+* Improved: Back to Login instead of Login on the Login element
+* Improved: Protected element default values
+* Fixed: Compatibility with old jQuery
+* Fixed: Full height for block slider on mobile
+* Fixed: Video fullscreen option
+* Fixed: HTML Tag changes style of the title for Accordion element
 
 = 2.3.4 - 2021-07-23 =
 * Fixed: Brizy and Job Manager WP plugin incompatibility render single job template

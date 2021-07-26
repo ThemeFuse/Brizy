@@ -2,6 +2,17 @@ import { t } from "visual/utils/i18n";
 
 export default register => ({ getItems: getItems(register) });
 
+const getShowLinkLabel = type => {
+  switch (type) {
+    case "forgot":
+      return t("Back to Login");
+    case "login":
+    case "authorized":
+    case "register":
+      return t("Login");
+  }
+};
+
 export const getItems = register => ({ v }) => {
   const typeChoices = register
     ? [
@@ -15,6 +26,8 @@ export const getItems = register => ({ v }) => {
         { value: "authorized", title: "Authorized" },
         { value: "forgot", title: "Forgot Password" }
       ];
+
+  const { type } = v;
 
   return [
     {
@@ -51,19 +64,19 @@ export const getItems = register => ({ v }) => {
                   id: "remember",
                   label: t("Remember"),
                   devices: "desktop",
-                  disabled: v.type !== "login",
+                  disabled: type !== "login",
                   type: "switch-dev"
                 },
                 {
                   id: "showRegisterInfo",
                   label: t("Register Info"),
                   devices: "desktop",
-                  disabled: v.type !== "register",
+                  disabled: type !== "register",
                   type: "switch-dev"
                 },
                 {
                   id: "showLoginLink",
-                  label: t("Login"),
+                  label: getShowLinkLabel(type),
                   devices: "desktop",
                   disabled: v.type === "login" || v.type === "authorized",
                   type: "switch-dev"
@@ -72,14 +85,14 @@ export const getItems = register => ({ v }) => {
                   id: "showLostPassword",
                   label: t("Lost Password"),
                   devices: "desktop",
-                  disabled: v.type === "forgot" || v.type === "authorized",
+                  disabled: type === "forgot" || type === "authorized",
                   type: "switch-dev"
                 },
                 {
                   id: "showRegisterLink",
                   label: t("Register"),
                   devices: "desktop",
-                  disabled: v.type === "register" || !register,
+                  disabled: type === "register" || !register,
                   type: "switch-dev"
                 }
               ]

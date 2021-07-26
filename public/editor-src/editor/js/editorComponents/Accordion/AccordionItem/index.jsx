@@ -158,6 +158,7 @@ class AccordionItem extends EditorComponent {
           <TextEditor
             value={v.labelText}
             tagName={tagName}
+            className="brz-accordion__nav-title"
             onChange={this.handleTextChange}
           />
           {navIcon !== "none" && this.getIcon(activeIcon, navIcon)}

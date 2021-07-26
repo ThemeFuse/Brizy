@@ -313,7 +313,7 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
 
       acc.uid.push(uid);
       acc.status.push(status);
-      acc.data.push(data);
+      acc.data.push(data ?? "");
       acc.position.push(JSON.stringify(position));
       acc.rules.push(rules);
       acc.meta.push(meta);

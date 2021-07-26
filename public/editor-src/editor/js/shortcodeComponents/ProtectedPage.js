@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "ProtectedPage",
-  title: t("ProtectedPage"),
+  title: t("Protected Form"),
   icon: "nc-lock",
   resolve: {
     type: "Wrapper",
@@ -16,6 +16,7 @@ export default {
               {
                 type: "Button",
                 value: {
+                  text: "SUBMIT",
                   _styles: ["button", "submit"]
                 }
               }

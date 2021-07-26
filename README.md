@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.3.4<br>
+Stable tag: 2.3.5<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.5 - 2021-07-26
+* New: Added option to allow json file upload for the Lottie element
+* Improved: Changed Protected Page element to Protected
+* Improved: Back to Login instead of Login on the Login element
+* Improved: Protected element default values
+* Fixed: Compatibility with old jQuery
+* Fixed: Full height for block slider on mobile
+* Fixed: Video fullscreen option
+* Fixed: HTML Tag changes style of the title for Accordion element
 
 ### 2.3.4 - 2021-07-23
 * Fixed: Brizy and Job Manager WP plugin incompatibility render single job template

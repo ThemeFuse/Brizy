@@ -2,15 +2,6 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover ": {
-      standart: [
-        "cssStyleTypography2FontFamily",
-        "cssStyleTypography2FontSize",
-        "cssStyleTypography2LineHeight",
-        "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
-      ]
-    },
     ".brz && .brz-accordion__item:not(.brz-accordion__item--active):hover": {
       standart: [
         "cssStyleBoxShadow",
@@ -40,6 +31,16 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-accordion__nav": {
       standart: ["cssStyleElementAccordionNavAlign"]
+    },
+    ".brz && .brz-accordion__nav-title": {
+      standart: [
+        "cssStyleElementAccordionNavTextAlign",
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2LetterSpacing"
+      ]
     },
     ".brz && .brz-accordion__nav .brz-span": {
       standart: ["cssStyleElementAccordionNavTextAlign"]

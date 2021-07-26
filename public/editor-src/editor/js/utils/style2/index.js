@@ -359,15 +359,18 @@ export {
 
 // Element Menu
 export {
+  styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuIconSize,
   styleElementMenuMode,
   styleElementMenuSize,
   styleElementMMenu,
   styleElementMMenuSize,
+  styleElementMMenuIconPosition,
   styleElementMMenuIconSpacing,
   styleElementMMenuIconSize,
   styleElementMMenuHoverColor,
+  styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
   styleElementMenuSubMenuIconSize
 } from "./styleElementMenu";

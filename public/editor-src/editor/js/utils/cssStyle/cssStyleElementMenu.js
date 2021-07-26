@@ -1,4 +1,5 @@
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { ACTIVE } from "visual/utils/stateMode";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -20,12 +21,15 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
+  styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuIconSize,
   styleElementMenuMode,
   styleElementMMenu,
   styleElementMMenuIconSpacing,
   styleElementMMenuIconSize,
+  styleElementMMenuIconPosition,
+  styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSize,
   styleElementMenuSubMenuIconSpacing,
   styleTypography2LineHeight,
@@ -55,11 +59,24 @@ export function cssStyleElementMenuAlign({ v, device, state }) {
 
   return `text-align: ${align};`;
 }
+export function cssStyleElementMenuIconPosition({ v, device, state }) {
+  const iconPosition = styleElementMenuIconPosition({ v, device, state });
+
+  return iconPosition === "right"
+    ? "flex-flow: row-reverse nowrap; justify-content: flex-end;"
+    : "flex-flow: row nowrap;";
+}
 
 export function cssStyleElementMenuIconSpacing({ v, device, state }) {
+  const iconPosition = styleElementMenuIconPosition({ v, device, state });
   const iconSpacing = styleElementMenuIconSpacing({ v, device, state });
 
-  return `margin-right: ${iconSpacing}px;`;
+  switch (iconPosition) {
+    case "left":
+      return `margin:0 ${iconSpacing}px 0 0;`;
+    case "right":
+      return `margin:0 0 0 ${iconSpacing}px;`;
+  }
 }
 
 export function cssStyleElementMenuIconSize({ v, device, state }) {
@@ -160,21 +177,26 @@ export function cssStyleElementMenuCurrentColor({ v, device }) {
 }
 
 export function cssStyleElementMenuCurrentBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, state: "active", prefix: "menuBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state: ACTIVE,
+    prefix: "menuBg"
+  });
 }
 
 export function cssStyleElementMenuCurrentLinkBgColor({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal") {
-    return cssStyleBgColor({ v, device, state: "active", prefix: "menuBg" });
+    return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
   }
 
   return "background-color: transparent;";
 }
 
 export function cssStyleElementMenuCurrentBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: "active", prefix: "menu" });
+  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "menu" });
 }
 
 // MMenu
@@ -232,11 +254,19 @@ export function cssStyleElementMMenuBackgroundColor({ v, device, state }) {
 
 export function cssStyleElementMMenuItemHorizontalAlign({ v, device, state }) {
   const align = styleAlignHorizontal({ v, device, state, prefix: "mMenuItem" });
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
+  const iconPosition = styleElementMMenuIconPosition({ v, device, state });
+  const aligns =
+    iconPosition === "left"
+      ? {
+          left: "flex-start",
+          center: "center",
+          right: "flex-end"
+        }
+      : {
+          left: "flex-end",
+          center: "center",
+          right: "flex-start"
+        };
 
   return `justify-content: ${aligns[align]};`;
 }
@@ -246,15 +276,28 @@ export function cssStyleElementMMenuIconColor({ v, device, state }) {
 }
 
 export function cssStyleElementMMenuIconSpacing({ v, device, state }) {
+  const iconPosition = styleElementMMenuIconPosition({ v, device, state });
   const iconSpacing = styleElementMMenuIconSpacing({ v, device, state });
 
-  return `margin-right: ${iconSpacing}px;`;
+  switch (iconPosition) {
+    case "left":
+      return `margin:0 ${iconSpacing}px 0 0;`;
+    case "right":
+      return `margin:0 0 0 ${iconSpacing}px;`;
+  }
 }
-
 export function cssStyleElementMMenuIconSize({ v, device, state }) {
   const iconSize = styleElementMMenuIconSize({ v, device, state });
 
   return `font-size: ${iconSize}px;`;
+}
+
+export function cssStyleElementMMenuIconPosition({ v, device, state }) {
+  const iconPosition = styleElementMMenuIconPosition({ v, device, state });
+
+  return iconPosition === "right"
+    ? "flex-flow: row-reverse nowrap;"
+    : "flex-flow: row nowrap;";
 }
 
 export function cssStyleElementMMenuBtnNext({ v, device }) {
@@ -371,10 +414,32 @@ export function cssStyleElementMenuSubMenuHoverColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "subMenuHoverColor" });
 }
 
-export function cssStyleElementMenuSubMenuIconSpacing({ v, device }) {
-  const iconSpacing = styleElementMenuSubMenuIconSpacing({ v, device });
+export function cssStyleElementMenuSubMenuIconPosition({ v, device, state }) {
+  const iconPosition = styleElementMenuSubMenuIconPosition({
+    v,
+    device,
+    state
+  });
 
-  return `margin-right: ${iconSpacing}px;`;
+  return iconPosition === "right"
+    ? "flex-flow: row-reverse nowrap; justify-content: flex-end;"
+    : "flex-flow: row nowrap;";
+}
+
+export function cssStyleElementMenuSubMenuIconSpacing({ v, device, state }) {
+  const iconPosition = styleElementMenuSubMenuIconPosition({
+    v,
+    device,
+    state
+  });
+  const iconSpacing = styleElementMenuSubMenuIconSpacing({ v, device, state });
+
+  switch (iconPosition) {
+    case "left":
+      return `margin:0 ${iconSpacing}px 0 0;`;
+    case "right":
+      return `margin:0 0 0 ${iconSpacing}px;`;
+  }
 }
 
 export function cssStyleElementMenuSubMenuIconSize({ v, device, state }) {
@@ -428,7 +493,8 @@ export function cssStyleElementMenuSubMenuCurrentBgColor({ v, device }) {
   const bgColor = styleBgColor({
     v,
     device,
-    prefix: "activeSubMenuBg"
+    state: ACTIVE,
+    prefix: "subMenuBg"
   });
 
   return `background-color: ${bgColor};`;

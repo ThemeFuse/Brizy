@@ -35,6 +35,9 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMMenuListViewMargin"
       ]
     },
+    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a": {
+      standart: ["cssStyleElementMenuIconPosition"]
+    },
     ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover": {
       standart: [
         "cssStyleColor",
@@ -108,7 +111,10 @@ export function styleMenu(v, vs, vd) {
       standart: ["cssStyleElementMMenuBackgroundColor"]
     },
     ".brz &&.brz-mm-menu .brz-mm-menu__item .brz-mm-listitem__text": {
-      standart: ["cssStyleElementMMenuPadding"]
+      standart: [
+        "cssStyleElementMMenuPadding",
+        "cssStyleElementMMenuIconPosition"
+      ]
     },
     ".brz &&:hover .brz-mm-menu__item:hover > .brz-mm-listitem__text": {
       standart: ["cssStyleElementMMenuHoverColor"]
@@ -171,6 +177,9 @@ export function styleMenu(v, vs, vd) {
         "cssStyleBoxShadow",
         "cssStyleBorderRadius"
       ]
+    },
+    ".brz &&:hover .brz-menu__sub-menu .brz-a": {
+      standart: ["cssStyleElementMenuSubMenuIconPosition"]
     },
     ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
       standart: ["cssStyleElementMenuSubMenuHoverColor"]
