@@ -3,15 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 const hasSubMenu = ({ items = [] }) => items.some(el => el.type === "MenuItem");
 
-const hasDropDown = (v, isMinimLevel) => {
-  const { megaMenu } = v;
-
-  if (megaMenu === "on" || !isMinimLevel) {
-    return false;
-  }
-
-  return hasSubMenu(v);
-};
+const hasDropDown = v => (v.megaMenu === "on" ? false : hasSubMenu(v));
 
 const getMMenuClassNames = node => {
   if (!node) {
@@ -32,21 +24,21 @@ const getMMenuClassNames = node => {
   return classNames;
 };
 
-export function styleClassName(v, state, isMinimLevel) {
+export function styleClassName(v, state) {
   const { className, megaMenu, current } = v;
 
   return classnames("brz-menu__item", className, {
     "brz-menu__item--current": current,
     "brz-menu__item-mega-menu": megaMenu === "on",
-    "brz-menu__item-dropdown": hasDropDown(v, isMinimLevel),
+    "brz-menu__item-dropdown": hasDropDown(v),
     "brz-menu__item--opened": state.isOpen
   });
 }
 
-export function styleMmMenuClassName(v, isMinimLevel, menuItem) {
+export function styleMmMenuClassName(v, menuItem) {
   const { className, megaMenu, current } = v;
   const needMegaMenu = megaMenu === "on";
-  const needDropDown = hasDropDown(v, isMinimLevel);
+  const needDropDown = hasDropDown(v);
   const currentNodeClassName = getMMenuClassNames(menuItem);
 
   return classnames("brz-mm-menu__item", className, currentNodeClassName, {

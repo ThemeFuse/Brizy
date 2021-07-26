@@ -2,6 +2,12 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 
+export function styleElementMenuIconPosition({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("iconPosition");
+}
+
 export function styleElementMenuIconSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -45,6 +51,12 @@ export function styleElementMMenuIconSpacing({ v, device, state }) {
   return dvv("mMenuIconSpacing");
 }
 
+export function styleElementMMenuIconPosition({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("mMenuIconPosition");
+}
+
 export function styleElementMMenuIconSize({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -62,6 +74,12 @@ export function styleElementMMenuHoverColor({ v, device, state }) {
 }
 
 // SubMenu
+export function styleElementMenuSubMenuIconPosition({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("subMenuIconPosition");
+}
+
 export function styleElementMenuSubMenuIconSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 

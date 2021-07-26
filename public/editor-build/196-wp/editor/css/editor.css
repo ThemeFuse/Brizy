@@ -847,6 +847,7 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-accordion__item{display:block;width:100%}
 .brz .brz-accordion__item>.brz-accordion__content{overflow:hidden;height:0;will-change:height,transition-duration;background-clip:padding-box;border-top-color:transparent!important}
 .brz .brz-accordion__item-content>*{-ms-flex-negative:0;flex-shrink:0}
+.brz .brz-accordion__item>.brz-accordion__nav .brz-accordion__nav-title{outline:0;white-space:pre-wrap;overflow:hidden}
 .brz .brz-accordion__item>.brz-accordion__nav>.brz-accordion--icon-wrapper>.brz-accordion__nav--previewIcon--active{display:none}
 .brz .brz-accordion__item--active>.brz-accordion__nav>.brz-accordion--icon-wrapper>.brz-accordion__nav--previewIcon--active{display:block}
 .brz .brz-accordion__item--active>.brz-accordion__nav>.brz-accordion--icon-wrapper>.brz-accordion__nav--previewIcon{display:none}

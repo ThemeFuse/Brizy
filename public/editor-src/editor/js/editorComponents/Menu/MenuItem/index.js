@@ -28,7 +28,6 @@ import { calculateMeta } from "./meta";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 
 const IS_PRO = Config.get("pro");
-const MAX_LEVEL_RENDER = 2;
 let openedMegaMenu = null;
 
 class MenuItem extends EditorComponent {
@@ -394,8 +393,7 @@ class MenuItem extends EditorComponent {
 
   renderSimple(v, vs, vd, content) {
     const { level, mMenu, mods } = this.props;
-    const isMinimLevel = level < MAX_LEVEL_RENDER;
-    const className = styleClassName(v, this.state, isMinimLevel);
+    const className = styleClassName(v, this.state);
 
     if (IS_PREVIEW) {
       const attr =
@@ -406,10 +404,9 @@ class MenuItem extends EditorComponent {
       return (
         <li {...attr}>
           {this.renderLink(v, vs, vd, content)}
-          {isMinimLevel &&
-            (v.megaMenu === "off"
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd))}
+          {v.megaMenu === "off"
+            ? this.renderDropDown(v, vs, vd)
+            : this.renderMegaMenu(v, vs, vd)}
         </li>
       );
     }
@@ -450,10 +447,9 @@ class MenuItem extends EditorComponent {
             >
               {this.renderLink(v, vs, vd, content)}
             </Toolbar>
-            {isMinimLevel &&
-              (v.megaMenu === "off"
-                ? this.renderDropDown(v, vs, vd)
-                : this.renderMegaMenu(v, vs, vd))}
+            {v.megaMenu === "off"
+              ? this.renderDropDown(v, vs, vd)
+              : this.renderMegaMenu(v, vs, vd)}
           </li>
         </ClickOutside>
       );
@@ -480,13 +476,11 @@ class MenuItem extends EditorComponent {
                 >
                   {this.renderLink(v, vs, vd, content)}
                 </Toolbar>
-                {isMinimLevel && v.megaMenu === "off" && this.renderDropDown()}
+                {v.megaMenu === "off" && this.renderDropDown()}
               </li>
             )}
           </Reference>
-          {isMinimLevel &&
-            v.megaMenu === "on" &&
-            this.renderMegaMenu(v, vs, vd)}
+          {v.megaMenu === "on" && this.renderMegaMenu(v, vs, vd)}
         </Manager>
       </ClickOutside>
     );
@@ -496,25 +490,24 @@ class MenuItem extends EditorComponent {
     const { level, mMenu } = this.props;
     const toolbarConfig = toolbarConfigFn(level, mMenu);
     const sidebarConfig = sidebarConfigFn(level, mMenu);
-    const isMinimLevel = level < MAX_LEVEL_RENDER;
+
     const isDropDown = v.megaMenu === "off";
 
     if (IS_PREVIEW) {
       const attr =
         TARGET === "WP"
           ? {
-              className: styleMmMenuClassName(v, isMinimLevel),
+              className: styleMmMenuClassName(v),
               "data-menu-item-id": v.id
             }
-          : { className: styleMmMenuClassName(v, isMinimLevel) };
+          : { className: styleMmMenuClassName(v) };
 
       return (
         <li {...attr}>
           {this.renderLink(v, vs, vd, content)}
-          {isMinimLevel &&
-            (isDropDown
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd))}
+          {isDropDown
+            ? this.renderDropDown(v, vs, vd)
+            : this.renderMegaMenu(v, vs, vd)}
         </li>
       );
     }
@@ -522,19 +515,17 @@ class MenuItem extends EditorComponent {
     return (
       <li
         ref={this.menuItem}
-        className={styleMmMenuClassName(v, isMinimLevel, this.menuItem.current)}
+        className={styleMmMenuClassName(v, this.menuItem.current)}
       >
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
           {this.renderLink(v, vs, vd, content)}
         </Toolbar>
-        {isMinimLevel && (
-          <div>
-            {isDropDown
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd)}
-          </div>
+        {isDropDown ? (
+          <div>{this.renderDropDown(v, vs, vd)}</div>
+        ) : (
+          <div>{this.renderMegaMenu(v, vs, vd)}</div>
         )}
       </li>
     );

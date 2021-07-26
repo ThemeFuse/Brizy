@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_195Wp_Texts {
+class Brizy_Public_EditorBuild_196Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -34,7 +34,7 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"ADD GOOGLE FONT" => __("ADD GOOGLE FONT", "brizy"),
 			"APPS" => __("APPS", "brizy"),
 			"About us" => __("About us", "brizy"),
-			"Access your Library in any WP install by connecting your Brizy Account" => __("Access your Library in any WP install by connecting your Brizy Account", "brizy"),
+			"Access your Library in any WP install by connecting your Account" => __("Access your Library in any WP install by connecting your Account", "brizy"),
 			"Accordion" => __("Accordion", "brizy"),
 			"Accordion Items" => __("Accordion Items", "brizy"),
 			"Accordion Tags" => __("Accordion Tags", "brizy"),
@@ -94,6 +94,7 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"Avatar" => __("Avatar", "brizy"),
 			"Back" => __("Back", "brizy"),
 			"Back to Layouts" => __("Back to Layouts", "brizy"),
+			"Back to Login" => __("Back to Login", "brizy"),
 			"Back to Stories" => __("Back to Stories", "brizy"),
 			"Background" => __("Background", "brizy"),
 			"Bar" => __("Bar", "brizy"),
@@ -122,7 +123,6 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"Branding" => __("Branding", "brizy"),
 			"Breadcrumbs" => __("Breadcrumbs", "brizy"),
 			"Brightness" => __("Brightness", "brizy"),
-			"Brizy" => __("Brizy", "brizy"),
 			"Btn Bg" => __("Btn Bg", "brizy"),
 			"Btn Color" => __("Btn Color", "brizy"),
 			"Bub." => __("Bub.", "brizy"),
@@ -582,8 +582,8 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"Products Pagination" => __("Products Pagination", "brizy"),
 			"Products Tags" => __("Products Tags", "brizy"),
 			"Progress" => __("Progress", "brizy"),
+			"Protected Form" => __("Protected Form", "brizy"),
 			"Protected Page" => __("Protected Page", "brizy"),
-			"ProtectedPage" => __("ProtectedPage", "brizy"),
 			"Publish" => __("Publish", "brizy"),
 			"Publish Page" => __("Publish Page", "brizy"),
 			"Pulse" => __("Pulse", "brizy"),
@@ -646,7 +646,7 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"Save HTML" => __("Save HTML", "brizy"),
 			"Save Layout" => __("Save Layout", "brizy"),
 			"Saved" => __("Saved", "brizy"),
-			"Saved Library is syncing to your Brizy Account" => __("Saved Library is syncing to your Brizy Account", "brizy"),
+			"Saved Library is syncing to your Account" => __("Saved Library is syncing to your Account", "brizy"),
 			"Saved Popups" => __("Saved Popups", "brizy"),
 			"Scroll Page Behind" => __("Scroll Page Behind", "brizy"),
 			"Search" => __("Search", "brizy"),
@@ -831,7 +831,6 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"WOOCart" => __("WOOCart", "brizy"),
 			"WOORating" => __("WOORating", "brizy"),
 			"Weight" => __("Weight", "brizy"),
-			"What’s this" => __("What’s this", "brizy"),
 			"When Finished" => __("When Finished", "brizy"),
 			"Width" => __("Width", "brizy"),
 			"Wobble" => __("Wobble", "brizy"),
@@ -843,7 +842,7 @@ class Brizy_Public_EditorBuild_195Wp_Texts {
 			"You have successfully connect the form with" => __("You have successfully connect the form with", "brizy"),
 			"You must be have one font added" => __("You must be have one font added", "brizy"),
 			"YouTube or Vimeo" => __("YouTube or Vimeo", "brizy"),
-			"Your Plugin version is incompatible with Brizy Account version, please update plugin" => __("Your Plugin version is incompatible with Brizy Account version, please update plugin", "brizy"),
+			"Your Plugin version is incompatible with Account version, please update plugin" => __("Your Plugin version is incompatible with Account version, please update plugin", "brizy"),
 			"Your block was saved without screenshot, browser is not compatible" => __("Your block was saved without screenshot, browser is not compatible", "brizy"),
 			"Your link is not correct" => __("Your link is not correct", "brizy"),
 			"Youtube" => __("Youtube", "brizy"),
