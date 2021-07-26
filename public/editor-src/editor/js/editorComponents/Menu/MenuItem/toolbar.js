@@ -55,6 +55,11 @@ const getItemsSimple = level => ({ v }) => {
         ...(v.iconName === ""
           ? [
               {
+                id: "iconPosition",
+                type: "radioGroup-dev",
+                disabled: true
+              },
+              {
                 id: "iconSize",
                 type: "slider-dev",
                 disabled: true
@@ -96,6 +101,11 @@ const getItemsSimple = level => ({ v }) => {
         },
         ...(v.iconName === ""
           ? [
+              {
+                id: "subMenuIconPosition",
+                type: "radioGroup-dev",
+                disabled: true
+              },
               {
                 id: "subMenuIconSize",
                 type: "slider-dev",
@@ -180,6 +190,11 @@ const getItemsMMenu = level => ({ v, device }) => {
         },
         ...(v.iconName === ""
           ? [
+              {
+                id: "mMenuIconPosition",
+                type: "radioGroup-dev",
+                disabled: true
+              },
               {
                 id: "mMenuIconSize",
                 type: "slider-dev",

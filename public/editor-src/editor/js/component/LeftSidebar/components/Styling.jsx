@@ -9,7 +9,7 @@ import {
   extraFontStylesSelector
 } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
-import { branding } from "visual/utils/branding";
+import { brizyToBranding } from "visual/utils/branding";
 
 class DrawerComponent extends React.Component {
   handleCurrentStyleIdChange = value => {
@@ -64,7 +64,7 @@ class DrawerComponent extends React.Component {
       extraFontStyles
     } = this.props;
     const stylesChoices = styles.map(style => ({
-      title: branding(style.title),
+      title: brizyToBranding(style.title),
       value: style.id
     }));
 

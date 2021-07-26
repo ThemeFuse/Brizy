@@ -65,9 +65,9 @@ export const CloudConnectWP: React.FC<CloudConnectProps> = (
     <div className="brz-ed-popup-two__cloud">
       <p className="brz-p">
         {isAuthorized
-          ? t("Saved Library is syncing to your Brizy Account")
+          ? t("Saved Library is syncing to your Account")
           : t(
-              "Access your Library in any WP install by connecting your Brizy Account"
+              "Access your Library in any WP install by connecting your Account"
             )}
       </p>
       <div className="brz-ed-popup-two__cloud-icon">
@@ -108,17 +108,10 @@ export const CloudConnectWP: React.FC<CloudConnectProps> = (
       {!syncAllowed && (
         <p className="brz-p">
           {t(
-            "Your Plugin version is incompatible with Brizy Account version, please update plugin"
+            "Your Plugin version is incompatible with Account version, please update plugin"
           )}
         </p>
       )}
-
-      <div className="brz-ed-popup-two__cloud-info">
-        <EditorIcon icon="nc-alert-circle-que" />
-        <a href="#" target="_blank" className="brz-a">
-          {t("What’s this")}?
-        </a>
-      </div>
     </div>
   );
 };

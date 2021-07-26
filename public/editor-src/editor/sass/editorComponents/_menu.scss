@@ -212,7 +212,6 @@ $dropdown-arrow-size: 7px;
         display: none;
       }
       .brz-mm-btn_next {
-        position: absolute;
         right: 0;
         left: auto;
         background: none;
@@ -297,6 +296,13 @@ $dropdown-arrow-size: 7px;
   &.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker {
     transition-delay: 0s;
   }
+}
+
+.brz-menu__item__content,
+.brz-menu__sub-menu__item__content,
+.brz-mm-menu__item__content {
+  display: flex;
+  align-items: center;
 }
 
 // Mega Menu

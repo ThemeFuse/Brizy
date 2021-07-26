@@ -266,6 +266,7 @@
     "tabletHorizontalAlign": null,
     "mobileHorizontalAlign": null,
 
+    "iconPosition": "left",
     "iconSize": 12,
     "iconSizeSuffix": null,
     "iconSpacing": 15,
@@ -349,6 +350,7 @@
     "subMenuBorderStyle": "solid",
 
     "subMenuIconSize": 12,
+    "subMenuIconPosition": "left",
     "subMenuIconSizeSuffix": null,
     "subMenuIconSpacing": 15,
     "subMenuIconSpacingSuffix": null,
@@ -486,6 +488,7 @@
     "mMenuTempBorderColorOpacity": 1,
 
     "mMenuIconSize": 12,
+    "mMenuIconPosition": "left",
     "mMenuIconSizeSuffix": null,
     "mMenuIconSpacing": 15,
     "mMenuIconSpacingSuffix": null,
@@ -501,6 +504,8 @@
 
     "tabletMenuSize": null,
     "tabletMenuSizeSuffix": null,
+
+    "tabletMMenuIconPosition": null,
 
     "tabletMenuPaddingTopSuffix": null,
     "tabletMenuPaddingTop": null,
@@ -554,6 +559,8 @@
     "mobileVerticalMode": null,
     "mobileMenuSize": null,
     "mobileMenuSizeSuffix": null,
+
+    "mobileMMenuIconPosition": null,
 
     "mobileMenuPadding": null,
     "mobileMenuPaddingTop": null,

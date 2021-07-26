@@ -99,22 +99,25 @@ export function cssStyleElementAccordionFilterAfterSpacing({
 export function cssStyleElementAccordionNavAlign({ v, device, state }) {
   const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
 
-  if (horizontalAlign === "right") {
-    return "flex-direction: row-reverse;";
-  }
+  return horizontalAlign === "right"
+    ? "flex-direction: row-reverse;"
+    : horizontalAlign === "center"
+    ? "justify-content: center;"
+    : "";
 }
 
 export function cssStyleElementAccordionNavTextAlign({ v, device, state }) {
   const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
 
-  if (horizontalAlign === "center") {
-    return "margin-left: auto; margin-right: auto;";
-  }
+  return `text-align: ${horizontalAlign};`;
 }
 
 export function cssStyleElementAccordionNavIconSpacing({ v, device, state }) {
   const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
-  return horizontalAlign === "center" ? "margin-left: 10px;" : "";
+
+  return horizontalAlign === "right"
+    ? "margin: 0 10px 0 0;"
+    : "margin: 0 0 0 10px;";
 }
 
 export function cssStyleElementAccordionNavIconSize({ v, device }) {
