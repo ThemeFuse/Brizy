@@ -48,7 +48,6 @@ class Brizy_Content_PlaceholderReplacer {
 		// set the placeholders found at this level
 		$this->context->setPlaceholders($placeholders);
 
-
 		if ( $placeholders ) {
 			foreach ( $placeholders as $contentPlaceholder ) {
 				try {
