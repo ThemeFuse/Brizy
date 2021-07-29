@@ -1,5 +1,6 @@
 <?php
 
+use BrizyPlaceholders\ContentPlaceholder;
 use BrizyPlaceholders\ContextInterface;
 
 class Brizy_Content_Context implements ContextInterface
@@ -8,7 +9,7 @@ class Brizy_Content_Context implements ContextInterface
     protected $data = array();
 
 	/**
-	 * @var Brizy_Content_ContentPlaceholder[]
+	 * @var ContentPlaceholder[]
 	 */
 	protected $placeholders = [];
 
@@ -74,17 +75,21 @@ class Brizy_Content_Context implements ContextInterface
         return $this->data[$key] = $value;
     }
 
-    /**
-     * BrizyPro_Content_Context constructor.
-     *
-     * @param $project
-     * @param $wp_post
-     */
-    public function __construct($project = null, $wp_post = null)
-    {
-        $this->setProject($project);
-        $this->setWpPost($wp_post);
-        $this->setEntity($wp_post);
+	/**
+	 * BrizyPro_Content_Context constructor.
+	 *
+	 * @param $project
+	 * @param $wp_post
+	 */
+	public function __construct($project, $brizy_post, $wp_post, $contentHtml, $parentContext = null ) {
+		$this->setProject( $project );
+		$this->setWpPost( $wp_post );
+		$this->setParentContext( $parentContext );
+		$this->setEntity($wp_post);
+	}
+
+    public function afterExtract($contentPlaceholders, $instancePlaceholders, $contentAfterExtractor) {
+	    $this->setPlaceholders($contentPlaceholders);
     }
 
 	/**
@@ -105,11 +110,10 @@ class Brizy_Content_Context implements ContextInterface
 		return $this;
 	}
 
-	/**
-	 * @param $id
-	 *
-	 * @return Brizy_Content_ContentPlaceholder|null
-	 */
+    /**
+     * @param $id
+     * @return mixed|null
+     */
 	public function getPlaceholderById( $id ) {
 
 		$results = $this->getPlaceholdersByAttrValue( 'id', $id );
@@ -117,13 +121,11 @@ class Brizy_Content_Context implements ContextInterface
 		return isset( $results[0] ) ? $results[0] : null;
 	}
 
-	/**
-	 * @param $key
-	 * @param $value
-	 *
-	 * @return Brizy_Content_ContentPlaceholder|null
-	 * @throws Exception
-	 */
+    /**
+     * @param $key
+     * @param $value
+     * @return array|null
+     */
 	public function getPlaceholdersByAttrValue( $key, $value ) {
 
 	    if(is_null($value)) return null;
@@ -131,7 +133,7 @@ class Brizy_Content_Context implements ContextInterface
 		$results = [];
 		if ( isset( $this->placeholders ) ) {
 			foreach ( $this->placeholders as $placeholder ) {
-				if ( $placeholder->getAttr( $key ) == $value ) {
+				if ( $placeholder->getAttribute( $key ) == $value ) {
 					$results[] = $placeholder;
 				}
 			}
