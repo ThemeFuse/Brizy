@@ -43,7 +43,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 
     public function shouldFallbackValue($value, ContextInterface $context, ContentPlaceholder $placeholder)
     {
-        return empty($value);
+        return is_null($value) || $value=="";
     }
 
     public function getFallbackValue(ContextInterface $context, ContentPlaceholder $placeholder)
