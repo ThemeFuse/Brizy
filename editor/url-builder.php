@@ -174,6 +174,20 @@ class Brizy_Editor_UrlBuilder
      *
      * @return string
      */
+    public function wp_upload_path($path = null)
+    {
+	    if ( $path ) {
+		    $path = ltrim( $path, '/' );
+	    }
+
+        return $this->upload_dir['path'] . '/' . $path;
+    }
+
+    /**
+     * @param $path
+     *
+     * @return string
+     */
     public function brizy_upload_relative_path($path = null)
     {
 
