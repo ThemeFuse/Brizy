@@ -59,7 +59,7 @@
     "timm": "^1.7.1",
     "tinycolor2": "1.4.1",
     "underscore": "^1.11.0",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
