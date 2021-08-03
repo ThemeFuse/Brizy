@@ -258,6 +258,8 @@ class Brizy_Public_Main
 
 
     /**
+     * Do not remove this function it is used to compatibilities like astra theme
+     *
      * @internal
      */
     public function _action_enqueue_preview_assets()
@@ -284,6 +286,8 @@ class Brizy_Public_Main
         // wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
         // wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
         // wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", apply_filters( 'brizy_preview_js_deps', [ 'brizy-preview-polyfill' ] ), null, true );
+	    wp_register_script( 'brizy-preview', '' );
+	    wp_enqueue_script( 'brizy-preview' );
         wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
         wp_add_inline_script(
             'brizy-preview',
