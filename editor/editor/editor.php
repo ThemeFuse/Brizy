@@ -114,7 +114,7 @@ class Brizy_Editor_Editor_Editor
             'urls' => array(
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
-                'assets' => $this->urlBuilder->editor_build_url(),
+                'assets' => $context == self::COMPILE_CONTEXT?Brizy_SiteUrlReplacer::hideSiteUrl($this->urlBuilder->editor_build_url()):$this->urlBuilder->editor_build_url(),
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
@@ -151,7 +151,7 @@ class Brizy_Editor_Editor_Editor
 				'pluginPrefix'     => Brizy_Editor::prefix(),
 				'permalink'        => get_permalink( $wp_post_id ),
 				'page'             => $wp_post_id,
-                'postType'       => get_post_type( $wp_post_id ),
+                'postType'          => get_post_type( $wp_post_id ),
 				'featuredImage'    => $this->getThumbnailData( $wp_post_id ),
 				'pageAttachments'  => array( 'images' => $this->get_page_attachments() ),
 				'templates'        => $this->post->get_templates(),
@@ -407,7 +407,7 @@ class Brizy_Editor_Editor_Editor
                     case Brizy_Admin_Rule::TAXONOMY :
                         $args = array(
                             'taxonomy' => $rule->getEntityType(),
-                            'hide_empty' => false,
+                            'hide_empty' => true,
                         );
                         if (count($rule->getEntityValues())) {
                             $args['term_taxonomy_id'] = $rule->getEntityValues();
