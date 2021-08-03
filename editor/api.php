@@ -643,7 +643,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 case Brizy_Admin_Rule::TAXONOMY :
                     $args = array(
                         'taxonomy' => $rule->getEntityType(),
-                        'hide_empty' => false,);
+                        'hide_empty' => true,);
 
                     if (count($rule->getEntityValues())) {
                         $args['term_taxonomy_id'] = $rule->getEntityValues();
