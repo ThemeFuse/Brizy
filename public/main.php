@@ -110,11 +110,8 @@ class Brizy_Public_Main
             add_action('wp_enqueue_scripts', array($this, '_action_enqueue_preview_assets'), 9999);
             add_filter('the_content', array($this, 'insert_page_content'), -12000);
             add_action('brizy_template_content', array($this, 'brizy_the_content'));
-            //add_filter( 'get_the_excerpt', array( $this, 'start_excerpt' ), 0 );
-            //add_filter( 'get_the_excerpt', array( $this, 'end_excerpt' ), 1000 );
             $this->plugin_live_composer_fixes();
         }
-        $this->addTheContentFilters();
     }
 
     public static function libAggregator($libSet, $post, $callback = null, $isPro = false)
@@ -276,37 +273,6 @@ class Brizy_Public_Main
      */
     public function _action_enqueue_preview_assets()
     {
-        $config_object = $this->getConfigObject();
-        $assets_url = $config_object->urls->assets;
-        $current_user = wp_get_current_user();
-        $config_json = json_encode(
-            array(
-                'serverTimestamp' => time(),
-                'currentUser' => [
-                    'user_login' => $current_user->user_login,
-                    'user_email' => $current_user->user_email,
-                    'user_level' => $current_user->user_level,
-                    'user_firstname' => $current_user->user_firstname,
-                    'user_lastname' => $current_user->user_lastname,
-                    'display_name' => $current_user->display_name,
-                    'ID' => $current_user->ID,
-                    'roles' => $current_user->roles,
-                ],
-            )
-        );
-
-        // wp_enqueue_style( 'brizy-preview', "${assets_url}/editor/css/preview.css", array(), null );
-        // wp_register_script( 'brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true );
-        // wp_enqueue_script( 'brizy-preview', "${assets_url}/editor/js/preview.js", apply_filters( 'brizy_preview_js_deps', [ 'brizy-preview-polyfill' ] ), null, true );
-	    wp_register_script( 'brizy-preview', '' );
-	    wp_enqueue_script( 'brizy-preview' );
-        wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
-        wp_add_inline_script(
-            'brizy-preview',
-            'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});',
-            'after'
-        );
-
         do_action('brizy_preview_enqueue_scripts');
     }
 
@@ -545,12 +511,6 @@ class Brizy_Public_Main
         $popupMain = Brizy_Admin_Popups_Main::_init();
         $params['content'] .= $popupMain->getPopupsHtml($project, $this->post, 'head');
 
-        // include content
-        $params['content'] .= "<!-- BRIZY ASSETS -->\n\n";
-        $params['content'] .= $this->asserEnqueueManager->getCodeStylesAsString();
-        $params['content'] .= "\n\n<!-- END BRIZY ASSETS -->";
-
-
         $params['content'] = apply_filters(
             'brizy_content',
             $params['content'],
@@ -713,7 +673,7 @@ class Brizy_Public_Main
         if ($this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed()) {
             add_filter('the_content', array($this, '_filter_the_content'));
             add_action('brizy_template_content', array($this, '_action_the_content'));
-        } elseif ($this->is_view_page()) {
+        } elseif ($this->is_view_page($this->post)) {
             if (!post_password_required($this->post->getWpPost())) {
                 add_filter('the_content', array($this, 'insert_page_content'));
             }
@@ -732,7 +692,7 @@ class Brizy_Public_Main
         if ($this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed()) {
             remove_filter('the_content', array($this, '_filter_the_content'));
             remove_action('brizy_template_content', array($this, '_action_the_content'));
-        } elseif ($this->is_view_page()) {
+        } elseif ($this->is_view_page($this->post)) {
             if (!post_password_required($this->post->getWpPost())) {
                 remove_filter('the_content', array($this, 'insert_page_content'));
             }

@@ -37,6 +37,66 @@ class Brizy_Public_AssetEnqueueManager
         add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
         add_filter('script_loader_tag', array($this, 'addScriptAttributes'), 10, 2);
         add_filter('style_loader_tag', array($this, 'addStyleAttributes'), 10, 2);
+        add_filter('wp_enqueue_scripts', array($this, 'addEditorConfigVar'));
+        add_action('wp_head', array($this, 'insertHeadCodeAssets'));
+        add_action('wp_head', array($this, 'insertBodyCodeAssets'));
+    }
+
+    public function insertHeadCodeAssets() {
+        // include content
+        $content = "<!-- BRIZY ASSETS -->\n\n";
+        $content .= $this->getCodeStylesAsString();
+        $content .= "\n\n<!-- END BRIZY ASSETS -->";
+
+        $content = apply_filters(
+            'brizy_content',
+            $content,
+            Brizy_Editor_Project::get(),
+            $this->post->getWpPost(),
+            'head'
+        );
+
+        echo $content;
+    }
+    public function insertBodyCodeAssets() {
+        // include content
+        // include content
+        $content = "<!-- BRIZY ASSETS -->\n\n";
+        $content .= $this->getCodeScriptsAsString();
+        $content .= "\n\n<!-- END BRIZY ASSETS -->";
+
+        $content = apply_filters(
+            'brizy_content',
+            $content,
+            Brizy_Editor_Project::get(),
+            $this->post->getWpPost(),
+            'body'
+        );
+
+        echo $content;
+    }
+
+    public function addEditorConfigVar() {
+        $current_user = wp_get_current_user();
+        $config_json = json_encode(
+            array(
+                'serverTimestamp' => time(),
+                'currentUser' => [
+                    'user_login' => $current_user->user_login,
+                    'user_email' => $current_user->user_email,
+                    'user_level' => $current_user->user_level,
+                    'user_firstname' => $current_user->user_firstname,
+                    'user_lastname' => $current_user->user_lastname,
+                    'display_name' => $current_user->display_name,
+                    'ID' => $current_user->ID,
+                    'roles' => $current_user->roles,
+                ],
+            )
+        );
+
+        wp_register_script( 'brizy-preview', '' );
+        wp_enqueue_script( 'brizy-preview' );
+        wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
     }
 
     public function enqueueStyles()
