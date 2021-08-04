@@ -13,7 +13,7 @@ const SintixStyle = require("./styles/Sintix");
 module.exports = {
   name: "Sintix",
   color: "#FF7A21",
-  cat: [0, 13, 17, 100],
+  cat: [0, 13, 17],
   pages: [
     Homepage,
     Homepage2,

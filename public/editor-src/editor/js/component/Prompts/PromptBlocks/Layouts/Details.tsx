@@ -68,7 +68,7 @@ interface State {
   thumbnailHeight: number;
   transition: number;
   previewPointer: "none" | "auto";
-  importStyles: boolean;
+  replaceStyle: boolean;
 }
 
 class Details extends Component<AllProps, State> {
@@ -91,7 +91,7 @@ class Details extends Component<AllProps, State> {
     thumbnailHeight: 0,
     transition: 0,
     previewPointer: "none",
-    importStyles: false
+    replaceStyle: false
   };
 
   thumbnailDetails = React.createRef<HTMLDivElement>();
@@ -148,7 +148,7 @@ class Details extends Component<AllProps, State> {
       onAddBlocks,
       onClose
     } = this.props;
-    const { active: pageId, importStyles } = this.state;
+    const { active: pageId, replaceStyle } = this.state;
 
     const page = await fetch(getBlockDataUrl(type, pageId));
     const { blocks }: { blocks: Block[] } = await page.json();
@@ -173,9 +173,15 @@ class Details extends Component<AllProps, State> {
       blocks,
       styles,
       fonts,
-      currentStyleId: importStyles ? styles?.[0]?.id : undefined
+      currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
     });
     onClose();
+  };
+
+  handleReplaceStyling = (): void => {
+    this.setState({
+      replaceStyle: !this.state.replaceStyle
+    });
   };
 
   renderSlotLeft(children: ReactNode): ReactNode {
@@ -197,10 +203,9 @@ class Details extends Component<AllProps, State> {
       active,
       thumbnailHeight,
       previewPointer,
-      importStyles
+      replaceStyle
     } = this.state;
     const isStory = type === "stories";
-    const existingTemplate = this.hasStyleInProject();
     const currentPage = pages.find(({ id }) => id === active);
     const activeSrc = templateThumbnailUrl(currentPage);
     const renderSectionPage = pages.map((el, index) => {
@@ -320,18 +325,13 @@ class Details extends Component<AllProps, State> {
                         : t("Upgrade to PRO to use this layout")}
                     </div>
                   ) : (
-                    styles.length > 0 &&
-                    !existingTemplate && (
+                    styles.length > 0 && (
                       <div
                         className="brz-ed-popup-two-details-footer-radio-button"
-                        onClick={(): void => {
-                          this.setState({
-                            importStyles: !importStyles
-                          });
-                        }}
+                        onClick={this.handleReplaceStyling}
                       >
                         <EditorIcon
-                          icon={importStyles ? "nc-check" : "nc-uncheck"}
+                          icon={replaceStyle ? "nc-check" : "nc-uncheck"}
                           className="brz-ed-popup-two-details-footer-radio-icon"
                         />
                         {t("Replace global styling")}

@@ -1047,6 +1047,7 @@ module.exports = {
   ],
   categories: [
     { id: 0, slug: "blank", title: "Blank", hidden: true },
+    { id: 100, slug: "free", title: "Free" },
     { id: 5582, slug: "hero", title: "Hero" },
     { id: 5584, slug: "features", title: "Features" },
     { id: 5586, slug: "contact", title: "Contact" },

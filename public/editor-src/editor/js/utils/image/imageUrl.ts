@@ -23,11 +23,13 @@ export default function imageUrl(
     iH: "any"
   }
 ): string | null {
-  const imageSrc = isAbsoluteUrl(src) || isPlaceholderStr(src) ? src : src;
+  if (isAbsoluteUrl(src) || isPlaceholderStr(src)) {
+    return src;
+  }
 
-  if (imageSrc) {
+  if (src) {
     const filter = getFilter(options);
-    return [Config.get("urls").image, filter, imageSrc].join("/");
+    return [Config.get("urls").image, filter, src].join("/");
   }
 
   return null;

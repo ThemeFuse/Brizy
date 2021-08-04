@@ -13,7 +13,6 @@ import WPPostContent from "./pro/WPPostContent";
 import WPPostInfo from "./pro/WPPostInfo";
 import WPPostNavigation from "./pro/WPPostNavigation";
 import Search from "./pro/Search";
-import Login from "./pro/Login";
 
 import Products from "./pro/Products";
 import WOOProductTitle from "./pro/WOOProductTitle";
@@ -32,6 +31,7 @@ import WOOUpsell from "./pro/WOOUpsell.js";
 import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
 import WOOArchives from "./pro/WOOArchives";
 import Review from "./pro/Review.js";
+import Login from "./pro/Login";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -144,18 +144,28 @@ const config = ((): Shortcodes => {
       archive: postArchiveShortcodes,
       ...nonWP,
       base: baseWP,
-      woocommerce: woocommerceShortcodes,
-      wordpress: wordpressShortcodes
+      wordpress: wordpressShortcodes,
+      woocommerce: woocommerceShortcodes
     };
   }
 
-  if (IS_SINGLE_TEMPLATE || IS_POST || IS_PAGE) {
+  if (IS_SINGLE_TEMPLATE || IS_POST) {
     return {
       single: singleShortcodes,
+      wordpress: wordpressShortcodes,
       ...nonWP,
       base: baseWP,
-      woocommerce: woocommerceShortcodes,
-      wordpress: wordpressShortcodes
+      woocommerce: woocommerceShortcodes
+    };
+  }
+
+  if (IS_PAGE) {
+    return {
+      ...nonWP,
+      base: baseWP,
+      single: singleShortcodes,
+      wordpress: wordpressShortcodes,
+      woocommerce: woocommerceShortcodes
     };
   }
 

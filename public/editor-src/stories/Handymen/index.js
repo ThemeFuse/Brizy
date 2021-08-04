@@ -8,7 +8,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Handymen",
   color: "#bf5049",
-  cat: [0, 5],
+  cat: [0, 5, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5],
   styles: [StoryStyle]
 };

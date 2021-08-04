@@ -24,11 +24,28 @@ export function getItems({ v, device }) {
       position: 60,
       options: [
         {
-          id: "logoutRedirect",
-          label: t("Redirect after logout"),
-          type: "inputText-dev",
-          devices: "desktop",
-          placeholder: "http://"
+          id: "redirectGroup",
+          type: "group-dev",
+          options: [
+            {
+              id: "logoutRedirectType",
+              type: "select-dev",
+              label: t("Redirect After Logout"),
+              devices: "desktop",
+              choices: [
+                { title: t("Same Page"), value: "samePage" },
+                { title: t("Custom"), value: "custom" }
+              ]
+            },
+            {
+              id: "logoutRedirect",
+              label: t("URL"),
+              type: "inputText-dev",
+              disabled: v.logoutRedirectType !== "custom",
+              devices: "desktop",
+              placeholder: "http://"
+            }
+          ]
         }
       ]
     },
