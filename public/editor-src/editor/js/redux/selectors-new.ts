@@ -1,4 +1,4 @@
-import { ReduxState } from "visual/redux/types";
+import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
 import { createSelector } from "reselect";
 
@@ -20,6 +20,11 @@ export const extraFontStylesSelector = (
 ): ReduxState["extraFontStyles"] => state.extraFontStyles;
 
 export const uiSelector = (state: ReduxState): ReduxState["ui"] => state.ui;
+
+export const storeWasChangedSelector = (
+  state: ReduxState
+): ReduxState["storeWasChanged"] =>
+  state.storeWasChanged || StoreChanged.unchanged;
 
 // === END 0 DEPENDENCIES ===
 

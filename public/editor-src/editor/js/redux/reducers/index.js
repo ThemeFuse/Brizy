@@ -40,6 +40,7 @@ import { extraFontStyles } from "./extraFontStyles";
 import { ui } from "./ui";
 import { syncAllowed } from "./syncAllowed";
 import { authorized } from "./authorized";
+import { storeWasChanged } from "./storeWasChanged";
 
 // project
 
@@ -204,9 +205,10 @@ export function currentStyle(state = {}, action, fullState) {
     case IMPORT_STORY:
     case IMPORT_TEMPLATE: {
       const { currentStyleId, styles } = action.payload;
+      const allStyles = [...(styles ?? []), ...fullState.styles];
 
       return currentStyleId
-        ? styles.find(style => style.id === currentStyleId)
+        ? allStyles.find(style => style.id === currentStyleId)
         : state;
     }
     default:
@@ -388,7 +390,8 @@ export default historyReducerEnhancer(
       project,
       projectVersion,
       styles,
-      ui
+      ui,
+      storeWasChanged
     },
     {
       screenshots
@@ -402,7 +405,8 @@ export default historyReducerEnhancer(
       "currentStyle",
       "extraFontStyles",
       "globalBlocksUpdates",
-      "projectVersion"
+      "projectVersion",
+      "storeWasChanged"
     ],
     onBeforeUpdate: (state, action, history) => {
       if (

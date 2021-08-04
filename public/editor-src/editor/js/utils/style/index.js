@@ -39,8 +39,7 @@ export { styleBorderColor } from "./styleBorderColor";
 // Hover Transition
 export {
   styleHoverTransition,
-  styleHoverTransitionProperty,
-  styleHoverTransitionPropertyImage
+  styleHoverTransitionProperty
 } from "./styleHoverTransition";
 
 // Align

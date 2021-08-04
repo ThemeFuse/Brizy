@@ -21,9 +21,8 @@ import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Audio from "./Audio";
 import Icon from "./Icon";
-import Image from "./Image2";
+import Image from "./Image";
 import { StoryWrapper } from "./StoryWrapper";
-// import Image2 from "./Image2";
 import Line from "./Line";
 import Spacer from "./Spacer";
 import EmbedCode from "./EmbedCode";
@@ -112,7 +111,6 @@ export default {
   VideoPlaylistItem,
   Icon,
   Image,
-  // Image2,
   Line,
   Spacer,
   EmbedCode,

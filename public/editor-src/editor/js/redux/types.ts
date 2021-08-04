@@ -27,6 +27,12 @@ export interface Fonts {
   };
 }
 
+export enum StoreChanged {
+  pending = "pending",
+  changed = "changed",
+  unchanged = "unchanged"
+}
+
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
@@ -78,6 +84,7 @@ export type ReduxState = {
       items: Block[];
     };
   };
+  storeWasChanged: StoreChanged;
 
   // below any are temporary and needed for ReduxStateWithHistory
   // they will be removed once we finish with ReduxState types

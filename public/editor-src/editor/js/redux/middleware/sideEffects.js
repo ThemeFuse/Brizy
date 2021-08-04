@@ -11,15 +11,12 @@ import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
   currentStyleSelector,
   currentRoleSelector,
-  unDeletedFontSelector
+  unDeletedFontSelector,
+  storeWasChangedSelector
 } from "../selectors";
 import {
   HYDRATE,
   ADD_BLOCK,
-  UPDATE_BLOCKS,
-  REMOVE_BLOCK,
-  REORDER_BLOCKS,
-  UPDATE_GLOBAL_BLOCK,
   UPDATE_UI,
   COPY_ELEMENT,
   updateCopiedElement,
@@ -30,11 +27,12 @@ import {
   ADD_FONTS,
   DELETE_FONTS
 } from "../actions";
-import { IMPORT_STORY, PUBLISH, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
+import { IMPORT_STORY, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import { makeSubsetGoogleFontsUrl } from "visual/utils/fonts";
 import { UNDO, REDO } from "../history/types";
 import { historySelector } from "../history/selectors";
+import { StoreChanged } from "visual/redux/types";
 
 export default config => store => next => action => {
   const callbacks = {
@@ -44,28 +42,7 @@ export default config => store => next => action => {
 
   // show warning if the user wants to leave
   // without publishing / updating changes
-  switch (action.type) {
-    case ADD_BLOCK:
-    case REMOVE_BLOCK:
-    case REORDER_BLOCKS:
-    case UPDATE_BLOCKS:
-    case UPDATE_GLOBAL_BLOCK:
-    case UPDATE_CURRENT_STYLE_ID:
-    case UPDATE_CURRENT_STYLE:
-    case UPDATE_EXTRA_FONT_STYLES:
-    case IMPORT_TEMPLATE:
-    case UNDO:
-    case REDO: {
-      const window_ = window.parent || window;
-      window_.addEventListener("beforeunload", handleBeforeUnload);
-      break;
-    }
-    case PUBLISH: {
-      const window_ = window.parent || window;
-      window_.removeEventListener("beforeunload", handleBeforeUnload);
-      break;
-    }
-  }
+  handleStoreChange(callbacks);
 
   if (action.type === HYDRATE) {
     handleHydrate(callbacks);
@@ -125,6 +102,28 @@ export default config => store => next => action => {
     task({ config, state, oldState, store, action })
   );
 };
+
+function handleStoreChange(callbacks) {
+  callbacks.onAfterNext.push(({ state, oldState }) => {
+    const oldStateWasChanged = storeWasChangedSelector(oldState);
+    const storeWasChanged = storeWasChangedSelector(state);
+
+    if (oldStateWasChanged !== storeWasChanged) {
+      const window_ = window.parent || window;
+
+      switch (storeWasChanged) {
+        case StoreChanged.changed: {
+          window_.addEventListener("beforeunload", handleBeforeUnload);
+          break;
+        }
+        case StoreChanged.unchanged: {
+          window_.removeEventListener("beforeunload", handleBeforeUnload);
+          break;
+        }
+      }
+    }
+  });
+}
 
 function handleHydrate(callbacks) {
   callbacks.onAfterNext.push(({ state, store, config }) => {

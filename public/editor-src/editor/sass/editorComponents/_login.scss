@@ -55,6 +55,22 @@
       flex-grow: 0;
     }
   }
+  &__alert {
+    min-height: 55px;
+    width: 100%;
+    padding: 17px 30px;
+    margin-top: 15px;
+
+    font-family: $font-family-1;
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #f00;
+  }
   .brz-control__check-group-option {
     display: flex;
     align-items: center;

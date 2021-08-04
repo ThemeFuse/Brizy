@@ -1,82 +1,33 @@
 import React, { Fragment } from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import ResizeAware from "react-resize-aware";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import BoxResizer from "visual/component/BoxResizer";
-import Placeholder from "visual/component/Placeholder";
-import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
-import { MIN_COL_WIDTH } from "visual/config/columns";
-import { imageUrl, imagePopulationUrl, svgUrl } from "visual/utils/image";
+import { imageUrl, imagePopulationUrl } from "visual/utils/image";
 import { getStore } from "visual/redux/store";
-import { blocksDataSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import {
+  tabletSyncOnChange,
+  mobileSyncOnChange,
+  defaultValueKey
+} from "visual/utils/onChange";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import toolbarConfigFn, {
-  getMinSize,
-  getMaxSize,
-  getMinHeight
-} from "./toolbar";
-import { calcImageSizes, calcWrapperSizes } from "./calculations";
-import {
-  imageStylesClassName,
-  imageStylesCSSVars,
-  contentStyleClassName,
-  contentStyleCSSVars,
-  wrapperStyleClassName,
-  wrapperStyleCSSVars,
-  imgStyleClassName,
-  imgStyleCSSVars,
-  pictureStyleClassName
-} from "./styles";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import toolbarConfigFn from "./toolbar";
+import classnames from "classnames";
+import { css } from "visual/utils/cssStyle";
+import { style, styleContent } from "./styles";
+import { Wrapper } from "../tools/Wrapper";
+import { isSVG, isGIF, calcWrapperSizes } from "./utils";
+import { isNumber } from "visual/utils/math";
 
-const resizerPoints = {
-  default: [
-    "topLeft",
-    "topCenter",
-    "topRight",
-    "bottomLeft",
-    "bottomCenter",
-    "bottomRight"
-  ],
-  gallery: ["bottomCenter"],
-  svg: ["topLeft", "topRight", "bottomLeft", "bottomRight"]
-};
-
-const resizerTransformValue = v => {
-  const { resize, ...rest } = v;
-
-  return {
-    size: resize,
-    tabletSize: tabletSyncOnChange(v, "resize"),
-    mobileSize: mobileSyncOnChange(v, "resize"),
-    ...rest
-  };
-};
-const resizerTransformPatch = patch => {
-  if (patch.size) {
-    patch.resize = patch.size;
-    delete patch.size;
-  }
-
-  if (patch.tabletSize) {
-    patch.tabletResize = patch.tabletSize;
-    delete patch.tabletSize;
-  }
-
-  if (patch.mobileSize) {
-    patch.mobileResize = patch.mobileSize;
-    delete patch.mobileSize;
-  }
-
-  return patch;
-};
-
-const isSVG = extension => extension === "svg";
+import ImageWrapper from "./Wrapper";
+import ImageContent from "./Image";
+import { IS_STORY } from "visual/utils/models";
+import * as ImagePatch from "./types/ImagePatch";
+import { elementModelToValue, patchOnImageChange } from "./imageChange";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -90,26 +41,23 @@ class Image extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
+  prevWrapperSizes = {
+    cW: 0,
+    cH: 0
+  };
+
   constructor(props) {
     super(props);
-    const { desktopW: containerWidth, tabletW, mobileW } = this.props.meta;
-    const maxDesktopContainerWidth = Math.round(
-      this.getMaxContainerWidth(containerWidth)
-    );
-    const maxTabletContainerWidth = Math.round(
-      this.getMaxContainerWidth(tabletW, "tablet")
-    );
-    const maxMobileContainerWidth = Math.round(
-      this.getMaxContainerWidth(mobileW, "mobile")
-    );
+    const { desktopW: containerWidth } = this.props.meta;
 
     this.state = {
-      containerWidth,
-      maxDesktopContainerWidth,
-      maxTabletContainerWidth,
-      maxMobileContainerWidth
+      containerWidth
     };
   }
+
+  container = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
@@ -121,19 +69,63 @@ class Image extends EditorComponent {
     this.mounted = false;
   }
 
-  handleContainerRef = el => {
-    this.container = el;
-  };
+  patchValue(patch, meta) {
+    const image = this.handleImageChange(patch);
+    super.patchValue(
+      {
+        ...patch,
+        ...image
+      },
+      meta
+    );
+  }
+
+  handleImageChange(patch) {
+    const device = deviceModeSelector(getStore().getState());
+    const image = ImagePatch.fromImageElementModel(patch);
+
+    const imageDC = ImagePatch.fromImageDCElementModel(patch);
+
+    if (image) {
+      const { v } = this.getValue2();
+      const value = elementModelToValue(v);
+      const wrapperSize = this.getWrapperSizes(v)[device];
+
+      return (
+        (value &&
+          patchOnImageChange(
+            this.state.containerWidth,
+            value,
+            wrapperSize,
+            image
+          )) ??
+        {}
+      );
+    }
+
+    if (imageDC) {
+      const { v } = this.getValue2();
+      const wrapperSize = this.getWrapperSizes(v)[device];
+      const dvk = key => defaultValueKey({ key, device });
+
+      return {
+        [dvk("height")]: wrapperSize.height,
+        [dvk("heightSuffix")]: "px"
+      };
+    }
+
+    return {};
+  }
 
   handleResize = () => {
-    this.updateContainerMaxWidth();
-    this.updateContainerWidth();
+    if (!IS_STORY) {
+      this.updateContainerWidth();
+    }
     this.props.onResize();
   };
 
-  handleBoxResizerChange = patch => {
-    this.patchValue(resizerTransformPatch(patch));
-    this.props.onResize();
+  handleChange = patch => {
+    this.patchValue(patch);
   };
 
   updateContainerWidth = () => {
@@ -144,138 +136,34 @@ class Image extends EditorComponent {
     const { containerWidth: stateContainerWidth } = this.state;
 
     if (getStore().getState().ui.deviceMode === "desktop") {
-      const containerWidth = this.container.clientWidth;
+      const parentNode = this.container?.current?.parentElement;
+      const parentWidth = parentNode?.getBoundingClientRect().width;
 
-      if (containerWidth !== stateContainerWidth) {
+      const cs = getComputedStyle(parentNode);
+
+      const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+      const borderX =
+        parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+      const containerWidth = parentWidth - paddingX - borderX;
+
+      if (isNumber(containerWidth) && containerWidth !== stateContainerWidth) {
         this.setState({ containerWidth });
       }
     }
   };
 
-  updateContainerMaxWidth = _.debounce(() => {
-    if (!this.mounted) {
-      return;
-    }
+  getExtraImageProps(v) {
+    return { alt: v.alt };
+  }
 
-    const { tabletW, mobileW } = this.props.meta;
-
-    const {
-      containerWidth,
-      maxDesktopContainerWidth: oldMaxDesktopContainerWidth,
-      maxTabletContainerWidth: oldMaxTabletContainerWidth,
-      maxMobileContainerWidth: oldMaxMobileContainerWidth
-    } = this.state;
-    const maxDesktopContainerWidth = Math.round(
-      this.getMaxContainerWidth(containerWidth)
-    );
-    const maxTabletContainerWidth = Math.round(
-      this.getMaxContainerWidth(tabletW, "tablet")
-    );
-    const maxMobileContainerWidth = Math.round(
-      this.getMaxContainerWidth(mobileW, "mobile")
-    );
-
-    if (
-      maxDesktopContainerWidth > oldMaxDesktopContainerWidth ||
-      maxTabletContainerWidth > oldMaxTabletContainerWidth ||
-      maxMobileContainerWidth > oldMaxMobileContainerWidth
-    ) {
-      this.setState({
-        maxDesktopContainerWidth,
-        maxTabletContainerWidth,
-        maxMobileContainerWidth
-      });
-    }
-  }, 2000);
-
-  getMaxContainerWidth = (containerWidth, type = "desktop") => {
+  getImageUrlsFor(wrapperSizes, imageSizes, device) {
     const v = this.getValue();
-    const widthStepInPercent = 20;
-    const imgSizes = this.getImageSizes(v, containerWidth);
 
-    let shortcodeWidthInPercent;
-    let maxDesktopContainerWidth;
-    if (this.props.meta.row && this.props.meta.row.itemsLength) {
-      const {
-        row: { itemsLength },
-        desktopW
-      } = this.props.meta;
+    let { width: cW, height: cH } = wrapperSizes[device];
+    cW = Math.round(cW);
+    cH = Math.round(cH);
 
-      maxDesktopContainerWidth = desktopW - MIN_COL_WIDTH * (itemsLength - 1);
-      shortcodeWidthInPercent =
-        (imgSizes[type].width * 100) / maxDesktopContainerWidth;
-    } else {
-      maxDesktopContainerWidth = containerWidth;
-      shortcodeWidthInPercent = (imgSizes[type].width * 100) / containerWidth;
-    }
-
-    const maxWidthPercent =
-      Math.ceil(shortcodeWidthInPercent / widthStepInPercent) *
-      widthStepInPercent;
-
-    return Math.min(
-      (maxWidthPercent * maxDesktopContainerWidth) / 100,
-      v.imageWidth
-    );
-  };
-
-  getImageSizes = (v, containerWidth) => {
-    const {
-      imageWidth,
-      imageHeight,
-      positionX,
-      positionY,
-      resize,
-      zoom,
-      width,
-      height
-    } = v;
-    const { tabletW, mobileW } = this.props.meta;
-    const desktopValue = {
-      imageWidth,
-      imageHeight,
-      positionX,
-      positionY,
-      resize,
-      zoom,
-      width,
-      height
-    };
-    const tabletValue = {
-      imageWidth,
-      imageHeight,
-      positionX: tabletSyncOnChange(v, "positionX"),
-      positionY: tabletSyncOnChange(v, "positionY"),
-      resize: tabletSyncOnChange(v, "resize"),
-      zoom: tabletSyncOnChange(v, "zoom"),
-      width,
-      height: tabletSyncOnChange(v, "height")
-    };
-    const mobileValue = {
-      imageWidth,
-      imageHeight,
-      positionX: mobileSyncOnChange(v, "positionX"),
-      positionY: mobileSyncOnChange(v, "positionY"),
-      resize: mobileSyncOnChange(v, "resize"),
-      zoom: mobileSyncOnChange(v, "zoom"),
-      width,
-      height: mobileSyncOnChange(v, "height")
-    };
-
-    return {
-      desktop: calcImageSizes(containerWidth, desktopValue),
-      tablet: calcImageSizes(tabletW, tabletValue),
-      mobile: calcImageSizes(mobileW, mobileValue)
-    };
-  };
-
-  getImageUrlsFor(wrapperSizes, device) {
-    const v = this.getValue();
-    const { desktopW } = this.props.meta;
-
-    const { width: cW, height: cH } = wrapperSizes[device];
-
-    const imageSizes = this.getImageSizes(v, desktopW);
     let { width: iW, height: iH, marginLeft: oX, marginTop: oY } = imageSizes[
       device
     ];
@@ -285,7 +173,16 @@ class Image extends EditorComponent {
 
     const urlFn = v.imagePopulation ? imagePopulationUrl : imageUrl;
     const src = v.imagePopulation ? v.imagePopulation : v.imageSrc;
-    const options = v.imagePopulation ? { cW, cH } : { iW, iH, oX, oY, cW, cH };
+    const options = v.imagePopulation
+      ? { cW: Math.round(cW), cH: Math.round(cH) }
+      : {
+          iW: Math.round(iW),
+          iH: Math.round(iH),
+          oX: Math.round(oX),
+          oY: Math.round(oY),
+          cW: Math.round(cW),
+          cH: Math.round(cH)
+        };
 
     return {
       source: urlFn(src, options),
@@ -300,8 +197,172 @@ class Image extends EditorComponent {
     }
   }
 
+  getResponsiveUrls(wrapperSizes, imageSizes) {
+    return {
+      desktopSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").url,
+      tabletSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "tablet").url,
+      mobileSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "mobile").url,
+      sourceSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop")
+        .source
+    };
+  }
+
+  getWrapperSizes(v) {
+    const { containerWidth } = this.state;
+    const {
+      imageWidth,
+      imageHeight,
+      width,
+      height,
+      widthSuffix,
+      heightSuffix
+    } = v;
+    const { tabletW, mobileW } = this.props.meta;
+
+    const desktopValue = {
+      imageWidth,
+      imageHeight,
+      width,
+      height,
+      widthSuffix,
+      heightSuffix
+    };
+    const tabletValue = {
+      imageWidth,
+      imageHeight,
+      width: v.tabletWidth || width,
+      height: v.tabletHeight || height,
+      widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
+      heightSuffix: tabletSyncOnChange(v, "heightSuffix")
+    };
+    const mobileValue = {
+      imageWidth,
+      imageHeight,
+      width: v.mobileWidth || width,
+      height: v.mobileHeight || v.height,
+      widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
+      heightSuffix: mobileSyncOnChange(v, "heightSuffix")
+    };
+    return {
+      desktop: calcWrapperSizes(desktopValue, containerWidth),
+      tablet: calcWrapperSizes(tabletValue, tabletW),
+      mobile: calcWrapperSizes(mobileValue, mobileW)
+    };
+  }
+
+  getLightboxClassName() {
+    const v = this.getValue();
+    const inGallery = Boolean(this.props.meta?.gallery?.inGallery);
+
+    return {
+      "brz-image__lightbox":
+        (v.imageSrc || v.imagePopulation) &&
+        v.linkLightBox === "on" &&
+        !inGallery &&
+        !(isSVG(v.imageExtension) || isGIF(v.imageExtension))
+    };
+  }
+
+  getDBValue() {
+    const {
+      resize,
+      tabletResize,
+      mobileResize,
+      ...dbValue
+    } = super.getDBValue();
+
+    let value = {};
+    if (resize) {
+      value = {
+        ...value,
+        width: resize,
+
+        widthSuffix: "%",
+        heightSuffix: "%"
+      };
+    }
+    if (tabletResize) {
+      value = {
+        ...value,
+        tabletWidth: tabletResize,
+
+        tabletWidthSuffix: "%",
+        tabletHeightSuffix: "%"
+      };
+    }
+    if (mobileResize) {
+      value = {
+        ...value,
+        mobileWidth: mobileResize,
+
+        mobileWidthSuffix: "%",
+        mobileHeightSuffix: "%"
+      };
+    }
+
+    if (dbValue.height && !dbValue.heightSuffix) {
+      value = {
+        ...value,
+        heightSuffix: "%"
+      };
+    }
+    if (dbValue.tabletHeight && !dbValue.tabletHeightSuffix) {
+      value = {
+        ...value,
+        tabletHeightSuffix: "%"
+      };
+    }
+    if (dbValue.mobileHeight && !dbValue.mobileHeightSuffix) {
+      value = {
+        ...value,
+        mobileHeightSuffix: "%"
+      };
+    }
+
+    return {
+      ...dbValue,
+      ...value
+    };
+  }
+
+  getDCValueHook(dcKeys, v) {
+    const wrapperSizes = this.getWrapperSizes(v);
+    const { deviceMode } = getStore().getState().ui;
+
+    return dcKeys.map(dcKey => {
+      if (dcKey.key === "image") {
+        let { width, height } = wrapperSizes[deviceMode];
+        let { cW, cH } = this.prevWrapperSizes;
+
+        if (width > cW || height > cH) {
+          cW = width;
+          cH = height;
+
+          this.prevWrapperSizes = {
+            cW: width,
+            cH: height
+          };
+        }
+
+        return {
+          ...dcKey,
+          key: "imageSrc",
+          attr: {
+            ...dcKey.attr,
+            cW: Math.round(cW),
+            cH: Math.round(cH),
+            disableCrop: IS_EDITOR
+          }
+        };
+      }
+
+      return dcKey;
+    });
+  }
+
   renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
+    const { popups, linkLightBox, linkPopup } = v;
+    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
 
     if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
       return null;
@@ -355,167 +416,13 @@ class Image extends EditorComponent {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
-  renderForEdit(v) {
-    const {
-      imageWidth,
-      imageHeight,
-      imageSrc,
-      imageExtension,
-      imagePopulation,
-      positionX,
-      positionY,
-      resize,
-      zoom,
-      width,
-      height,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkLightBox,
-      linkExternalType,
-      linkPopup,
-      linkUpload
-    } = v;
+  renderForEdit(v, vs, vd) {
+    const { className } = v;
     const { tabletW, mobileW, gallery = {} } = this.props.meta;
-    const {
-      containerWidth,
-      maxDesktopContainerWidth,
-      maxTabletContainerWidth,
-      maxMobileContainerWidth
-    } = this.state;
+    const { containerWidth } = this.state;
 
-    const imageSizes = this.getImageSizes(v, containerWidth);
+    const wrapperSizes = this.getWrapperSizes(v);
 
-    let content;
-
-    if (imagePopulation) {
-      content = <Placeholder icon="dynamic-img" />;
-    } else if (imageSrc) {
-      if (isSVG(imageExtension)) {
-        content = (
-          <img
-            className={imgStyleClassName(v)}
-            src={svgUrl(imageSrc)}
-            draggable={false}
-            loading="lazy"
-          />
-        );
-      } else {
-        // Mobile
-        const mobileImageOptions = { iW: maxMobileContainerWidth, iH: "any" };
-        const mobileImageOptions2X = {
-          iW: maxMobileContainerWidth * 2,
-          iH: "any"
-        };
-        const mobileSrcSet = `${imageUrl(
-          imageSrc,
-          mobileImageOptions
-        )} 1x, ${imageUrl(imageSrc, mobileImageOptions2X)} 2x`;
-
-        // Tablet
-        const tabletImageOptions = { iW: maxTabletContainerWidth, iH: "any" };
-        const tabletImageOptions2X = {
-          iW: maxTabletContainerWidth * 2,
-          iH: "any"
-        };
-        const tabletSrcSet = `${imageUrl(
-          imageSrc,
-          tabletImageOptions
-        )} 1x, ${imageUrl(imageSrc, tabletImageOptions2X)} 2x`;
-
-        // Desktop
-        const desktopImageOptions = { iW: maxDesktopContainerWidth, iH: "any" };
-        const desktopImageOptions2X = {
-          iW: maxDesktopContainerWidth * 2,
-          iH: "any"
-        };
-        const desktopSrcSet = `${imageUrl(
-          imageSrc,
-          desktopImageOptions
-        )} 1x, ${imageUrl(imageSrc, desktopImageOptions2X)} 2x`;
-
-        content = (
-          <picture className="brz-picture">
-            <source srcSet={desktopSrcSet} media="(min-width: 992px)" />
-            <source srcSet={tabletSrcSet} media="(min-width: 768px)" />
-            <img
-              className={imgStyleClassName(v)}
-              style={imgStyleCSSVars(v, imageSizes)}
-              srcSet={mobileSrcSet}
-              src={imageUrl(imageSrc, mobileImageOptions)}
-              draggable={false}
-              loading="lazy"
-            />
-          </picture>
-        );
-      }
-    } else {
-      content = <Placeholder icon="img" />;
-    }
-
-    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
-    const linkHrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload,
-      lightBox: imagePopulation
-        ? imagePopulationUrl(imagePopulation)
-        : isSVG(imageExtension)
-        ? svgUrl(imageSrc)
-        : imageUrl(imageSrc, { iW: 1200, iH: "any" })
-    };
-    if (linkHrefs[linkType] !== "") {
-      content = (
-        <Link
-          type={linkType}
-          href={linkHrefs[linkType]}
-          target={linkExternalBlank}
-          rel={linkExternalRel}
-        >
-          {content}
-        </Link>
-      );
-    }
-
-    const desktopValue = {
-      imageSrc,
-      imageWidth,
-      imageHeight,
-      positionX,
-      positionY,
-      resize,
-      zoom,
-      width,
-      height
-    };
-    const tabletValue = {
-      imageSrc,
-      imageWidth,
-      imageHeight,
-      positionX: tabletSyncOnChange(v, "positionX"),
-      positionY: tabletSyncOnChange(v, "positionY"),
-      resize: tabletSyncOnChange(v, "resize"),
-      zoom: tabletSyncOnChange(v, "zoom"),
-      width,
-      height: tabletSyncOnChange(v, "height")
-    };
-    const mobileValue = {
-      imageSrc,
-      imageWidth,
-      imageHeight,
-      positionX: mobileSyncOnChange(v, "positionX"),
-      positionY: mobileSyncOnChange(v, "positionY"),
-      resize: mobileSyncOnChange(v, "resize"),
-      zoom: mobileSyncOnChange(v, "zoom"),
-      width,
-      height: mobileSyncOnChange(v, "height")
-    };
-    const wrapperSizes = {
-      desktop: calcWrapperSizes(containerWidth, desktopValue),
-      tablet: calcWrapperSizes(tabletW, tabletValue),
-      mobile: calcWrapperSizes(mobileW, mobileValue)
-    };
     const toolbarConfig = toolbarConfigFn({
       desktopWrapperSizes: wrapperSizes.desktop,
       desktopContainerWidth: containerWidth,
@@ -526,185 +433,131 @@ class Image extends EditorComponent {
       gallery
     });
 
-    const resizerRestrictions = {
-      height: {
-        min: getMinHeight(),
-        max: Infinity
-      },
-      size: {
-        min: getMinSize(),
-        max: getMaxSize()
-      }
-    };
+    const linked = v.linkExternal !== "" || v.linkPopulation !== "";
 
-    let resizerPoints_ = resizerPoints.default;
-    if (gallery && gallery.inGallery) {
-      resizerPoints_ = resizerPoints.gallery;
-    } else if (isSVG(imageExtension)) {
-      resizerPoints_ = resizerPoints.svg;
-    }
+    const parentClassName = classnames(
+      "brz-image",
+      IS_STORY && "brz-image--story",
+      { "brz-story-linked": IS_STORY && linked },
+      this.getLightboxClassName(),
+      className
+    );
+
+    const classNameContent = classnames(
+      "brz-ed-image__content",
+      css(
+        // hard to explain, but because styles are generated from props in this case
+        // we can't rely on the usual way of using css(),
+        // so we trick it with a custom class for both default and custom classNames
+        // `${this.constructor.componentId}-content`,
+        `${this.constructor.componentId}-${this.getId()}-content`,
+        `${this.getId()}-content`,
+        styleContent(v, vs, vd, wrapperSizes)
+      )
+    );
+
+    const meta = {
+      ...this.props.meta,
+      desktopW: containerWidth,
+      _dc: this._dc
+    };
 
     return (
       <Fragment>
-        <div
-          ref={this.handleContainerRef}
-          className={imageStylesClassName(v, wrapperSizes, this.props)}
-          style={imageStylesCSSVars(v)}
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: classnames(parentClassName, classNameContent),
+            ref: this.container
+          })}
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+            {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
           >
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <div
-                className={contentStyleClassName(v)}
-                style={contentStyleCSSVars(v, wrapperSizes)}
+              <ImageWrapper
+                v={v}
+                vs={vs}
+                vd={vd}
+                _id={this.getId()}
+                componentId={this.constructor.componentId}
+                wrapperSizes={wrapperSizes}
+                meta={meta}
+                onChange={this.handleChange}
               >
-                <BoxResizer
-                  restrictions={resizerRestrictions}
-                  points={resizerPoints_}
-                  meta={this.props.meta}
-                  value={resizerTransformValue(v)}
-                  onChange={this.handleBoxResizerChange}
-                >
-                  <div
-                    className={wrapperStyleClassName(v)}
-                    style={wrapperStyleCSSVars(v, wrapperSizes)}
-                  >
-                    {content}
-                  </div>
-                </BoxResizer>
-              </div>
+                <ImageContent
+                  v={v}
+                  vs={vs}
+                  vd={vd}
+                  _id={this.getId()}
+                  componentId={this.constructor.componentId}
+                  wrapperSizes={wrapperSizes}
+                  meta={meta}
+                />
+              </ImageWrapper>
             </CustomCSS>
           </Toolbar>
-          {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
-        </div>
+        </Wrapper>
+        {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
         {this.renderPopups(v)}
       </Fragment>
     );
   }
 
-  renderForView(v) {
-    const {
-      imagePopulation,
-      imageWidth,
-      imageHeight,
-      imageExtension,
-      imageSrc,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkLightBox,
-      linkExternalType,
-      linkPopup,
-      linkUpload,
-      actionClosePopup
-    } = v;
+  renderForView(v, vs, vd) {
+    const { className } = v;
+    const isAbsoluteOrFixed =
+      v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
-    const { desktopW, tabletW, mobileW } = this.props.meta;
+    const wrapperSizes = this.getWrapperSizes(v);
 
-    const wrapperSizes = {
-      desktop: calcWrapperSizes(desktopW, v),
-      tablet: calcWrapperSizes(tabletW, {
-        imageWidth,
-        imageHeight,
-        resize: tabletSyncOnChange(v, "resize"),
-        width: tabletSyncOnChange(v, "width"),
-        height: tabletSyncOnChange(v, "height")
-      }),
-      mobile: calcWrapperSizes(mobileW, {
-        imageWidth,
-        imageHeight,
-        resize: mobileSyncOnChange(v, "resize"),
-        width: mobileSyncOnChange(v, "width"),
-        height: mobileSyncOnChange(v, "height")
-      })
-    };
+    // this is needed for dynamic attributes like alt and title
+    const extraAttributes = this.getExtraImageProps(v);
 
-    const { source: sourceSrc, url: desktopSrc } = this.getImageUrlsFor(
+    const styleProps = {
       wrapperSizes,
-      "desktop"
-    );
-
-    const { url: tabletSrc } = this.getImageUrlsFor(wrapperSizes, "tablet");
-
-    const { url: mobileSrc } = this.getImageUrlsFor(wrapperSizes, "mobile");
-
-    let content;
-    if (imagePopulation || imageSrc) {
-      // this is needed for wp dynamic attributes like alt and title
-      const extraImgProps = this.getExtraImageProps
-        ? this.getExtraImageProps(v)
-        : {};
-
-      if (isSVG(imageExtension) && !imagePopulation) {
-        content = (
-          <picture className={pictureStyleClassName(wrapperSizes)}>
-            {" "}
-            <img
-              {...extraImgProps}
-              className="brz-img brz-p-absolute"
-              src={svgUrl(imageSrc)}
-              loading="lazy"
-            />
-          </picture>
-        );
-      } else {
-        content = (
-          <picture className={pictureStyleClassName(wrapperSizes)}>
-            <source srcSet={desktopSrc} media="(min-width: 992px)" />
-            <source srcSet={tabletSrc} media="(min-width: 768px)" />
-            <img
-              {...extraImgProps}
-              className="brz-img brz-p-absolute"
-              src={sourceSrc}
-              srcSet={mobileSrc}
-              loading="lazy"
-            />
-          </picture>
-        );
-      }
-    } else {
-      content = <Placeholder icon="img" />;
-    }
-
-    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
-    const linkHrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload,
-      lightBox: imagePopulation
-        ? imagePopulationUrl(imagePopulation)
-        : isSVG(imageExtension)
-        ? svgUrl(imageSrc)
-        : imageUrl(imageSrc, { iW: 1200, iH: "any" })
+      props: this.props
     };
-    if (linkHrefs[linkType] !== "") {
-      const className = classnames({
-        "brz-popup2__action-close":
-          linkType === "action" && actionClosePopup === "on"
-      });
 
-      content = (
-        <Link
-          type={linkType}
-          href={linkHrefs[linkType]}
-          target={linkExternalBlank}
-          rel={linkExternalRel}
-          className={className}
-        >
-          {content}
-        </Link>
-      );
-    }
+    const linked = v.linkExternal !== "" || v.linkPopulation !== "";
+
+    const parentClassName = classnames(
+      "brz-image",
+      { "brz-story-linked": IS_STORY && linked },
+      isAbsoluteOrFixed && "brz-image--story",
+      this.getLightboxClassName(),
+      className,
+      css(
+        `${this.constructor.componentId}-${this.getId()}-parent`,
+        `${this.getId()}-parent`,
+        style(v, vs, vd, styleProps)
+      )
+    );
 
     return (
       <Fragment>
-        <div className={imageStylesClassName(v, wrapperSizes, this.props)}>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: parentClassName,
+            ref: this.container
+          })}
+        >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            {content}
+            <ImageContent
+              v={v}
+              vs={vs}
+              vd={vd}
+              _id={this.getId()}
+              componentId={this.constructor.componentId}
+              wrapperSizes={wrapperSizes}
+              meta={this.props.meta}
+              extraAttributes={extraAttributes}
+              getResponsiveUrls={imageSizes =>
+                this.getResponsiveUrls(wrapperSizes, imageSizes)
+              }
+              onChange={this.handleChange}
+            />
           </CustomCSS>
-        </div>
+        </Wrapper>
         {this.renderPopups(v)}
       </Fragment>
     );

@@ -39,7 +39,7 @@ export default {
         {
           type: "link",
           icon: "nc-help-docs",
-          label: t("Support & Docs"),
+          label: t("Support"),
           link: urls.support,
           linkTarget: "_blank",
           roles: ["admin"]

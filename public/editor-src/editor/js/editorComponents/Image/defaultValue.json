@@ -3,7 +3,6 @@
     "images": {
       "imageSrc": ""
     },
-
     "imagePopulation": "",
     "imageWidth": 600,
     "imageHeight": 450,
@@ -19,7 +18,11 @@
     "mobilePositionX": null,
 
     "popups": [],
-    "tags": ""
+    "tags": "",
+    "alt": "",
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "link": {
@@ -48,19 +51,90 @@
     "imageHue": 0,
     "imageSaturation": 100,
     "imageContrast": 100,
+
     "imageOpacity": 100,
 
-    "resize": 100,
-    "resizeSuffix": null,
     "zoom": 100,
     "zoomSuffix": null,
+
     "width": 100,
-    "widthSuffix": null,
     "height": 100,
-    "heightSuffix": null,
+
+    "widthSuffix": "%",
+    "heightSuffix": "%",
+
+    "borderStyle": "",
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "tempBorderStyle": "solid",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "tempBorderWidth": 4,
+    "tempBorderTopWidth": 4,
+    "tempBorderRightWidth": 4,
+    "tempBorderBottomWidth": 4,
+    "tempBorderLeftWidth": 4,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
     "borderRadiusType": "square",
+    
     "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+    
     "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+    
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
 
     "boxShadow": "",
 
@@ -107,13 +181,13 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": null,
 
-    "tabletResize": null,
-    "tabletResizeSuffix": null,
     "tabletZoom": null,
     "tabletZoomSuffix": null,
+
     "tabletWidth": null,
-    "tabletWidthSuffix": null,
     "tabletHeight": null,
+
+    "tabletWidthSuffix": null,
     "tabletHeightSuffix": null,
 
     "tabletBoxShadow": null,
@@ -135,13 +209,13 @@
     "tempTabletBoxShadowVertical": null,
     "tempTabletBoxShadowHorizontal": null,
 
-    "mobileResize": null,
-    "mobileResizeSuffix": null,
     "mobileZoom": null,
     "mobileZoomSuffix": null,
+
     "mobileWidth": null,
-    "mobileWidthSuffix": null,
     "mobileHeight": null,
+
+    "mobileWidthSuffix": null,
     "mobileHeightSuffix": null,
 
     "mobileBoxShadow": null,

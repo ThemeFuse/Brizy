@@ -9,7 +9,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Great Ideas",
   color: "#f9bbb6",
-  cat: [0, 1],
+  cat: [0, 1, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6],
   styles: [StoryStyle]
 };

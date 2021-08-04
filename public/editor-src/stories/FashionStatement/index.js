@@ -8,7 +8,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Fashion",
   color: "#b6d8ad",
-  cat: [0, 2],
+  cat: [0, 2, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5],
   styles: [StoryStyle]
 };

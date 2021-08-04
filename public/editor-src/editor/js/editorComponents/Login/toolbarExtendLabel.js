@@ -72,6 +72,7 @@ export function getItems({ v, device }) {
           type: "tabs-dev",
           tabs: [
             {
+              id: "labelColor",
               label: t("Label"),
               options: [
                 {

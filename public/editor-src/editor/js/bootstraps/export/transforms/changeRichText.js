@@ -102,12 +102,28 @@ export default function changeRichText($) {
     .each(function() {
       const $this = $(this);
       const src = $this.attr("data-image_src");
-      const population = $this.attr("data-image_population");
       const extension = $this.attr("data-image_extension");
 
       const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
 
-      $this.css("background-image", `url(${population || imgUrl})`);
+      const css = $this.css();
+      const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
+        // cheeriojs have bug for background-image: url("someurl")
+        // this is small fix for this case
+        if (!property.includes("http")) {
+          acc[property] = value;
+        }
+
+        return acc;
+      }, {});
+
+      $this.removeAttr("style");
+
+      $this.css({
+        ...newCSS,
+        "background-image": `url(${imgUrl})`
+      });
+
       $this.removeAttr("data-image_src");
       $this.removeAttr("data-image_population");
     });

@@ -4,2348 +4,2103 @@ module.exports = {
   thumbnailHeight: 1038,
   title: "Portfolio Details",
   keywords: "portfolio, business, agency, work, gallery, details",
-  cat: [0, 1, 3, 100],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {
-        "type": "SectionHeader",
-        "value": {
-          "_styles": [
-            "sectionHeader"
-          ],
-          "items": [
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionHeaderItem",
-              "value": {
-                "_styles": [
-                  "sectionHeaderItem"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row"
-                      ],
-                      "items": [
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "imageWidth": 133,
-                                        "imageHeight": 41,
-                                        "imageSrc": "9a6719976ff9da9bb932336a82f0d903.png",
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "tabletPositionX": 52,
-                                        "tabletPositionY": 56,
-                                        "tabletHeight": 100,
-                                        "_id": "jmpvbjpcycivmbscndtmavezhyvqtwlwtsfs",
-                                        "width": 85,
-                                        "widthSuffix": "%",
-                                        "heightSuffix": "%",
-                                        "tabletWidth": 75,
-                                        "tabletWidthSuffix": "%",
-                                        "tabletHeightSuffix": "%",
-                                        "mobileWidth": 28,
-                                        "mobileWidthSuffix": "%",
-                                        "mobileHeightSuffix": "%",
-                                        "imageExtension": "png"
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "tfrnfsmjdpwwegzmihsbcmnhamwjspjvgaxk",
+                                        imageSrc:
+                                          "a8df13bf4d6583feda5586b1baa2ced5.svg",
+                                        imageExtension: "svg",
+                                        imageWidth: 300,
+                                        imageHeight: 92,
+                                        width: 100,
+                                        height: 100,
+                                        heightSuffix: "%"
                                       }
                                     }
                                   ],
-                                  "horizontalAlign": "left",
-                                  "mobileHorizontalAlign": "center",
-                                  "_id": "dlimyuqvcdmnyxbasjtqvcglqibanownlsas",
-                                  "mobileMarginBottomSuffix": "px",
-                                  "mobileMarginBottom": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "jeawqwwbfjzoepdzxgvbmdgublbkyejeanui"
                                 }
                               }
                             ],
-                            "width": 8.4,
-                            "verticalAlign": "center",
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 0,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "paddingType": "grouped",
-                            "paddingSuffix": "px",
-                            "paddingRight": 0,
-                            "paddingLeft": 0,
-                            "tabletWidth": 26.4,
-                            "_id": "gqnopxfuziczrjgvznmtbwnubjjhmhrguspe",
-                            "mobileWidth": 100
+                            _id: "ynpovatgbyjgegnlliywjrwvjykfmpwbngii",
+                            width: 7.2,
+                            verticalAlign: "center",
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            paddingSuffix: "px",
+                            paddingTopSuffix: "px",
+                            paddingRightSuffix: "px",
+                            paddingBottomSuffix: "px",
+                            paddingLeftSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingTopSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            tabletPaddingType: "grouped",
+                            tabletPadding: 0,
+                            tabletPaddingTop: 0,
+                            tabletPaddingRight: 0,
+                            tabletPaddingBottom: 0,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingSuffix: "px",
+                            tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletWidth: 12.1,
+                            mobileWidth: 27
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
                                     {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
-                                        ],
-                                        "menuSelected": "0efe842c25b313e4c7e71594e75f1954ac7cb3df6521d390841560f239fd17cc",
-                                        "fontSize": 18,
-                                        "fontFamily": "roboto",
-                                        "lineHeight": 1.5,
-                                        "letterSpacing": 0,
-                                        "fontWeight": 400,
-                                        "fontStyle": "button",
-                                        "itemPadding": 49,
-                                        "itemPaddingRight": 49,
-                                        "itemPaddingLeft": 49,
-                                        "colorPalette": "color8",
-                                        "colorOpacity": 1,
-                                        "hoverColorPalette": "color3",
-                                        "colorHex": "#000000",
-                                        "tempColorOpacity": 1,
-                                        "hoverColorHex": "#41444e",
-                                        "hoverColorOpacity": 1,
-                                        "mobileMMenu": "off",
-                                        "mobileFontSize": 15,
-                                        "mobileLineHeight": 1.5,
-                                        "mobileLetterSpacing": 0,
-                                        "mobileFontWeight": 700,
-                                        "mobileFontStyle": "",
-                                        "tabletMMenu": "off",
-                                        "tabletFontSize": 17,
-                                        "tabletLineHeight": 1.8,
-                                        "tabletLetterSpacing": 0,
-                                        "tabletFontWeight": 400,
-                                        "tabletFontStyle": "heading6",
-                                        "mobileMMenuSize": 23,
-                                        "mMenuTitle": "Main Menu",
-                                        "mMenu": "off",
-                                        "mMenuSize": 23,
-                                        "mMenuFontSize": 16,
-                                        "mMenuFontFamily": "roboto",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 400,
-                                        "mMenuFontStyle": "heading6",
-                                        "mMenuBorderColorHex": "#ffffff",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "mMenuBorderColorPalette": "color8",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuBgColorPalette": "color2",
-                                        "mMenuBgColorOpacity": 1,
-                                        "mMenuBgColorHex": "#191b21",
-                                        "mMenuTempBgColorOpacity": 1,
-                                        "mMenuHoverColorPalette": "color3",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "mMenuItemHorizontalAlign": "center",
-                                        "tabletMMenuFontSize": 16,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mobileMMenuFontSize": 16,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "tabletHorizontalAlign": "left",
-                                        "mMenuPosition": "left",
-                                        "tabletMMenuSize": 23,
-                                        "subMenuBgColorHex": "#ffffff",
-                                        "subMenuBgColorOpacity": 1,
-                                        "subMenuBgColorPalette": "",
-                                        "subMenuTempBgColorOpacity": 1,
-                                        "subMenuHoverBgColorHex": "#ffffff",
-                                        "subMenuHoverBgColorOpacity": "#927474",
-                                        "subMenuBorderColorHex": "#000000",
-                                        "subMenuBorderColorOpacity": 0.08,
-                                        "subMenuBorderColorPalette": "",
-                                        "subMenuTempBorderColorOpacity": 0.08,
-                                        "subMenuHoverBorderColorHex": "#000000",
-                                        "subMenuHoverBorderColorOpacity": 0.08,
-                                        "subMenuColorPalette": "color2",
-                                        "subMenuColorOpacity": 1,
-                                        "subMenuHoverColorPalette": "color3",
-                                        "mMenuColorPalette": "color8",
-                                        "subMenuFontSize": 15,
-                                        "subMenuFontFamily": "roboto",
-                                        "subMenuLineHeight": 1.3,
-                                        "subMenuLetterSpacing": 0,
-                                        "subMenuFontWeight": 400,
-                                        "subMenuFontStyle": "heading6",
-                                        "subMenuHoverBorderColorPalette": "",
-                                        "subMenuTempHoverBorderColorOpacity": 0.08,
-                                        "subMenuHoverColorOpacity": 1,
-                                        "mMenuColorHex": "#ffffff",
-                                        "mMenuColorOpacity": 1,
-                                        "mMenuTempColorOpacity": 1,
-                                        "mMenuHoverColorHex": "#ffffff",
-                                        "tabletSubMenuFontStyle": "button",
-                                        "mobileSubMenuFontStyle": "button",
-                                        "tabletItemPadding": 15,
-                                        "tabletItemPaddingRight": 15,
-                                        "tabletItemPaddingLeft": 15,
-                                        "mobileItemPadding": 5,
-                                        "mobileItemPaddingRight": 5,
-                                        "mobileItemPaddingLeft": 5,
-                                        "_id": "zyxbaxihkthwqmtmpbhbziyhxofbgdrpahne",
-                                        "tempColorPalette": "",
-                                        "tabsState": "tabNormal",
-                                        "activeColorHex": "#FFFFFF",
-                                        "activeColorOpacity": 1,
-                                        "tempActiveColorOpacity": 1,
-                                        "activeColorPalette": "color3",
-                                        "tempActiveColorPalette": ""
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        _id:
+                                          "blqqcuzuiaikuhvgviovawszarsmjvmtqtaa",
+                                        menuSelected:
+                                          "b4a639abbd3e165444a42968c173ffd923a0aeec42f3bc204e1f975168238b7e",
+                                        colorHex: "#000000",
+                                        colorOpacity: 1,
+                                        tempColorOpacity: 1,
+                                        colorPalette: "color8",
+                                        tempColorPalette: "",
+                                        tabsState: "tabNormal",
+                                        hoverColorHex: "#000000",
+                                        hoverColorOpacity: 1,
+                                        tempHoverColorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        tempHoverColorPalette: "",
+                                        activeColorHex: "#FFFFFF",
+                                        activeColorOpacity: 1,
+                                        tempActiveColorOpacity: 1,
+                                        activeColorPalette: "color3",
+                                        tempActiveColorPalette: "",
+                                        itemPadding: 50,
+                                        itemPaddingRight: 50,
+                                        itemPaddingLeft: 50,
+                                        tabletMMenuSize: 25,
+                                        tabletMMenuSizeSuffix: "",
+                                        tabletMMenuIconColorPalette: "color8",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: null,
+                                        tabletMMenu: "off",
+                                        mobileMMenuSize: 30,
+                                        mobileMMenuSizeSuffix: "",
+                                        mobileMMenuIconColorPalette: "color8",
+                                        mobileMMenuIconColorHex: "",
+                                        mobileMMenuIconColorOpacity: null,
+                                        subMenuColorPalette: "color8",
+                                        subMenuColorOpacity: 1,
+                                        subMenuHoverColorPalette: "color3",
+                                        mMenuColorPalette: "color8",
+                                        mMenuHoverColorPalette: "color3",
+                                        subMenuBgColorPalette: "color2",
+                                        subMenuBgColorOpacity: 1,
+                                        subMenuHoverBgColorPalette: "color2",
+                                        mMenuBgColorPalette: "color2",
+                                        subMenuHoverColorOpacity: 1
                                       }
                                     }
                                   ],
-                                  "showOnMobile": "on",
-                                  "showOnTablet": "on",
-                                  "tabletHorizontalAlign": "center",
-                                  "mobileMarginTop": 0,
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMargin": 0,
-                                  "_id": "gawufnuxslaecwkxbryaprjeqisfqbensisd",
-                                  "mobileMarginBottomSuffix": "px",
-                                  "mobileMarginBottom": 0,
-                                  "mobileMarginSuffix": "px",
-                                  "mobileHorizontalAlign": "left"
+                                  _id: "rfttqnklbhdlwbcgpfavtokuhfplnhbdkfzs"
                                 }
                               }
                             ],
-                            "verticalAlign": "center",
-                            "width": 73.6,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "tabletWidth": 57.8,
-                            "_id": "psmcmctfvrzrvmfdjorvelnibeucwaqjsuld",
-                            "mobileWidth": 84.8
+                            _id: "stwurvgwvwrpblxvqmxfytoderuyrzlfvvfc",
+                            width: 84.5,
+                            tabletWidth: 75.8,
+                            mobileWidth: 46
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
                                     {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
-                                        ],
-                                        "menuSelected": "0efe842c25b313e4c7e71594e75f1954ac7cb3df6521d390841560f239fd17cc",
-                                        "mMenu": "on",
-                                        "horizontalAlign": "right",
-                                        "mMenuSize": 23,
-                                        "mMenuIconColorPalette": "color8",
-                                        "mMenuIconColorHex": "",
-                                        "mMenuIconColorOpacity": 1,
-                                        "mMenuPosition": "right",
-                                        "mMenuItemHorizontalAlign": "center",
-                                        "mMenuFontSize": 16,
-                                        "mMenuFontFamily": "roboto",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 400,
-                                        "mMenuFontStyle": "button",
-                                        "mMenuBorderColorHex": "#ffffff",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "mMenuBorderColorPalette": "",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuTitle": "Secondary Links",
-                                        "mMenuHoverColorPalette": "color3",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "mMenuBgColorPalette": "color2",
-                                        "mMenuBgColorOpacity": 1,
-                                        "tabletHorizontalAlign": "right",
-                                        "mobileHorizontalAlign": "center",
-                                        "tabletMMenuFontSize": 16,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mobileMMenuFontSize": 16,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "mMenuColorPalette": "color8",
-                                        "mMenuColorOpacity": 1,
-                                        "tabletMMenuIconColorPalette": "color8",
-                                        "tabletMMenuIconColorHex": "",
-                                        "tabletMMenuIconColorOpacity": null,
-                                        "_id": "smpddfjzwijbobcpxlkqpviyhakgezsrrdbc"
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        _id:
+                                          "udaarafemjfecixbyghpsrngdgtodszgruhu",
+                                        menuSelected:
+                                          "b4a639abbd3e165444a42968c173ffd923a0aeec42f3bc204e1f975168238b7e",
+                                        mMenu: "on",
+                                        mMenuIconColorPalette: "color8",
+                                        mMenuIconColorHex: "",
+                                        mMenuIconColorOpacity: 1,
+                                        mMenuSize: 24,
+                                        mMenuSizeSuffix: "",
+                                        tabletMMenuSize: 25,
+                                        tabletMMenuSizeSuffix: "",
+                                        mobileMMenuSize: 30,
+                                        mobileMMenuSizeSuffix: "",
+                                        mMenuColorPalette: "color8",
+                                        mMenuColorOpacity: 1,
+                                        mMenuBgColorPalette: "color2",
+                                        mMenuBgColorOpacity: 1,
+                                        mMenuHoverColorPalette: "color3",
+                                        mMenuHoverColorOpacity: 1
                                       }
                                     }
                                   ],
-                                  "showOnTablet": "on",
-                                  "_id": "pafhdtfrdvhkssuirzxssptsliedyaimxtuv",
-                                  "horizontalAlign": "right",
-                                  "mobileHorizontalAlign": "center"
+                                  _id: "faqccmnvfsfqdxifvazsuxxbfgmhwlhfpksi",
+                                  horizontalAlign: "right"
                                 }
                               }
                             ],
-                            "verticalAlign": "center",
-                            "width": 18,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "tabletWidth": 14.6,
-                            "showOnTablet": "on",
-                            "showOnMobile": "on",
-                            "_id": "ljscdpybvkbkzqlzdbxoiuwngvfmzorqqpal",
-                            "mobileWidth": 15
+                            _id: "nowrorlbdjcvtdvytpagtxyhrlbmljrxpdxo",
+                            width: 8.3,
+                            tabletWidth: 12,
+                            tabletPaddingRight: 0,
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            mobileWidth: 27
                           }
                         }
                       ],
-                      "tabsState": "tabNormal",
-                      "tabsCurrentElement": "tabCurrentElement",
-                      "tabsColor": "tabOverlay",
-                      "_id": "vohvedryibvceduyurmbrxkzebmbukpjcsgx"
+                      _id: "fbwdpkuqecqfyibujochtebhsufyfcxhcmca"
                     }
                   }
                 ],
-                "paddingType": "ungrouped",
-                "paddingTop": 10,
-                "paddingBottom": 10,
-                "padding": 10,
-                "bgColorHex": "#ffffff",
-                "bgColorOpacity": 0,
-                "bgColorPalette": "",
-                "tempBgColorOpacity": 1,
-                "tabletPaddingType": "ungrouped",
-                "tabletPaddingTop": 15,
-                "tabletPaddingBottom": 15,
-                "tabletPadding": 50,
-                "mobilePaddingType": "ungrouped",
-                "mobilePaddingTop": 15,
-                "mobilePaddingBottom": 15,
-                "mobilePadding": 25,
-                "containerType": "fullWidth",
-                "mobileBgColorHex": "#ffffff",
-                "mobileBgColorOpacity": 1,
-                "mobileBgColorPalette": "color2",
-                "boxShadow": "on",
-                "boxShadowBlur": 6,
-                "boxShadowColorOpacity": 0.1,
-                "boxShadowColorHex": "#000000",
-                "boxShadowColorPalette": "",
-                "boxShadowVertical": 0,
-                "_id": "lsyjvbtkfzxatdqiereuekzzidwxdbxkedqq",
-                "paddingRight": 100,
-                "paddingRightSuffix": "px",
-                "tempPaddingRightSuffix": "px",
-                "paddingSuffix": "px",
-                "tempPaddingSuffix": "px",
-                "tempPaddingRight": 100,
-                "paddingLeft": 100,
-                "paddingLeftSuffix": "px",
-                "tempPaddingLeftSuffix": "px",
-                "tempPaddingLeft": 100,
-                "tabsState": "tabNormal",
-                "tabsCurrentElement": "tabCurrentElement",
-                "tabsColor": "tabOverlay",
-                "tempBgColorPalette": "",
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "borderWidthType": "ungrouped",
-                "borderBottomWidth": 1,
-                "tempBorderBottomWidth": 1,
-                "tempBorderTopWidth": 0,
-                "tempBorderRightWidth": 0,
-                "tempBorderLeftWidth": 0,
-                "borderWidth": 8,
-                "borderStyle": "solid",
-                "borderColorOpacity": 0.27,
-                "borderColorPalette": "color8",
-                "tempBorderColorPalette": "color8",
-                "borderTopWidth": 0,
-                "borderRightWidth": 0,
-                "borderLeftWidth": 0,
-                "borderColorHex": "#ffffff",
-                "tempBorderColorOpacity": 0.27,
-                "bgColorType": "gradient",
-                "gradientActivePointer": "startPointer",
-                "gradientLinearDegree": 0,
-                "gradientStartPointer": 0,
-                "gradientFinishPointer": 72,
-                "gradientColorPalette": "color1",
-                "tempGradientColorPalette": "color1",
-                "gradientColorOpacity": 0.34,
-                "gradientColorHex": "#000000",
-                "tempGradientColorOpacity": 0.34,
-                "tempMobileBgColorPalette": "color2",
-                "mobileBorderRadius": 0,
-                "mobileGradientStartPointer": 0,
-                "mobileGradientFinishPointer": 72,
-                "mobileGradientActivePointer": "finishPointer",
-                "mobileGradientColorPalette": "color2",
-                "tempMobileGradientColorPalette": "color2",
-                "mobileGradientColorOpacity": 1,
-                "mobileBorderColorPalette": "color2",
-                "tempMobileBorderColorPalette": "color2",
-                "mobileBorderColorOpacity": 0.75,
-                "mobileBorderStyle": "solid",
-                "mobileBorderWidth": 8,
-                "mobileBorderColorHex": "#000000",
-                "tempMobileBorderColorOpacity": 0.75
-              }
-            },
-            {
-              "type": "SectionHeaderStickyItem",
-              "value": {
-                "_styles": [
-                  "sectionHeaderStickyItem"
-                ],
-                "items": [
-                  {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row"
-                      ],
-                      "items": [
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "imageWidth": 2129,
-                                        "imageHeight": 457,
-                                        "imageSrc": "b731902c6bf15805972db395c1ec4670.png",
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "resize": 75,
-                                        "mobileResize": 30,
-                                        "tabletPositionX": 52,
-                                        "tabletPositionY": 56,
-                                        "tabletHeight": 100,
-                                        "tabletResize": 75,
-                                        "_id": "wctzthuctvrcolzcxybsuxpdyhlnflhtbkhj"
-                                      }
-                                    }
-                                  ],
-                                  "horizontalAlign": "left",
-                                  "mobileHorizontalAlign": "center",
-                                  "_id": "apkxqlccwxtnknmnlbkpdqhfovdoegujpjoi"
-                                }
-                              }
-                            ],
-                            "width": 18,
-                            "verticalAlign": "center",
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 0,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "paddingType": "grouped",
-                            "paddingSuffix": "px",
-                            "paddingRight": 0,
-                            "paddingLeft": 0,
-                            "tabletWidth": 26.4,
-                            "_id": "jsiechucjitkzcbxujrwewnfglzdewztkpkq"
-                          }
-                        },
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
-                                        ],
-                                        "menuSelected": "10364db008ecd7620f56ffa943a57451",
-                                        "fontSize": 18,
-                                        "fontFamily": "roboto",
-                                        "lineHeight": 1.5,
-                                        "letterSpacing": 0,
-                                        "fontWeight": 400,
-                                        "fontStyle": "heading6",
-                                        "itemPadding": 49,
-                                        "itemPaddingRight": 49,
-                                        "itemPaddingLeft": 49,
-                                        "colorPalette": "color2",
-                                        "colorOpacity": 1,
-                                        "hoverColorPalette": "color3",
-                                        "colorHex": "#41444e",
-                                        "tempColorOpacity": 1,
-                                        "hoverColorHex": "#41444e",
-                                        "hoverColorOpacity": 1,
-                                        "mobileMMenu": "off",
-                                        "mobileFontSize": 15,
-                                        "mobileLineHeight": 1.5,
-                                        "mobileLetterSpacing": 0,
-                                        "mobileFontWeight": 700,
-                                        "mobileFontStyle": "",
-                                        "tabletMMenu": "off",
-                                        "tabletFontSize": 17,
-                                        "tabletLineHeight": 1.8,
-                                        "tabletLetterSpacing": 0,
-                                        "tabletFontWeight": 400,
-                                        "tabletFontStyle": "heading6",
-                                        "mobileMMenuSize": 23,
-                                        "mMenuTitle": "Main Menu",
-                                        "mMenu": "off",
-                                        "mMenuSize": 23,
-                                        "mMenuFontSize": 16,
-                                        "mMenuFontFamily": "roboto",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 400,
-                                        "mMenuFontStyle": "heading6",
-                                        "mMenuBorderColorHex": "#ffffff",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "mMenuBorderColorPalette": "color8",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuBgColorPalette": "color2",
-                                        "mMenuBgColorOpacity": 1,
-                                        "mMenuBgColorHex": "#191b21",
-                                        "mMenuTempBgColorOpacity": 1,
-                                        "mMenuHoverColorPalette": "color3",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "mMenuItemHorizontalAlign": "center",
-                                        "tabletMMenuFontSize": 16,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mobileMMenuFontSize": 16,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "tabletHorizontalAlign": "left",
-                                        "mMenuPosition": "left",
-                                        "tabletMMenuSize": 23,
-                                        "subMenuBgColorHex": "#ffffff",
-                                        "subMenuBgColorOpacity": 1,
-                                        "subMenuBgColorPalette": "",
-                                        "subMenuTempBgColorOpacity": 1,
-                                        "subMenuHoverBgColorHex": "#ffffff",
-                                        "subMenuHoverBgColorOpacity": "#927474",
-                                        "subMenuBorderColorHex": "#000000",
-                                        "subMenuBorderColorOpacity": 0.08,
-                                        "subMenuBorderColorPalette": "",
-                                        "subMenuTempBorderColorOpacity": 0.08,
-                                        "subMenuHoverBorderColorHex": "#000000",
-                                        "subMenuHoverBorderColorOpacity": 0.08,
-                                        "subMenuColorPalette": "color2",
-                                        "subMenuColorOpacity": 1,
-                                        "subMenuHoverColorPalette": "color3",
-                                        "mMenuColorPalette": "color8",
-                                        "subMenuFontSize": 15,
-                                        "subMenuFontFamily": "roboto",
-                                        "subMenuLineHeight": 1.3,
-                                        "subMenuLetterSpacing": 0,
-                                        "subMenuFontWeight": 400,
-                                        "subMenuFontStyle": "heading6",
-                                        "subMenuHoverBorderColorPalette": "",
-                                        "subMenuTempHoverBorderColorOpacity": 0.08,
-                                        "subMenuHoverColorOpacity": 1,
-                                        "mMenuColorHex": "#ffffff",
-                                        "mMenuColorOpacity": 1,
-                                        "mMenuTempColorOpacity": 1,
-                                        "mMenuHoverColorHex": "#ffffff",
-                                        "tabletSubMenuFontStyle": "button",
-                                        "mobileSubMenuFontStyle": "button",
-                                        "mobileItemPadding": 20,
-                                        "mobileItemPaddingRight": 20,
-                                        "mobileItemPaddingLeft": 20,
-                                        "tabletItemPadding": 15,
-                                        "tabletItemPaddingRight": 15,
-                                        "tabletItemPaddingLeft": 15,
-                                        "_id": "cguidokhhcqaloavcsxjkdkmgteqeifudnyq"
-                                      }
-                                    }
-                                  ],
-                                  "showOnMobile": "on",
-                                  "showOnTablet": "on",
-                                  "tabletHorizontalAlign": "right",
-                                  "mobileMarginTop": 0,
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMargin": 0,
-                                  "_id": "mstvgwbuytfdvmfuaoyyyayosuqtlwwckgmi"
-                                }
-                              }
-                            ],
-                            "verticalAlign": "center",
-                            "width": 64,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "tabletWidth": 45.9,
-                            "_id": "rfrnxofojthgglvxxojjccduedvwmrfjogev"
-                          }
-                        },
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
-                                        ],
-                                        "menuSelected": "0be046c538e24d8deda6760af5baaf07",
-                                        "mMenu": "on",
-                                        "horizontalAlign": "right",
-                                        "mMenuSize": 23,
-                                        "mMenuIconColorPalette": "color2",
-                                        "mMenuIconColorHex": "",
-                                        "mMenuIconColorOpacity": 1,
-                                        "mMenuPosition": "right",
-                                        "mMenuItemHorizontalAlign": "center",
-                                        "mMenuFontSize": 16,
-                                        "mMenuFontFamily": "roboto",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 400,
-                                        "mMenuFontStyle": "heading6",
-                                        "mMenuBorderColorHex": "#ffffff",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "mMenuBorderColorPalette": "",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuTitle": "Secondary Links",
-                                        "mMenuHoverColorPalette": "color3",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "mMenuBgColorPalette": "color2",
-                                        "mMenuBgColorOpacity": 1,
-                                        "tabletHorizontalAlign": "right",
-                                        "mobileHorizontalAlign": "center",
-                                        "tabletMMenuFontSize": 16,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mobileMMenuFontSize": 16,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "mMenuColorPalette": "color8",
-                                        "mMenuColorOpacity": 1,
-                                        "tabletMMenuIconColorPalette": "color2",
-                                        "tabletMMenuIconColorHex": "",
-                                        "tabletMMenuIconColorOpacity": null,
-                                        "_id": "sdrmnxnvekdbjparmjaryhjalatqlfykbprs"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "ffxhjfoijkgxkacolrdwrzvyvbqdlpfpcyyx"
-                                }
-                              }
-                            ],
-                            "verticalAlign": "center",
-                            "width": 18,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "tabletWidth": 26.8,
-                            "showOnTablet": "on",
-                            "showOnMobile": "on",
-                            "_id": "krcfkmmroltbdxlssexgpuczwdyldqufugld"
-                          }
-                        }
-                      ],
-                      "_id": "xfdcpozohppaixaxrbvqbhyvxgfwqmjtfskt"
-                    }
-                  }
-                ],
-                "bgImageWidth": 0,
-                "bgImageHeight": 0,
-                "bgImageSrc": "",
-                "bgPositionX": 50,
-                "bgPositionY": 50,
-                "bgPopulation": "",
-                "bgColorOpacity": 1,
-                "tempBgColorOpacity": 1,
-                "bgColorHex": "#ffffff",
-                "bgColorPalette": "",
-                "_id": "noxosvfnvfcjgbbrtvjpaaybljnesykncktc"
+                _id: "kbkfxwlxagxuxgnkfbftlukqeddxuujztsxs",
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                paddingTop: 15,
+                tempPaddingTop: 10,
+                paddingRight: 100,
+                paddingRightSuffix: "px",
+                tempPaddingRightSuffix: "px",
+                tempPaddingRight: 100,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                paddingBottom: 10,
+                tempPaddingBottom: 10,
+                paddingLeft: 100,
+                paddingLeftSuffix: "px",
+                tempPaddingLeftSuffix: "px",
+                tempPaddingLeft: 100,
+                containerType: "fullWidth",
+                paddingType: "ungrouped",
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 15,
+                tabletPaddingBottom: 15,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 15,
+                mobilePaddingBottom: 15,
+                bgColorPalette: "",
+                tempBgColorPalette: "color6",
+                bgColorOpacity: 0,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                bgColorType: "gradient",
+                gradientActivePointer: "startPointer",
+                gradientLinearDegree: 0,
+                gradientStartPointer: 0,
+                gradientFinishPointer: 78,
+                gradientColorPalette: "color2",
+                tempGradientColorPalette: "color2",
+                gradientColorOpacity: 0.3,
+                gradientColorHex: "#000000",
+                tempGradientColorOpacity: 0.3,
+                bgColorHex: "#f4f4f4",
+                tempBgColorOpacity: 1,
+                borderWidth: 1,
+                borderTopWidth: 0,
+                borderRightWidth: 0,
+                borderBottomWidth: 1,
+                borderLeftWidth: 0,
+                tempBorderWidth: 1,
+                tempBorderTopWidth: 0,
+                tempBorderRightWidth: 0,
+                tempBorderBottomWidth: 1,
+                tempBorderLeftWidth: 0,
+                borderStyle: "solid",
+                borderColorOpacity: 0.2,
+                borderColorPalette: "color8",
+                tempBorderColorPalette: "color8",
+                borderColorHex: "#ffffff",
+                tempBorderColorOpacity: 0.2,
+                borderWidthType: "ungrouped"
               }
             }
           ],
-          "type": "static",
-          "_id": "nildbzjsufyeqnonttfzvsrairiunuomqtaw",
-          "_thumbnailSrc": 5742893,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 31,
-          "_thumbnailTime": 1615983852367
+          _id: "rsakcjmqykcnnbfkctycpnjmxclqbhejofkh",
+          _thumbnailSrc: 6774102,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 30,
+          _thumbnailTime: 1623232671220,
+          zIndex: 50,
+          zIndexSuffix: ""
         },
-        "blockId": "block2kit14955"
+        blockId: "Kit2Blank000Light"
       },
       {
-        "type": "Section",
-        "value": {
-          "_styles": [
-            "section"
-          ],
-          "items": [
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionItem",
-              "value": {
-                "_styles": [
-                  "section-item"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
                         {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "reijuizlxruquzghaqdeyyhegksjzvvbzfxf",
-                            "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color8\">HOME - PORTFOLIO</span></p>"
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "bbejmlogymbomzbwlaoltsuymcdlbkjghkjx",
+                            text:
+                              '<p class="brz-text-lg-center brz-tp-lg-paragraph" data-uniq-id="txtvr" data-generated-css="brz-css-qlirm"><span class="brz-cp-color8">HOME - PORTFOLIO</span></p>'
                           }
                         }
                       ],
-                      "_id": "nlexbbsnbojzprahtrrbkvcfhaxwgnvtwgzf",
-                      "marginBottomSuffix": "px",
-                      "marginBottom": 0,
-                      "margin": 0,
-                      "marginSuffix": "px",
-                      "mobileMarginBottomSuffix": "px",
-                      "mobileMarginBottom": 0,
-                      "mobileMargin": 0,
-                      "mobileMarginSuffix": "px"
+                      _id: "ngxpjqynmtasktugcqfbyneauuwckvnkrbey",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      mobileMarginBottomSuffix: "px",
+                      mobileMarginBottom: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px"
                     }
                   },
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
                         {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "ccruventuxqzhcqsucptnegilliqxfoxzwun",
-                            "text": "<p class=\"brz-tp-xs-heading2 brz-tp-sm-heading2 brz-text-lg-center brz-fss-lg-px brz-ff-oswald brz-ft-google brz-fs-lg-70 brz-lh-lg-1_3 brz-fw-lg-700 brz-ls-lg-0\"><span class=\"brz-cp-color8\">PORTFOLIO DETAILS</span></p>"
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "rrvpaysjjbxeqzczlbhjlglfncczsdcsmhru",
+                            text:
+                              '<p class="brz-fs-sm-60 brz-lh-sm-1_3 brz-ls-sm-0 brz-fw-sm-400 brz-fss-sm-px brz-ft-google brz-ff-oswald brz-lh-lg-1_3 brz-ls-lg-0 brz-fw-lg-400 brz-fss-lg-px brz-fs-lg-70 brz-tp-lg-empty brz-text-lg-center brz-fss-xs-px brz-fw-xs-400 brz-ls-xs-0 brz-lh-xs-1_3 brz-fs-xs-52" data-uniq-id="vufue" data-generated-css="brz-css-yablb"><strong class="brz-cp-color8">PORTFOLIO DETAILS</strong></p>'
                           }
                         }
                       ],
-                      "_id": "cusadkuyxbgunsoznytlngimlblwofnejkum",
-                      "paddingType": "ungrouped",
-                      "paddingRight": 100,
-                      "paddingRightSuffix": "px",
-                      "tempPaddingRightSuffix": "px",
-                      "paddingSuffix": "px",
-                      "tempPaddingSuffix": "px",
-                      "tempPaddingRight": 100,
-                      "paddingLeft": 100,
-                      "paddingLeftSuffix": "px",
-                      "tempPaddingLeftSuffix": "px",
-                      "tempPaddingLeft": 100,
-                      "marginTopSuffix": "px",
-                      "marginTop": 0,
-                      "margin": 0,
-                      "marginSuffix": "px",
-                      "tabletMarginTopSuffix": "px",
-                      "tabletMarginTop": 0,
-                      "tabletMargin": 0,
-                      "tabletMarginSuffix": "px"
+                      _id: "zlpujqxsflrbfnnunnelzmpmmtrnushrqwnp",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      marginTopSuffix: "px",
+                      marginTop: 0
                     }
                   }
                 ],
-                "_id": "rbqzcvmdopyxhxarupnbocvsydvnkzpvxcee",
-                "paddingType": "ungrouped",
-                "paddingTop": 200,
-                "paddingBottom": 70,
-                "bgImageWidth": 1894,
-                "bgImageHeight": 972,
-                "bgImageExtension": "jpg",
-                "bgImageSrc": "c2cc1fac6758302bc2a481738b07169c.jpg",
-                "bgColorOpacity": 0,
-                "tempBgColorOpacity": 1,
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "bgPositionX": 67,
-                "bgPositionY": 19,
-                "tabletPaddingType": "ungrouped",
-                "tabletPaddingTop": 151,
-                "tabletBgPositionX": 49,
-                "tabletBgPositionY": 0,
-                "tabletBorderRadius": 0
+                _id: "lsxeaqfecaaxilpdxswxoqqyonmhaevwdnfh",
+                bgImageWidth: 1894,
+                bgImageHeight: 972,
+                bgImageExtension: "jpg",
+                bgImageSrc: "f42f1d7bf40a5079dbd4464e08f88358.jpg",
+                bgColorOpacity: 0,
+                tempBgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                paddingTop: 200,
+                tempPaddingTop: 200,
+                paddingBottom: 100,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                tempPaddingBottom: 100,
+                bgPositionX: 47,
+                bgPositionY: 16,
+                tabletPaddingTop: 150,
+                tabletPaddingTopSuffix: "px",
+                tempTabletPaddingTopSuffix: "px",
+                tabletPaddingSuffix: "px",
+                tempTabletPaddingSuffix: "px",
+                tempTabletPaddingTop: 150,
+                mobilePaddingTop: 150,
+                mobilePaddingTopSuffix: "px",
+                tempMobilePaddingTopSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px",
+                tempMobilePaddingTop: 150,
+                mobilePaddingBottomSuffix: "px",
+                tempMobilePaddingBottomSuffix: "px",
+                mobilePaddingBottom: 50,
+                tempMobilePaddingBottom: 50
               }
             }
           ],
-          "_id": "scbquamkmsdtbcdxtigdmkcwqzyfmoqomqru",
-          "marginType": "ungrouped",
-          "marginTopSuffix": "px",
-          "marginTop": -120,
-          "margin": 0,
-          "marginSuffix": "px",
-          "_thumbnailSrc": 5742711,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 132,
-          "_thumbnailTime": 1617635478806,
-          "slider": "off",
-          "sliderArrowsColorHex": "#FFFFFF",
-          "sliderArrowsColorOpacity": 1,
-          "tempSliderArrowsColorOpacity": 1,
-          "sliderArrowsColorPalette": "color8",
-          "tempSliderArrowsColorPalette": "",
-          "tabsState": "tabNormal",
-          "hoverSliderArrowsColorHex": "#FFFFFF",
-          "hoverSliderArrowsColorOpacity": 1,
-          "tempHoverSliderArrowsColorOpacity": 1,
-          "hoverSliderArrowsColorPalette": "color7",
-          "tempHoverSliderArrowsColorPalette": "",
-          "sliderDots": "none",
-          "sliderArrows": "heavy",
-          "tabletMarginTopSuffix": "px",
-          "tabletMarginTop": -100,
-          "tabletMargin": 0,
-          "tabletMarginSuffix": "px"
+          _id: "cdekbuobvsucctpnubyaydxmmwaheirqqtqk",
+          marginType: "ungrouped",
+          marginTopSuffix: "%",
+          marginTop: -5,
+          margin: 0,
+          marginSuffix: "px",
+          _thumbnailSrc: 6773778,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 138,
+          _thumbnailTime: 1626700423690,
+          tabletMarginTopSuffix: "%",
+          tabletMarginTop: -12,
+          tabletMargin: 0,
+          tabletMarginSuffix: "px",
+          mobileMarginTopSuffix: "%",
+          mobileMarginTop: -24,
+          mobileMargin: 0,
+          mobileMarginSuffix: "px"
         },
-        "blockId": "Kit2Blank000Light"
+        blockId: "Kit2Blank000Light"
       },
       {
-        "type": "Section",
-        "value": {
-          "_styles": [
-            "section"
-          ],
-          "items": [
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionItem",
-              "value": {
-                "_styles": [
-                  "section-item"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row",
-                        "hide-row-borders",
-                        "padding-0"
-                      ],
-                      "items": [
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "dwyvbgkpmnuincyblgfmrgxwonzwnwskybrx",
-                                        "imageWidth": 770,
-                                        "imageHeight": 532,
-                                        "imageSrc": "cdbf316bd98452348ca13ca0c20a1fdd.jpg",
-                                        "imageExtension": "jpg",
-                                        "width": 100,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%"
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "kdiamjmczinltkmnrljknwxamfzzaylvbvgo",
+                                        imageSrc:
+                                          "24fc1a3a6b017526f414235705067a16.jpg",
+                                        imageExtension: "jpg",
+                                        imageWidth: 583,
+                                        imageHeight: 440,
+                                        width: 100,
+                                        height: 99
                                       }
                                     }
                                   ],
-                                  "_id": "wzqjcrccllbpbbprxozglcubeixaukicfbny"
+                                  _id: "lchcpmturvaescsbyrqudollpnbdzvdcmysn",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "zvagpvlniyvhfxkaibeawwsdtbxmpugtashp",
-                                        "imageWidth": 770,
-                                        "imageHeight": 532,
-                                        "imageSrc": "e949e235db200564f8f48bf34bb6799e.jpg",
-                                        "imageExtension": "jpg",
-                                        "width": 100,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%"
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "gmznrexilwdhnfrfegkyuvupvubmdrymxyyg",
+                                        imageSrc:
+                                          "6ce35ea13d3ed42627c24b9395029038.jpg",
+                                        imageExtension: "jpg",
+                                        imageWidth: 386,
+                                        imageHeight: 580,
+                                        width: 100,
+                                        height: 50,
+                                        heightSuffix: "%",
+                                        positionX: 53,
+                                        positionY: 58,
+                                        tabletPositionX: 38,
+                                        tabletPositionY: 44,
+                                        mobilePositionX: 50,
+                                        mobilePositionY: 45
                                       }
                                     }
                                   ],
-                                  "_id": "slvcvtsvkxxptofffwliiazkohbhgfomugff"
+                                  _id: "ydoptcbxceqjsivvawwbmcxoabbsluzjliog",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               }
                             ],
-                            "_id": "nmynibeklqpwovuwkdqtfxgzwefnnsqoavcm",
-                            "width": 66.6
+                            _id: "gfknxdgjkwprrxmsnauwgharfvqlbtwfamvy",
+                            width: 66,
+                            paddingRight: 15,
+                            paddingLeft: 0,
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            tempPaddingRight: 15,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginTop: 0,
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px"
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "rkvmkgfnpdomrtwbskhdbwjvemdbickrcqjl",
-                                        "text": "<p class=\"brz-tp-xs-heading4 brz-tp-lg-heading4 brz-tp-sm-heading5 brz-text-xs-center\"><strong class=\"brz-cp-color2\">DESIGN STYLES</strong></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "seufrhtjvmwaboelbyzfgzfpedxpukmvrjku",
+                                        text:
+                                          '<p data-generated-css="brz-css-xlxoh" data-uniq-id="yfvfr" class="brz-tp-lg-heading4"><strong class="brz-cp-color2">DESIGN STYLES</strong></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "cerapujsamwdhdcscddowswgrevizixxcpng"
+                                  _id: "eyvsvrbtkfmavmboamowrlrscgnkufrwrjkp"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "eaiktaprfqvdvrqexmfemobugunftaoofufk",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\">Tincidunt elit magnis nulla facilisis sagittis sapien nunc amet ultrices dolores sit ipsum velit purus aliquet massa fringilla leo orci. Sapien nunc amet ultrices, dolores sit ipsum velit purus aliquet, massa fringilla leo orci dolors sit amet elit amet.</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "gmhfjgtjnyzfwydzxmemljsemyeategmzshg",
+                                        text:
+                                          '<p data-generated-css="brz-css-oonjp" data-uniq-id="lsizo" class="brz-tp-lg-paragraph"><span class="brz-cp-color7">Tincidunt elit magnis nulla facilisis sagittis sapien nunc amet ultrices dolores sit ipsum velit purus aliquet massa fringilla leo orci. Sapien nunc amet ultrices, dolores sit ipsum velit purus aliquet, massa fringilla leo orci dolors sit amet elit amet.</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "wbnhclkapodvmfpmkrthlkegowdrdtrqyxnr"
+                                  _id: "oqiavqyexnplvkgwwykgxplhhgjczggbeekw"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "pvxbyhfmnymwdtwxxxufpicvrnylfiiyrnvn",
-                                        "height": 10,
-                                        "heightSuffix": ""
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "casbiadbopxspqahzzmlvchefnebdgfutovh",
+                                        height: 10,
+                                        heightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "mbjoqmqwamqgutjtwwpltvqjwqvseucssmfn"
+                                  _id: "jxaavvjjrlvoreiljxqvalbcuswaaougncnm"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "itanrlobjwxdstqpghsrdhbhfaatumhaecpm",
-                                        "text": "<p class=\"brz-tp-xs-heading5 brz-tp-sm-heading6 brz-tp-lg-heading5 brz-text-xs-center\"><span class=\"brz-cp-color2\">CLIENTS:</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "lkeyzepvelmprstwmkejiskdfhuhjywvirqy",
+                                        text:
+                                          '<p data-uniq-id="oozyh" data-generated-css="brz-css-waaom" class="brz-tp-lg-heading5"><span class="brz-cp-color2">CLIENTS:</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "chhzjhdjmueduxpevqhvvjwqhbctogdmyupf",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "rclixcejuilmhzpqrvupwjttjbrfzmxmnuwl",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "yzudlkwgikkhnonkedkubcgmginjxcdmaolq",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\">Jessica Brown</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "xsxejsdbvjclpgfxsgyjvffxmfvkwpqgcpie",
+                                        text:
+                                          '<p data-uniq-id="vtjvs" data-generated-css="brz-css-inykp" class="brz-tp-lg-paragraph"><span class="brz-cp-color7">Jessica Brown</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "decrscoqgutpsqaoasoqxnoxrxcanqbwaxad",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "xikyhjfrbqsbuexkjtuszonbebxzplwcbhhc",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "pmucgnypgfqidcqufvkvrlfqlbwnighqxntn",
-                                        "height": 10,
-                                        "heightSuffix": ""
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "aqswngulwxxpckcgtwzuymjbrkktzooybprt",
+                                        height: 20,
+                                        heightSuffix: "px",
+                                        tabletHeight: 10,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 10,
+                                        mobileHeightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "djjuiqmtbpsryovysbwqxizirwfxcduckalf"
+                                  _id: "bqsxkuqgriysgdwmylthqfftacwfzcqrblnc",
+                                  showOnMobile: "off"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "aaccmqqtlurxowbniepqhcxabeingrqfvtuh",
-                                        "text": "<p class=\"brz-tp-xs-heading5 brz-tp-lg-heading5 brz-tp-sm-heading6 brz-text-xs-center\"><span class=\"brz-cp-color2\">CATEGORY:</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "gwczvpclmqtdixfujykoejjdhjftolbgqxpq",
+                                        text:
+                                          '<p data-uniq-id="oozyh" data-generated-css="brz-css-waaom" class="brz-tp-lg-heading5"><span class="brz-cp-color2">CATEGORY:</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "yyzunjmomtznvztyiiovtyfdhmokeokkkfef",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "elkwglejdtuiuyveplaokxbizzdmqvfmrifv",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "zabmcrqqvesnqafejnocvpmbznfiaijwmlsp",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\">Graphic, Illustrations</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "tbjuoxeemotbsknamrlhqaxzmapvheqgcall",
+                                        text:
+                                          '<p data-uniq-id="vtjvs" data-generated-css="brz-css-inykp" class="brz-tp-lg-paragraph"><span class="brz-cp-color7">Jessica Brown</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "ffysbzzfzlgfuhfuaghtgadvdzddzhftnfvu",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "lmbruusvjkiscaydsgkvrghihehmjuzzatkj",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "znvdjoxynqqbnrrrkdzdpzbnjdqdcuuobikk",
-                                        "height": 10,
-                                        "heightSuffix": ""
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "nxnjjntmpcgnnjbocxgdqsqdtfwkqrmoadqj",
+                                        height: 20,
+                                        heightSuffix: "px",
+                                        tabletHeight: 10,
+                                        tabletHeightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "zvqvzbegxunlkxmbzuiqmzuyufhytnxxkgfr"
+                                  _id: "nlqrscgkymgzzuxqytujqojdorywwtknqequ",
+                                  showOnMobile: "off"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "neaglgmoftlkvoegxztifudlfxwoqlfgikgf",
-                                        "text": "<p class=\"brz-tp-xs-heading5 brz-tp-lg-heading5 brz-tp-sm-heading6 brz-text-xs-center\"><span class=\"brz-cp-color2\">DATE:</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "cftrpruwxeulsvnpvtdzrzokorallqpkbzta",
+                                        text:
+                                          '<p class="brz-tp-lg-heading5" data-uniq-id="dwdjx" data-generated-css="brz-css-cfhbk"><span class="brz-cp-color2">DATE:</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "wyypfchhhekwsoqvonawahqmnghjbhelizdf",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "tnftqltkqgvysijqkzqhlzpxzjbeamkcmeqk",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "wkaogjpxiejnimdfiksfqvrjehukhjevaiib",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><span class=\"brz-cp-color7\">8 Nov, 2018</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "qjqygoxgkbtckeqsajdvbdgzoxnrkfsgpbqk",
+                                        text:
+                                          '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-svchn" data-uniq-id="eqool"><span class="brz-cp-color7">8 Nov, 2018</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "nmehanenmojcttieqmsjjawtzgzbhfxczaut",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "wankimeqwyvqtfpkprransftyngjxdipebuu",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "xsmoyhgnbwxebzltmdhcyjfpfnkfcpnxlxsj",
-                                        "height": 10,
-                                        "heightSuffix": ""
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "okywdyfjdnnkfpzqclomvyqfocsyktdpxfvb",
+                                        height: 20,
+                                        heightSuffix: "px",
+                                        tabletHeight: 10,
+                                        tabletHeightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "pzkgejqpifhpciiukkcprgmzgwvhoaxutzfn"
+                                  _id: "xzcketwrrbwhsupwkrskbfjxmikoaekhcsbr",
+                                  showOnMobile: "off"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "iyqhhambuiffrbszyzmwrghtoonhsvpyjjva",
-                                        "text": "<p class=\"brz-tp-xs-heading5 brz-tp-lg-heading5 brz-tp-sm-heading6 brz-text-xs-center\"><span class=\"brz-cp-color2\">FOLLOW:</span></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "rdwngxfqfmhpudnsykoyahojawswehloxyuj",
+                                        text:
+                                          '<p class="brz-tp-lg-heading5" data-generated-css="brz-css-uzczo" data-uniq-id="vepxp"><span class="brz-cp-color2">FOLLOW:</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "wylhbjnlphqstxmwbdnlyeowgouwbjrrtqle",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 10,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "dreppstszzytubwbzilhhbhbdrijdsebixpm",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "fnezjddzbotgfhywtyynpezbkgzppqriiazc",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%23%22%2C%22externalBlank%22%3A%22off%22%2C%22externalRel%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D\" class=\"link--external brz-cp-color3\">FACEBOOK</a></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "zjavlzzjibadcjfnizkpfbriwfqtwmyjiyta",
+                                        text:
+                                          '<p class="brz-tp-lg-paragraph" data-uniq-id="rgyft" data-generated-css="brz-css-gagki"><u class="brz-cp-color3">FACEBOOK</u></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "qtryypdfiwdqzptocwmtrvnoayirytexcsoo",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "tabletMarginTopSuffix": "px",
-                                  "tabletMarginTop": 0,
-                                  "tabletMargin": 0,
-                                  "tabletMarginSuffix": "px",
-                                  "tabletMarginBottomSuffix": "px",
-                                  "tabletMarginBottom": 0,
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "qdvapftghfeaabwblwgsraouqzgujkckloeh",
+                                  marginTopSuffix: "px",
+                                  marginTop: 10,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 10,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 10,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "wfrjyczyhqetlzjkavwtjcvftuatogomtgco",
-                                        "text": "<p class=\"brz-tp-paragraph brz-text-xs-center\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%23%22%2C%22externalBlank%22%3A%22off%22%2C%22externalRel%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D\" class=\"link--external brz-cp-color3\">TWITTER</a></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "srnxckmoailupdbaarpytchpuvdgnsixpoia",
+                                        text:
+                                          '<p class="brz-tp-lg-paragraph" data-uniq-id="vpagh" data-generated-css="brz-css-ozjwm"><u class="brz-cp-color3">TWITTER</u></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "irkxtzymvdyxrobpiszuctohxxlqeuczftqy",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "tabletMarginTopSuffix": "px",
-                                  "tabletMarginTop": 10,
-                                  "tabletMargin": 0,
-                                  "tabletMarginSuffix": "px",
-                                  "tabletMarginBottomSuffix": "px",
-                                  "tabletMarginBottom": 0,
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "dsjcnwgzrlceekrzxlyqgbneuseojlnlunzj",
+                                  marginTopSuffix: "px",
+                                  marginTop: 5,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "myfcnlzjexkbknmejzzcuynxnxzsqqopsxmo",
-                                        "text": "<p class=\"brz-text-lg-left brz-tp-paragraph brz-text-xs-center\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%23%22%2C%22externalBlank%22%3A%22off%22%2C%22externalRel%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D\" class=\"link--external brz-cp-color3\">YOUTUBE</a></p>"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "fmmuavedpoubhpelznbdbfgnspcuwpnssxcq",
+                                        text:
+                                          '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-zdlsy" data-uniq-id="dfzxh"><u class="brz-cp-color3">YOUTUBE</u></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "zlfuqpeionxhwyggyekpahcnwvwxwklqvlmh",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "mobileMarginTopSuffix": "px",
-                                  "mobileMarginTop": 0,
-                                  "mobileMargin": 0,
-                                  "mobileMarginSuffix": "px"
+                                  _id: "olztjnpuivzdatpmrdignhlwrchvsqppltol",
+                                  marginTopSuffix: "px",
+                                  marginTop: 5,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
                                 }
                               }
                             ],
-                            "_id": "qfxgqlddxqnfalvnbrgglutmavrwkjgsxjuz",
-                            "width": 33.4
+                            _id: "nvckgrkjtdbufvwktpxyyziagvccfthmklez",
+                            paddingRight: 0,
+                            width: 34,
+                            tabletPaddingRight: 0,
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0,
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginTop: 0
                           }
                         }
                       ],
-                      "_id": "hllkrqqrajjqntozvnyoxxwprygouacimytv"
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--spacer"
-                      ],
-                      "items": [
-                        {
-                          "type": "Spacer",
-                          "value": {
-                            "_styles": [
-                              "spacer"
-                            ],
-                            "_id": "mhafzfanzbwjislgpytvmuimvmjyarrnbkoc",
-                            "height": 90,
-                            "heightSuffix": "",
-                            "tabletHeight": 40,
-                            "tabletHeightSuffix": "",
-                            "mobileHeight": 40,
-                            "mobileHeightSuffix": ""
-                          }
-                        }
-                      ],
-                      "_id": "hirhefsmyvpchscifejrujqdytigvtsojvvt",
-                      "showOnMobile": "on"
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
-                        {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "pcaejdwszdhwbgqiwjsuglymjwobugvwzboh",
-                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle brz-text-lg-center\"><span class=\"brz-cp-color7\">OUR PORTFOLIO</span></p>"
-                          }
-                        }
-                      ],
-                      "_id": "yffadgnatuvgwzuhjhxluprrpdublmfobsbi",
-                      "marginBottomSuffix": "px",
-                      "marginBottom": 0,
-                      "margin": 0,
-                      "marginSuffix": "px"
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
-                        {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "fiboieseesfacddgoyqhrrijnypibdppujav",
-                            "text": "<p class=\"brz-tp-xs-heading2 brz-tp-lg-heading2 brz-text-lg-center brz-tp-sm-heading2\"><span class=\"brz-cp-color2\">RELATED WORK</span></p>"
-                          }
-                        }
-                      ],
-                      "_id": "kovucomfgqkfzptwwspaelfniuefpdlcplql",
-                      "marginTopSuffix": "px",
-                      "marginTop": 0,
-                      "margin": 0,
-                      "marginSuffix": "px"
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
-                        {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "mvcgifdgvspnzhcakqwaavftexwrlikgzksm",
-                            "text": "<p class=\"brz-tp-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>"
-                          }
-                        }
-                      ],
-                      "_id": "imafdshqmegllaefzljtxcoaoyjpwjqcnndu",
-                      "paddingType": "ungrouped",
-                      "paddingRightSuffix": "%",
-                      "tempPaddingRightSuffix": "%",
-                      "paddingRight": 25,
-                      "padding": 0,
-                      "paddingLeftSuffix": "%",
-                      "tempPaddingLeftSuffix": "%",
-                      "paddingLeft": 25,
-                      "tempPaddingRight": 25,
-                      "tempPaddingLeft": 25
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--spacer"
-                      ],
-                      "items": [
-                        {
-                          "type": "Spacer",
-                          "value": {
-                            "_styles": [
-                              "spacer"
-                            ],
-                            "_id": "ixibsspyslyhyzkgykukbikuncrhomuuzidb",
-                            "height": 30,
-                            "heightSuffix": ""
-                          }
-                        }
-                      ],
-                      "_id": "rvegmhgevxobjeherxpunqcryelaqsbpcorr",
-                      "showOnMobile": "off"
-                    }
-                  },
-                  {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row",
-                        "hide-row-borders",
-                        "padding-0"
-                      ],
-                      "items": [
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "ibdasrnjhmrxlhrdfffzngxusrfwqfhxfqjm",
-                                        "imageWidth": 370,
-                                        "imageHeight": 426,
-                                        "imageSrc": "405ad97bf18f27c53c41801b4216f404.jpg",
-                                        "imageExtension": "jpg",
-                                        "width": 100,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "icbctjfiaphtfdeenahficpxxeswbqzlbglt"
-                                }
-                              }
-                            ],
-                            "_id": "qtiuixoxatvqguffelciqgftaghcwdtzjmkw",
-                            "width": 33.3
-                          }
-                        },
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "pzrkaaeocgynohniczlrbuyhrpyrxtfuuioi",
-                                        "imageWidth": 370,
-                                        "imageHeight": 426,
-                                        "imageSrc": "ac1ddc851674baf74641120b49ec0e01.jpg",
-                                        "imageExtension": "jpg",
-                                        "width": 100,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "egbqgpihxharqwzlhdskrsarcnthvsmvkttj"
-                                }
-                              }
-                            ],
-                            "_id": "cfngexsiyxcxpkvqsgkhqdqbunxqnutawlba",
-                            "width": 33.3
-                          }
-                        },
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "mudulgtcrefwqvxrmaptcuzywtfixxiotsev",
-                                        "imageWidth": 370,
-                                        "imageHeight": 426,
-                                        "imageSrc": "0c3cbd84284d61c68ab6ff2f2f7342ae.jpg",
-                                        "imageExtension": "jpg",
-                                        "width": 100,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "aedczijfhyowqobnkyppognyvbtrjuincktb"
-                                }
-                              }
-                            ],
-                            "_id": "svkxnwnijhzogwfamiumujgdadwsxwadunlx",
-                            "width": 33.4
-                          }
-                        }
-                      ],
-                      "_id": "hfpconrulmdtsyunfdddqamkokpiscubeyzq"
+                      _id: "rgrwuzrszmennatwevfwgjasmqrtttxjuyah"
                     }
                   }
                 ],
-                "_id": "wlopmrvgamaogcfljpakxzzkfazunyzwavex",
-                "paddingType": "ungrouped",
-                "paddingTop": 110,
-                "paddingBottom": 110
+                _id: "fbqmisjvflgvswppjzecywxovitslurcncyk",
+                paddingTop: 100,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                tempPaddingTop: 100,
+                paddingBottom: 85,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                tempPaddingBottom: 100,
+                mobilePaddingTopSuffix: "px",
+                tempMobilePaddingTopSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px",
+                mobilePaddingTop: 50,
+                tempMobilePaddingTop: 50,
+                mobilePaddingBottomSuffix: "px",
+                tempMobilePaddingBottomSuffix: "px",
+                mobilePaddingBottom: 25,
+                tempMobilePaddingBottom: 50,
+                paddingType: "ungrouped",
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 55,
+                tabletPaddingBottom: 40,
+                mobilePaddingType: "ungrouped"
               }
             }
           ],
-          "_id": "hxzjnyceulrsghstfhgdzinmgyydozyjqfuz",
-          "_thumbnailSrc": 5742726,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 658,
-          "_thumbnailTime": 1617635483659
+          _id: "abbrhbzisrxutqlinlxbskymdduwxtdimzbh",
+          _thumbnailSrc: 6773782,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 439,
+          _thumbnailTime: 1626700427822
         },
-        "blockId": "Kit2Blank000Light"
+        blockId: "Kit2Blank000Light"
       },
       {
-        "type": "Section",
-        "value": {
-          "_styles": [
-            "section"
-          ],
-          "items": [
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionItem",
-              "value": {
-                "_styles": [
-                  "section-item"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row",
-                        "hide-row-borders",
-                        "padding-0"
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "olpadqhnexjlahyekusfiaepfnuqamjxwatr",
+                            text:
+                              '<p class="brz-tp-lg-abovetitle brz-text-lg-center" data-uniq-id="uzmtu" data-generated-css="brz-css-vmfcw"><span class="brz-cp-color7">OUR PORTFOLIO</span></p>'
+                          }
+                        }
                       ],
-                      "items": [
+                      _id: "rtztdmkguyzyqvubuqhncbdnsmnamevsgmpz",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      mobileMarginBottomSuffix: "px",
+                      mobileMarginBottom: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "wiasaakarrunnmwdbpradrhdkyxmildtnmpk",
+                            text:
+                              '<p class="brz-tp-lg-heading2 brz-text-lg-center" data-uniq-id="osmqm" data-generated-css="brz-css-uvycf"><span class="brz-cp-color2">RELATED WORK</span></p>'
+                          }
+                        }
+                      ],
+                      _id: "cespmfwrwbjxbizudsvudrtzvulyyfygrmix",
+                      marginTopSuffix: "px",
+                      marginTop: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      tabletMarginTopSuffix: "px",
+                      tabletMarginTop: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      mobileMarginTopSuffix: "px",
+                      mobileMarginTop: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "ojgqlzctxbfzcsjcrrglwpltswjtxxtjsjnh",
+                            text:
+                              '<p class="brz-tp-lg-paragraph brz-text-lg-center" data-generated-css="brz-css-tsdnp" data-uniq-id="ckdmn"><span class="brz-cp-color7">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>'
+                          }
+                        }
+                      ],
+                      _id: "zekkthcdfosgcrowpmischprttuvngttnyra",
+                      paddingType: "ungrouped",
+                      paddingRightSuffix: "%",
+                      tempPaddingRightSuffix: "%",
+                      paddingSuffix: "px",
+                      tempPaddingSuffix: "px",
+                      paddingRight: 28,
+                      tempPaddingRight: 28,
+                      paddingLeftSuffix: "%",
+                      tempPaddingLeftSuffix: "%",
+                      paddingLeft: 28,
+                      tempPaddingLeft: 28
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--spacer"],
+                      items: [
+                        {
+                          type: "Spacer",
+                          value: {
+                            _styles: ["spacer"],
+                            _id: "hnsfudbbcylgihwwtopuvdzawkfkwputotid",
+                            height: 20,
+                            heightSuffix: "px"
+                          }
+                        }
+                      ],
+                      _id: "nvghcwbvlhcluanxlzxrslypzdjhtxabzpoo"
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "gkrmgzlsdznamvfxjrncffkdiontnxiesssx",
-                                        "imageWidth": 133,
-                                        "imageHeight": 41,
-                                        "imageSrc": "07b22bf97a46ea64aefe711fcf931dff.png",
-                                        "imageExtension": "png",
-                                        "width": 31,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%",
-                                        "widthSuffix": "%"
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "hiewtahwuttymscannbbejnwhzkjylqmeidh",
+                                        height: 372,
+                                        heightSuffix: "px",
+                                        tabletHeight: 200,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 200,
+                                        mobileHeightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "tvbkywltzjhzxanjidihkzftqttjcqoonmdk",
-                                  "horizontalAlign": "left"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "cetykvsogmxdqklrjigakyjmyvyneiglsbsr",
-                                        "height": 10,
-                                        "heightSuffix": ""
-                                      }
-                                    }
-                                  ],
-                                  "_id": "envxehlvwxxssvgdfcmwmzvdeburimpworuf"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "blshqrpwtcefmapqrupngollvgqnfnnphfpm",
-                                        "text": "<p class=\"brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle\"><span style=\"color: rgb(170, 170, 170);\">Welcome to our web design agency. Lorem ipsum is simply free text dolor sit amet consectetur adipisicing elit. Tempore corrupti temporibus fuga earum asperiores, alias excepturi sit mpedit fugit laudantium.</span></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "bhpenyvakoyjhakpzqaxhpnlzltnffrvviux",
-                                  "paddingType": "ungrouped"
+                                  _id: "jmyoubisdunivdojgmhqifavjtgiylpekyoc"
                                 }
                               }
                             ],
-                            "_id": "kcmetydjadaoshukombeenixpauzybeeskvo",
-                            "width": 43.4,
-                            "paddingRightSuffix": "px",
-                            "tempPaddingRightSuffix": "px",
-                            "paddingSuffix": "px",
-                            "tempPaddingSuffix": "px",
-                            "paddingRight": 200,
-                            "tempPaddingRight": 200
+                            _id: "zcybjlhofpyeuuvafuipntqesqgzvlesmlxh",
+                            width: 33.3,
+                            paddingBottomSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingBottom: 25,
+                            tempPaddingBottom: 25,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingLeft: 25,
+                            tempPaddingLeft: 25,
+                            marginSuffix: "px",
+                            marginTopSuffix: "px",
+                            marginRightSuffix: "px",
+                            marginBottomSuffix: "px",
+                            marginLeftSuffix: "px",
+                            margin: 10,
+                            marginTop: 10,
+                            marginRight: 10,
+                            marginBottom: 10,
+                            marginLeft: 10,
+                            bgImageWidth: 384,
+                            bgImageHeight: 574,
+                            bgImageExtension: "jpg",
+                            bgImageSrc: "809ab1f07b47872ac340163bdf0b9ed4.jpg",
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            mobilePaddingRight: 25,
+                            mobilePaddingLeft: 25,
+                            bgPositionX: 45,
+                            bgPositionY: 80,
+                            hoverBgColorPalette: "color3",
+                            tempHoverBgColorPalette: "color3",
+                            hoverBgColorOpacity: 0.61,
+                            hoverBgColorHex: "#e62b4a",
+                            tempHoverBgColorOpacity: 0.61,
+                            tabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingBottom: 15,
+                            tempTabletPaddingBottom: 15,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingLeft: 15,
+                            tempTabletPaddingLeft: 15,
+                            tabletMarginType: "grouped",
+                            tabletMarginSuffix: "px",
+                            tabletMarginTopSuffix: "px",
+                            tabletMarginRightSuffix: "px",
+                            tabletMarginBottomSuffix: "px",
+                            tabletMarginLeftSuffix: "px",
+                            tabletMargin: 5,
+                            tabletMarginTop: 5,
+                            tabletMarginRight: 5,
+                            tabletMarginBottom: 5,
+                            tabletMarginLeft: 5,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            tempMobilePaddingLeft: 25,
+                            mobilePaddingBottomSuffix: "px",
+                            tempMobilePaddingBottomSuffix: "px",
+                            mobilePaddingBottom: 25,
+                            tempMobilePaddingBottom: 25,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRight: 25,
+                            mobilePaddingTopSuffix: "px",
+                            tempMobilePaddingTopSuffix: "px",
+                            mobilePaddingTop: 25,
+                            tempMobilePaddingTop: 25
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "tjovxjgxrtnhfrwzvrwosjdbwxeeyzjmudnz",
-                                        "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color8\">CONTACT</span></p>"
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "rvjeaazfowmhrhxlfbwddkkiexolgkdtoeaf",
+                                        height: 384,
+                                        heightSuffix: "px",
+                                        tabletHeight: 200,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 200,
+                                        mobileHeightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "yclcmrardemtochrgvsvojrwxkyenzqobukp"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "ooityyodifaaaaakpsrmadbsuguvglnthqfj",
-                                        "height": 10,
-                                        "heightSuffix": ""
-                                      }
-                                    }
-                                  ],
-                                  "_id": "ektlgngegvgwhppoufzmbsotdvdfdjexekwt"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "wmknhzcwkjmcrrthgpzjydjigcqjhacpoisa",
-                                        "text": "<p class=\"brz-tp-lg-subtitle brz-tp-xs-paragraph brz-tp-sm-paragraph\"><span style=\"color: rgb(170, 170, 170);\">66 Broklyn Street, New York </span></p><p class=\"brz-tp-lg-subtitle brz-tp-xs-paragraph brz-tp-sm-paragraph\"><span style=\"color: rgb(170, 170, 170);\">United States of America</span></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "xfuvhqfoxacvmbqqbodtzbtgibweneqldzaq"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "yphxrbaksrptppdbpagdhjtczsmyuosckedj",
-                                        "text": "<p class=\"brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle\"><span style=\"color: rgb(170, 170, 170);\">P: 666 888 000 </span></p><p class=\"brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle\"><span style=\"color: rgb(170, 170, 170);\">E: needhelp@meipaly.com</span></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "pxrsxxicrdkpfnwnxpdguuagnjrcugigrnam"
+                                  _id: "nhdpqmaxugmimlixlocdacgcnpyefrwlmwic"
                                 }
                               }
                             ],
-                            "_id": "mtumhafkpfeyskpyxykeyjmjvxoujkoposzm",
-                            "width": 32.3,
-                            "mobileWidth": 55.3
+                            _id: "vldhxzatmmxpsptwnmvxatgryqijgbkidomj",
+                            width: 33.3,
+                            paddingBottomSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingBottom: 25,
+                            tempPaddingBottom: 25,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingLeft: 25,
+                            tempPaddingLeft: 25,
+                            marginSuffix: "px",
+                            marginTopSuffix: "px",
+                            marginRightSuffix: "px",
+                            marginBottomSuffix: "px",
+                            marginLeftSuffix: "px",
+                            margin: 10,
+                            marginTop: 10,
+                            marginRight: 10,
+                            marginBottom: 10,
+                            marginLeft: 10,
+                            bgImageWidth: 821,
+                            bgImageHeight: 561,
+                            bgImageExtension: "jpg",
+                            bgImageSrc: "4dd09d6ad990ddd460b5221148e6ec7a.jpg",
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            mobilePaddingRight: 25,
+                            mobilePaddingLeft: 25,
+                            bgPositionX: 10,
+                            bgPositionY: 57,
+                            hoverBgColorPalette: "color3",
+                            tempHoverBgColorPalette: "color3",
+                            hoverBgColorOpacity: 0.61,
+                            hoverBgColorHex: "#e62b4a",
+                            tempHoverBgColorOpacity: 0.61,
+                            tabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingBottom: 15,
+                            tempTabletPaddingBottom: 15,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingLeft: 15,
+                            tempTabletPaddingLeft: 15,
+                            tabletMarginType: "grouped",
+                            tabletMarginSuffix: "px",
+                            tabletMarginTopSuffix: "px",
+                            tabletMarginRightSuffix: "px",
+                            tabletMarginBottomSuffix: "px",
+                            tabletMarginLeftSuffix: "px",
+                            tabletMargin: 5,
+                            tabletMarginTop: 5,
+                            tabletMarginRight: 5,
+                            tabletMarginBottom: 5,
+                            tabletMarginLeft: 5,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            tempMobilePaddingLeft: 25,
+                            mobilePaddingBottomSuffix: "px",
+                            tempMobilePaddingBottomSuffix: "px",
+                            mobilePaddingBottom: 25,
+                            tempMobilePaddingBottom: 25,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRight: 25,
+                            mobilePaddingTopSuffix: "px",
+                            tempMobilePaddingTopSuffix: "px",
+                            mobilePaddingTop: 25,
+                            tempMobilePaddingTop: 25
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "rvwtixodjhylujvchbqlbzscrhwnuztqimyl",
+                                        height: 371,
+                                        heightSuffix: "px",
+                                        tabletHeight: 200,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 200,
+                                        mobileHeightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "uqwvcinftcrpkbsxwleewwicwyjngkgktpdh"
+                                }
+                              }
                             ],
-                            "items": [
+                            _id: "knuyfkycpsdwuafzogahofcxkzodmqtkyrsa",
+                            width: 33.4,
+                            paddingBottomSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingBottom: 25,
+                            tempPaddingBottom: 25,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingLeft: 25,
+                            tempPaddingLeft: 25,
+                            marginSuffix: "px",
+                            marginTopSuffix: "px",
+                            marginRightSuffix: "px",
+                            marginBottomSuffix: "px",
+                            marginLeftSuffix: "px",
+                            margin: 10,
+                            marginTop: 10,
+                            marginRight: 10,
+                            marginBottom: 10,
+                            marginLeft: 10,
+                            bgImageWidth: 378,
+                            bgImageHeight: 567,
+                            bgImageExtension: "jpg",
+                            bgImageSrc: "5b3993bb5da1f85468f68883c46cf9b3.jpg",
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            mobilePaddingRight: 25,
+                            mobilePaddingLeft: 25,
+                            bgPositionX: 50,
+                            bgPositionY: 46,
+                            hoverBgColorPalette: "color3",
+                            tempHoverBgColorPalette: "color3",
+                            hoverBgColorOpacity: 0.61,
+                            hoverBgColorHex: "#e62b4a",
+                            tempHoverBgColorOpacity: 0.61,
+                            tabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingBottom: 15,
+                            tempTabletPaddingBottom: 15,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingLeft: 15,
+                            tempTabletPaddingLeft: 15,
+                            tabletMarginType: "grouped",
+                            tabletMarginSuffix: "px",
+                            tabletMarginTopSuffix: "px",
+                            tabletMarginRightSuffix: "px",
+                            tabletMarginBottomSuffix: "px",
+                            tabletMarginLeftSuffix: "px",
+                            tabletMargin: 5,
+                            tabletMarginTop: 5,
+                            tabletMarginRight: 5,
+                            tabletMarginBottom: 5,
+                            tabletMarginLeft: 5,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            tempMobilePaddingLeft: 25,
+                            mobilePaddingBottomSuffix: "px",
+                            tempMobilePaddingBottomSuffix: "px",
+                            mobilePaddingBottom: 25,
+                            tempMobilePaddingBottom: 25,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRight: 25,
+                            mobilePaddingTopSuffix: "px",
+                            tempMobilePaddingTopSuffix: "px",
+                            mobilePaddingTop: 25,
+                            tempMobilePaddingTop: 25,
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0,
+                            mobileMargin: 10,
+                            mobileMarginSuffix: "px"
+                          }
+                        }
+                      ],
+                      _id: "ibzyiloefdytxfzrxttkzyflidxsnuutaqbc"
+                    }
+                  }
+                ],
+                _id: "glvgrryzwmiuxtaqqbhpsrvvsgtoddtjptda",
+                paddingType: "ungrouped",
+                paddingTop: 15,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 15,
+                tabletPaddingBottomSuffix: "px",
+                tempTabletPaddingBottomSuffix: "px",
+                tabletPaddingSuffix: "px",
+                tempTabletPaddingSuffix: "px",
+                tabletPaddingBottom: 75,
+                tempTabletPaddingBottom: 75,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 15,
+                paddingBottom: 100,
+                mobilePaddingBottom: 50
+              }
+            }
+          ],
+          _id: "uiwlsadzrnuhsjawzjnrleqmktgvjgvezvkd",
+          _thumbnailSrc: 6773896,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 240,
+          _thumbnailTime: 1626700430743
+        },
+        blockId: "Kit2Blank000Light"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
                                     {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "yjtbepamkbdrbzbokvtobsykdrgvjrvjiadf",
-                                        "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color8\">SOCIAL</span></p>"
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "bkqidaahzrlpedtjkwkehsssupvvfjbxsiyk",
+                                        imageSrc:
+                                          "d20d19eefb047674efa5d5833106d59f.svg",
+                                        imageExtension: "svg",
+                                        imageWidth: 300,
+                                        imageHeight: 92,
+                                        width: 36,
+                                        height: 99,
+                                        heightSuffix: "%",
+                                        mobileWidth: 28,
+                                        mobileHeight: 99,
+                                        mobileHeightSuffix: "%"
                                       }
                                     }
                                   ],
-                                  "_id": "ushizonbcombdwoexczsdinhorswehtzkkis"
+                                  _id: "ikvyrubcurinfjmavgktabgphumfnlcaqpqw",
+                                  horizontalAlign: "left"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--spacer"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
                                     {
-                                      "type": "Spacer",
-                                      "value": {
-                                        "_styles": [
-                                          "spacer"
-                                        ],
-                                        "_id": "tuzlyxnqihossdikvnrizvxprfibpzvcxfqx",
-                                        "height": 10,
-                                        "heightSuffix": ""
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "kqtbwlehrazhudkvegkegnjcoekaohobvzhk",
+                                        height: 10,
+                                        heightSuffix: "px"
                                       }
                                     }
                                   ],
-                                  "_id": "ztpvqcacanknpnjosrosgetlegrwdhhbkpdq"
+                                  _id: "oznhwdvnwgxtshybmdrcoewwecwosewdvhze"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--iconText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "IconText",
-                                      "value": {
-                                        "_styles": [
-                                          "iconText"
-                                        ],
-                                        "items": [
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "hqdkefdekyuaxaaqsbhdsxstxdlprdsidypj",
+                                        text:
+                                          '<p data-generated-css="brz-css-uzdjj" data-uniq-id="kineu" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">Welcome to our web design agency. Lorem ipsum is simply free text dolor sit amet consectetur adipisicing elit. Tempore corrupti temporibus fuga earum asperiores, alias excepturi sit mpedit fugit laudantium.</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "jqrflznyxetzjufikyrzcygypfmrwteidmmz"
+                                }
+                              }
+                            ],
+                            _id: "dmmisiavjfidjosheyyeshanvxntaixlwsxa",
+                            width: 43,
+                            paddingLeft: 0,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingRight: 200,
+                            tempPaddingRight: 200
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "cukkvkomgrzgglxlvtdkanhkaykbpooblgim",
+                                        text:
+                                          '<p data-generated-css="brz-css-kqmvi" data-uniq-id="hweoz" class="brz-tp-lg-heading6"><span class="brz-cp-color8">CONTACT</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "rbouqapltlowfevyottcynpznjehgruovcwj"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "czcdczfwjmxxjuorogxgpovbqagppeaxmzyt",
+                                        height: 10,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "zpefqwfnqlspdkvptelsjrpgtcewxzlkoliq"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "vfngcwwwaaheukocqqxlcdqdqjzopgvkuirj",
+                                        text:
+                                          '<p data-uniq-id="prbgn" data-generated-css="brz-css-mknsh" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">66 Broklyn Street, New York</span></p><p data-generated-css="brz-css-qqyuu" data-uniq-id="zrppl" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">United States of America</span> </p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "oblxaanekhpekjememjfvgrnpptnbkhjndrh"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "vdfqqbyxedazxsbvbgyrbkkywpexywqpdxeu",
+                                        text:
+                                          '<p class="brz-tp-lg-subtitle" data-uniq-id="utrxc" data-generated-css="brz-css-uioce"><span class="brz-cp-color7">P: 666 888 000</span></p><p class="brz-tp-xs-subtitle brz-tp-lg-subtitle" data-generated-css="brz-css-uqdly" data-uniq-id="bjauv"><span class="brz-cp-color7">E: needhelp@meipaly.com</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "fslzcqfsyrmualxbpiifdruskduplfoxyrxc",
+                                  marginTopSuffix: "px",
+                                  marginTop: 20,
+                                  margin: 0,
+                                  marginSuffix: "px"
+                                }
+                              }
+                            ],
+                            _id: "akavdrkkpwdtumgfbvljyjlstaerpilkaizp",
+                            width: 31,
+                            mobileWidth: 60
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "uxgvuayvpugpgmsnwngxchfbiqriqaeoizao",
+                                        text:
+                                          '<p class="brz-tp-lg-heading6" data-uniq-id="rncqp" data-generated-css="brz-css-goqnc"><span class="brz-cp-color8">SOCIAL</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "vqkfpzaijpajedgmohyoxujgylxixjgkipmo"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "kasmbsigasghpnbbeauhngpxnmykvacoubxu",
+                                        height: 10,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "pxlnvairojsagxcayyakwdayfyryhljnrbsn"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--iconText"],
+                                  items: [
+                                    {
+                                      type: "IconText",
+                                      value: {
+                                        _styles: ["iconText"],
+                                        items: [
                                           {
-                                            "type": "Icon",
-                                            "value": {
-                                              "_styles": [
+                                            type: "Icon",
+                                            value: {
+                                              _styles: [
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-                                              "_id": "dhhvjalgcthzcxhggrysnvjqndlfwofetwiy",
-                                              "name": "logo-twitter",
-                                              "type": "glyph",
-                                              "size": "custom",
-                                              "customSize": 16,
-                                              "borderRadius": 0,
-                                              "colorPalette": "color8",
-                                              "colorOpacity": 1
+                                              _id:
+                                                "ydflukbdoazboiphqygasnzzewjsykiwgrli",
+                                              size: "custom",
+                                              customSize: 16,
+                                              borderRadius: 0,
+                                              name: "logo-fb-simple",
+                                              type: "glyph",
+                                              colorPalette: "color8",
+                                              colorOpacity: 1
                                             }
                                           },
                                           {
-                                            "type": "RichText",
-                                            "value": {
-                                              "_styles": [
+                                            type: "RichText",
+                                            value: {
+                                              _styles: [
                                                 "text",
                                                 "iconText--text"
                                               ],
-                                              "_id": "hsihwarfteshtgusbbekscboceannilnfuxt",
-                                              "text": "<p class=\"brz-tp-lg-subtitle brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span style=\"color: rgb(170, 170, 170);\">Twitter</span></p>"
+                                              _id:
+                                                "cmakecprjmionpbiffbfygenokdwhcmerivm",
+                                              text:
+                                                '<p data-uniq-id="gbmxj" data-generated-css="brz-css-lyjdo" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">Facebook </span></p>'
                                             }
                                           }
                                         ],
-                                        "_id": "rfvjnqdfpdfxgxcpeipcpveandiibykxhixj",
-                                        "iconSpacing": 10,
-                                        "iconSpacingSuffix": ""
+                                        _id:
+                                          "wgscjgucxdwqlwlskagofxgieegyhavjfjrp",
+                                        iconSpacing: 10,
+                                        iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  "_id": "dzszkrmwiocuqudsmewaausglyqhvdoggkyo",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "kdkvrucvrgkhtpjyvpdhbtehzvdmbohnqbic",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5,
+                                  margin: 0,
+                                  marginSuffix: "px"
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--iconText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--iconText"],
+                                  items: [
                                     {
-                                      "type": "IconText",
-                                      "value": {
-                                        "_styles": [
-                                          "iconText"
-                                        ],
-                                        "items": [
+                                      type: "IconText",
+                                      value: {
+                                        _styles: ["iconText"],
+                                        items: [
                                           {
-                                            "type": "Icon",
-                                            "value": {
-                                              "_styles": [
+                                            type: "Icon",
+                                            value: {
+                                              _styles: [
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-                                              "_id": "egldkooxoevrqldhcqpdtlusjoqmttakgabj",
-                                              "name": "logo-fb-simple",
-                                              "type": "glyph",
-                                              "size": "custom",
-                                              "customSize": 16,
-                                              "borderRadius": 0,
-                                              "colorPalette": "color8",
-                                              "colorOpacity": 1
+                                              _id:
+                                                "rocbzjvdgfhqdncefezjyetnbmuizxnvvzgl",
+                                              size: "custom",
+                                              customSize: 16,
+                                              borderRadius: 0,
+                                              name: "logo-twitter",
+                                              type: "glyph",
+                                              colorPalette: "color8",
+                                              colorOpacity: 1
                                             }
                                           },
                                           {
-                                            "type": "RichText",
-                                            "value": {
-                                              "_styles": [
+                                            type: "RichText",
+                                            value: {
+                                              _styles: [
                                                 "text",
                                                 "iconText--text"
                                               ],
-                                              "_id": "zendvapbhxgfjzuphxyhrsczjuxywriifuwy",
-                                              "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-subtitle\"><span style=\"color: rgb(170, 170, 170);\">Facebook</span></p>"
+                                              _id:
+                                                "wxiohcdriifzkllzrzwlqmpxuxykexcxtphx",
+                                              text:
+                                                '<p class="brz-tp-lg-subtitle" data-generated-css="brz-css-zxubb" data-uniq-id="ofduw"><span class="brz-cp-color7">Twitter</span></p>'
                                             }
                                           }
                                         ],
-                                        "_id": "cwibuecnhznhjkjfqkrincjwzrsikqkwmxnl",
-                                        "iconSpacing": 10,
-                                        "iconSpacingSuffix": ""
+                                        _id:
+                                          "qpaqqaruwzzcsfpxuiejzsybcjzfqmzbvpde",
+                                        iconSpacing: 10,
+                                        iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  "_id": "dvsgncnachtsozzbomioofsiljombfdzgkwq",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 0,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
+                                  _id: "rwqokwsjcatzdjqkqtgylzssqslfvgzagyme",
+                                  marginTopSuffix: "px",
+                                  marginTop: 5,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5
                                 }
                               },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--iconText"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--iconText"],
+                                  items: [
                                     {
-                                      "type": "IconText",
-                                      "value": {
-                                        "_styles": [
-                                          "iconText"
-                                        ],
-                                        "items": [
+                                      type: "IconText",
+                                      value: {
+                                        _styles: ["iconText"],
+                                        items: [
                                           {
-                                            "type": "Icon",
-                                            "value": {
-                                              "_styles": [
+                                            type: "Icon",
+                                            value: {
+                                              _styles: [
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-                                              "_id": "cfayoxuzlgfeqqxkownspgdgfilylpxrbcqb",
-                                              "name": "logo-youtube",
-                                              "type": "glyph",
-                                              "size": "custom",
-                                              "customSize": 16,
-                                              "borderRadius": 0,
-                                              "colorPalette": "color8",
-                                              "colorOpacity": 1
+                                              _id:
+                                                "epyarnxvikpcxhzuflfluqtqubysporqvyvs",
+                                              size: "custom",
+                                              customSize: 16,
+                                              borderRadius: 0,
+                                              name: "logo-youtube",
+                                              type: "glyph",
+                                              colorPalette: "color8",
+                                              colorOpacity: 1
                                             }
                                           },
                                           {
-                                            "type": "RichText",
-                                            "value": {
-                                              "_styles": [
+                                            type: "RichText",
+                                            value: {
+                                              _styles: [
                                                 "text",
                                                 "iconText--text"
                                               ],
-                                              "_id": "rvghafsnatvtepkrxehffphwbsuzgtjtoxny",
-                                              "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-subtitle\"><span style=\"color: rgb(170, 170, 170);\">Youtube</span></p>"
+                                              _id:
+                                                "nhlzzpgjzqtwdmvzbukwlmakcaxrpgjffkkt",
+                                              text:
+                                                '<p class="brz-tp-lg-subtitle" data-generated-css="brz-css-jzadr" data-uniq-id="qedir"><span class="brz-cp-color7">Youtube</span></p>'
                                             }
                                           }
                                         ],
-                                        "_id": "wrlhbkfrturzswqeemcmlhgksohckoawxzdy",
-                                        "iconSpacing": 10,
-                                        "iconSpacingSuffix": ""
+                                        _id:
+                                          "zljmazstgjuqpplnglwdofysdibqoyzpdhzh",
+                                        iconSpacing: 10,
+                                        iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  "_id": "jbfbbbbpfczcqcfffehageguwoinyxmysiuy"
+                                  _id: "cccatifcqhpqelzulitmdfyulxqaurefvfkm",
+                                  marginTopSuffix: "px",
+                                  marginTop: 5,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 5
                                 }
                               }
                             ],
-                            "_id": "lwnsixqufkkxrjcmrcxknpovfufarwkuexxq",
-                            "width": 24.3,
-                            "mobileWidth": 39.5
+                            _id: "tsxixjmaxhqcehpraqoxzsnkcqtgxbcbotso",
+                            width: 26,
+                            mobileWidth: 40
                           }
                         }
                       ],
-                      "_id": "qbkfxywjsdmeqxhnqssiocvqyxdqrphzgmkg"
+                      _id: "cysbgxrxqrysoctxzdhqdqnzwwwnvtkvgvdk"
                     }
                   },
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--spacer"
-                      ],
-                      "items": [
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--spacer"],
+                      items: [
                         {
-                          "type": "Spacer",
-                          "value": {
-                            "_styles": [
-                              "spacer"
-                            ],
-                            "_id": "akgoohohvwbkrbyomzizridwbmweerlekuuy",
-                            "height": 70,
-                            "heightSuffix": "",
-                            "tabletHeight": 30,
-                            "tabletHeightSuffix": ""
+                          type: "Spacer",
+                          value: {
+                            _styles: ["spacer"],
+                            _id: "gvrwxuxyclzoalrhrjkucplaqtrxxpwtuzro",
+                            height: 70,
+                            heightSuffix: "px",
+                            tabletHeight: 40,
+                            tabletHeightSuffix: "px",
+                            mobileHeight: 20,
+                            mobileHeightSuffix: "px"
                           }
                         }
                       ],
-                      "_id": "geehaagufmyetcgebzplnkehmxalbumcxlmu",
-                      "showOnMobile": "off"
+                      _id: "ipkptnhssmxwvareqhypisrrsospapdzaqiy"
                     }
                   },
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--line"
-                      ],
-                      "items": [
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--line"],
+                      items: [
                         {
-                          "type": "Line",
-                          "value": {
-                            "_styles": [
-                              "line"
-                            ],
-                            "_id": "mfaxhtohgqusyrcylvmaqemjtblucnrbyrgf",
-                            "width": 98,
-                            "widthSuffix": "%",
-                            "borderStyle": "solid",
-                            "tempBorderStyle": "solid",
-                            "borderColorHex": "#73777f",
-                            "borderColorOpacity": 0.33,
-                            "tempBorderColorOpacity": 0.33,
-                            "borderColorPalette": "color7",
-                            "tempBorderColorPalette": "color7",
-                            "borderWidthType": "grouped",
-                            "borderWidth": 1,
-                            "tempBorderWidth": 1,
-                            "borderTopWidth": 1,
-                            "tempBorderTopWidth": 2,
-                            "borderRightWidth": 1,
-                            "tempBorderRightWidth": 2,
-                            "borderBottomWidth": 1,
-                            "tempBorderBottomWidth": 2,
-                            "borderLeftWidth": 1,
-                            "tempBorderLeftWidth": 2
+                          type: "Line",
+                          value: {
+                            _styles: ["line"],
+                            _id: "slxyqhvobkokuynbepgnpokervxcxxbgdtie",
+                            width: 100,
+                            widthSuffix: "%",
+                            borderStyle: "solid",
+                            tempBorderStyle: "solid",
+                            borderColorHex: "#73777f",
+                            borderColorOpacity: 0.35,
+                            tempBorderColorOpacity: 0.35,
+                            borderColorPalette: "color7",
+                            tempBorderColorPalette: "color7",
+                            borderWidthType: "grouped",
+                            borderWidth: 1,
+                            tempBorderWidth: 1,
+                            borderTopWidth: 1,
+                            tempBorderTopWidth: 2,
+                            borderRightWidth: 1,
+                            tempBorderRightWidth: 2,
+                            borderBottomWidth: 1,
+                            tempBorderBottomWidth: 2,
+                            borderLeftWidth: 1,
+                            tempBorderLeftWidth: 2
                           }
                         }
                       ],
-                      "_id": "dyzvjfcocdgmsuqbtdezxdpxzzfqweqttgdn",
-                      "marginBottomSuffix": "px",
-                      "marginBottom": 20,
-                      "margin": 0,
-                      "marginSuffix": "px"
+                      _id: "fmbpfycrxhyxusmhgmivtyrnwpwdaihykxhg",
+                      marginBottomSuffix: "px",
+                      marginBottom: 20,
+                      margin: 0,
+                      marginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 20,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px"
                     }
                   },
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
                         {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "ansyvuiapqrnkxxihjygiftgdmumkrhaeaxu",
-                            "text": "<p class=\"brz-text-lg-center brz-tp-lg-subtitle brz-tp-sm-paragraph brz-tp-xs-paragraph brz-text-xs-left\"><span style=\"color: rgb(170, 170, 170);\">© COPYRIGHT 2021, ALL RIGHTS RESERVED</span></p>"
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "mgvkvzxiohzehztoavykvzoajpksmohctlrj",
+                            text:
+                              '<p class="brz-tp-lg-subtitle brz-text-lg-center" data-uniq-id="pecli" data-generated-css="brz-css-xqdzm"><span class="brz-cp-color7">© COPYRIGHT 2021, ALL RIGHTS RESERVED</span></p>'
                           }
                         }
                       ],
-                      "_id": "ykmbpegjoocsctknqtibycagoycyfwutpkgs"
+                      _id: "idodwqbakwahpzrvulcecsqxwjnefkgujbck"
                     }
                   }
                 ],
-                "_id": "obfsaaupigarcqyxvxrijrvjwjtfbmxhfhrh",
-                "paddingType": "ungrouped",
-                "paddingBottom": 30,
-                "bgImageWidth": 1894,
-                "bgImageHeight": 738,
-                "bgImageExtension": "jpg",
-                "bgImageSrc": "5cdefbf9f507665175dab5a3b3ff4dd5.jpg",
-                "bgColorOpacity": 0,
-                "tempBgColorOpacity": 1,
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "bgPositionX": 50,
-                "bgPositionY": 76,
-                "paddingBottomSuffix": "px",
-                "tempPaddingBottomSuffix": "px",
-                "paddingSuffix": "px",
-                "tempPaddingSuffix": "px",
-                "tempPaddingBottom": 20,
-                "paddingTop": 101,
-                "tabletPaddingType": "ungrouped",
-                "tabletPaddingBottom": 15,
-                "mobilePaddingType": "ungrouped",
-                "mobilePaddingBottom": 15
+                _id: "qgczodjxhcscdouwnvfhpvtnwtprazemetzf",
+                bgImageWidth: 1894,
+                bgImageHeight: 543,
+                bgImageExtension: "jpg",
+                bgImageSrc: "e13ea3b02ca370335c25ec46d237bceb.jpg",
+                bgColorOpacity: 0,
+                tempBgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                paddingTop: 100,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                tempPaddingTop: 100,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                paddingBottom: 30,
+                tempPaddingBottom: 30,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 65,
+                tabletPaddingBottomSuffix: "px",
+                tempTabletPaddingBottomSuffix: "px",
+                tabletPaddingSuffix: "px",
+                tempTabletPaddingSuffix: "px",
+                tabletPaddingBottom: 20,
+                tempTabletPaddingBottom: 20,
+                mobileBgPositionX: 87,
+                mobileBgPositionY: 45,
+                mobileBorderRadius: 0
               }
             }
           ],
-          "_id": "wnarjmlqpkmyufxpsqvlmvkedatyidgttynh",
-          "_thumbnailSrc": 5742807,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 157,
-          "_thumbnailTime": 1615983251167
+          _id: "rqatyvumxuapeehsfpfphfdcwryzquqwriqz",
+          _thumbnailSrc: 6766929,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 156,
+          _thumbnailTime: 1623175903304
         },
-        "blockId": "Kit2Blank000Light"
+        blockId: "Kit2Blank000Light"
       }
     ]
   }

@@ -29,7 +29,8 @@ import {
 import {
   PUBLISH,
   IMPORT_STORY,
-  UPDATE_EXTRA_FONT_STYLES
+  UPDATE_EXTRA_FONT_STYLES,
+  updateStoreWasChanged
 } from "../../actions2";
 import {
   apiUpdateProject,
@@ -64,9 +65,10 @@ import { IS_STORY } from "visual/utils/models";
 import { UNDO, REDO } from "../../history/types";
 import { historySelector } from "../../history/selectors";
 import { t } from "visual/utils/i18n";
+import { StoreChanged } from "visual/redux/types";
 
 export default store => next => {
-  const apiHandler = apiCatch.bind(null, next);
+  const apiHandler = apiCatch.bind(null, store.dispatch);
 
   return action => {
     const oldState = store.getState();
@@ -361,6 +363,7 @@ function handleHeartBeat({ action, state, apiHandler }) {
 function apiCatch(next, p, onSuccess = _.noop, onError = _.noop) {
   return p
     .then(r => {
+      next(updateStoreWasChanged(StoreChanged.unchanged));
       onSuccess(r);
     })
     .catch(r => {

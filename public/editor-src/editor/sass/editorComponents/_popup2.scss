@@ -1,11 +1,12 @@
 // Popups
 .brz-popup2 {
   position: fixed;
-  width: 100%;
+  width: 100% !important;
   height: 100%;
   top: 0;
   left: 0;
   z-index: z("section-popup");
+  max-width: 100% !important;
 
   &__close {
     position: absolute;

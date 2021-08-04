@@ -10,7 +10,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Bistro Menu",
   color: "#952c19",
-  cat: [0, 3],
+  cat: [0, 3, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7],
   styles: [StoryStyle]
 };

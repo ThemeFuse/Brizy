@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { IS_WP } from "visual/utils/env";
 
 export default register => ({ getItems: getItems(register) });
 
@@ -14,18 +15,13 @@ const getShowLinkLabel = type => {
 };
 
 export const getItems = register => ({ v }) => {
-  const typeChoices = register
-    ? [
-        { value: "login", title: "Login" },
-        { value: "authorized", title: "Authorized" },
-        { value: "register", title: "Register" },
-        { value: "forgot", title: "Forgot Password" }
-      ]
-    : [
-        { value: "login", title: "Login" },
-        { value: "authorized", title: "Authorized" },
-        { value: "forgot", title: "Forgot Password" }
-      ];
+  const typeChoices = [
+    { value: "login", title: "Login" },
+    { value: "authorized", title: "Authorized" },
+
+    ...(register ? [{ value: "register", title: "Register" }] : []),
+    ...(IS_WP ? [{ value: "forgot", title: "Forgot Password" }] : [])
+  ];
 
   const { type } = v;
 

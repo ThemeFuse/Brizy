@@ -59,8 +59,8 @@ export function getItems({ v, device, context }) {
                   disabled: v.type !== "simple",
                   config: {
                     size: "short",
-                    min: -999999,
-                    max: 999999,
+                    min: -1000000,
+                    max: 1000000,
                     spinner: false
                   },
                   population: richTextDC
@@ -72,8 +72,8 @@ export function getItems({ v, device, context }) {
                   devices: "desktop",
                   config: {
                     size: "short",
-                    min: -999999,
-                    max: 999999,
+                    min: -1000000,
+                    max: 1000000,
                     spinner: false
                   },
                   population: richTextDC

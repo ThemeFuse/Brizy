@@ -9,5386 +9,7403 @@ module.exports = {
   resolve: {
     blocks: [
       {
-        "type": "SectionHeader",
-        "value": {
-          "_styles": [
-            "sectionHeader"
-          ],
-          "items": [
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionHeaderItem",
-              "value": {
-                "_styles": [
-                  "sectionHeaderItem"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row"
-                      ],
-                      "items": [
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "wcnyahbzminoidbdxtihdauiyelupzcfvcsy",
-                                        "imageWidth": 39,
-                                        "imageHeight": 39,
-                                        "imageSrc": "09e7c67535dcbfd0080fb89072924211.png",
-                                        "imageExtension": "png",
-                                        "width": 44,
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%",
-                                        "mobileWidth": 80,
-                                        "mobileWidthSuffix": "%",
-                                        "widthSuffix": "px"
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "zmzqnqifbosqgluuqlifvovgfusqpipxgoiv",
+                                        imageSrc:
+                                          "2d16f94db2531d4b38de00cddfda95c9.svg",
+                                        imageExtension: "svg",
+                                        imageWidth: 150,
+                                        imageHeight: 150,
+                                        width: 23,
+                                        height: 100.43,
+                                        heightSuffix: "%",
+                                        linkType: "external"
                                       }
                                     }
                                   ],
-                                  "_id": "gpzmicntjozzvhxumatqpfnkztjfsevjgmne",
-                                  "horizontalAlign": "left"
+                                  _id: "aaekdyibsrxwaykrsnvxtjcseqovcbwxiovx",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  horizontalAlign: "left",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
                                 }
                               }
                             ],
-                            "verticalAlign": "center",
-                            "width": 15.3,
-                            "tabletWidth": 10.1,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "_id": "uududrdhcalgzjkbdplkknyrgqmoonrqhzuf",
-                            "paddingLeft": 0,
-                            "mobileWidth": 15
+                            _id: "lprjntaiwxfnfaxofedbfqcupngamsclccvd",
+                            width: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            paddingSuffix: "px",
+                            paddingTopSuffix: "px",
+                            paddingRightSuffix: "px",
+                            paddingBottomSuffix: "px",
+                            paddingLeftSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingTopSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            tabletPaddingTop: 0,
+                            tabletPadding: 0,
+                            tabletPaddingTopSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingRight: 0,
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingBottom: 0,
+                            tabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeft: 0,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletWidth: 20,
+                            mobileWidth: 35,
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginTop: 0,
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
                                     {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
-                                        ],
-                                        "menuSelected": "ba994c4f389318214e2ebf1b597536f175d91e9c41ea7aba4eec30be766aeea6",
-                                        "fontSize": 15,
-                                        "fontFamily": "kumbh_sans",
-                                        "lineHeight": 1.7,
-                                        "letterSpacing": 0,
-                                        "fontWeight": 700,
-                                        "fontStyle": "",
-                                        "itemPadding": 25,
-                                        "itemPaddingRight": 25,
-                                        "itemPaddingLeft": 25,
-                                        "horizontalAlign": "left",
-                                        "colorHex": "#1C1C1C",
-                                        "colorOpacity": 1,
-                                        "colorPalette": "color8",
-                                        "tempColorOpacity": 1,
-                                        "hoverColorHex": "#2f7df6",
-                                        "hoverColorOpacity": 1,
-                                        "hoverColorPalette": "color4",
-                                        "subMenuBgColorPalette": "",
-                                        "subMenuBgColorOpacity": 1,
-                                        "subMenuHoverBgColorPalette": "",
-                                        "mMenuBgColorPalette": "color2",
-                                        "subMenuBorderColorHex": "#000000",
-                                        "subMenuBorderColorOpacity": 0.08,
-                                        "subMenuBorderColorPalette": "",
-                                        "subMenuTempBorderColorOpacity": 0.08,
-                                        "subMenuHoverBorderColorHex": "#000000",
-                                        "subMenuHoverBorderColorOpacity": 0.07,
-                                        "mMenuBorderColorHex": "#000000",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "subMenuColorHex": "#8b8b8b",
-                                        "subMenuColorOpacity": 1,
-                                        "subMenuColorPalette": "color2",
-                                        "subMenuTempColorOpacity": 1,
-                                        "subMenuHoverColorHex": "#8b8b8b",
-                                        "subMenuHoverColorOpacity": "#8b8b8b",
-                                        "mMenuColorHex": "#8b8b8b",
-                                        "mMenuColorOpacity": 1,
-                                        "mMenuHoverColorHex": "#8b8b8b",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "subMenuHoverColorPalette": "color1",
-                                        "mMenuHoverColorPalette": "color3",
-                                        "subMenuHoverBorderColorPalette": "",
-                                        "subMenuTempHoverBorderColorOpacity": 0.07,
-                                        "subMenuHoverBgColorHex": "#ffffff",
-                                        "subMenuHoverBgColorOpacity": 1,
-                                        "tabletMMenuSize": 25,
-                                        "tabletHorizontalAlign": "left",
-                                        "tabletMMenuFontSize": 18,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mMenuBgColorHex": "#ffffff",
-                                        "mMenuBgColorOpacity": 1,
-                                        "mMenuTempBgColorOpacity": 1,
-                                        "mMenuBorderColorPalette": "",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuTitle": "Main Menu",
-                                        "mobileHorizontalAlign": "center",
-                                        "mobileMMenuSize": 25,
-                                        "mMenuColorPalette": "color8",
-                                        "mMenuTempColorOpacity": 1,
-                                        "mobileMMenuFontSize": 18,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "tabletMMenuIconColorHex": "",
-                                        "tabletMMenuIconColorOpacity": 1,
-                                        "tabletMMenuIconColorPalette": "color8",
-                                        "mMenu": "off",
-                                        "mMenuSize": 25,
-                                        "subMenuBgColorHex": "#ffffff",
-                                        "subMenuTempBgColorOpacity": 1,
-                                        "subMenuFontSize": 17,
-                                        "subMenuFontFamily": "josefin_sans",
-                                        "subMenuLineHeight": 1,
-                                        "subMenuLetterSpacing": 0,
-                                        "subMenuFontWeight": 600,
-                                        "subMenuFontStyle": "heading6",
-                                        "mMenuIconColorPalette": "color2",
-                                        "mMenuIconColorHex": "",
-                                        "mMenuIconColorOpacity": 1,
-                                        "mMenuFontSize": 18,
-                                        "mMenuFontFamily": "josefin_sans",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 600,
-                                        "mMenuFontStyle": "heading6",
-                                        "tabletFontStyle": "button",
-                                        "mobileFontStyle": "button",
-                                        "tabletSubMenuFontStyle": "button",
-                                        "mobileSubMenuFontStyle": "button",
-                                        "tabletMMenu": "off",
-                                        "mobileMMenu": "on",
-                                        "mobileItemPadding": 20,
-                                        "mobileItemPaddingRight": 20,
-                                        "mobileItemPaddingLeft": 20,
-                                        "_id": "uajserzibhfursejgmvxsoxxbeumatxsmekn",
-                                        "tempColorPalette": "",
-                                        "fontSizeSuffix": "px",
-                                        "fontFamilyType": "google",
-                                        "tabsState": "tabNormal",
-                                        "tempHoverColorOpacity": 1,
-                                        "tempHoverColorPalette": "",
-                                        "activeColorHex": "#FFFFFF",
-                                        "activeColorOpacity": 1,
-                                        "tempActiveColorOpacity": 1,
-                                        "activeColorPalette": "color4",
-                                        "tempActiveColorPalette": "",
-                                        "tabletItemPadding": 15,
-                                        "tabletItemPaddingRight": 15,
-                                        "tabletItemPaddingLeft": 15,
-                                        "mobileMMenuIconColorPalette": "color8",
-                                        "mobileMMenuIconColorHex": "",
-                                        "mobileMMenuIconColorOpacity": null
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        _id:
+                                          "cucevlcybvwmmlrsarcdzsivpprmymqhqzhi",
+                                        menuSelected:
+                                          "afa3d7e6a1ce8cd7bf6c34e93ed37a1118fe11593242a154ecfd1391e864fd0e",
+                                        colorHex: "#000000",
+                                        colorOpacity: 1,
+                                        tempColorOpacity: 1,
+                                        colorPalette: "color8",
+                                        tempColorPalette: "",
+                                        tabsState: "tabNormal",
+                                        hoverColorHex: "#000000",
+                                        hoverColorOpacity: 1,
+                                        tempHoverColorOpacity: 1,
+                                        hoverColorPalette: "color1",
+                                        tempHoverColorPalette: "",
+                                        activeColorHex: "#FFFFFF",
+                                        activeColorOpacity: 1,
+                                        tempActiveColorOpacity: 1,
+                                        activeColorPalette: "color1",
+                                        tempActiveColorPalette: "",
+                                        itemPadding: 25,
+                                        itemPaddingRight: 25,
+                                        itemPaddingLeft: 25,
+                                        tabletMMenuSize: 35,
+                                        tabletMMenuSizeSuffix: "",
+                                        tabletMMenuIconColorPalette: "color8",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: null,
+                                        mobileMMenuSize: 35,
+                                        mobileMMenuSizeSuffix: "",
+                                        mMenuColorPalette: "color8",
+                                        mMenuColorOpacity: 1,
+                                        mMenuHoverColorPalette: "color8",
+                                        mMenuHoverColorOpacity: 1,
+                                        activeMMenuColorPalette: "color1",
+                                        activeMMenuColorOpacity: null,
+                                        mMenuBgColorPalette: "color2",
+                                        mMenuBgColorOpacity: 1,
+                                        mobileMMenuIconColorPalette: "color8",
+                                        mobileMMenuIconColorHex: "",
+                                        mobileMMenuIconColorOpacity: null
                                       }
                                     }
                                   ],
-                                  "showOnTablet": "on",
-                                  "marginType": "grouped",
-                                  "_id": "vsidprjqyqehuesskkipgxgrqywrxjewihvp"
+                                  _id: "pnprfjsiykzzeszyghlctdrdgydmoaacnfuj",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
                                 }
                               }
                             ],
-                            "verticalAlign": "center",
-                            "width": 66.7,
-                            "tabletWidth": 63.6,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "_id": "thyitwwemonmdsyervnrkrxmptimzjxnszlo",
-                            "paddingLeft": 15,
-                            "paddingLeftSuffix": "px",
-                            "tempPaddingLeftSuffix": "px",
-                            "paddingSuffix": "px",
-                            "tempPaddingSuffix": "px",
-                            "tempPaddingLeft": 15,
-                            "mobileWidth": 47.3
+                            _id: "bmyixiocpkkmjvvqjfvsjcyrnhcqzjcawwxt",
+                            width: 70,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            tabletPaddingType: "ungrouped",
+                            tabletPadding: 0,
+                            tabletPaddingTop: 5,
+                            tabletPaddingRight: 0,
+                            tabletPaddingBottom: 0,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingSuffix: "px",
+                            tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletWidth: 60,
+                            mobileWidth: 30,
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginTop: 0,
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0,
+                            mobilePaddingTopSuffix: "px",
+                            tempMobilePaddingTopSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            mobilePaddingTop: 5,
+                            tempMobilePaddingTop: 5,
+                            tempTabletPaddingTop: 5
                           }
                         },
                         {
-                          "type": "Column",
-                          "value": {
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Cloneable",
-                                "value": {
-                                  "_styles": [
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
                                     "wrapper-clone",
                                     "wrapper-clone--button"
                                   ],
-                                  "items": [
+                                  items: [
                                     {
-                                      "type": "Button",
-                                      "value": {
-                                        "_styles": [
-                                          "button"
-                                        ],
-                                        "text": "Buy DroneX",
-                                        "iconName": "",
-                                        "iconType": "",
-                                        "size": "custom",
-                                        "fontSize": 13,
-                                        "paddingTB": 10,
-                                        "paddingTop": 10,
-                                        "paddingBottom": 10,
-                                        "tempPaddingTB": 10,
-                                        "tempPaddingTop": 10,
-                                        "tempPaddingBottom": 10,
-                                        "paddingRL": 37,
-                                        "paddingRight": 37,
-                                        "paddingLeft": 37,
-                                        "tempPaddingRL": 37,
-                                        "tempPaddingRight": 37,
-                                        "tempPaddingLeft": 37,
-                                        "borderRadius": 26,
-                                        "borderWidth": 2,
-                                        "borderRadiusType": "custom",
-                                        "tempBorderRadiusType": "custom",
-                                        "fillType": "filled",
-                                        "borderColorOpacity": 1,
-                                        "borderColorPalette": "color3",
-                                        "bgColorOpacity": 1,
-                                        "bgColorPalette": "color3",
-                                        "hoverBgColorOpacity": 1,
-                                        "hoverBorderColorOpacity": 0.8,
-                                        "tempBorderRadius": 4,
-                                        "tempBgColorPalette": "color3",
-                                        "tempBorderColorPalette": "color3",
-                                        "bgColorHex": "#239ddb",
-                                        "tempBgColorOpacity": 1,
-                                        "borderColorHex": "#239ddb",
-                                        "hoverBorderColorHex": "#142850",
-                                        "tempBorderColorOpacity": 1,
-                                        "hoverBgColorHex": "#142850",
-                                        "hoverBgColorPalette": "color8",
-                                        "hoverBorderColorPalette": "color8",
-                                        "tempHoverBorderColorPalette": "color8",
-                                        "tempHoverBgColorOpacity": 1,
-                                        "tempHoverBgColorPalette": "color3",
-                                        "fontFamily": "montserrat",
-                                        "lineHeight": 1.5,
-                                        "letterSpacing": 1,
-                                        "fontWeight": 500,
-                                        "fontStyle": "button",
-                                        "tabsState": "",
-                                        "tabsColor": "",
-                                        "tempBorderWidth": 2,
-                                        "_id": "umwasrbksrmwojkwxrwmnhttuwxgkfxpwwpf",
-                                        "hoverColorPalette": "color2",
-                                        "hoverColorOpacity": 1
+                                      type: "Button",
+                                      value: {
+                                        _styles: ["button"],
+                                        _id:
+                                          "mwqaxihsasaoakjnovnejqfoykdnekocrvkb",
+                                        iconName: "",
+                                        iconType: "",
+                                        size: "custom",
+                                        fontSize: 15,
+                                        paddingTB: 10,
+                                        paddingTop: 10,
+                                        paddingBottom: 10,
+                                        tempPaddingTB: 10,
+                                        tempPaddingTop: 10,
+                                        tempPaddingBottom: 10,
+                                        paddingRL: 37,
+                                        paddingRight: 37,
+                                        paddingLeft: 37,
+                                        tempPaddingRL: 37,
+                                        tempPaddingRight: 37,
+                                        tempPaddingLeft: 37,
+                                        borderRadius: 24,
+                                        borderWidth: 2,
+                                        borderRadiusType: "rounded",
+                                        tempBorderRadiusType: "rounded",
+                                        fillType: "filled",
+                                        borderColorOpacity: 1,
+                                        borderColorPalette: "color3",
+                                        bgColorOpacity: 1,
+                                        bgColorPalette: "color3",
+                                        hoverBgColorOpacity: 1,
+                                        hoverBorderColorOpacity: 0.8,
+                                        text: "Buy DroneX",
+                                        hoverColorPalette: "color2",
+                                        hoverColorOpacity: 1,
+                                        hoverBgColorPalette: "color8",
+                                        hoverBorderColorPalette: "",
+                                        tempHoverBorderColorPalette: "",
+                                        hoverBgColorHex: "#ffffff",
+                                        tempHoverBgColorOpacity: 1,
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBorderColorHex: "#ffffff",
+                                        tabletSize: "custom",
+                                        tabletFontSize: 11,
+                                        tabletPaddingTB: 10,
+                                        tabletPaddingTop: 10,
+                                        tabletPaddingBottom: 10,
+                                        tempTabletPaddingTB: 11,
+                                        tempTabletPaddingTop: 10,
+                                        tempTabletPaddingBottom: 10,
+                                        tabletPaddingRL: 26,
+                                        tabletPaddingRight: 26,
+                                        tabletPaddingLeft: 26,
+                                        tempTabletPaddingRL: 26,
+                                        tempTabletPaddingRight: 26,
+                                        tempTabletPaddingLeft: 26,
+                                        tabletBorderRadius: 24,
+                                        mobileSize: "custom",
+                                        mobileFontSize: 11,
+                                        mobilePaddingTB: 8,
+                                        mobilePaddingTop: 8,
+                                        mobilePaddingBottom: 8,
+                                        tempMobilePaddingTB: 11,
+                                        tempMobilePaddingTop: 8,
+                                        tempMobilePaddingBottom: 8,
+                                        mobilePaddingRL: 26,
+                                        mobilePaddingRight: 26,
+                                        mobilePaddingLeft: 26,
+                                        tempMobilePaddingRL: 26,
+                                        tempMobilePaddingRight: 26,
+                                        tempMobilePaddingLeft: 26,
+                                        mobileBorderRadius: 22
                                       }
                                     }
                                   ],
-                                  "itemPadding": 30,
-                                  "itemPaddingRight": 30,
-                                  "itemPaddingLeft": 30,
-                                  "horizontalAlign": "right",
-                                  "marginType": "grouped",
-                                  "tabletHorizontalAlign": "right",
-                                  "mobileHorizontalAlign": "center",
-                                  "showOnTablet": "on",
-                                  "_id": "zrzlgobvwsztmbvnccywlmgtpzhoqvptpkul"
+                                  _id: "mkyfhsabnthorfnojavdpndevbbmuxkodbqs",
+                                  padding: 0,
+                                  paddingTop: 0,
+                                  paddingRight: 0,
+                                  paddingBottom: 0,
+                                  paddingLeft: 0,
+                                  paddingSuffix: "px",
+                                  paddingTopSuffix: "px",
+                                  paddingRightSuffix: "px",
+                                  paddingBottomSuffix: "px",
+                                  paddingLeftSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  tempPaddingTopSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  tempPaddingBottomSuffix: "px",
+                                  tempPaddingLeftSuffix: "px",
+                                  tempPadding: 12,
+                                  tempPaddingTop: 12,
+                                  tempPaddingRight: 12,
+                                  tempPaddingBottom: 12,
+                                  tempPaddingLeft: 12,
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
                                 }
                               }
                             ],
-                            "width": 18,
-                            "verticalAlign": "center",
-                            "paddingType": "grouped",
-                            "padding": 0,
-                            "paddingSuffix": "px",
-                            "paddingTop": 0,
-                            "paddingRight": 0,
-                            "paddingBottom": 0,
-                            "paddingLeft": 0,
-                            "tabletWidth": 26.2,
-                            "showOnTablet": "on",
-                            "showOnMobile": "on",
-                            "_id": "ozyrpegtfdtjsacycelevvldnyifbiwstasi",
-                            "mobileWidth": 36.8
+                            _id: "blozqooqdfnhnqvsbaawmjkgocpqmsisslqy",
+                            width: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            tabletWidth: 20,
+                            tabletPaddingType: "grouped",
+                            tabletPadding: 0,
+                            tabletPaddingTop: 0,
+                            tabletPaddingRight: 0,
+                            tabletPaddingBottom: 0,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingSuffix: "px",
+                            tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            mobileWidth: 35,
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginTop: 0,
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0
                           }
                         }
                       ],
-                      "padding": 0,
-                      "paddingSuffix": "px",
-                      "paddingTop": 0,
-                      "paddingRight": 0,
-                      "paddingBottom": 0,
-                      "paddingLeft": 0,
-                      "size": 100,
-                      "tabletPaddingRight": 0,
-                      "tabletPaddingRightSuffix": "px",
-                      "tabletPadding": 0,
-                      "tabletPaddingLeft": 0,
-                      "tabletPaddingLeftSuffix": "px",
-                      "tabsState": "tabNormal",
-                      "tabsCurrentElement": "tabCurrentElement",
-                      "tabsColor": "tabOverlay",
-                      "_id": "nppqobvdrlfuxyxzmgmoxssssepxxvndxvgd"
+                      _id: "wjpkelwxzjyonqgbpqemvaiqwjbkfhmobekh"
                     }
                   }
                 ],
-                "paddingType": "ungrouped",
-                "paddingTop": 28,
-                "paddingBottom": 15,
-                "padding": 75,
-                "bgColorHex": "#000002",
-                "bgColorOpacity": 1,
-                "bgColorPalette": "color2",
-                "tempBgColorOpacity": 1,
-                "tabletPaddingType": "ungrouped",
-                "tabletPaddingTop": 15,
-                "tabletPaddingBottom": 80,
-                "tabletPadding": 50,
-                "mobilePaddingType": "ungrouped",
-                "mobilePaddingTop": 15,
-                "mobilePaddingBottom": 36,
-                "mobilePadding": 25,
-                "boxShadow": "on",
-                "boxShadowBlur": 7,
-                "boxShadowColorOpacity": 0.15,
-                "boxShadowVertical": 1,
-                "boxShadowColorHex": "#000000",
-                "boxShadowColorPalette": "",
-                "_id": "bhlrngvhljpngnftwdwtcykggpprfdxumvcj",
-                "tempBgColorPalette": "color2",
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "tabsState": "tabNormal",
-                "tabsCurrentElement": "tabCurrentElement",
-                "tabsColor": "tabOverlay",
-                "paddingTopSuffix": "px",
-                "tempPaddingTopSuffix": "px",
-                "paddingSuffix": "px",
-                "tempPaddingSuffix": "px",
-                "tempPaddingTop": 28,
-                "bgColorType": "solid",
-                "gradientActivePointer": "startPointer",
-                "gradientLinearDegree": 0,
-                "gradientStartPointer": 0,
-                "gradientFinishPointer": 33,
-                "gradientColorPalette": "color1",
-                "tempGradientColorPalette": "color1",
-                "gradientColorOpacity": 1,
-                "gradientColorHex": "#000002",
-                "tempGradientColorOpacity": 1
+                _id: "gaycdpgdvuxekgxnilbtgvcghwsfrnnczgoo",
+                paddingType: "ungrouped",
+                paddingTop: 35,
+                paddingBottom: 15,
+                bgColorPalette: "color2",
+                tempBgColorPalette: "color2",
+                bgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 30,
+                tabletPaddingBottom: 15,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 25,
+                mobilePaddingBottom: 0,
+                mobilePaddingBottomSuffix: "px",
+                tempMobilePaddingBottomSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px"
               }
-            },
+            }
+          ],
+          _id: "tohtfrnbbgotcnwzymzsrkvevsgnechaottd",
+          _thumbnailSrc: 7244221,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 30,
+          _thumbnailTime: 1626699337552
+        },
+        blockId: "Kit2Blank000Light"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
             {
-              "type": "SectionHeaderStickyItem",
-              "value": {
-                "_styles": [
-                  "sectionHeaderStickyItem"
-                ],
-                "items": [
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
                   {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row"
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "hfrflgharskovyharuhdljzcyoevmpnusnrx",
+                            text:
+                              '<p data-generated-css="brz-css-boqxx" data-uniq-id="ubzxl" class="brz-tp-lg-heading3"><strong class="brz-cp-color8">FAQ</strong></p>'
+                          }
+                        }
                       ],
-                      "items": [
+                      _id: "wrzluqvrhjacfbzztgawsdcvhiftszhlmdke",
+                      marginTopSuffix: "px",
+                      marginTop: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      tabletMarginTopSuffix: "px",
+                      tabletMarginTop: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 0
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--spacer"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Spacer",
+                          value: {
+                            _styles: ["spacer"],
+                            _id: "kkgczxjxtkzsplnvupchsylskwaulxvozbsq",
+                            tabletHeight: 30,
+                            tabletHeightSuffix: "px"
+                          }
+                        }
+                      ],
+                      _id: "sfjbkabauatauolgscbtewcrfuxhdggtdwjq"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--tabs"],
+                      items: [
+                        {
+                          type: "Tabs",
+                          value: {
+                            _styles: ["tabs"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
+                                type: "Tab",
+                                value: {
+                                  labelText: "Product",
+                                  items: [
                                     {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
+                                      type: "Wrapper",
+                                      value: {
+                                        _styles: [
+                                          "wrapper",
+                                          "wrapper--accordion"
                                         ],
-                                        "imagePopulation": "",
-                                        "imageWidth": 2129,
-                                        "imageHeight": 457,
-                                        "imageSrc": "b731902c6bf15805972db395c1ec4670.png",
-                                        "height": 100,
-                                        "positionX": 50,
-                                        "positionY": 50,
-                                        "resize": 70,
-                                        "mobileResize": 30,
-                                        "tabletResize": 100,
-                                        "_id": "qdqxpedlrmxzoidszccugzdcavizjlqqgouc"
+                                        items: [
+                                          {
+                                            type: "Accordion",
+                                            value: {
+                                              _styles: ["accordion"],
+                                              items: [
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is the weight of DroneX? ",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "uknttcoimzmecpxwuohxxkxzjdeywtdbirtn",
+                                                                text:
+                                                                  '<p class="brz-text-xs-left brz-tp-lg-heading5" data-generated-css="brz-css-mhqyb" data-uniq-id="etndb"><span style="color: rgb(134, 134, 145);">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams. Check local rules and regulations before use.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "ygcmyvsuungirmuiigrjcrachtoemsjbmlzo",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "ubzjkdcecqxauwbhjkpmuuncjzufolzifaae"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support panorama?",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "aeixgdwkddppxwqfmwfoxtrlxexvxfkcbdpz",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "fxjgvlqbcfmxffkgpsvlphvhzhvwebywapea",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "haifmyqkxsqwpkjnuiqoeqqrquvdrdrcgczz"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Where can I find tips about using DroneX?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "lhvmonnyayffnzyrnqwlkfcrihucuhgsnija",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "cydosvwdfcrjweoupafvcwecesqaqupwoply",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "ifieclhhkvzulipspkbhdguqaonijkghdfgy"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support obstacle avoidance?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "smmcnvcjkzkqlgwzmyzdjjiviyvhwzkuayas",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "nhqbfjlteczxbjaysejzcmcosubxtapmwcvi",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "rrlhusfkifzdteiowkzmpmhflqfpnxvaevxh"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is SmartPhoto?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "pzblmlvxvucabxnndhoxkduddfazwpyqcoew",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "dmsxkqebxhazvycsmlonkkbgjokfhgopagoi",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "gjgsrtmqfklugucqkhpwjlybfcwanewxbeca"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Can I control the camera settings manually?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "zrouwxsturohmwtvzywzjkgtmbkjshrdmzfx",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "rkyrmodmdvkojhactfuseoeoexrgiljdhslp",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "nmjfkvimiibchpcucyoftdzoijpyggzrqpnn"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What photo resolutions and formats are available?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "ayxkychyxtdbqakscrlblsaiozhetxuouucv",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "doiwgnkufzrechmxhuwlleasuwbeptvkooic",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "nthegjyozlbumejlqbmgdgasrwcsdjtetlfl"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "bfwdusyjlcgvwcppfkkofjqtvttojbrfcqim",
+                                              fontStyle: "heading5",
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0.01,
+                                              tempBgColorOpacity: 0.01,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderStyle: "solid",
+                                              tempBorderStyle: "solid",
+                                              borderColorHex: "#dcdee1",
+                                              borderColorOpacity: 0.2,
+                                              tempBorderColorOpacity: 0.2,
+                                              borderColorPalette: "",
+                                              tempBorderColorPalette: "",
+                                              borderWidthType: "grouped",
+                                              borderWidth: 1,
+                                              tempBorderWidth: 1,
+                                              borderTopWidth: 1,
+                                              tempBorderTopWidth: 2,
+                                              borderRightWidth: 1,
+                                              tempBorderRightWidth: 2,
+                                              borderBottomWidth: 1,
+                                              tempBorderBottomWidth: 2,
+                                              borderLeftWidth: 1,
+                                              tempBorderLeftWidth: 2,
+                                              navIcon: "thin",
+                                              colorHex: "#FFFFFF",
+                                              colorOpacity: 1,
+                                              tempColorOpacity: 1,
+                                              colorPalette: "color8",
+                                              tempColorPalette: "color8",
+                                              activeAccordionItem: 0,
+                                              tabletFontStyle: "heading5",
+                                              mobileFontStyle: "heading5",
+                                              borderRadius: 20,
+                                              borderTopLeftRadius: 20,
+                                              borderTopRightRadius: 20,
+                                              borderBottomLeftRadius: 20,
+                                              borderBottomRightRadius: 20,
+                                              tempBorderRadius: 20,
+                                              tempBorderTopLeftRadius: 20,
+                                              tempBorderTopRightRadius: 20,
+                                              tempBorderBottomLeftRadius: 20,
+                                              tempBorderBottomRightRadius: 20
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "ojudqhrcfcoaxnvicioemccltmjmffgmstrz",
+                                        marginTopSuffix: "px",
+                                        marginTop: 0,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginBottom: 0,
+                                        paddingType: "ungrouped",
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingLeft: 70,
+                                        tempPaddingLeft: 70,
+                                        padding: 0,
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginTop: 35,
+                                        tabletMargin: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginBottom: 35,
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginTop: 0,
+                                        mobileMargin: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        paddingTop: 35,
+                                        tempPaddingTop: 35,
+                                        paddingRightSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        paddingRight: 70,
+                                        tempPaddingRight: 70,
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        paddingBottom: 35,
+                                        tempPaddingBottom: 35,
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginRight: 25,
+                                        tabletMarginLeftSuffix: "px",
+                                        tabletMarginLeft: 25,
+                                        mobilePaddingType: "ungrouped",
+                                        mobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        mobilePaddingSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        mobilePaddingTop: 25,
+                                        tempMobilePaddingTop: 25,
+                                        mobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        mobilePaddingBottom: 25,
+                                        tempMobilePaddingBottom: 25
                                       }
                                     }
                                   ],
-                                  "horizontalAlign": "left",
-                                  "mobileHorizontalAlign": "center",
-                                  "marginType": "grouped",
-                                  "_id": "hsisghicsymkmetlmzpcrhsitajnxhoriqob"
+                                  _id: "qntquihhqqkavvbuyvhbvgyukjwtqqpdmitu"
                                 }
-                              }
-                            ],
-                            "verticalAlign": "center",
-                            "width": 18.7,
-                            "tabletWidth": 24.6,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "_id": "fwvaxbuzlsqbpplrbczotrodtlwcjhquoizl"
-                          }
-                        },
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                              },
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--menu"
-                                  ],
-                                  "items": [
+                                type: "Tab",
+                                value: {
+                                  labelText: "Camera",
+                                  items: [
                                     {
-                                      "type": "Menu",
-                                      "value": {
-                                        "_styles": [
-                                          "menu"
+                                      type: "Wrapper",
+                                      value: {
+                                        _styles: [
+                                          "wrapper",
+                                          "wrapper--accordion"
                                         ],
-                                        "menuSelected": "10364db008ecd7620f56ffa943a57451",
-                                        "fontSize": 17,
-                                        "fontFamily": "josefin_sans",
-                                        "lineHeight": 1.7,
-                                        "letterSpacing": 0,
-                                        "fontWeight": 600,
-                                        "fontStyle": "heading6",
-                                        "itemPadding": 25,
-                                        "itemPaddingRight": 25,
-                                        "itemPaddingLeft": 25,
-                                        "horizontalAlign": "left",
-                                        "colorHex": "#8b8b8b",
-                                        "colorOpacity": 1,
-                                        "colorPalette": "color2",
-                                        "tempColorOpacity": 1,
-                                        "hoverColorHex": "#8b8b8b",
-                                        "hoverColorOpacity": 1,
-                                        "hoverColorPalette": "color3",
-                                        "subMenuBgColorPalette": "",
-                                        "subMenuBgColorOpacity": 1,
-                                        "subMenuHoverBgColorPalette": "",
-                                        "mMenuBgColorPalette": "color2",
-                                        "subMenuBorderColorHex": "#000000",
-                                        "subMenuBorderColorOpacity": 0.08,
-                                        "subMenuBorderColorPalette": "",
-                                        "subMenuTempBorderColorOpacity": 0.08,
-                                        "subMenuHoverBorderColorHex": "#000000",
-                                        "subMenuHoverBorderColorOpacity": 0.07,
-                                        "mMenuBorderColorHex": "#000000",
-                                        "mMenuBorderColorOpacity": 0.08,
-                                        "subMenuColorHex": "#8b8b8b",
-                                        "subMenuColorOpacity": 1,
-                                        "subMenuColorPalette": "color2",
-                                        "subMenuTempColorOpacity": 1,
-                                        "subMenuHoverColorHex": "#8b8b8b",
-                                        "subMenuHoverColorOpacity": "#8b8b8b",
-                                        "mMenuColorHex": "#8b8b8b",
-                                        "mMenuColorOpacity": 1,
-                                        "mMenuHoverColorHex": "#8b8b8b",
-                                        "mMenuHoverColorOpacity": 1,
-                                        "subMenuHoverColorPalette": "color1",
-                                        "mMenuHoverColorPalette": "color3",
-                                        "subMenuHoverBorderColorPalette": "",
-                                        "subMenuTempHoverBorderColorOpacity": 0.07,
-                                        "subMenuHoverBgColorHex": "#ffffff",
-                                        "subMenuHoverBgColorOpacity": 1,
-                                        "tabletMMenuSize": 25,
-                                        "tabletHorizontalAlign": "left",
-                                        "tabletMMenuFontSize": 18,
-                                        "tabletMMenuLineHeight": 2.5,
-                                        "tabletMMenuLetterSpacing": 0,
-                                        "tabletMMenuFontWeight": 400,
-                                        "tabletMMenuFontStyle": "heading6",
-                                        "mMenuBgColorHex": "#ffffff",
-                                        "mMenuBgColorOpacity": 1,
-                                        "mMenuTempBgColorOpacity": 1,
-                                        "mMenuBorderColorPalette": "",
-                                        "mMenuTempBorderColorOpacity": 0.08,
-                                        "mMenuTitle": "Main Menu",
-                                        "mobileHorizontalAlign": "center",
-                                        "mobileMMenuSize": 25,
-                                        "mMenuColorPalette": "color8",
-                                        "mMenuTempColorOpacity": 1,
-                                        "mobileMMenuFontSize": 18,
-                                        "mobileMMenuLineHeight": 2.5,
-                                        "mobileMMenuLetterSpacing": 0,
-                                        "mobileMMenuFontWeight": 400,
-                                        "mobileMMenuFontStyle": "heading6",
-                                        "tabletMMenuIconColorHex": "",
-                                        "tabletMMenuIconColorOpacity": 1,
-                                        "tabletMMenuIconColorPalette": "color2",
-                                        "mMenu": "off",
-                                        "mMenuSize": 25,
-                                        "subMenuBgColorHex": "#ffffff",
-                                        "subMenuTempBgColorOpacity": 1,
-                                        "subMenuFontSize": 17,
-                                        "subMenuFontFamily": "josefin_sans",
-                                        "subMenuLineHeight": 1,
-                                        "subMenuLetterSpacing": 0,
-                                        "subMenuFontWeight": 600,
-                                        "subMenuFontStyle": "heading6",
-                                        "mMenuIconColorPalette": "color2",
-                                        "mMenuIconColorHex": "",
-                                        "mMenuIconColorOpacity": 1,
-                                        "mMenuFontSize": 18,
-                                        "mMenuFontFamily": "josefin_sans",
-                                        "mMenuLineHeight": 2.5,
-                                        "mMenuLetterSpacing": 0,
-                                        "mMenuFontWeight": 600,
-                                        "mMenuFontStyle": "heading6",
-                                        "tabletFontStyle": "button",
-                                        "mobileFontStyle": "button",
-                                        "tabletSubMenuFontStyle": "button",
-                                        "mobileSubMenuFontStyle": "button",
-                                        "mobileMMenu": "off",
-                                        "mobileItemPadding": 20,
-                                        "mobileItemPaddingRight": 20,
-                                        "mobileItemPaddingLeft": 20,
-                                        "_id": "ihwxfkswmcthitwptmrqxqjvyerohxddnsaf"
+                                        items: [
+                                          {
+                                            type: "Accordion",
+                                            value: {
+                                              _styles: ["accordion"],
+                                              items: [
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is the weight of DroneX? ",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "lsxxpaaaesrjauexnlbickobgykzqvgloohj",
+                                                                text:
+                                                                  '<p class="brz-text-xs-left brz-tp-lg-heading5" data-generated-css="brz-css-mhqyb" data-uniq-id="etndb"><span style="color: rgb(134, 134, 145);">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams. Check local rules and regulations before use.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "lvuskebqcflnxamxnohjxiphkzraleqdrwlo",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "oxpqvszfuvolxfgvjesqwiccfhwjdcvlwpbe"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support panorama?",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "wffwkicctemlbgvtxhtrfeagyxqdolfymlcs",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "fspopspjemspcrljyxbptthpoivczzscoaom",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "qorkhrzjobrqrowitfvpixdomejabcjxxcvv"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Where can I find tips about using DroneX?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "kjqmoegrhgkcvpckaosokganrxbqtttbseyy",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "zqwioergoiocgqgudkpshstmwzxhyqxgfmcz",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "xtyffqtxrddyjiamasirnytocovwxhgdjztg"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support obstacle avoidance?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "ttctauzkayyntttspkwwkitszqyzasjpvhds",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "uyxnvexahnzevivscimvoeodlbhzanfhrihr",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "tredvmilbsqekvwknototlagzxidyzltmjpk"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is SmartPhoto?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "cnftcckpxkdfszsdinghixwwubskabxomfbc",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "iuthstpcqzdrsllndgcgoobxpxjmwyvlzvup",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "tqnokebgizrpnsczcnavqqluttmhgcbgzjvj"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Can I control the camera settings manually?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "pabtpjdbbprgcoljnyztwosnvcjtxxxprfaq",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "psewmdghjjjmawejzbsvwjenviqgejbckvao",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "wwlgdviwzbmvfscmgowdensubrxohruojxtf"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What photo resolutions and formats are available?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "hyesmacxqimnvmextxyplesofunlinxwnxky",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "ttakvkhgrmsiwaqznjkkudlpanjpkzqxwkbs",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "pcwvvjskqlhgtjtnqwzdlnifffkjhtpgvnti"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "lcmxiiggqevnvclupyxqwqmheiwceveqolbs",
+                                              fontStyle: "heading5",
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0.01,
+                                              tempBgColorOpacity: 0.01,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderStyle: "solid",
+                                              tempBorderStyle: "solid",
+                                              borderColorHex: "#dcdee1",
+                                              borderColorOpacity: 0.2,
+                                              tempBorderColorOpacity: 0.2,
+                                              borderColorPalette: "",
+                                              tempBorderColorPalette: "",
+                                              borderWidthType: "grouped",
+                                              borderWidth: 1,
+                                              tempBorderWidth: 1,
+                                              borderTopWidth: 1,
+                                              tempBorderTopWidth: 2,
+                                              borderRightWidth: 1,
+                                              tempBorderRightWidth: 2,
+                                              borderBottomWidth: 1,
+                                              tempBorderBottomWidth: 2,
+                                              borderLeftWidth: 1,
+                                              tempBorderLeftWidth: 2,
+                                              navIcon: "thin",
+                                              colorHex: "#FFFFFF",
+                                              colorOpacity: 1,
+                                              tempColorOpacity: 1,
+                                              colorPalette: "color8",
+                                              tempColorPalette: "color8",
+                                              activeAccordionItem: 6,
+                                              tabletFontStyle: "heading5",
+                                              mobileFontStyle: "heading5",
+                                              borderRadius: 20,
+                                              borderTopLeftRadius: 20,
+                                              borderTopRightRadius: 20,
+                                              borderBottomLeftRadius: 20,
+                                              borderBottomRightRadius: 20,
+                                              tempBorderRadius: 20,
+                                              tempBorderTopLeftRadius: 20,
+                                              tempBorderTopRightRadius: 20,
+                                              tempBorderBottomLeftRadius: 20,
+                                              tempBorderBottomRightRadius: 20
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "obytyawdhmxmzcbdgegssdgvxuqgxfgzehgn",
+                                        marginTopSuffix: "px",
+                                        marginTop: 0,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginBottom: 0,
+                                        paddingType: "ungrouped",
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingLeft: 70,
+                                        tempPaddingLeft: 70,
+                                        padding: 0,
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginTop: 35,
+                                        tabletMargin: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginBottom: 35,
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginTop: 0,
+                                        mobileMargin: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        paddingTop: 35,
+                                        tempPaddingTop: 35,
+                                        paddingRightSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        paddingRight: 70,
+                                        tempPaddingRight: 70,
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        paddingBottom: 35,
+                                        tempPaddingBottom: 35,
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginRight: 25,
+                                        tabletMarginLeftSuffix: "px",
+                                        tabletMarginLeft: 25,
+                                        mobilePaddingType: "ungrouped",
+                                        mobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        mobilePaddingSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        mobilePaddingTop: 25,
+                                        tempMobilePaddingTop: 25,
+                                        mobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        mobilePaddingBottom: 25,
+                                        tempMobilePaddingBottom: 25
                                       }
                                     }
                                   ],
-                                  "showOnTablet": "on",
-                                  "marginType": "grouped",
-                                  "_id": "myraqjpqflfxrzzlgtavvknyihxbvfdmxlmn"
+                                  _id: "hjfjvromjcrfynecjvjkbkhqgbbrocpnssqe"
+                                }
+                              },
+                              {
+                                type: "Tab",
+                                value: {
+                                  labelText: "Remote Controller",
+                                  items: [
+                                    {
+                                      type: "Wrapper",
+                                      value: {
+                                        _styles: [
+                                          "wrapper",
+                                          "wrapper--accordion"
+                                        ],
+                                        items: [
+                                          {
+                                            type: "Accordion",
+                                            value: {
+                                              _styles: ["accordion"],
+                                              items: [
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is the weight of DroneX? ",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "gtyzzpjpkgltuqzqqukkfruopalytyhsskkw",
+                                                                text:
+                                                                  '<p class="brz-text-xs-left brz-tp-lg-heading5" data-generated-css="brz-css-mhqyb" data-uniq-id="etndb"><span style="color: rgb(134, 134, 145);">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams. Check local rules and regulations before use.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "edmnrvyijpbbzdmyvuckvpnvwapzxbkvsqcu",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "zpruiqulqrfampnfexizfjzbenvnhaxuyxes"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support panorama?",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "vqzyzdbnayvycynreeuxtzihnmdqmhegyqqh",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "noobccuipbztmzntzrqolqatdxvsecwzlqlg",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "enebwmdxkatyraoqicdrqgpnqtrqhtjxnnac"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Where can I find tips about using DroneX?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "zwsjzrnzxzrllrhskoeufuphihylaoxscpqo",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "gvxniwpiwnzimxllrnibbwgoguloyjdkpjkq",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "mgmjluzeqlukvmtfttpdavsvdojmzgowtxyy"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support obstacle avoidance?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "thogazuvtkhhuwfsiwfpsvrysoimcnrqadyj",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "dbbsdloflqoblghjmdlkjaegawgnpxkzarxf",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "ibseubkdwvgxffdffwtxmibzqaijtkredvkp"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is SmartPhoto?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "uiiglvwdkkfvgpmvyywhyizpbjtcjsktvcrs",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "gcpsyrtvhmyvqnhiankhlazlqcndsahylfls",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "txhixjhatzcanwdxgcdrjseutctsgoelgbxo"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Can I control the camera settings manually?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "xqtfropwrbkudtjfpkvmialzvpfrsejlcsxc",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "ohcuzojogklujdxxjvhbaymzchtdkmebgygr",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "ntkixkyybkdmppoamhacvlxypfokdebuantm"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What photo resolutions and formats are available?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "ykupbjjsycyfganmbwwtmpddlhzmjunllnbj",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "iozntvinejijskjwnpafprrtcuwufjrkveni",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "yxvihmfbutvxgjgloiidliaimhgpenlztkwi"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "jilwoextegevrbmdmdnsawdtxdlolgzsncny",
+                                              fontStyle: "heading5",
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0.01,
+                                              tempBgColorOpacity: 0.01,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderStyle: "solid",
+                                              tempBorderStyle: "solid",
+                                              borderColorHex: "#dcdee1",
+                                              borderColorOpacity: 0.2,
+                                              tempBorderColorOpacity: 0.2,
+                                              borderColorPalette: "",
+                                              tempBorderColorPalette: "",
+                                              borderWidthType: "grouped",
+                                              borderWidth: 1,
+                                              tempBorderWidth: 1,
+                                              borderTopWidth: 1,
+                                              tempBorderTopWidth: 2,
+                                              borderRightWidth: 1,
+                                              tempBorderRightWidth: 2,
+                                              borderBottomWidth: 1,
+                                              tempBorderBottomWidth: 2,
+                                              borderLeftWidth: 1,
+                                              tempBorderLeftWidth: 2,
+                                              navIcon: "thin",
+                                              colorHex: "#FFFFFF",
+                                              colorOpacity: 1,
+                                              tempColorOpacity: 1,
+                                              colorPalette: "color8",
+                                              tempColorPalette: "color8",
+                                              activeAccordionItem: 6,
+                                              tabletFontStyle: "heading5",
+                                              mobileFontStyle: "heading5",
+                                              borderRadius: 20,
+                                              borderTopLeftRadius: 20,
+                                              borderTopRightRadius: 20,
+                                              borderBottomLeftRadius: 20,
+                                              borderBottomRightRadius: 20,
+                                              tempBorderRadius: 20,
+                                              tempBorderTopLeftRadius: 20,
+                                              tempBorderTopRightRadius: 20,
+                                              tempBorderBottomLeftRadius: 20,
+                                              tempBorderBottomRightRadius: 20
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "awibwypfkxqsmkcyofwvudaclxgulmscsfpc",
+                                        marginTopSuffix: "px",
+                                        marginTop: 0,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginBottom: 0,
+                                        paddingType: "ungrouped",
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingLeft: 70,
+                                        tempPaddingLeft: 70,
+                                        padding: 0,
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginTop: 35,
+                                        tabletMargin: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginBottom: 35,
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginTop: 0,
+                                        mobileMargin: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        paddingTop: 35,
+                                        tempPaddingTop: 35,
+                                        paddingRightSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        paddingRight: 70,
+                                        tempPaddingRight: 70,
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        paddingBottom: 35,
+                                        tempPaddingBottom: 35,
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginRight: 25,
+                                        tabletMarginLeftSuffix: "px",
+                                        tabletMarginLeft: 25,
+                                        mobilePaddingType: "ungrouped",
+                                        mobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        mobilePaddingSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        mobilePaddingTop: 25,
+                                        tempMobilePaddingTop: 25,
+                                        mobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        mobilePaddingBottom: 25,
+                                        tempMobilePaddingBottom: 25
+                                      }
+                                    }
+                                  ],
+                                  _id: "hzkqkroikzwinjjxkgyqiotgpjsptryatusf"
+                                }
+                              },
+                              {
+                                type: "Tab",
+                                value: {
+                                  labelText: "Propulsion and Battery",
+                                  items: [
+                                    {
+                                      type: "Wrapper",
+                                      value: {
+                                        _styles: [
+                                          "wrapper",
+                                          "wrapper--accordion"
+                                        ],
+                                        items: [
+                                          {
+                                            type: "Accordion",
+                                            value: {
+                                              _styles: ["accordion"],
+                                              items: [
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is the weight of DroneX? ",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "qpidravfnnxzqeipvbsvdazurylnguwtquzq",
+                                                                text:
+                                                                  '<p class="brz-text-xs-left brz-tp-lg-heading5" data-generated-css="brz-css-mhqyb" data-uniq-id="etndb"><span style="color: rgb(134, 134, 145);">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams. Check local rules and regulations before use.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "aqwujcelikenvaaytxdwypbndipsbnnxkzfm",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "uhlozskeoakedipqyxvpxdxhsaebziwvjrum"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support panorama?",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "cgiyrurzgdccdkvkforddhhfuvdawftexvoc",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "wzptfwgrqeagzmroxukkoemdecsptettnbvy",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "wyoyibwbpgzqndnhmtytnvrubwklboubnpsb"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Where can I find tips about using DroneX?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "jsdatvioiuzszpodwdyibbnujuatzthtaqgi",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "zxaarsjxduqwkvwbpwslmkvbystespdvccpl",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "zsfvmuudyvvaprseucnksfjnrykqozmhzhno"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support obstacle avoidance?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "dppfwkunrgglteaukdyzljxxylxoenopjcoj",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "fnbrwhhqdhdpjzvoukwdllpvmapgngqmmlys",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "anbjzxbfghgsdwwujchmpjikzocwvpfamzzz"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is SmartPhoto?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "cxlnthbrxuorpsuensviudfdfanhmprypxzh",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "sivgwievtkwnrsuchfbcappvllwkbhxsypuc",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "nzasemzhqllvogptrfiwoihgahgereymjvox"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Can I control the camera settings manually?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "wdffxqfxsfosuvlgdtfpdaangmbiqqgzhotm",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "nysavcfszfpvrztzvjxjneachjjnmltqxxdi",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "rpdkvwphndrrufzqkxfaqmsnvcdqqbqxcphz"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What photo resolutions and formats are available?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "uuprgukbwoszsmkfovqlwfpfirouscrswhho",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "hkfdzbyipiyqgjzycqlwfavvheihuhbfrtqd",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "trxufitizyuvpwaorjtfenfpufeyfscfdufp"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "rafqqxapbqkwovdzhkmrnsonpjjskqbrqcvj",
+                                              fontStyle: "heading5",
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0.01,
+                                              tempBgColorOpacity: 0.01,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderStyle: "solid",
+                                              tempBorderStyle: "solid",
+                                              borderColorHex: "#dcdee1",
+                                              borderColorOpacity: 0.2,
+                                              tempBorderColorOpacity: 0.2,
+                                              borderColorPalette: "",
+                                              tempBorderColorPalette: "",
+                                              borderWidthType: "grouped",
+                                              borderWidth: 1,
+                                              tempBorderWidth: 1,
+                                              borderTopWidth: 1,
+                                              tempBorderTopWidth: 2,
+                                              borderRightWidth: 1,
+                                              tempBorderRightWidth: 2,
+                                              borderBottomWidth: 1,
+                                              tempBorderBottomWidth: 2,
+                                              borderLeftWidth: 1,
+                                              tempBorderLeftWidth: 2,
+                                              navIcon: "thin",
+                                              colorHex: "#FFFFFF",
+                                              colorOpacity: 1,
+                                              tempColorOpacity: 1,
+                                              colorPalette: "color8",
+                                              tempColorPalette: "color8",
+                                              activeAccordionItem: 6,
+                                              tabletFontStyle: "heading5",
+                                              mobileFontStyle: "heading5",
+                                              borderRadius: 20,
+                                              borderTopLeftRadius: 20,
+                                              borderTopRightRadius: 20,
+                                              borderBottomLeftRadius: 20,
+                                              borderBottomRightRadius: 20,
+                                              tempBorderRadius: 20,
+                                              tempBorderTopLeftRadius: 20,
+                                              tempBorderTopRightRadius: 20,
+                                              tempBorderBottomLeftRadius: 20,
+                                              tempBorderBottomRightRadius: 20
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "masinhqmatrmebjushwjxfewupqvjkbokafj",
+                                        marginTopSuffix: "px",
+                                        marginTop: 0,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginBottom: 0,
+                                        paddingType: "ungrouped",
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingLeft: 70,
+                                        tempPaddingLeft: 70,
+                                        padding: 0,
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginTop: 35,
+                                        tabletMargin: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginBottom: 35,
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginTop: 0,
+                                        mobileMargin: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        paddingTop: 35,
+                                        tempPaddingTop: 35,
+                                        paddingRightSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        paddingRight: 70,
+                                        tempPaddingRight: 70,
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        paddingBottom: 35,
+                                        tempPaddingBottom: 35,
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginRight: 25,
+                                        tabletMarginLeftSuffix: "px",
+                                        tabletMarginLeft: 25,
+                                        mobilePaddingType: "ungrouped",
+                                        mobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        mobilePaddingSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        mobilePaddingTop: 25,
+                                        tempMobilePaddingTop: 25,
+                                        mobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        mobilePaddingBottom: 25,
+                                        tempMobilePaddingBottom: 25
+                                      }
+                                    }
+                                  ],
+                                  _id: "oldydpfhbbeklnitplltpovtqnfmzwkaiasn"
+                                }
+                              },
+                              {
+                                type: "Tab",
+                                value: {
+                                  labelText: "Accessory Compatibility",
+                                  items: [
+                                    {
+                                      type: "Wrapper",
+                                      value: {
+                                        _styles: [
+                                          "wrapper",
+                                          "wrapper--accordion"
+                                        ],
+                                        items: [
+                                          {
+                                            type: "Accordion",
+                                            value: {
+                                              _styles: ["accordion"],
+                                              items: [
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is the weight of DroneX? ",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "dqpmgivmuwzqdcuqblxtjkwbfpvvlbstxhrh",
+                                                                text:
+                                                                  '<p class="brz-text-xs-left brz-tp-lg-heading5" data-generated-css="brz-css-mhqyb" data-uniq-id="etndb"><span style="color: rgb(134, 134, 145);">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams. Check local rules and regulations before use.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "tlshojghzmpapbjgalazifpqbwwkngsinyux",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "yfzhxdiusiqutalucnjjmoyrevuieqoopymf"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support panorama?",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "qpkwsmvirxzbwjlcxhshakapdrajavtucyic",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "jwgwfkyjcyaemhetopzzevzfmnnkjthxncfp",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "gsgzxdsjjlfvjdxedjbifpvebtlruujkdpnh"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Where can I find tips about using DroneX?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "mmjoepdkbtqzzptentnehyprebmioejwsqjj",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "rgsgvzqawjzmpcpobhwhpylojrpdueeoeeyz",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "radgfyjawfshjfptzkbnplznabqrigjqrrwb"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Does DroneX support obstacle avoidance?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "xtyisjqtncetwsvldyzwtshcoeunxeiowbxa",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "jivhzznjypynjvlyadverqbiwgfqthmrmgbm",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "fczsxbonhvrtgoqnwjaughsmocxepaphqdno"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What is SmartPhoto?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "yslhisaubkqwdazfjhnufazrmctpgghpbddv",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "vtymfrxpbqqxgfkesfmouopwrlrynnkdewor",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "rtxnqctxgxrtummzsytieovwuqbsraxmngjb"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "Can I control the camera settings manually?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "blsrtufkdkludpmknilcmujlvtpoyqfsosjo",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "bpybmbxhjbrorinozhjwwdukhiqxaztnqkjz",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "uxptqcknilxqblkhebedoeaouewqnzbeabij"
+                                                  }
+                                                },
+                                                {
+                                                  type: "AccordionItem",
+                                                  value: {
+                                                    labelText:
+                                                      "What photo resolutions and formats are available?\n",
+                                                    items: [
+                                                      {
+                                                        type: "Wrapper",
+                                                        value: {
+                                                          _styles: [
+                                                            "wrapper",
+                                                            "wrapper--richText"
+                                                          ],
+                                                          items: [
+                                                            {
+                                                              type: "RichText",
+                                                              value: {
+                                                                _styles: [
+                                                                  "richText"
+                                                                ],
+                                                                _id:
+                                                                  "jxhrjzukaekqbwnljjmlyfpnxyppwsxvaxpm",
+                                                                text:
+                                                                  '<p class="brz-tp-lg-heading5 brz-text-xs-left" data-uniq-id="qllmv" data-generated-css="brz-css-afoir"><span style="color: rgb(134, 134, 145);">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>'
+                                                              }
+                                                            }
+                                                          ],
+                                                          _id:
+                                                            "tzjpsjewnpazvmgycmmbfsigxjimzfgaiwpc",
+                                                          marginTopSuffix: "px",
+                                                          marginTop: 0,
+                                                          margin: 0,
+                                                          marginSuffix: "px",
+                                                          marginBottomSuffix:
+                                                            "px",
+                                                          marginBottom: 0,
+                                                          tabletMarginBottomSuffix:
+                                                            "px",
+                                                          tabletMarginBottom: 0,
+                                                          tabletMargin: 0,
+                                                          tabletMarginSuffix:
+                                                            "px",
+                                                          tabletMarginTopSuffix:
+                                                            "px",
+                                                          tabletMarginTop: 0,
+                                                          mobileMarginBottomSuffix:
+                                                            "px",
+                                                          mobileMarginBottom: 10,
+                                                          mobileMargin: 0,
+                                                          mobileMarginSuffix:
+                                                            "px",
+                                                          mobileMarginTopSuffix:
+                                                            "px",
+                                                          mobileMarginTop: 0,
+                                                          paddingType:
+                                                            "ungrouped",
+                                                          paddingRightSuffix:
+                                                            "px",
+                                                          tempPaddingRightSuffix:
+                                                            "px",
+                                                          paddingSuffix: "px",
+                                                          tempPaddingSuffix:
+                                                            "px",
+                                                          paddingRight: 15,
+                                                          tempPaddingRight: 15,
+                                                          padding: 0,
+                                                          paddingLeftSuffix:
+                                                            "px",
+                                                          tempPaddingLeftSuffix:
+                                                            "px",
+                                                          paddingLeft: 15,
+                                                          tempPaddingLeft: 15,
+                                                          paddingTopSuffix:
+                                                            "px",
+                                                          tempPaddingTopSuffix:
+                                                            "px",
+                                                          paddingTop: 25,
+                                                          tempPaddingTop: 25,
+                                                          paddingBottomSuffix:
+                                                            "px",
+                                                          tempPaddingBottomSuffix:
+                                                            "px",
+                                                          paddingBottom: 25,
+                                                          tempPaddingBottom: 25,
+                                                          tabletPaddingType:
+                                                            "ungrouped",
+                                                          tabletPaddingTopSuffix:
+                                                            "px",
+                                                          tempTabletPaddingTopSuffix:
+                                                            "px",
+                                                          tabletPaddingSuffix:
+                                                            "px",
+                                                          tempTabletPaddingSuffix:
+                                                            "px",
+                                                          tabletPaddingTop: 10,
+                                                          tempTabletPaddingTop: 10,
+                                                          tabletPaddingRightSuffix:
+                                                            "px",
+                                                          tempTabletPaddingRightSuffix:
+                                                            "px",
+                                                          tabletPaddingRight: 20,
+                                                          tempTabletPaddingRight: 20,
+                                                          tabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tempTabletPaddingBottomSuffix:
+                                                            "px",
+                                                          tabletPaddingBottom: 10,
+                                                          tempTabletPaddingBottom: 10,
+                                                          tabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tempTabletPaddingLeftSuffix:
+                                                            "px",
+                                                          tabletPaddingLeft: 20,
+                                                          tempTabletPaddingLeft: 20,
+                                                          mobileMarginRightSuffix:
+                                                            "px",
+                                                          mobileMarginRight: 20,
+                                                          mobileMarginLeftSuffix:
+                                                            "px",
+                                                          mobileMarginLeft: 20
+                                                        }
+                                                      }
+                                                    ],
+                                                    _id:
+                                                      "rbuarqtknkajfhdajrgivdmgpqqkyzsgiwgl"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "lqdnzcjuugiblqiacydtzbzapnpmveserpzq",
+                                              fontStyle: "heading5",
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0.01,
+                                              tempBgColorOpacity: 0.01,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderStyle: "solid",
+                                              tempBorderStyle: "solid",
+                                              borderColorHex: "#dcdee1",
+                                              borderColorOpacity: 0.2,
+                                              tempBorderColorOpacity: 0.2,
+                                              borderColorPalette: "",
+                                              tempBorderColorPalette: "",
+                                              borderWidthType: "grouped",
+                                              borderWidth: 1,
+                                              tempBorderWidth: 1,
+                                              borderTopWidth: 1,
+                                              tempBorderTopWidth: 2,
+                                              borderRightWidth: 1,
+                                              tempBorderRightWidth: 2,
+                                              borderBottomWidth: 1,
+                                              tempBorderBottomWidth: 2,
+                                              borderLeftWidth: 1,
+                                              tempBorderLeftWidth: 2,
+                                              navIcon: "thin",
+                                              colorHex: "#FFFFFF",
+                                              colorOpacity: 1,
+                                              tempColorOpacity: 1,
+                                              colorPalette: "color8",
+                                              tempColorPalette: "color8",
+                                              activeAccordionItem: 6,
+                                              tabletFontStyle: "heading5",
+                                              mobileFontStyle: "heading5",
+                                              borderRadius: 20,
+                                              borderTopLeftRadius: 20,
+                                              borderTopRightRadius: 20,
+                                              borderBottomLeftRadius: 20,
+                                              borderBottomRightRadius: 20,
+                                              tempBorderRadius: 20,
+                                              tempBorderTopLeftRadius: 20,
+                                              tempBorderTopRightRadius: 20,
+                                              tempBorderBottomLeftRadius: 20,
+                                              tempBorderBottomRightRadius: 20
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "rvkdpcjkjvwzwgtjbqkeasilndpksespcnbj",
+                                        marginTopSuffix: "px",
+                                        marginTop: 0,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginBottom: 0,
+                                        paddingType: "ungrouped",
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingLeft: 70,
+                                        tempPaddingLeft: 70,
+                                        padding: 0,
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginTop: 35,
+                                        tabletMargin: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginBottom: 35,
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginTop: 0,
+                                        mobileMargin: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        paddingTop: 35,
+                                        tempPaddingTop: 35,
+                                        paddingRightSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        paddingRight: 70,
+                                        tempPaddingRight: 70,
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        paddingBottom: 35,
+                                        tempPaddingBottom: 35,
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginRight: 25,
+                                        tabletMarginLeftSuffix: "px",
+                                        tabletMarginLeft: 25,
+                                        mobilePaddingType: "ungrouped",
+                                        mobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        mobilePaddingSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        mobilePaddingTop: 25,
+                                        tempMobilePaddingTop: 25,
+                                        mobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        mobilePaddingBottom: 25,
+                                        tempMobilePaddingBottom: 25
+                                      }
+                                    }
+                                  ],
+                                  _id: "kvvrakqnnjkoyqugnslqpfjejkglyczwdckv"
                                 }
                               }
                             ],
-                            "verticalAlign": "center",
-                            "width": 47.9,
-                            "tabletWidth": 28,
-                            "paddingTop": 0,
-                            "paddingTopSuffix": "px",
-                            "padding": 15,
-                            "paddingBottom": 0,
-                            "paddingBottomSuffix": "px",
-                            "_id": "cnqjgghzqepekolozozlpsinqvaepouhgfsf"
+                            _id: "dusdykpecxiqkrkvoawoqmjzdjrvvjldahic",
+                            activeTab: 0,
+                            navStyle: "style-2",
+                            verticalMode: "on",
+                            fontStyle: "heading5",
+                            bgColorHex: "#1f1f29",
+                            bgColorOpacity: 1,
+                            tempBgColorOpacity: 1,
+                            bgColorPalette: "color4",
+                            tempBgColorPalette: "",
+                            colorHex: "#FFFFFF",
+                            colorOpacity: 1,
+                            tempColorOpacity: 1,
+                            colorPalette: "color8",
+                            tempColorPalette: "color8",
+                            borderStyle: "none",
+                            tempBorderStyle: "solid",
+                            borderColorHex: "#dcdee1",
+                            borderColorOpacity: 0,
+                            tempBorderColorOpacity: 0.37,
+                            borderColorPalette: "",
+                            tempBorderColorPalette: "",
+                            borderWidthType: "grouped",
+                            borderWidth: 0,
+                            tempBorderWidth: 2,
+                            borderTopWidth: 0,
+                            tempBorderTopWidth: 2,
+                            borderRightWidth: 0,
+                            tempBorderRightWidth: 2,
+                            borderBottomWidth: 0,
+                            tempBorderBottomWidth: 2,
+                            borderLeftWidth: 0,
+                            tempBorderLeftWidth: 2,
+                            tabsState: "tabNormal",
+                            hoverColorHex: "#868691",
+                            hoverColorOpacity: 1,
+                            tempHoverColorOpacity: 1,
+                            hoverColorPalette: "color8",
+                            tempHoverColorPalette: "color8",
+                            hoverBgColorHex: "#FFFFFF",
+                            hoverBgColorOpacity: 1,
+                            tempHoverBgColorOpacity: 1,
+                            hoverBgColorPalette: "color4",
+                            tempHoverBgColorPalette: "",
+                            activeBgColorHex: "#1f1f29",
+                            activeBgColorOpacity: 1,
+                            tempActiveBgColorOpacity: 1,
+                            activeBgColorPalette: "color8",
+                            tempActiveBgColorPalette: "",
+                            activeColorHex: "#FFFFFF",
+                            activeColorOpacity: 1,
+                            tempActiveColorOpacity: 1,
+                            activeColorPalette: "color2",
+                            tempActiveColorPalette: "color8",
+                            spacingAfter: 34,
+                            spacingAfterSuffix: "",
+                            spacing: 17,
+                            spacingSuffix: "",
+                            verticalAlign: "left",
+                            tabletFontStyle: "heading5",
+                            mobileFontStyle: "heading5"
                           }
-                        },
+                        }
+                      ],
+                      _id: "ybiyijdsvkbowdjffpbgkospuoijqwutluno",
+                      marginTopSuffix: "px",
+                      marginTop: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      tabletMarginTopSuffix: "px",
+                      tabletMarginTop: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 0
+                    }
+                  }
+                ],
+                _id: "spbtuiivjvczaqadggqfnkteuzgjqjdundue",
+                bgColorPalette: "color2",
+                tempBgColorPalette: "color2",
+                bgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                paddingTop: 100,
+                tempPaddingTop: 100,
+                paddingType: "ungrouped",
+                paddingBottom: 15
+              }
+            }
+          ],
+          _id: "uxmbmfabgpodalgmncjqcedtgelcprllukrs",
+          _thumbnailSrc: 6615013,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 273,
+          _thumbnailTime: 1626699414178
+        },
+        blockId: "Kit2Blank000Light"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--image"],
+                      items: [
                         {
-                          "type": "Column",
-                          "value": {
-                            "items": [
+                          type: "Image",
+                          value: {
+                            _styles: ["image"],
+                            _id: "odeinxzzbqaqqwdoacyrkprvbtysfihluqmr",
+                            imageSrc: "00f6c24e825642c03a4be7ce8addfe7a.png",
+                            imageExtension: "png",
+                            imageWidth: 821,
+                            imageHeight: 393,
+                            width: 72,
+                            height: 100,
+                            heightSuffix: "%",
+                            widthSuffix: "%",
+                            positionX: 51,
+                            positionY: 15
+                          }
+                        }
+                      ],
+                      _id: "tagkxjfmzfhcusskisfcizvsmjhfcimbttue",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      marginTopSuffix: "px",
+                      marginTop: 0,
+                      tabletMarginTopSuffix: "px",
+                      tabletMarginTop: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px",
+                      tabletMarginBottomSuffix: "px",
+                      tabletMarginBottom: 0,
+                      mobileMarginBottomSuffix: "px",
+                      mobileMarginBottom: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px",
+                      mobileMarginTopSuffix: "px",
+                      mobileMarginTop: 0
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Cloneable",
-                                "value": {
-                                  "_styles": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "csydobpmswoafzsyeyiebzfupyarlcdravnk",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading3" data-generated-css="brz-css-rjsso" data-uniq-id="hmxhp"><strong class="brz-cp-color8">DroneX</strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "mmeiremefmazlfdwyoyrkshkkryoxndfchto",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "dvcyzoyoaiemtirogxfdxxacvdgkgtcvpvnw",
+                                        height: 15,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "hhqvnufohutfdioefeviboreqcpkksombpgr"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "nbhgexaczqttkbzgxqorhsmehiwuznyxssdg",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-paragraph" data-uniq-id="vdmwf" data-generated-css="brz-css-ficku"><span class="brz-cp-color7">Innovative drone with VR capabilities &amp; longest range</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "vferfgyixpighuonxhzsdgxsoyxtdsmsiyva",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  marginLeftSuffix: "%",
+                                  marginLeft: 17,
+                                  marginRightSuffix: "%",
+                                  marginRight: 17,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  tabletMarginRightSuffix: "%",
+                                  tabletMarginRight: 12,
+                                  tabletMarginLeftSuffix: "%",
+                                  tabletMarginLeft: 12
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "enrbgbtuqqsknwjanmjpkcxidqonzeigkjpe",
+                                        tabletHeight: 20,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 25,
+                                        mobileHeightSuffix: "px",
+                                        height: 20,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "wpzlthfamrsgqqfwezdwtxfebdhcbxecnjhc"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "wotdzmedynfbmrgxejldnjyvtpxcroembsln",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-subtitle" data-uniq-id="lcilj" data-generated-css="brz-css-cgjvk"><span class="brz-cp-color8">From </span><strong class="brz-cp-color8">$2399</strong><strong class="brz-cp-color7"> </strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "umfnkinldzxltfhpfldexlkfxhkjnospnxxc",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  marginLeftSuffix: "%",
+                                  marginLeft: 17,
+                                  marginRightSuffix: "%",
+                                  marginRight: 17,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "omsdmmncfqljybvxpjuouzrtwplarajhkacx",
+                                        tabletHeight: 30,
+                                        tabletHeightSuffix: "px",
+                                        mobileHeight: 25,
+                                        mobileHeightSuffix: "px",
+                                        height: 20,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "wnqrizvxjiwboqkwnpledmwrcooomddpshdy"
+                                }
+                              },
+                              {
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
                                     "wrapper-clone",
                                     "wrapper-clone--button"
                                   ],
-                                  "items": [
+                                  items: [
                                     {
-                                      "type": "Button",
-                                      "value": {
-                                        "_styles": [
-                                          "button"
-                                        ],
-                                        "text": "Sign in",
-                                        "iconName": "single-04",
-                                        "iconType": "glyph",
-                                        "fillType": "default",
-                                        "tempFillType": "outline",
-                                        "paddingRL": 0,
-                                        "paddingRight": 0,
-                                        "paddingLeft": 0,
-                                        "paddingTB": 14,
-                                        "paddingTop": 14,
-                                        "paddingBottom": 14,
-                                        "borderRadiusType": "",
-                                        "borderRadius": 2,
-                                        "borderWidth": 0,
-                                        "borderColorOpacity": 0,
-                                        "borderColorPalette": "",
-                                        "bgColorOpacity": 0,
-                                        "bgColorPalette": "",
-                                        "hoverBgColorOpacity": 0,
-                                        "hoverBorderColorOpacity": 0,
-                                        "colorPalette": "",
-                                        "colorOpacity": 1,
-                                        "fontSize": 15,
-                                        "fontFamily": "montserrat",
-                                        "lineHeight": 1.7,
-                                        "letterSpacing": 0,
-                                        "fontWeight": 400,
-                                        "fontStyle": "paragraph",
-                                        "colorHex": "#8b8b8b",
-                                        "hoverColorPalette": "color1",
-                                        "hoverColorOpacity": 1,
-                                        "tabletFontSize": 15,
-                                        "tabletLineHeight": 1.7,
-                                        "tabletLetterSpacing": 0,
-                                        "tabletFontWeight": 400,
-                                        "tabletFontStyle": "",
-                                        "mobileFontSize": 15,
-                                        "mobileLineHeight": 1.7,
-                                        "mobileLetterSpacing": 0,
-                                        "mobileFontWeight": 400,
-                                        "mobileFontStyle": "",
-                                        "iconPosition": "left",
-                                        "iconSize": "custom",
-                                        "iconCustomSize": 15,
-                                        "iconSpacing": 6,
-                                        "tabletSize": "custom",
-                                        "tabletPaddingTB": 11,
-                                        "tabletPaddingTop": 11,
-                                        "tabletPaddingBottom": 11,
-                                        "tempTabletPaddingTB": 11,
-                                        "tempTabletPaddingTop": 11,
-                                        "tempTabletPaddingBottom": 11,
-                                        "tabletPaddingRL": 10,
-                                        "tabletPaddingRight": 10,
-                                        "tabletPaddingLeft": 10,
-                                        "tempTabletPaddingRL": 26,
-                                        "tempTabletPaddingRight": 10,
-                                        "tempTabletPaddingLeft": 10,
-                                        "tabletBorderRadius": 2,
-                                        "mobileSize": "custom",
-                                        "mobilePaddingTB": 11,
-                                        "mobilePaddingTop": 11,
-                                        "mobilePaddingBottom": 11,
-                                        "tempMobilePaddingTB": 11,
-                                        "tempMobilePaddingTop": 11,
-                                        "tempMobilePaddingBottom": 11,
-                                        "mobilePaddingRL": 10,
-                                        "mobilePaddingRight": 10,
-                                        "mobilePaddingLeft": 10,
-                                        "tempMobilePaddingRL": 26,
-                                        "tempMobilePaddingRight": 10,
-                                        "tempMobilePaddingLeft": 10,
-                                        "mobileBorderRadius": 2,
-                                        "tabsState": "",
-                                        "tabsColor": "",
-                                        "_id": "gbmpwlimekzeyrynflbfmdwyurzejevvzbpk"
+                                      type: "Button",
+                                      value: {
+                                        _styles: ["button"],
+                                        _id:
+                                          "autnoebghjcanjxehrjsyiafjlcbydebqayz",
+                                        text: "Buy DroneX",
+                                        iconName: "",
+                                        iconType: "",
+                                        borderRadiusType: "rounded",
+                                        tempBorderRadiusType: "rounded",
+                                        paddingRight: 26,
+                                        paddingLeft: 26,
+                                        fillType: "filled",
+                                        borderRadius: 30,
+                                        borderWidth: 0,
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: 0,
+                                        bgColorOpacity: 1,
+                                        bgColorPalette: "color3",
+                                        hoverBgColorOpacity: 1,
+                                        hoverBorderColorOpacity: 0,
+                                        tempFillType: "outline",
+                                        paddingRL: 26,
+                                        paddingTB: 16,
+                                        paddingTop: 16,
+                                        paddingBottom: 16,
+                                        gradientColorOpacity: 0,
+                                        gradientColorPalette: "",
+                                        colorPalette: "color8",
+                                        colorOpacity: 1,
+                                        size: "custom",
+                                        fontSize: 15,
+                                        tempPaddingTB: 16,
+                                        tempPaddingTop: 16,
+                                        tempPaddingBottom: 16,
+                                        tempPaddingRL: 26,
+                                        tempPaddingRight: 26,
+                                        tempPaddingLeft: 26,
+                                        tempBgColorPalette: "color3",
+                                        tempBorderColorPalette: "color3",
+                                        hoverColorPalette: "color2",
+                                        hoverColorOpacity: 1,
+                                        hoverBgColorPalette: "color8",
+                                        hoverBorderColorPalette: "",
+                                        tempHoverBorderColorPalette: "",
+                                        hoverBgColorHex: "#ffffff",
+                                        tempHoverBgColorOpacity: 1,
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBorderColorHex: "#ffffff",
+                                        tempBorderWidth: 2,
+                                        tabletSize: "medium",
+                                        tabletFontSize: 12,
+                                        tabletPaddingTB: 14,
+                                        tabletPaddingTop: 14,
+                                        tabletPaddingBottom: 14,
+                                        tempTabletPaddingTB: 14,
+                                        tempTabletPaddingTop: 14,
+                                        tempTabletPaddingBottom: 14,
+                                        tabletPaddingRL: 42,
+                                        tabletPaddingRight: 42,
+                                        tabletPaddingLeft: 42,
+                                        tempTabletPaddingRL: 42,
+                                        tempTabletPaddingRight: 42,
+                                        tempTabletPaddingLeft: 42,
+                                        tabletBorderRadius: 25
+                                      }
+                                    }
+                                  ],
+                                  _id: "hvgdiqptmniehtoxqtrqpipqemubkclqvzkb",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  horizontalAlign: "center",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
+                                }
+                              }
+                            ],
+                            _id: "ppzboqlaptnszciqyjjqvuoemckddmebfexf",
+                            width: 100,
+                            bgColorType: "gradient",
+                            gradientActivePointer: "finishPointer",
+                            gradientStartPointer: 56,
+                            gradientFinishPointer: 84,
+                            gradientLinearDegree: 0,
+                            gradientColorHex: "#000002",
+                            gradientColorOpacity: 0,
+                            tempGradientColorOpacity: 1,
+                            gradientColorPalette: "",
+                            tempGradientColorPalette: "color2",
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            mobilePaddingRight: 0,
+                            mobilePaddingLeft: 0,
+                            bgColorHex: "#000000",
+                            bgColorOpacity: 1,
+                            tempBgColorOpacity: 1,
+                            bgColorPalette: "",
+                            tempBgColorPalette: "",
+                            paddingBottomSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingBottom: 140,
+                            tempPaddingBottom: 140
+                          }
+                        }
+                      ],
+                      _id: "bopxosjwikvftlbmtikomazfewgpuzeapeqp"
+                    }
+                  }
+                ],
+                _id: "vwfvezrddoqblamgnafodlnkjjcjaljpwuna",
+                bgColorPalette: "",
+                tempBgColorPalette: "",
+                bgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                paddingType: "ungrouped",
+                paddingTop: 140,
+                bgColorType: "gradient",
+                gradientActivePointer: "finishPointer",
+                gradientType: "radial",
+                gradientStartPointer: 0,
+                gradientFinishPointer: 76,
+                gradientColorPalette: "color2",
+                tempGradientColorPalette: "color2",
+                gradientColorOpacity: 1,
+                gradientColorHex: "#000002",
+                tempGradientColorOpacity: 1,
+                paddingBottom: 0,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingBottom: 75,
+                gradientRadialDegree: 600,
+                bgColorHex: "#4c2271",
+                tempBgColorOpacity: 1,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                tempPaddingTop: 140,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                tempPaddingBottom: 96,
+                tabletPaddingTopSuffix: "px",
+                tempTabletPaddingTopSuffix: "px",
+                tabletPaddingSuffix: "px",
+                tempTabletPaddingSuffix: "px",
+                tabletPaddingTop: 75,
+                tempTabletPaddingTop: 75,
+                tabletPaddingBottomSuffix: "px",
+                tempTabletPaddingBottomSuffix: "px",
+                tempTabletPaddingBottom: 75,
+                tabletGradientRadialDegree: 400,
+                mobilePaddingTopSuffix: "px",
+                tempMobilePaddingTopSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px",
+                mobilePaddingTop: 50,
+                tempMobilePaddingTop: 50,
+                mobilePaddingBottomSuffix: "px",
+                tempMobilePaddingBottomSuffix: "px",
+                mobilePaddingBottom: 50,
+                tempMobilePaddingBottom: 50,
+                mobileGradientRadialDegree: 500
+              }
+            }
+          ],
+          _id: "ppuljgawiqgzdtppotebmxafkqyyjfmcbsdc",
+          _thumbnailSrc: 6611914,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 304,
+          _thumbnailTime: 1626699417825
+        },
+        blockId: "Kit2Blank000Light"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
+                                    "wrapper-clone",
+                                    "wrapper-clone--icon"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "plgssxszqdvhosnjnhdwycemcuhqpmclqwch",
+                                        name: "box-3d-50",
+                                        type: "outline",
+                                        size: "large",
+                                        customSize: 64,
+                                        borderRadius: 0,
+                                        colorPalette: "color7",
+                                        colorOpacity: 1
+                                      }
+                                    }
+                                  ],
+                                  _id: "mnywmrwecqfnkrbvkrygmbdnowtmzpdvdynw",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "xojkijfbzffmucsiabzyknprocbubjkkshcm",
+                                        height: 20,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "tyxrowigqsiinucpfwughjfknpwpvnpiimce"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "hmgonyqgxoiymqclwsjydvenxvvfuyzwxibn",
+                                        text:
+                                          '<p class="brz-tp-lg-heading5 brz-text-lg-center" data-generated-css="brz-css-finxn" data-uniq-id="ofqsw"><strong class="brz-cp-color8">No‑contact delivery</strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "iujijdtginlwntjweundznshwjsxgvlxpxiw",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "sztkifdvrjvsmomacrgvjdaorktmfsecrbwc",
+                                        height: 10,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "oeqydnlvknkifqhilszogqwmxivevcsninsd"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "pnwsyxnpoxhzdbibezdtztccjikhifpfohcr",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading6" data-uniq-id="dxeps" data-generated-css="brz-css-ilplo"><span class="brz-cp-color7">Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Turpis egestas maecenas.</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "lywwadrgrjvioonqzgfmeybbhktgcrspehpw",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              }
+                            ],
+                            _id: "imilglwlktchcbozbdyxajoypjfdrsyzqtyg",
+                            width: 33.3,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            mobilePaddingRight: 20,
+                            tempMobilePaddingRight: 20,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingLeft: 20,
+                            tempMobilePaddingLeft: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
+                                    "wrapper-clone",
+                                    "wrapper-clone--icon"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "retveeehsajsezdfklfkmyzbrtaefvqmuecc",
+                                        name: "chat-46",
+                                        type: "outline",
+                                        size: "large",
+                                        customSize: 64,
+                                        borderRadius: 0,
+                                        colorPalette: "color7",
+                                        colorOpacity: 1
+                                      }
+                                    }
+                                  ],
+                                  _id: "piwiqywxbnwhaqkvbzcvpakpkdsoggsrougx",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "gxunskclfkwcgtkzfwlaqcxzadeygqfhcvxs",
+                                        height: 20,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "ufsnztemtbdtrvggiqdhgbgkxdqrxhrzrbzr"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "wyyfgkgfhutabgffgoefdxkybcyllznwokhf",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading5" data-uniq-id="jptuc" data-generated-css="brz-css-tqzee"><strong class="brz-cp-color8">Get help buying</strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "cildzyekpgtdmrysgwwbemaloxcobseovxfo",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "fzksyanpoihybryjzanddcakdsmhoreaokul",
+                                        height: 10,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "qsanuvvctohzokcohbkflmgrkwccluqyqndl"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "pmsrtuphjbybcykwofrumviroiweensgghwz",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading6" data-uniq-id="sbtlr" data-generated-css="brz-css-cbeon"><span class="brz-cp-color7">Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Turpis egestas maecenas.</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "ffqgglnoybiwzzfcgoljxpwaelbqmpkbxnkg",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              }
+                            ],
+                            _id: "rtkesfyukxrfdmpbnishldorewgdwincddqe",
+                            width: 33.3,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            mobilePaddingRight: 20,
+                            tempMobilePaddingRight: 20,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingLeft: 20,
+                            tempMobilePaddingLeft: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
+                                    "wrapper-clone",
+                                    "wrapper-clone--icon"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "htjgxnnspvoaljflsrwmwjnrblgqcmbeqqrt",
+                                        name: "single-04",
+                                        type: "outline",
+                                        size: "large",
+                                        customSize: 64,
+                                        borderRadius: 0,
+                                        colorPalette: "color7",
+                                        colorOpacity: 1
+                                      }
+                                    }
+                                  ],
+                                  _id: "wiatuqoifsxbjovzycramavuxwnudblilbkf",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "nfrqqzptuwekieoikiwyhtrsqabqzpdojlzd",
+                                        height: 20,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "avffszlgnlwobcfboxufjnbjpepbdgfadddd"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "mftbytzmvpcjnwdtkuqvnhcxitcylnerbyxp",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading5" data-uniq-id="czgft" data-generated-css="brz-css-rwhce"><strong class="brz-cp-color8">Personal assistant</strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "yqmafzkmiibgxejucvzgpfbacaxvwhvnvvll",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        _id:
+                                          "nmfusfhguhltsoesntuonifwvtwxyabuflrn",
+                                        height: 10,
+                                        heightSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "exfmsfzpxzujiblnspgsvcauglxvzcbtaqmf"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "vadowjnppjinchdmtvdahrwwovanelbqptrd",
+                                        text:
+                                          '<p class="brz-text-lg-center brz-tp-lg-heading6" data-uniq-id="athgm" data-generated-css="brz-css-amuew"><span class="brz-cp-color7">Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Turpis egestas maecenas.</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "zdjnrwisnreaprmgcjvsbhktplnlrakgseyw",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
+                                }
+                              }
+                            ],
+                            _id: "qqdhqhluowgmstqxytlijazxhbqsalgpgmyp",
+                            width: 33.4,
+                            mobilePaddingRightSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            mobilePaddingSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            mobilePaddingRight: 20,
+                            tempMobilePaddingRight: 20,
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePaddingLeft: 20,
+                            tempMobilePaddingLeft: 20
+                          }
+                        }
+                      ],
+                      _id: "asxjemexebalvkigihqmyemjaihsyrqnrkhr"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--spacer"],
+                      items: [
+                        {
+                          type: "Spacer",
+                          value: {
+                            _styles: ["spacer"],
+                            _id: "tipiputzkotffoirtfjgxztrxvcbmiqboorx",
+                            tabletHeight: 30,
+                            tabletHeightSuffix: "px",
+                            mobileHeight: 40,
+                            mobileHeightSuffix: "px"
+                          }
+                        }
+                      ],
+                      _id: "nqktdwcwjhvdxmuqirealguafapfijvwhcfi"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--line"],
+                      items: [
+                        {
+                          type: "Line",
+                          value: {
+                            _styles: ["line"],
+                            _id: "zfnzgdhcsdhrwahtbrvzzzaqfvgxybnizliy",
+                            width: 100,
+                            widthSuffix: "%",
+                            borderStyle: "solid",
+                            tempBorderStyle: "solid",
+                            borderColorHex: "#73777f",
+                            borderColorOpacity: 0.42,
+                            tempBorderColorOpacity: 0.42,
+                            borderColorPalette: "color7",
+                            tempBorderColorPalette: "color7",
+                            borderWidthType: "grouped",
+                            borderWidth: 1,
+                            tempBorderWidth: 1,
+                            borderTopWidth: 1,
+                            tempBorderTopWidth: 2,
+                            borderRightWidth: 1,
+                            tempBorderRightWidth: 2,
+                            borderBottomWidth: 1,
+                            tempBorderBottomWidth: 2,
+                            borderLeftWidth: 1,
+                            tempBorderLeftWidth: 2
+                          }
+                        }
+                      ],
+                      _id: "trbkufeqlzhadsneobsvcksakmzwpxruwykn",
+                      mobileMarginTopSuffix: "px",
+                      mobileMarginTop: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px"
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
+                                    {
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        _id:
+                                          "wzmvkthxcchyztloyydbeuhykwhtkbxjrlry",
+                                        menuSelected:
+                                          "afa3d7e6a1ce8cd7bf6c34e93ed37a1118fe11593242a154ecfd1391e864fd0e",
+                                        colorHex: "#000000",
+                                        colorOpacity: 1,
+                                        tempColorOpacity: 1,
+                                        colorPalette: "color8",
+                                        tempColorPalette: "",
+                                        tabsState: "tabNormal",
+                                        hoverColorHex: "#000000",
+                                        hoverColorOpacity: 1,
+                                        tempHoverColorOpacity: 1,
+                                        hoverColorPalette: "color1",
+                                        tempHoverColorPalette: "",
+                                        activeColorHex: "#FFFFFF",
+                                        activeColorOpacity: 1,
+                                        tempActiveColorOpacity: 1,
+                                        activeColorPalette: "color1",
+                                        tempActiveColorPalette: "",
+                                        itemPadding: 25,
+                                        itemPaddingRight: 25,
+                                        itemPaddingLeft: 25,
+                                        tabletMMenuSize: 35,
+                                        tabletMMenuSizeSuffix: "",
+                                        tabletMMenuIconColorPalette: "color6",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: null,
+                                        mobileMMenuSize: 35,
+                                        mobileMMenuSizeSuffix: "",
+                                        mMenuColorPalette: "color8",
+                                        mMenuColorOpacity: 1,
+                                        mMenuHoverColorPalette: "color8",
+                                        mMenuHoverColorOpacity: 1,
+                                        activeMMenuColorPalette: "color1",
+                                        activeMMenuColorOpacity: null,
+                                        mMenuBgColorPalette: "color2",
+                                        mMenuBgColorOpacity: 1,
+                                        mobileMMenuIconColorPalette: "color8",
+                                        mobileMMenuIconColorHex: "",
+                                        mobileMMenuIconColorOpacity: null,
+                                        tabletMMenu: "off"
+                                      }
+                                    }
+                                  ],
+                                  _id: "qadyyyuytixtgeeayckksbjipnuwyfneoulq",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  horizontalAlign: "left"
+                                }
+                              }
+                            ],
+                            _id: "ayiwsnpgevmspckmhanczngqraiqzswenbxs",
+                            paddingLeft: 0,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tabletWidth: 63.1,
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingRight: 0,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingLeft: 0,
+                            mobileWidth: 49.5
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
+                                    "wrapper-clone",
+                                    "wrapper-clone--icon"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "edmnfnucqneumzxohkpxcsbvnkuxrqxbzopn",
+                                        name: "logo-instagram",
+                                        type: "glyph",
+                                        size: "custom",
+                                        customSize: 18,
+                                        borderRadius: 0,
+                                        colorPalette: "color8",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color1",
+                                        hoverColorOpacity: 1,
+                                        hoverColorHex: "#8d1ccd"
                                       }
                                     },
                                     {
-                                      "type": "Button",
-                                      "value": {
-                                        "_styles": [
-                                          "button"
-                                        ],
-                                        "text": "GET STARTED ",
-                                        "iconName": "",
-                                        "iconType": "",
-                                        "size": "custom",
-                                        "fontSize": 13,
-                                        "paddingTB": 12,
-                                        "paddingTop": 12,
-                                        "paddingBottom": 12,
-                                        "tempPaddingTB": 12,
-                                        "tempPaddingTop": 12,
-                                        "tempPaddingBottom": 12,
-                                        "paddingRL": 20,
-                                        "paddingRight": 20,
-                                        "paddingLeft": 20,
-                                        "tempPaddingRL": 20,
-                                        "tempPaddingRight": 20,
-                                        "tempPaddingLeft": 20,
-                                        "borderRadius": 4,
-                                        "borderWidth": 0,
-                                        "borderRadiusType": "custom",
-                                        "tempBorderRadiusType": "custom",
-                                        "fillType": "filled",
-                                        "borderColorOpacity": 0,
-                                        "borderColorPalette": 0,
-                                        "bgColorOpacity": 1,
-                                        "bgColorPalette": "color3",
-                                        "hoverBgColorOpacity": 1,
-                                        "hoverBorderColorOpacity": 1,
-                                        "tempBorderRadius": 4,
-                                        "tempBgColorPalette": "color3",
-                                        "tempBorderColorPalette": "color3",
-                                        "bgColorHex": "#239ddb",
-                                        "tempBgColorOpacity": 1,
-                                        "borderColorHex": "#239ddb",
-                                        "hoverBorderColorHex": "#142850",
-                                        "tempBorderColorOpacity": 1,
-                                        "hoverBgColorHex": "#142850",
-                                        "hoverBgColorPalette": "color2",
-                                        "hoverBorderColorPalette": "color2",
-                                        "tempHoverBorderColorPalette": "",
-                                        "tempHoverBgColorOpacity": 1,
-                                        "tempHoverBgColorPalette": "color3",
-                                        "fontFamily": "montserrat",
-                                        "lineHeight": 1.5,
-                                        "letterSpacing": 1,
-                                        "fontWeight": 500,
-                                        "fontStyle": "button",
-                                        "tabsState": "",
-                                        "tabsColor": "",
-                                        "tempBorderWidth": 2,
-                                        "_id": "dmmqygstejrbkosqznquklmkvkwnasooqsuk"
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "ipnmfnroxoqkuikiivysxtrszcskydyteike",
+                                        name: "logo-facebook",
+                                        type: "glyph",
+                                        size: "custom",
+                                        customSize: 18,
+                                        borderRadius: 0,
+                                        colorPalette: "color8",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color1",
+                                        hoverColorOpacity: 0.8
+                                      }
+                                    },
+                                    {
+                                      type: "Icon",
+                                      value: {
+                                        _styles: ["icon"],
+                                        _id:
+                                          "szyackcnkwhxpnhqqoyakxznsogrcsfysisl",
+                                        name: "email-83",
+                                        type: "glyph",
+                                        size: "custom",
+                                        customSize: 18,
+                                        borderRadius: 0,
+                                        colorPalette: "color8",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color1",
+                                        hoverColorOpacity: 0.8
                                       }
                                     }
                                   ],
-                                  "itemPadding": 30,
-                                  "itemPaddingRight": 30,
-                                  "itemPaddingLeft": 30,
-                                  "horizontalAlign": "right",
-                                  "marginType": "grouped",
-                                  "tabletHorizontalAlign": "right",
-                                  "mobileHorizontalAlign": "center",
-                                  "showOnTablet": "on",
-                                  "_id": "jmlipbnjppiezotulnvfudebutjnesgpwgai"
+                                  _id: "jpbeztnztdvztxfwhsugoebuuaavbfcxycas",
+                                  itemPadding: 15,
+                                  itemPaddingRight: 15,
+                                  itemPaddingLeft: 15,
+                                  horizontalAlign: "right",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0
                                 }
                               }
                             ],
-                            "width": 33.4,
-                            "verticalAlign": "center",
-                            "paddingType": "grouped",
-                            "padding": 0,
-                            "paddingSuffix": "px",
-                            "paddingTop": 0,
-                            "paddingRight": 0,
-                            "paddingBottom": 0,
-                            "paddingLeft": 0,
-                            "tabletWidth": 46.4,
-                            "showOnTablet": "on",
-                            "showOnMobile": "on",
-                            "_id": "rjodolibstpjdaclaykqwjpcidejpkyvunhz"
+                            _id: "tyusakzztdcoeianpxypncpeiacurfcfzwoj",
+                            paddingRight: 5,
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingRight: 5,
+                            tabletWidth: 36.5,
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingRight: 5,
+                            tempTabletPaddingRight: 5,
+                            mobileWidth: 50.3
                           }
                         }
                       ],
-                      "padding": 0,
-                      "paddingSuffix": "px",
-                      "paddingTop": 0,
-                      "paddingRight": 0,
-                      "paddingBottom": 0,
-                      "paddingLeft": 0,
-                      "size": 100,
-                      "tabletPaddingRight": 0,
-                      "tabletPaddingRightSuffix": "px",
-                      "tabletPadding": 0,
-                      "tabletPaddingLeft": 0,
-                      "tabletPaddingLeftSuffix": "px",
-                      "_id": "swkjpcajszqwvjqtmyanyqaefyrtkivcvsie"
-                    }
-                  }
-                ],
-                "bgImageWidth": 0,
-                "bgImageHeight": 0,
-                "bgImageSrc": "",
-                "bgPositionX": 50,
-                "bgPositionY": 50,
-                "bgPopulation": "",
-                "bgColorOpacity": 1,
-                "tempBgColorOpacity": 1,
-                "bgColorHex": "#ffffff",
-                "bgColorPalette": "",
-                "boxShadow": "on",
-                "boxShadowBlur": 7,
-                "boxShadowColorOpacity": 0.15,
-                "boxShadowVertical": 1,
-                "boxShadowColorHex": "#000000",
-                "boxShadowColorPalette": "",
-                "_id": "hnjnlxtelgrgjrudihhjrdgxsqfyipnrhabp"
-              }
-            }
-          ],
-          "type": "static",
-          "_id": "acbpicbjpwwaijatgnzjoiuwcbcalxzgsmxk",
-          "_thumbnailSrc": 5756203,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 34,
-          "_thumbnailTime": 1616072621517
-        },
-        "blockId": "block2kit14911"
-      },
-      {
-        "type": "Section",
-        "value": {
-          "_styles": [
-            "section"
-          ],
-          "items": [
-            {
-              "type": "SectionItem",
-              "value": {
-                "_styles": [
-                  "section-item"
-                ],
-                "items": [
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--richText"
-                      ],
-                      "items": [
-                        {
-                          "type": "RichText",
-                          "value": {
-                            "_styles": [
-                              "richText"
-                            ],
-                            "_id": "njadlbcniopwaippztyozvapaobpnjzcycqr",
-                            "text": "<p class=\"brz-tp-sm-heading4 brz-tp-lg-heading2 brz-tp-xs-heading4\"><span class=\"brz-cp-color8\">FAQ</span></p>"
-                          }
-                        }
-                      ],
-                      "_id": "jwvbkrkpkzunzhvehjjeljrfozkqdjxzhfnc"
+                      _id: "cupyrqubjerzfgtmhjhwjjphlpbsgelamjqd"
                     }
                   },
                   {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--spacer"
-                      ],
-                      "items": [
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
                         {
-                          "type": "Spacer",
-                          "value": {
-                            "_styles": [
-                              "spacer"
-                            ],
-                            "_id": "hbzglwhmdogjenpjshummpopppgloynjxcpc",
-                            "height": 30,
-                            "heightSuffix": "",
-                            "mobileHeight": 10,
-                            "mobileHeightSuffix": ""
-                          }
-                        }
-                      ],
-                      "_id": "feulxcvifnqkuamsqsmjgyighqsrrtqvkiuc"
-                    }
-                  },
-                  {
-                    "type": "Wrapper",
-                    "value": {
-                      "_styles": [
-                        "wrapper",
-                        "wrapper--tabs"
-                      ],
-                      "items": [
-                        {
-                          "type": "Tabs",
-                          "value": {
-                            "_styles": [
-                              "tabs"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Tab",
-                                "value": {
-                                  "labelText": "Product",
-                                  "items": [
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
                                     {
-                                      "type": "Wrapper",
-                                      "value": {
-                                        "_styles": [
-                                          "wrapper",
-                                          "wrapper--accordion"
-                                        ],
-                                        "items": [
-                                          {
-                                            "type": "Accordion",
-                                            "value": {
-                                              "_styles": [
-                                                "accordion"
-                                              ],
-                                              "items": [
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is the weight of DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "lnlxwopytwrriegfltyizxswnsegvjqngiaq",
-                                                                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams.  Check local rules and regulations before use.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "gvcsiycmlffuiyalpkvtlhaseaokbsiksqbd"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "rejuogsbjipfwybhswmseppuomlgsdhahrjc",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "fdmhhndqoumgdblnngnutwpfigrhxsebisgc"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "omycooqkvptztqjrwnkpfkydbtwnwmanrnsa"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support panorama?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "svrcpvvomzndfiqxxysmjttsxzpomyhyvqjt",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "pkwyfruvwurggbgbmrwrcmsqwulugmtwzntc"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "xjaanyvcckzlnqjglqjqixqpawlstwcibsmm",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "nghcpeuanslypheysutqxcwubidxxazxkyfy"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "cqohgscoqsufctmonxekyytkvfhafirswkln"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Where can I find tips about using DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "ddwkfrgpgsbfzhknoiomlxvymvvorzyztnjw",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "hkbmqzomjzdnwqewubsbvvyeozgsfgnebfkx"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "twqrpvaoxipadivmgetqblqxpeiqmxnjxpir",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "dagjholycyffrvufupjpamzggthlcccdxaor"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "rzzfebzdhzeacwxocizmliamgxdrnxevmsnv"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support obstacle avoidance?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "xrrzefpbqsupopigxndnkabfajudioxjfelx",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "fbaagdzehdfxeebvjwnhoihsupdklheaqtrh"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "wccneiwlhsfkgylkjyjspajsvwkgjrltimsl",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "jzjcktfnthyidklklsdxhavpgfuckurresmg"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "ibucucszusrtlvvljlhcpibihpdgjcgkejkm"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is SmartPhoto?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "sxdthgaflcondqslmuhkyhhayeetlvbeyrmz",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "cndbbzpvrmwhgcnupiowpfivifahzlmiptcr"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "aahomnkzrkxwkviwfexeaudzjkewvwedyztc",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "rqrdnlsqkultcsqtilqyjfummgtfzjuvaehw"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "wsoiffrfdyxwwayevbqifepcxzqkpmjtchtb"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Can I control the camera settings manually?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "zxcdbxbxeffhdgkstwgkhfejolpvrbxpvnsa",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "rvaiiyshkdhdlvzklebkqkxbahruvdlimhhs"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "geinhkvnwvmsozymoacawnpdyirbwsotdktv",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "ycbuwxrldptrcuxoawxvjapjfmzmjudwhtsn"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "yiieftkhwmwjwteipqlzpfxdcyrhuwdphzzj"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What photo resolutions and formats are available?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "sxwqhzptkhpmhwdadhcqhxvrftibxtfzjxpc",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "tzpawdorumilnfaufogixqyrzpmhouytamhy"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "hxgfyecirpeoptbjrgpimfpruozxlnrboftj",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "vzphckvazbhlikvaavouacnsluodeiqnqncs"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "jabpmxapyaotaimzgcbcaryuljrouvvujegj"
-                                                  }
-                                                }
-                                              ],
-                                              "_id": "hohczpdxnyjapwfwhsugsrtlkbvrkaxxlohd",
-                                              "fontStyle": "heading5",
-                                              "bgColorHex": "#000002",
-                                              "bgColorOpacity": 1,
-                                              "tempBgColorOpacity": 1,
-                                              "bgColorPalette": "color5",
-                                              "tempBgColorPalette": "",
-                                              "borderStyle": "solid",
-                                              "tempBorderStyle": "solid",
-                                              "borderColorHex": "#dcdee1",
-                                              "borderColorOpacity": 0.2,
-                                              "tempBorderColorOpacity": 0.2,
-                                              "borderColorPalette": "",
-                                              "tempBorderColorPalette": "",
-                                              "borderWidthType": "grouped",
-                                              "borderWidth": 1,
-                                              "tempBorderWidth": 1,
-                                              "borderTopWidth": 1,
-                                              "tempBorderTopWidth": 2,
-                                              "borderRightWidth": 1,
-                                              "tempBorderRightWidth": 2,
-                                              "borderBottomWidth": 1,
-                                              "tempBorderBottomWidth": 2,
-                                              "borderLeftWidth": 1,
-                                              "tempBorderLeftWidth": 2,
-                                              "borderRadius": 20,
-                                              "borderTopLeftRadius": 20,
-                                              "borderTopRightRadius": 20,
-                                              "borderBottomLeftRadius": 20,
-                                              "borderBottomRightRadius": 20,
-                                              "tempBorderRadius": 20,
-                                              "tempBorderTopLeftRadius": 20,
-                                              "tempBorderTopRightRadius": 20,
-                                              "tempBorderBottomLeftRadius": 20,
-                                              "tempBorderBottomRightRadius": 20,
-                                              "activeAccordionItem": 0,
-                                              "colorHex": "#FFFFFF",
-                                              "colorOpacity": 1,
-                                              "tempColorOpacity": 1,
-                                              "colorPalette": "color8",
-                                              "tempColorPalette": "color8",
-                                              "navIcon": "thin",
-                                              "spacing": 5,
-                                              "spacingSuffix": ""
-                                            }
-                                          }
-                                        ],
-                                        "_id": "xkssnkqxyiuzmiicnpwqtooibfonaqhisuqr",
-                                        "padding": 55,
-                                        "paddingTop": 25,
-                                        "paddingRight": 70,
-                                        "paddingBottom": 25,
-                                        "paddingLeft": 70,
-                                        "paddingSuffix": "px",
-                                        "paddingTopSuffix": "px",
-                                        "paddingRightSuffix": "px",
-                                        "paddingBottomSuffix": "px",
-                                        "paddingLeftSuffix": "px",
-                                        "tempPaddingSuffix": "px",
-                                        "tempPaddingTopSuffix": "px",
-                                        "tempPaddingRightSuffix": "px",
-                                        "tempPaddingBottomSuffix": "px",
-                                        "tempPaddingLeftSuffix": "px",
-                                        "tempPadding": 55,
-                                        "tempPaddingTop": 25,
-                                        "tempPaddingRight": 70,
-                                        "tempPaddingBottom": 25,
-                                        "tempPaddingLeft": 70,
-                                        "paddingType": "ungrouped"
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "paurwregmyxlikiwepafbubntqcesshhteow",
+                                        text:
+                                          '<p class="brz-text-lg-left brz-tp-lg-abovetitle brz-text-xs-center" data-generated-css="brz-css-fcxwc" data-uniq-id="dorll"><span class="brz-cp-color7">Copyright © 2021 DroneX Inc. All rights reserved.</span></p>'
                                       }
                                     }
                                   ],
-                                  "_id": "ydchfbtokevbsxrkevessvgfrmprexibmocf"
-                                }
-                              },
-                              {
-                                "type": "Tab",
-                                "value": {
-                                  "labelText": "Camera",
-                                  "items": [
-                                    {
-                                      "type": "Wrapper",
-                                      "value": {
-                                        "_styles": [
-                                          "wrapper",
-                                          "wrapper--accordion"
-                                        ],
-                                        "items": [
-                                          {
-                                            "type": "Accordion",
-                                            "value": {
-                                              "_styles": [
-                                                "accordion"
-                                              ],
-                                              "items": [
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is the weight of DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "saplogoeimcmdvdywhjkxcoutzedrukxwmze",
-                                                                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams.  Check local rules and regulations before use.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "eeihsutkbgcgukoxqlrfxenfwuhviytxutco"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "pxmxmagkhgyaqzdnuldqaqzigfrvcqmlszuc",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "lpyohxvnibtcqmkpifrqaaqcwzkbhqnqbfra"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "kbdleutainktemvlzuxkeobxdqyatsjzcdbw"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support panorama?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "ttsmkyjejtmcdvafjcpddxavsfmfmefekdiu",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "ohamlxncxsnkitjuotwqglnnndwkrwaxdrdv"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "glrcknljzcakvdzlycsrxjytpygkubjkgywv",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "pfbdiyrqotxkbmijdbtqgioknddfxiorpblw"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "coksvgnmramuautnyafhlvttmezwdgazhnyt"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Where can I find tips about using DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "flxdzlkutkibwusfqqjfvirujeaeftsrtgus",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "vqoppdmenbhggnsmdqpajowkwpzfwfcobzki"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "hgfyanocmcwzujqizopmlppzqejntnqnielh",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "flfvkwwzbalbxkftbteyfuaknefofacrauhy"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "baartcrulysfoclkvfuhqyiijpfzypvwzymr"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support obstacle avoidance?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "quauwzpokifbjuporzlkssvlairnkcbubijj",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "dbaqlvnojzacolvxccdotnxvbvquwzzxkfrv"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "qwxdryiiqkhgkbayemlvobgnibpgmnncphrq",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "kvwtmujathpkkpjgcgdasfkgsfrdxviuwgic"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "lrxgpnifujjcdynkwzfnxpwwixjagyfczwft"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is SmartPhoto?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "kcavbpvvgxwatjjtvvbzcjivefpxaidanrpt",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "gxtwtxdkgorcxmiqfgtohvanyidvpxpszqsy"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "exwkbhdlcsvbbceruzjxmmkgkchgxdvhhmrv",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "prjugnlzpnivixbragzpkaoivmuqkoobqvdn"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "ulkbsxcmbxhermrtwrktrxbacrpaaxlytixi"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Can I control the camera settings manually?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "neyqtlpmpogsnfagwlpoyjrmohylwdrfttit",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "woljahonevxzwbwroobbibczzwsgiynoitfv"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "rapefrcumuylyjpkhnkvrnbtrmfhyuhfxywt",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "kkxytlwprxdpozfnuafteijzxioytwhuncpb"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "dewikyjbywcxpurmupijkggseswuacymbewq"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What photo resolutions and formats are available?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "dqrpdodlvnvvdawqhsdmjmocstaubecddxrf",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "quwzivfbewpfokyfhlxuopadfamsfamiknwn"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "yvytjzlyupuxjyftcegchkapsxqzzaxgjmkm",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "plfgbctfckzmmojzcvawmdibhdxdkadyczux"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "sorleygqqkxtxowuncllvbabmdqrdjjyygal"
-                                                  }
-                                                }
-                                              ],
-                                              "_id": "iqbywxzjmeudxkzxczcvltesqxvekftubtkb",
-                                              "fontStyle": "heading5",
-                                              "bgColorHex": "#000002",
-                                              "bgColorOpacity": 1,
-                                              "tempBgColorOpacity": 1,
-                                              "bgColorPalette": "color5",
-                                              "tempBgColorPalette": "",
-                                              "borderStyle": "solid",
-                                              "tempBorderStyle": "solid",
-                                              "borderColorHex": "#dcdee1",
-                                              "borderColorOpacity": 0.2,
-                                              "tempBorderColorOpacity": 0.2,
-                                              "borderColorPalette": "",
-                                              "tempBorderColorPalette": "",
-                                              "borderWidthType": "grouped",
-                                              "borderWidth": 1,
-                                              "tempBorderWidth": 1,
-                                              "borderTopWidth": 1,
-                                              "tempBorderTopWidth": 2,
-                                              "borderRightWidth": 1,
-                                              "tempBorderRightWidth": 2,
-                                              "borderBottomWidth": 1,
-                                              "tempBorderBottomWidth": 2,
-                                              "borderLeftWidth": 1,
-                                              "tempBorderLeftWidth": 2,
-                                              "borderRadius": 20,
-                                              "borderTopLeftRadius": 20,
-                                              "borderTopRightRadius": 20,
-                                              "borderBottomLeftRadius": 20,
-                                              "borderBottomRightRadius": 20,
-                                              "tempBorderRadius": 20,
-                                              "tempBorderTopLeftRadius": 20,
-                                              "tempBorderTopRightRadius": 20,
-                                              "tempBorderBottomLeftRadius": 20,
-                                              "tempBorderBottomRightRadius": 20,
-                                              "activeAccordionItem": 0,
-                                              "colorHex": "#FFFFFF",
-                                              "colorOpacity": 1,
-                                              "tempColorOpacity": 1,
-                                              "colorPalette": "color8",
-                                              "tempColorPalette": "color8",
-                                              "navIcon": "thin",
-                                              "spacing": 5,
-                                              "spacingSuffix": ""
-                                            }
-                                          }
-                                        ],
-                                        "_id": "mnqsecgppgqszwlfjgjhdldpldjvqqzjpvmo",
-                                        "padding": 55,
-                                        "paddingTop": 25,
-                                        "paddingRight": 70,
-                                        "paddingBottom": 25,
-                                        "paddingLeft": 70,
-                                        "paddingSuffix": "px",
-                                        "paddingTopSuffix": "px",
-                                        "paddingRightSuffix": "px",
-                                        "paddingBottomSuffix": "px",
-                                        "paddingLeftSuffix": "px",
-                                        "tempPaddingSuffix": "px",
-                                        "tempPaddingTopSuffix": "px",
-                                        "tempPaddingRightSuffix": "px",
-                                        "tempPaddingBottomSuffix": "px",
-                                        "tempPaddingLeftSuffix": "px",
-                                        "tempPadding": 55,
-                                        "tempPaddingTop": 25,
-                                        "tempPaddingRight": 70,
-                                        "tempPaddingBottom": 25,
-                                        "tempPaddingLeft": 70,
-                                        "paddingType": "ungrouped"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "pzgyzphqrxzwusspghemypeqlzhkxsbaggiu"
-                                }
-                              },
-                              {
-                                "type": "Tab",
-                                "value": {
-                                  "labelText": "Remote Controller",
-                                  "items": [
-                                    {
-                                      "type": "Wrapper",
-                                      "value": {
-                                        "_styles": [
-                                          "wrapper",
-                                          "wrapper--accordion"
-                                        ],
-                                        "items": [
-                                          {
-                                            "type": "Accordion",
-                                            "value": {
-                                              "_styles": [
-                                                "accordion"
-                                              ],
-                                              "items": [
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is the weight of DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "dmrtjvhdgqnygxxfhwvnxqwryutqgmvkfepy",
-                                                                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams.  Check local rules and regulations before use.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "liyahglsmiulpudkvwhndctwqkcnhvlqmujj"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "idzgyjaekckryotjnnrydwriyajnzexpqjfu",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "ktyfsfclwqnomfgsxnvhhzfgfrbwgnrfccrm"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "pbpptdhtfduxkqunnvodyrndoadcxvgauwsj"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support panorama?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "idqmrxtudfqsfatnxbadnfnpazbtcsiadgef",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "pafishtuktzaqkkaobmslnowuvoujcfqwoeg"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "lpbnuskfebzyvlnbrxkjgfnizbkmedyxdztb",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "hiwmbhrdyhaqjweffaxgcuswxqnsabjauzsl"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "pabwwirohsiinvxckqojzvyfuxpeftajawea"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Where can I find tips about using DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "stnwupsxiunhpsjawyvhvyljrgveezvaclpj",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "olpzwrywltslazufmedhnppdeaxiqkmasgkq"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "toayshtatbikvwcjmkwonujvntznpajhkrgp",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "uqjasdrotjeqzubhbyrgaiyiuihabmutqktt"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "qhsfdmxvadxvcfnopucaxkhumyqvhedjnsds"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support obstacle avoidance?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "uvqfkkpdsvyvytstiptamipnkwzdelaktpja",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "vnpvprvzcndyiwmrxdpwewcsmcerhnddheym"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "dtncpelqmmvpaxfoopjmawlbcldhwtyoxapd",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "jsfwezatvydaoscaqpmavmlolrdjgdrkbtlc"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "ibplflewxzaqdyfivgtsjawyaxstwnesqijk"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is SmartPhoto?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "npidegjiaxlizsdgmwiyxyezbjiebpzpuhpc",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "nliulnqwvhituqiugubfdivhqmmubmhwzvbr"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "vnsfdgunsarfbmwpbqhonvjpnlnxihpehprk",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "fdkkoqrqypydmtedoojhbkacwesgsyezxegf"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "tlorvstmwidcsmxyjnxovwaouuzcssyftklw"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Can I control the camera settings manually?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "zxxsptnzjyxivjusumpzgzeabeivvbmtrezi",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "lqwnspchdarvkknmtlzuskmykjhgkibaiwwn"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "okrpwmondvnbrzfntvwtqvnqgrlcslybyxqk",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "ekeddkwkdwptdjzayvuviaemaciusreypuvx"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "yiieamfftxbjfgqozalwvsmdcmtzrcshwwev"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What photo resolutions and formats are available?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "qvcfanjgustxnvmgcprebrguridcmhcsncqo",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "deplsrmqdzslkwibukyyzpxaddwabcqminvc"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "cripjnjtefgmdcqumqbkipwdqmmifxrytfqy",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "qxlrxkeroqrrhtgvdrpbnjnyxftusutcbrli"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "oouquxfdejwsoheymirlbirepvdnlhmiqrus"
-                                                  }
-                                                }
-                                              ],
-                                              "_id": "erbdxdppdzlajkfityccobrbfapxdkmadnck",
-                                              "fontStyle": "heading5",
-                                              "bgColorHex": "#000002",
-                                              "bgColorOpacity": 1,
-                                              "tempBgColorOpacity": 1,
-                                              "bgColorPalette": "color5",
-                                              "tempBgColorPalette": "",
-                                              "borderStyle": "solid",
-                                              "tempBorderStyle": "solid",
-                                              "borderColorHex": "#dcdee1",
-                                              "borderColorOpacity": 0.2,
-                                              "tempBorderColorOpacity": 0.2,
-                                              "borderColorPalette": "",
-                                              "tempBorderColorPalette": "",
-                                              "borderWidthType": "grouped",
-                                              "borderWidth": 1,
-                                              "tempBorderWidth": 1,
-                                              "borderTopWidth": 1,
-                                              "tempBorderTopWidth": 2,
-                                              "borderRightWidth": 1,
-                                              "tempBorderRightWidth": 2,
-                                              "borderBottomWidth": 1,
-                                              "tempBorderBottomWidth": 2,
-                                              "borderLeftWidth": 1,
-                                              "tempBorderLeftWidth": 2,
-                                              "borderRadius": 20,
-                                              "borderTopLeftRadius": 20,
-                                              "borderTopRightRadius": 20,
-                                              "borderBottomLeftRadius": 20,
-                                              "borderBottomRightRadius": 20,
-                                              "tempBorderRadius": 20,
-                                              "tempBorderTopLeftRadius": 20,
-                                              "tempBorderTopRightRadius": 20,
-                                              "tempBorderBottomLeftRadius": 20,
-                                              "tempBorderBottomRightRadius": 20,
-                                              "activeAccordionItem": 0,
-                                              "colorHex": "#FFFFFF",
-                                              "colorOpacity": 1,
-                                              "tempColorOpacity": 1,
-                                              "colorPalette": "color8",
-                                              "tempColorPalette": "color8",
-                                              "navIcon": "thin",
-                                              "spacing": 5,
-                                              "spacingSuffix": ""
-                                            }
-                                          }
-                                        ],
-                                        "_id": "nirsovtjghsfmlcgffsvqeupxzacslfdaiqx",
-                                        "padding": 55,
-                                        "paddingTop": 25,
-                                        "paddingRight": 70,
-                                        "paddingBottom": 25,
-                                        "paddingLeft": 70,
-                                        "paddingSuffix": "px",
-                                        "paddingTopSuffix": "px",
-                                        "paddingRightSuffix": "px",
-                                        "paddingBottomSuffix": "px",
-                                        "paddingLeftSuffix": "px",
-                                        "tempPaddingSuffix": "px",
-                                        "tempPaddingTopSuffix": "px",
-                                        "tempPaddingRightSuffix": "px",
-                                        "tempPaddingBottomSuffix": "px",
-                                        "tempPaddingLeftSuffix": "px",
-                                        "tempPadding": 55,
-                                        "tempPaddingTop": 25,
-                                        "tempPaddingRight": 70,
-                                        "tempPaddingBottom": 25,
-                                        "tempPaddingLeft": 70,
-                                        "paddingType": "ungrouped"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "jmrkqneboptnmswisfynzdzeufuwdufttbrs"
-                                }
-                              },
-                              {
-                                "type": "Tab",
-                                "value": {
-                                  "labelText": "Propulsion and Battery",
-                                  "items": [
-                                    {
-                                      "type": "Wrapper",
-                                      "value": {
-                                        "_styles": [
-                                          "wrapper",
-                                          "wrapper--accordion"
-                                        ],
-                                        "items": [
-                                          {
-                                            "type": "Accordion",
-                                            "value": {
-                                              "_styles": [
-                                                "accordion"
-                                              ],
-                                              "items": [
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is the weight of DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "mwfokmkkobamyazutdbyhbnwbsijjlxhfxhn",
-                                                                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams.  Check local rules and regulations before use.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "oolecyjpnqhfziflyltaewpzzzdasbysrzmz"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "hecjeskdzxbcblawkrjjuoycxreahkfoaxvm",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "qprvowuccgehrbnfkphwuvpfanpmjewervhl"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "pbhqzdmyzmrmbzksdegntabqmrqdnwxgovdw"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support panorama?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "zjjmcbmtjyxpvrpuixrsvuupeyfllkbytmff",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "vjcktkpfmpgookiykfrclofexledhnppstdm"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "rfuyctlpdgklzoutlkiztaqwbqltrxtgfira",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "fvgqmhxcshjoyamssktthpqbwfchaomksanu"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "eajsfkrqzfcpnpxsmyvujedywelwvczjcwpe"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Where can I find tips about using DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "hgakcwuoosspgdfhbiworxdzsadzcerhobxc",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "whizzhpkxljiwffybkmhyfigokxcfmygrsbd"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "culdvpfmvqjmssgrdokjhatghtudpaencuds",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "krusnwgybxrgnzggtczbzuztluqgueuqumlv"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "qfmhbmeqdtjdxvcuyalhylahmvlnfmifxqpj"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support obstacle avoidance?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "pmhhwrcuibntnqkcpxoqryrexjwdjyhybvlf",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "lsgvzcgwybxdhrynjsulnwgxiaiufgstewgo"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "dsenrskbnfrrzuowvinjsfuzgdljbgvuwmdc",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "wmbkqrphxysptplpggniyiigmmuyvzrybfzi"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "myzhdkiuwhehhxdzypnccodfymmwvziuonod"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is SmartPhoto?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "gipyokjkjotmopaujfvsjhoarouabyevgoxm",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "nygpowwtxqpbslffyhxholvmvoryigtgtgky"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "nsyytzqlikdvjrpceozzcgedegzxgaamvxrf",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "hifnqjdurmmwarxccfabzzkqjaqvvbflkhzp"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "bftjyijukadvyhhombprgmmmofthylbxkofi"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Can I control the camera settings manually?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "qeyczhygqkevdlprpkjluahqcqvwzfduzony",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "kvbixrqkghvqvxeurogrvmgrwgchbepmrvjk"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "rwmpcnehmyclpzewzouugbqfajjabdqwqstz",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "jegyncohlueucgkzhbrrsbulgmrhacisblwf"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "nhvlwxqajjkajlmsqfqacbmiwhavlqyvxghl"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What photo resolutions and formats are available?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "ultggxzhekxmpdmxoegedyuxebwlyeftyunz",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "ifxgxjarehggvwkhdukwjlzgzxzulhieiviy"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "hpwsntcrycpzscqrtkoevuujjfbaeyjeozqp",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "mvvcuhfbjqytudoxsuoxpxqanvxgsnrnwduj"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "boqlscvazfceesosdxblmntdmewuasadlmaj"
-                                                  }
-                                                }
-                                              ],
-                                              "_id": "rlgysodqmigolpvoktywfqtkudhozabpcrmv",
-                                              "fontStyle": "heading5",
-                                              "bgColorHex": "#000002",
-                                              "bgColorOpacity": 1,
-                                              "tempBgColorOpacity": 1,
-                                              "bgColorPalette": "color5",
-                                              "tempBgColorPalette": "",
-                                              "borderStyle": "solid",
-                                              "tempBorderStyle": "solid",
-                                              "borderColorHex": "#dcdee1",
-                                              "borderColorOpacity": 0.2,
-                                              "tempBorderColorOpacity": 0.2,
-                                              "borderColorPalette": "",
-                                              "tempBorderColorPalette": "",
-                                              "borderWidthType": "grouped",
-                                              "borderWidth": 1,
-                                              "tempBorderWidth": 1,
-                                              "borderTopWidth": 1,
-                                              "tempBorderTopWidth": 2,
-                                              "borderRightWidth": 1,
-                                              "tempBorderRightWidth": 2,
-                                              "borderBottomWidth": 1,
-                                              "tempBorderBottomWidth": 2,
-                                              "borderLeftWidth": 1,
-                                              "tempBorderLeftWidth": 2,
-                                              "borderRadius": 20,
-                                              "borderTopLeftRadius": 20,
-                                              "borderTopRightRadius": 20,
-                                              "borderBottomLeftRadius": 20,
-                                              "borderBottomRightRadius": 20,
-                                              "tempBorderRadius": 20,
-                                              "tempBorderTopLeftRadius": 20,
-                                              "tempBorderTopRightRadius": 20,
-                                              "tempBorderBottomLeftRadius": 20,
-                                              "tempBorderBottomRightRadius": 20,
-                                              "activeAccordionItem": 0,
-                                              "colorHex": "#FFFFFF",
-                                              "colorOpacity": 1,
-                                              "tempColorOpacity": 1,
-                                              "colorPalette": "color8",
-                                              "tempColorPalette": "color8",
-                                              "navIcon": "thin",
-                                              "spacing": 5,
-                                              "spacingSuffix": ""
-                                            }
-                                          }
-                                        ],
-                                        "_id": "xhpalxaslgjwvzsfeqqfzkythcfhsydbotsc",
-                                        "padding": 55,
-                                        "paddingTop": 25,
-                                        "paddingRight": 70,
-                                        "paddingBottom": 25,
-                                        "paddingLeft": 70,
-                                        "paddingSuffix": "px",
-                                        "paddingTopSuffix": "px",
-                                        "paddingRightSuffix": "px",
-                                        "paddingBottomSuffix": "px",
-                                        "paddingLeftSuffix": "px",
-                                        "tempPaddingSuffix": "px",
-                                        "tempPaddingTopSuffix": "px",
-                                        "tempPaddingRightSuffix": "px",
-                                        "tempPaddingBottomSuffix": "px",
-                                        "tempPaddingLeftSuffix": "px",
-                                        "tempPadding": 55,
-                                        "tempPaddingTop": 25,
-                                        "tempPaddingRight": 70,
-                                        "tempPaddingBottom": 25,
-                                        "tempPaddingLeft": 70,
-                                        "paddingType": "ungrouped"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "ecwqxqlytuqfamyxhkgrxrvahsbmudclyqck"
-                                }
-                              },
-                              {
-                                "type": "Tab",
-                                "value": {
-                                  "labelText": "Accessory Compatibility",
-                                  "items": [
-                                    {
-                                      "type": "Wrapper",
-                                      "value": {
-                                        "_styles": [
-                                          "wrapper",
-                                          "wrapper--accordion"
-                                        ],
-                                        "items": [
-                                          {
-                                            "type": "Accordion",
-                                            "value": {
-                                              "_styles": [
-                                                "accordion"
-                                              ],
-                                              "items": [
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is the weight of DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "gowdbmjelvnerjkqogbkttanfdvphbhkaobw",
-                                                                            "text": "<p class=\"brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">The standard weight of the aircraft (including battery, propellers, and a microSD card) is 242 grams.  Check local rules and regulations before use.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "omubhmjulcpggkgxzdwnmqbgjjkpzafszujd"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "mamyjauydbogqjlcmmclgwqzmgziakydqozw",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "ugowdljjkatjqcnxfbyfcmojjxkakxymwgcz"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "vkspyiihgpckjkmazyspeetonrbjhvubiqnm"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support panorama?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "jmxforhzfjmmwgvhenllinghstqixlamameb",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "iobmiuhmgshzzzjwnrmjovtlwlzpotqnrdly"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "twwwmyxzowdrfkxtorfckbclclohrztypepw",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "rlevrcacohkntwwyhvlnqpiyojduzmwavxvt"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "kkysgjqpevobuhapuffwajpelfezhrxfvfxm"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Where can I find tips about using DroneX?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "tcusrpwuwxiypyhqxrledzkchgrrodfdytpd",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "nrckywcvzlwovoppqqlyenbssrvvlnbvypol"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "boumaecmzpfkmbiqysvznkdrrxsixsyrhnut",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "quvzjpayfrponfnxcaxhkxubpdfmnwriqplc"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "rrewxjfkwmrsgkzoaddyuakrlzhpnnguycvp"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Does DroneX support obstacle avoidance?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "tthqbqtsgdbcqiyfjefasqqjipsdxsokmbki",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "mqhnkwacfpgppzppfkqkovgwnotirdalnshz"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "qujjkfbfomwdceogiasnunaruccrjjlfrxfj",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "mxkloeydmtwzqinjkcwvcysfjmrswhayaqez"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "tvqboaddwzesvrvoiocdkwxdxjlmubgnxfib"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What is SmartPhoto?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "swocztzsuujiwwinuvdmhiarrbyexyciswfr",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "jigkhyowngwdkqzxhgcfxvpybozvdihwyrht"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "dgaupazayxbmnouxcosxqlcmzciwvproheia",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "arosmtulrybohcdclrrcctmzmezlplktskrg"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "zpajpnjluhfrchcjphoctzvapdiivwwhcilv"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "Can I control the camera settings manually?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "pfijqovjpjpggjeqvolfttkdunwwbdnrmewr",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "uoiukuqketuybedryrhbosixfsypsxvkwspj"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "cwlbjxdkoevsjhyyrtehdprsluheafkiriks",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "nxkiqydhojsdbeoqvbzkvbbnktrpkodmvxyf"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "uatpxzexhyfudovupdqtujnorjitjbqknghb"
-                                                  }
-                                                },
-                                                {
-                                                  "type": "AccordionItem",
-                                                  "value": {
-                                                    "labelText": "What photo resolutions and formats are available?",
-                                                    "items": [
-                                                      {
-                                                        "type": "Row",
-                                                        "value": {
-                                                          "_styles": [
-                                                            "row",
-                                                            "hide-row-borders",
-                                                            "padding-0"
-                                                          ],
-                                                          "items": [
-                                                            {
-                                                              "type": "Column",
-                                                              "value": {
-                                                                "_styles": [
-                                                                  "column"
-                                                                ],
-                                                                "items": [
-                                                                  {
-                                                                    "type": "Wrapper",
-                                                                    "value": {
-                                                                      "_styles": [
-                                                                        "wrapper",
-                                                                        "wrapper--richText"
-                                                                      ],
-                                                                      "items": [
-                                                                        {
-                                                                          "type": "RichText",
-                                                                          "value": {
-                                                                            "_styles": [
-                                                                              "richText"
-                                                                            ],
-                                                                            "_id": "pcoqhcxktrqguulwigskllsaxnchrlynnxgq",
-                                                                            "text": "<p class=\"brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><span class=\"brz-cp-color7\">By pressing the High-Speed Rotation button on remote, the drone will spin automatically at certain height. No need to hold the direction throttle all the time now.</span></p>"
-                                                                          }
-                                                                        }
-                                                                      ],
-                                                                      "_id": "orstbhviumazfjfgdajhsqbnrnltyjzhdlby"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                "_id": "jedrdqxkxgevhjhkkrnidqktlnwmtiyirecb",
-                                                                "width": 100,
-                                                                "paddingLeftSuffix": "px",
-                                                                "tempPaddingLeftSuffix": "px",
-                                                                "paddingSuffix": "px",
-                                                                "tempPaddingSuffix": "px",
-                                                                "paddingLeft": 5,
-                                                                "tempPaddingLeft": 5,
-                                                                "paddingRightSuffix": "px",
-                                                                "tempPaddingRightSuffix": "px",
-                                                                "paddingRight": 5,
-                                                                "tempPaddingRight": 5,
-                                                                "padding": 5,
-                                                                "tempPadding": 5
-                                                              }
-                                                            }
-                                                          ],
-                                                          "_id": "ajyszylqlumcrwgotsoobdelufzaafhfdpzr"
-                                                        }
-                                                      }
-                                                    ],
-                                                    "_id": "cmjhgrdsuhmjwdsqqosbwpbcpqxxqrsnndng"
-                                                  }
-                                                }
-                                              ],
-                                              "_id": "ctaqwmwxqahdrfzfooyooktwsctmljjdcxdk",
-                                              "fontStyle": "heading5",
-                                              "bgColorHex": "#000002",
-                                              "bgColorOpacity": 1,
-                                              "tempBgColorOpacity": 1,
-                                              "bgColorPalette": "color5",
-                                              "tempBgColorPalette": "",
-                                              "borderStyle": "solid",
-                                              "tempBorderStyle": "solid",
-                                              "borderColorHex": "#dcdee1",
-                                              "borderColorOpacity": 0.2,
-                                              "tempBorderColorOpacity": 0.2,
-                                              "borderColorPalette": "",
-                                              "tempBorderColorPalette": "",
-                                              "borderWidthType": "grouped",
-                                              "borderWidth": 1,
-                                              "tempBorderWidth": 1,
-                                              "borderTopWidth": 1,
-                                              "tempBorderTopWidth": 2,
-                                              "borderRightWidth": 1,
-                                              "tempBorderRightWidth": 2,
-                                              "borderBottomWidth": 1,
-                                              "tempBorderBottomWidth": 2,
-                                              "borderLeftWidth": 1,
-                                              "tempBorderLeftWidth": 2,
-                                              "borderRadius": 20,
-                                              "borderTopLeftRadius": 20,
-                                              "borderTopRightRadius": 20,
-                                              "borderBottomLeftRadius": 20,
-                                              "borderBottomRightRadius": 20,
-                                              "tempBorderRadius": 20,
-                                              "tempBorderTopLeftRadius": 20,
-                                              "tempBorderTopRightRadius": 20,
-                                              "tempBorderBottomLeftRadius": 20,
-                                              "tempBorderBottomRightRadius": 20,
-                                              "activeAccordionItem": 0,
-                                              "colorHex": "#FFFFFF",
-                                              "colorOpacity": 1,
-                                              "tempColorOpacity": 1,
-                                              "colorPalette": "color8",
-                                              "tempColorPalette": "color8",
-                                              "navIcon": "thin",
-                                              "spacing": 5,
-                                              "spacingSuffix": ""
-                                            }
-                                          }
-                                        ],
-                                        "_id": "tjiokspmaugzjflukaznvgjsqaktuymxdqkz",
-                                        "padding": 55,
-                                        "paddingTop": 25,
-                                        "paddingRight": 70,
-                                        "paddingBottom": 25,
-                                        "paddingLeft": 70,
-                                        "paddingSuffix": "px",
-                                        "paddingTopSuffix": "px",
-                                        "paddingRightSuffix": "px",
-                                        "paddingBottomSuffix": "px",
-                                        "paddingLeftSuffix": "px",
-                                        "tempPaddingSuffix": "px",
-                                        "tempPaddingTopSuffix": "px",
-                                        "tempPaddingRightSuffix": "px",
-                                        "tempPaddingBottomSuffix": "px",
-                                        "tempPaddingLeftSuffix": "px",
-                                        "tempPadding": 55,
-                                        "tempPaddingTop": 25,
-                                        "tempPaddingRight": 70,
-                                        "tempPaddingBottom": 25,
-                                        "tempPaddingLeft": 70,
-                                        "paddingType": "ungrouped"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "ieifgyxqhffmmrizdxkkkygnncmrivfejhqz"
+                                  _id: "nvzhgdwwubrmwxnqldywhqahprmhghonvedq",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "px",
+                                  tempPaddingRightSuffix: "px",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 0,
+                                  tempPaddingRight: 50,
+                                  padding: 0
                                 }
                               }
                             ],
-                            "_id": "yabtoasuxcwwgszynutecdxsnlfpdwjvmsuz",
-                            "activeTab": 0,
-                            "verticalMode": "on",
-                            "navStyle": "style-2",
-                            "spacing": 17,
-                            "spacingSuffix": "",
-                            "fontStyle": "heading5",
-                            "bgColorHex": "#9543dd",
-                            "bgColorOpacity": 1,
-                            "tempBgColorOpacity": 1,
-                            "bgColorPalette": "color5",
-                            "tempBgColorPalette": "",
-                            "borderStyle": "none",
-                            "tempBorderStyle": "solid",
-                            "borderColorHex": "#dcdee1",
-                            "borderColorOpacity": 0,
-                            "tempBorderColorOpacity": 0.97,
-                            "borderColorPalette": "",
-                            "tempBorderColorPalette": "",
-                            "borderWidthType": "grouped",
-                            "borderWidth": 0,
-                            "tempBorderWidth": 2,
-                            "borderTopWidth": 0,
-                            "tempBorderTopWidth": 2,
-                            "borderRightWidth": 0,
-                            "tempBorderRightWidth": 2,
-                            "borderBottomWidth": 0,
-                            "tempBorderBottomWidth": 2,
-                            "borderLeftWidth": 0,
-                            "tempBorderLeftWidth": 2,
-                            "colorHex": "#FFFFFF",
-                            "colorOpacity": 1,
-                            "tempColorOpacity": 1,
-                            "colorPalette": "color8",
-                            "tempColorPalette": "color8",
-                            "spacingAfter": 34,
-                            "spacingAfterSuffix": "",
-                            "tabsState": "tabNormal",
-                            "hoverBgColorHex": "#FFFFFF",
-                            "hoverBgColorOpacity": 1,
-                            "tempHoverBgColorOpacity": 1,
-                            "hoverBgColorPalette": "color5",
-                            "tempHoverBgColorPalette": "",
-                            "hoverColorHex": "#000002",
-                            "hoverColorOpacity": 1,
-                            "tempHoverColorOpacity": 1,
-                            "hoverColorPalette": "color8",
-                            "tempHoverColorPalette": "color8",
-                            "activeColorHex": "#FFFFFF",
-                            "activeColorOpacity": 1,
-                            "tempActiveColorOpacity": 1,
-                            "activeColorPalette": "color2",
-                            "tempActiveColorPalette": "color8",
-                            "activeBgColorHex": "#282837",
-                            "activeBgColorOpacity": 1,
-                            "tempActiveBgColorOpacity": 1,
-                            "activeBgColorPalette": "color8",
-                            "tempActiveBgColorPalette": ""
+                            _id: "ppficmwyfhyutzrpdpgxxhdlufeqqlpweank",
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingLeft: 5,
+                            paddingTopSuffix: "px",
+                            tempPaddingTopSuffix: "px",
+                            paddingTop: 15,
+                            tempPaddingTop: 15,
+                            paddingBottomSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            paddingBottom: 15,
+                            tempPaddingBottom: 15,
+                            tempPaddingLeft: 5,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingLeft: 5,
+                            tempTabletPaddingLeft: 5,
+                            tabletPaddingTopSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tabletPaddingTop: 10,
+                            tempTabletPaddingTop: 10,
+                            verticalAlign: "center"
                           }
-                        }
-                      ],
-                      "_id": "lofkbbcceoeuufmqhupvkmfnaorppoovujzs",
-                      "paddingType": "ungrouped",
-                      "paddingRight": 0,
-                      "paddingRightSuffix": "px",
-                      "tempPaddingRightSuffix": "px",
-                      "paddingSuffix": "px",
-                      "tempPaddingSuffix": "px",
-                      "tempPaddingRight": 100,
-                      "padding": 0
-                    }
-                  }
-                ],
-                "_id": "avucggiseiioufnkmtnedbblckqolqkuzfrs",
-                "paddingType": "ungrouped",
-                "paddingTop": 190,
-                "bgColorPalette": "color1",
-                "tempBgColorPalette": "color1",
-                "bgColorOpacity": 1,
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "paddingBottom": 80,
-                "tabletPaddingType": "ungrouped",
-                "tabletPaddingTop": 79,
-                "mobilePaddingType": "ungrouped",
-                "mobilePaddingTop": 84
-              }
-            }
-          ],
-          "_id": "ueomrfryalxoehhjppmyczybmijvcduqoxsp",
-          "marginType": "ungrouped",
-          "marginTopSuffix": "px",
-          "marginTop": -100,
-          "margin": 0,
-          "marginSuffix": "px",
-          "_thumbnailSrc": 5462933,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 320,
-          "_thumbnailTime": 1617635074732,
-          "tabletMarginTopSuffix": "px",
-          "tabletMarginTop": -100,
-          "tabletMargin": 0,
-          "tabletMarginSuffix": "px",
-          "mobileMarginTopSuffix": "px",
-          "mobileMarginTop": -100,
-          "mobileMargin": 0,
-          "mobileMarginSuffix": "px"
-        },
-        "blockId": "Kit2Blank000Light"
-      },
-      {
-        "type": "Section",
-        "value": {
-          "_styles": [
-            "section"
-          ],
-          "items": [
-            {
-              "type": "SectionItem",
-              "value": {
-                "_styles": [
-                  "section-item"
-                ],
-                "items": [
-                  {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row",
-                        "hide-row-borders",
-                        "padding-0"
-                      ],
-                      "items": [
+                        },
                         {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
                               {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--image"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "Image",
-                                      "value": {
-                                        "_styles": [
-                                          "image"
-                                        ],
-                                        "_id": "lggpaqwdqkilrgbkzgtjijvpqeljmsaqzasq",
-                                        "imageWidth": 1030,
-                                        "imageHeight": 560,
-                                        "imageSrc": "4294d39d59b93b5fbe754a82bbfd9c57.png",
-                                        "imageExtension": "png",
-                                        "width": 72,
-                                        "height": 88,
-                                        "positionX": 53,
-                                        "positionY": 0,
-                                        "imagePopulation": "",
-                                        "heightSuffix": "%",
-                                        "widthSuffix": "%"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "lbzxwedxokiyflftbhxwgiwsexrsktocafva",
-                                  "marginTopSuffix": "px",
-                                  "marginTop": 10,
-                                  "margin": 0,
-                                  "marginSuffix": "px",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": -21
-                                }
-                              }
-                            ],
-                            "_id": "grcnndueignitkpikmwtylzayquxqkgrgzbb",
-                            "width": 100,
-                            "bgImageWidth": 0,
-                            "bgImageHeight": 0,
-                            "bgImageSrc": "",
-                            "bgColorOpacity": 0,
-                            "tempBgColorOpacity": 1,
-                            "borderRadius": 0,
-                            "borderTopLeftRadius": 0,
-                            "borderTopRightRadius": 0,
-                            "borderBottomLeftRadius": 0,
-                            "borderBottomRightRadius": 0,
-                            "tempBorderTopLeftRadius": 0,
-                            "tempBorderTopRightRadius": 0,
-                            "tempBorderBottomLeftRadius": 0,
-                            "tempBorderBottomRightRadius": 0,
-                            "mobilePaddingRight": 0,
-                            "mobilePaddingLeft": 0,
-                            "paddingTopSuffix": "px",
-                            "tempPaddingTopSuffix": "px",
-                            "paddingTop": 5,
-                            "tempPaddingTop": 5,
-                            "paddingBottomSuffix": "px",
-                            "tempPaddingBottomSuffix": "px",
-                            "paddingBottom": 5,
-                            "tempPaddingBottom": 5,
-                            "paddingSuffix": "px",
-                            "tempPaddingSuffix": "px"
-                          }
-                        }
-                      ],
-                      "_id": "tlmncfhvwiwbeelquazkwtxgmleyfgzdeojp"
-                    }
-                  },
-                  {
-                    "type": "Row",
-                    "value": {
-                      "_styles": [
-                        "row",
-                        "hide-row-borders",
-                        "padding-0"
-                      ],
-                      "items": [
-                        {
-                          "type": "Column",
-                          "value": {
-                            "_styles": [
-                              "column"
-                            ],
-                            "items": [
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "sqrentfxxgdoytwoxqdxdhczlftpelsfomtd",
-                                        "text": "<p class=\"brz-tp-sm-heading4 brz-text-lg-center brz-tp-lg-heading3 brz-tp-xs-heading4\"><span class=\"brz-cp-color8\">DroneX</span></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "ksddaexntgznqfqevdwocqqfwqrauotuqegt",
-                                  "marginBottomSuffix": "px",
-                                  "marginBottom": 10,
-                                  "margin": 0,
-                                  "marginSuffix": "px"
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "dmwstraileawbrofbgwlrzkzvzbvifzntxlv",
-                                        "text": "<p class=\"brz-text-lg-center brz-tp-paragraph\"><span class=\"brz-cp-color7\">Innovative drone with VR capabilities &amp; longest range</span></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "yeekgyadlitbywutrezvgqhlqtqxdgkuhxnz",
-                                  "paddingType": "ungrouped",
-                                  "paddingRightSuffix": "%",
-                                  "tempPaddingRightSuffix": "%",
-                                  "paddingRight": 10,
-                                  "padding": 0,
-                                  "paddingLeftSuffix": "%",
-                                  "tempPaddingLeftSuffix": "%",
-                                  "paddingLeft": 10,
-                                  "tempPaddingRight": 10,
-                                  "tempPaddingLeft": 10
-                                }
-                              },
-                              {
-                                "type": "Wrapper",
-                                "value": {
-                                  "_styles": [
-                                    "wrapper",
-                                    "wrapper--richText"
-                                  ],
-                                  "items": [
-                                    {
-                                      "type": "RichText",
-                                      "value": {
-                                        "_styles": [
-                                          "richText"
-                                        ],
-                                        "_id": "vcytcnxkmloycdrkmcuhjjklkgrnnnvmywnx",
-                                        "text": "<p class=\"brz-tp-xs-paragraph brz-text-lg-center brz-tp-lg-subtitle brz-tp-sm-heading5\"><span class=\"brz-cp-color8\">From </span><strong class=\"brz-cp-color8\">$2399</strong></p>"
-                                      }
-                                    }
-                                  ],
-                                  "_id": "rrwzcnyrpkwaqjdxtqpimazhowwfkxroyfaf"
-                                }
-                              },
-                              {
-                                "type": "Cloneable",
-                                "value": {
-                                  "_styles": [
+                                type: "Cloneable",
+                                value: {
+                                  _styles: [
                                     "wrapper-clone",
                                     "wrapper-clone--button"
                                   ],
-                                  "items": [
+                                  items: [
                                     {
-                                      "type": "Button",
-                                      "value": {
-                                        "_styles": [
-                                          "button"
-                                        ],
-                                        "_id": "ucwhxmagtrsqolmrlmtujiicdjsdxqeoyojl",
-                                        "borderRadiusType": "rounded",
-                                        "tempBorderRadiusType": "rounded",
-                                        "paddingRight": 26,
-                                        "paddingLeft": 26,
-                                        "fillType": "filled",
-                                        "borderRadius": 27,
-                                        "borderWidth": 2,
-                                        "borderColorOpacity": 1,
-                                        "borderColorPalette": "color3",
-                                        "bgColorOpacity": 1,
-                                        "bgColorPalette": "color3",
-                                        "hoverBgColorOpacity": 1,
-                                        "hoverBorderColorOpacity": 0,
-                                        "tempBorderWidth": 2,
-                                        "size": "custom",
-                                        "fontSize": 16,
-                                        "paddingTB": 13,
-                                        "paddingTop": 13,
-                                        "paddingBottom": 13,
-                                        "tempPaddingTB": 13,
-                                        "tempPaddingTop": 13,
-                                        "tempPaddingBottom": 13,
-                                        "paddingRL": 26,
-                                        "tempPaddingRL": 26,
-                                        "tempPaddingRight": 26,
-                                        "tempPaddingLeft": 26,
-                                        "iconName": "",
-                                        "iconType": "",
-                                        "text": "Buy DroneX",
-                                        "bgColorHex": "#2f7df6",
-                                        "tempBgColorPalette": "color3",
-                                        "tempBgColorOpacity": 1,
-                                        "borderColorHex": "#2f7df6",
-                                        "tempBorderColorPalette": "color3",
-                                        "hoverBorderColorHex": "#2f7df6",
-                                        "colorPalette": "color8",
-                                        "colorOpacity": 1,
-                                        "hoverBorderColorPalette": "color8",
-                                        "hoverBgColorHex": "#2f7df6",
-                                        "tempHoverBgColorOpacity": 1,
-                                        "hoverBgColorPalette": "color8",
-                                        "tempHoverBgColorPalette": "color3",
-                                        "tempHoverBorderColorPalette": "color8",
-                                        "hoverColorPalette": "color2",
-                                        "hoverColorOpacity": 1
+                                      type: "Button",
+                                      value: {
+                                        _styles: ["button"],
+                                        _id:
+                                          "djikzpsozbtcaeduazpsuveapnvtmzgkixnt",
+                                        text: "Privacy Policy",
+                                        fillType: "default",
+                                        tempFillType: "filled",
+                                        paddingRL: 0,
+                                        paddingRight: 0,
+                                        paddingLeft: 0,
+                                        paddingTB: 0,
+                                        paddingTop: 0,
+                                        paddingBottom: 0,
+                                        borderRadiusType: "",
+                                        borderRadius: 2,
+                                        borderWidth: 0,
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        bgColorOpacity: 0,
+                                        bgColorPalette: "",
+                                        gradientColorOpacity: 0,
+                                        gradientColorPalette: "",
+                                        hoverBgColorOpacity: 0,
+                                        hoverBorderColorOpacity: 0,
+                                        size: "custom",
+                                        fontSize: 15,
+                                        tempPaddingTB: 0,
+                                        tempPaddingTop: 0,
+                                        tempPaddingBottom: 0,
+                                        tempPaddingRL: 42,
+                                        tempPaddingRight: 42,
+                                        tempPaddingLeft: 42,
+                                        iconName: "",
+                                        iconType: "",
+                                        fontStyle: "abovetitle",
+                                        colorPalette: "color7",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color8",
+                                        hoverColorOpacity: 1,
+                                        tabletSize: "custom",
+                                        tabletFontSize: 11,
+                                        tabletPaddingTB: 5,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingBottom: 5,
+                                        tempTabletPaddingTB: 11,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingBottom: 5,
+                                        tabletPaddingRL: 0,
+                                        tabletPaddingRight: 0,
+                                        tabletPaddingLeft: 0,
+                                        tempTabletPaddingRL: 26,
+                                        tempTabletPaddingRight: 0,
+                                        tempTabletPaddingLeft: 0,
+                                        tabletBorderRadius: 2,
+                                        mobileSize: "custom",
+                                        mobileFontSize: 11,
+                                        mobilePaddingTB: 5,
+                                        mobilePaddingTop: 5,
+                                        mobilePaddingBottom: 5,
+                                        tempMobilePaddingTB: 11,
+                                        tempMobilePaddingTop: 5,
+                                        tempMobilePaddingBottom: 5,
+                                        mobilePaddingRL: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        tempMobilePaddingRL: 26,
+                                        tempMobilePaddingRight: 0,
+                                        tempMobilePaddingLeft: 0,
+                                        mobileBorderRadius: 2
+                                      }
+                                    },
+                                    {
+                                      type: "Button",
+                                      value: {
+                                        _styles: ["button"],
+                                        _id:
+                                          "mgrbzvbyvaixxkptrppseoppwjfujqbiqmad",
+                                        text: "Terms of Use Sales",
+                                        fillType: "default",
+                                        tempFillType: "filled",
+                                        paddingRL: 0,
+                                        paddingRight: 0,
+                                        paddingLeft: 0,
+                                        paddingTB: 0,
+                                        paddingTop: 0,
+                                        paddingBottom: 0,
+                                        borderRadiusType: "",
+                                        borderRadius: 2,
+                                        borderWidth: 0,
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        bgColorOpacity: 0,
+                                        bgColorPalette: "",
+                                        gradientColorOpacity: 0,
+                                        gradientColorPalette: "",
+                                        hoverBgColorOpacity: 0,
+                                        hoverBorderColorOpacity: 0,
+                                        size: "custom",
+                                        fontSize: 15,
+                                        tempPaddingTB: 0,
+                                        tempPaddingTop: 0,
+                                        tempPaddingBottom: 0,
+                                        tempPaddingRL: 42,
+                                        tempPaddingRight: 42,
+                                        tempPaddingLeft: 42,
+                                        iconName: "",
+                                        iconType: "",
+                                        fontStyle: "abovetitle",
+                                        colorPalette: "color7",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color8",
+                                        hoverColorOpacity: 1,
+                                        tabletSize: "custom",
+                                        tabletFontSize: 11,
+                                        tabletPaddingTB: 5,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingBottom: 5,
+                                        tempTabletPaddingTB: 11,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingBottom: 5,
+                                        tabletPaddingRL: 0,
+                                        tabletPaddingRight: 0,
+                                        tabletPaddingLeft: 0,
+                                        tempTabletPaddingRL: 26,
+                                        tempTabletPaddingRight: 0,
+                                        tempTabletPaddingLeft: 0,
+                                        tabletBorderRadius: 2,
+                                        mobileSize: "custom",
+                                        mobileFontSize: 11,
+                                        mobilePaddingTB: 5,
+                                        mobilePaddingTop: 5,
+                                        mobilePaddingBottom: 5,
+                                        tempMobilePaddingTB: 11,
+                                        tempMobilePaddingTop: 5,
+                                        tempMobilePaddingBottom: 5,
+                                        mobilePaddingRL: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        tempMobilePaddingRL: 26,
+                                        tempMobilePaddingRight: 0,
+                                        tempMobilePaddingLeft: 0,
+                                        mobileBorderRadius: 2
+                                      }
+                                    },
+                                    {
+                                      type: "Button",
+                                      value: {
+                                        _styles: ["button"],
+                                        _id:
+                                          "ddiuclvcjrzymodnyopyjeuyjpxexisqgyqw",
+                                        text: "Legal Site",
+                                        fillType: "default",
+                                        tempFillType: "filled",
+                                        paddingRL: 0,
+                                        paddingRight: 0,
+                                        paddingLeft: 0,
+                                        paddingTB: 0,
+                                        paddingTop: 0,
+                                        paddingBottom: 0,
+                                        borderRadiusType: "",
+                                        borderRadius: 2,
+                                        borderWidth: 0,
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        bgColorOpacity: 0,
+                                        bgColorPalette: "",
+                                        gradientColorOpacity: 0,
+                                        gradientColorPalette: "",
+                                        hoverBgColorOpacity: 0,
+                                        hoverBorderColorOpacity: 0,
+                                        size: "custom",
+                                        fontSize: 15,
+                                        tempPaddingTB: 0,
+                                        tempPaddingTop: 0,
+                                        tempPaddingBottom: 0,
+                                        tempPaddingRL: 42,
+                                        tempPaddingRight: 42,
+                                        tempPaddingLeft: 42,
+                                        iconName: "",
+                                        iconType: "",
+                                        fontStyle: "abovetitle",
+                                        colorPalette: "color7",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color8",
+                                        hoverColorOpacity: 1,
+                                        tabletSize: "custom",
+                                        tabletFontSize: 11,
+                                        tabletPaddingTB: 5,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingBottom: 5,
+                                        tempTabletPaddingTB: 11,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingBottom: 5,
+                                        tabletPaddingRL: 0,
+                                        tabletPaddingRight: 0,
+                                        tabletPaddingLeft: 0,
+                                        tempTabletPaddingRL: 26,
+                                        tempTabletPaddingRight: 0,
+                                        tempTabletPaddingLeft: 0,
+                                        tabletBorderRadius: 2,
+                                        mobileSize: "custom",
+                                        mobileFontSize: 11,
+                                        mobilePaddingTB: 5,
+                                        mobilePaddingTop: 5,
+                                        mobilePaddingBottom: 5,
+                                        tempMobilePaddingTB: 11,
+                                        tempMobilePaddingTop: 5,
+                                        tempMobilePaddingBottom: 5,
+                                        mobilePaddingRL: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        tempMobilePaddingRL: 26,
+                                        tempMobilePaddingRight: 0,
+                                        tempMobilePaddingLeft: 0,
+                                        mobileBorderRadius: 2
                                       }
                                     }
                                   ],
-                                  "_id": "ywjalkmtdhmztzrwsflpcjjyamgdfjjxyuey",
-                                  "horizontalAlign": "center"
+                                  _id: "jxamodrnontimksgdsctbrvcdsmrztzvpclh",
+                                  itemPadding: 20,
+                                  itemPaddingRight: 20,
+                                  itemPaddingLeft: 20,
+                                  horizontalAlign: "right",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-                            "_id": "ithjcwbxdxaeczrvwjtkmglctvfoaklfawqp",
-                            "width": 100,
-                            "paddingRightSuffix": "px",
-                            "tempPaddingRightSuffix": "px",
-                            "paddingRight": 85,
-                            "tempPaddingRight": 85,
-                            "paddingLeftSuffix": "px",
-                            "tempPaddingLeftSuffix": "px",
-                            "paddingLeft": 85,
-                            "tempPaddingLeft": 85,
-                            "bgColorType": "gradient",
-                            "gradientActivePointer": "startPointer",
-                            "gradientType": "linear",
-                            "bgColorPalette": "color1",
-                            "tempBgColorPalette": "color1",
-                            "bgColorOpacity": 1,
-                            "borderRadius": 0,
-                            "borderTopLeftRadius": 0,
-                            "borderTopRightRadius": 0,
-                            "borderBottomLeftRadius": 0,
-                            "borderBottomRightRadius": 0,
-                            "tempBorderTopLeftRadius": 0,
-                            "tempBorderTopRightRadius": 0,
-                            "tempBorderBottomLeftRadius": 0,
-                            "tempBorderBottomRightRadius": 0,
-                            "mobilePaddingRight": 0,
-                            "mobilePaddingLeft": 0,
-                            "gradientStartPointer": 54,
-                            "gradientFinishPointer": 86,
-                            "gradientColorPalette": "",
-                            "tempGradientColorPalette": "color1",
-                            "gradientColorOpacity": 0,
-                            "gradientColorHex": "#000002",
-                            "tempGradientColorOpacity": 1,
-                            "gradientRadialDegree": 740,
-                            "bgColorHex": "#535374",
-                            "tempBgColorOpacity": 1,
-                            "gradientLinearDegree": 0,
-                            "marginType": "ungrouped",
-                            "marginTopSuffix": "px",
-                            "marginTop": -33,
-                            "margin": 0,
-                            "marginSuffix": "px",
-                            "paddingTop": 35,
-                            "paddingTopSuffix": "px",
-                            "tempPaddingTopSuffix": "px",
-                            "tempPaddingTop": 35,
-                            "paddingBottom": 140,
-                            "paddingBottomSuffix": "px",
-                            "tempPaddingBottomSuffix": "px",
-                            "tempPaddingBottom": 140,
-                            "paddingSuffix": "px",
-                            "tempPaddingSuffix": "px",
-                            "tabletPaddingBottom": 49,
-                            "tabletPaddingBottomSuffix": "px",
-                            "tempTabletPaddingBottomSuffix": "px",
-                            "tabletPaddingSuffix": "px",
-                            "tempTabletPaddingSuffix": "px",
-                            "tempTabletPaddingBottom": 49,
-                            "mobilePaddingBottomSuffix": "px",
-                            "tempMobilePaddingBottomSuffix": "px",
-                            "mobilePaddingSuffix": "px",
-                            "tempMobilePaddingSuffix": "px",
-                            "mobilePaddingBottom": 50,
-                            "tempMobilePaddingBottom": 50,
-                            "mobileMarginRightSuffix": "px",
-                            "mobileMarginRight": -10,
-                            "mobileMargin": 10,
-                            "mobileMarginSuffix": "px",
-                            "mobileMarginBottomSuffix": "px",
-                            "mobileMarginBottom": 0,
-                            "mobileMarginLeftSuffix": "px",
-                            "mobileMarginLeft": -10
+                            _id: "jhnuahvlxnzsvcqaomjmccoigmcbstdjokga",
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            paddingRight: 5,
+                            tempPaddingRight: 5,
+                            tabletPaddingTop: 0,
+                            tabletPaddingTopSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tabletPaddingRight: 5,
+                            tempTabletPaddingRight: 5
                           }
                         }
                       ],
-                      "_id": "pjvlndysmdrjgdnvwfbxewguyvcnqzrpjgam"
+                      _id: "eibmvzswvpusnnzblzzgrewcahwnawfxwlyy",
+                      mobileReverseColumns: "on"
                     }
                   }
                 ],
-                "_id": "wgxfiletbshpcqmbeeybikhflfejcdbeajyd",
-                "paddingType": "ungrouped",
-                "paddingTop": 140,
-                "bgImageWidth": 0,
-                "bgImageHeight": 0,
-                "bgImageSrc": "",
-                "bgColorOpacity": 1,
-                "tempBgColorOpacity": 1,
-                "borderRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomLeftRadius": 0,
-                "borderBottomRightRadius": 0,
-                "tempBorderTopLeftRadius": 0,
-                "tempBorderTopRightRadius": 0,
-                "tempBorderBottomLeftRadius": 0,
-                "tempBorderBottomRightRadius": 0,
-                "containerType": "boxed",
-                "paddingBottom": 0,
-                "bgColorPalette": "",
-                "tempBgColorPalette": "",
-                "paddingTopSuffix": "px",
-                "tempPaddingTopSuffix": "px",
-                "paddingSuffix": "px",
-                "tempPaddingSuffix": "px",
-                "padding": 0,
-                "paddingBottomSuffix": "px",
-                "tempPaddingBottomSuffix": "px",
-                "bgColorType": "gradient",
-                "gradientActivePointer": "finishPointer",
-                "gradientType": "radial",
-                "gradientStartPointer": 0,
-                "gradientFinishPointer": 66,
-                "gradientColorPalette": "color1",
-                "tempGradientColorPalette": "color1",
-                "gradientColorOpacity": 1,
-                "gradientRadialDegree": 700,
-                "bgColorHex": "#4c2271",
-                "tempPaddingTop": 100,
-                "tempPaddingBottom": 100,
-                "gradientColorHex": "#000002",
-                "tempGradientColorOpacity": 1,
-                "tabletPaddingBottom": 0,
-                "tabletPaddingBottomSuffix": "px",
-                "tempTabletPaddingBottomSuffix": "px",
-                "tabletPaddingSuffix": "px",
-                "tempTabletPaddingSuffix": "px",
-                "mobilePaddingType": "ungrouped",
-                "mobilePaddingTop": 54,
-                "mobilePaddingBottom": 0,
-                "mobilePaddingBottomSuffix": "px",
-                "tempMobilePaddingBottomSuffix": "px",
-                "mobilePaddingSuffix": "px",
-                "tempMobilePaddingSuffix": "px"
+                _id: "egfvhfiwuhuavanacwicwzuganvclbksloyj",
+                bgColorPalette: "color5",
+                tempBgColorPalette: "color5",
+                bgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                bgColorHex: "#242482",
+                tempBgColorOpacity: 1,
+                paddingTopSuffix: "px",
+                tempPaddingTopSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                paddingTop: 70,
+                tempPaddingTop: 70,
+                paddingBottomSuffix: "px",
+                tempPaddingBottomSuffix: "px",
+                paddingBottom: 70,
+                tempPaddingBottom: 70,
+                mobilePaddingBottomSuffix: "px",
+                tempMobilePaddingBottomSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px",
+                mobilePaddingBottom: 35,
+                tempMobilePaddingBottom: 35
               }
             }
           ],
-          "_id": "mqkehhsettfrotsliacqkbqnhehwlocpajml",
-          "_thumbnailSrc": 5476174,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 309,
-          "_thumbnailTime": 1614089940429,
-          "zIndex": 16,
-          "zIndexSuffix": "",
-          "marginType": "ungrouped",
-          "marginTopSuffix": "px",
-          "marginTop": 0,
-          "margin": 0,
-          "marginSuffix": "px"
+          _id: "uaeoceawncmksydqbedyphttswgeplohvmmf",
+          _thumbnailSrc: 7244226,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 181,
+          _thumbnailTime: 1626699341299
         },
-        "blockId": "Kit2Blank000Light"
-      },
-      {
-        "type": "SectionFooter",
-        "value": {
-          "_styles": [
-            "sectionFooter"
-          ],
-          "items": [
-            {
-              "type": "Row",
-              "value": {
-                "_styles": [
-                  "row",
-                  "hide-row-borders",
-                  "padding-0"
-                ],
-                "items": [
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Cloneable",
-                          "value": {
-                            "_styles": [
-                              "wrapper-clone",
-                              "wrapper-clone--icon"
-                            ],
-                            "items": [
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "ubnjzxdisadykcgonmhqskrnbqbvauhfcqbe",
-                                  "name": "box-3d-50",
-                                  "type": "outline",
-                                  "size": "large",
-                                  "customSize": 64,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color7",
-                                  "hoverColorOpacity": 1,
-                                  "hoverColorHex": "#868691"
-                                }
-                              }
-                            ],
-                            "_id": "lyirsecdxofpsalonlmhpdbsrzhljsuihwkk"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "lprpvdxxokogwpnvqxdcrvxulfgwzzdjwqat",
-                                  "text": "<p class=\"brz-text-lg-center brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-heading5\"><strong class=\"brz-cp-color8\">No‑contact delivery</strong></p>"
-                                }
-                              }
-                            ],
-                            "_id": "dengjqyjwwnqyeslwcquaiqpbxmpkqtotrjy",
-                            "marginBottomSuffix": "px",
-                            "marginBottom": 0,
-                            "margin": 0,
-                            "marginSuffix": "px"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "bcjumsgjpfmsrrhvaruousztepgkhlljxfst",
-                                  "text": "<p class=\"brz-text-lg-center brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Turpis egestas maecenas.</span></p>"
-                                }
-                              }
-                            ],
-                            "_id": "hftjjdrxsrvuwyqrelceujxqdtbnjrxhfdrl"
-                          }
-                        }
-                      ],
-                      "_id": "ohlvubacwypctweodvpgaqkqdgyuwvxabave",
-                      "width": 33.3,
-                      "mobilePaddingRightSuffix": "px",
-                      "tempMobilePaddingRightSuffix": "px",
-                      "mobilePaddingSuffix": "px",
-                      "tempMobilePaddingSuffix": "px",
-                      "mobilePaddingRight": 15,
-                      "tempMobilePaddingRight": 15,
-                      "mobilePaddingLeftSuffix": "px",
-                      "tempMobilePaddingLeftSuffix": "px",
-                      "mobilePaddingLeft": 15,
-                      "tempMobilePaddingLeft": 15
-                    }
-                  },
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Cloneable",
-                          "value": {
-                            "_styles": [
-                              "wrapper-clone",
-                              "wrapper-clone--icon"
-                            ],
-                            "items": [
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "axhgzblkasfxihjuewjontniskuafcucvlsv",
-                                  "name": "chat-46",
-                                  "type": "outline",
-                                  "size": "large",
-                                  "customSize": 64,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color7",
-                                  "hoverColorOpacity": 1,
-                                  "hoverColorHex": "#868691"
-                                }
-                              }
-                            ],
-                            "_id": "oknwsfpdopsjgxxweptplrhnywcasvullmpm"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "mzzeynewyhrgqpeyndueslrmmsdmqhkckqtb",
-                                  "text": "<p class=\"brz-text-lg-center brz-tp-lg-heading5 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><strong class=\"brz-cp-color8\">Get help buying</strong></p>"
-                                }
-                              }
-                            ],
-                            "_id": "eaeytenswqhaftpaysnilyxkxivqvhfnkiso",
-                            "marginBottomSuffix": "px",
-                            "marginBottom": 0,
-                            "margin": 0,
-                            "marginSuffix": "px"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "lpwxieijrtejcfstjozigfhzzomcfftoyeit",
-                                  "text": "<p class=\"brz-text-lg-center brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-heading6\"><span class=\"brz-cp-color7\">Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Turpis egestas maecenas.</span></p>"
-                                }
-                              }
-                            ],
-                            "_id": "lpmklskoirkfckjdnptopzjdcmydakomwqwc"
-                          }
-                        }
-                      ],
-                      "_id": "eyxzfoaehofalyyrpkpomyxbijequfsitsqk",
-                      "width": 33.3,
-                      "mobilePaddingRightSuffix": "px",
-                      "tempMobilePaddingRightSuffix": "px",
-                      "mobilePaddingSuffix": "px",
-                      "tempMobilePaddingSuffix": "px",
-                      "mobilePaddingRight": 15,
-                      "tempMobilePaddingRight": 15,
-                      "mobilePaddingLeftSuffix": "px",
-                      "tempMobilePaddingLeftSuffix": "px",
-                      "mobilePaddingLeft": 15,
-                      "tempMobilePaddingLeft": 15
-                    }
-                  },
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Cloneable",
-                          "value": {
-                            "_styles": [
-                              "wrapper-clone",
-                              "wrapper-clone--icon"
-                            ],
-                            "items": [
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "haebwtufeycetieouvquycrijruqfbpwbedd",
-                                  "name": "single-04",
-                                  "type": "outline",
-                                  "size": "large",
-                                  "customSize": 64,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color7",
-                                  "hoverColorOpacity": 1,
-                                  "hoverColorHex": "#868691"
-                                }
-                              }
-                            ],
-                            "_id": "vpgwnvaevjniddtjnjlfvebhibhqjxranrxb"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "oyevjvfwgzctkyfuceuttixrldtetppjljxo",
-                                  "text": "<p class=\"brz-text-lg-center brz-tp-lg-heading5 brz-tp-sm-paragraph brz-tp-xs-paragraph\"><strong class=\"brz-cp-color8\">Personal assistant</strong></p>"
-                                }
-                              }
-                            ],
-                            "_id": "toehhnbipkbabvybrcgjpxzvgrlatawmtwcp",
-                            "marginBottomSuffix": "px",
-                            "marginBottom": 0,
-                            "margin": 0,
-                            "marginSuffix": "px"
-                          }
-                        },
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "_id": "fmrfwewiskbdtjrbvphrahedjjvijkybnyaa",
-                                  "text": "<p class=\"brz-tp-lg-heading6 brz-tp-xs-paragraph brz-tp-sm-paragraph brz-text-lg-center\"><span class=\"brz-cp-color7\">Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Magna etiam tempor orci</span></p>"
-                                }
-                              }
-                            ],
-                            "_id": "ptoveknudeixnfpihssoamvewmlyfgquhrua"
-                          }
-                        }
-                      ],
-                      "_id": "dfmqlhxaejbxmmxxumsmmkpddjvlrfpyoyrx",
-                      "width": 33.4,
-                      "mobilePaddingRightSuffix": "px",
-                      "tempMobilePaddingRightSuffix": "px",
-                      "mobilePaddingSuffix": "px",
-                      "tempMobilePaddingSuffix": "px",
-                      "mobilePaddingRight": 15,
-                      "tempMobilePaddingRight": 15,
-                      "mobilePaddingLeftSuffix": "px",
-                      "tempMobilePaddingLeftSuffix": "px",
-                      "mobilePaddingLeft": 15,
-                      "tempMobilePaddingLeft": 15
-                    }
-                  }
-                ],
-                "_id": "mpqtqpqlqqbvkhfjqjquneedflzjrrdwlhcn"
-              }
-            },
-            {
-              "type": "Wrapper",
-              "value": {
-                "_styles": [
-                  "wrapper",
-                  "wrapper--spacer"
-                ],
-                "items": [
-                  {
-                    "type": "Spacer",
-                    "value": {
-                      "_styles": [
-                        "spacer"
-                      ],
-                      "_id": "vgiiydidybvibxehbxupyzvouwgbjcwqlycq",
-                      "height": 50,
-                      "heightSuffix": "",
-                      "mobileHeight": 20,
-                      "mobileHeightSuffix": ""
-                    }
-                  }
-                ],
-                "_id": "eipbzhcuagepkdjhkpghubnbzdjjexudfwdn",
-                "showOnTablet": "off"
-              }
-            },
-            {
-              "type": "Wrapper",
-              "value": {
-                "_styles": [
-                  "wrapper",
-                  "wrapper--line"
-                ],
-                "items": [
-                  {
-                    "type": "Line",
-                    "value": {
-                      "_styles": [
-                        "line"
-                      ],
-                      "_id": "xkqhtljvxnbprenxlxkqyzbtrjjcejvpkxdj",
-                      "width": 100,
-                      "widthSuffix": "%",
-                      "borderStyle": "solid",
-                      "tempBorderStyle": "solid",
-                      "borderColorHex": "#73777f",
-                      "borderColorOpacity": 0.4,
-                      "tempBorderColorOpacity": 0.4,
-                      "borderColorPalette": "color7",
-                      "tempBorderColorPalette": "color7",
-                      "borderWidthType": "grouped",
-                      "borderWidth": 1,
-                      "tempBorderWidth": 1,
-                      "borderTopWidth": 1,
-                      "tempBorderTopWidth": 2,
-                      "borderRightWidth": 1,
-                      "tempBorderRightWidth": 2,
-                      "borderBottomWidth": 1,
-                      "tempBorderBottomWidth": 2,
-                      "borderLeftWidth": 1,
-                      "tempBorderLeftWidth": 2
-                    }
-                  }
-                ],
-                "_id": "imwkqbudgvdpwwfzodpvijryeszttdpqtyai",
-                "paddingType": "ungrouped",
-                "paddingRightSuffix": "px",
-                "tempPaddingRightSuffix": "px",
-                "paddingSuffix": "px",
-                "tempPaddingSuffix": "px",
-                "paddingRight": 5,
-                "tempPaddingRight": 5,
-                "paddingLeftSuffix": "px",
-                "tempPaddingLeftSuffix": "px",
-                "paddingLeft": 5,
-                "tempPaddingLeft": 5
-              }
-            },
-            {
-              "type": "Row",
-              "value": {
-                "_styles": [
-                  "row",
-                  "hide-row-borders",
-                  "padding-0"
-                ],
-                "items": [
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--menu"
-                            ],
-                            "items": [
-                              {
-                                "type": "Menu",
-                                "value": {
-                                  "_styles": [
-                                    "menu"
-                                  ],
-                                  "menuSelected": "ba994c4f389318214e2ebf1b597536f175d91e9c41ea7aba4eec30be766aeea6",
-                                  "fontSize": 15,
-                                  "fontFamily": "kumbh_sans",
-                                  "lineHeight": 1.7,
-                                  "letterSpacing": 0,
-                                  "fontWeight": 700,
-                                  "fontStyle": "",
-                                  "itemPadding": 25,
-                                  "itemPaddingRight": 25,
-                                  "itemPaddingLeft": 25,
-                                  "horizontalAlign": "left",
-                                  "colorHex": "#1C1C1C",
-                                  "colorOpacity": 1,
-                                  "colorPalette": "color8",
-                                  "tempColorOpacity": 1,
-                                  "hoverColorHex": "#2f7df6",
-                                  "hoverColorOpacity": 1,
-                                  "hoverColorPalette": "color4",
-                                  "subMenuBgColorPalette": "",
-                                  "subMenuBgColorOpacity": 1,
-                                  "subMenuHoverBgColorPalette": "",
-                                  "mMenuBgColorPalette": "color2",
-                                  "subMenuBorderColorHex": "#000000",
-                                  "subMenuBorderColorOpacity": 0.08,
-                                  "subMenuBorderColorPalette": "",
-                                  "subMenuTempBorderColorOpacity": 0.08,
-                                  "subMenuHoverBorderColorHex": "#000000",
-                                  "subMenuHoverBorderColorOpacity": 0.07,
-                                  "mMenuBorderColorHex": "#000000",
-                                  "mMenuBorderColorOpacity": 0.08,
-                                  "subMenuColorHex": "#8b8b8b",
-                                  "subMenuColorOpacity": 1,
-                                  "subMenuColorPalette": "color2",
-                                  "subMenuTempColorOpacity": 1,
-                                  "subMenuHoverColorHex": "#8b8b8b",
-                                  "subMenuHoverColorOpacity": "#8b8b8b",
-                                  "mMenuColorHex": "#8b8b8b",
-                                  "mMenuColorOpacity": 1,
-                                  "mMenuHoverColorHex": "#8b8b8b",
-                                  "mMenuHoverColorOpacity": 1,
-                                  "subMenuHoverColorPalette": "color1",
-                                  "mMenuHoverColorPalette": "color3",
-                                  "subMenuHoverBorderColorPalette": "",
-                                  "subMenuTempHoverBorderColorOpacity": 0.07,
-                                  "subMenuHoverBgColorHex": "#ffffff",
-                                  "subMenuHoverBgColorOpacity": 1,
-                                  "tabletMMenuSize": 25,
-                                  "tabletHorizontalAlign": "left",
-                                  "tabletMMenuFontSize": 18,
-                                  "tabletMMenuLineHeight": 2.5,
-                                  "tabletMMenuLetterSpacing": 0,
-                                  "tabletMMenuFontWeight": 400,
-                                  "tabletMMenuFontStyle": "heading6",
-                                  "mMenuBgColorHex": "#ffffff",
-                                  "mMenuBgColorOpacity": 1,
-                                  "mMenuTempBgColorOpacity": 1,
-                                  "mMenuBorderColorPalette": "",
-                                  "mMenuTempBorderColorOpacity": 0.08,
-                                  "mMenuTitle": "Main Menu",
-                                  "mobileHorizontalAlign": "center",
-                                  "mobileMMenuSize": 25,
-                                  "mMenuColorPalette": "color8",
-                                  "mMenuTempColorOpacity": 1,
-                                  "mobileMMenuFontSize": 18,
-                                  "mobileMMenuLineHeight": 2.5,
-                                  "mobileMMenuLetterSpacing": 0,
-                                  "mobileMMenuFontWeight": 400,
-                                  "mobileMMenuFontStyle": "heading6",
-                                  "tabletMMenuIconColorHex": "",
-                                  "tabletMMenuIconColorOpacity": 1,
-                                  "tabletMMenuIconColorPalette": "color8",
-                                  "mMenu": "off",
-                                  "mMenuSize": 25,
-                                  "subMenuBgColorHex": "#ffffff",
-                                  "subMenuTempBgColorOpacity": 1,
-                                  "subMenuFontSize": 17,
-                                  "subMenuFontFamily": "josefin_sans",
-                                  "subMenuLineHeight": 1,
-                                  "subMenuLetterSpacing": 0,
-                                  "subMenuFontWeight": 600,
-                                  "subMenuFontStyle": "heading6",
-                                  "mMenuIconColorPalette": "color2",
-                                  "mMenuIconColorHex": "",
-                                  "mMenuIconColorOpacity": 1,
-                                  "mMenuFontSize": 18,
-                                  "mMenuFontFamily": "josefin_sans",
-                                  "mMenuLineHeight": 2.5,
-                                  "mMenuLetterSpacing": 0,
-                                  "mMenuFontWeight": 600,
-                                  "mMenuFontStyle": "heading6",
-                                  "tabletFontStyle": "button",
-                                  "mobileFontStyle": "button",
-                                  "tabletSubMenuFontStyle": "button",
-                                  "mobileSubMenuFontStyle": "button",
-                                  "tabletMMenu": "on",
-                                  "mobileMMenu": "on",
-                                  "mobileItemPadding": 20,
-                                  "mobileItemPaddingRight": 20,
-                                  "mobileItemPaddingLeft": 20,
-                                  "_id": "blnadnndaoukdhdhkwsitkripxoymflgsiaj",
-                                  "tempColorPalette": "",
-                                  "fontSizeSuffix": "px",
-                                  "fontFamilyType": "google",
-                                  "tabsState": "tabNormal",
-                                  "tempHoverColorOpacity": 1,
-                                  "tempHoverColorPalette": "",
-                                  "activeColorHex": "#FFFFFF",
-                                  "activeColorOpacity": 1,
-                                  "tempActiveColorOpacity": 1,
-                                  "activeColorPalette": "color4",
-                                  "tempActiveColorPalette": "",
-                                  "mobileMMenuIconColorPalette": "color8",
-                                  "mobileMMenuIconColorHex": "",
-                                  "mobileMMenuIconColorOpacity": null
-                                }
-                              }
-                            ],
-                            "showOnTablet": "on",
-                            "marginType": "grouped",
-                            "_id": "kzxuycaxjzrhgereifiebpdvkobuelgrtibt",
-                            "horizontalAlign": "left"
-                          }
-                        }
-                      ],
-                      "_id": "prxuxxepfxuixbekahsruvaymfkbvbwkbeot",
-                      "verticalAlign": "center",
-                      "paddingLeft": 0,
-                      "paddingLeftSuffix": "px",
-                      "tempPaddingLeftSuffix": "px",
-                      "paddingSuffix": "px",
-                      "tempPaddingSuffix": "px",
-                      "mobileWidth": 63.3
-                    }
-                  },
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Cloneable",
-                          "value": {
-                            "_styles": [
-                              "wrapper-clone",
-                              "wrapper-clone--icon"
-                            ],
-                            "items": [
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "yqqcpksbdlxeyoeocllvtpeqddxrruxfsywa",
-                                  "name": "logo-instagram",
-                                  "type": "glyph",
-                                  "size": "custom",
-                                  "customSize": 18,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color8",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color4",
-                                  "hoverColorOpacity": 0.8
-                                }
-                              },
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "jrbybrdhzxfhpdoghupoiischachdjgqjsgo",
-                                  "name": "logo-fb-simple",
-                                  "type": "glyph",
-                                  "size": "custom",
-                                  "customSize": 18,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color8",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color4",
-                                  "hoverColorOpacity": 0.8
-                                }
-                              },
-                              {
-                                "type": "Icon",
-                                "value": {
-                                  "_styles": [
-                                    "icon"
-                                  ],
-                                  "_id": "tybfrytnbzigebtbuzhrkgbgkbawrljrljpr",
-                                  "name": "email-83",
-                                  "type": "glyph",
-                                  "size": "custom",
-                                  "customSize": 18,
-                                  "borderRadius": 0,
-                                  "colorPalette": "color8",
-                                  "colorOpacity": 1,
-                                  "hoverColorPalette": "color4",
-                                  "hoverColorOpacity": 0.8
-                                }
-                              }
-                            ],
-                            "_id": "nppgscluvrakzdfzcujlydqhrrczpbketfzo",
-                            "horizontalAlign": "right",
-                            "itemPadding": 15,
-                            "itemPaddingRight": 15,
-                            "itemPaddingLeft": 15
-                          }
-                        }
-                      ],
-                      "_id": "uzslueeoemjeiqbpridcdnxxiioyisfwlzyz",
-                      "paddingRight": 5,
-                      "paddingRightSuffix": "px",
-                      "tempPaddingRightSuffix": "px",
-                      "paddingSuffix": "px",
-                      "tempPaddingSuffix": "px",
-                      "tempPaddingRight": 5,
-                      "mobileWidth": 36
-                    }
-                  }
-                ],
-                "_id": "shlxnpewcdntbwkwyvrikppwgamqsietmyxo"
-              }
-            },
-            {
-              "type": "Row",
-              "value": {
-                "_styles": [
-                  "row",
-                  "hide-row-borders",
-                  "padding-0"
-                ],
-                "items": [
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Wrapper",
-                          "value": {
-                            "_styles": [
-                              "wrapper",
-                              "wrapper--richText"
-                            ],
-                            "items": [
-                              {
-                                "type": "RichText",
-                                "value": {
-                                  "_styles": [
-                                    "richText"
-                                  ],
-                                  "text": "<p class=\"brz-text-lg-left brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300 brz-text-sm-left brz-tp-lg-abovetitle\"><span class=\"brz-cp-color7\">Copyright © 2021 DroneX Inc. All rights reserved.</span></p>",
-                                  "_id": "jmewuudfabznauaikhzyjkprvwnsviavewcq"
-                                }
-                              }
-                            ],
-                            "marginTop": 15,
-                            "marginTopSuffix": "px",
-                            "margin": 0,
-                            "tabletMarginTop": 0,
-                            "tabletMarginTopSuffix": "px",
-                            "tabletMargin": 0,
-                            "mobileMarginTop": 0,
-                            "mobileMarginTopSuffix": "px",
-                            "mobileMargin": 0,
-                            "tabletMarginBottom": 0,
-                            "tabletMarginBottomSuffix": "px",
-                            "mobileMarginBottom": 0,
-                            "mobileMarginBottomSuffix": "px",
-                            "_id": "bqtolipgenpbrebcggruvpykzalblbzwwvdr",
-                            "marginSuffix": "px"
-                          }
-                        }
-                      ],
-                      "_id": "wcotlpvzsbjpfqmrjjfrtjxywzvghzxponvv",
-                      "width": 33,
-                      "paddingLeft": 5,
-                      "paddingLeftSuffix": "px",
-                      "tempPaddingLeftSuffix": "px",
-                      "paddingSuffix": "px",
-                      "tempPaddingSuffix": "px",
-                      "tempPaddingLeft": 5,
-                      "tabletWidth": 45.1,
-                      "tabletPaddingTop": 25,
-                      "tabletPaddingTopSuffix": "px",
-                      "tempTabletPaddingTopSuffix": "px",
-                      "tabletPaddingSuffix": "px",
-                      "tempTabletPaddingSuffix": "px",
-                      "tempTabletPaddingTop": 25,
-                      "verticalAlign": "center"
-                    }
-                  },
-                  {
-                    "type": "Column",
-                    "value": {
-                      "_styles": [
-                        "column"
-                      ],
-                      "items": [
-                        {
-                          "type": "Cloneable",
-                          "value": {
-                            "_styles": [
-                              "wrapper-clone",
-                              "wrapper-clone--button"
-                            ],
-                            "items": [
-                              {
-                                "type": "Button",
-                                "value": {
-                                  "_styles": [
-                                    "button"
-                                  ],
-                                  "_id": "htnenpoyaricgqgnmcuqnvzflextclaseczd",
-                                  "text": "Privacy Policy",
-                                  "iconName": "",
-                                  "iconType": "",
-                                  "fillType": "default",
-                                  "tempFillType": "filled",
-                                  "paddingRL": 0,
-                                  "paddingRight": 0,
-                                  "paddingLeft": 0,
-                                  "paddingTB": 0,
-                                  "paddingTop": 0,
-                                  "paddingBottom": 0,
-                                  "borderRadiusType": "",
-                                  "borderRadius": 2,
-                                  "borderWidth": 0,
-                                  "borderColorOpacity": 0,
-                                  "borderColorPalette": "",
-                                  "bgColorOpacity": 0,
-                                  "bgColorPalette": "",
-                                  "gradientColorOpacity": 0,
-                                  "gradientColorPalette": "",
-                                  "hoverBgColorOpacity": 0,
-                                  "hoverBorderColorOpacity": 0,
-                                  "size": "custom",
-                                  "fontSize": 15,
-                                  "tempPaddingTB": 0,
-                                  "tempPaddingTop": 0,
-                                  "tempPaddingBottom": 0,
-                                  "tempPaddingRL": 42,
-                                  "tempPaddingRight": 42,
-                                  "tempPaddingLeft": 42,
-                                  "fontStyle": "abovetitle",
-                                  "fontSizeSuffix": "px",
-                                  "fontWeight": 400,
-                                  "letterSpacing": 0,
-                                  "lineHeight": 1.8,
-                                  "fontFamily": "kumbh_sans",
-                                  "fontFamilyType": "google",
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "tabletSize": "custom",
-                                  "tabletFontSize": 11,
-                                  "tabletPaddingTB": 11,
-                                  "tabletPaddingTop": 11,
-                                  "tabletPaddingBottom": 11,
-                                  "tempTabletPaddingTB": 11,
-                                  "tempTabletPaddingTop": 11,
-                                  "tempTabletPaddingBottom": 11,
-                                  "tabletPaddingRL": 0,
-                                  "tabletPaddingRight": 0,
-                                  "tabletPaddingLeft": 0,
-                                  "tempTabletPaddingRL": 26,
-                                  "tempTabletPaddingRight": 0,
-                                  "tempTabletPaddingLeft": 0,
-                                  "tabletBorderRadius": 2,
-                                  "mobileSize": "small",
-                                  "mobileFontSize": 11,
-                                  "mobilePaddingTB": 11,
-                                  "mobilePaddingTop": 11,
-                                  "mobilePaddingBottom": 11,
-                                  "tempMobilePaddingTB": 11,
-                                  "tempMobilePaddingTop": 11,
-                                  "tempMobilePaddingBottom": 11,
-                                  "mobilePaddingRL": 0,
-                                  "mobilePaddingRight": 0,
-                                  "mobilePaddingLeft": 0,
-                                  "tempMobilePaddingRL": 26,
-                                  "tempMobilePaddingRight": 26,
-                                  "tempMobilePaddingLeft": 26,
-                                  "mobileBorderRadius": 2
-                                }
-                              },
-                              {
-                                "type": "Button",
-                                "value": {
-                                  "_styles": [
-                                    "button"
-                                  ],
-                                  "_id": "djyzdlexvxfuvtsscqnadpyxtbtibxvpskmu",
-                                  "text": "Terms of Use Sales",
-                                  "iconName": "",
-                                  "iconType": "",
-                                  "fillType": "default",
-                                  "tempFillType": "filled",
-                                  "paddingRL": 0,
-                                  "paddingRight": 0,
-                                  "paddingLeft": 0,
-                                  "paddingTB": 0,
-                                  "paddingTop": 0,
-                                  "paddingBottom": 0,
-                                  "borderRadiusType": "",
-                                  "borderRadius": 2,
-                                  "borderWidth": 0,
-                                  "borderColorOpacity": 0,
-                                  "borderColorPalette": "",
-                                  "bgColorOpacity": 0,
-                                  "bgColorPalette": "",
-                                  "gradientColorOpacity": 0,
-                                  "gradientColorPalette": "",
-                                  "hoverBgColorOpacity": 0,
-                                  "hoverBorderColorOpacity": 0,
-                                  "size": "custom",
-                                  "fontSize": 15,
-                                  "tempPaddingTB": 0,
-                                  "tempPaddingTop": 0,
-                                  "tempPaddingBottom": 0,
-                                  "tempPaddingRL": 42,
-                                  "tempPaddingRight": 42,
-                                  "tempPaddingLeft": 42,
-                                  "fontStyle": "abovetitle",
-                                  "fontSizeSuffix": "px",
-                                  "fontWeight": 400,
-                                  "letterSpacing": 0,
-                                  "lineHeight": 1.8,
-                                  "fontFamily": "kumbh_sans",
-                                  "fontFamilyType": "google",
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "tabletSize": "custom",
-                                  "tabletFontSize": 11,
-                                  "tabletPaddingTB": 11,
-                                  "tabletPaddingTop": 11,
-                                  "tabletPaddingBottom": 11,
-                                  "tempTabletPaddingTB": 11,
-                                  "tempTabletPaddingTop": 11,
-                                  "tempTabletPaddingBottom": 11,
-                                  "tabletPaddingRL": 0,
-                                  "tabletPaddingRight": 0,
-                                  "tabletPaddingLeft": 0,
-                                  "tempTabletPaddingRL": 26,
-                                  "tempTabletPaddingRight": 26,
-                                  "tempTabletPaddingLeft": 26,
-                                  "tabletBorderRadius": 2,
-                                  "mobileSize": "small",
-                                  "mobileFontSize": 11,
-                                  "mobilePaddingTB": 11,
-                                  "mobilePaddingTop": 11,
-                                  "mobilePaddingBottom": 11,
-                                  "tempMobilePaddingTB": 11,
-                                  "tempMobilePaddingTop": 11,
-                                  "tempMobilePaddingBottom": 11,
-                                  "mobilePaddingRL": 0,
-                                  "mobilePaddingRight": 0,
-                                  "mobilePaddingLeft": 0,
-                                  "tempMobilePaddingRL": 26,
-                                  "tempMobilePaddingRight": 26,
-                                  "tempMobilePaddingLeft": 26,
-                                  "mobileBorderRadius": 2
-                                }
-                              },
-                              {
-                                "type": "Button",
-                                "value": {
-                                  "_styles": [
-                                    "button"
-                                  ],
-                                  "_id": "qnthletpexvemyayrkghzxltjxvsgjaqeomm",
-                                  "text": "Legal Site",
-                                  "iconName": "",
-                                  "iconType": "",
-                                  "fillType": "default",
-                                  "tempFillType": "filled",
-                                  "paddingRL": 0,
-                                  "paddingRight": 0,
-                                  "paddingLeft": 0,
-                                  "paddingTB": 0,
-                                  "paddingTop": 0,
-                                  "paddingBottom": 0,
-                                  "borderRadiusType": "",
-                                  "borderRadius": 2,
-                                  "borderWidth": 0,
-                                  "borderColorOpacity": 0,
-                                  "borderColorPalette": "",
-                                  "bgColorOpacity": 0,
-                                  "bgColorPalette": "",
-                                  "gradientColorOpacity": 0,
-                                  "gradientColorPalette": "",
-                                  "hoverBgColorOpacity": 0,
-                                  "hoverBorderColorOpacity": 0,
-                                  "size": "custom",
-                                  "fontSize": 15,
-                                  "tempPaddingTB": 0,
-                                  "tempPaddingTop": 0,
-                                  "tempPaddingBottom": 0,
-                                  "tempPaddingRL": 42,
-                                  "tempPaddingRight": 42,
-                                  "tempPaddingLeft": 42,
-                                  "fontStyle": "abovetitle",
-                                  "fontSizeSuffix": "px",
-                                  "fontWeight": 400,
-                                  "letterSpacing": 0,
-                                  "lineHeight": 1.8,
-                                  "fontFamily": "kumbh_sans",
-                                  "fontFamilyType": "google",
-                                  "colorPalette": "color7",
-                                  "colorOpacity": 1,
-                                  "tabletSize": "custom",
-                                  "tabletFontSize": 11,
-                                  "tabletPaddingTB": 11,
-                                  "tabletPaddingTop": 11,
-                                  "tabletPaddingBottom": 11,
-                                  "tempTabletPaddingTB": 11,
-                                  "tempTabletPaddingTop": 11,
-                                  "tempTabletPaddingBottom": 11,
-                                  "tabletPaddingRL": 0,
-                                  "tabletPaddingRight": 0,
-                                  "tabletPaddingLeft": 0,
-                                  "tempTabletPaddingRL": 26,
-                                  "tempTabletPaddingRight": 0,
-                                  "tempTabletPaddingLeft": 0,
-                                  "tabletBorderRadius": 2,
-                                  "mobileSize": "small",
-                                  "mobileFontSize": 11,
-                                  "mobilePaddingTB": 11,
-                                  "mobilePaddingTop": 11,
-                                  "mobilePaddingBottom": 11,
-                                  "tempMobilePaddingTB": 11,
-                                  "tempMobilePaddingTop": 11,
-                                  "tempMobilePaddingBottom": 11,
-                                  "mobilePaddingRL": 0,
-                                  "mobilePaddingRight": 0,
-                                  "mobilePaddingLeft": 0,
-                                  "tempMobilePaddingRL": 26,
-                                  "tempMobilePaddingRight": 26,
-                                  "tempMobilePaddingLeft": 26,
-                                  "mobileBorderRadius": 2
-                                }
-                              }
-                            ],
-                            "_id": "soscfjnhihaptdnxhdqpmntujevpwcbppshn",
-                            "horizontalAlign": "right",
-                            "itemPadding": 20,
-                            "itemPaddingRight": 20,
-                            "itemPaddingLeft": 20,
-                            "tabletHorizontalAlign": "right",
-                            "mobileHorizontalAlign": "center",
-                            "mobileMarginTopSuffix": "px",
-                            "mobileMarginTop": 0,
-                            "mobileMargin": 0,
-                            "mobileMarginSuffix": "px"
-                          }
-                        }
-                      ],
-                      "_id": "egixccjmwgadohrodtbvprlziweowvraqnqm",
-                      "width": 67,
-                      "tabletWidth": 52.7,
-                      "tabletPaddingRight": 0,
-                      "tabletPaddingRightSuffix": "px",
-                      "tempTabletPaddingRightSuffix": "px",
-                      "tabletPaddingSuffix": "px",
-                      "tempTabletPaddingSuffix": "px",
-                      "mobileMarginTopSuffix": "px",
-                      "mobileMarginTop": 0,
-                      "mobileMargin": 0,
-                      "mobileMarginSuffix": "px",
-                      "mobileMarginBottomSuffix": "px",
-                      "mobileMarginBottom": 0,
-                      "verticalAlign": "center"
-                    }
-                  }
-                ],
-                "_id": "oisilainpyslelvfijifrblrkgsmslmhiczy"
-              }
-            }
-          ],
-          "paddingType": "ungrouped",
-          "paddingTop": 70,
-          "paddingBottom": 70,
-          "padding": 55,
-          "tabletPaddingType": "ungrouped",
-          "tabletPaddingTop": 25,
-          "tabletPaddingBottom": 25,
-          "tabletPadding": 25,
-          "mobilePaddingType": "ungrouped",
-          "mobilePaddingTop": 25,
-          "mobilePaddingBottom": 15,
-          "mobilePadding": 25,
-          "_id": "nlahjdurkjhsnihclfddczjwixkdzcnfyjnq",
-          "tabsState": "tabNormal",
-          "tabsCurrentElement": "tabCurrentElement",
-          "tabsColor": "tabOverlay",
-          "bgColorPalette": "",
-          "tempBgColorPalette": "",
-          "bgColorOpacity": 1,
-          "borderRadius": 0,
-          "borderTopLeftRadius": 0,
-          "borderTopRightRadius": 0,
-          "borderBottomLeftRadius": 0,
-          "borderBottomRightRadius": 0,
-          "tempBorderTopLeftRadius": 0,
-          "tempBorderTopRightRadius": 0,
-          "tempBorderBottomLeftRadius": 0,
-          "tempBorderBottomRightRadius": 0,
-          "bgColorHex": "#1f1f29",
-          "tempBgColorOpacity": 1,
-          "_thumbnailSrc": 5756205,
-          "_thumbnailWidth": 600,
-          "_thumbnailHeight": 190,
-          "_thumbnailTime": 1616072637013,
-          "tabletPaddingBottomSuffix": "px",
-          "tempTabletPaddingBottomSuffix": "px",
-          "tabletPaddingSuffix": "px",
-          "tempTabletPaddingSuffix": "px",
-          "tempTabletPaddingBottom": 25
-        },
-        "blockId": "block2kit15252"
+        blockId: "Kit2Blank000Light"
       }
     ]
   }

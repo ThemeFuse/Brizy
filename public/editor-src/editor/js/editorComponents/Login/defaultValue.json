@@ -2,8 +2,13 @@
   "content": {
     "type": "login",
 
+    "emptyFieldsError": "All fields should be filled!",
+    "submitUrlError": "Something went wrong, try again later",
+
     "redirectType": "samePage",
     "messageRedirect": "",
+
+    "logoutRedirectType": "samePage",
     "logoutRedirect": "",
 
     "showPlaceholder": "on",
@@ -114,6 +119,13 @@
     "colorOpacity": 0.7,
     "colorPalette": "",
 
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
     "tempColorOpacity": 0.7,
     "tempColorPalette": "",
 
@@ -123,6 +135,13 @@
 
     "tempHoverColorOpacity": null,
     "tempHoverColorPalette": null,
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorPalette": null,
+    "tempHoverBgColorOpacity": null,
 
     "textColorHex": "#000000",
     "textColorOpacity": 0.7,
@@ -467,7 +486,7 @@
     "hoverCheckboxColorOpacity": null,
     "tempHoverCheckboxColorOpacity": null,
     "hoverCheckboxColorPalette": null,
-    "tempHoverCheckboxColorPalette": null, 
+    "tempHoverCheckboxColorPalette": null,
 
     "tempCheckboxColorOpacity": 0.7,
     "tempCheckboxColorPalette": "",
@@ -531,6 +550,8 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "tabletHorizontalAlign": null,
+
+    "tabletRememberMeHorizontalAlign": null,
 
     "tabletSubmitWidth": null,
     "tabletSubmitWidthSuffix": null,
@@ -728,6 +749,12 @@
     "tabletTabletFieldPaddingBottom": 15,
     "tabletTabletFieldPaddingLeft": 15,
 
+    "tabletFieldPadding": 15,
+    "tabletFieldPaddingTop": 0,
+    "tabletFieldPaddingRight": 15,
+    "tabletFieldPaddingBottom": 15,
+    "tabletFieldPaddingLeft": 15,
+
     "tempTabletFieldPadding": 15,
     "tempTabletFieldPaddingTop": 0,
     "tempTabletFieldPaddingRight": 15,
@@ -774,6 +801,8 @@
     "tempHoverTabletFieldPaddingLeftSuffix": null,
 
     "mobileHorizontalAlign": null,
+
+    "mobileRememberMeHorizontalAlign": null,
 
     "mobileSubmitWidth": null,
     "mobileSubmitWidthSuffix": null,
@@ -969,6 +998,12 @@
     "mobileMobileFieldPaddingRight": 15,
     "mobileMobileFieldPaddingBottom": 15,
     "mobileMobileFieldPaddingLeft": 15,
+
+    "mobileFieldPadding": 15,
+    "mobileFieldPaddingTop": 0,
+    "mobileFieldPaddingRight": 15,
+    "mobileFieldPaddingBottom": 15,
+    "mobileFieldPaddingLeft": 15,
 
     "tempMobileFieldPadding": 15,
     "tempMobileFieldPaddingTop": 0,

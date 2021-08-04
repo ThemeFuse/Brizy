@@ -1,3 +1,13 @@
+const Brandio = require("./Brandio");
+const Corpio = require("./Corpio");
+const DroneX = require("./DroneX");
+const Eladio = require("./Eladio");
+const OrangePhotography = require("./OrangePhotography");
+const Sintix = require("./Sintix");
+const SmartLearning = require("./SmartLearning");
+const Starter = require("./Starter");
+const Travely = require("./Travely");
+const Trefon = require("./Trefon");
 const Agens = require("./Agens");
 const Atorno = require("./Atorno");
 const Beauty = require("./Beauty");
@@ -12,8 +22,6 @@ const Dieting = require("./Dieting");
 const Medico = require("./Medico");
 const DigitalWork = require("./DigitalWork");
 const Ditox = require("./Ditox");
-// const DroneX = require("./DroneX");
-// const Eladio = require("./Eladio");
 const Fitness = require("./Fitness");
 const Florin = require("./Florin");
 const Guide = require("./Guide");
@@ -25,15 +33,11 @@ const Motion = require("./Motion");
 const Okloos = require("./Okloos");
 const PetCare = require("./PetCare");
 const Riston = require("./Riston");
-// const Sintix = require("./Sintix");
-const SmartLearning = require("./SmartLearning");
 const Solting = require("./Solting");
 const Soofer = require("./Soofer");
 const Spotless = require("./Spotless");
 const Timon = require("./Timon");
 const Trainer = require("./Trainer");
-// const Travely = require("./Travely");
-// const Trefon = require("./Trefon");
 const Vopril = require("./Vopril");
 const Webno = require("./Webno");
 const Winery = require("./Winery");
@@ -106,6 +110,16 @@ const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
+    Brandio,
+    Corpio,
+    DroneX,
+    Eladio,
+    OrangePhotography,
+    Sintix,
+    SmartLearning,
+    Starter,
+    Travely,
+    Trefon,
     Agens,
     Atorno,
     Beauty,
@@ -120,8 +134,6 @@ module.exports = {
     Dieting,
     Medico,
     Ditox,
-    // DroneX,
-    // Eladio,
     Fitness,
     Florin,
     Guide,
@@ -133,15 +145,11 @@ module.exports = {
     Okloos,
     PetCare,
     Riston,
-    // Sintix,
-    SmartLearning,
     Solting,
     Soofer,
     Spotless,
     Timon,
     Trainer,
-    // Travely,
-    // Trefon,
     Vopril,
     Webno,
     Winery,
@@ -209,7 +217,7 @@ module.exports = {
     Politiko,
     Refix,
     Uplyft,
-    Workspace,
+    Workspace
   ],
   categories: [
     { id: 100, title: "Free" },
@@ -228,6 +236,6 @@ module.exports = {
     { id: 13, title: "Sport" },
     { id: 15, title: "Repair" },
     { id: 16, title: "Children" },
-    { id: 17, title: "Gaming" },
+    { id: 17, title: "Gaming" }
   ]
 };

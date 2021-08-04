@@ -51,13 +51,14 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementForm2FieldsLabelPadding"]
     },
     ".brz &&:hover .brz-form-login .brz-login__field-label": {
+      standart: ["cssStyleLabelColor", "cssStyleElementForm2FieldsLabelAlign"]
+    },
+    ".brz &&:hover .brz-form-login .brz-login__field-label .brz-label": {
       standart: [
-        "cssStyleLabelColor",
         "cssStyleElementForm2FieldsLabelFontFamily",
         "cssStyleElementForm2FieldsLabelFontSize",
         "cssStyleElementForm2FieldsLabelFontWeight",
         "cssStyleElementForm2FieldsLabelLetterSpacing",
-        "cssStyleElementForm2FieldsLabelAlign",
         "cssStyleElementForm2FieldsLabelLineHeight"
       ]
     },
