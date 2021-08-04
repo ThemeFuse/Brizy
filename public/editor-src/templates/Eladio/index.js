@@ -13,7 +13,7 @@ const EladioStyle = require("./styles/Eladio");
 module.exports = {
   name: "Eladio",
   color: "#E62B4A",
-  cat: [0, 1, 3, 100],
+  cat: [0, 1, 3],
   pages: [
     Homepage,
     Homepage2,

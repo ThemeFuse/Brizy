@@ -16,43 +16,45 @@ export default function imageUrl(
     iH: "any"
   }
 ) {
-  const imageSrc = isAbsoluteUrl(src) || isPlaceholderStr(src) ? src : src;
+  if (isAbsoluteUrl(src) || isPlaceholderStr(src)) {
+    return src;
+  }
 
-  if (!imageSrc) {
+  if (!src) {
     return null;
   }
 
   if (IS_EDITOR) {
     const filter = getFilter(options);
     const imageDownloaded =
-      imageAttachments.has(imageSrc) || imageSrc.indexOf("wp-") === 0;
+      imageAttachments.has(src) || src.indexOf("wp-") === 0;
 
     if (imageDownloaded) {
       const prefix = Config.get("prefix") ?? "brizy";
       const queryString = objectToQueryString({
-        [`${prefix}_media`]: imageSrc,
+        [`${prefix}_media`]: src,
         [`${prefix}_crop`]: filter,
         [`${prefix}_post`]: Config.get("wp").page
       });
 
       return imageUrlPrefix + queryString;
     } else {
-      if (!pendingRequests[imageSrc]) {
-        pendingRequests[imageSrc] = true;
+      if (!pendingRequests[src]) {
+        pendingRequests[src] = true;
 
-        downloadImageFromCloud(imageSrc).then(() => {
-          pendingRequests[imageSrc] = false;
-          imageAttachments.add(imageSrc);
+        downloadImageFromCloud(src).then(() => {
+          pendingRequests[src] = false;
+          imageAttachments.add(src);
         });
       }
 
-      return cloudImageUrl(imageSrc, options);
+      return cloudImageUrl(src, options);
     }
   } else {
     const filter = getFilter(options);
     const prefix = Config.get("prefix") ?? "brizy";
     const queryString = objectToQueryString({
-      [`${prefix}_media`]: imageSrc,
+      [`${prefix}_media`]: src,
       [`${prefix}_crop`]: filter,
       [`${prefix}_post`]: Config.get("wp").page
     });

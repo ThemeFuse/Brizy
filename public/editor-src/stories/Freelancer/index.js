@@ -9,7 +9,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Freelancer",
   color: "#c5baba",
-  cat: [0, 7],
+  cat: [0, 7, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6],
   styles: [StoryStyle]
 };

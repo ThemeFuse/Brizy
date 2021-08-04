@@ -7,8 +7,8 @@ export default async function getMiddleware() {
 
   return [
     thunk,
-    error,
     sideEffects({ document, parentDocument: window.parent.document }),
+    error,
     ...(screenshotsSupported ? [screenshots] : []),
     api
   ];

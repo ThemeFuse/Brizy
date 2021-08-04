@@ -42,8 +42,9 @@ const Gym = require("./Gym");
 const Lifestyle = require("./Lifestyle");
 const Business = require("./Business");
 const Photographer = require("./Photographer");
+const Foodie = require("./Foodie");
 const PetServices = require("./PetServices");
-const CraftDIY = require("./CraftDIY");
+const Crafts = require("./Crafts");
 const Yoga = require("./Yoga");
 const Interior = require("./Interior");
 const Gaming = require("./Gaming");
@@ -56,7 +57,6 @@ const Hiring = require("./Hiring");
 const Marketing = require("./Marketing");
 const Dating = require("./Dating");
 const TheAcademy = require("./TheAcademy");
-const FoodBlogger = require("./FoodBlogger");
 
 module.exports = {
   stories: [
@@ -104,9 +104,9 @@ module.exports = {
     Lifestyle,
     Business,
     Photographer,
-    FoodBlogger,
+    Foodie,
     PetServices,
-    CraftDIY,
+    Crafts,
     Yoga,
     Interior,
     Gaming,
@@ -122,6 +122,7 @@ module.exports = {
   ],
   categories: [
     { id: 0, title: "Blank", hidden: true },
+    { id: 100, title: "Free" },
     { id: 1, title: "Magazine" },
     { id: 2, title: "Fashion" },
     { id: 3, title: "Food" },

@@ -2,7 +2,7 @@ import _ from "underscore";
 import { mergeDeep } from "timm";
 import { ThunkAction } from "redux-thunk";
 import { uuid } from "visual/utils/uuid";
-import { ReduxState } from "./types";
+import { ReduxState, StoreChanged } from "./types";
 import {
   Authorized,
   Block,
@@ -181,6 +181,11 @@ export type ActionReorderBlocks = {
   };
 };
 
+export type ActionStoreWasChanged = {
+  type: "STORE_WAS_CHANGED";
+  payload: StoreChanged;
+};
+
 export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
@@ -206,7 +211,8 @@ export type ReduxAction =
   | ActionMakeNormalToGlobalBlock
   | ActionMakeGlobalToNormalBlock
   | ActionMakePopupToGlobalBlock
-  | ActionMakeGlobalBlockToPopup;
+  | ActionMakeGlobalBlockToPopup
+  | ActionStoreWasChanged;
 
 export type ActionImportTemplate = {
   type: "IMPORT_TEMPLATE";
@@ -417,6 +423,15 @@ export function updateUI<K extends keyof UIState>(
     value
   };
 }
+
+export const updateStoreWasChanged = (
+  payload: ReduxState["storeWasChanged"]
+): ActionStoreWasChanged => {
+  return {
+    type: "STORE_WAS_CHANGED",
+    payload
+  };
+};
 
 // pages
 

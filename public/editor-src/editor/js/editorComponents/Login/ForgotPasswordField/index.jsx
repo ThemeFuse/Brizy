@@ -15,22 +15,12 @@ class ForgotPasswordField extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  input = React.createRef();
-
-  state = {
-    value: ""
-  };
-
   handleLabelChange = label => {
     this.patchValue({ label });
   };
 
   getLabel(v) {
     const { label } = v;
-
-    if (IS_EDITOR) {
-      return label === null ? "" : label;
-    }
 
     return label === null ? "" : label;
   }
@@ -73,7 +63,7 @@ class ForgotPasswordField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label " htmlFor="user_login">
+                  <label className="brz-label">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -87,7 +77,6 @@ class ForgotPasswordField extends EditorComponent {
                 {showLabel === "on" ? (
                   <input
                     name="user_login"
-                    ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
                     placeholder={this.getPlaceholder(v)}
@@ -102,7 +91,6 @@ class ForgotPasswordField extends EditorComponent {
                 ) : (
                   <input
                     name="user_login"
-                    ref={this.input}
                     className="brz-input brz-login__field-email"
                     type="email"
                     placeholder={this.getPlaceholder(v)}
@@ -147,19 +135,16 @@ class ForgotPasswordField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label " htmlFor="user_login">
-                  {this.getLabel(v)}
-                </label>
+                <label className="brz-label">{this.getLabel(v)}</label>
               </div>
             )}
             <div className="brz-login__field">
               <input
-                ref={this.input}
                 type="email"
                 name="user_login"
                 className="brz-input brz-login__field-email"
                 placeholder={this.getPlaceholder(v)}
-                value=""
+                defaultValue=""
                 required
               />
             </div>

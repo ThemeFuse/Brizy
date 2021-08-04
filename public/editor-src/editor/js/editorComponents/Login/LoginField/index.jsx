@@ -12,6 +12,7 @@ import CheckboxControls, {
 } from "visual/component/Controls/CheckGroup";
 import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
+import { IS_WP } from "visual/utils/env";
 
 class LoginField extends EditorComponent {
   static get componentId() {
@@ -19,8 +20,6 @@ class LoginField extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
-
-  input = React.createRef();
 
   state = {
     value: "",
@@ -41,10 +40,6 @@ class LoginField extends EditorComponent {
 
   getLabel(v) {
     const { label } = v;
-
-    if (IS_EDITOR) {
-      return label === null ? "" : label;
-    }
 
     return label === null ? "" : label;
   }
@@ -127,7 +122,7 @@ class LoginField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label " htmlFor="emailInput">
+                  <label className="brz-label">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -139,8 +134,7 @@ class LoginField extends EditorComponent {
             <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
               <div className="brz-login__field">
                 <input
-                  name="log"
-                  ref={this.input}
+                  name={IS_WP ? "log" : "email"}
                   className="brz-input brz-login__field-email"
                   type="text"
                   id="user"
@@ -167,7 +161,7 @@ class LoginField extends EditorComponent {
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
                 <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label" htmlFor="passwordInput">
+                  <label className="brz-label">
                     <TextEditor
                       value={this.getLabel(v)}
                       onChange={this.handleLabelChange}
@@ -181,12 +175,11 @@ class LoginField extends EditorComponent {
                 <input
                   className="brz-input brz-login__field brz-login__field-password"
                   type="password"
-                  name="pwd"
+                  name={IS_WP ? "pwd" : "password"}
                   id="password"
                   placeholder={this.getPlaceholder(v)}
                   value={this.getPlaceholder(v)}
                   required
-                  ref={this.input}
                   onChange={e => {
                     showLabel === "on"
                       ? this.patchValue({
@@ -251,20 +244,17 @@ class LoginField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label " htmlFor="emailInput">
-                  {this.getLabel(v)}
-                </label>
+                <label className="brz-label">{this.getLabel(v)}</label>
               </div>
             )}
             <div className="brz-login__field">
               <input
-                ref={this.input}
                 type="text"
-                name="log"
+                name={IS_WP ? "log" : "email"}
                 id="user"
                 className="brz-input brz-login__field-email"
                 placeholder={this.getPlaceholder(v)}
-                value=""
+                defaultValue=""
                 required
               />
             </div>
@@ -274,20 +264,17 @@ class LoginField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label" htmlFor="passwordInput">
-                  {this.getLabel(v)}
-                </label>
+                <label className="brz-label">{this.getLabel(v)}</label>
               </div>
             )}
             <div className="brz-login__field">
               <input
-                ref={this.input}
                 type="password"
-                name="pwd"
+                name={IS_WP ? "pwd" : "password"}
                 id="password"
                 className="brz-input brz-login__field brz-login__field-password"
                 placeholder={this.getPlaceholder(v)}
-                value=""
+                defaultValue=""
                 required
               />
             </div>

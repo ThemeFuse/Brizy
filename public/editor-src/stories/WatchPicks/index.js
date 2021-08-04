@@ -10,7 +10,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Watch Picks",
   color: "#09707d",
-  cat: [0, 4],
+  cat: [0, 4, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7],
   styles: [StoryStyle]
 };

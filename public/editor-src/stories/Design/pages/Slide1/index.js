@@ -1,5 +1,5 @@
 module.exports = {
-  id: "DesignServiceSlide1",
+  id: "DesignSlide1",
   thumbnailWidth: 437,
   thumbnailHeight: 728,
   title: "",

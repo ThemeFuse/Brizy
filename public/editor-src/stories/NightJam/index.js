@@ -8,7 +8,7 @@ const StoryStyle = require("./styles/Story");
 module.exports = {
   name: "Night Jam",
   color: "#2a4989",
-  cat: [0, 6],
+  cat: [0, 6, 100],
   pages: [Slide1, Slide2, Slide3, Slide4, Slide5],
   styles: [StoryStyle]
 };

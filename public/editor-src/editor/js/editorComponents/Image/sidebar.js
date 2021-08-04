@@ -1,4 +1,5 @@
 import { t } from "visual/utils/i18n";
+import { IS_WP } from "visual/utils/env";
 
 export const title = t("Image");
 
@@ -12,6 +13,18 @@ export function getItems() {
       },
       devices: "desktop",
       tabs: [
+        {
+          id: "settingsStyling",
+          label: t("Styling"),
+          icon: "nc-styling",
+          options: [
+            {
+              id: "border",
+              label: t("Corner"),
+              type: "corners-dev"
+            }
+          ]
+        },
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
@@ -28,6 +41,18 @@ export function getItems() {
                 max: 99,
                 units: [{ title: "ms", value: "ms" }]
               }
+            },
+            {
+              id: "alt",
+              type: "inputText-dev",
+              label: t("Alt Title"),
+              display: "block",
+              disabled: IS_WP,
+              helper: {
+                content:
+                  "Specify an alternate text for the image, if it cannot be displayed."
+              },
+              devices: "desktop"
             }
           ]
         }

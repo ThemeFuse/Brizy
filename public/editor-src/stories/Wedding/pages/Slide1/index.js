@@ -1,5 +1,5 @@
 module.exports = {
-  id: "WeddingRSVPSlide1",
+  id: "WeddingSlide1",
   thumbnailWidth: 437,
   thumbnailHeight: 728,
   title: "",
