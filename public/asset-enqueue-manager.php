@@ -35,7 +35,8 @@ class Brizy_Public_AssetEnqueueManager
     {
         add_action('wp_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
-        add_filter('script_loader_tag', array($this, 'addAssetAttributes'), 10, 2);
+        add_filter('script_loader_tag', array($this, 'addScriptAttributes'), 10, 2);
+        add_filter('style_loader_tag', array($this, 'addStyleAttributes'), 10, 2);
     }
 
     public function enqueueStyles()
@@ -104,11 +105,20 @@ class Brizy_Public_AssetEnqueueManager
         return $this->getCodeAssetsAsString($assets);
     }
 
-    public function addAssetAttributes($tag, $ahandle)
+    public function addScriptAttributes($tag, $ahandle)
     {
         if (isset($this->enqueuedAssets[$ahandle])) {
             $attributes = $this->getAttributes($asset = $this->enqueuedAssets[$ahandle]);
             $tag = str_replace('src=', $attributes . ' src=', $tag);
+        }
+
+        return $tag;
+    }
+    public function addStyleAttributes($tag, $ahandle)
+    {
+        if (isset($this->enqueuedAssets[$ahandle])) {
+            $attributes = $this->getAttributes($asset = $this->enqueuedAssets[$ahandle]);
+            $tag = str_replace('href=', $attributes . ' href=', $tag);
         }
 
         return $tag;
