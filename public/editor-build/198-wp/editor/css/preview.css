@@ -3909,6 +3909,9 @@ b {
 .brz.brz:not(.brz-ed) .flatpickr-calendar.hasTime .numInputWrapper span.arrowDown {
   margin-bottom: -10px; }
 
+.brz.brz:not(.brz-ed) .brz-g-recaptcha {
+  font-size: initial; }
+
 .brz .brz-input__upload {
   position: relative; }
   .brz .brz-input__upload .brz-label {
@@ -3971,6 +3974,9 @@ b {
 .brz .brz-story .brz-form {
   width: 100%;
   margin: 0; }
+  .brz .brz-story .brz-form .brz-g-recaptcha .grecaptcha-badge {
+    position: initial !important;
+    margin-top: 10px; }
   .brz .brz-story .brz-form .brz-forms2__item-button {
     padding-bottom: 0; }
     .brz .brz-story .brz-form .brz-forms2__item-button .brz-btn {

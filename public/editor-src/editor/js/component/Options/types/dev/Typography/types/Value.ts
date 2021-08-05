@@ -14,7 +14,7 @@ export interface FontSettings {
   fontWeight: Weight;
   letterSpacing: number;
   lineHeight: Positive;
-  fontStyle: undefined;
+  fontStyle: "";
 }
 
 export interface FontFamily extends FontSettings {
@@ -25,5 +25,5 @@ export interface FontFamily extends FontSettings {
 export interface Value
   extends Omit<FontFamily, "fontStyle">,
     Omit<FontSettings, "fontStyle"> {
-  fontStyle: undefined | NoEmptyString;
+  fontStyle: "" | NoEmptyString;
 }
