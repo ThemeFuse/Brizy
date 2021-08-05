@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.3.6<br>
+Stable tag: 2.3.7<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.7 - 2021-08-05
+* Fixed: Story contact form element in preview
+* Fixed: Typography changes on mobile for the Text element
+* Fixed: Broken WooCommerce Products template in preview
 
 ### 2.3.6 - 2021-08-04
 * New: Added Free blocks category in sidebar when you add blocks

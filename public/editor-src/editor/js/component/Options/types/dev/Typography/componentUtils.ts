@@ -22,7 +22,7 @@ import { match2, or, pass } from "fp-utilities";
 export const DEFAULT_VALUE: Value = {
   fontFamily: "",
   fontFamilyType: FontType.FontFamilyType.google,
-  fontStyle: undefined,
+  fontStyle: "",
   fontSize: Positive.unsafe(17),
   fontSizeSuffix: SizeSuffix.empty,
   fontWeight: FontWeight.empty,
@@ -130,6 +130,6 @@ export const patchFontFamily = (
     fontSize: m.fontSize,
     letterSpacing: m.letterSpacing,
     lineHeight: m.lineHeight,
-    fontStyle: undefined
+    fontStyle: ""
   };
 };
