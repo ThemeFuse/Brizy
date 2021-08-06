@@ -525,11 +525,6 @@ class Brizy_Admin_Templates
 	    wp_register_script( 'brizy-preview', '' );
 	    wp_enqueue_script( 'brizy-preview' );
 	    wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
-	    wp_add_inline_script(
-		    'brizy-preview',
-		    'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});',
-		    'after'
-	    );
 
         do_action('brizy_preview_enqueue_scripts');
     }
