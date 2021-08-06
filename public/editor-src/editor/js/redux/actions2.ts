@@ -9,7 +9,8 @@ import {
   DeviceMode,
   GlobalBlock,
   GoogleFont,
-  UploadedFont
+  UploadedFont,
+  Style
 } from "visual/types";
 import { fontSelector } from "visual/redux/selectors";
 
@@ -27,7 +28,6 @@ export type ActionHydrate = {
       locked: boolean;
       lockedBy: boolean | string;
     };
-    projectVersion: ReduxState["projectVersion"];
     blocksThumbnailSizes: [];
     globalBlocks: ReduxState["globalBlocks"];
     fonts: ReduxState["fonts"];
@@ -220,6 +220,8 @@ export type ActionImportTemplate = {
     blocks: Block[];
     fonts: FontsPayload;
     extraFontStyles: Array<{ id: string }>;
+    styles?: Style[];
+    currentStyleId?: string;
   };
   meta: {
     insertIndex: number;
@@ -233,6 +235,8 @@ export type ActionImportStory = {
     blocks: Block[];
     fonts: FontsPayload;
     extraFontStyles: Array<{ id: string }>;
+    styles?: Style[];
+    currentStyleId?: string;
   };
   meta: {
     insertIndex: number;
