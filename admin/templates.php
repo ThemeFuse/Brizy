@@ -505,27 +505,26 @@ class Brizy_Admin_Templates
             wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'));
         }
 
-        $urlBuilder = new Brizy_Editor_UrlBuilder(Brizy_Editor_Project::get());
-        $assets_url = $urlBuilder->editor_build_url();
+	    $current_user  = wp_get_current_user();
+	    $config_json   = json_encode(
+		    array(
+			    'serverTimestamp' => time(),
+			    'currentUser'     => [
+				    'user_login'     => $current_user->user_login,
+				    'user_email'     => $current_user->user_email,
+				    'user_level'     => $current_user->user_level,
+				    'user_firstname' => $current_user->user_firstname,
+				    'user_lastname'  => $current_user->user_lastname,
+				    'display_name'   => $current_user->display_name,
+				    'ID'             => $current_user->ID,
+				    'roles'          => $current_user->roles,
+			    ],
+		    )
+	    );
 
-        wp_enqueue_style('brizy-preview', "${assets_url}/editor/css/preview.css", array(), null);
-        wp_register_script('brizy-preview-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true);
-        wp_enqueue_script(
-            'brizy-preview',
-            "${assets_url}/editor/js/preview.js",
-            array(
-                'jquery',
-                'brizy-preview-polyfill',
-            ),
-            null,
-            true
-        );
-        //wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
-        wp_add_inline_script(
-            'brizy-preview',
-            'document.addEventListener("DOMContentLoaded",function(){Brizy.emit("init.dom",jQuery(document.body))});',
-            'after'
-        );
+	    wp_register_script( 'brizy-preview', '' );
+	    wp_enqueue_script( 'brizy-preview' );
+	    wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
 
         do_action('brizy_preview_enqueue_scripts');
     }

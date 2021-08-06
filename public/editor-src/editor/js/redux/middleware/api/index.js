@@ -78,7 +78,7 @@ export default store => next => {
     const state = store.getState();
 
     handlePublish({ action, state, oldState, apiHandler });
-    handleProject({ action, state, apiHandler });
+    handleProject({ action, state, oldState, apiHandler });
     handlePage({ action, state, apiHandler });
     handleGlobalBlocks({ action, state, apiHandler });
     handleHeartBeat({ action, state, apiHandler });
@@ -138,17 +138,8 @@ function handlePublish({ action, state, oldState, apiHandler }) {
   }
 }
 
-function handleProject({ action, state, apiHandler }) {
+function handleProject({ action, state, oldState, apiHandler }) {
   switch (action.type) {
-    case UPDATE_DISABLED_ELEMENTS: {
-      const meta = {
-        is_autosave: 0
-      };
-      const project = projectSelector(state);
-
-      apiHandler(apiUpdateProject(project, meta));
-      break;
-    }
     case UPDATE_CURRENT_STYLE_ID:
     case UPDATE_CURRENT_STYLE:
     case UPDATE_EXTRA_FONT_STYLES: {
@@ -157,18 +148,15 @@ function handleProject({ action, state, apiHandler }) {
       debouncedApiUpdateProject(project);
       break;
     }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE:
+
     case IMPORT_KIT:
-    case UPDATE_CURRENT_KIT_ID: {
+    case UPDATE_CURRENT_KIT_ID:
+    case UPDATE_DISABLED_ELEMENTS: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
-      const project = produce(projectSelector(state), draft => {
-        draft.data.fonts = fontSelector(state);
-        draft.data.styles = stylesSelector(state);
-      });
       const meta = {
         is_autosave: 0
       };
+      const project = projectSelector(state);
 
       // cancel pending request
       debouncedApiUpdateProject.cancel();
@@ -176,6 +164,32 @@ function handleProject({ action, state, apiHandler }) {
       apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
       break;
     }
+
+    case IMPORT_STORY:
+    case IMPORT_TEMPLATE: {
+      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const oldFonts = fontSelector(oldState);
+      const fonts = fontSelector(state);
+      const oldStyles = stylesSelector(oldState);
+      const styles = stylesSelector(state);
+
+      if (oldFonts !== fonts || oldStyles !== styles) {
+        const project = produce(projectSelector(state), draft => {
+          draft.data.fonts = fonts;
+          draft.data.styles = styles;
+        });
+        const meta = {
+          is_autosave: 0
+        };
+
+        // cancel pending request
+        debouncedApiUpdateProject.cancel();
+
+        apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+      }
+      break;
+    }
+
     case ADD_FONTS:
     case DELETE_FONTS: {
       const fonts = fontSelector(state);
@@ -193,6 +207,7 @@ function handleProject({ action, state, apiHandler }) {
       apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
       break;
     }
+
     case UNDO:
     case REDO: {
       const { currSnapshot, prevSnapshot } = historySelector(state);

@@ -49,7 +49,6 @@ export type ReduxState = {
       disabledElements: string[];
     };
   };
-  projectVersion: number;
   page: Page;
   globalBlocks: {
     [key: string]: GlobalBlock;

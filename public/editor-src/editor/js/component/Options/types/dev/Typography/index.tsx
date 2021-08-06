@@ -134,7 +134,7 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
       fontAddLabel={t("Add New Font")}
       styles={styles}
-      style={_value.fontStyle ?? ""}
+      style={_value.fontStyle}
       styleOpenSettings={openFontStyle}
       size={_value.fontSize}
       sizeSuffix={_value.fontSizeSuffix}
