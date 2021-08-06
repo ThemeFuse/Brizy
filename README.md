@@ -140,9 +140,6 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Image mask for Text in preview
 * Fixed: Archive and Posts element for category pages
 
-### 2.3.5.1 - 2021-08-03
-TO BE PROVIDED
-
 ### 2.3.5 - 2021-07-26
 * New: Added option to allow json file upload for the Lottie element
 * Improved: Changed Protected Page element to Protected
