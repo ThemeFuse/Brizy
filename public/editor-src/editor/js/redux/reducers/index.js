@@ -1,15 +1,14 @@
 import produce from "immer";
+import { fromJS } from "immutable";
 import {
   projectAssembled,
   blocksOrderSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
-import { projectVersionSelector } from "visual/redux/selectors2";
 import { objectTraverse2 } from "visual/utils/object";
 import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
 import { historyReducerEnhancer } from "../history/reducers";
 
-import { projectVersion } from "./project";
 import { page } from "./page";
 import { blocksOrder } from "./blocksOrder";
 import { blocksData } from "./blocksData";
@@ -52,9 +51,10 @@ export function project(state = {}, action, fullState) {
       return project;
     }
     case PUBLISH: {
-      const projectVersion = projectVersionSelector(fullState);
+      const oldState = fromJS(state);
+      const newState = fromJS(projectAssembled(fullState));
 
-      if (state.dataVersion === projectVersion) {
+      if (oldState.equals(newState)) {
         return state;
       }
 
@@ -87,7 +87,17 @@ export function project(state = {}, action, fullState) {
       });
     }
     case IMPORT_STORY:
-    case IMPORT_TEMPLATE:
+    case IMPORT_TEMPLATE: {
+      const { styles, fonts } = action.payload;
+
+      if (styles?.length || fonts?.length) {
+        return produce(state, draft => {
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+      }
+
+      return state;
+    }
     case ADD_FONTS:
     case DELETE_FONTS: {
       return produce(state, draft => {
@@ -388,7 +398,6 @@ export default historyReducerEnhancer(
       page,
       blocksOrder,
       project,
-      projectVersion,
       styles,
       ui,
       storeWasChanged
@@ -405,7 +414,6 @@ export default historyReducerEnhancer(
       "currentStyle",
       "extraFontStyles",
       "globalBlocksUpdates",
-      "projectVersion",
       "storeWasChanged"
     ],
     onBeforeUpdate: (state, action, history) => {

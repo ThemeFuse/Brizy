@@ -3,6 +3,9 @@ import { Authorized, SyncAllowed } from "visual/types";
 import { createSelector } from "reselect";
 
 // === 0 DEPENDENCIES ===
+export const projectSelector = (state: ReduxState): ReduxState["project"] =>
+  state.project;
+
 export const pageSelector = (state: ReduxState): ReduxState["page"] =>
   state.page;
 
