@@ -36,7 +36,6 @@ export const UPDATE_AUTHORIZATION = "UPDATE_AUTHORIZATION";
 export function hydrate({
   project,
   projectStatus,
-  projectVersion,
   fonts,
   page,
   globalBlocks,
@@ -49,7 +48,6 @@ export function hydrate({
     payload: {
       project,
       projectStatus,
-      projectVersion,
       fonts,
       page,
       globalBlocks,

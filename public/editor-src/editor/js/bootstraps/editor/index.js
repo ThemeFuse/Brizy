@@ -114,7 +114,6 @@ const pageCurtain = window.parent.document.querySelector(
         projectStatus,
         globalBlocks,
         blocksThumbnailSizes,
-        projectVersion: project.dataVersion,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
         fonts: deepMerge(fonts, newFonts),

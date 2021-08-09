@@ -755,6 +755,7 @@ body.brz::after,body.brz::before{display:none}
 .brz.brz:not(.brz-ed) .flatpickr-calendar.hasTime .numInputWrapper span.arrowDown,.brz.brz:not(.brz-ed) .flatpickr-calendar.hasTime .numInputWrapper span.arrowUp{height:10px;top:50%}
 .brz.brz:not(.brz-ed) .flatpickr-calendar.hasTime .numInputWrapper span.arrowUp{margin-top:-10px}
 .brz.brz:not(.brz-ed) .flatpickr-calendar.hasTime .numInputWrapper span.arrowDown{margin-bottom:-10px}
+.brz.brz:not(.brz-ed) .brz-g-recaptcha{font-size:initial}
 .brz .brz-input__upload{position:relative}
 .brz .brz-input__upload .brz-label{font:inherit;width:100%;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-right:1.5em;cursor:pointer}
 .brz .brz-input__upload .brz-label .brz-span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -765,6 +766,7 @@ body.brz::after,body.brz::before{display:none}
 @media (max-width:767px){.brz .brz-forms2__select-item__input{font-size:14px;padding:10px 16px}
 .brz .brz-forms2 .brz-control__select-current{padding:10px 16px}
 .brz .brz-forms2 .brz-control__select-options .brz-control__select-option{padding:10px 16px;font-size:14px}}.brz .brz-story .brz-form{width:100%;margin:0}
+.brz .brz-story .brz-form .brz-g-recaptcha .grecaptcha-badge{position:initial!important;margin-top:10px}
 .brz .brz-story .brz-form .brz-forms2__item-button{padding-bottom:0}
 .brz .brz-story .brz-form .brz-forms2__item-button .brz-btn{width:100%}
 .brz .brz-tabs{min-width:0}

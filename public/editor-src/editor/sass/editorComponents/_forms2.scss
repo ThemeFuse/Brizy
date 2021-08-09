@@ -519,6 +519,10 @@
       margin-bottom: -10px;
     }
   }
+
+  .brz-g-recaptcha {
+    font-size: initial;
+  }
 }
 
 // Upload
@@ -600,6 +604,11 @@
   .brz-form {
     width: 100%;
     margin: 0;
+
+    .brz-g-recaptcha .grecaptcha-badge {
+      position: initial !important;
+      margin-top: 10px;
+    }
 
     .brz-forms2__item-button {
       padding-bottom: 0;

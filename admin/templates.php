@@ -512,7 +512,7 @@ class Brizy_Admin_Templates
             wp_register_script('jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js");
             wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'));
         }
-
+      
         do_action('brizy_preview_enqueue_scripts');
     }
 

@@ -21,7 +21,7 @@ export const patchFontSettings = <K extends keyof FontSettings>(
     fontWeight: m.fontWeight,
     letterSpacing: m.letterSpacing,
     lineHeight: m.lineHeight,
-    fontStyle: undefined,
+    fontStyle: "",
     [k]: v
   };
 };
@@ -39,7 +39,7 @@ export const patchFontFamily = <K extends keyof FontFamily>(
     fontSizeSuffix: m.fontSizeSuffix,
     letterSpacing: m.letterSpacing,
     lineHeight: m.lineHeight,
-    fontStyle: undefined,
+    fontStyle: "",
     [k]: v
   };
 };
