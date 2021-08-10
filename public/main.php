@@ -22,9 +22,6 @@ class Brizy_Public_Main
 
     static $is_excerpt = false;
 
-    private $postStylesAssetCache;
-    private $postScriptAssetCache;
-
     /**
      * Brizy_Public_Main constructor.
      *
@@ -61,7 +58,6 @@ class Brizy_Public_Main
 
     public function initialize_wordpress_editor()
     {
-
         if (self::is_editing_page_without_editor($this->post)) {
             add_action('admin_bar_menu', array($this, '_action_add_admin_bar_update_button'), 9999);
         }
@@ -83,19 +79,9 @@ class Brizy_Public_Main
             add_action('wp_enqueue_scripts', array($this, '_action_enqueue_editor_assets'), 9999);
             add_filter('the_content', array($this, '_filter_the_content'), -12000);
             add_action('brizy_template_content', array($this, '_action_the_content'));
-
             add_action('post_password_required', '__return_false');
-            $this->plugin_live_composer_fixes();
-
-            /*
-                The plugin https://wordpress.org/plugins/wp-copyright-protection/ loads a script js which disable the right click on frontend.
-                Its purpose is to prevent users from copying the text from the site, a way to prevent copyright.
-             */
-            remove_action('wp_head', 'wp_copyright_protection');
-
 
         } elseif (self::is_view_page($this->post)) {
-
 
             $this->preparePost();
 
@@ -110,61 +96,7 @@ class Brizy_Public_Main
             add_action('wp_enqueue_scripts', array($this, '_action_enqueue_preview_assets'), 9999);
             add_filter('the_content', array($this, 'insert_page_content'), -12000);
             add_action('brizy_template_content', array($this, 'brizy_the_content'));
-            $this->plugin_live_composer_fixes();
         }
-    }
-
-    public static function libAggregator($libSet, $post, $callback = null, $isPro = false)
-    {
-        // get assets list
-        $assets = [];
-
-        if (isset($libSet['main'])) {
-            $assets[] = $libSet['main'];
-        }
-
-        foreach ($libSet['generic'] as $style) {
-            $assets[] = $style;
-        }
-
-        $selectors = $libSet['libsSelectors'];
-        $selectorsCount = count($selectors);
-
-        if ($selectorsCount != 0) {
-            $selectedLib = array_reduce(
-                $libSet['libsMap'],
-                function ($lib, $alib) use ($selectors, $selectorsCount) {
-                    if ($lib) {
-                        return $lib;
-                    }
-
-                    return count(array_intersect($alib['selectors'], $selectors)) == $selectorsCount ? $alib : null;
-                }
-            );
-
-            if ($selectedLib) {
-                $assets[] = $selectedLib;
-            }
-        }
-
-        foreach ($assets as $i => $asset) {
-            $asset['pro'] = $isPro;
-            $assets[$i] = $asset;
-        }
-
-        // get pro assets
-        if ($callback) {
-            $assets = $callback($assets, $post);
-        }
-
-        $assets = array_filter(
-            $assets,
-            function ($a) {
-                return !is_null($a);
-            }
-        );
-
-        return $assets;
     }
 
     /**
@@ -480,52 +412,36 @@ class Brizy_Public_Main
         echo $this->_filter_the_content('');
     }
 
-
     /**
      *  Show the compiled page head content
      */
     public function insert_page_head()
     {
-
-        $params = array('content' => '');
-
         if (!$this->post->get_compiled_html()) {
-
             $compiled_html_head = $this->post->get_compiled_html_head();
             $compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl($compiled_html_head);
-            $this->post->set_needs_compile(true)
-                ->saveStorage();
-
-            $params['content'] = $compiled_html_head;
+            $this->post->set_needs_compile(true)->saveStorage();
+	        $html = $compiled_html_head;
         } else {
             $compiled_page = $this->post->get_compiled_page();
             $head = $compiled_page->get_head();
-            $params['content'] = $head;
+	        $html = $head;
         }
 
-
-        // get all assets needed for this page
-        $project = Brizy_Editor_Project::get();
-
-        // add popups and popup assets
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $params['content'] .= $popupMain->getPopupsHtml($project, $this->post, 'head');
+        if ( empty( $html ) ) {
+        	return;
+        }
 
         $params['content'] = apply_filters(
             'brizy_content',
-            $params['content'],
+	        $html,
             Brizy_Editor_Project::get(),
             $this->post->getWpPost(),
             'head'
         );
 
-        echo Brizy_TwigEngine::instance(self::path('views'))
-            ->render('head-partial.html.twig', $params);
-
-        return;
+        echo Brizy_TwigEngine::instance(self::path('views'))->render('head-partial.html.twig', $params);
     }
-
-
 
     /**
      * @param $content
@@ -535,9 +451,6 @@ class Brizy_Public_Main
      */
     public function insert_page_content($content)
     {
-
-        global $post;
-
         if (doing_filter('brizy_dc_excerpt')) {
             return $content;
         }
@@ -563,42 +476,20 @@ class Brizy_Public_Main
 
         // add popups and popup assets
         $popupMain = Brizy_Admin_Popups_Main::_init();
-        $content .= $popupMain->getPopupsHtml($project, $this->post, 'body');
+        $content .= $popupMain->getPopupsHtml( $project, $this->post, 'body' );
 
-        // include content
-        $content .= "<!-- BRIZY ASSETS -->\n\n";
-        $content .= $this->asserEnqueueManager->getCodeScriptsAsString();
-        $content .= "\n\n<!-- END BRIZY ASSETS -->";
-
-        $content = apply_filters(
+	    return apply_filters(
             'brizy_content',
             $content,
             $project,
             $this->post->getWpPost(),
             'body'
         );
-
-        return $content;
     }
 
     public function brizy_the_content()
     {
-        global $post;
-
-        if (doing_filter('brizy_dc_excerpt')) {
-            return '';
-        }
-
-        if (!$this->post->get_compiled_html()) {
-            $compiled_html_body = $this->post->get_compiled_html_body();
-            $content = Brizy_SiteUrlReplacer::restoreSiteUrl($compiled_html_body);
-            $this->post->set_needs_compile(true)->saveStorage();
-        } else {
-            $compiled_page = $this->post->get_compiled_page();
-            $content = $compiled_page->get_body();
-        }
-
-        echo apply_filters('the_content', apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $this->post->getWpPost(), 'body'));
+        echo $this->insert_page_content( 'brz-root__container' );
     }
 
     /**
@@ -654,15 +545,6 @@ class Brizy_Public_Main
         }
     }
 
-
-    private function plugin_live_composer_fixes()
-    {
-        // Conflict with Live Composer builder when it has set a template for single post.
-        remove_filter('the_content', 'dslc_filter_content', 101);
-        // Remove button "Edit Template" from single when it is builded with brizy.
-        remove_filter('wp_footer', array('DSLC_EditorInterface', 'show_lc_button_on_front'));
-    }
-
     public function addTheContentFilters()
     {
 
@@ -700,7 +582,6 @@ class Brizy_Public_Main
 
         self::$the_content_fitler_addded = false;
     }
-
 
     public function start_excerpt($content)
     {

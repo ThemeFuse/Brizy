@@ -14,14 +14,14 @@ class Brizy_Public_AssetEnqueueManager
     /**
      * @var array
      */
-    private $postStylesAssetCache = [];
+    private $postStylesAssetCache;
 
     /**
      * @var array
      */
-    private $postScriptAssetCache = [];
+    private $postScriptAssetCache;
 
-    private $enqueuedAssets = [];
+    private $enqueuedAssets;
 
     public function __construct(Brizy_Editor_Entity $post)
     {
@@ -33,70 +33,71 @@ class Brizy_Public_AssetEnqueueManager
 
     public function registerActions()
     {
-        add_action('wp_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
-        add_filter('script_loader_tag', array($this, 'addScriptAttributes'), 10, 2);
-        add_filter('style_loader_tag', array($this, 'addStyleAttributes'), 10, 2);
-        add_filter('wp_enqueue_scripts', array($this, 'addEditorConfigVar'));
-        add_action('wp_head', array($this, 'insertHeadCodeAssets'));
-        add_action('wp_head', array($this, 'insertBodyCodeAssets'));
+	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
+	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+	    add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
+	    add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
+	    add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ] );
+	    add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
+	    add_action( 'wp_head', [ $this, 'insertBodyCodeAssets' ] );
     }
 
     public function insertHeadCodeAssets() {
-        // include content
-        $content = "<!-- BRIZY ASSETS -->\n\n";
-        $content .= $this->getCodeStylesAsString();
-        $content .= "\n\n<!-- END BRIZY ASSETS -->";
 
-        $content = apply_filters(
+	    $assets  = $this->getCodeStylesAsString();
+	    $assets .= Brizy_Admin_Popups_Main::_init()->getPopupsHtml( Brizy_Editor_Project::get(), $this->post, 'head' );
+
+	    if ( empty( $assets ) ) {
+	    	return;
+	    }
+
+        echo apply_filters(
             'brizy_content',
-            $content,
+            "\n\n<!-- BRIZY HEAD ASSETS -->\n\n" . $assets . "\n\n<!-- END BRIZY HEAD ASSETS -->\n\n",
             Brizy_Editor_Project::get(),
             $this->post->getWpPost(),
             'head'
         );
-
-        echo $content;
     }
-    public function insertBodyCodeAssets() {
-        // include content
-        // include content
-        $content = "<!-- BRIZY ASSETS -->\n\n";
-        $content .= $this->getCodeScriptsAsString();
-        $content .= "\n\n<!-- END BRIZY ASSETS -->";
 
-        $content = apply_filters(
+    public function insertBodyCodeAssets() {
+
+    	$assets = $this->getCodeScriptsAsString();
+
+	    if ( empty( $assets ) ) {
+		    return;
+	    }
+
+        echo apply_filters(
             'brizy_content',
-            $content,
+	        '<!-- BRIZY BODY ASSETS -->\n\n' . $assets . '\n\n<!-- END BRIZY BODY ASSETS -->',
             Brizy_Editor_Project::get(),
             $this->post->getWpPost(),
             'body'
         );
-
-        echo $content;
     }
 
     public function addEditorConfigVar() {
         $current_user = wp_get_current_user();
         $config_json = json_encode(
-            array(
-                'serverTimestamp' => time(),
-                'currentUser' => [
-                    'user_login' => $current_user->user_login,
-                    'user_email' => $current_user->user_email,
-                    'user_level' => $current_user->user_level,
-                    'user_firstname' => $current_user->user_firstname,
-                    'user_lastname' => $current_user->user_lastname,
-                    'display_name' => $current_user->display_name,
-                    'ID' => $current_user->ID,
-                    'roles' => $current_user->roles,
-                ],
-            )
+	        [
+		        'serverTimestamp' => time(),
+		        'currentUser'     => [
+			        'user_login'     => $current_user->user_login,
+			        'user_email'     => $current_user->user_email,
+			        'user_level'     => $current_user->user_level,
+			        'user_firstname' => $current_user->user_firstname,
+			        'user_lastname'  => $current_user->user_lastname,
+			        'display_name'   => $current_user->display_name,
+			        'ID'             => $current_user->ID,
+			        'roles'          => $current_user->roles,
+		        ]
+            ]
         );
 
         wp_register_script( 'brizy-preview', '' );
         wp_enqueue_script( 'brizy-preview' );
-        wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
+        wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
     }
 
     public function enqueueStyles()
@@ -114,6 +115,19 @@ class Brizy_Public_AssetEnqueueManager
         $popupMain = Brizy_Admin_Popups_Main::_init();
 
         $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
+
+        foreach ( $assetGroups as &$group ) {
+        	$fonts = $group->getPageFonts();
+        	foreach ( $fonts as &$font ) {
+        		if ( $font->getFontType() == 'uploaded-font' ) {
+        			$url = $font->getUrl();
+			        if ( ! empty( $url ) && ! strpos( $url, '|' ) && ! strpos( $url, '"' ) && ! strpos( $url, '&' ) ) {
+				        $font->setUrl( $url . '&' );
+			        }
+		        }
+	        }
+        }
+
         $assetAggregator = new AssetAggregator($assetGroups);
 
         // include content
@@ -132,7 +146,8 @@ class Brizy_Public_AssetEnqueueManager
         $project = Brizy_Editor_Project::get();
         $scripts = $this->post->getCompiledScripts();
         $assetGroups = [];
-        if (isset($scripts['free']) && !empty($scripts['free'])) {
+
+        if (!empty($scripts['free'])) {
             $assetGroups[] = AssetGroup::instanceFromJsonData($scripts['free']);
         }
         $assetGroups = apply_filters('brizy_pro_body_assets', $assetGroups, $this->post);

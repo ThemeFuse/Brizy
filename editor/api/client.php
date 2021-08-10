@@ -183,7 +183,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
      * @param $config
      * @param $compiler_url
      *
-     * @return string
+     * @return array
      * @throws Brizy_Editor_API_Exceptions_Exception
      * @throws Brizy_Editor_Exceptions_NotFound
      * @throws Brizy_Editor_Http_Exceptions_BadRequest

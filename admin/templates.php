@@ -532,8 +532,8 @@ class Brizy_Admin_Templates
         if (!self::getTemplate()) {
             return;
         }
+
         $pid = Brizy_Editor::get()->currentPostId();
-        $project = Brizy_Editor_Project::get();
         $template = self::getTemplate();
         $post = $template->getWpPost();
 
@@ -544,14 +544,9 @@ class Brizy_Admin_Templates
         $compiled_page = self::getTemplate()->get_compiled_page();
         $templateHead = $compiled_page->get_head();
 
-        // add popups and popup assets
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $templateHead .= $popupMain->getPopupsHtml($project, $template, 'head');
-
-        // include content
-        $templateHead .= "<!-- BRIZY ASSETS -->\n\n";
-        $templateHead .= $this->assetEnqueueManager->getCodeStylesAsString() . "\n";
-        $templateHead .= "\n\n<!-- END BRIZY ASSETS -->";
+	    if ( empty( $templateHead ) ) {
+		    return;
+	    }
 
         $head = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
         ?>
@@ -559,11 +554,6 @@ class Brizy_Admin_Templates
         <?php echo $head; ?>
         <!-- END BRIZY HEAD -->
         <?php
-    }
-
-    public function insertTemplateContent($content)
-    {
-        return $this->getTemplateContent();
     }
 
     /**
@@ -601,11 +591,6 @@ class Brizy_Admin_Templates
         // add popups and popup assets
         $popupMain = Brizy_Admin_Popups_Main::_init();
         $content .= $popupMain->getPopupsHtml($project, $template, 'body');
-
-        // include content
-        $content .= "<!-- BRIZY ASSETS -->\n\n";
-        $content .= $this->assetEnqueueManager->getCodeScriptsAsString();
-        $content .= "\n\n<!-- END BRIZY ASSETS -->";
 
         return apply_filters(
             'brizy_content',
