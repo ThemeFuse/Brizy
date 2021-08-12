@@ -33,8 +33,8 @@ class Brizy_Public_AssetEnqueueManager
 
     public function registerActions()
     {
-	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 20 );
+	    add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 20 );
 	    add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
 	    add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 	    add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ] );
