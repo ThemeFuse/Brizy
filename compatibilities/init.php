@@ -102,6 +102,14 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'JOB_MANAGER_VERSION' ) ) {
 			new Brizy_Compatibilities_WpJobManager();
 		}
+
+		if ( function_exists( 'wp_copyright_protection' ) ) {
+			new Brizy_Compatibilities_WpCopyrightProtection();
+		}
+
+		if ( defined( 'DS_LIVE_COMPOSER_VER' ) ) {
+			new Brizy_Compatibilities_LiveComposerPageBuilder();
+		}
   }
 
 	public function after_setup_theme() {

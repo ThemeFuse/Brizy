@@ -45,7 +45,12 @@ class Brizy_Content_Context implements ContextInterface {
 		return null;
 	}
 
-	/**
+    public function afterExtract($contentPlaceholders, $instancePlaceholders, $contentAfterExtractor) {
+        $this->setPlaceholders($contentPlaceholders);
+    }
+
+
+    /**
 	 * @param $key
 	 * @param $value
 	 *
