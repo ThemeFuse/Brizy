@@ -39,7 +39,7 @@ class Brizy_Public_AssetEnqueueManager
 	    add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 	    add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ] );
 	    add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
-	    add_action( 'wp_head', [ $this, 'insertBodyCodeAssets' ] );
+	    add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
     }
 
     public function insertHeadCodeAssets() {
