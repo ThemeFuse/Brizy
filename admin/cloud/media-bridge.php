@@ -62,8 +62,7 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
             $jsonUpload->enableJsonUpload();
 		}
 
-
-		$media_cacher = new Brizy_Editor_CropCacheMedia( $this->client->getBrizyProject(), $this->blockId );
+		$media_cacher = new Brizy_Editor_CropCacheMedia( $this->client->getBrizyProject() );
 		$media_cacher->download_original_image( $mediaUid, false );
 
 		// disabled it if was disabled before

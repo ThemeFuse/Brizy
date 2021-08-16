@@ -116,27 +116,6 @@ trait Brizy_Editor_Asset_StaticFileTrait
     }
 
     /**
-     * @param $attachmentId
-     * @param $post_id
-     * @param $madia_name
-     *
-     * @return bool
-     * @throws Brizy_Editor_Exceptions_NotFound
-     */
-    public function attach_to_post($attachmentId, $post_id, $madia_name)
-    {
-
-        if (!$post_id) {
-            return false;
-        }
-        $bpost = Brizy_Editor_Post::get($post_id);
-
-        add_post_meta($attachmentId, 'brizy_post_uid', $bpost->getUid());
-
-        return $attachmentId;
-    }
-
-    /**
      * @param $filename
      * @param array $headers
      */

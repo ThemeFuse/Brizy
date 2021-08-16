@@ -161,7 +161,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function brizy_upload_path($path = null)
     {
-
         if ($path) {
             $path = ltrim($path, '/');
         }
@@ -182,6 +181,22 @@ class Brizy_Editor_UrlBuilder
 
         return $this->upload_dir['path'] . '/' . $path;
     }
+
+	/**
+	 * @param $path
+	 *
+	 * @return string
+	 */
+	public function wp_upload_relative_path( $path )
+	{
+		$path = ltrim( $path, '/' );
+
+		if ( empty( $this->upload_dir['subdir'] ) || $this->upload_dir['subdir'] == '/' ) {
+			return $path;
+		}
+
+		return ltrim( $this->upload_dir['subdir'] . '/' . $path, '/' );
+	}
 
     /**
      * @param $path

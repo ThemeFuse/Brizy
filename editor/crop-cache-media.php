@@ -10,20 +10,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	private $url_builder;
 
 	/**
-	 * @var Brizy_Editor_Post
-	 */
-	private $post_id;
-
-	/**
 	 * Brizy_Editor_CropCacheMedia constructor.
 	 *
 	 * @param Brizy_Editor_Project $project
-	 * @param int $post_id
 	 */
-	public function __construct( $project, $post_id = null ) {
-
-		$this->post_id     = $post_id;
-		$this->url_builder = new Brizy_Editor_UrlBuilder( $project, $this->post_id );
+	public function __construct( $project ) {
+		$this->url_builder = new Brizy_Editor_UrlBuilder( $project );
 	}
 
 	/**
@@ -46,68 +38,58 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new InvalidArgumentException( "Invalid media file" );
 		}
 
-		$attachmentId       = null;
 		$external_asset_url = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
 
 		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $madia_name ) ) ) {
 
-			$original_asset_path          = $this->url_builder->page_upload_path( "/assets/images/" . $madia_name );
-			$original_asset_path_relative = $this->url_builder->page_upload_relative_path( "/assets/images/" . $madia_name );
+			// /var/www/html/wp-content/uploads/2021/09/mediaName.png
+			$original_asset_path          = $this->url_builder->wp_upload_path( $madia_name );
+			// 2021/09/mediaName.png
+			$original_asset_path_relative = $this->url_builder->wp_upload_relative_path( $madia_name );
 
 			if ( ! file_exists( $original_asset_path ) ) {
 				// I assume that the media was already attached.
 
 				if ( ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
 					// unable to save the attachment
-					Brizy_Logger::instance()->error( 'Unable to store original media file', array(
+					Brizy_Logger::instance()->error( 'Unable to store original media file', [
 						'source'      => $external_asset_url,
 						'destination' => $original_asset_path
-					) );
+					] );
+
 					throw new Exception( 'Unable to cache media' );
 				}
 			}
 
-			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $original_asset_path_relative, $this->post_id, $madia_name );
+			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $original_asset_path_relative, null, $madia_name );
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {
-			Brizy_Logger::instance()->error( 'Unable to attach media file', array(
-				'media'       => $external_asset_url,
-				'parent_post' => $this->post_id
-
-			) );
+			Brizy_Logger::instance()->error( 'Unable to attach media file', [ 'media' => $external_asset_url ] );
 			throw new Exception( 'Unable to attach media' );
 		}
-
-
-		// attach to post
-		$this->attach_to_post( $attachmentId, $this->post_id, $madia_name );
 
 		return get_attached_file( $attachmentId );
 	}
 
 	/**
 	 * @param $original
-	 * @param $sizes
+	 * @param $size
 	 *
 	 * @return string|null
 	 * @throws Exception
 	 */
-	public function crop_media( $original, $sizes ) {
+	public function crop_media( $originalPath, $size ) {
 
-		if ( ! $sizes ) {
+		if ( ! $size ) {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		if ( ! $original ) {
+		if ( ! $originalPath ) {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		if ( ( $img = $this->getOldPath( $original, $sizes ) ) && file_exists( $img ) ) {
-			return $img;
-		}
-
-		$resizedImgPath = $this->getResizedMediaPath( $original, $sizes );
+		$resizedImgPath = $this->getResizedMediaPath( $originalPath, $size );
 
 		if ( file_exists( $resizedImgPath ) ) {
 			return $resizedImgPath;
@@ -121,48 +103,61 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
 
-		if ( ! $cropper->crop( $original, $resizedImgPath, $sizes ) ) {
-			return $original;
+		if ( ! $cropper->crop( $originalPath, $resizedImgPath, $size ) ) {
+			return $originalPath;
 		}
 
 		return $resizedImgPath;
 	}
 
-	public function getOldPath( $original_asset_path, $media_filter ) {
+	/**
+	 * @throws Exception
+	 */
+	public function tryOptimizedPath( $originalPath, $size, $postId ) {
 
-		$resized_image_path        = $this->buildPath( $this->url_builder->page_upload_path( "/assets/images/" . $media_filter ), $this->basename( $original_asset_path ) );
-		$optimized_image_full_path = $this->buildPath( dirname( $resized_image_path ), 'optimized', $this->basename( $resized_image_path ) );
+		$urlBuilder         = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $postId );
+		$resized_image_path = $this->buildPath( $urlBuilder->page_upload_path( "/assets/images/" . $size ), $this->basename( $originalPath ) );
+		$optimizedPath      = $this->buildPath( dirname( $resized_image_path ), 'optimized', $this->basename( $resized_image_path ) );
 
-		if ( file_exists( $optimized_image_full_path ) ) {
-			return $optimized_image_full_path;
-		} elseif ( file_exists( $resized_image_path ) ) {
-			return $resized_image_path;
+		if ( file_exists( $optimizedPath ) ) {
+			return $optimizedPath;
 		}
 
-		return null;
+		$croppedPath = $this->getResizedMediaPath( $originalPath, $size );
+
+		if ( ! file_exists( $croppedPath ) ) {
+			throw new Exception( 'The image was not cropped yet.' );
+		}
+
+		return $croppedPath;
 	}
 
 	/**
-	 * @param $original
-	 * @param $sizes
+	 * @param $originalPath
+	 * @param $size
 	 *
 	 * @return string
 	 */
-	public function getResizedMediaPath( $original, $sizes ) {
+	public function getResizedMediaPath( $originalPath, $size ) {
 
-		$pathinfo = pathinfo( $original );
+		$pathinfo = pathinfo( $originalPath );
 		// iW=555&iH=451&oX=0&oY=0&cW=555&cH=451
 		// car-red-555x451x0x0x555x451x1627570218.jpg
 		// iW=594&iH=any
 		// car-red-594xanyx1627570218.jpeg
-		$sizes = str_replace( '&', 'x', $sizes );
+		$size = strtolower( $size );
+		$size = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
+		$size = str_replace( '&', 'x', $size );
 
-		$name = $pathinfo['filename'] . '-' . $sizes . 'x' . filemtime( $original ) . '.' . $pathinfo['extension'];
+		$name = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
 
 		return $this->buildPath( $this->url_builder->brizy_upload_path( 'imgs' ), $name );
 	}
 
-	public function getMediaUrl( $hash ) {
+	/**
+	 * @throws Exception
+	 */
+	public function getOriginalPath( $hash ) {
 
 		$id = null;
 
@@ -186,11 +181,21 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new Exception( 'Media not found' );
 		}
 
-		return get_attached_file( $id );
+		$file = get_attached_file( $id );
+
+		if ( ! $file ) {
+			throw new Exception( sprintf( 'File by id "%s" is not found.', $id ) );
+		}
+
+		if ( ! file_exists( $file ) ) {
+			throw new Exception( sprintf( 'The file "%s" does not exist.', $file ) );
+		}
+
+		return $file;
 	}
 
-	public function basename( $original_asset_path ) {
-		return preg_replace( '/^.+[\\\\\\/]/', '', $original_asset_path );
+	public function basename( $originalPath ) {
+		return preg_replace( '/^.+[\\\\\\/]/', '', $originalPath );
 	}
 
 	public function buildPath( ...$parts ) {

@@ -956,11 +956,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
-            $project = Brizy_Editor_Project::get();
-            $apost = (int)$_REQUEST['post_id'];
+            $project      = Brizy_Editor_Project::get();
+	        $media_cacher = new Brizy_Editor_CropCacheMedia( $project );
 
-            $media_cacher = new Brizy_Editor_CropCacheMedia($project, $apost);
-            $media_cacher->download_original_image($_REQUEST['media']);
+	        $media_cacher->download_original_image( $_REQUEST['media'] );
 
             $this->success(array(), 200);
         } catch (Exception $e) {

@@ -216,7 +216,7 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	private function getCropType( $filter ) {
 		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
 		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
-		$cropType      = null;
+
 		// iW=555&iH=451&oX=0&oY=0&cW=555&cH=451
 		if ( preg_match( $regExBasic, $filter ) ) {
 			$cropType = self::BASIC_CROP_TYPE;

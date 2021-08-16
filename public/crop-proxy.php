@@ -2,9 +2,9 @@
 
 class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
-	const ENDPOINT = '_media';
+	const ENDPOINT        = '_media';
 	const ENDPOINT_FILTER = '_crop';
-	const ENDPOINT_POST = '_post';
+	const ENDPOINT_POST   = '_post';
 
 	/**
 	 * @return array
@@ -12,74 +12,45 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	protected function get_endpoint_keys() {
 		return [
 			Brizy_Editor::prefix( self::ENDPOINT ),
-			Brizy_Editor::prefix( self::ENDPOINT_FILTER ),
-			Brizy_Editor::prefix( self::ENDPOINT_POST ),
+			Brizy_Editor::prefix( self::ENDPOINT_FILTER )
 		];
 	}
 
 	/**
-	 * @return mixed|void
+	 * @return void
 	 * @throws Exception
 	 */
 	public function process_query() {
 		global $wp_query;
 
-		$vars = $wp_query->query_vars;
+		$vars           = $wp_query->query_vars;
+		$endpointKey    = Brizy_Editor::prefix( self::ENDPOINT );
+		$endpointFilter = Brizy_Editor::prefix( self::ENDPOINT_FILTER );
 
-		$endpointKey         =  Brizy_Editor::prefix( self::ENDPOINT );
-		$endpointFilterKey   =  Brizy_Editor::prefix( self::ENDPOINT_FILTER );
-		$endpointPostKey     =  Brizy_Editor::prefix( self::ENDPOINT_POST );
-
-		if ( ! isset( $vars[ $endpointFilterKey ] ) || ! is_string( $vars[ $endpointFilterKey ] ) || empty( $vars[ $endpointFilterKey ] ) ) {
+		if ( empty( $vars[ $endpointKey ] ) || empty( $vars[ $endpointFilter ] ) ) {
 			return;
 		}
 
-		if ( ! isset( $vars[ $endpointPostKey ] ) || ! is_numeric( $vars[ $endpointPostKey ] ) ) {
-			return;
-		}
+		session_write_close();
 
-		if ( isset( $vars[ $endpointKey ] ) && is_string( $vars[ $endpointKey ] ) && ! empty( $vars[ $endpointKey ] ) ) {
-
-			session_write_close();
-
-			try {
-				// Set artificially high because GD uses uncompressed images in memory.
-				wp_raise_memory_limit( 'image' );
-
-				$wp_get_post_parent_id = wp_is_post_revision( $vars[ $endpointPostKey ] ) ? wp_get_post_parent_id( $vars[ $endpointPostKey ] ) : $vars[ $endpointPostKey ];
-				$this->crop_local_asset( $vars[ $endpointKey ], html_entity_decode( $vars[ $endpointFilterKey ] ), (int) $wp_get_post_parent_id );
-
-			} catch ( Exception $e ) {
-				Brizy_Logger::instance()->exception( $e );
-				status_header( 404 );
-				global $wp_query;
-				$wp_query->set_404();
-
-				return;
-			}
-		}
-	}
-
-	/**
-	 * @param $attachment_hash
-	 * @param $filter
-	 * @param $post_id
-	 *
-	 * @throws Exception
-	 */
-	private function crop_local_asset( $attachment_hash, $filter, $post_id ) {
 		try {
-			$media_cache     = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get(), $post_id );
-			$media_url       = $media_cache->getMediaUrl( $attachment_hash );
-			$crop_media_path = $media_cache->crop_media( $media_url, $filter );
 
-			do_action( 'brizy_before_send_asset', $post_id );
+			$size        = html_entity_decode( $vars[ $endpointFilter ] );
+			$mediaCache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
+			$mediaPath   = $mediaCache->getOriginalPath( $vars[ $endpointKey ] );
+			$croppedPath = $mediaCache->crop_media( $mediaPath, $size );
 
-			$this->send_file( $crop_media_path );
+			//do_action( 'brizy_before_send_asset', null );
+
+			$this->send_file( $croppedPath );
 
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
-			throw new Exception( 'Unable to crop media' );
+			status_header( 404 );
+			global $wp_query;
+			$wp_query->set_404();
+
+			return;
 		}
 	}
 }

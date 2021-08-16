@@ -144,7 +144,6 @@ class Brizy_Editor {
 		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
             Brizy_Admin_Json_Main::_init();
-			Brizy_Admin_OptimizeImages::_init();
 			Brizy_Admin_Layouts_Main::_init();
 			Brizy_Admin_Membership_Membership::_init();
 
