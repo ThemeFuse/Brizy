@@ -204,13 +204,13 @@ class Brizy_Public_AssetEnqueueManager
         $handle = $this->getHandle($asset);
         switch ($asset->getType()) {
             case Asset::TYPE_INLINE:
-                wp_register_style($handle, false);
+                wp_register_style($handle, false, [], BRIZY_VERSION);
                 wp_enqueue_style($handle);
-                wp_add_inline_style($handle, $asset->getContent(), []);
+                wp_add_inline_style($handle, $asset->getContent());
                 $this->enqueuedAssets[$handle] = $asset;
                 break;
             case Asset::TYPE_FILE:
-                wp_enqueue_style($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), []);
+                wp_enqueue_style($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], BRIZY_VERSION);
                 $this->enqueuedAssets[$handle] = $asset;
                 break;
         }
@@ -221,14 +221,14 @@ class Brizy_Public_AssetEnqueueManager
         $handle = $this->getHandle($asset);
         switch ($asset->getType()) {
             case Asset::TYPE_INLINE:
-                wp_register_script($handle, false, [], false, true);
+                wp_register_script($handle, false, [], BRIZY_VERSION, true);
                 wp_enqueue_script($handle, false, [], false, true);
-                wp_add_inline_script($handle, $asset->getContent(), []);
+                wp_add_inline_script($handle, $asset->getContent());
                 $this->enqueuedAssets[$handle] = $asset;
 
                 break;
             case Asset::TYPE_FILE:
-                wp_enqueue_script($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], false, true);
+                wp_enqueue_script($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], BRIZY_VERSION, true);
                 $this->enqueuedAssets[$handle] = $asset;
 
                 break;
