@@ -23,12 +23,12 @@
     "twig/twig": "1.42.5",
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4.2",
-    "bagrinsergiu/brizy-merge-page-assets": "^1.0",
-    "bagrinsergiu/content-placeholder": "2.0.4",
+    "bagrinsergiu/brizy-merge-page-assets": "dev-master",
+    "bagrinsergiu/content-placeholder": "2.0.5",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
     "shortpixel/shortpixel-php": "dev-master",
-    "symfony/dotenv": "5.x-dev",
+    "symfony/dotenv": "^5",
     "tburry/pquery": "dev-master"
   },
   "config": {

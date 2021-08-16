@@ -21,6 +21,11 @@ class Brizy_Admin_Templates
     private static $template;
 
     /**
+     * @var Brizy_Public_AssetEnqueueManager
+     */
+    private $assetEnqueueManager;
+
+    /**
      * Brizy_Admin_Templates constructor.
      */
     protected function __construct()
@@ -43,28 +48,28 @@ class Brizy_Admin_Templates
             add_filter('post_updated_messages', array($this, 'filterTemplateMessages'));
             add_action('add_meta_boxes', array($this, 'registerTemplateMetaBox'), 9);
             add_action('transition_post_status', array($this, 'actionTransitionPostStatus'), 10, 3);
-            add_action('wp_ajax_'.self::RULE_LIST_VEIW, array($this, 'getTemplateRuleBox'));
+            add_action('wp_ajax_' . self::RULE_LIST_VEIW, array($this, 'getTemplateRuleBox'));
             add_filter('post_row_actions', array($this, 'removeRowActions'), 10, 1);
             add_action('admin_init', array($this, 'addTemplateRoleCaps'), 10000);
             add_action('admin_enqueue_scripts', array($this, 'action_register_static'));
             add_filter('save_post', array($this, 'saveTemplateRules'), 10, 2);
             add_filter('pre_post_update', array($this, 'validate_template_rules'), 10, 2);
             add_action('admin_notices', array($this, 'saveTemplateRulesNotices'));
-        } elseif ( ! defined('DOING_AJAX') &&
-                   ! is_admin() &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('_media')]) &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('-edit-iframe')]) &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('_file')]) &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('_attachment')]) &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('_block_screenshot')]) &&
-                   ! isset($_REQUEST[Brizy_Editor::prefix('')])) {
+        } elseif (!defined('DOING_AJAX') &&
+            !is_admin() &&
+            !isset($_REQUEST[Brizy_Editor::prefix('_media')]) &&
+            !isset($_REQUEST[Brizy_Editor::prefix('-edit-iframe')]) &&
+            !isset($_REQUEST[Brizy_Editor::prefix('_file')]) &&
+            !isset($_REQUEST[Brizy_Editor::prefix('_attachment')]) &&
+            !isset($_REQUEST[Brizy_Editor::prefix('_block_screenshot')]) &&
+            !isset($_REQUEST[Brizy_Editor::prefix('')])) {
             add_action('wp', array($this, 'templateFrontEnd'));
         }
     }
 
     /**
-     * @deprecated
      * @return Brizy_Admin_Templates
+     * @deprecated
      */
     public static function _init()
     {
@@ -75,7 +80,7 @@ class Brizy_Admin_Templates
     {
         static $instance;
 
-        if ( ! $instance) {
+        if (!$instance) {
             $instance = new self();
         }
 
@@ -93,7 +98,7 @@ class Brizy_Admin_Templates
 
         //  hyperapp.js is also used in PRO
         wp_enqueue_script(
-            Brizy_Editor::get_slug().'-hyperapp-js',
+            Brizy_Editor::get_slug() . '-hyperapp-js',
             $urlBuilder->plugin_url('admin/static/js/hyperapp.js'),
             array('jquery', 'underscore'),
             BRIZY_VERSION,
@@ -101,48 +106,48 @@ class Brizy_Admin_Templates
         );
 
         wp_enqueue_style(
-            Brizy_Editor::get_slug().'-select2',
+            Brizy_Editor::get_slug() . '-select2',
             $urlBuilder->plugin_url('vendor/select2/select2/dist/css/select2.min.css'),
             array(),
             true
         );
 
         wp_enqueue_script(
-            Brizy_Editor::get_slug().'-select2',
+            Brizy_Editor::get_slug() . '-select2',
             $urlBuilder->plugin_url('vendor/select2/select2/dist/js/select2.full.min.js'),
             array('jquery')
         );
 
         wp_enqueue_script(
-            Brizy_Editor::get_slug().'-rules',
+            Brizy_Editor::get_slug() . '-rules',
             $urlBuilder->plugin_url('admin/static/js/rules.js'),
-            array(Brizy_Editor::get_slug().'-hyperapp-js'),
+            array(Brizy_Editor::get_slug() . '-hyperapp-js'),
             BRIZY_VERSION,
             true
         );
 
         $templateGroups = [
-            'single'  => __('Single', 'brizy'),
+            'single' => __('Single', 'brizy'),
             'archive' => __('Archive', 'brizy'),
 
         ];
 
         if (class_exists('WooCommerce')) {
-            $templateGroups['single_product']  = __('Product', 'brizy');
+            $templateGroups['single_product'] = __('Product', 'brizy');
             $templateGroups['product_archive'] = __('Product Archive', 'brizy');
         }
-	    $ruleManager = new Brizy_Admin_Rules_Manager();
+        $ruleManager = new Brizy_Admin_Rules_Manager();
         wp_localize_script(
-            Brizy_Editor::get_slug().'-rules',
+            Brizy_Editor::get_slug() . '-rules',
             'Brizy_Admin_Rules',
             array(
-                'url'          => set_url_scheme(admin_url('admin-ajax.php')),
-                'rules'        => $ruleManager->getRules(get_the_ID()),
-                'hash'         => wp_create_nonce(Brizy_Admin_Rules_Api::nonce),
-                'id'           => get_the_ID(),
+                'url' => set_url_scheme(admin_url('admin-ajax.php')),
+                'rules' => $ruleManager->getRules(get_the_ID()),
+                'hash' => wp_create_nonce(Brizy_Admin_Rules_Api::nonce),
+                'id' => get_the_ID(),
                 'templateType' => Brizy_Admin_Templates::getTemplateType(get_the_ID()),
-                'labels'       => $templateGroups,
-                'prefix'       => Brizy_Editor::prefix(),
+                'labels' => $templateGroups,
+                'prefix' => Brizy_Editor::prefix(),
             )
         );
     }
@@ -154,25 +159,25 @@ class Brizy_Admin_Templates
      */
     function filterTemplateMessages($messages)
     {
-        $post             = get_post();
-        $post_type        = get_post_type($post);
+        $post = get_post();
+        $post_type = get_post_type($post);
         $post_type_object = get_post_type_object($post_type);
 
         $messages[self::CP_TEMPLATE] = array(
-            0  => '', // Unused. Messages start at index 1.
-            1  => __('Template updated.'),
-            2  => __('Custom field updated.'),
-            3  => __('Custom field deleted.'),
-            4  => __('Template updated.'),
+            0 => '', // Unused. Messages start at index 1.
+            1 => __('Template updated.'),
+            2 => __('Custom field updated.'),
+            3 => __('Custom field deleted.'),
+            4 => __('Template updated.'),
             /* translators: %s: date and time of the revision */
-            5  => isset($_GET['revision']) ? sprintf(
+            5 => isset($_GET['revision']) ? sprintf(
                 __('Template restored to revision from %s'),
                 wp_post_revision_title((int)$_GET['revision'], false)
             ) : false,
-            6  => __('Template published.'),
-            7  => __('Template saved.'),
-            8  => __('Template submitted.'),
-            9  => sprintf(
+            6 => __('Template published.'),
+            7 => __('Template saved.'),
+            8 => __('Template submitted.'),
+            9 => sprintf(
                 __('Template scheduled for: <strong>%1$s</strong>.'),
                 // translators: Publish box date format, see http://php.net/date
                 date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date))
@@ -183,18 +188,18 @@ class Brizy_Admin_Templates
         if ($post_type_object->publicly_queryable && 'Template' === $post_type) {
             $permalink = get_permalink($post->ID);
 
-            $view_link               = sprintf(' <a href="%s">%s</a>', esc_url($permalink), __('View Template'));
+            $view_link = sprintf(' <a href="%s">%s</a>', esc_url($permalink), __('View Template'));
             $messages[$post_type][1] .= $view_link;
             $messages[$post_type][6] .= $view_link;
             $messages[$post_type][9] .= $view_link;
 
-            $preview_permalink        = add_query_arg('preview', 'true', $permalink);
-            $preview_link             = sprintf(
+            $preview_permalink = add_query_arg('preview', 'true', $permalink);
+            $preview_link = sprintf(
                 ' <a target="_blank" href="%s">%s</a>',
                 esc_url($preview_permalink),
                 __('Preview Template')
             );
-            $messages[$post_type][8]  .= $preview_link;
+            $messages[$post_type][8] .= $preview_link;
             $messages[$post_type][10] .= $preview_link;
         }
 
@@ -220,16 +225,16 @@ class Brizy_Admin_Templates
                 $roleObject->add_cap( 'delete_published_' . self::CP_TEMPLATES );
             } else */
             {
-                $roleObject->remove_cap('read_'.self::CP_TEMPLATE);
-                $roleObject->remove_cap('read_private_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('edit_'.self::CP_TEMPLATE);
-                $roleObject->remove_cap('edit_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('edit_others_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('edit_published_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('publish_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('delete_others_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('delete_private_'.self::CP_TEMPLATES);
-                $roleObject->remove_cap('delete_published_'.self::CP_TEMPLATES);
+                $roleObject->remove_cap('read_' . self::CP_TEMPLATE);
+                $roleObject->remove_cap('read_private_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('edit_' . self::CP_TEMPLATE);
+                $roleObject->remove_cap('edit_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('edit_others_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('edit_published_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('publish_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('delete_others_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('delete_private_' . self::CP_TEMPLATES);
+                $roleObject->remove_cap('delete_published_' . self::CP_TEMPLATES);
             }
         }
     }
@@ -238,40 +243,40 @@ class Brizy_Admin_Templates
     {
 
         $labels = array(
-            'name'               => _x('Templates', 'post type general name', 'brizy'),
-            'singular_name'      => _x('Template', 'post type singular name', 'brizy'),
-            'menu_name'          => _x('Templates', 'admin menu', 'brizy'),
-            'name_admin_bar'     => _x('Template', 'add new on admin bar', 'brizy'),
-            'add_new'            => _x('Add New', self::CP_TEMPLATE, 'brizy'),
-            'add_new_item'       => __('Add New Template', 'brizy'),
-            'new_item'           => __('New Template', 'brizy'),
-            'edit_item'          => __('Edit Template', 'brizy'),
-            'view_item'          => __('View Template', 'brizy'),
-            'all_items'          => __('Templates', 'brizy'),
-            'search_items'       => __('Search Templates', 'brizy'),
-            'parent_item_colon'  => __('Parent Templates:', 'brizy'),
-            'not_found'          => __('No Templates found.', 'brizy'),
+            'name' => _x('Templates', 'post type general name', 'brizy'),
+            'singular_name' => _x('Template', 'post type singular name', 'brizy'),
+            'menu_name' => _x('Templates', 'admin menu', 'brizy'),
+            'name_admin_bar' => _x('Template', 'add new on admin bar', 'brizy'),
+            'add_new' => _x('Add New', self::CP_TEMPLATE, 'brizy'),
+            'add_new_item' => __('Add New Template', 'brizy'),
+            'new_item' => __('New Template', 'brizy'),
+            'edit_item' => __('Edit Template', 'brizy'),
+            'view_item' => __('View Template', 'brizy'),
+            'all_items' => __('Templates', 'brizy'),
+            'search_items' => __('Search Templates', 'brizy'),
+            'parent_item_colon' => __('Parent Templates:', 'brizy'),
+            'not_found' => __('No Templates found.', 'brizy'),
             'not_found_in_trash' => __('No Templates found in Trash.', 'brizy'),
         );
 
         register_post_type(
             self::CP_TEMPLATE,
             array(
-                'labels'              => $labels,
-                'public'              => false,
-                'has_archive'         => false,
-                'description'         => __bt('brizy', 'Brizy').' '.__('templates', 'brizy').'.',
-                'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
-                'show_ui'             => true,
-                'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
-                'query_var'           => false,
-                'rewrite'             => array('slug' => 'brizy-template'),
-                'capability_type'     => 'page',
-                'hierarchical'        => false,
-                'show_in_rest'        => false,
-                'can_export'          => true,
+                'labels' => $labels,
+                'public' => false,
+                'has_archive' => false,
+                'description' => __bt('brizy', 'Brizy') . ' ' . __('templates', 'brizy') . '.',
+                'publicly_queryable' => Brizy_Editor_User::is_user_allowed(),
+                'show_ui' => true,
+                'show_in_menu' => Brizy_Admin_Settings::menu_slug(),
+                'query_var' => false,
+                'rewrite' => array('slug' => 'brizy-template'),
+                'capability_type' => 'page',
+                'hierarchical' => false,
+                'show_in_rest' => false,
+                'can_export' => true,
                 'exclude_from_search' => true,
-                'supports'            => array('title', 'revisions', 'page-attributes'),
+                'supports' => array('title', 'revisions', 'page-attributes'),
             )
         );
 
@@ -315,30 +320,30 @@ class Brizy_Admin_Templates
 
             $templateId = isset($_REQUEST['post']) ? (int)$_REQUEST['post'] : get_the_ID();
 
-            if ( ! $templateId) {
+            if (!$templateId) {
                 throw new Exception();
             }
-	        $ruleManager = new Brizy_Admin_Rules_Manager();
+            $ruleManager = new Brizy_Admin_Rules_Manager();
             $rules = $ruleManager->getRules($templateId);
 
-            $nonce   = wp_create_nonce(Brizy_Editor_API::nonce);
+            $nonce = wp_create_nonce(Brizy_Editor_API::nonce);
             $context = array(
-                'rules'         => $rules,
-                'types'         => array(),
-                'apply_for'     => array(),
-                'templateId'    => $templateId,
+                'rules' => $rules,
+                'types' => array(),
+                'apply_for' => array(),
+                'templateId' => $templateId,
                 'reload_action' => admin_url(
-                    'admin-ajax.php?action='.self::RULE_LIST_VEIW.'&post='.$templateId.'&hash='.$nonce
+                    'admin-ajax.php?action=' . self::RULE_LIST_VEIW . '&post=' . $templateId . '&hash=' . $nonce
                 ),
-                'submit_action' => admin_url('admin-ajax.php?action='.Brizy_Admin_Rules_Api::CREATE_RULE_ACTION),
+                'submit_action' => admin_url('admin-ajax.php?action=' . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION),
                 'delete_action' => admin_url(
-                    'admin-ajax.php?action='.Brizy_Admin_Rules_Api::DELETE_RULE_ACTION.'&postId='.$templateId.'&hash='.$nonce
+                    'admin-ajax.php?action=' . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION . '&postId=' . $templateId . '&hash=' . $nonce
                 ),
-                'nonce'         => $nonce,
+                'nonce' => $nonce,
             );
 
             echo Brizy_TwigEngine::instance(path_join(BRIZY_PLUGIN_PATH, "admin/views"))
-                                 ->render('rules-box.html.twig', $context);
+                ->render('rules-box.html.twig', $context);
         } catch (Exception $e) {
             Brizy_Logger::instance()->error($e->getMessage(), array('exception' => $e));
             esc_html_e('Unable to show the rule box.', 'brizy');
@@ -364,7 +369,7 @@ class Brizy_Admin_Templates
 
         $templates = get_posts(
             array(
-                'post_type'   => self::CP_TEMPLATE,
+                'post_type' => self::CP_TEMPLATE,
                 'numberposts' => -1,
                 'post_status' => $is_preview ? 'any' : 'publish',
             )
@@ -373,16 +378,16 @@ class Brizy_Admin_Templates
         $templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
             $templates,
             [
-                'type'         => $applyFor,
-                'entityType'   => $entityType,
+                'type' => $applyFor,
+                'entityType' => $entityType,
                 'entityValues' => $entityValues,
             ]
         );
 
-	    $ruleManager = new Brizy_Admin_Rules_Manager();
+        $ruleManager = new Brizy_Admin_Rules_Manager();
         foreach ($templates as $atemplate) {
             $ruleSet = $ruleManager->getRuleSet($atemplate->ID);
-            try  {
+            try {
                 if ($ruleSet->isMatching($applyFor, $entityType, $entityValues)) {
                     return Brizy_Editor_Post::get($atemplate->ID);
                 }
@@ -400,15 +405,15 @@ class Brizy_Admin_Templates
      */
     public function templateInclude($template)
     {
-        if ( ! self::getTemplate()) {
+        if (!self::getTemplate()) {
             return $template;
         }
 
         $templateName = self::getTemplate()->get_template();
-        $urlBuilder   = new Brizy_Editor_UrlBuilder();
+        $urlBuilder = new Brizy_Editor_UrlBuilder();
 
-        if ( ! $templateName || $templateName == 'default') {
-            return $urlBuilder->plugin_path('public/views/templates/'.Brizy_Config::BRIZY_TEMPLATE_FILE_NAME);
+        if (!$templateName || $templateName == 'default') {
+            return $urlBuilder->plugin_path('public/views/templates/' . Brizy_Config::BRIZY_TEMPLATE_FILE_NAME);
         }
 
         if (in_array(
@@ -419,7 +424,7 @@ class Brizy_Admin_Templates
             )
         )) {
 
-            return $urlBuilder->plugin_path('/public/views/templates/'.$templateName);
+            return $urlBuilder->plugin_path('/public/views/templates/' . $templateName);
         }
 
         return $template;
@@ -440,23 +445,22 @@ class Brizy_Admin_Templates
         }
         try {
 
-            if (is_null($pid) || ! $is_using_brizy) {
+            if (is_null($pid) || !$is_using_brizy) {
                 self::$template = $this->getTemplateForCurrentPage();
 
-                if ( ! self::getTemplate()) {
+                if (!self::getTemplate()) {
                     return;
                 }
 
-	            add_filter('template_include', array($this, 'templateInclude'), 20000);
+                add_filter('template_include', array($this, 'templateInclude'), 20000);
 
-                $is_preview    = is_preview() || isset($_GET['preview']);
-                $needs_compile = $is_preview || ! self::getTemplate()->isCompiledWithCurrentVersion(
-                    ) || self::getTemplate()->get_needs_compile();
+                $is_preview = is_preview() || isset($_GET['preview']);
+                $needs_compile = $is_preview || !self::getTemplate()->isCompiledWithCurrentVersion() || self::getTemplate()->get_needs_compile();
 
                 if ($needs_compile) {
                     try {
                         self::getTemplate()->compile_page();
-                        if ( ! $is_preview && $needs_compile) {
+                        if (!$is_preview && $needs_compile) {
                             self::getTemplate()->saveStorage();
                             self::getTemplate()->savePost();
                         }
@@ -472,8 +476,10 @@ class Brizy_Admin_Templates
 
                 remove_filter('the_content', 'wpautop');
 
+                $this->assetEnqueueManager = new Brizy_Public_AssetEnqueueManager(self::getTemplate());
+                $this->assetEnqueueManager->registerActions();
                 // insert the compiled head and content
-				add_filter( 'body_class', array($this, 'bodyClassFrontend'));
+                add_filter('body_class', array($this, 'bodyClassFrontend'));
                 add_action('wp_head', array($this, 'insertTemplateHead'));
                 add_action('brizy_template_content', array($this, 'showTemplateContent'), -12000);
                 add_action('wp_enqueue_scripts', array($this, 'enqueue_preview_assets'), 9999);
@@ -486,13 +492,15 @@ class Brizy_Admin_Templates
         }
     }
 
-	public function addTheContentFilters() {
-		add_filter('the_content', array($this, 'filterPageContent'), -12000);
-	}
+    public function addTheContentFilters()
+    {
+        add_filter('the_content', array($this, 'filterPageContent'), -12000);
+    }
 
-	public function removeTheContentFilters() {
-		remove_filter('the_content', array($this, 'filterPageContent'), -12000);
-	}
+    public function removeTheContentFilters()
+    {
+        remove_filter('the_content', array($this, 'filterPageContent'), -12000);
+    }
 
     /**
      * @internal
@@ -504,32 +512,12 @@ class Brizy_Admin_Templates
             wp_register_script('jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js");
             wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'));
         }
-
-	    $current_user  = wp_get_current_user();
-	    $config_json   = json_encode(
-		    array(
-			    'serverTimestamp' => time(),
-			    'currentUser'     => [
-				    'user_login'     => $current_user->user_login,
-				    'user_email'     => $current_user->user_email,
-				    'user_level'     => $current_user->user_level,
-				    'user_firstname' => $current_user->user_firstname,
-				    'user_lastname'  => $current_user->user_lastname,
-				    'display_name'   => $current_user->display_name,
-				    'ID'             => $current_user->ID,
-				    'roles'          => $current_user->roles,
-			    ],
-		    )
-	    );
-
-	    wp_register_script( 'brizy-preview', '' );
-	    wp_enqueue_script( 'brizy-preview' );
-	    wp_add_inline_script('brizy-preview', "var __CONFIG__ = ${config_json};", 'before');
-
+      
         do_action('brizy_preview_enqueue_scripts');
     }
 
-	public function bodyClassFrontend( $classes ) {
+    public function bodyClassFrontend($classes)
+    {
 
         $classes[] = 'brz';
 
@@ -541,47 +529,26 @@ class Brizy_Admin_Templates
      */
     public function insertTemplateHead()
     {
-
-		if ( ! self::getTemplate() ) {
-			return;
-		}
-		$pid = Brizy_Editor::get()->currentPostId();
-        $project = Brizy_Editor_Project::get();
-		$template = self::getTemplate();
-		$post = $template->getWpPost();
-
-		if ( $pid ) {
-			$post = get_post( $pid );
-		}
-
-		$compiled_page = self::getTemplate()->get_compiled_page();
-		$templateHead  = $compiled_page->get_head();
-
-
-	    $styles  = $template->getCompiledStyles();
-	    $assetGroups = [];
-	    if(isset($styles['free']) && !empty($styles['free'])) {
-            $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
+        if (!self::getTemplate()) {
+            return;
         }
-	    $assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $template);
 
-        // add popups and popup assets
-	    $popupMain         = Brizy_Admin_Popups_Main::_init();
-	    $templateHead .= $popupMain->getPopupsHtml($project, $template, 'head');
+        $pid = Brizy_Editor::get()->currentPostId();
+        $template = self::getTemplate();
+        $post = $template->getWpPost();
 
-	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $template, 'head'));
+        if ($pid) {
+            $post = get_post($pid);
+        }
 
-	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
+        $compiled_page = self::getTemplate()->get_compiled_page();
+        $templateHead = $compiled_page->get_head();
 
-
-        // include content
-	    $templateHead .= "<!-- BRIZY ASSETS -->\n\n";
-	    foreach ($assetAggregator->getAssetList() as $asset) {
-		    $templateHead .= $asset->getContent()."\n";
+	    if ( empty( $templateHead ) ) {
+		    return;
 	    }
-	    $templateHead .= "\n\n<!-- END BRIZY ASSETS -->";
 
-		$head         = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
+        $head = apply_filters('brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head');
         ?>
         <!-- BRIZY HEAD -->
         <?php echo $head; ?>
@@ -589,70 +556,49 @@ class Brizy_Admin_Templates
         <?php
     }
 
-    public function insertTemplateContent($content) {
-        return  $this->getTemplateContent();
-    }
-
-	/**
-	 * @param $content
-	 *
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	public function showTemplateContent() {
+    /**
+     * @param $content
+     *
+     * @return null|string|string[]
+     * @throws Exception
+     */
+    public function showTemplateContent()
+    {
         $content = $this->getTemplateContent();
-        echo apply_filters('the_content',$content);
+        echo apply_filters('the_content', $content);
     }
 
 
-    private function getTemplateContent() {
-	    if ( ! self::getTemplate()) {
-		    return;
-	    }
-
-	    $pid = Brizy_Editor::get()->currentPostId();
-
-	    $project = Brizy_Editor_Project::get();
-	    $template = self::getTemplate();
-	    $post = $template->getWpPost();
-
-	    if ( $pid ) {
-		    $post = get_post( $pid );
-	    }
-
-	    $compiled_page = self::getTemplate()->get_compiled_page();
-
-	    $content = $compiled_page->get_body();
-
-//	    // get all assets needed for this page
-	    $scripts = $template->getCompiledScripts();
-	    $assetGroups = [];
-        if(isset($scripts['free']) && !empty($scripts['free'])) {
-            $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($scripts['free']);
+    private function getTemplateContent()
+    {
+        if (!self::getTemplate()) {
+            return;
         }
-	    $assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $template);
 
-	    // add popups and popup assets
-	    $popupMain         = Brizy_Admin_Popups_Main::_init();
-	    $content .= $popupMain->getPopupsHtml($project, $template, 'body');
+        $pid = Brizy_Editor::get()->currentPostId();
 
-	    $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $template, 'body'));
-	    $assetAggregator = new \BrizyMerge\AssetAggregator($assetGroups);
+        $project = Brizy_Editor_Project::get();
+        $template = self::getTemplate();
+        $post = $template->getWpPost();
 
-	    // include content
-	    $content .= "<!-- BRIZY ASSETS -->\n\n";
-	    foreach ($assetAggregator->getAssetList() as $script) {
-		    $content .= $script->getContent()."\n";
-	    }
-	    $content .= "\n\n<!-- END BRIZY ASSETS -->";
+        if ($pid) {
+            $post = get_post($pid);
+        }
 
-	    return apply_filters(
-		    'brizy_content',
-		    $content,
-		    Brizy_Editor_Project::get(),
-		    $post,
-		    'body'
-	    );
+        $compiled_page = self::getTemplate()->get_compiled_page();
+        $content = $compiled_page->get_body();
+
+        // add popups and popup assets
+        $popupMain = Brizy_Admin_Popups_Main::_init();
+        $content .= $popupMain->getPopupsHtml($project, $template, 'body');
+
+        return apply_filters(
+            'brizy_content',
+            $content,
+            Brizy_Editor_Project::get(),
+            $post,
+            'body'
+        );
     }
 
     /**
@@ -663,22 +609,22 @@ class Brizy_Admin_Templates
      */
     public function filterPageContent($content)
     {
-        if ( ! self::getTemplate() || doing_filter('brizy_content')) {
+        if (!self::getTemplate() || doing_filter('brizy_content')) {
             return $content;
         }
 
-        $pid       = Brizy_Editor::get()->currentPostId();
-	    $brizyPost = null;
+        $pid = Brizy_Editor::get()->currentPostId();
+        $brizyPost = null;
 
-        if ( $pid ) {
-	        $brizyPost = get_post( $pid );
+        if ($pid) {
+            $brizyPost = get_post($pid);
         }
 
-	    $content = $this->getTemplateContent();
+        $content = $this->getTemplateContent();
 
         return apply_filters(
             'brizy_content',
-	        $content,
+            $content,
             Brizy_Editor_Project::get(),
             $brizyPost,
             'body'
@@ -701,15 +647,15 @@ class Brizy_Admin_Templates
             return;
         }
 
-        $post_id      = $post->ID;
+        $post_id = $post->ID;
         $rule_manager = new Brizy_Admin_Rules_Manager();
-        $post_rules   = $rule_manager->getRules($post_id);
+        $post_rules = $rule_manager->getRules($post_id);
 
-        if ( ! $post_rules) {
+        if (!$post_rules) {
             return;
         }
 
-        $all_rules     = $rule_manager->getAllRulesSet(array('post__not_in' => array($post_id)))->getRules();
+        $all_rules = $rule_manager->getAllRulesSet(array('post__not_in' => array($post_id)))->getRules();
         $has_conflicts = false;
 
         foreach ($post_rules as $post_rule) {
@@ -741,8 +687,8 @@ class Brizy_Admin_Templates
 
 
         $ruleManager = new Brizy_Admin_Rules_Manager();
-        $rules       = $ruleManager->getRules($wp_post->ID);
-        $rule        = null;
+        $rules = $ruleManager->getRules($wp_post->ID);
+        $rule = null;
 
         // find first include rule
         foreach ($rules as $rule) {
@@ -784,7 +730,7 @@ class Brizy_Admin_Templates
 
                     $args["meta_query"] = array(
                         array(
-                            "key"     => "brizy",
+                            "key" => "brizy",
                             'compare' => 'NOT EXISTS',
                         ),
                     );
@@ -794,8 +740,8 @@ class Brizy_Admin_Templates
                     return array_pop($array);
                     break;
                 case Brizy_Admin_Rule::TAXONOMY :
-                    $args     = array(
-                        'taxonomy'   => $rule->getEntityType(),
+                    $args = array(
+                        'taxonomy' => $rule->getEntityType(),
                         'hide_empty' => false,
                     );
                     $entities = $rule->getEntityValues();
@@ -818,11 +764,11 @@ class Brizy_Admin_Templates
                     $array = get_posts(
                         [
                             'post_status' => 'publish',
-                            'tax_query'   => array(
+                            'tax_query' => array(
                                 array(
                                     'taxonomy' => $term->taxonomy,
-                                    'field'    => 'term_id',
-                                    'terms'    => $term->term_id,
+                                    'field' => 'term_id',
+                                    'terms' => $term->term_id,
                                 ),
                             ),
                         ]
@@ -880,7 +826,7 @@ class Brizy_Admin_Templates
 
             $prefix = ucfirst(Brizy_Editor::prefix());
 
-            echo '<div class="error"><p>'.$prefix.': '.$error.'</p></div>';
+            echo '<div class="error"><p>' . $prefix . ': ' . $error . '</p></div>';
 
             delete_transient("editor_tpl_rule_errors_{$post_id}");
         }
@@ -913,11 +859,11 @@ class Brizy_Admin_Templates
 
         // get rules from $_POST
         $rules = [];
-        if ($type && isset($_POST['brizy-'.$type.'-rule-type']) && is_array($_POST['brizy-'.$type.'-rule-type'])) {
-            foreach ($_POST['brizy-'.$type.'-rule-type'] as $i => $ruleType) {
+        if ($type && isset($_POST['brizy-' . $type . '-rule-type']) && is_array($_POST['brizy-' . $type . '-rule-type'])) {
+            foreach ($_POST['brizy-' . $type . '-rule-type'] as $i => $ruleType) {
 
                 // ignore this rule if type is invalid
-                if ( ! in_array(
+                if (!in_array(
                     (int)$ruleType,
                     [
                         Brizy_Admin_Rule::TYPE_EXCLUDE,
@@ -927,17 +873,17 @@ class Brizy_Admin_Templates
                     continue;
                 }
 
-                $values = explode("|", $_POST['brizy-'.$type.'-rule-group'][$i]);
+                $values = explode("|", $_POST['brizy-' . $type . '-rule-group'][$i]);
                 list($appliedFor, $entityType) = $values;
 
                 // ingnore invalid group value
-                if ( ! $appliedFor ) {
+                if (!$appliedFor) {
                     continue;
                 }
 
                 $entityValues = [];
-                if (isset($_POST['brizy-'.$type.'-rule-entity-values'][$i])) {
-                    $entityValues = (array)$_POST['brizy-'.$type.'-rule-entity-values'][$i];
+                if (isset($_POST['brizy-' . $type . '-rule-entity-values'][$i])) {
+                    $entityValues = (array)$_POST['brizy-' . $type . '-rule-entity-values'][$i];
                 }
 
                 $rules[] = new Brizy_Admin_Rule(null, $ruleType, $appliedFor, $entityType, $entityValues);
@@ -950,7 +896,7 @@ class Brizy_Admin_Templates
 
     public function validate_template_rules($post_id, $data)
     {
-        if(!isset($_REQUEST['brizy-template-type'])) {
+        if (!isset($_REQUEST['brizy-template-type'])) {
             return;
         }
 
@@ -964,20 +910,20 @@ class Brizy_Admin_Templates
             // validate rule
             $ruleValidator = Brizy_Admin_Rules_ValidatorFactory::getValidator($post_id);
 
-            if ( ! $ruleValidator) {
+            if (!$ruleValidator) {
                 $this->addError($post_id, esc_html__('Unable to get the rule validator for this post type.', 'brizy'));
-                header('Location: '.get_edit_post_link($post_id, 'redirect'));
+                header('Location: ' . get_edit_post_link($post_id, 'redirect'));
                 exit;
             }
 
             $ruleValidator->validateRulesForPostId($rules, $post_id);
         } catch (Brizy_Editor_Exceptions_DataVersionMismatch $e) {
             $this->addError($post_id, esc_html__('Invalid data version.', 'brizy'));
-            header('Location: '.get_edit_post_link($post_id, 'redirect'));
+            header('Location: ' . get_edit_post_link($post_id, 'redirect'));
             exit;
         } catch (Exception $e) {
             $this->addError($post_id, $e->getMessage());
-            header('Location: '.get_edit_post_link($post_id, 'redirect'));
+            header('Location: ' . get_edit_post_link($post_id, 'redirect'));
             exit;
         }
     }
@@ -985,11 +931,11 @@ class Brizy_Admin_Templates
     public function saveTemplateRules($post_id)
     {
         try {
-	        if(!isset($_REQUEST['brizy-template-type'])) {
-		        return;
-	        }
+            if (!isset($_REQUEST['brizy-template-type'])) {
+                return;
+            }
 
-            $rules       = $this->obtainRulesFromPostSubmit($post_id);
+            $rules = $this->obtainRulesFromPostSubmit($post_id);
             $ruleManager = new Brizy_Admin_Rules_Manager();
             $ruleManager->setRules($post_id, $rules);
         } catch (Brizy_Editor_Exceptions_DataVersionMismatch $e) {

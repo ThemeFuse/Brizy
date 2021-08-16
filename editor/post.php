@@ -303,12 +303,17 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-					$compiledData['pageScripts'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content'] );
-					continue;
+                    if(isset($compiledData['pageScripts'][ $i ][ $k ]['content']['url'])) {
+                        $compiledData['pageScripts'][$i][$k]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl($compiledData['pageScripts'][$i][$k]['content']['url']);
+                        continue;
+                    }
 				}
 
 				foreach ( $scripts as $l => $script ) {
-					$compiledData['pageScripts'][ $i ][ $k ][ $l ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content'] );
+					if(isset($compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url']))
+                    {
+                        $compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content']['url'] );
+                    }
 				}
 
 			}
@@ -319,13 +324,19 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-					$compiledData['pageStyles'][ $i ][ $k ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content'] );
+				    if(isset($compiledData['pageStyles'][ $i ][ $k ]['content']['url']))
+                    {
+                        $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] );
+                    }
 					continue;
 				}
 				foreach ( $styles as $l => $style ) {
-					$compiledData['pageStyles'][ $i ][ $k ][ $l ]['content'] = Brizy_SiteUrlReplacer::hideSiteUrl(
-						$style['content']
-					);
+                    if(isset($compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url']))
+                    {
+                        $compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl(
+                            $style['content']['url']
+                        );
+                    }
 				}
 			}
 		}
