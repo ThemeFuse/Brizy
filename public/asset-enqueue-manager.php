@@ -116,18 +116,6 @@ class Brizy_Public_AssetEnqueueManager
 
         $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
 
-        foreach ( $assetGroups as &$group ) {
-        	$fonts = $group->getPageFonts();
-        	foreach ( $fonts as &$font ) {
-        		if ( $font->getFontType() == 'uploaded-font' ) {
-        			$url = $font->getUrl();
-			        if ( ! empty( $url ) && ! strpos( $url, '|' ) && ! strpos( $url, '"' ) && ! strpos( $url, '&' ) ) {
-				        $font->setUrl( $url . '&' );
-			        }
-		        }
-	        }
-        }
-
         $assetAggregator = new AssetAggregator($assetGroups);
 
         // include content
