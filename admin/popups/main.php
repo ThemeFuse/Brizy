@@ -178,17 +178,18 @@ class Brizy_Admin_Popups_Main {
 
 			if ( $context == 'head' ) {
 				$styles = $brizyPopup->getCompiledStyles();
-                if(isset($styles['free']) && !empty($styles['free'])) {
+
+                if(!empty($styles['free'])) {
                     $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
                 }
-				$assetGroups =  apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
+				$assetGroups = apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
 
 			}
 
 			if ( $context == 'body' ) {
 
 				$assets = $brizyPopup->getCompiledScripts();
-                if(isset($assets['free']) && !empty($assets['free'])) {
+                if(!empty($assets['free'])) {
                     $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
                 }
 				$assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $brizyPopup);
@@ -201,12 +202,20 @@ class Brizy_Admin_Popups_Main {
 
 	private function insertHead( $target, $headContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n";
+		if ( empty( $headContent ) ) {
+			return $target;
+		}
+
+		return $target . "\n\n<!-- POPUP HEAD -->\n{$headContent}\n<!-- POPUP HEAD END-->\n\n";
 	}
 
 	private function insertBody( $target, $bodyContent ) {
 
-		return $target . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n";
+		if ( empty( $bodyContent ) ) {
+			return $target;
+		}
+
+		return $target . "\n\n<!-- POPUP BODY -->\n{$bodyContent}\n<!-- POPUP BODY END-->\n\n";
 	}
 
 	private function insertInDocumentHead( $target, $headContent ) {
