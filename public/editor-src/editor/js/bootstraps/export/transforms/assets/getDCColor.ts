@@ -43,5 +43,5 @@ export const getDCColor = ($: cheerio.CheerioAPI): string[] => {
     return [];
   }
 
-  return [`<style class="brz-style" id="dc-color">${rules.join("")}</style>`];
+  return rules;
 };

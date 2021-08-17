@@ -19,6 +19,10 @@ data-valid3:'customValue'
 data-valid4:"customValue"
 data-valid5:'custom Value'
 data-valid6:"custom   Value"
+data-valid7:aaa/.!:+?$#&%=@*()-
+data-valid8:"aaa/.!:+?$#&%=@*()-"
+data-valid9:custom--__--Value
+on-Click:"return gtag_report_conversion('http://example.com/your-link')"
 `,
     {
       "data-valid1": "customValue",
@@ -26,7 +30,12 @@ data-valid6:"custom   Value"
       "data-valid3": "customValue",
       "data-valid4": "customValue",
       "data-valid5": "custom Value",
-      "data-valid6": "custom   Value"
+      "data-valid6": "custom   Value",
+      "data-valid7": "aaa/.!:+?$#&%=@*()-",
+      "data-valid8": "aaa/.!:+?$#&%=@*()-",
+      "data-valid9": "custom--__--Value",
+      "on-Click":
+        "return gtag_report_conversion('http://example.com/your-link')"
     }
   ]
 ])("Testing 'parseCustomAttributes' function", (s, expected) => {

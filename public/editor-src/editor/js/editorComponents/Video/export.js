@@ -52,7 +52,7 @@ export default function($node) {
     "elements.accordion.changed",
     "elements.switcher.changed"
   ].forEach(id => {
-    window.Brizy.on(id, (node, options) => {
+    window.Brz.on(id, (node, options) => {
       var hiddenTabs = options.tabs.filter(tab => tab !== options.active);
 
       hideVideos($(hiddenTabs));
@@ -61,13 +61,13 @@ export default function($node) {
   });
 
   ["elements.mmenu.panel.opened", "elements.mmenu.open"].forEach(id => {
-    window.Brizy.on(id, node => {
+    window.Brz.on(id, node => {
       showVideos($(node));
     });
   });
 
   ["elements.mmenu.panel.closed", "elements.mmenu.close"].forEach(id => {
-    window.Brizy.on(id, node => {
+    window.Brz.on(id, node => {
       hideVideos($(node));
     });
   });

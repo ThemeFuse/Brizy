@@ -39,7 +39,7 @@ class Brizy_Public_AssetEnqueueManager
 	    add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 	    add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ] );
 	    add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
-	    add_action( 'wp_head', [ $this, 'insertBodyCodeAssets' ] );
+	    add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
     }
 
     public function insertHeadCodeAssets() {
@@ -115,18 +115,6 @@ class Brizy_Public_AssetEnqueueManager
         $popupMain = Brizy_Admin_Popups_Main::_init();
 
         $assetGroups = array_merge($assetGroups, $popupMain->getPopupsAssets($project, $this->post, 'head'));
-
-        foreach ( $assetGroups as &$group ) {
-        	$fonts = $group->getPageFonts();
-        	foreach ( $fonts as &$font ) {
-        		if ( $font->getFontType() == 'uploaded-font' ) {
-        			$url = $font->getUrl();
-			        if ( ! empty( $url ) && ! strpos( $url, '|' ) && ! strpos( $url, '"' ) && ! strpos( $url, '&' ) ) {
-				        $font->setUrl( $url . '&' );
-			        }
-		        }
-	        }
-        }
 
         $assetAggregator = new AssetAggregator($assetGroups);
 
@@ -216,13 +204,13 @@ class Brizy_Public_AssetEnqueueManager
         $handle = $this->getHandle($asset);
         switch ($asset->getType()) {
             case Asset::TYPE_INLINE:
-                wp_register_style($handle, false);
+                wp_register_style($handle, false, [], BRIZY_VERSION);
                 wp_enqueue_style($handle);
-                wp_add_inline_style($handle, $asset->getContent(), []);
+                wp_add_inline_style($handle, $asset->getContent());
                 $this->enqueuedAssets[$handle] = $asset;
                 break;
             case Asset::TYPE_FILE:
-                wp_enqueue_style($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), []);
+                wp_enqueue_style($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], BRIZY_VERSION);
                 $this->enqueuedAssets[$handle] = $asset;
                 break;
         }
@@ -233,14 +221,14 @@ class Brizy_Public_AssetEnqueueManager
         $handle = $this->getHandle($asset);
         switch ($asset->getType()) {
             case Asset::TYPE_INLINE:
-                wp_register_script($handle, false, [], false, true);
+                wp_register_script($handle, false, [], BRIZY_VERSION, true);
                 wp_enqueue_script($handle, false, [], false, true);
-                wp_add_inline_script($handle, $asset->getContent(), []);
+                wp_add_inline_script($handle, $asset->getContent());
                 $this->enqueuedAssets[$handle] = $asset;
 
                 break;
             case Asset::TYPE_FILE:
-                wp_enqueue_script($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], false, true);
+                wp_enqueue_script($handle, Brizy_SiteUrlReplacer::restoreSiteUrl($asset->getUrl()), [], BRIZY_VERSION, true);
                 $this->enqueuedAssets[$handle] = $asset;
 
                 break;

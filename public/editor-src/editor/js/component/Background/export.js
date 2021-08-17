@@ -20,7 +20,7 @@ export default function($node) {
     // wee need stop parallax
     const openedElements = ["elements.mmenu.open", "elements.popup.open"];
     openedElements.forEach(id => {
-      window.Brizy.on(id, element => {
+      window.Brz.on(id, element => {
         if (id === "elements.popup.open") {
           // need to check scroll behance
           const { scroll_page = "false" } = element.dataset;
@@ -40,7 +40,7 @@ export default function($node) {
     // start parallaxes
     const closedElements = ["elements.mmenu.close", "elements.popup.close"];
     closedElements.forEach(id => {
-      window.Brizy.on(id, element => {
+      window.Brz.on(id, element => {
         if (id === "elements.popup.close") {
           // need to check scroll behance
           const { scroll_page = "false" } = element.dataset;

@@ -18,5 +18,5 @@ export const getCustomCSS = ($: cheerio.CheerioAPI): string[] => {
     return [];
   }
 
-  return [`<style class="brz-style" id="custom-css">${styles}</style>`];
+  return [styles];
 };

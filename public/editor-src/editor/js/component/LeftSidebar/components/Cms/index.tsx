@@ -118,7 +118,10 @@ const Component = ({ config }: Props): ReactElement => {
         appointmentsApi: token
           ? { __type: "withToken", token, uri: config.cms.apiUrl }
           : { __type: "withOutToken", uri: config.cms.apiUrl },
-        projectId: fromNumber(config.project.id)
+        projectId: fromNumber(config.project.id),
+        shopChannel: "shopChannel",
+        taxesInfoUrl: "taxesInfoUrl",
+        taxesMainCategoryId: "taxesMainCategoryId"
       });
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);

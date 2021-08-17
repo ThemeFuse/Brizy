@@ -25,7 +25,6 @@ import {
 } from "visual/utils/fonts";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
-import { flatMap } from "visual/utils/array";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 import { createStore } from "visual/redux/store";
@@ -269,9 +268,10 @@ function parseFonts(blocks, project) {
     models: blocks
   });
 
-  // get fonts from styles
-  const { styles, extraFontStyles = [] } = project.data;
-  const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
+  // get fonts from selectedStyle
+  const { selectedStyle, styles, extraFontStyles = [] } = project.data;
+  const currentStyle = styles.find(style => style.id === selectedStyle) || {};
+  const fontStyles = currentStyle.fontStyles || [];
   const stylesFonts = getUsedStylesFonts([...fontStyles, ...extraFontStyles]);
 
   // merge fonts

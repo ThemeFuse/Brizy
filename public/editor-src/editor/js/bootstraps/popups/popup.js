@@ -18,7 +18,7 @@
           .then(appendScripts)
           .then(function(data) {
             if (data.html) {
-              window.Brizy.emit("init.dom", window.jQuery(data.html));
+              window.Brz.emit("init.dom", window.jQuery(data.html));
             }
           })
           .catch(function(r) {
