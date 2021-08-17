@@ -32,8 +32,11 @@ type MakeStyles = {
 const makePageMetaViewport = (): Asset => ({
   name: "metaViewport",
   score: DEPENDENCY_SCORE,
-  content:
-    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+  content: {
+    type: "code",
+    content:
+      '<meta name="viewport" content="width=device-width, initial-scale=1">'
+  },
   pro: false
 });
 
@@ -46,7 +49,15 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
       name: "google",
       type: "google-font",
       score: DEPENDENCY_SCORE,
-      content: google,
+      content: {
+        type: "file",
+        url: google,
+        attr: {
+          class: "brz-link brz-link-google",
+          type: "text/css",
+          rel: "stylesheet"
+        }
+      },
       pro: false
     });
   }
@@ -56,7 +67,15 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
       name: "upload",
       type: "uploaded-font",
       score: DEPENDENCY_SCORE,
-      content: upload,
+      content: {
+        type: "file",
+        url: upload,
+        attr: {
+          class: "brz-link brz-link-upload",
+          type: "text/css",
+          rel: "stylesheet"
+        }
+      },
       pro: false
     });
   }
@@ -65,24 +84,39 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
 };
 
 const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
-  const prefetchLinks = {
+  const prefetchLinks: Asset = {
     name: "projectPrefetchFonts",
     score: DEPENDENCY_SCORE,
-    content: makePrefetchFonts().join(" "),
+    content: {
+      type: "code",
+      content: makePrefetchFonts().join(" ")
+    },
     pro: false
   };
 
-  const paletteStyles = {
+  const paletteStyles: Asset = {
     name: "projectPalette",
     score: OTHERS_SCORE,
-    content: getProjectStyles($doc),
+    content: {
+      type: "inline",
+      content: getProjectStyles($doc),
+      attr: {
+        class: "brz-style brz-project__style-palette"
+      }
+    },
     pro: false
   };
   const typography = getTypographyStyles($doc);
-  const typographyStyles = {
+  const typographyStyles: Asset = {
     name: toHashCode(typography),
     score: OTHERS_SCORE,
-    content: typography,
+    content: {
+      type: "inline",
+      content: typography,
+      attr: {
+        class: "brz-style brz-project__style-fonts"
+      }
+    },
     pro: false
   };
 
@@ -90,19 +124,33 @@ const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
 };
 
 const makeCustomCSS = ($doc: cheerio.CheerioAPI): Asset[] => {
-  return getCustomCSS($doc).map(style => ({
+  return getCustomCSS($doc).map((style, index) => ({
     name: toHashCode(style),
     score: OTHERS_SCORE,
-    content: style,
+    content: {
+      type: "inline",
+      content: style,
+      attr: {
+        id: `brz-custom-css-${index}`,
+        class: "brz-style"
+      }
+    },
     pro: false
   }));
 };
 
 const makeDCColor = ($doc: cheerio.CheerioAPI): Asset[] => {
-  return getDCColor($doc).map(style => ({
+  return getDCColor($doc).map((style, index) => ({
     name: toHashCode(style),
     score: OTHERS_SCORE,
-    content: style,
+    content: {
+      type: "inline",
+      content: style,
+      attr: {
+        id: `brz-dc-color-${index}`,
+        class: "brz-style"
+      }
+    },
     pro: false
   }));
 };
@@ -110,10 +158,13 @@ const makeDCColor = ($doc: cheerio.CheerioAPI): Asset[] => {
 const makeDynamicStyle = ($doc: cheerio.CheerioAPI): Asset => {
   const $styles = $doc("style.brz-style");
   const __html = $doc.html($styles);
-  const otherStyles = {
+  const otherStyles: Asset = {
     name: toHashCode(__html),
     score: OTHERS_SCORE,
-    content: __html,
+    content: {
+      type: "code",
+      content: __html
+    },
     pro: false
   };
   $styles.remove();
@@ -132,11 +183,17 @@ export const makeStyles = (
   fonts: Fonts
 ): MakeStyles => {
   const { free = [], pro = [] } = LibsConfig;
-  const previewCSS = assetUrl("editor/css/preview.css");
   const main: Asset = {
     name: "main",
     score: MAIN_SCORE,
-    content: `<link class="brz-link brz-link-preview" href="${previewCSS}" rel="stylesheet"/>`,
+    content: {
+      type: "file",
+      url: assetUrl("editor/css/preview.css"),
+      attr: {
+        class: "brz-link brz-link-preview",
+        rel: "stylesheet"
+      }
+    },
     pro: false
   };
   const generic: Asset[] = [];
@@ -169,14 +226,21 @@ export const makeStyles = (
   // libs
   free.forEach(lib => {
     const { name, selectors } = lib;
-    const cssUrl = assetUrl(`editor/css/${lib.name}.css`);
 
     // generate lib map
     libsMap.push({
       name,
       selectors,
       score: LIBS_SCORE,
-      content: `<link class="brz-link brz-link-preview-lib" href="${cssUrl}" rel="stylesheet"/>`,
+      content: {
+        type: "file",
+        url: assetUrl(`editor/css/${name}.css`),
+        attr: {
+          class: "brz-link brz-link-preview-lib",
+          rel: "stylesheet",
+          "data-group": name
+        }
+      },
       pro: false
     });
 
@@ -208,25 +272,38 @@ export const makeStyles = (
     const genericPro: Asset[] = [];
     const libsProSelectors = new Set<string>();
     const libsProMap: AssetLibsMap[] = [];
-    const previewProCSS = `${proUrls.assets}/css/preview.pro.css`;
-    const mainPro = {
+    const mainPro: Asset = {
       name: "main",
       score: MAIN_SCORE,
-      content: `<link class="brz-link brz-link-preview-pro" href="${previewProCSS}" rel="stylesheet"/>`,
+      content: {
+        type: "file",
+        url: `${proUrls.assets}/css/preview.pro.css`,
+        attr: {
+          class: "brz-link brz-link-preview-pro",
+          rel: "stylesheet"
+        }
+      },
       pro: true
     };
 
     // libs
     pro.forEach(lib => {
       const { name, selectors } = lib;
-      const cssUrl = `${proUrls.assets}/css/${name}-pro.css`;
 
       // generate lib map
       libsProMap.push({
         name,
         selectors,
         score: LIBS_SCORE + 1,
-        content: `<link class="brz-link brz-link-preview-lib-pro" href="${cssUrl}" rel="stylesheet"/>`,
+        content: {
+          type: "file",
+          url: `${proUrls.assets}/css/${name}-pro.css`,
+          attr: {
+            class: "brz-link brz-link-preview-lib-pro",
+            rel: "stylesheet",
+            "data-group": name
+          }
+        },
         pro: true
       });
 

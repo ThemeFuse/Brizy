@@ -27,7 +27,7 @@ export default function($node) {
   $(".brz-popup").addClass("brz-initialized");
 
   // closes a popup when an anchor link is clicked inside it
-  window.Brizy.on("elements.anchor.startScrolled", anchor => {
+  window.Brz.on("elements.anchor.startScrolled", anchor => {
     const $closestPopup = $(anchor).closest(".brz-popup");
 
     if ($closestPopup.length > 0) {
@@ -41,12 +41,12 @@ export default function($node) {
 
     // trigger an event so that other components could listen
     $(document).trigger("brz.popup.close", [popup]);
-    window.Brizy.emit("elements.popup.close", popup);
+    window.Brz.emit("elements.popup.close", popup);
   }
 
   function openPopup(popup) {
     $(popup).addClass("brz-popup--opened");
     $("html").addClass("brz-ow-hidden");
-    window.Brizy.emit("elements.popup.open", popup);
+    window.Brz.emit("elements.popup.open", popup);
   }
 }

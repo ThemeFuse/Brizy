@@ -1,4 +1,3 @@
-export { default as Image } from "./Image/export.js";
 export { default as Map } from "./Map/export.js";
 export { default as Counter } from "./Counter/export.js";
 export { default as Form } from "./Form/export.js";
@@ -14,6 +13,5 @@ export { default as ProgressBar } from "./ProgressBar/export.js";
 export { default as SectionPopup } from "./SectionPopup/export.js";
 export { default as SectionPopup2 } from "./SectionPopup2/export.js";
 export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/export.js";
-export { default as Carousel } from "./Carousel/export";
 export { default as Story } from "./Story/export";
 export { default as Protected } from "./ProtectedPage/export.ts";

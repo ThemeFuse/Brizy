@@ -14,12 +14,12 @@ export default function($node) {
       $(this).toggleClass("brz-section__header--animated-opened", isSticky);
 
       if (isSticky) {
-        window.Brizy.emit("elements.headerSticky.show", {
+        window.Brz.emit("elements.headerSticky.show", {
           node: this,
           type: "animated"
         });
       } else {
-        window.Brizy.emit("elements.headerSticky.hide", {
+        window.Brz.emit("elements.headerSticky.hide", {
           node: this,
           type: "animated"
         });
@@ -42,7 +42,7 @@ export default function($node) {
           height: $this.outerHeight()
         });
 
-        window.Brizy.emit("elements.headerSticky.show", {
+        window.Brz.emit("elements.headerSticky.show", {
           node: this,
           type: "fixed"
         });
@@ -52,7 +52,7 @@ export default function($node) {
           height: "auto"
         });
 
-        window.Brizy.emit("elements.headerSticky.hide", {
+        window.Brz.emit("elements.headerSticky.hide", {
           node: this,
           type: "fixed"
         });

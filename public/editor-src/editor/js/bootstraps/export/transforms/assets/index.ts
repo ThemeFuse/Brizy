@@ -2,69 +2,96 @@ import { makeStyles } from "./makeStyles";
 import { makeScripts } from "./makeScripts";
 import { GoogleFont, UploadedFont } from "../../../../types";
 
-export type Fonts = {
+export interface Fonts {
   google: GoogleFont[];
   upload: UploadedFont[];
-};
+}
 
-export type Asset = {
+interface AssetCommon {
+  attr?: Record<string, string>;
+}
+
+export interface AssetFile extends AssetCommon {
+  type: "file";
+  url: string;
+}
+
+export interface AssetInline extends AssetCommon {
+  type: "inline";
+  content: string;
+}
+
+export interface AssetCode {
+  type: "code";
+  content: string;
+}
+
+export interface Asset {
   name: string;
   score: number;
-  content: string;
+  content: AssetFile | AssetInline | AssetCode;
   pro: boolean;
-};
+}
 
-export type AssetGoogle = {
+export interface AssetGoogle {
   name: "google";
   type: "google-font";
   score: number;
-  content: string;
+  content: {
+    type: "file";
+    url: string;
+    attr: Record<string, string>;
+  };
   pro: boolean;
-};
+}
 
-export type AssetUpload = {
+export interface AssetUpload {
   name: "upload";
   type: "uploaded-font";
   score: number;
-  content: string;
+  content: {
+    type: "file";
+    url: string;
+    attr: Record<string, string>;
+  };
   pro: boolean;
-};
+}
 
-export type AssetLibsMap = Asset & {
+export interface AssetLibsMap extends Asset {
   selectors: string[];
-};
+}
 
 export type AssetFonts = AssetGoogle | AssetUpload;
 
-export type StylesFree = {
+export interface StylesFree {
   main: Asset;
   generic: Asset[];
   libsMap: Asset[];
   libsSelectors: string[];
   pageFonts: AssetFonts[];
   pageStyles: Asset[];
-};
+}
 
-export type StylesPro = {
+export interface StylesPro {
   main: Asset;
   generic: Asset[];
   libsMap: Asset[];
   libsSelectors: string[];
-};
+}
 
-export type ScriptsFree = {
+export interface ScriptsFree {
   main: Asset;
   generic: Asset[];
   libsMap: AssetLibsMap[];
   libsSelectors: string[];
-};
+}
 
-export type ScriptsPro = {
+export interface ScriptsPro {
   main: Asset;
   generic: Asset[];
   libsMap: AssetLibsMap[];
   libsSelectors: string[];
-};
+}
 
 type GetAssets = (
   $: cheerio.CheerioAPI,
