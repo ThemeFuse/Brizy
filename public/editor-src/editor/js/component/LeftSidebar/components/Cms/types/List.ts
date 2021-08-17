@@ -20,6 +20,9 @@ export interface Cloud {
   mediaUrl: string;
   shop: Authorize;
   projectId: ProjectId;
+  taxesInfoUrl: string;
+  shopChannel: string;
+  taxesMainCategoryId: string;
 }
 
 export type Context = Cloud;

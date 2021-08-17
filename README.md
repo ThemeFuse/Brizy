@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.3.9<br>
+Stable tag: 2.3.10<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.10 - 2021-08-17
+* Fixed: Dash separated value name for custom attributes
+* Fixed: Cache assets on Brizy websites
+* Fixed: Added the version of the plugin at the end of the included scripts
+* Fixed: Merge uploaded fonts to one URL
+* Fixed: Allow to call register scripts on priority 10 for compatibilities like Astra theme
+* Fixed: Enqueue scripts through WordPress
 
 ### 2.3.9 - 2021-08-06
 * Fixed: Replace global style when import some template

@@ -10,7 +10,7 @@ const scrollTo = (config: {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-expect-error
-    window.Brizy.emit("elements.anchor.startScrolled", targetNode);
+    window.Brz.emit("elements.anchor.startScrolled", targetNode);
 
     const element = document.scrollingElement;
 

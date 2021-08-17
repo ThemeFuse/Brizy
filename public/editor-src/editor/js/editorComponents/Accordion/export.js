@@ -33,7 +33,7 @@ export default function($node) {
       const handleAnimationComplete = () => {
         // Emit Accordion Changed
         const offsetTop = $item.offset().top;
-        window.Brizy.emit("elements.accordion.changed", _this, {
+        window.Brz.emit("elements.accordion.changed", _this, {
           active: $item.get(0),
           tabs: $item.siblings().get()
         });

@@ -44,12 +44,7 @@ export const getProjectStyles = ($: cheerio.CheerioAPI): string => {
     getClassName = (className: string): string => `#${popupId} ${className}`;
   }
 
-  const richTextPaletteCSS = makeRichTextColorPaletteCSS(
-    getColorPaletteColors(),
-    getClassName
-  );
-
-  return `<style class="brz-style brz-project__style-palette">${richTextPaletteCSS}</style>`;
+  return makeRichTextColorPaletteCSS(getColorPaletteColors(), getClassName);
 };
 
 export const getTypographyStyles = ($: cheerio.CheerioAPI): string => {
@@ -61,9 +56,5 @@ export const getTypographyStyles = ($: cheerio.CheerioAPI): string => {
     fs => parsedDynamicFontStylesObj[fs.id]
   );
 
-  const richTextDynamicFontStylesCSS = makeRichTextDynamicFontStylesCSS(
-    dynamicFontStylesToLoad
-  );
-
-  return `<style class="brz-style brz-project__style-fonts">${richTextDynamicFontStylesCSS}</style>`;
+  return makeRichTextDynamicFontStylesCSS(dynamicFontStylesToLoad);
 };

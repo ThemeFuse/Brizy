@@ -447,22 +447,22 @@ export default function($node: JQuery): void {
         "openPanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
           // @ts-expect-error
-          window.Brizy.emit("elements.mmenu.panel.opened", panel);
+          window.Brz.emit("elements.mmenu.panel.opened", panel);
         },
         "closePanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
           // @ts-expect-error
-          window.Brizy.emit("elements.mmenu.panel.closed", panel);
+          window.Brz.emit("elements.mmenu.panel.closed", panel);
         },
         "open:start": function(): void {
           // Emit Menu panel opened
           // @ts-expect-error
-          window.Brizy.emit("elements.mmenu.open", this.node.pnls);
+          window.Brz.emit("elements.mmenu.open", this.node.pnls);
         },
         "close:start": function(): void {
           // Emit Menu panel opened
           // @ts-expect-error
-          window.Brizy.emit("elements.mmenu.close", this.node.pnls);
+          window.Brz.emit("elements.mmenu.close", this.node.pnls);
         }
       }
     };
@@ -492,7 +492,7 @@ export default function($node: JQuery): void {
       menuAPI?.open();
     });
     // @ts-expect-error
-    window.Brizy.on("elements.anchor.startScrolled", () => {
+    window.Brz.on("elements.anchor.startScrolled", () => {
       menuAPI?.close();
     });
   });
@@ -501,7 +501,7 @@ export default function($node: JQuery): void {
   // need close Mega Menu
   if (root.querySelector(".brz-menu__item-mega-menu")) {
     // @ts-expect-error
-    window.Brizy.on(
+    window.Brz.on(
       "elements.headerSticky.show",
       ({ type }: { node: HTMLElement; type: string }) => {
         if (type === "animated") {
@@ -515,7 +515,7 @@ export default function($node: JQuery): void {
     );
 
     // @ts-expect-error
-    window.Brizy.on(
+    window.Brz.on(
       "elements.headerSticky.hide",
       ({ node, type }: { node: HTMLElement; type: string }) => {
         if (type === "animated") {

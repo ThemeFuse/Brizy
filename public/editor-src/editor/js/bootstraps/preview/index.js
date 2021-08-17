@@ -1,7 +1,7 @@
 import { createNanoEvents } from "nanoevents";
 import initExports from "./initExports";
 
-window.Brizy = {
+window.Brz = {
   emitter: createNanoEvents(),
 
   on(id, f) {
@@ -13,6 +13,6 @@ window.Brizy = {
   }
 };
 
-window.Brizy.on("init.dom", $node => {
+window.Brz.on("init.dom", $node => {
   initExports($node);
 });

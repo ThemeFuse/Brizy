@@ -57,7 +57,7 @@ export default function($node) {
     ];
 
     elements.forEach(id => {
-      window.Brizy.on(id, element => {
+      window.Brz.on(id, element => {
         if (iso && element && element.contains(_this)) {
           iso.arrange();
         }

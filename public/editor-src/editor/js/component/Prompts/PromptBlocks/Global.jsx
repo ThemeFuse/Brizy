@@ -182,7 +182,7 @@ class Global extends Component {
   }
 
   render() {
-    const { globalBlocks, globalBlocksInPage } = this.props;
+    const { globalBlocksInPage } = this.props;
     const blocks = this.getBlocks();
 
     if (blocks.length === 0) {
@@ -191,13 +191,13 @@ class Global extends Component {
 
     const thumbnails = blocks.map(block => {
       const { url, width, height } = blockThumbnailData(block.data);
-      const { _id } = block.data.value;
-      const { data } = globalBlocks[_id];
+      const {
+        type,
+        value: { _id }
+      } = block.data;
 
       const inactive =
-        IS_GLOBAL_POPUP ||
-        data.type === "SectionPopup" ||
-        data.type === "SectionPopup2"
+        IS_GLOBAL_POPUP || type === "SectionPopup" || type === "SectionPopup2"
           ? false
           : globalBlocksInPage[_id];
 

@@ -27,7 +27,7 @@ function changeTab($tabs, target) {
   $($tabsContent[navIndex]).addClass("brz-tabs__items--active");
 
   // Emit Tabs Changed
-  window.Brizy.emit("elements.tabs.changed", $tabs.get(0), {
+  window.Brz.emit("elements.tabs.changed", $tabs.get(0), {
     active: $tabsContent[navIndex],
     tabs: $tabsContent.get()
   });
@@ -80,7 +80,7 @@ export default function($node) {
       }, 100);
 
       // Emit Tabs Changed
-      window.Brizy.emit("elements.tabs.changed", $item.get(0), {
+      window.Brz.emit("elements.tabs.changed", $item.get(0), {
         active: $item.get(0),
         tabs: $tabsContent.get()
       });

@@ -21,11 +21,16 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
   const libsMap: AssetLibsMap[] = [];
 
   // added previewJS
-  const previewJS = assetUrl("editor/js/preview.js");
-  const main = {
+  const main: Asset = {
     name: "main",
     score: MAIN_SCORE,
-    content: `<script class="brz-script brz-script-preview" src="${previewJS}"></script>`,
+    content: {
+      type: "file",
+      url: assetUrl("editor/js/preview.js"),
+      attr: {
+        class: "brz-script brz-script-preview"
+      }
+    },
     pro: false
   };
 
@@ -33,25 +38,33 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
   generic.push({
     name: "initMain",
     score: MAIN_INIT_SCORE,
-    content: `<script class="brz-script brz-script-emit">
-     jQuery(document).ready(function() {
-       window.Brizy.emit("init.dom", jQuery(document.body));
-     });
-   </script>`,
+    content: {
+      type: "inline",
+      content: `jQuery(document).ready(function() { window.Brz.emit("init.dom", jQuery(document.body)); });`,
+      attr: {
+        class: "brz-script brz-script-emit"
+      }
+    },
     pro: false
   });
 
   // libs
   free.forEach(lib => {
     const { name, selectors } = lib;
-    const scriptUrl = assetUrl(`editor/js/${name}.js`);
 
     // generate lib map
     libsMap.push({
       name,
       selectors,
       score: LIBS_SCORE,
-      content: `<script class="brz-script brz-script-preview-lib" src="${scriptUrl}"></script>`,
+      content: {
+        type: "file",
+        url: assetUrl(`editor/js/${name}.js`),
+        attr: {
+          class: "brz-script brz-script-preview-lib",
+          "data-group": name
+        }
+      },
       pro: false
     });
 
@@ -78,7 +91,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
     }
   };
 
-  const proConfig = Config.get("pro");
+  const proConfig = Config.getAll().pro;
   const proUrls = proConfig && proConfig.urls;
 
   // PRO
@@ -86,24 +99,35 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
     const genericPro: Asset[] = [];
     const libsProSelectors = new Set<string>();
     const libsProMap: AssetLibsMap[] = [];
-    const previewProJS = `${proUrls.assets}/js/preview.pro.js`;
-    const mainPro = {
+    const mainPro: Asset = {
       name: "main",
       score: MAIN_SCORE,
-      content: `<script class="brz-script brz-script-preview-pro" src="${previewProJS}"></script>`,
+      content: {
+        type: "file",
+        url: `${proUrls.assets}/js/preview.pro.js`,
+        attr: {
+          class: "brz-script brz-script-preview-pro"
+        }
+      },
       pro: true
     };
 
     // libs
     pro.forEach(lib => {
       const { name, selectors } = lib;
-      const scriptUrl = `${proUrls.assets}/js/${name}.pro.js`;
 
       libsProMap.push({
         name,
         selectors,
         score: LIBS_SCORE + 1,
-        content: `<script class="brz-script brz-script-preview-lib-pro" src="${scriptUrl}"></script>`,
+        content: {
+          type: "file",
+          url: `${proUrls.assets}/js/${name}.pro.js`,
+          attr: {
+            class: `brz-script brz-script-preview-lib-pro`,
+            "data-group": name
+          }
+        },
         pro: true
       });
 
