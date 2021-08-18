@@ -72,6 +72,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	/**
 	 * @var string
 	 */
+	protected $pro_plugin_version;
+
+	/**
+	 * @var string
+	 */
 	protected $plugin_version;
 
 	/**
@@ -196,6 +201,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'editor_version'                   => $this->editor_version,
 			'compiler_version'                 => $this->compiler_version,
 			'plugin_version'                   => $this->plugin_version,
+			'pro_plugin_version'               => $this->pro_plugin_version,
 			'editor_data'                      => $this->editor_data,
 			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor()
 		);
@@ -223,7 +229,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$post_type        = $this->getWpPost()->post_type;
 			$post_type_object = get_post_type_object( $post_type );
 			$content          = $this->getWpPost()->post_content;
-			$content          = strpos( $content, 'brz-root__container' ) ? preg_replace('/<!-- version:\d+ -->/', '', $content ) : $emptyContent;
+			$content          = strpos( $content, 'brz-root__container' ) ? preg_replace( '/<!-- version:\d+ -->/', '', $content ) : $emptyContent;
 
 			$params = [
 				'ID'           => $this->getWpPostId(),
@@ -243,16 +249,16 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $this->getWpPost(), null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
-            $context->setProvider( $placeholderProvider );
-			$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
+			$context->setProvider( $placeholderProvider );
+			$extractor = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 
-            list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content );
+			list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content );
 
-            $replacer = new \BrizyPlaceholders\Replacer( $placeholderProvider );
-            $content = $replacer->replaceWithExtractedData( $placeholders, $placeholderInstances, $content ,$context);
+			$replacer = new \BrizyPlaceholders\Replacer( $placeholderProvider );
+			$content  = $replacer->replaceWithExtractedData( $placeholders, $placeholderInstances, $content, $context );
 
-			$content  = $extractor->stripPlaceholders( $content );
-			$content  = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost() );
+			$content = $extractor->stripPlaceholders( $content );
+			$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost() );
 
 			$wpdb->update(
 				$wpdb->posts,
@@ -303,17 +309,16 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-                    if(isset($compiledData['pageScripts'][ $i ][ $k ]['content']['url'])) {
-                        $compiledData['pageScripts'][$i][$k]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl($compiledData['pageScripts'][$i][$k]['content']['url']);
-                        continue;
-                    }
+					if ( isset( $compiledData['pageScripts'][ $i ][ $k ]['content']['url'] ) ) {
+						$compiledData['pageScripts'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content']['url'] );
+						continue;
+					}
 				}
 
 				foreach ( $scripts as $l => $script ) {
-					if(isset($compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url']))
-                    {
-                        $compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content']['url'] );
-                    }
+					if ( isset( $compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] ) ) {
+						$compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content']['url'] );
+					}
 				}
 
 			}
@@ -324,19 +329,17 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 					continue;
 				}
 				if ( $k == 'main' ) {
-				    if(isset($compiledData['pageStyles'][ $i ][ $k ]['content']['url']))
-                    {
-                        $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] );
-                    }
+					if ( isset( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] ) ) {
+						$compiledData['pageStyles'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] );
+					}
 					continue;
 				}
 				foreach ( $styles as $l => $style ) {
-                    if(isset($compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url']))
-                    {
-                        $compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl(
-                            $style['content']['url']
-                        );
-                    }
+					if ( isset( $compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] ) ) {
+						$compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl(
+							$style['content']['url']
+						);
+					}
 				}
 			}
 		}
@@ -346,6 +349,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$this->set_compiled_html_body( null );
 		$this->set_needs_compile( false );
 		$this->set_compiler_version( BRIZY_EDITOR_VERSION );
+		$this->set_pro_plugin_version(  defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null );
 		$this->setCompiledScripts( $compiledData['pageScripts'] );
 		$this->setCompiledStyles( $compiledData['pageStyles'] );
 
@@ -556,6 +560,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_POST_PLUGIN_VERSION, $plugin_version );
 	}
 
+
+
 	/**
 	 * @param $v
 	 *
@@ -580,15 +586,16 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 */
 	public function get_compiled_page() {
 
-		if ( isset(self::$compiled_page[$this->getWpPostId()]) ) {
-			return self::$compiled_page[$this->getWpPostId()];
+		if ( isset( self::$compiled_page[ $this->getWpPostId() ] ) ) {
+			return self::$compiled_page[ $this->getWpPostId() ];
 		}
 
-		return self::$compiled_page[$this->getWpPostId()] = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
+		return self::$compiled_page[ $this->getWpPostId() ] = new Brizy_Editor_CompiledHtml( $this->get_compiled_html() );
 	}
 
 	public function isCompiledWithCurrentVersion() {
-		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION;
+		$proVersion = defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null;
+		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version()===$proVersion;
 	}
 
 	/**
@@ -650,16 +657,34 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	/**
 	 * @return string
 	 */
+	public function get_pro_plugin_version() {
+		return $this->pro_plugin_version;
+	}
+
+	/**
+	 * @param string $pro_plugin_version
+	 *
+	 * @return Brizy_Editor_Post
+	 */
+	public function set_pro_plugin_version( $pro_plugin_version ) {
+		$this->pro_plugin_version = $pro_plugin_version;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function get_editor_version() {
 		return $this->editor_version;
 	}
 
 	/**
-	 * @deprecated Use getEditUrl()
 	 * @return string
+	 * @deprecated Use getEditUrl()
 	 */
 	public function edit_url() {
-		return self::getEditUrl($this->getWpPostId());
+		return self::getEditUrl( $this->getWpPostId() );
 	}
 
 	/**
@@ -678,7 +703,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		// get the storage values
 		$storage = $this->getStorage();
 		//$storageData          = $storage->get_storage();
-		$storage_post     = $storage->get( $this->getObjectKey(), false );
+		$storage_post = $storage->get( $this->getObjectKey(), false );
 
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
@@ -697,12 +722,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 				$this->setCompiledStyles( $storage_post['compiled_styles'] );
 			}
 
+			$proVersion = defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null;
 			$data_needs_compile = isset( $storage_post['needs_compile'] ) ? $storage_post['needs_compile'] : true;
 			$this->set_editor_data( $storage_post['editor_data'] );
 			$this->set_needs_compile( metadata_exists( 'post', $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY ) ? (bool) get_post_meta( $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY, true ) : $data_needs_compile );
 			$this->set_editor_version( isset( $storage_post['editor_version'] ) ? $storage_post['editor_version'] : BRIZY_EDITOR_VERSION );
 			$this->set_compiler_version( isset( $storage_post['compiler_version'] ) ? $storage_post['compiler_version'] : BRIZY_EDITOR_VERSION );
 			$this->set_plugin_version( isset( $storage_post['plugin_version'] ) ? $storage_post['plugin_version'] : BRIZY_VERSION );
+			$this->set_pro_plugin_version( isset( $storage_post['pro_plugin_version'] ) ? $storage_post['pro_plugin_version'] : null );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
 		}
@@ -717,7 +744,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$autosave->set_template( $this->get_template() );
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );
-		$autosave->set_needs_compile(true);
+		$autosave->set_needs_compile( true );
 
 		return $autosave;
 	}
@@ -730,7 +757,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$postLabel   = $wp_post_types[ $postType ]->label;
 
 		// not sure iw we will have this case :D
-		if ( is_array($excludePostType) && in_array( $postType, $excludePostType ) ) {
+		if ( is_array( $excludePostType ) && in_array( $postType, $excludePostType ) ) {
 			return [];
 		}
 
@@ -758,13 +785,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 SQL;
 		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $postLabel, $postType, $offset, $limit ) );
 
-		foreach($posts as $i=>$p) {
-			$postTitle = apply_filters( 'the_title', $p->post_title );
+		foreach ( $posts as $i => $p ) {
+			$postTitle     = apply_filters( 'the_title', $p->post_title );
 			$p->post_title = $postTitle;
-			$p->title = $postTitle;
-			$p->uid = self::create_uid( $p->ID,$p->uid );
-			$p->ID = (int)$p->ID;
+			$p->title      = $postTitle;
+			$p->uid        = self::create_uid( $p->ID, $p->uid );
+			$p->ID         = (int) $p->ID;
 		}
+
 		return $posts;
 	}
 
