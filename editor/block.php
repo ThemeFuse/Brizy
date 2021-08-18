@@ -7,7 +7,7 @@
  */
 
 
-class Brizy_Editor_Block extends Brizy_Editor_Post {
+class Brizy_Editor_Block extends Brizy_Editor_Post implements Brizy_Editor_ZipableInterface{
 
 
 	use Brizy_Editor_AutoSaveAware, Brizy_Editor_Synchronizable;

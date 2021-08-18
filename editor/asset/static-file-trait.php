@@ -1,258 +1,270 @@
 <?php
 
-trait Brizy_Editor_Asset_StaticFileTrait {
+trait Brizy_Editor_Asset_StaticFileTrait
+{
 
-	public static function get_asset_content( $asset_source ) {
-		$http        = new WP_Http();
-		$wp_response = null;
-		if ( is_string( $asset_source ) ) {
-			$wp_response = $http->request( $asset_source, array( 'timeout' => 30 ) );
-		} else {
-			foreach ( $asset_source as $url ) {
-				$wp_response = $http->request( $url, array( 'timeout' => 30 ) );
+    public static function get_asset_content($asset_source)
+    {
+        $http = new WP_Http();
+        $wp_response = null;
+        if (is_string($asset_source)) {
+            $wp_response = $http->request($asset_source, array('timeout' => 30));
+        } else {
+            foreach ($asset_source as $url) {
+                $wp_response = $http->request($url, array('timeout' => 30));
 
-				if ( is_wp_error( $wp_response ) ) {
-					Brizy_Logger::instance()->error( 'Unable to get media content', array( 'exception' => $wp_response ) );
-					continue;
-				}
+                if (is_wp_error($wp_response)) {
+                    Brizy_Logger::instance()->error('Unable to get media content', array('exception' => $wp_response));
+                    continue;
+                }
 
-				break;
-			}
-		}
+                break;
+            }
+        }
 
-		$code = wp_remote_retrieve_response_code( $wp_response );
+        $code = wp_remote_retrieve_response_code($wp_response);
 
-		if ( is_wp_error( $wp_response ) || ! ( $code >= 200 && $code < 300 ) ) {
-			Brizy_Logger::instance()->error( 'Unable to get media content', array( 'exception' => $wp_response ) );
+        if (is_wp_error($wp_response) || !($code >= 200 && $code < 300)) {
+            Brizy_Logger::instance()->error('Unable to get media content', array('exception' => $wp_response));
 
-			return false;
-		}
+            return false;
+        }
 
-		$content = wp_remote_retrieve_body( $wp_response );
+        $content = wp_remote_retrieve_body($wp_response);
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * @param $asset_source
-	 * @param $asset_path
-	 *
-	 * @return bool
-	 */
-	protected function store_file( $asset_source, $asset_path ) {
+    /**
+     * @param $asset_source
+     * @param $asset_path
+     *
+     * @return bool
+     */
+    protected function store_file($asset_source, $asset_path)
+    {
 
-		if ( file_exists( $asset_path ) ) {
-			return true;
-		}
+        if (file_exists($asset_path)) {
+            return true;
+        }
 
-		try {
-			// check destination dir
-			$dir_path = dirname( $asset_path );
+        try {
+            // check destination dir
+            $dir_path = dirname($asset_path);
 
-			if ( ! file_exists( $dir_path ) ) {
-				if ( !file_exists( $dir_path ) && ! mkdir( $dir_path, 0755, true ) && ! is_dir( $dir_path ) ) {
-					throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $dir_path ) );
-				}
-			}
+            if (!file_exists($dir_path)) {
+                if (!file_exists($dir_path) && !mkdir($dir_path, 0755, true) && !is_dir($dir_path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir_path));
+                }
+            }
 
-			$content = self::get_asset_content( $asset_source );
+            $content = self::get_asset_content($asset_source);
 
-			if ( $content !== false ) {
-				file_put_contents( $asset_path, $content );
-			} else {
-				return false;
-			}
+            if ($content !== false) {
+                file_put_contents($asset_path, $content);
+            } else {
+                return false;
+            }
 
-		} catch ( Exception $e ) {
-			// clean up
-			if ( $asset_path ) {
-				@unlink( $asset_path );
-			}
+        } catch (Exception $e) {
+            // clean up
+            if ($asset_path) {
+                @unlink($asset_path);
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	protected function create_attachment( $madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null ) {
-		$filetype = wp_check_filetype( $absolute_asset_path );
+    protected function create_attachment($madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+    {
+        return self::createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id, $uid);
+    }
 
-		$upload_path = wp_upload_dir();
+    public static function createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+    {
+        $filetype = wp_check_filetype($absolute_asset_path);
 
-		$attachment = array(
-			'guid'           => $upload_path['baseurl'] . "/" . $relative_asset_path,
-			'post_mime_type' => $filetype['type'],
-			'post_title'     => basename( $absolute_asset_path ),
-			'post_content'   => '',
-			'post_status'    => 'inherit'
-		);
+        $upload_path = wp_upload_dir();
 
-		$attachment_id = wp_insert_attachment( $attachment, $relative_asset_path, $post_id );
+        $attachment = array(
+            'guid' => $upload_path['baseurl'] . "/" . $relative_asset_path,
+            'post_mime_type' => $filetype['type'],
+            'post_title' => basename($absolute_asset_path),
+            'post_content' => '',
+            'post_status' => 'inherit'
+        );
 
-		if ( is_wp_error( $attachment_id ) || $attachment_id === 0 ) {
-			return false;
-		}
+        $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
 
-		update_post_meta( $attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5( $attachment_id . time() ) );
+        if (is_wp_error($attachment_id) || $attachment_id === 0) {
+            return false;
+        }
 
-		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-			include_once ABSPATH . "/wp-admin/includes/image.php";
-		}
+        update_post_meta($attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5($attachment_id . time()));
 
-		$attach_data = wp_generate_attachment_metadata( $attachment_id, $absolute_asset_path );
-		wp_update_attachment_metadata( $attachment_id, $attach_data );
+        if (!function_exists('wp_generate_attachment_metadata')) {
+            include_once ABSPATH . "/wp-admin/includes/image.php";
+        }
 
-		return $attachment_id;
-	}
+        $attach_data = wp_generate_attachment_metadata($attachment_id, $absolute_asset_path);
+        wp_update_attachment_metadata($attachment_id, $attach_data);
 
-	/**
-	 * @param $attachmentId
-	 * @param $post_id
-	 * @param $madia_name
-	 *
-	 * @return bool
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function attach_to_post( $attachmentId, $post_id, $madia_name ) {
+        return $attachment_id;
+    }
 
-		if ( ! $post_id ) {
-			return false;
-		}
-		$bpost = Brizy_Editor_Post::get( $post_id );
+    /**
+     * @param $attachmentId
+     * @param $post_id
+     * @param $madia_name
+     *
+     * @return bool
+     * @throws Brizy_Editor_Exceptions_NotFound
+     */
+    public function attach_to_post($attachmentId, $post_id, $madia_name)
+    {
 
-		add_post_meta( $attachmentId, 'brizy_post_uid', $bpost->getUid() );
+        if (!$post_id) {
+            return false;
+        }
+        $bpost = Brizy_Editor_Post::get($post_id);
 
-		return $attachmentId;
-	}
+        add_post_meta($attachmentId, 'brizy_post_uid', $bpost->getUid());
 
-	/**
-	 * @param $filename
-	 * @param array $headers
-	 */
-	public function send_file( $filename, $headers = array() ) {
-		if ( file_exists( $filename ) ) {
+        return $attachmentId;
+    }
 
-			$defaultHeaders = array(
-				'Content-Type'  => $this->get_mime( $filename, 1 ),
-				'Cache-Control' => 'max-age=600'
-			);
+    /**
+     * @param $filename
+     * @param array $headers
+     */
+    public function send_file($filename, $headers = array())
+    {
+        if (file_exists($filename)) {
 
-			$content = file_get_contents( $filename );
+            $defaultHeaders = array(
+                'Content-Type' => $this->get_mime($filename, 1),
+                'Cache-Control' => 'max-age=600'
+            );
 
-			// send headers
-			$headers = array_merge( $defaultHeaders, $headers );
+            $content = file_get_contents($filename);
 
-			foreach ( $headers as $key => $val ) {
-				if ( is_array( $val ) ) {
-					$val = implode( ', ', $val );
-				}
+            // send headers
+            $headers = array_merge($defaultHeaders, $headers);
 
-				header( "{$key}: {$val}" );
-			}
-			// send file content
-			echo $content;
-			exit;
-		} else {
-			global $wp_query;
-			$wp_query->set_404();
+            foreach ($headers as $key => $val) {
+                if (is_array($val)) {
+                    $val = implode(', ', $val);
+                }
 
-			return;
-		}
+                header("{$key}: {$val}");
+            }
+            // send file content
+            echo $content;
+            exit;
+        } else {
+            global $wp_query;
+            $wp_query->set_404();
 
-	}
+            return;
+        }
 
-	/**
-	 * @param $filename
-	 * @param int $mode
-	 *
-	 * @return mixed|string
-	 */
-	protected function get_mime( $filename, $mode = 0 ) {
+    }
 
-		// mode 0 = full check
-		// mode 1 = extension check only
+    /**
+     * @param $filename
+     * @param int $mode
+     *
+     * @return mixed|string
+     */
+    protected function get_mime($filename, $mode = 0)
+    {
 
-		$mime_types = array(
+        // mode 0 = full check
+        // mode 1 = extension check only
 
-			'txt'  => 'text/plain',
-			'htm'  => 'text/html',
-			'html' => 'text/html',
-			'php'  => 'text/html',
-			'css'  => 'text/css',
-			'js'   => 'application/javascript',
-			'json' => 'application/json',
-			'xml'  => 'application/xml',
-			'swf'  => 'application/x-shockwave-flash',
-			'flv'  => 'video/x-flv',
+        $mime_types = array(
 
-			// images
-			'png'  => 'image/png',
-			'jpe'  => 'image/jpeg',
-			'jpeg' => 'image/jpeg',
-			'jpg'  => 'image/jpeg',
-			'gif'  => 'image/gif',
-			'bmp'  => 'image/bmp',
-			'ico'  => 'image/vnd.microsoft.icon',
-			'tiff' => 'image/tiff',
-			'tif'  => 'image/tiff',
-			'svg'  => 'image/svg+xml',
-			'svgz' => 'image/svg+xml',
-			'webp' => 'image/webp',
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
 
-			// archives
-			'zip'  => 'application/zip',
-			'rar'  => 'application/x-rar-compressed',
-			'exe'  => 'application/x-msdownload',
-			'msi'  => 'application/x-msdownload',
-			'cab'  => 'application/vnd.ms-cab-compressed',
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+            'webp' => 'image/webp',
 
-			// audio/video
-			'mp3'  => 'audio/mpeg',
-			'qt'   => 'video/quicktime',
-			'mov'  => 'video/quicktime',
+            // archives
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
 
-			// adobe
-			'pdf'  => 'application/pdf',
-			'psd'  => 'image/vnd.adobe.photoshop',
-			'ai'   => 'application/postscript',
-			'eps'  => 'application/postscript',
-			'ps'   => 'application/postscript',
+            // audio/video
+            'mp3' => 'audio/mpeg',
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
 
-			// ms office
-			'doc'  => 'application/msword',
-			'rtf'  => 'application/rtf',
-			'xls'  => 'application/vnd.ms-excel',
-			'ppt'  => 'application/vnd.ms-powerpoint',
-			'docx' => 'application/msword',
-			'xlsx' => 'application/vnd.ms-excel',
-			'pptx' => 'application/vnd.ms-powerpoint',
+            // adobe
+            'pdf' => 'application/pdf',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
+
+            // ms office
+            'doc' => 'application/msword',
+            'rtf' => 'application/rtf',
+            'xls' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'docx' => 'application/msword',
+            'xlsx' => 'application/vnd.ms-excel',
+            'pptx' => 'application/vnd.ms-powerpoint',
 
 
-			// open office
-			'odt'  => 'application/vnd.oasis.opendocument.text',
-			'ods'  => 'application/vnd.oasis.opendocument.spreadsheet',
-		);
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        );
 
-		$array = explode( '.', $filename );
-		$str   = end( $array );
-		$ext   = strtolower( $str );
+        $array = explode('.', $filename);
+        $str = end($array);
+        $ext = strtolower($str);
 
-		if ( function_exists( 'mime_content_type' ) && $mode == 0 ) {
-			$mimetype = mime_content_type( $filename );
+        if (function_exists('mime_content_type') && $mode == 0) {
+            $mimetype = mime_content_type($filename);
 
-			return $mimetype;
+            return $mimetype;
 
-		} elseif ( function_exists( 'finfo_open' ) && $mode == 0 ) {
-			$finfo    = finfo_open( FILEINFO_MIME );
-			$mimetype = finfo_file( $finfo, $filename );
-			finfo_close( $finfo );
+        } elseif (function_exists('finfo_open') && $mode == 0) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            $mimetype = finfo_file($finfo, $filename);
+            finfo_close($finfo);
 
-			return $mimetype;
-		} elseif ( array_key_exists( $ext, $mime_types ) ) {
-			return $mime_types[ $ext ];
-		} else {
-			return 'application/octet-stream';
-		}
-	}
+            return $mimetype;
+        } elseif (array_key_exists($ext, $mime_types)) {
+            return $mime_types[$ext];
+        } else {
+            return 'application/octet-stream';
+        }
+    }
 }
