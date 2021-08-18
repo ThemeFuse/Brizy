@@ -5,12 +5,9 @@ use BrizyMerge\Assets\Asset;
 use BrizyMerge\Assets\AssetGroup;
 
 class Brizy_Public_AssetEnqueueManager {
-	private static $posts = [];
-
-	private static $wpHooksAdded = false;
-
-	private $scripts = [];
-	private $styles = [];
+	private $posts    = [];
+	private $scripts  = [];
+	private $styles   = [];
 	private $enqueued = [];
 
 	/**
@@ -18,30 +15,26 @@ class Brizy_Public_AssetEnqueueManager {
 	 */
 	private $project;
 
-	/**
-	 * @var Brizy_Admin_Popups_Main
-	 */
-	private $popupMain;
+	public static function _init() {
+		static $instance;
 
-	/**
-	 * @param Brizy_Editor_Entity $post
-	 *
-	 * @throws Exception
-	 */
-	public function __construct( Brizy_Editor_Entity $post ) {
-		if ( ! isset( $this->posts[ $post->getWpPost()->ID ] ) ) {
-			self::$posts[ $post->getWpPost()->ID ] = $post;
+		if ( ! $instance ) {
+			$instance = new self();
 		}
 
-		if ( ! self::$wpHooksAdded ) {
-			$this->registerActions();
-			self::$wpHooksAdded = true;
-			$this->project      = Brizy_Editor_Project::get();
-			$this->popupMain    = Brizy_Admin_Popups_Main::_init();
-		}
+		return $instance;
 	}
 
-	public function registerActions() {
+	/**
+	 * @throws Exception
+	 */
+	private function __construct() {
+		$this->project = Brizy_Editor_Project::get();
+		$this->popupMain = Brizy_Admin_Popups_Main::_init();
+		$this->registerActions();
+	}
+
+	private function registerActions() {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 10002 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
@@ -51,11 +44,22 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_footer',          [ $this, 'insertBodyCodeAssets' ] );
 	}
 
+	/**
+	 * @param Brizy_Editor_Post $post
+	 */
+	public function enqueuePost( $post ) {
+		$id = $post->getWpPost()->ID;
+
+		if ( ! isset( $this->posts[ $id ] ) ) {
+			$this->posts[ $id ] = $post;
+		}
+	}
+
 	public function insertHeadCodeAssets() {
 
 		$assets = $this->getCodeAssetsAsString( $this->styles );
 
-		foreach ( self::$posts as $editorPost ) {
+		foreach ( $this->posts as $editorPost ) {
 			$assets .= $this->popupMain->getPopupsHtml( $this->project, $editorPost, 'head' );
 		}
 
@@ -115,7 +119,7 @@ class Brizy_Public_AssetEnqueueManager {
 	public function enqueueStyles() {
 		$assetGroups = [];
 
-		foreach ( self::$posts as $editorPost ) {
+		foreach ( $this->posts as $editorPost ) {
 			$styles = $editorPost->getCompiledStyles();
 
 			if ( ! empty( $styles['free'] ) ) {
@@ -139,7 +143,7 @@ class Brizy_Public_AssetEnqueueManager {
 	public function enqueueScripts() {
 		$assetGroups = [];
 
-		foreach ( self::$posts as $editorPost ) {
+		foreach ( $this->posts as $editorPost ) {
 			$scripts = $editorPost->getCompiledScripts();
 
 			if ( ! empty( $scripts['free'] ) ) {

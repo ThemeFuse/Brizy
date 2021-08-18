@@ -205,7 +205,7 @@ class Brizy_Public_Main
      */
     public function _action_enqueue_preview_assets()
     {
-	    new Brizy_Public_AssetEnqueueManager( $this->post );
+	    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $this->post );
 
         do_action('brizy_preview_enqueue_scripts');
     }
