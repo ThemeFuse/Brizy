@@ -27,12 +27,19 @@ class Brizy_Admin_Popups_Main {
 
 	public function initialize() {
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
-		add_action( 'brizy_pro_head_assets', [ $this, 'enqueueHeadAssets' ], 10, 2 );
-		add_action( 'brizy_pro_body_assets', [ $this, 'enqueueBodyAssets' ], 10, 2 );
+		add_action( 'brizy_popup_head_assets', [ $this, 'enqueueHeadAssets' ], 10, 2 );
+		add_action( 'brizy_popup_body_assets', [ $this, 'enqueueBodyAssets' ], 10, 2 );
+		add_action( 'brizy_popup_head_code_assets', [ $this, 'enqueueCodeHeadAssets' ], 10, 2 );
+		add_action( 'brizy_popup_body_code_assets', [ $this, 'enqueueCodeBodyAssets' ], 10, 2 );
+		add_action( 'brizy_popup_body_content', [ $this, 'appendPopupContent' ], 10, 2 );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
 		}
+	}
+
+	public function appendPopupContent($content,$post) {
+		return $content . $this->getPopupsHtml( null, $post, 'body' );
 	}
 
 	public function removePageAttributes() {
@@ -149,6 +156,14 @@ class Brizy_Admin_Popups_Main {
 		}
 
 		return $content;
+	}
+
+	public function enqueueCodeHeadAssets($content,$wpPost) {
+		return $content . $this->getPopupsHtml( Brizy_Editor_Project::get(), $wpPost, 'head' );
+	}
+
+	public function enqueueCodeBodyAssets($content,$wpPost) {
+		return $content . $this->getPopupsHtml( Brizy_Editor_Project::get(), $wpPost, 'body' );
 	}
 
 	public function enqueueHeadAssets( $assetGroups, Brizy_Editor_Post $editorPost ) {
