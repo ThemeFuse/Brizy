@@ -995,6 +995,8 @@ class Brizy_Editor_Editor_Editor
             'deleteSavedBlock' => $pref . Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
             'downloadBlock' => $pref . Brizy_Admin_Blocks_Api::DOWNLOAD_BLOCK,
             'uploadBlock' => $pref . Brizy_Admin_Blocks_Api::UPLOAD_BLOCK,
+            'downloadLayout' => $pref . Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUT,
+            'uploadLayout' => $pref . Brizy_Admin_Layouts_Api::UPLOAD_LAYOUT,
             'media' => $pref . Brizy_Editor_API::AJAX_MEDIA,
             'downloadMedia' => $pref . Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
             'getMediaUid' => $pref . Brizy_Editor_API::AJAX_MEDIA_METAKEY,
