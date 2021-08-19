@@ -21,11 +21,6 @@ class Brizy_Admin_Templates
     private static $template;
 
     /**
-     * @var Brizy_Public_AssetEnqueueManager
-     */
-    private $assetEnqueueManager;
-
-    /**
      * Brizy_Admin_Templates constructor.
      */
     protected function __construct()
@@ -476,8 +471,6 @@ class Brizy_Admin_Templates
 
                 remove_filter('the_content', 'wpautop');
 
-                $this->assetEnqueueManager = new Brizy_Public_AssetEnqueueManager(self::getTemplate());
-                $this->assetEnqueueManager->registerActions();
                 // insert the compiled head and content
                 add_filter('body_class', array($this, 'bodyClassFrontend'));
                 add_action('wp_head', array($this, 'insertTemplateHead'));
@@ -512,7 +505,9 @@ class Brizy_Admin_Templates
             wp_register_script('jquery-migrate', "/wp-includes/js/jquery/jquery-migrate.min.js");
             wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'));
         }
-      
+
+	    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( self::getTemplate() );
+
         do_action('brizy_preview_enqueue_scripts');
     }
 

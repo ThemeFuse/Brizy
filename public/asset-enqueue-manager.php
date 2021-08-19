@@ -60,7 +60,7 @@ class Brizy_Public_AssetEnqueueManager {
 		$assets = $this->getCodeAssetsAsString( $this->styles );
 
 		foreach ( $this->posts as $editorPost ) {
-			$assets .= $this->popupMain->getPopupsHtml( $this->project, $editorPost, 'head' );
+			$assets .= $this->popupMain->getPopupsHtml( $this->project, $editorPost->getWpPost(), 'head' );
 		}
 
 		if ( empty( $assets ) ) {
@@ -127,7 +127,6 @@ class Brizy_Public_AssetEnqueueManager {
 			}
 
 			$assetGroups = apply_filters( 'brizy_pro_head_assets', $assetGroups, $editorPost );
-			$assetGroups = array_merge( $assetGroups, $this->popupMain->getPopupsAssets( $this->project, $editorPost, 'head' ) );
 		}
 
 		$assetAggregator = new AssetAggregator( $assetGroups );
@@ -151,7 +150,6 @@ class Brizy_Public_AssetEnqueueManager {
 			}
 
 			$assetGroups = apply_filters( 'brizy_pro_body_assets', $assetGroups, $editorPost );
-			$assetGroups = array_merge( $assetGroups, $this->popupMain->getPopupsAssets( $this->project, $editorPost, 'body' ) );
 		}
 
 		$assetAggregator = new AssetAggregator( $assetGroups );

@@ -477,7 +477,7 @@ class Brizy_Public_Main
 
         // add popups and popup assets
         $popupMain = Brizy_Admin_Popups_Main::_init();
-        $content .= $popupMain->getPopupsHtml( $project, $this->post, 'body' );
+        $content .= $popupMain->getPopupsHtml( null, null, 'body' );
 
 	    return apply_filters(
             'brizy_content',

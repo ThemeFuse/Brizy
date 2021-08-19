@@ -27,6 +27,8 @@ class Brizy_Admin_Popups_Main {
 
 	public function initialize() {
 		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
+		add_action( 'brizy_pro_head_assets', [ $this, 'enqueueHeadAssets' ], 10, 2 );
+		add_action( 'brizy_pro_body_assets', [ $this, 'enqueueBodyAssets' ], 10, 2 );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
@@ -147,6 +149,21 @@ class Brizy_Admin_Popups_Main {
 		}
 
 		return $content;
+	}
+
+	public function enqueueHeadAssets( $assetGroups, Brizy_Editor_Post $editorPost ) {
+		if ( $editorPost->getWpPost()->post_type === self::CP_POPUP ) {
+			return $assetGroups;
+		}
+
+		return array_merge( $assetGroups, $this->getPopupsAssets( null, $editorPost->getWpPost(), 'head' ) );
+	}
+
+	public function enqueueBodyAssets( $assetGroups, Brizy_Editor_Post $editorPost ) {
+		if ( $editorPost->getWpPost()->post_type === self::CP_POPUP ) {
+			return $assetGroups;
+		}
+		return array_merge( $assetGroups, $this->getPopupsAssets( null, $editorPost->getWpPost(), 'body' ) );
 	}
 
 	/**
