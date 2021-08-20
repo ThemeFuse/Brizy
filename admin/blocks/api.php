@@ -22,8 +22,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	const DELETE_GLOBAL_BLOCK_ACTION = '-delete-global-block';
 	const DELETE_SAVED_BLOCK_ACTION = '-delete-saved-block';
 	const UPDATE_POSITIONS_ACTION = '-update-block-positions';
-	const DOWNLOAD_BLOCK = '-download-block';
-	const UPLOAD_BLOCK = '-upload-block';
+	const DOWNLOAD_BLOCKS = '-download-blocks';
+	const UPLOAD_BLOCKS = '-upload-blocks';
 
 	/**
 	 * @var Brizy_Admin_Rules_Manager
@@ -60,8 +60,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	protected function initializeApiActions() {
 		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
-		add_action( $pref . self::DOWNLOAD_BLOCK, array( $this, 'actionDownloadBlock' ) );
-		add_action( $pref . self::UPLOAD_BLOCK, array( $this, 'actionUploadBlock' ) );
+		add_action( $pref . self::DOWNLOAD_BLOCKS, array( $this, 'actionDownloadBlocks' ) );
+		add_action( $pref . self::UPLOAD_BLOCKS, array( $this, 'actionUploadBlocks' ) );
 		add_action( $pref . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
 		add_action( $pref . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( $pref . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
@@ -76,24 +76,55 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::UPDATE_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
 	}
 
-	public function actionDownloadBlock() {
+	public function actionDownloadBlocks() {
 		$this->verifyNonce( self::nonce );
 
 		if ( ! $this->param( 'uid' ) ) {
 			$this->error( 400, 'Invalid block uid param' );
 		}
-
 		try {
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
-			$blocks      = $bockManager->getEntities( [ 'include' => explode( ',', $this->param( 'uid' ) ) ] );
+			$uids        = [];
 
-			if ( count( $blocks ) == 0 ) {
-				$this->error( 404, 'There are no block to be archived' );
+			// this is not a very eficien solution if you have a big array of uids
+			$explode = explode( ',', $this->param( 'uid' ) );
+			$items   = array_map( function ( $auid ) use ( $uids, $bockManager ) {
+				list( $uid, $isPro ) = explode( ':', $auid );
+				$uids[] = $uid;
+				$item   = new Brizy_Editor_Zip_ArchiveItem( $uid, $isPro );
+
+				if ( $post = $bockManager->getEntity( $uid ) ) {
+					$item->setPost( $post );
+
+					return $item;
+				}
+
+				return null;
+			},$explode );
+
+			$items = array_filter( $items );
+
+//			$blocks = $bockManager->getEntities( [
+//				'meta_query' => array(
+//					// meta query takes an array of arrays, watch out for this!
+//					array(
+//						'key'     => 'brizy_post_uid',
+//						'value'   => explode( ',', $uids ),
+//						'compare' => 'IN',
+//					),
+//				),
+//			] );
+
+			if ( count( $items ) == 0 ) {
+				$this->error( 404, __( 'There are no block to be archived' ) );
 			}
 
 			$fontManager = new Brizy_Admin_Fonts_Manager();
-			$zip         = new Brizy_Editor_Zip_BlockArchiver( Brizy_Editor_Project::get(), $fontManager, BRIZY_EDITOR_VERSION );
-			$zipPath     = $zip->createZip( $blocks );
+			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
+				$fontManager,
+				BRIZY_EDITOR_VERSION );
+			$zipPath     = "Blocks-" . date( DATE_ATOM ) . ".zip";
+			$zipPath     = $zip->createZip( $items, $zipPath );
 
 			header( "Pragma: public" );
 			header( "Expires: 0" );
@@ -106,18 +137,20 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			echo file_get_contents( $zipPath );
 			exit;
 		} catch ( Exception $exception ) {
-			$this->error( 400, $exception->getMessage() );
+			$this->error( 400, __( $exception->getMessage(), 'brizy' ) );
 		}
 	}
 
-	public function actionUploadBlock() {
+	public function actionUploadBlocks() {
 		try {
 
 			$this->verifyNonce( self::nonce );
 
 			if ( ! isset( $_FILES['files'] ) ) {
-				$this->error( 400, 'Invalid block file' );
+				$this->error( 400, __( 'Invalid block file' ) );
 			}
+
+			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 
 			if ( ! function_exists( 'wp_handle_upload' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/file.php' );
@@ -131,16 +164,27 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				'size'     => $_FILES['files']['size'][0],
 			];
 			$uploadedFile = wp_handle_upload( $file, [ 'test_form' => false ] );
-			if ( isset( $uploadedFile['file'] ) ) {
-				$zip   = new Brizy_Editor_Zip_BlockArchiver( Brizy_Editor_Project::get(), new Brizy_Admin_Fonts_Manager(), BRIZY_EDITOR_VERSION );
-				$block = $zip->createFromZip( $uploadedFile['file'] );
-				unset( $uploadedFile['file'] );
 
-				$this->success( $block->createResponse() );
+			if ( isset( $uploadedFile['file'] ) ) {
+				$zip = new Brizy_Editor_Zip_BlockArchiver( Brizy_Editor_Project::get(),
+					new Brizy_Admin_Fonts_Manager(),
+					BRIZY_EDITOR_VERSION );
+				list( $instances, $errors ) = $zip->createFromZip( $uploadedFile['file'] );
+				unset( $uploadedFile['file'] );
+				$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
+				$this->success( [
+					'success' => $bockManager->createResponseForEntities( $instances, $fields ),
+					'errors'  => $errors
+				] );
+			} else {
+				if ( isset( $uploadedFile['error'] ) ) {
+					$this->error( 400, $uploadedFile['error'] );
+				} else {
+					$this->error( 400, __( "Invalid zip file provided" ) );
+				}
 			}
 
 		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->critical( $exception->getMessage(), [ $exception ] );
 			$this->error( 400, $exception->getMessage() );
 		}
 	}
@@ -346,7 +390,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					// rules
 					$rulesData = stripslashes( $this->param( 'rules' )[ $i ] );
 					if ( $rulesData ) {
-						$rules = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
+						$rules = $this->ruleManager->createRulesFromJson( $rulesData,
+							Brizy_Admin_Blocks_Main::CP_GLOBAL );
 						$this->ruleManager->setRules( $block->getWpPostId(), $rules );
 					}
 
@@ -397,7 +442,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
 			$blocks      = $bockManager->getEntities( [] );
-			$blocks      = apply_filters( 'brizy_get_saved_blocks', $bockManager->createResponseForEntities( $blocks, $fields ), $fields, $bockManager );
+			$blocks      = apply_filters( 'brizy_get_saved_blocks',
+				$bockManager->createResponseForEntities( $blocks, $fields ),
+				$fields,
+				$bockManager );
 			$this->success( $blocks );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -622,7 +670,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								meta_value='%s'   
 								WHERE p.post_type IN ('%s')
 								ORDER BY p.ID DESC
-								LIMIT 1", array( $uid, $postType ) );
+								LIMIT 1",
+			array( $uid, $postType ) );
 
 		return $wpdb->get_var( $prepare );
 	}
@@ -640,7 +689,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 								JOIN {$wpdb->postmeta} pm  ON pm.post_id=p.ID and meta_key='brizy_post_uid' and meta_value='%s'
 								WHERE p.post_type <> 'attachment'   
 								ORDER BY p.ID DESC
-								LIMIT 1", array( $uid, ) );
+								LIMIT 1",
+			array( $uid, ) );
 
 		return $wpdb->get_var( $prepare );
 	}
@@ -676,7 +726,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			'post_title'  => $name,
 			'post_name'   => $name,
 			'post_status' => $status,
-			'post_type'   => $type
+			'post_type'   => $type,
 		) );
 
 		if ( $post ) {

@@ -1,11 +1,14 @@
 <?php
 
 interface Brizy_Editor_Zip_ArchiverInterface {
-	public function createZip( $posts, $outZipPath = null );
+
+	public function createZip( $posts, $fileName );
 
 	public function createFromZip( $zipPath );
 
 	public function getEditorVersion();
 
-	public function supportBlockVersion($version);
+	public function isVersionSupported($version);
+
+	public function getScreenshotType($archiveType);
 }
