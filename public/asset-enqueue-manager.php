@@ -29,8 +29,7 @@ class Brizy_Public_AssetEnqueueManager {
 	 * @throws Exception
 	 */
 	private function __construct() {
-		$this->project   = Brizy_Editor_Project::get();
-		$this->popupMain = Brizy_Admin_Popups_Main::_init();
+		$this->project = Brizy_Editor_Project::get();
 		$this->registerActions();
 	}
 
@@ -38,10 +37,10 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 10002 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
-		add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
-		add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
-		add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
-		add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
+		add_filter( 'script_loader_tag',  [ $this, 'addScriptAttributes' ], 10, 2 );
+		add_filter( 'style_loader_tag',   [ $this, 'addStyleAttributes' ], 10, 2 );
+		add_action( 'wp_head',            [ $this, 'insertHeadCodeAssets' ] );
+		add_action( 'wp_footer',          [ $this, 'insertBodyCodeAssets' ] );
 	}
 
 	/**
@@ -58,10 +57,6 @@ class Brizy_Public_AssetEnqueueManager {
 	public function insertHeadCodeAssets() {
 
 		$assetsContent = $this->getCodeAssetsAsString( $this->styles );
-
-		foreach ( $this->posts as $editorPost ) {
-			$assetsContent = apply_filters( 'brizy_popup_head_code_assets', $assetsContent, $editorPost->getWpPost() );
-		}
 
 		if ( empty( $assetsContent ) ) {
 			return;
@@ -127,7 +122,6 @@ class Brizy_Public_AssetEnqueueManager {
 			}
 
 			$assetGroups = apply_filters( 'brizy_pro_head_assets', $assetGroups, $editorPost );
-			$assetGroups = apply_filters( 'brizy_popop_head_assets', $assetGroups, $editorPost );
 		}
 
 		$assetAggregator = new AssetAggregator( $assetGroups );
@@ -151,7 +145,6 @@ class Brizy_Public_AssetEnqueueManager {
 			}
 
 			$assetGroups = apply_filters( 'brizy_pro_body_assets', $assetGroups, $editorPost );
-			$assetGroups = apply_filters( 'brizy_popup_body_assets', $assetGroups, $editorPost );
 		}
 
 		$assetAggregator = new AssetAggregator( $assetGroups );

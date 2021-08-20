@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 1/11/19
- * Time: 10:59 AM
- */
-
 
 class Brizy_Admin_Popups_Main {
 
 	const CP_POPUP = 'brizy-popup';
 
+	private $popups = [];
 	/**
 	 * @return Brizy_Admin_Popups_Main
 	 */
@@ -26,20 +20,43 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
-		add_action( 'brizy_popup_head_assets', [ $this, 'enqueueHeadAssets' ], 10, 2 );
-		add_action( 'brizy_popup_body_assets', [ $this, 'enqueueBodyAssets' ], 10, 2 );
-		add_action( 'brizy_popup_head_code_assets', [ $this, 'enqueueCodeHeadAssets' ], 10, 2 );
-		add_action( 'brizy_popup_body_code_assets', [ $this, 'enqueueCodeBodyAssets' ], 10, 2 );
-		add_action( 'brizy_popup_body_content', [ $this, 'appendPopupContent' ], 10, 2 );
+		add_action( 'brizy_after_enabled_for_post', [ $this, 'afterBrizyEnabledForPopup' ] );
 
 		if ( is_admin() ) {
-			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
+			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
+		} else {
+			$this->popups = $this->getMatchingBrizyPopups();
+
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
+			add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
+			add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
 		}
 	}
 
-	public function appendPopupContent($content,$post) {
-		return $content . $this->getPopupsHtml( null, $post, 'body' );
+	public function enqueuePopupScripts() {
+		foreach ( $this->getMatchingBrizyPopups() as $popup ) {
+			Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $popup );
+		}
+	}
+
+	public function wpHeadAppentPopupHtml() {
+		echo apply_filters(
+			'brizy_content',
+			$this->getPopupsHtml( null, null, 'head' ),
+			Brizy_Editor_Project::get(),
+			null,
+			'head'
+		);
+	}
+
+	public function wpFooterAppentPopupHtml() {
+		echo apply_filters(
+			'brizy_content',
+			$this->getPopupsHtml( null, null, 'body' ),
+			Brizy_Editor_Project::get(),
+			null,
+			'footer'
+		);
 	}
 
 	public function removePageAttributes() {
@@ -158,79 +175,6 @@ class Brizy_Admin_Popups_Main {
 		return $content;
 	}
 
-	public function enqueueCodeHeadAssets($content,$wpPost) {
-		return $content . $this->getPopupsHtml( Brizy_Editor_Project::get(), $wpPost, 'head' );
-	}
-
-	public function enqueueCodeBodyAssets($content,$wpPost) {
-		return $content . $this->getPopupsHtml( Brizy_Editor_Project::get(), $wpPost, 'body' );
-	}
-
-	public function enqueueHeadAssets( $assetGroups, Brizy_Editor_Post $editorPost ) {
-		if ( $editorPost->getWpPost()->post_type === self::CP_POPUP ) {
-			return $assetGroups;
-		}
-
-		return array_merge( $assetGroups, $this->getPopupsAssets( null, $editorPost->getWpPost(), 'head' ) );
-	}
-
-	public function enqueueBodyAssets( $assetGroups, Brizy_Editor_Post $editorPost ) {
-		if ( $editorPost->getWpPost()->post_type === self::CP_POPUP ) {
-			return $assetGroups;
-		}
-		return array_merge( $assetGroups, $this->getPopupsAssets( null, $editorPost->getWpPost(), 'body' ) );
-	}
-
-	/**
-	 * @param $content
-	 * @param $project
-	 * @param $wpPost
-	 * @param string $context
-	 *
-	 * @return string|string[]|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-	 */
-	public function getPopupsAssets( $project, $wpPost, $context ) {
-		$assetGroups = [];
-
-		$popups = $this->getMatchingBrizyPopups( $wpPost );
-
-		foreach ( $popups as $brizyPopup ) {
-			/**
-			 * @var Brizy_Editor_Post $brizyPopup ;
-			 */
-
-			if ( $brizyPopup->get_needs_compile() || ! $brizyPopup->isCompiledWithCurrentVersion() ) {
-				$brizyPopup->compile_page();
-				$brizyPopup->saveStorage();
-				$brizyPopup->savePost();
-			}
-
-			if ( $context == 'head' ) {
-				$styles = $brizyPopup->getCompiledStyles();
-
-				if ( ! empty( $styles['free'] ) ) {
-					$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData( $styles['free'] );
-				}
-				$assetGroups = apply_filters( 'brizy_pro_head_assets', $assetGroups, $brizyPopup );
-
-			}
-
-			if ( $context == 'body' ) {
-
-				$assets = $brizyPopup->getCompiledScripts();
-				if ( ! empty( $assets['free'] ) ) {
-					$assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData( $assets['free'] );
-				}
-				$assetGroups = apply_filters( 'brizy_pro_body_assets', $assetGroups, $brizyPopup );
-
-			}
-		}
-
-		return $assetGroups;
-	}
-
 	private function insertHead( $target, $headContent ) {
 
 		if ( empty( $headContent ) ) {
@@ -249,33 +193,12 @@ class Brizy_Admin_Popups_Main {
 		return $target . "\n\n<!-- POPUP BODY -->\n{$bodyContent}\n<!-- POPUP BODY END-->\n\n";
 	}
 
-	private function insertInDocumentHead( $target, $headContent ) {
-
-		$target = preg_replace(
-			"/(<head[^>]*>)/ium",
-			"$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n",
-			$target
-		);
-
-		return $target;
-	}
-
-	private function insertInDocumentBody( $target, $bodyContent ) {
-
-		$target = preg_replace(
-			"/(<body[^>]*>)/ium",
-			"$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n",
-			$target
-		);
-
-		return $target;
-	}
-
 	/**
+	 * @param null $wpPost
+	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function getMatchingBrizyPopups( $wpPost ) {
+	public function getMatchingBrizyPopups( $wpPost = null ) {
 		if ( $wpPost ) {
 			$applyFor       = Brizy_Admin_Rule::POSTS;
 			$entityType     = $wpPost->post_type;
@@ -293,7 +216,6 @@ class Brizy_Admin_Popups_Main {
 	 * @param $entityValues
 	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	private function findMatchingPopups( $applyFor, $entityType, $entityValues ) {
 

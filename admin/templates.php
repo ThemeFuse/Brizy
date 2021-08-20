@@ -583,10 +583,6 @@ class Brizy_Admin_Templates
         $compiled_page = self::getTemplate()->get_compiled_page();
         $content = $compiled_page->get_body();
 
-        // add popups and popup assets
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $content .= $popupMain->getPopupsHtml(null, null, 'body');
-
         return apply_filters(
             'brizy_content',
             $content,

@@ -475,9 +475,6 @@ class Brizy_Public_Main
             $content = $compiled_page->get_body();
         }
 
-        // add popups and popup assets
-        $content = apply_filters('brizy_popup_body_content',$content,$this->post);
-
 	    return apply_filters(
             'brizy_content',
             $content,
