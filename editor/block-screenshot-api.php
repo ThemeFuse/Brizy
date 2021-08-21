@@ -90,19 +90,12 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 			), 400 );
 		}
 
-		file_put_contents( $tmpFilePath = tempnam( get_temp_dir(), 'screen' ), $imageContent );
-		$mime = mime_content_type( $tmpFilePath );
-
-		if ( $mime !== 'image/jpeg' ) {
-			wp_send_json_error( array(
-				'success' => false,
-				'message' => esc_html__( 'Invalid image content', 'brizy' )
-			), 400 );
-		}
-		unlink( $tmpFilePath );
-
 		$manager = new Brizy_Editor_Screenshot_Manager( new Brizy_Editor_UrlBuilder( $brizyPost ) );
-		$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
+		try {
+			$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
+		} catch (Exception $e) {
+			$this->error(400,$e->getMessage());
+		}
 
 		if ( $result ) {
 			$screenPath = $manager->getScreenshot( $screenId, $brizyPost );
