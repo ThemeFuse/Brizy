@@ -4,7 +4,6 @@ class Brizy_Admin_Popups_Main {
 
 	const CP_POPUP = 'brizy-popup';
 
-	private $popups = [];
 	/**
 	 * @return Brizy_Admin_Popups_Main
 	 */
@@ -25,8 +24,6 @@ class Brizy_Admin_Popups_Main {
 		if ( is_admin() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		} else {
-			$this->popups = $this->getMatchingBrizyPopups();
-
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
 			add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
 			add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
