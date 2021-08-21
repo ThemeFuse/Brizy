@@ -58,15 +58,9 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		session_write_close();
 
 		if ( empty( $_REQUEST['block_type'] ) || ! in_array( $_REQUEST['block_type'], $this->blockTypes ) || empty( $_REQUEST['ibsf'] ) ) {
-			wp_send_json_error( array(
-				'success' => false,
-				'message' => esc_html__( 'Bad request', 'brizy' )
-			), 400 );
+			$this->error( 400, __( 'Bad request', 'brizy' ) );
 		}
 
-		// obtain the image content from POST
-		$fileName     = null;
-		$screenId     = null;
 		$brizyPost    = isset( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 		$base64       = $_REQUEST['ibsf'];
 		$imageContent = base64_decode( $base64 );
@@ -74,7 +68,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		if ( isset( $_REQUEST['id'] ) ) {
 
 			if ( ! preg_match( "/.[-a-zA-Z0-9]+/", $_REQUEST['id'] ) ) {
-				$this->error( __( 'Invalid uid string', 'brizy' ), 400 );
+				$this->error( 400, __( 'Invalid uid string', 'brizy' ) );
 			}
 
 			$screenId = $_REQUEST['id'];
@@ -84,17 +78,15 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		}
 
 		if ( false === $imageContent ) {
-			wp_send_json_error( array(
-				'success' => false,
-				'message' => esc_html__( 'Invalid image content', 'brizy' )
-			), 400 );
+			$this->error( 400, __( 'Invalid image content', 'brizy' ) );
 		}
 
 		$manager = new Brizy_Editor_Screenshot_Manager( new Brizy_Editor_UrlBuilder( $brizyPost ) );
+
 		try {
-			$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
-		} catch (Exception $e) {
-			$this->error(400,$e->getMessage());
+			$result = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
+		} catch ( Exception $e ) {
+			$this->error( 400, $e->getMessage() );
 		}
 
 		if ( $result ) {

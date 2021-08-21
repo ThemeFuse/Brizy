@@ -5,8 +5,6 @@
  */
 class Brizy_Editor {
 
-	private static $is_allowed_for_current_user = null;
-
 	private static $settings_key = 'post-types';
 
 	private static $instance;
@@ -30,7 +28,6 @@ class Brizy_Editor {
 
 		return self::$instance;
 	}
-
 
 	/**
 	 * Return the prefix
@@ -144,7 +141,7 @@ class Brizy_Editor {
 		Brizy_Admin_Membership_Membership::_init();
         Brizy_Admin_Stories_Main::_init();
 
-		if ( Brizy_Editor::is_user_allowed() ) {
+		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
             Brizy_Admin_Json_Main::_init();
 			Brizy_Admin_OptimizeImages::_init();
@@ -327,7 +324,7 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
-			if ( Brizy_Editor::is_user_allowed() ) {
+			if ( Brizy_Editor_User::is_user_allowed() ) {
 				new Brizy_Editor_RestExtend();
 				new Brizy_Editor_API( $post );
 				new Brizy_Editor_BlockScreenshotApi( $post );
@@ -432,47 +429,6 @@ class Brizy_Editor {
 
 	static public function get_slug() {
 		return apply_filters( 'brizy-slug', 'brizy' );
-	}
-
-	public static function is_administrator() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		return is_admin() || is_super_admin();
-	}
-
-	public static function is_subscriber() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		$user = wp_get_current_user();
-
-		return in_array( 'subscriber', (array) $user->roles );
-	}
-
-	public static function is_user_allowed() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		if ( self::is_administrator() ) {
-			return true;
-		}
-
-		if ( is_null( self::$is_allowed_for_current_user ) ) {
-			self::$is_allowed_for_current_user =
-				(
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
-				);
-		}
-
-		return self::$is_allowed_for_current_user;
 	}
 
 	public function get_path( $rel = '/' ) {

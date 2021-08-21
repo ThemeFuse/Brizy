@@ -27,7 +27,7 @@ class Brizy_Admin_FormEntries {
 	 */
 	public function __construct() {
 
-		if ( is_admin() && Brizy_Editor::is_administrator() ) {
+		if ( is_admin() && Brizy_Editor_User::is_administrator() ) {
 			add_action( 'admin_menu', array( $this, 'addSubmenuPage' ), 11 );
 			//add_action( 'admin_init', array( $this, 'handleEnableButton' ) );
 			//add_action( 'admin_footer', array( $this, 'addOnOffOption' ) );
