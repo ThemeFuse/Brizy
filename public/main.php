@@ -302,7 +302,6 @@ class Brizy_Public_Main
     public function body_class_frontend($classes)
     {
         $classes[] = 'brz';
-        $classes[] = (function_exists('wp_is_mobile') && wp_is_mobile()) ? 'brz-is-mobile' : '';
 
         return $classes;
     }

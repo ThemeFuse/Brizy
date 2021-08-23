@@ -513,7 +513,6 @@ class Brizy_Admin_Templates
 
     public function bodyClassFrontend($classes)
     {
-
         $classes[] = 'brz';
 
         return $classes;

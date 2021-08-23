@@ -24,22 +24,38 @@ class Brizy_Admin_Popups_Main {
 		if ( is_admin() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		} else {
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
-			add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
-			add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
+			if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+				add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
+				add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
+				add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
+				add_filter( 'body_class',         [ $this, 'bodyClassFrontend' ], 11 );
+			}
 		}
 	}
 
 	public function enqueuePopupScripts() {
 		foreach ( $this->getMatchingBrizyPopups() as $popup ) {
+
+			if ( $popup->get_needs_compile() ) {
+				$popup->compile_page();
+				$popup->saveStorage();
+				$popup->savePost();
+			}
+
 			Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $popup );
 		}
 	}
 
 	public function wpHeadAppentPopupHtml() {
+		$headHtml = $this->getPopupsHtml( null, null, 'head' );
+
+		if ( empty( $headHtml ) ) {
+			return;
+		}
+
 		echo apply_filters(
 			'brizy_content',
-			$this->getPopupsHtml( null, null, 'head' ),
+			$headHtml,
 			Brizy_Editor_Project::get(),
 			null,
 			'head'
@@ -47,13 +63,30 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function wpFooterAppentPopupHtml() {
+
+		$bodyHtml = $this->getPopupsHtml( null, null, 'body' );
+
+		if ( empty( $bodyHtml ) ) {
+			return;
+		}
+
 		echo apply_filters(
 			'brizy_content',
-			$this->getPopupsHtml( null, null, 'body' ),
+			$bodyHtml,
 			Brizy_Editor_Project::get(),
 			null,
 			'footer'
 		);
+	}
+
+	public function bodyClassFrontend( $classes ) {
+		if ( ! $this->getMatchingBrizyPopups() || false !== array_search( 'brz', $classes ) ) {
+			return $classes;
+		}
+
+		$classes[] = 'brz';
+
+		return $classes;
 	}
 
 	public function removePageAttributes() {
