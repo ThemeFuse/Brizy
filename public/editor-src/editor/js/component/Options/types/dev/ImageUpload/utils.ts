@@ -9,13 +9,14 @@ import { GetModel } from "visual/component/Options/Type";
 import { PositionPatch, ImageDataPatch, Value } from "./Types";
 import { apply } from "visual/utils/model";
 
-export const DEFAULT_VALUE = {
+export const DEFAULT_VALUE: Value = {
   src: "",
   extension: "",
   width: 0,
   height: 0,
   x: 50,
-  y: 50
+  y: 50,
+  sizeType: "custom"
 };
 
 export const getModel: GetModel<Value> = get => ({
@@ -24,7 +25,8 @@ export const getModel: GetModel<Value> = get => ({
   width: Math.toNonNegative(get("imageWidth")),
   height: Math.toNonNegative(get("imageHeight")),
   x: Math.toNonNegative(get("positionX")),
-  y: Math.toNonNegative(get("positionY"))
+  y: Math.toNonNegative(get("positionY")),
+  sizeType: String.toString(get("sizeType")) ?? DEFAULT_VALUE.sizeType
 });
 
 export const getElementModel: Option.GetElementModel<Value> = (v, get) => ({
@@ -33,7 +35,8 @@ export const getElementModel: Option.GetElementModel<Value> = (v, get) => ({
   [get("imageWidth")]: v.width,
   [get("imageHeight")]: v.height,
   [get("positionX")]: v.x,
-  [get("positionY")]: v.y
+  [get("positionY")]: v.y,
+  [get("sizeType")]: v.sizeType
 });
 
 export const patchImageData = (

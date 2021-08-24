@@ -3,7 +3,7 @@ import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";
 import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
-import { IS_CMS, IS_PRO } from "visual/utils/env";
+import { IS_CLOUD, IS_PRO } from "visual/utils/env";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
@@ -29,7 +29,7 @@ export default function Rules({
     async function fetchData() {
       let rules = await asyncGetValue();
 
-      if (IS_CMS && !rules) {
+      if (IS_CLOUD && !rules) {
         rules = [
           {
             type: 1,
@@ -57,7 +57,7 @@ export default function Rules({
         entityValues: []
       };
 
-      if (IS_CMS) {
+      if (IS_CLOUD) {
         newRule.entityType = pageSelector(
           getStore().getState()
         ).collectionType.id;

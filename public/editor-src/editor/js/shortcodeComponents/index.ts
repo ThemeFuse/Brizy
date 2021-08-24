@@ -1,4 +1,4 @@
-import { IS_SINGLE, IS_CMS, IS_ARCHIVE, IS_PROTECTED } from "visual/utils/env";
+import { IS_SINGLE, IS_ARCHIVE, IS_PROTECTED } from "visual/utils/env";
 import { IS_STORY } from "visual/utils/models";
 import { Shortcodes } from "visual/types";
 
@@ -57,7 +57,7 @@ import Lottie from "./pro/Lottie";
 import Table from "./pro/Table";
 import StoryStarRating from "./pro/story/StoryStarRating";
 
-const base = [
+export const base = [
   { component: Text, pro: false },
   { component: Button, pro: false },
   { component: Icon, pro: false },
@@ -88,7 +88,7 @@ const base = [
   { component: Lottie, pro: true }
 ];
 
-const baseCms = [...base, { component: Posts, pro: false }];
+const baseWithPosts = [...base, { component: Posts, pro: false }];
 
 const systemPages = [{ component: ProtectedPage, pro: false }];
 
@@ -106,7 +106,6 @@ const baseStory = [
   { component: StoryCounter, pro: false },
   { component: StoryShape, pro: false },
   { component: StoryForm2, pro: false },
-
   { component: StoryStarRating, pro: true }
 ];
 
@@ -137,37 +136,35 @@ const config = ((): Shortcodes => {
     };
   }
 
-  if (IS_CMS) {
-    if (IS_PROTECTED) {
-      return {
-        systemPages,
-        base: baseCms,
-        grid,
-        social
-      };
-    }
+  if (IS_PROTECTED) {
+    return {
+      systemPages,
+      base: baseWithPosts,
+      grid,
+      social
+    };
+  }
 
-    if (IS_SINGLE) {
-      return {
-        dynamic: cmsSingle,
-        base,
-        grid,
-        social
-      };
-    }
+  if (IS_SINGLE) {
+    return {
+      dynamic: cmsSingle,
+      base,
+      grid,
+      social
+    };
+  }
 
-    if (IS_ARCHIVE) {
-      return {
-        archive: cmsArchive,
-        base,
-        grid,
-        social
-      };
-    }
+  if (IS_ARCHIVE) {
+    return {
+      archive: cmsArchive,
+      base,
+      grid,
+      social
+    };
   }
 
   return {
-    base: IS_CMS ? baseCms : base,
+    base: baseWithPosts,
     grid,
     social
   };

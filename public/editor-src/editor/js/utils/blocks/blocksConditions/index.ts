@@ -2,7 +2,7 @@
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";
-import { IS_CMS } from "visual/utils/env";
+import { IS_CLOUD } from "visual/utils/env";
 import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
 
 import { IS_WP } from "visual/utils/env";
@@ -298,7 +298,7 @@ export const getCurrentRule = (
   let group: Rule["group"] = PAGES_GROUP_ID;
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  let type: Rule["type"] = IS_CMS ? page.collectionType.id : "page";
+  let type: Rule["type"] = IS_CLOUD ? page.collectionType.id : "page";
 
   if (IS_WP) {
     const { ruleMatches }: ConfigType["wp"] = Config.get("wp");

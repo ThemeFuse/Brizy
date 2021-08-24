@@ -2,13 +2,15 @@
 @import "../../mixins/input";
 
 .brz-ed-control__colorPickerSelect {
+  position: relative;
+
   &--select {
     @include small-select;
 
     position: absolute;
     z-index: 2;
-    margin-top: 6px;
-    margin-left: 4px;
+    top: 6px;
+    left: 4px;
     width: auto;
 
     .brz-ed-control__multiSelect {

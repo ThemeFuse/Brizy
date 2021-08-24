@@ -566,7 +566,9 @@ export const pageDataNoRefsSelector = createSelector(
         if (model.type === "GlobalBlock") {
           const { _id } = model.value;
 
-          return globalBlocks[_id]?.data;
+          if (globalBlocks[_id] && globalBlocks[_id].data) {
+            return globalBlocks[_id].data;
+          }
         }
 
         return model;

@@ -64,7 +64,7 @@ export type ActionMakePopupToGlobalBlock = {
 
 export type ActionMakeGlobalBlockToPopup = {
   type: "MAKE_GLOBAL_BLOCK_TO_POPUP";
-  payload: { block: Block; fromBlockId: string };
+  payload: { block: Block; fromBlockId: string; parentId: string };
 };
 
 export type ActionUpdateGlobalBlock = {
@@ -324,15 +324,18 @@ export function makePopupToGlobalBlock(
 
 export function makeGlobalBlockToPopup({
   fromBlockId,
+  parentId,
   block
 }: {
   fromBlockId: string;
   block: Block;
+  parentId: string;
 }): ActionMakeGlobalBlockToPopup {
   return {
     type: "MAKE_GLOBAL_BLOCK_TO_POPUP",
     payload: {
       fromBlockId,
+      parentId,
       block
     }
   };

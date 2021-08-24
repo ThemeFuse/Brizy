@@ -1,16 +1,12 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
-import { IS_CMS } from "visual/utils/env";
 import { Choices, OptGroup } from "./types/Choices";
 
 /**
  * Check if population feature is enabled
  */
-export const isEnabled = (): boolean => TARGET === "WP" || IS_CMS;
 
-export const bindPopulationEnabled = (
-  option: ToolbarItemType
-): ToolbarItemType => {
+export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
   const {
     population,
     label,
@@ -46,14 +42,6 @@ export const bindPopulationEnabled = (
     options: [o]
   };
 };
-
-export const bindPopulationDisabled = (
-  option: ToolbarItemType
-): ToolbarItemType => option;
-
-export const bindPopulation = isEnabled()
-  ? bindPopulationEnabled
-  : bindPopulationDisabled;
 
 export const isOptgroup = <T extends string | number>(
   choice: Choices<T> | OptGroup<T>

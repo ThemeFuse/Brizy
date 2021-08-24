@@ -1,10 +1,10 @@
 import { property } from "underscore";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { bindPopulationEnabled, isOptgroup } from "./utils";
+import { bindPopulation, isOptgroup } from "./utils";
 import { PopulationMethod } from "./types/PopulationMethod";
 import { Choices, OptGroup } from "./types/Choices";
 
-describe("Testing 'bindPopulationEnabled' function", function() {
+describe("Testing 'bindPopulation' function", function() {
   const method: PopulationMethod = { title: "test", value: "test" };
   const option: ToolbarItemType = {
     id: "test",
@@ -39,7 +39,7 @@ describe("Testing 'bindPopulationEnabled' function", function() {
       value: { src: "test.jpg", extension: "jpg" }
     };
 
-    expect(bindPopulationEnabled(i)).toEqual(i);
+    expect(bindPopulation(i)).toEqual(i);
   });
 
   test("If option is not in development, return original option", () => {
@@ -50,7 +50,7 @@ describe("Testing 'bindPopulationEnabled' function", function() {
       population: [method]
     };
 
-    expect(bindPopulationEnabled(i)).toEqual(i);
+    expect(bindPopulation(i)).toEqual(i);
   });
 
   test("Wrap option in a population option type", () => {
@@ -68,7 +68,7 @@ describe("Testing 'bindPopulationEnabled' function", function() {
       options: [option]
     };
 
-    expect(bindPopulationEnabled(withPopulation)).toEqual(result);
+    expect(bindPopulation(withPopulation)).toEqual(result);
   });
 
   const o: ToolbarItemType = {
@@ -84,7 +84,7 @@ describe("Testing 'bindPopulationEnabled' function", function() {
       content: "Test helper"
     }
   };
-  const r = bindPopulationEnabled(o);
+  const r = bindPopulation(o);
 
   test.each([
     "label",

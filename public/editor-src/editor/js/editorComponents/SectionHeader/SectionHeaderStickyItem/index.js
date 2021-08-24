@@ -158,7 +158,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
     return (
       <ContainerBorder
         type="header__animated"
-        showBorder={false}
+        hiddenInResponsive={true}
         activateOnContentClick={false}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (

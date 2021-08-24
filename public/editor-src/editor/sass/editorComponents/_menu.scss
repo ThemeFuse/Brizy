@@ -419,7 +419,7 @@ $dropdown-arrow-size: 7px;
   overflow: visible;
 }
 &.brz-mm-wrapper_opened {
-  .brz-mm-page {
+  .brz-root__container.brz-mm-page {
     z-index: auto;
   }
 

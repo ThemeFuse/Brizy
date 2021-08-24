@@ -1,7 +1,6 @@
 import Config from "visual/global/Config";
 import {
   getExternalPopups,
-  getInternalPopup,
   createExternalPopup,
   getPage
 } from "visual/utils/api";
@@ -20,14 +19,9 @@ export async function getCurrentPage(): Promise<Page> {
     const pageId = Str.read(Config.get("wp").page) ?? "";
     return getPage(pageId);
   } else {
-    if (IS_PAGE || IS_SINGLE || IS_ARCHIVE || IS_STORY) {
+    if (IS_PAGE || IS_SINGLE || IS_ARCHIVE || IS_STORY || IS_INTERNAL_POPUP) {
       const pageId = Str.read(Config.get("page")?.id) ?? "";
       return getPage(pageId);
-    }
-
-    if (IS_INTERNAL_POPUP) {
-      const pageId = Str.read(Config.get("page")?.id) ?? "";
-      return getInternalPopup(pageId);
     }
 
     if (IS_EXTERNAL_POPUP) {

@@ -3,7 +3,6 @@ import _ from "underscore";
 import classnames from "classnames";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import * as str from "visual/utils/reader/string";
-import { dcSupported } from "visual/utils/env";
 import { hasDC } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { V } from "visual/types";
 
@@ -18,11 +17,7 @@ type Props = {
   onChange?: (value: { [k: string]: string }) => void;
 };
 
-export const Text: React.FC<Props> = props => {
-  return dcSupported ? <TextWithDC {...props} /> : <TextNoDC {...props} />;
-};
-
-export const TextWithDC: React.FC<Props> = ({
+export const Text: React.FC<Props> = ({
   id,
   v,
   tagName = "span",
@@ -44,23 +39,6 @@ export const TextWithDC: React.FC<Props> = ({
   ) : (
     <TextEditor
       className={className_} // TextEditor puts brz-${tagName} class itself
-      tagName={tagName}
-      value={str.read(v[id])}
-      onChange={(value: string): void => onChange({ [id]: value })}
-    />
-  );
-};
-
-export const TextNoDC: React.FC<Props> = ({
-  id,
-  v,
-  tagName = "span",
-  className,
-  onChange = _.noop
-}) => {
-  return (
-    <TextEditor
-      className={className}
       tagName={tagName}
       value={str.read(v[id])}
       onChange={(value: string): void => onChange({ [id]: value })}

@@ -1,6 +1,6 @@
 import _ from "underscore";
 import Config from "visual/global/Config";
-import { IS_CMS } from "visual/utils/env";
+import { IS_CLOUD } from "visual/utils/env";
 import {
   getCurrentRule,
   TEMPLATES_GROUP_ID,
@@ -186,7 +186,7 @@ export function canUseConditionInPage(globalBlock, page) {
   } = pageSplitRules(rules, page);
 
   let cmsRule = false;
-  if (IS_CMS) {
+  if (IS_CLOUD) {
     const { fields } = page;
 
     const refs = getFieldsReferences(fields);

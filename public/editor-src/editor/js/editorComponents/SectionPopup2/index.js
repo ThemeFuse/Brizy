@@ -286,7 +286,11 @@ class SectionPopup2 extends EditorComponent {
     );
 
     let content = (
-      <ContainerBorder type="popup2" activateOnContentClick={false}>
+      <ContainerBorder
+        type="popup2"
+        hiddenInResponsive={true}
+        activateOnContentClick={false}
+      >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={v.customCSS}>
             <div

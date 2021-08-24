@@ -2,6 +2,8 @@ import React from "react";
 import T from "prop-types";
 import classnames from "classnames";
 import ClickOutside from "visual/component/ClickOutside";
+import { getStore } from "visual/redux/store";
+import { deviceModeSelector } from "visual/redux/selectors";
 import ContainerBorderButton from "./ContainerBorderButton";
 
 export default class ContainerBorder extends React.Component {
@@ -15,6 +17,7 @@ export default class ContainerBorder extends React.Component {
     renderButtonWrapper: T.func,
     activateOnContentClick: T.bool,
     clickOutsideExceptions: T.arrayOf(T.string),
+    hiddenInResponsive: T.bool,
     children: T.func
   };
 
@@ -27,7 +30,8 @@ export default class ContainerBorder extends React.Component {
       "#brz-toolbar-portal",
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal"
-    ]
+    ],
+    hiddenInResponsive: false
   };
 
   containerRef = React.createRef();
@@ -43,6 +47,12 @@ export default class ContainerBorder extends React.Component {
   isButtonActive = false;
 
   isHovered = false;
+
+  isHidden = false;
+
+  isHiddenTime = null;
+
+  device = "desktop";
 
   componentDidMount() {
     // we attach a native click handler instead
@@ -74,6 +84,10 @@ export default class ContainerBorder extends React.Component {
     );
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.isHiddenTime);
+  }
+
   handleContentClick = e => {
     this.handleActivationEvent(e);
   };
@@ -100,11 +114,27 @@ export default class ContainerBorder extends React.Component {
   };
 
   handleToolbarOpen = e => {
-    this.handleActivationEvent(e);
+    const { hiddenInResponsive } = this.props;
+    this.device = deviceModeSelector(getStore().getState());
+
+    // we are clear timeout for last toolbarClose
+    clearTimeout(this.isHiddenTime);
+
+    if (hiddenInResponsive && this.device !== "desktop") {
+      this.setHidden(true);
+    } else {
+      this.handleActivationEvent(e);
+    }
   };
 
   handleToolbarClose = () => {
     this.setActive(false, false);
+
+    // we have a little clipping when close / opened toolbar
+    // waiting 250ms between close and opened toolbar
+    this.isHiddenTime = setTimeout(() => {
+      this.setHidden(false);
+    }, 250);
   };
 
   handleActivationEvent = e => {
@@ -131,7 +161,7 @@ export default class ContainerBorder extends React.Component {
       e.brzContainerBorderHandled = true;
     }
 
-    if (!handled && (this.isBorderActive || this.isBorderActive)) {
+    if (!handled && this.isBorderActive) {
       this.setActive(false, false);
     }
   };
@@ -163,6 +193,19 @@ export default class ContainerBorder extends React.Component {
         this.containerRef.current.setAttribute("data-border--hovered", type);
       } else {
         this.containerRef.current.removeAttribute("data-border--hovered");
+      }
+    }
+  }
+
+  setHidden(hidden) {
+    if (hidden !== this.isHidden) {
+      this.isHidden = hidden;
+
+      if (hidden) {
+        const { type } = this.props;
+        this.containerRef.current.setAttribute("data-border--hidden", type);
+      } else {
+        this.containerRef.current.removeAttribute("data-border--hidden");
       }
     }
   }

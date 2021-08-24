@@ -1,4 +1,4 @@
-export * from "./index-legacy";
+export * from "./index-legacy.wp";
 
 import Config from "visual/global/Config";
 import { persistentRequest, request2 } from "./index-legacy";

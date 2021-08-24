@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { IS_CMS } from "visual/utils/env";
+import { IS_CLOUD } from "visual/utils/env";
 
 export default {
   id: "Posts",
@@ -69,7 +69,7 @@ export default {
                         ]
                       }
                     },
-                    ...(IS_CMS
+                    ...(IS_CLOUD
                       ? []
                       : [
                           {

@@ -24,7 +24,7 @@ export function Select2<T extends Literal>({
   const _value = value !== undefined ? [value] : [];
   const _onChange = useCallback(mCompose(onChange, last), [onChange]);
   return (
-    <MultiSelect
+    <MultiSelect<T>
       {...props}
       className={classNames(className, "brz-ed-control__select-single")}
       onChange={_onChange}

@@ -81,7 +81,8 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
     blocksData: {},
     globalBlocks: {},
     value: {
-      _id: ""
+      _id: "",
+      parentId: undefined
     },
     makeNormalToGlobalBlock: noop,
     makeGlobalToNormalBlock: noop,
@@ -120,7 +121,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
       makeGlobalToNormalBlock,
       makePopupToGlobalBlock,
       makeGlobalBlockToPopup,
-      value: { _id }
+      value: { _id, parentId }
     } = this.props;
 
     // if '_id' starts from number - document.getElementById(_id) will throw an error.
@@ -208,11 +209,13 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
           block,
           fromBlockId: _id
         };
-        blockType === "popup"
-          ? makeGlobalBlockToPopup(data)
-          : makeGlobalToNormalBlock(data);
 
-        popupId && openPopupById(popupId);
+        if (blockType === "popup" && parentId) {
+          makeGlobalBlockToPopup({ ...data, parentId });
+          popupId && openPopupById(popupId);
+        } else {
+          makeGlobalToNormalBlock(data);
+        }
       }
     }
   };
