@@ -9,7 +9,7 @@ class Brizy_Editor {
 
 	private static $instance;
 
-
+	private static $is_allowed_for_current_user = null;
 	/**
 	 * All plugin ajax actions and enpoints are going to be prefixed with this string.
 	 * This will not affect the database prefix tables or option keys and post meta keys *
@@ -531,5 +531,29 @@ class Brizy_Editor {
 		if ( $feedback && current_user_can( 'manage_options' ) ) {
 			new Brizy_Admin_Feedback();
 		}
+	}
+
+	/**
+	 * @deprecated Use Brizy_Editor_User::is_user_allowed()
+	 */
+	public static function is_user_allowed() {
+
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
+
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		if ( is_null( self::$is_allowed_for_current_user ) ) {
+			self::$is_allowed_for_current_user = (
+					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE )
+					||
+					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
+				);
+		}
+
+		return self::$is_allowed_for_current_user;
 	}
 }
