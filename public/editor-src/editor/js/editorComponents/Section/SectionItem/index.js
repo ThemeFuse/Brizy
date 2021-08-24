@@ -153,7 +153,11 @@ class SectionItem extends EditorComponent {
     );
 
     return (
-      <ContainerBorder type="section__item" activateOnContentClick={false}>
+      <ContainerBorder
+        type="section__item"
+        hiddenInResponsive={true}
+        activateOnContentClick={false}
+      >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={customCSS}>
             <div

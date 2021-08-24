@@ -1,21 +1,22 @@
-import React from "react";
+import React, { ReactElement, ReactText } from "react";
 import classnames from "classnames";
-import ImageSetter from "./index.jsx";
+import { ImageSetter as CloudImageSetter, Value } from "./index.cloud";
 import EditorIcon from "visual/component/EditorIcon";
-import { getImageUid } from "visual/utils/api";
+import { getImageUid } from "visual/utils/api/index.wp";
 import { getImageFormat, preloadImage } from "visual/utils/image";
-import { imageAttachments } from "visual/utils/image/imageAttachments";
+import { imageAttachments } from "visual/utils/image/imageAttachments.wp";
 
-export default class WPImageSetter extends ImageSetter {
-  wpMediaFrame = null;
+export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
+  wpMediaFrame: WPMediaFrame | null = null;
 
-  handleWpImageChange = () => {
+  handleWpImageChange = (): void => {
     const { onlyPointer } = this.props;
 
     if (onlyPointer) {
       return;
     }
 
+    // @ts-expect-error, we expect window to have wp property
     const wp = global.wp || global.parent.wp;
 
     if (!wp) {
@@ -31,7 +32,7 @@ export default class WPImageSetter extends ImageSetter {
     const html = document.querySelector("html");
 
     if (!this.wpMediaFrame) {
-      this.wpMediaFrame = wp.media({
+      const wpMediaFrame = wp.media({
         library: {
           type: "image"
         },
@@ -43,8 +44,8 @@ export default class WPImageSetter extends ImageSetter {
           priority: 20
         })
       });
-      this.wpMediaFrame.on("select", () => {
-        const attachment = this.wpMediaFrame
+      wpMediaFrame.on("select", () => {
+        const attachment = wpMediaFrame
           .state()
           .get("selection")
           .first();
@@ -59,7 +60,7 @@ export default class WPImageSetter extends ImageSetter {
             // we use preloadImage function not attachment.get("width"), because
             // for some svg it returns wrong sizes(width/height = 0)
             preloadImage(url).then(({ width, height }) => {
-              const newValue = {
+              const newValue: Value = {
                 x,
                 y,
                 src: r.uid,
@@ -69,7 +70,9 @@ export default class WPImageSetter extends ImageSetter {
               };
 
               if (this.mounted) {
-                this.setState(newValue);
+                this.setState<"src" | "width" | "height" | "extension">(
+                  newValue
+                );
               }
               this.props.onChange(newValue, { isChanged: "image" });
             });
@@ -78,9 +81,11 @@ export default class WPImageSetter extends ImageSetter {
             console.error("failed to get attachment uid", e);
           });
       });
-      this.wpMediaFrame.on("close", () => {
-        html.classList.remove("brz-ow-hidden");
+      wpMediaFrame.on("close", () => {
+        html?.classList.remove("brz-ow-hidden");
       });
+
+      this.wpMediaFrame = wpMediaFrame;
     }
 
     // block html scroll
@@ -88,13 +93,11 @@ export default class WPImageSetter extends ImageSetter {
       html.classList.add("brz-ow-hidden");
     }
 
-    this.wpMediaFrame.open();
+    this.wpMediaFrame?.open();
   };
 
-  componentWillUnmount() {
-    if (super.componentWillUnmount) {
-      super.componentWillUnmount();
-    }
+  componentWillUnmount(): void {
+    super.componentWillUnmount();
 
     if (this.wpMediaFrame) {
       this.wpMediaFrame.detach();
@@ -102,8 +105,11 @@ export default class WPImageSetter extends ImageSetter {
     }
   }
 
-  renderUpload() {
-    const { onlyPointer, onUpload } = this.props;
+  onUpload = (): void =>
+    this.props.onUpload ? this.props.onUpload() : this.handleWpImageChange();
+
+  renderUpload(): ReactElement {
+    const { onlyPointer } = this.props;
     const { loading } = this.state;
     const className = classnames(
       "brz-label brz-ed-control__focal-point__label",
@@ -111,8 +117,6 @@ export default class WPImageSetter extends ImageSetter {
         "brz-ed-control__focal-point__label--disable": onlyPointer
       }
     );
-    const hasCustomUpload = typeof onUpload === "function";
-
     return (
       <label className={className}>
         {loading ? (
@@ -122,7 +126,7 @@ export default class WPImageSetter extends ImageSetter {
         ) : (
           <div
             className="brz-ed-control__focal-point__upload"
-            onClick={hasCustomUpload ? onUpload : this.handleWpImageChange}
+            onClick={this.onUpload}
           >
             <EditorIcon icon="nc-upload" />
           </div>
@@ -131,3 +135,5 @@ export default class WPImageSetter extends ImageSetter {
     );
   }
 }
+
+export default ImageSetter;

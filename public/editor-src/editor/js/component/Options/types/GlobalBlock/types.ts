@@ -33,6 +33,7 @@ export type GlobalBlockProps = {
   helperContent: string;
   value: {
     _id: string;
+    parentId?: string;
   };
   className?: string;
   attr?: HTMLAttributes<object>;
@@ -55,6 +56,10 @@ export type GlobalBlockMapDispatch = {
     fromBlockId: string;
   }) => void;
   makePopupToGlobalBlock: (data: GlobalBlock) => void;
-  makeGlobalBlockToPopup: (data: { block: Block; fromBlockId: string }) => void;
+  makeGlobalBlockToPopup: (data: {
+    block: Block;
+    fromBlockId: string;
+    parentId: string;
+  }) => void;
   updateBlocks: (data: PageBlocks) => void;
 };

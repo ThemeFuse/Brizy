@@ -35,7 +35,7 @@ import Login from "./pro/Login";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import nonWP from "./index.ts";
+import nonWP, { base } from "./index.ts";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import { IS_STORY } from "visual/utils/models";
@@ -56,7 +56,7 @@ const hasWoocommerce = pluginActivated("woocommerce");
 const featuredImage = { component: WPFeaturedImage, pro: true };
 
 const baseWP = [
-  ...nonWP.base,
+  ...base,
   { component: Search, pro: true },
   { component: Login, pro: true }
 ];

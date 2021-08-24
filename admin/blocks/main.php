@@ -30,7 +30,7 @@ class Brizy_Admin_Blocks_Main {
 	 */
 	public function __construct() {
 
-		if ( Brizy_Editor::is_user_allowed() ) {
+		if ( Brizy_Editor_User::is_user_allowed() ) {
 			add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
 		}
 

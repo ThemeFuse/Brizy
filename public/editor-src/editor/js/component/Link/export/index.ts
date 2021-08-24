@@ -74,11 +74,14 @@ export default function($node: JQuery): void {
     e.preventDefault();
 
     const anchorHash = location.hash;
+    const targetExists =
+      anchorHash && !!root.querySelector(`[id="${anchorHash.slice(1)}"]`);
 
-    scrollTo({
-      endLocation: getEndLocation(root, anchorHash, scrollingElement),
-      duration: 600
-    });
+    (targetExists || anchorHash === "#") &&
+      scrollTo({
+        endLocation: getEndLocation(root, anchorHash, scrollingElement),
+        duration: 600
+      });
   };
 
   const handleRootClick = (e: Event): void => {
@@ -91,7 +94,14 @@ export default function($node: JQuery): void {
         const targetHref = targetNode.href;
         const targetPath = targetHref.replace(anchorHash, "");
 
-        if (anchorHash && toSamePage(targetPath, location)) {
+        const targetExists =
+          anchorHash && !!root.querySelector(`[id="${anchorHash.slice(1)}"]`);
+
+        if (
+          anchorHash &&
+          toSamePage(targetPath, location) &&
+          (targetExists || anchorHash === "#")
+        ) {
           e.preventDefault();
 
           const handleComplete = (): void => {

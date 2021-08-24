@@ -1,14 +1,19 @@
 import produce from "immer";
 import { setIn } from "timm";
-import { objectTraverse2 } from "visual/utils/object";
-import { IS_STORY, insertItemsBatch } from "visual/utils/models";
-import { mapModels } from "visual/utils/models";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { objectTraverse2, map } from "visual/utils/object";
+import {
+  IS_GLOBAL_POPUP,
+  IS_STORY,
+  insertItemsBatch,
+  isModel,
+  mapModels
+} from "visual/utils/models";
 
 import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
 
 import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
+import { Block } from "visual/types";
 
 type BlocksData = ReduxState["blocksData"];
 type RBlocksData = (s: BlocksData, a: ReduxAction, f: ReduxState) => BlocksData;
@@ -66,8 +71,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       return produce<BlocksData>(
         { ...pageBlocksData, ...globalBlocksData },
         draft => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          objectTraverse2(draft, (obj: any) => {
+          objectTraverse2(draft, (obj: Block) => {
             if (obj.type && obj.type === "GlobalBlock") {
               const { globalBlockId } = obj.value;
 
@@ -93,7 +97,11 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
         storiesBlocks
       );
 
-      return setIn(state, [firstBlockId, "value", "items"], newPageBlocks);
+      return setIn(
+        state,
+        [firstBlockId, "value", "items"],
+        newPageBlocks
+      ) as BlocksData;
     }
 
     case "ADD_BLOCK": {
@@ -108,8 +116,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     case "MAKE_POPUP_TO_GLOBAL_BLOCK": {
       const { data } = action.payload;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newState = mapModels((block: any) => {
+      const newState = mapModels((block: Block) => {
         if (block.value._id === data.value._id) {
           return {
             blockId: block.blockId,
@@ -129,7 +136,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     }
 
     case "MAKE_GLOBAL_BLOCK_TO_POPUP": {
-      const { block: blockData, fromBlockId } = action.payload;
+      const { block: blockData, fromBlockId, parentId } = action.payload;
 
       if (IS_GLOBAL_POPUP) {
         return {
@@ -138,17 +145,35 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
         };
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newState = mapModels((block: any) => {
-        if (block.value._id === fromBlockId) {
+      const childCb = (data: Block): Block => {
+        if (data.value._id === fromBlockId) {
           return blockData;
         }
 
-        return block;
-      }, state);
+        return data;
+      };
 
-      return newState;
+      const mapChild = (model: BlocksData): BlocksData => {
+        return isModel(model)
+          ? map(mapChild, childCb((model as unknown) as Block))
+          : map(mapChild, model);
+      };
+
+      const isParent = (data: BlocksData): boolean => {
+        if (isModel(data)) {
+          return ((data as unknown) as Block).value._id === parentId;
+        }
+
+        return false;
+      };
+
+      const mapParent = (model: BlocksData): BlocksData => {
+        return isParent(model) ? mapChild(model) : map(mapParent, model);
+      };
+
+      return mapParent(state);
     }
+
     case "MAKE_GLOBAL_TO_NORMAL_BLOCK": {
       const { block } = action.payload;
 

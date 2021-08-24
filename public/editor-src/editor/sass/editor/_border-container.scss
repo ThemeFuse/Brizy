@@ -246,3 +246,12 @@
     opacity: 1;
   }
 }
+
+// CollapsibleToolbar for section
+[data-border--hidden] >,
+[data-border--hidden]:hover > {
+  .brz-ed-collapsible--section {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

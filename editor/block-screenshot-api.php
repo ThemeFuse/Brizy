@@ -1,5 +1,7 @@
 <?php
 
+use Brizy\Utils\UUId;
+
 class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 
 	const nonce = 'brizy-api';
@@ -36,7 +38,7 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 	}
 
 	protected function getRequestNonce() {
-        return $this->param( 'hash' );
+		return $this->param( 'hash' );
 	}
 
 
@@ -56,37 +58,39 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi {
 		session_write_close();
 
 		if ( empty( $_REQUEST['block_type'] ) || ! in_array( $_REQUEST['block_type'], $this->blockTypes ) || empty( $_REQUEST['ibsf'] ) ) {
-			wp_send_json_error( array(
-				'success' => false,
-				'message' => esc_html__( 'Bad request', 'brizy' )
-			), 400 );
+			$this->error( 400, __( 'Bad request', 'brizy' ) );
 		}
 
-		// obtain the image content from POST
-		$fileName     = null;
-		$screenId     = null;
 		$brizyPost    = isset( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 		$base64       = $_REQUEST['ibsf'];
 		$imageContent = base64_decode( $base64 );
 
 		if ( isset( $_REQUEST['id'] ) ) {
+
+			if ( ! preg_match( "/.[-a-zA-Z0-9]+/", $_REQUEST['id'] ) ) {
+				$this->error( 400, __( 'Invalid uid string', 'brizy' ) );
+			}
+
 			$screenId = $_REQUEST['id'];
+
 		} else {
-			$screenId = \Brizy\Utils\UUId::uuid();
+			$screenId = UUId::uuid();
 		}
 
 		if ( false === $imageContent ) {
-			wp_send_json_error( array(
-				'success' => false,
-				'message' => esc_html__( 'Invalid image content', 'brizy' )
-			), 400 );
+			$this->error( 400, __( 'Invalid image content', 'brizy' ) );
 		}
 
 		$manager = new Brizy_Editor_Screenshot_Manager( new Brizy_Editor_UrlBuilder( $brizyPost ) );
-		$result  = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
+
+		try {
+			$result = $manager->saveScreenshot( $screenId, $_REQUEST['block_type'], $imageContent, $brizyPost );
+		} catch ( Exception $e ) {
+			$this->error( 400, $e->getMessage() );
+		}
 
 		if ( $result ) {
-			$screenPath = $manager->getScreenshot( $screenId,  $brizyPost );
+			$screenPath = $manager->getScreenshot( $screenId, $brizyPost );
 			wp_send_json_success( array( 'id' => $screenId, 'file_name' => $screenPath ) );
 		}
 	}

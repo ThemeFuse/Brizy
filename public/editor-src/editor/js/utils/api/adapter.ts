@@ -12,7 +12,6 @@ import { getUsedModelsImages } from "visual/utils/traverse/images";
 import { SavedBlocksError, SavedLayoutError } from "visual/utils/errors";
 import {
   PageCommon,
-  PageCloud,
   InternalPopupCloud,
   ExternalPopupCloud,
   ExternalStoryCloud,
@@ -20,7 +19,8 @@ import {
   Page,
   GlobalBlock,
   SavedBlock,
-  SavedLayout
+  SavedLayout,
+  PageCloud
 } from "visual/types";
 import { PageError } from "visual/utils/errors";
 import { pipe } from "visual/utils/fp/pipe";
@@ -178,45 +178,8 @@ export const makeBlockMeta = (
 
 //#region Page
 
-type PageSerialized<T extends PageCloud | PageWP | InternalPopupCloud> = Omit<
-  T,
-  "data"
-> & {
+type PageSerialized<T extends PageWP | InternalPopupCloud> = Omit<T, "data"> & {
   data: string;
-};
-
-export const parsePage = (page: unknown): PageCloud => {
-  const reader = mPipe(
-    Obj.read,
-    readWithParser<object, PageCloud>({
-      _kind: () => "cloud",
-      id: mPipe(Obj.readKey("id"), Str.read),
-      data: pipe(
-        Obj.readKey("data"),
-        Json.read,
-        Obj.read as () => PageCloud["data"] | undefined, // TODO: needs more thorough checking
-        onNullish({ items: [] } as PageCloud["data"])
-      ),
-      dataVersion: mPipe(Obj.readKey("dataVersion"), Num.read),
-      type: mPipe(Obj.readKey("type"), Str.read),
-      slug: mPipe(Obj.readKey("slug"), Str.read),
-      title: pipe(Obj.readKey("title"), Str.read, onNullish("")),
-      description: pipe(Obj.readKey("description"), Str.read, onNullish("")),
-      status: mPipe(
-        Obj.readKey("status"),
-        Union.readWithChoices(["draft", "publish"])
-      ),
-      project: mPipe(Obj.readKey("project"), Num.read),
-      is_index: mPipe(Obj.readKey("is_index"), Union.readWithChoices([0, 1]))
-    })
-  );
-  const parsed = reader(page);
-
-  if (parsed === undefined) {
-    throw new PageError("Failed to parse page");
-  }
-
-  return parsed;
 };
 
 export const parseInternalPopup = (page: unknown): InternalPopupCloud => {
@@ -318,7 +281,7 @@ export const parsePageWP = (page: unknown): PageWP => {
       data: pipe(
         Obj.readKey("data"),
         Json.read,
-        Obj.read as () => PageCloud["data"] | undefined, // TODO: needs more thorough checking
+        Obj.read as () => PageWP["data"] | undefined, // TODO: needs more thorough checking
         onNullish({ items: [] } as PageWP["data"])
       ),
       dataVersion: pipe(Obj.readKey("dataVersion"), Num.read, onNullish(0)),
@@ -390,14 +353,13 @@ export const parsePageCommon = (page: unknown): PageCommon => {
 export const pageDataToString = (pageData: Page["data"]): string =>
   JSON.stringify(pageData);
 
-export function stringifyPage(page: PageCloud): PageSerialized<PageCloud>;
 export function stringifyPage(
   page: InternalPopupCloud
 ): PageSerialized<InternalPopupCloud>;
 export function stringifyPage(page: PageWP): PageSerialized<PageWP>;
 export function stringifyPage(
-  page: PageCloud | PageWP | InternalPopupCloud
-): PageSerialized<PageCloud | PageWP | InternalPopupCloud> {
+  page: PageWP | InternalPopupCloud
+): PageSerialized<PageWP | InternalPopupCloud> {
   return { ...page, data: JSON.stringify(page.data) };
 }
 

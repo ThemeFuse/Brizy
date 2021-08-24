@@ -119,7 +119,7 @@ class Brizy_Editor_User {
 		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
 		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post->getWpPostId() );
 
-		return  $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
+		return $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
 	}
 
 	public static function is_administrator() {
@@ -128,18 +128,7 @@ class Brizy_Editor_User {
 			return false;
 		}
 
-		return is_admin() || is_super_admin();
-	}
-
-	public static function is_subscriber() {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		$user = wp_get_current_user();
-
-		return in_array( 'subscriber', (array) $user->roles );
+		return current_user_can( 'manage_options' ) || is_super_admin();
 	}
 
 	public static function is_user_allowed() {
@@ -162,7 +151,6 @@ class Brizy_Editor_User {
 
 		return self::$is_allowed_for_current_user;
 	}
-
 
 	protected function get_token() {
 		return $this->token;

@@ -15,7 +15,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                     $roles = explode(',', $attrs['roles']);
                     $user = wp_get_current_user();
 
-                    if ( Brizy_Editor::is_user_allowed() && isset( $user->roles ) ) {
+                    if ( Brizy_Editor_User::is_user_allowed() && isset( $user->roles ) ) {
 
 					    if ( ! empty( $_GET['role'] ) && $_GET['role'] != 'default' ) {
 

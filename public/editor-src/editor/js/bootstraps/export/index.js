@@ -39,6 +39,7 @@ import changeRichText from "./transforms/changeRichText";
 import extractPopups from "./transforms/extractPopups";
 import dynamicContent from "./transforms/dynamicContent";
 import replaceIcons from "./transforms/replaceIcons";
+import { changeMenuUid } from "./transforms/changeMenuUid";
 
 export default async function main({
   pageId,
@@ -231,6 +232,7 @@ async function getPageBlocks({
   // transforms
   await replaceIcons($pageHTML, buildPath);
   changeRichText($pageHTML);
+  changeMenuUid($pageHTML);
 
   const { freeScripts, freeStyles, proScripts, proStyles } = getAssets(
     $pageHTML,

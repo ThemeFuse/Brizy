@@ -2,7 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import Config from "visual/global/Config";
-import ImageSetter from "visual/component/Controls/ImageSetter";
+import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import {
   updateFeaturedImage,
   updateFeaturedImageFocalPoint,

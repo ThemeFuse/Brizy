@@ -33,6 +33,10 @@ class Brizy_Editor_Screenshot_Manager {
 	public function saveScreenshot( $screenUid, $blockType, $imageContent, $postId ) {
 		$path = $this->getScreenshotPath( $screenUid, $blockType, $postId );
 
+		if(!$this->validateImageContent( $imageContent )) {
+			throw new Exception('Invalid image content');
+		}
+
 		$extension      = 'jpeg';
 		$screenFileName = $screenUid . '.' . $extension;
 		$screenFullPath = $path . DIRECTORY_SEPARATOR . $screenFileName;
@@ -140,5 +144,20 @@ class Brizy_Editor_Screenshot_Manager {
 		} catch ( Exception $e ) {
 			return false;
 		}
+	}
+
+	/**
+	 * @param $imageContent
+	 */
+	protected function validateImageContent( $imageContent ) {
+		file_put_contents( $tmpFilePath = tempnam( get_temp_dir(), 'screen' ), $imageContent );
+		$mime = mime_content_type( $tmpFilePath );
+
+		if ( $mime !== 'image/jpeg' ) {
+			return false;
+		}
+		unlink( $tmpFilePath );
+
+		return true;
 	}
 }

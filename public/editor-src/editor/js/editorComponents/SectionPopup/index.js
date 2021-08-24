@@ -227,7 +227,11 @@ class SectionPopup extends EditorComponent {
     );
 
     return ReactDOM.createPortal(
-      <ContainerBorder type="popup" activateOnContentClick={false}>
+      <ContainerBorder
+        type="popup"
+        hiddenInResponsive={true}
+        activateOnContentClick={false}
+      >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={v.customCSS}>
             <div

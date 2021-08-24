@@ -25,9 +25,6 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
   user: User<"cloud">;
   urls: Urls<"cloud">;
   project: Project<"cloud">;
-}
-
-interface WithCMS {
   cms: {
     adminUrl: string;
     apiUrl: string;
@@ -37,25 +34,19 @@ interface WithCMS {
 
 // endregion
 
-// region Legacy
-export type Legacy = Base<"legacy">;
-
-export const isLegacy = (c: Cloud): c is Legacy => c.platform === "legacy";
-// endregion
-
 // region CMS
-export interface CMS extends Base<"cms">, WithCMS {}
+export type CMS = Base<"cms">;
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 // endregion
 
 // region Shopify
-export interface Shopify extends Base<"shopify">, WithCMS {}
+export type Shopify = Base<"shopify">;
 
 export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";
 // endregion
 
-export type Cloud = Legacy | CMS | Shopify;
+export type Cloud = CMS | Shopify;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const isCloud = (config: Config): config is Cloud =>
