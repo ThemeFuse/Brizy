@@ -135,7 +135,8 @@ class Brizy_Public_AssetEnqueueManager {
 		$others = [];
 
 		foreach ( $this->posts as $editorPost ) {
-			$scripts = $editorPost->getCompiledScripts();
+			$postAssetGroup = null;
+			$scripts         = $editorPost->getCompiledScripts();
 
 			if ( ! empty( $scripts['free'] ) ) {
 				$ours[] = $ourGroup = AssetGroup::instanceFromJsonData( $scripts['free'] );
@@ -184,6 +185,7 @@ class Brizy_Public_AssetEnqueueManager {
 		foreach ( $assets as $script ) {
 			if ( $script->getType() == Asset::TYPE_CODE ) {
 				$content .= $script->getContent() . "\n";
+
 			}
 		}
 
