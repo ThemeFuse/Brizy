@@ -78,6 +78,7 @@
     "@csstools/postcss-sass": "^3.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
+    "@types/backbone": "^1.4.11",
     "@types/cheerio": "^0.22.22",
     "@types/classnames": "^2.2.11",
     "@types/events": "^3.0.0",

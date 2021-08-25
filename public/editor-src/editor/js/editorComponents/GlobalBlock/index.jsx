@@ -63,6 +63,13 @@ class GlobalBlock extends EditorComponent {
     const _id = this.getId();
     const { blocksData, globalBlocks, page } = this.props;
 
+    // sometime users are delete global blocks from BD
+    // but in pageData exist, in this case we need to check
+    // if have some global block with id
+    if (!globalBlocks[_id]) {
+      return null;
+    }
+
     // if all rules was removed in globalBlock - it still exists
     // into pageJson, but shouldn't be shown
 

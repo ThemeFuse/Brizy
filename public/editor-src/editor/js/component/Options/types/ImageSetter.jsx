@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import ImageSetter from "visual/component/Controls/ImageSetter";
+import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import EditorIcon from "visual/component/EditorIcon";
 import Population from "./common/Population";
 

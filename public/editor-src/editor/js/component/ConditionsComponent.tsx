@@ -8,7 +8,7 @@ import { updateGBRules } from "visual/redux/actions2";
 import Config from "visual/global/Config";
 import { GlobalBlock, Rule } from "visual/types";
 import { getRulesList } from "visual/utils/api";
-import { IS_CMS } from "visual/utils/env";
+import { IS_CLOUD } from "visual/utils/env";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -98,8 +98,8 @@ export const ConditionsComponent: React.FC<{
 
         if (!IS_EXTERNAL_POPUP) {
           // ts-ignore added because cms's getRulesList method is expecting
-          // CollectionItemId, but old cloud & wp is expecting nothing
-          const asyncGetValue = IS_CMS
+          // CollectionItemId, wp is expecting nothing
+          const asyncGetValue = IS_CLOUD
             ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
             : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
               // @ts-ignore

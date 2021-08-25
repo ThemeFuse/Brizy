@@ -160,7 +160,11 @@ export default class SectionHeaderItem extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     return (
-      <ContainerBorder type="header__static" activateOnContentClick={false}>
+      <ContainerBorder
+        type="header__static"
+        hiddenInResponsive={true}
+        activateOnContentClick={false}
+      >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <div

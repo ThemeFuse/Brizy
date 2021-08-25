@@ -94,14 +94,6 @@ export type PageWP = PageCommon & {
 
 export type PopupWP = PageWP;
 
-export type PageCloud = PageCommon & {
-  _kind: "cloud";
-  description: string;
-  is_index: 1 | 0; // TODO: would be nice if WP and cloud types would match
-  project: number;
-  type: string;
-};
-
 export type ExternalStoryCloud = Omit<DataCommon, "title"> & {
   slug: string;
 };
@@ -113,7 +105,7 @@ export type InternalPopupCloud = DataCommon & {
   project: number;
 };
 
-export type PageCloudCMS = PageCommon & {
+export type PageCloud = PageCommon & {
   _kind: "cloud-cms";
   collectionType: {
     id: string;
@@ -133,17 +125,16 @@ export type PageCloudCMS = PageCommon & {
     | null;
 };
 
-export type PopupCloudCMS = PageCloudCMS & {
+export type PopupCloud = PageCloud & {
   rules: Rule[];
 };
 
 export type Page =
   | PageWP
   | PageCloud
-  | PageCloudCMS
   | InternalPopupCloud
   | ExternalPopupCloud
-  | PopupCloudCMS;
+  | PopupCloud;
 
 //#endregion
 

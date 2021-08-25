@@ -33,7 +33,5 @@ export const IS_ARCHIVE_TEMPLATE = isTemplate("archive");
 export const IS_PRODUCT_TEMPLATE = isTemplate("product");
 export const IS_PRODUCT_ARCHIVE_TEMPLATE = isTemplate("product_archive");
 
-export const dcSupported = IS_WP || IS_CMS;
-
 export const IS_PROTECTED =
   isCloud(config) && isCMS(config) && config.page.isProtected;

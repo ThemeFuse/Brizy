@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.7<br>
 Requires PHP: 5.6<br>
-Stable tag: 2.3.10<br>
+Stable tag: 2.3.12<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,24 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.12 - 2021-08-24
+* New: Hide Section icon when not in focus on tablet and mobile
+* Fixed: Anchor scroll when block not found
+* Fixed: Form multi-select close
+* Fixed: Richtext styles 
+* Fixed: Global blocks in page compiler error
+* Fixed: Deprecate function is_user_allowed from Brizy_Editor class
+* Fixed: Load popup on non Brizy pages
+* Fixed: Popup code refactoring
+* Fixed: Check user permissions by current_user_can
+* Fixed: Moved the screenshot validation in screenshot manager class
+* Fixed: Validate the uid on save block screenshot
+* Fixed: Avoid recursion when including assets
+* Fixed: Load all script using wp enqueue functions
+
+### 2.3.11 - 2021-08-18
+* Fixed: Recompile pages when the Pro plugin is upgraded or disabled
 
 ### 2.3.10 - 2021-08-17
 * Fixed: Dash separated value name for custom attributes

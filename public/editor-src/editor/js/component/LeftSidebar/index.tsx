@@ -6,7 +6,7 @@ import { updateUI } from "visual/redux/actions2";
 import items from "./items";
 import DrawerOptions from "./components/Options";
 import classnames from "classnames";
-import { IS_CMS } from "visual/utils/env";
+import { IS_CLOUD } from "visual/utils/env";
 import { leftSidebarSelector } from "visual/redux/selectors";
 import { IS_STORY } from "visual/utils/models";
 
@@ -29,7 +29,7 @@ export const LeftSidebar: FC = () => {
 
   const opened = drawerContentType === "cmsUi" && isOpen;
 
-  const leftSidebarCssV2 = IS_CMS && !IS_STORY;
+  const leftSidebarCssV2 = IS_CLOUD && !IS_STORY;
 
   return (
     <ClickOutside

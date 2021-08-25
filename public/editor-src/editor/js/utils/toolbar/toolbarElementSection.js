@@ -66,6 +66,14 @@ export function toolbarElementSectionSaved({
   };
 }
 
+const getInstanceParentId = (key, type) => {
+  if (key && type === "popup") {
+    return key.split("_")[0];
+  }
+
+  return undefined;
+};
+
 export function toolbarElementSectionGlobal({
   device,
   component,
@@ -74,6 +82,7 @@ export function toolbarElementSectionGlobal({
   devices = "all"
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
+  const componentId = component.getId();
 
   return {
     devices,
@@ -82,7 +91,8 @@ export function toolbarElementSectionGlobal({
     label: t("Make it Global"),
     type: "globalBlock",
     value: {
-      _id: component.getId()
+      _id: componentId,
+      parentId: getInstanceParentId(component.props.instanceKey, blockType)
     }
   };
 }

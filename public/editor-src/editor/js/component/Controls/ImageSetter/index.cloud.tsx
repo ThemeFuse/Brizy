@@ -1,5 +1,10 @@
-import React from "react";
-import T from "prop-types";
+import React, {
+  ChangeEvent,
+  ChangeEventHandler,
+  ReactElement,
+  ReactNode,
+  ReactText
+} from "react";
 import classnames from "classnames";
 import ToastNotification from "cogo-toast";
 import EditorIcon from "visual/component/EditorIcon";
@@ -13,38 +18,55 @@ import {
 import { t } from "visual/utils/i18n";
 
 import Image from "./Image";
+import { Select2 } from "visual/component/Controls/Select2";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { noop } from "rxjs";
 
-const isSVG = extension => extension === "svg";
+const isSVG = (extension: string): extension is "svg" => extension === "svg";
 
-export default class ImageSetter extends React.Component {
-  static propTypes = {
-    className: T.string,
-    src: T.string,
-    x: T.number,
-    y: T.number,
-    width: T.number,
-    height: T.number,
-    extension: T.string,
-    onlyPointer: T.bool,
-    showPointer: T.bool,
-    customUrl: T.bool,
-    onUpload: T.func,
-    onChange: T.func
-  };
+export interface Value {
+  src: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  extension: string;
+}
 
-  static defaultProps = {
-    className: "",
-    src: "",
-    x: 50,
-    y: 50,
-    width: 0,
-    height: 0,
-    extension: null,
-    onlyPointer: false,
-    showPointer: true,
-    customUrl: false
-  };
+export type Meta = {
+  isChanged: "image" | "pointer";
+};
 
+export interface Props<T extends ReactText> {
+  className?: string;
+  src: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  extension: string;
+  onlyPointer: boolean;
+  showPointer: boolean;
+  customUrl?: boolean;
+  size: T;
+  onUpload?: (e?: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (v: Value, meta: Meta) => void;
+  sizes?: Array<{ value: T; label: string }>;
+  onSizeChange?: (v: T) => void;
+}
+
+interface State {
+  src: string;
+  width: number;
+  height: number;
+  extension: string;
+  loading: boolean;
+}
+
+export class ImageSetter<T extends ReactText> extends React.Component<
+  Props<T>,
+  State
+> {
   state = {
     src: this.props.src,
     width: this.props.width,
@@ -55,11 +77,11 @@ export default class ImageSetter extends React.Component {
 
   mounted = false;
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.mounted = true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props<T>): void {
     if (this.props.src !== nextProps.src) {
       this.setState({
         src: nextProps.src
@@ -67,11 +89,11 @@ export default class ImageSetter extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.mounted = false;
   }
 
-  handleChange = (value, meta) => {
+  handleChange = (value: Partial<Value>, meta: Meta): void => {
     const { x, y, extension } = this.props;
     const { src, width, height } = this.state;
 
@@ -81,27 +103,31 @@ export default class ImageSetter extends React.Component {
     );
   };
 
-  handleRemove = () => {
-    const newValue = {
+  handleRemove = (): void => {
+    const newValue: Value = {
       src: "",
       width: 0,
-      height: 0
+      height: 0,
+      x: 0,
+      y: 0,
+      extension: ""
     };
 
-    this.setState(newValue);
+    this.setState<"src" | "width" | "height" | "extension">(newValue);
     this.props.onChange(newValue, { isChanged: "image" });
   };
 
-  handleImageChange = e => {
+  handleImageChange: ChangeEventHandler<HTMLInputElement> = e => {
     const { files } = e.target;
+    const file = files?.[0];
 
-    if (!files || !files[0]) {
+    if (!file) {
       return;
     }
 
     this.setState({ loading: true });
 
-    uploadImage(files[0], {
+    uploadImage(file, {
       acceptedExtensions: ["jpeg", "jpg", "png", "gif", "svg"],
       onUpload: ({ name: src }) => {
         const extension = getImageFormat(src);
@@ -140,11 +166,11 @@ export default class ImageSetter extends React.Component {
     });
   };
 
-  renderDraggable() {
+  renderDraggable(): ReactNode {
     const { customUrl, onlyPointer, showPointer, x, y } = this.props;
     const { src, width, height, extension } = this.state;
 
-    let content = [
+    const content = [
       <Image
         key="image"
         src={src}
@@ -174,7 +200,7 @@ export default class ImageSetter extends React.Component {
     return content;
   }
 
-  renderUpload() {
+  renderUpload(): ReactNode {
     const { onlyPointer, onUpload } = this.props;
     const { loading } = this.state;
     const className = classnames(
@@ -183,7 +209,6 @@ export default class ImageSetter extends React.Component {
         "brz-ed-control__focal-point__label--disable": onlyPointer
       }
     );
-    const hasCustomUpload = typeof onUpload === "function";
 
     return (
       <label className={className}>
@@ -202,14 +227,32 @@ export default class ImageSetter extends React.Component {
             type="file"
             accept="image/*"
             hidden
-            onChange={hasCustomUpload ? onUpload : this.handleImageChange}
+            onChange={onUpload ?? this.handleImageChange}
           />
         )}
       </label>
     );
   }
 
-  render() {
+  renderSelect(): ReactElement | null {
+    return this.props.sizes ? (
+      <Select2<T>
+        className="brz-control__select--dark brz-control__select__auto brz-ed-control__colorPickerSelect--select"
+        value={this.props.size}
+        editable={false}
+        onChange={this.props.onSizeChange ?? noop}
+        size="short"
+      >
+        {this.props.sizes?.map(s => (
+          <Item key={s.value} value={s.value}>
+            {s.label}
+          </Item>
+        ))}
+      </Select2>
+    ) : null;
+  }
+
+  render(): ReactElement {
     const className = classnames(
       "brz-ed-control__focal-point",
       this.props.className
@@ -217,8 +260,11 @@ export default class ImageSetter extends React.Component {
 
     return (
       <div className={className}>
+        {this.state.src ? this.renderSelect() : null}
         {this.state.src ? this.renderDraggable() : this.renderUpload()}
       </div>
     );
   }
 }
+
+export default ImageSetter;

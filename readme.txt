@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.3.10
+Stable tag: 2.3.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,24 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.12 - 2021-08-24 =
+* New: Hide Section icon when not in focus on tablet and mobile
+* Fixed: Anchor scroll when block not found
+* Fixed: Form multi-select close
+* Fixed: Richtext styles 
+* Fixed: Global blocks in page compiler error
+* Fixed: Deprecate function is_user_allowed from Brizy_Editor class
+* Fixed: Load popup on non Brizy pages
+* Fixed: Popup code refactoring
+* Fixed: Check user permissions by current_user_can
+* Fixed: Moved the screenshot validation in screenshot manager class
+* Fixed: Validate the uid on save block screenshot
+* Fixed: Avoid recursion when including assets
+* Fixed: Load all script using wp enqueue functions
+
+= 2.3.11 - 2021-08-18 =
+* Fixed: Recompile pages when the Pro plugin is upgraded or disabled
 
 = 2.3.10 - 2021-08-17 =
 * Fixed: Dash separated value name for custom attributes

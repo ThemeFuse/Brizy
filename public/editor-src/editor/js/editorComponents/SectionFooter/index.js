@@ -172,7 +172,7 @@ class SectionFooter extends EditorComponent {
     return (
       <ContainerBorder
         type="footer"
-        showBorder={false}
+        hiddenInResponsive={true}
         activateOnContentClick={false}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (

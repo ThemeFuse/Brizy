@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { setIn } from "timm";
-import { IS_CMS } from "visual/utils/env";
 import {
   disableAlreadyUsedRules,
   getUniqRules,
@@ -9,7 +8,7 @@ import {
 
 import { getCollectionTypesInfo } from "visual/editorComponents/Posts/toolbarExtendParent/utils";
 
-import { getPages, getCollectionItems } from "visual/utils/api";
+import { getCollectionItems } from "visual/utils/api";
 
 const transformCollectionItems = items =>
   items.map(({ id, title }) => ({
@@ -25,18 +24,7 @@ export default function useRuleList(rules) {
   const [refsById, setRefsById] = useState([]);
 
   useEffect(() => {
-    async function fetchLegacyData() {
-      setRulesList([
-        {
-          title: "Pages",
-          value: "page",
-          // temp
-          groupValue: 1
-        }
-      ]);
-    }
-
-    async function fetchDataCms() {
+    async function fetchData() {
       const { collectionTypes, refsById } = await getCollectionTypesInfo();
 
       let rulesList = collectionTypes.map(({ id, title }) => ({
@@ -50,23 +38,11 @@ export default function useRuleList(rules) {
       setRulesList(rulesList);
     }
 
-    IS_CMS ? fetchDataCms() : fetchLegacyData();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    async function fetchLegacyData() {
-      const pages = (await getPages()) || [];
-
-      const items = pages.map(({ title, id }) => ({ title, value: id }));
-
-      setRulesList(
-        disableAlreadyUsedRules(rules, setIn(rulesList, [0, "items"], items))
-      );
-
-      setListLoading(false);
-    }
-
-    async function fetchDataCms() {
+    async function fetchData() {
       const uniqRules = getUniqRules(rules);
       let newRulesList = rulesList;
 
@@ -97,7 +73,7 @@ export default function useRuleList(rules) {
     }
 
     if (rulesList.length) {
-      IS_CMS ? fetchDataCms() : fetchLegacyData();
+      fetchData();
     }
   }, [rules, rulesList]);
 

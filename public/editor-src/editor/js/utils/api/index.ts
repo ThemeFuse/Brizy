@@ -1,6 +1,7 @@
 export * from "./index-legacy";
 export * from "./cms";
-export * from "./pageCloud";
+export * from "./cms/page";
+export * from "./cms/popup";
 
 import Config from "visual/global/Config";
 import * as Obj from "visual/utils/reader/object";

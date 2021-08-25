@@ -1,4 +1,4 @@
-import { PageCloudCMS } from "visual/types";
+import { PageCloud } from "visual/types";
 import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";
 import { paginationData } from "visual/utils/api/const";
@@ -7,7 +7,7 @@ import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
 
-export function getPages(collectionTypeId: string): Promise<PageCloudCMS[]> {
+export function getPages(collectionTypeId: string): Promise<PageCloud[]> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
@@ -22,7 +22,7 @@ export function getPages(collectionTypeId: string): Promise<PageCloudCMS[]> {
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
-export function getPage(id: string): Promise<PageCloudCMS> {
+export function getPage(id: string): Promise<PageCloud> {
   return Gql.getCollectionItem(getConnection(), { id })
     .then(r => r?.data?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
@@ -31,7 +31,7 @@ export function getPage(id: string): Promise<PageCloudCMS> {
 }
 
 export function updatePage(
-  page: PageCloudCMS,
+  page: PageCloud,
   meta: { is_autosave?: 1 | 0 } = {}
 ): Promise<void> {
   /*

@@ -501,6 +501,7 @@ class Brizy_Admin_Main {
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );
+			$post->set_pro_plugin_version(  defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null );
 			$post->saveStorage();
 			do_action( 'brizy_after_enabled_for_post', $p );
 			// redirect

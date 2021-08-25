@@ -74,12 +74,12 @@
   }
 
   // Text Reset
-  > h1,
-  > h2,
-  > h3,
-  > h4,
-  > h5,
-  > h6 {
+  > div > h1,
+  > div > h2,
+  > div > h3,
+  > div > h4,
+  > div > h5,
+  > div > h6 {
     margin-top: 0;
     margin-bottom: 0;
     padding: 0;
@@ -90,7 +90,7 @@
       display: none;
     }
   }
-  > p,
+  > div > p,
   span {
     margin-top: 0;
     margin-bottom: 0;

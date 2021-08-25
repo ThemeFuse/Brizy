@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 1/11/19
- * Time: 10:59 AM
- */
-
 
 class Brizy_Admin_Popups_Main {
 
@@ -26,11 +19,74 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function initialize() {
-		add_action( 'brizy_after_enabled_for_post', array( $this, 'afterBrizyEnabledForPopup' ) );
+		add_action( 'brizy_after_enabled_for_post', [ $this, 'afterBrizyEnabledForPopup' ] );
 
 		if ( is_admin() ) {
-			add_action( 'admin_menu', array( $this, 'removePageAttributes' ) );
+			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
+		} else {
+			if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+				add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
+				add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
+				add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
+				add_filter( 'body_class',         [ $this, 'bodyClassFrontend' ], 11 );
+			}
 		}
+	}
+
+	public function enqueuePopupScripts() {
+		foreach ( $this->getMatchingBrizyPopups() as $popup ) {
+
+			if ( $popup->get_needs_compile() ) {
+				$popup->compile_page();
+				$popup->saveStorage();
+				$popup->savePost();
+			}
+
+			Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $popup );
+		}
+	}
+
+	public function wpHeadAppentPopupHtml() {
+		$headHtml = $this->getPopupsHtml( null, null, 'head' );
+
+		if ( empty( $headHtml ) ) {
+			return;
+		}
+
+		echo apply_filters(
+			'brizy_content',
+			$headHtml,
+			Brizy_Editor_Project::get(),
+			null,
+			'head'
+		);
+	}
+
+	public function wpFooterAppentPopupHtml() {
+
+		$bodyHtml = $this->getPopupsHtml( null, null, 'body' );
+
+		if ( empty( $bodyHtml ) ) {
+			return;
+		}
+
+		echo apply_filters(
+			'brizy_content',
+			$bodyHtml,
+			Brizy_Editor_Project::get(),
+			null,
+			'footer'
+		);
+	}
+
+	public function bodyClassFrontend( $classes ) {
+		if ( ! $this->getMatchingBrizyPopups() || false !== array_search( 'brz', $classes ) ) {
+			return $classes;
+		}
+
+		$classes[] = 'brz';
+
+		return $classes;
 	}
 
 	public function removePageAttributes() {
@@ -122,8 +178,7 @@ class Brizy_Admin_Popups_Main {
 	 */
 	public function getPopupsHtml( $project, $wpPost, $context ) {
 		$content = "";
-
-		$popups = $this->getMatchingBrizyPopups();
+		$popups  = $this->getMatchingBrizyPopups( $wpPost );
 
 		foreach ( $popups as $brizyPopup ) {
 			/**
@@ -150,56 +205,6 @@ class Brizy_Admin_Popups_Main {
 		return $content;
 	}
 
-	/**
-	 * @param $content
-	 * @param $project
-	 * @param $wpPost
-	 * @param string $context
-	 *
-	 * @return string|string[]|null
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_ServiceUnavailable
-	 */
-	public function getPopupsAssets( $project, $wpPost, $context ) {
-		$assetGroups = [];
-
-		$popups = $this->getMatchingBrizyPopups();
-
-		foreach ( $popups as $brizyPopup ) {
-			/**
-			 * @var Brizy_Editor_Post $brizyPopup ;
-			 */
-
-			if ( $brizyPopup->get_needs_compile() || ! $brizyPopup->isCompiledWithCurrentVersion() ) {
-				$brizyPopup->compile_page();
-				$brizyPopup->saveStorage();
-				$brizyPopup->savePost();
-			}
-
-			if ( $context == 'head' ) {
-				$styles = $brizyPopup->getCompiledStyles();
-
-                if(!empty($styles['free'])) {
-                    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($styles['free']);
-                }
-				$assetGroups = apply_filters('brizy_pro_head_assets', $assetGroups, $brizyPopup);
-
-			}
-
-			if ( $context == 'body' ) {
-
-				$assets = $brizyPopup->getCompiledScripts();
-                if(!empty($assets['free'])) {
-                    $assetGroups[] = \BrizyMerge\Assets\AssetGroup::instanceFromJsonData($assets['free']);
-                }
-				$assetGroups =  apply_filters('brizy_pro_body_assets', $assetGroups, $brizyPopup);
-
-			}
-		}
-
-		return $assetGroups;
-	}
-
 	private function insertHead( $target, $headContent ) {
 
 		if ( empty( $headContent ) ) {
@@ -218,34 +223,19 @@ class Brizy_Admin_Popups_Main {
 		return $target . "\n\n<!-- POPUP BODY -->\n{$bodyContent}\n<!-- POPUP BODY END-->\n\n";
 	}
 
-	private function insertInDocumentHead( $target, $headContent ) {
-
-		$target = preg_replace(
-			"/(<head[^>]*>)/ium",
-			"$1" . "\n\n<!-- POPUP INSERT START-->\n{$headContent}\n<!-- POPUP INSERT END-->\n\n",
-			$target
-		);
-
-		return $target;
-	}
-
-	private function insertInDocumentBody( $target, $bodyContent ) {
-
-		$target = preg_replace(
-			"/(<body[^>]*>)/ium",
-			"$1" . "\n\n<!-- POPUP INSERT START-->\n{$bodyContent}\n<!-- POPUP INSERT END-->\n\n",
-			$target
-		);
-
-		return $target;
-	}
-
 	/**
+	 * @param null $wpPost
+	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
-	public function getMatchingBrizyPopups() {
-		list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndTypeForPopoup();
+	public function getMatchingBrizyPopups( $wpPost = null ) {
+		if ( $wpPost ) {
+			$applyFor       = Brizy_Admin_Rule::POSTS;
+			$entityType     = $wpPost->post_type;
+			$entityValues[] = $wpPost->ID;
+		} else {
+			list( $applyFor, $entityType, $entityValues ) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndTypeForPopoup();
+		}
 
 		return $this->findMatchingPopups( $applyFor, $entityType, $entityValues );
 	}
@@ -256,7 +246,6 @@ class Brizy_Admin_Popups_Main {
 	 * @param $entityValues
 	 *
 	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	private function findMatchingPopups( $applyFor, $entityType, $entityValues ) {
 
@@ -281,13 +270,13 @@ class Brizy_Admin_Popups_Main {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		foreach ( $allPopups as $aPopup ) {
 			$ruleSet = $ruleManager->getRuleSet( $aPopup->ID );
-            try  {
-                if ( $ruleSet->isMatching( $applyFor, $entityType, $entityValues ) ) {
-                    $resultPopups[] = Brizy_Editor_Post::get( $aPopup );
-                }
-            } catch (\Exception $e) {
-                continue; // we catch here  the  exclusions
-            }
+			try {
+				if ( $ruleSet->isMatching( $applyFor, $entityType, $entityValues ) ) {
+					$resultPopups[] = Brizy_Editor_Post::get( $aPopup );
+				}
+			} catch ( \Exception $e ) {
+				continue; // we catch here  the  exclusions
+			}
 		}
 
 		return $resultPopups;

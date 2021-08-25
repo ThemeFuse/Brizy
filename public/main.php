@@ -30,25 +30,27 @@ class Brizy_Public_Main
     private function __construct(Brizy_Editor_Entity $post)
     {
         $this->post = $post;
-        $this->asserEnqueueManager = new Brizy_Public_AssetEnqueueManager($post);
     }
 
-    /**
-     * @param Brizy_Editor_Entity $post
-     *
-     * @return Brizy_Public_Main
-     */
-    static public function get(Brizy_Editor_Entity $post = null)
+	/**
+	 * @param Brizy_Editor_Entity $post
+	 *
+	 * @return Brizy_Public_Main
+	 * @throws Exception
+	 */
+    static public function get(Brizy_Editor_Entity $post)
     {
-        if (self::$instance) {
-            return self::$instance;
+    	if ( ! $post->getWpPost() ) {
+		    throw new Exception('Unable to create Brizy_Public_Main instance with null wp post');
+	    }
+
+    	$wpPostId = $post->getWpPost()->ID;
+
+        if ( isset( self::$instance[ $wpPostId ] ) ) {
+            return self::$instance[ $wpPostId ];
         }
 
-        if (!$post) {
-            throw new Exception('Unable to create Brizy_Public_Main instance with null post');
-        }
-
-        return self::$instance = new self($post);
+        return self::$instance[ $wpPostId ] = new self( $post );
     }
 
     static public function isInitialized()
@@ -84,8 +86,6 @@ class Brizy_Public_Main
         } elseif (self::is_view_page($this->post)) {
 
             $this->preparePost();
-
-            $this->asserEnqueueManager->registerActions();
 
             add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
             remove_filter('the_content', 'wpautop');
@@ -205,6 +205,8 @@ class Brizy_Public_Main
      */
     public function _action_enqueue_preview_assets()
     {
+	    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $this->post );
+
         do_action('brizy_preview_enqueue_scripts');
     }
 
@@ -299,9 +301,7 @@ class Brizy_Public_Main
 
     public function body_class_frontend($classes)
     {
-
         $classes[] = 'brz';
-        $classes[] = (function_exists('wp_is_mobile') && wp_is_mobile()) ? 'brz-is-mobile' : '';
 
         return $classes;
     }
@@ -473,10 +473,6 @@ class Brizy_Public_Main
             $compiled_page = $this->post->get_compiled_page();
             $content = $compiled_page->get_body();
         }
-
-        // add popups and popup assets
-        $popupMain = Brizy_Admin_Popups_Main::_init();
-        $content .= $popupMain->getPopupsHtml( $project, $this->post, 'body' );
 
 	    return apply_filters(
             'brizy_content',

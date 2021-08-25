@@ -1,4 +1,4 @@
-import { PageCloudCMS } from "visual/types";
+import { PageCloud } from "visual/types";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import { CollectionItemStatus } from "visual/utils/api/cms/graphql/types/entities";
@@ -7,7 +7,7 @@ import { mPipe } from "visual/utils/fp/mPipe";
 
 export const itemStatusToPageStatus = (
   status: CollectionItemStatus
-): PageCloudCMS["status"] => {
+): PageCloud["status"] => {
   switch (status) {
     case CollectionItemStatus.draft:
       return "draft";
@@ -17,7 +17,7 @@ export const itemStatusToPageStatus = (
 };
 
 export const pageStatusToItemStatus = (
-  status: PageCloudCMS["status"]
+  status: PageCloud["status"]
 ): CollectionItemStatus => {
   switch (status) {
     case "draft":
@@ -27,7 +27,7 @@ export const pageStatusToItemStatus = (
   }
 };
 
-export const itemToPage = (item: CollectionItem): PageCloudCMS => {
+export const itemToPage = (item: CollectionItem): PageCloud => {
   const readData = mPipe(Json.read, Obj.read);
 
   return {
@@ -36,7 +36,7 @@ export const itemToPage = (item: CollectionItem): PageCloudCMS => {
     title: item.title,
     slug: item.slug,
     status: itemStatusToPageStatus(item.status),
-    data: (readData(item.template?.data) as PageCloudCMS["data"]) ?? {
+    data: (readData(item.template?.data) as PageCloud["data"]) ?? {
       items: []
     },
     dataVersion: 0,

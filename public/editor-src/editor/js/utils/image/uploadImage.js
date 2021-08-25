@@ -17,13 +17,13 @@ const defaultOptions = {
  * }} Image
  *
  * @typedef {{
- *   onBase64:any,
+ *   onBase64?:any,
  *   acceptedExtensions: Array<string>,
  *   onUpload: function(image:Image):void,
  *   onError: function(response:Response): void,
  * }} Options
  *
- * @param {string} imageFile
+ * @param {File} imageFile
  * @param {Options} options
  */
 export default function uploadImage(imageFile, options) {

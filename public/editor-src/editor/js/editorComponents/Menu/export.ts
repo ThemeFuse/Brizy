@@ -21,7 +21,7 @@ interface Settings {
   };
 }
 
-const hasRootContainer = $(document).find(".brz-root__container").length > 0;
+const $rootContainer = $(document).find(".brz-root__container");
 const megaMenus = new Map<string, HTMLElement>();
 
 const getCurrentDevice = (): DeviceMode => {
@@ -212,20 +212,29 @@ const mouseMove = ({ target }: Event): void => {
       }
 
       // Deep Mega Menu
-      const parentMegaMenu = target.closest(".brz-mega-menu");
+
+      // 1 - hover on megaMenu-portal
+      const parentMegaMenu = target.closest(".brz-mega-menu__portal");
 
       if (parentMegaMenu) {
+        // 2 - get megaMenu-portal uid
         const parentMenuUid = parentMegaMenu.getAttribute("data-mega-menu-uid");
+
+        // 3 - get menu item that opened megaMenu-portal with same uid
         const menuItemByTarget = document.querySelector(
           `[data-mega-menu-open-uid="${parentMenuUid}"]`
         );
 
         if (menuItemByTarget) {
           const megaMenu = menuItemByTarget.closest<HTMLElement>(
-            ".brz-mega-menu"
+            ".brz-mega-menu__portal"
           );
 
-          if (megaMenu && megaMenu.dataset.opened === "true") {
+          if (
+            megaMenu &&
+            megaMenu.dataset.opened === "true" &&
+            megaMenu.dataset.megaMenuUid === megaMenuUid
+          ) {
             return;
           }
         }
@@ -422,9 +431,14 @@ export default function($node: JQuery): void {
       });
     });
 
+  let currentMenuOpened: string | undefined = undefined;
+  let needToOpen: string | undefined = undefined;
+
   root.querySelectorAll<HTMLElement>("[data-mmenu-id]").forEach(node => {
     const { mmenuId, mmenuPosition, mmenuTitle } = node.dataset;
-    const icon = node.querySelector(".brz-mm-menu__icon");
+    const icon = [...node.children].find(node =>
+      node.classList.contains("brz-mm-menu__icon")
+    );
 
     if (!mmenuId || !icon) {
       return;
@@ -463,33 +477,65 @@ export default function($node: JQuery): void {
           // Emit Menu panel opened
           // @ts-expect-error
           window.Brz.emit("elements.mmenu.close", this.node.pnls);
+          currentMenuOpened = undefined;
+        },
+        "close:finish": function(): void {
+          if (needToOpen) {
+            const mMenuNode = root.querySelector(`${needToOpen}.brz-mm-menu`);
+
+            // @ts-expect-error mmApi is added by MMenu
+            if (mMenuNode?.mmApi) {
+              // @ts-expect-error mmApi is added by MMenu
+              mMenuNode.mmApi.open();
+              needToOpen = undefined;
+            }
+          }
         }
       }
     };
 
     let menu;
 
-    if (hasRootContainer) {
-      const config = {
-        offCanvas: {
-          menu: {
-            insertSelector: ".brz-root__container"
-          },
-          page: {
-            wrapIfNeeded: false,
-            selector: ".brz-root__container"
+    switch ($rootContainer.length) {
+      case 1: {
+        const config = {
+          offCanvas: {
+            menu: {
+              insertSelector: ".brz-root__container"
+            },
+            page: {
+              wrapIfNeeded: false,
+              selector: ".brz-root__container"
+            }
           }
-        }
-      };
-      menu = new MMenu(mmenuId, options, config);
-    } else {
-      menu = new MMenu(mmenuId, options);
+        };
+        menu = new MMenu(mmenuId, options, config);
+        break;
+      }
+      default: {
+        menu = new MMenu(mmenuId, options);
+        break;
+      }
     }
 
     const menuAPI = menu.API;
 
     icon.addEventListener("click", () => {
-      menuAPI?.open();
+      if (currentMenuOpened) {
+        const mMenuNode = root.querySelector(
+          `${currentMenuOpened}.brz-mm-menu`
+        );
+
+        // @ts-expect-error mmApi is added by MMenu
+        if (mMenuNode && mMenuNode.mmApi) {
+          needToOpen = mmenuId;
+          // @ts-expect-error mmApi is added by MMenu
+          mMenuNode.mmApi.close(mmenuId);
+        }
+      } else {
+        currentMenuOpened = mmenuId;
+        menuAPI?.open();
+      }
     });
     // @ts-expect-error
     window.Brz.on("elements.anchor.startScrolled", () => {

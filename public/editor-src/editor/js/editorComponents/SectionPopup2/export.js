@@ -78,10 +78,13 @@ export default function($node) {
           ".brz-popup2__action-close"
         ).length;
 
+        const clickedFormEvent =
+          $(e.target).closest(".select2-selection__choice").length > 0;
+
         if (
           clickedTheCrossAction ||
           clickedTheCross ||
-          (clickedOutSideContent && clickedOutSideToClose)
+          (!clickedFormEvent && clickedOutSideContent && clickedOutSideToClose)
         ) {
           e.preventDefault();
           $this.popup().close();
