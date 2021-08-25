@@ -134,7 +134,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 				try {
 					$instances[] = $this->createSingleFromZipPath( $z, $folder );
 				} catch ( Exception $e ) {
-					$failed[] = $e->getMessage();
+					$failed[$folder] = $e->getMessage();
 				}
 			}
 

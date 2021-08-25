@@ -166,7 +166,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$uploadedFile = wp_handle_upload( $file, [ 'test_form' => false ] );
 
 			if ( isset( $uploadedFile['file'] ) ) {
-				$zip = new Brizy_Editor_Zip_BlockArchiver( Brizy_Editor_Project::get(),
+				$zip = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
 					new Brizy_Admin_Fonts_Manager(),
 					BRIZY_EDITOR_VERSION );
 				list( $instances, $errors ) = $zip->createFromZip( $uploadedFile['file'] );
