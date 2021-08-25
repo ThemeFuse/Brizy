@@ -55,19 +55,26 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$bockManager = new Brizy_Admin_Layouts_Manager();
-			$layouts     = $bockManager->getEntities( [
-				'meta_query' => array(
-					// meta query takes an array of arrays, watch out for this!
-					array(
-						'key'     => 'brizy_post_uid',
-						'value'   => explode( ',', $this->param( 'uid' ) ),
-						'compare' => 'IN',
-					),
-				),
-			] );
+			$uids        = [];
+			// this is not a very eficien solution if you have a big array of uids
 
-			if ( count( $layouts ) == 0 ) {
-				$this->error( 404, __('There are no layouts to be archived') );
+			$explode = explode( ',', $this->param( 'uid' ) );
+			$items   = array_map( function ( $auid ) use ( $uids, $bockManager ) {
+				list( $uid, $isPro ) = explode( ':', $auid );
+				$uids[] = $uid;
+				$item   = new Brizy_Editor_Zip_ArchiveItem( $uid, $isPro );
+
+				if ( $post = $bockManager->getEntity( $uid ) ) {
+					$item->setPost( $post );
+
+					return $item;
+				}
+
+				return null;
+			}, $explode );
+			$items = array_filter( $items );
+			if ( count( $items ) == 0 ) {
+				$this->error( 404, __( 'There are no layouts to be archived' ) );
 			}
 
 			$zipPath     = "Layouts-" . date( DATE_ATOM ) . ".zip";
@@ -75,7 +82,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
 				$fontManager,
 				BRIZY_EDITOR_VERSION );
-			$zipPath     = $zip->createZip( $layouts, $zipPath );
+			$zipPath     = $zip->createZip( $items, $zipPath );
 
 			header( "Pragma: public" );
 			header( "Expires: 0" );

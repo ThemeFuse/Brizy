@@ -143,7 +143,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionUploadBlocks() {
 		try {
-
 			$this->verifyNonce( self::nonce );
 
 			if ( ! isset( $_FILES['files'] ) ) {

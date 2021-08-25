@@ -134,7 +134,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 				try {
 					$instances[] = $this->createSingleFromZipPath( $z, $folder );
 				} catch ( Exception $e ) {
-					$failed[$folder] = $e->getMessage();
+					$failed[] = [ 'uid' => $folder, 'message' => $e->getMessage() ];
 				}
 			}
 
@@ -151,11 +151,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 
 	private function createSingleFromZipPath( ZipArchive $z, $dir ) {
 
-		$data        = json_decode( $z->getFromName( $dir . '/data.json' ) );
-		$hasPro      = (bool) $data->hasPro;
+		$data   = json_decode( $z->getFromName( $dir . '/data.json' ) );
+		$hasPro = (bool) $data->hasPro;
 
-		if($hasPro && (!class_exists('BrizyPro_Admin_License' ) || !BrizyPro_Admin_License::_init()->getCurrentLicense())) {
-			throw new Exception('Attempt to import a PRO block in a non PRO environment.');
+		if ( $hasPro && ( ! class_exists( 'BrizyPro_Admin_License' ) || ! BrizyPro_Admin_License::_init()->getCurrentLicense() ) ) {
+			throw new Exception( 'Attempt to import a PRO block in a non PRO environment.' );
 		}
 
 		$entityClass = $data->class;
@@ -203,7 +203,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	}
 
 	protected function prepareArchiveFilepath( $fileName ) {
-		return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName ;
+		return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 	}
 
 	protected function storeImages( $data, ZipArchive $z, Brizy_Editor_Post $block ) {
