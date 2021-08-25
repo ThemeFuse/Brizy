@@ -2,7 +2,7 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: 2.3.12
 License: GPLv3
