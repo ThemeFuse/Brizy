@@ -49,6 +49,7 @@ pipeline {
         stage('Prepare the build') {
             steps {
                 sh "./jenkins/version-update.sh ${params.buildVersion} ${params.minProVersion} ${params.editorVersion} ${params.syncVersion}"
+                sh "./jenkins/update-tested-version.sh README.md readme.txt"
             }
         }
 
