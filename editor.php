@@ -146,7 +146,6 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
-		Brizy_Admin_Membership_Membership::_init();
         Brizy_Admin_Stories_Main::_init();
 
 		if ( Brizy_Editor_User::is_user_allowed() ) {
