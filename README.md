@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.7<br>
-Requires PHP: 5.6<br>
-Stable tag: 2.3.12<br>
+Tested up to: 5.8<br>
+Requires PHP: 5.6.20<br>
+Stable tag: 2.3.13<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.13 - 2021-08-26
+* Fixed:  Editor for Internal Popup
 
 ### 2.3.12 - 2021-08-24
 * New: Hide Section icon when not in focus on tablet and mobile

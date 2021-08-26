@@ -3,7 +3,6 @@ import _ from "underscore";
 import {
   updateProject as apiUpdateProject,
   updatePage as apiUpdatePage,
-  updateInternalPopup as apiUpdateInternalPopup,
   updateExternalPopup as apiUpdateExternalPopup,
   createGlobalBlock as apiCreateGlobalBlock,
   updateGlobalBlock as apiUpdateGlobalBlock,
@@ -29,10 +28,8 @@ const updateFn = (() => {
       throw new Error("unknown editor mode");
     };
 
-    return IS_PAGE || IS_SINGLE || IS_ARCHIVE || IS_STORY
+    return IS_PAGE || IS_SINGLE || IS_ARCHIVE || IS_STORY || IS_INTERNAL_POPUP
       ? apiUpdatePage
-      : IS_INTERNAL_POPUP
-      ? apiUpdateInternalPopup
       : IS_EXTERNAL_POPUP
       ? apiUpdateExternalPopup
       : err();
