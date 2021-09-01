@@ -37,10 +37,10 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 10002 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
-		add_filter( 'script_loader_tag',  [ $this, 'addScriptAttributes' ], 10, 2 );
-		add_filter( 'style_loader_tag',   [ $this, 'addStyleAttributes' ], 10, 2 );
-		add_action( 'wp_head',            [ $this, 'insertHeadCodeAssets' ] );
-		add_action( 'wp_footer',          [ $this, 'insertBodyCodeAssets' ] );
+		add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
+		add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
+		add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
+		add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
 	}
 
 	/**
@@ -56,36 +56,40 @@ class Brizy_Public_AssetEnqueueManager {
 
 	public function insertHeadCodeAssets() {
 
-		$assetsContent = $this->getCodeAssetsAsString( $this->styles );
+		$content = $this->getCodeAssetsAsString( $this->styles );
 
-		if ( empty( $assetsContent ) ) {
+		if ( empty( $content ) ) {
 			return;
 		}
 
-		echo apply_filters(
-			'brizy_content',
-			$assetsContent,
-			$this->project,
-			null,
-			'head'
-		);
+		echo $content;
+
+//		echo apply_filters(
+//			'brizy_content',
+//			$content,
+//			$this->project,
+//			null,
+//			'head'
+//		);
 	}
 
 	public function insertBodyCodeAssets() {
 
-		$assets = $this->getCodeAssetsAsString( $this->scripts );
+		$content = $this->getCodeAssetsAsString( $this->scripts );
 
-		if ( empty( $assets ) ) {
+		if ( empty( $content ) ) {
 			return;
 		}
 
-		echo apply_filters(
-			'brizy_content',
-			$assets,
-			$this->project,
-			null,
-			'body'
-		);
+		echo $content;
+
+//		echo apply_filters(
+//			'brizy_content',
+//			$content,
+//			$this->project,
+//			null,
+//			'body'
+//		);
 	}
 
 	public function addEditorConfigVar() {
@@ -113,18 +117,24 @@ class Brizy_Public_AssetEnqueueManager {
 
 	public function enqueueStyles() {
 		$assetGroups = [];
+		$others      = [];
 
 		foreach ( $this->posts as $editorPost ) {
 			$styles = $editorPost->getCompiledStyles();
 
 			if ( ! empty( $styles['free'] ) ) {
-				$assetGroups[] = AssetGroup::instanceFromJsonData( $styles['free'] );
+				$assetGroups[] = $assetGroup = AssetGroup::instanceFromJsonData( $styles['free'] );
+				$this->replacePlaceholders( $assetGroup, $editorPost->getWpPost(), 'head' );
 			}
 
-			$assetGroups = apply_filters( 'brizy_pro_head_assets', $assetGroups, $editorPost );
+			$others = apply_filters( 'brizy_pro_head_assets', [], $editorPost );
+
+			foreach ( $others as $i => $assetGroup ) {
+				$this->replacePlaceholders( $others[ $i ], $editorPost->getWpPost(), 'body' );
+			}
 		}
 
-		$assetAggregator = new AssetAggregator( $assetGroups );
+		$assetAggregator = new AssetAggregator( array_merge( $assetGroups, $others ) );
 		$this->styles    = $assetAggregator->getAssetList();
 
 		foreach ( $this->styles as $asset ) {
@@ -136,18 +146,24 @@ class Brizy_Public_AssetEnqueueManager {
 
 	public function enqueueScripts() {
 		$assetGroups = [];
+		$others      = [];
 
 		foreach ( $this->posts as $editorPost ) {
 			$scripts = $editorPost->getCompiledScripts();
 
 			if ( ! empty( $scripts['free'] ) ) {
-				$assetGroups[] = AssetGroup::instanceFromJsonData( $scripts['free'] );
+				$assetGroups[] = $assetGroup = AssetGroup::instanceFromJsonData( $scripts['free'] );
+				$this->replacePlaceholders( $assetGroup, $editorPost->getWpPost(), 'body' );
 			}
 
-			$assetGroups = apply_filters( 'brizy_pro_body_assets', $assetGroups, $editorPost );
+			$others = apply_filters( 'brizy_pro_body_assets', [], $editorPost );
+
+			foreach ( $others as $i => $assetGroup ) {
+				$this->replacePlaceholders( $others[ $i ], $editorPost->getWpPost(), 'body' );
+			}
 		}
 
-		$assetAggregator = new AssetAggregator( $assetGroups );
+		$assetAggregator = new AssetAggregator( array_merge( $assetGroups, $others ) );
 		$this->scripts   = $assetAggregator->getAssetList();
 
 		foreach ( $this->scripts as $asset ) {
@@ -235,5 +251,42 @@ class Brizy_Public_AssetEnqueueManager {
 	 */
 	private function getHandle( Asset $asset ) {
 		return Brizy_Editor::prefix() . '-asset-' . $asset->getName() . '-' . $asset->getScore();
+	}
+
+	private function replacePlaceholders( AssetGroup $ag, $post, $context ) {
+
+		$this->replacePlaceholderInAsset( $ag->getMain(), $post, $context );
+
+		foreach ( $ag->getGeneric() as $i => &$asset ) {
+			$this->replacePlaceholderInAsset( $asset, $post, $context );
+		}
+//		foreach ( $ag->getLibsMap() as $i => &$asset ) {
+//			$this->replacePlaceholderInAsset( $asset, $post, $context );
+//		}
+//		foreach ( $ag->getPageFonts() as $i => &$asset ) {
+//			$this->replacePlaceholderInAsset( $asset, $post, $context );
+//		}
+		foreach ( $ag->getPageStyles() as $i => &$asset ) {
+			$this->replacePlaceholderInAsset( $asset, $post, $context );
+		}
+
+	}
+
+	private function replacePlaceholderInAsset( Asset $asset, $post, $context ) {
+
+		if ( $asset->getType() == Asset::TYPE_INLINE || $asset->getType() == Asset::TYPE_CODE ) {
+
+			$assetContent = apply_filters(
+				'brizy_content',
+				$asset->getContent(),
+				$this->project,
+				$post,
+				$context
+			);
+
+			$asset->setContent( $assetContent );
+		}
+
+		return $asset;
 	}
 }
