@@ -100,31 +100,27 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 
 				return null;
-			},$explode );
+			}, $explode );
 
 			$items = array_filter( $items );
-
-//			$blocks = $bockManager->getEntities( [
-//				'meta_query' => array(
-//					// meta query takes an array of arrays, watch out for this!
-//					array(
-//						'key'     => 'brizy_post_uid',
-//						'value'   => explode( ',', $uids ),
-//						'compare' => 'IN',
-//					),
-//				),
-//			] );
 
 			if ( count( $items ) == 0 ) {
 				$this->error( 404, __( 'There are no block to be archived' ) );
 			}
 
 			$fontManager = new Brizy_Admin_Fonts_Manager();
-			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
-				$fontManager,
-				BRIZY_EDITOR_VERSION );
-			$zipPath     = "Blocks-" . date( DATE_ATOM ) . ".zip";
-			$zipPath     = $zip->createZip( $items, $zipPath );
+			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(), $fontManager, BRIZY_EDITOR_VERSION );
+
+			switch ( $this->param( 'type' ) ) {
+				case 'popup':
+					$zipPath = "Popups-" . date( DATE_ATOM ) . ".zip";
+					break;
+				default:
+					$zipPath = "Blocks-" . date( DATE_ATOM ) . ".zip";
+					break;
+			}
+
+			$zipPath = $zip->createZip( $items, $zipPath );
 
 			header( "Pragma: public" );
 			header( "Expires: 0" );
