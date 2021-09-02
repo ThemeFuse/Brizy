@@ -22,7 +22,7 @@
     "glamor": "^2.20.40",
     "graphql": "^15.3.0",
     "imagesloaded": "^4.1.4",
-    "immer": "^3.1.2",
+    "immer": "^9.0.6",
     "immutable": "^4.0.0-rc.14",
     "isotope-layout": "^3.0.6",
     "jquery": "^3.3.1",
