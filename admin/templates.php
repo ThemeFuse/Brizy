@@ -471,9 +471,14 @@ class Brizy_Admin_Templates
 
                 remove_filter('the_content', 'wpautop');
 
-                add_filter('brizy_asset_manager_post', function ($post) use ($pid) {
-                    return get_post($pid);
-                });
+	            add_filter( 'brizy_asset_manager_post', function ( $post ) use ( $pid ) {
+
+	                if ( $post->post_type !== self::CP_TEMPLATE ) {
+	                    return $post;
+                    }
+
+		            return get_post( $pid );
+	            } );
 
                 // insert the compiled head and content
                 add_filter('body_class', array($this, 'bodyClassFrontend'));

@@ -219,56 +219,67 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function savePost( $createRevision = false ) {
 
-		$version      = '<!-- version:' . time() . ' -->';
-		$emptyContent = '<div class="brz-root__container"></div>';
+		$postarr = [
+			'ID'           => $this->getWpPostId(),
+			'post_content' => $this->getPostContent( $createRevision )
+		];
 
 		$this->deleteOldAutosaves( $this->getWpPostId() );
 
 		if ( $createRevision ) {
 
-			$post_type        = $this->getWpPost()->post_type;
-			$post_type_object = get_post_type_object( $post_type );
-			$content          = $this->getWpPost()->post_content;
-			$content          = strpos( $content, 'brz-root__container' ) ? preg_replace( '/<!-- version:\d+ -->/', '', $content ) : $emptyContent;
-
-			$params = [
-				'ID'           => $this->getWpPostId(),
-				'post_content' => $content . $version
-			];
+			$post_type_object = get_post_type_object( $this->getWpPost()->post_type );
 
 			if ( current_user_can( $post_type_object->cap->publish_posts ) ) {
-				$params['post_status'] = $this->getWpPost()->post_status;
+				$postarr['post_status'] = $this->getWpPost()->post_status;
 			}
 
-			wp_update_post( $params );
-
 		} else {
-			global $wpdb;
+			remove_action( 'post_updated', 'wp_save_post_revision' );
+		}
 
-			$content = $this->get_compiled_page()->getPageContent();
+		wp_update_post( $postarr );
 
-			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $this->getWpPost(), null );
+		$this->createUid();
+	}
+
+	private function getPostContent( $noFilters ) {
+
+		$post         = $this->getWpPost();
+		$emptyContent = '<div class="brz-root__container"></div>';
+		$versionTime  = '<!-- version:' . time() . ' -->';
+
+		$excluded = [
+			Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			Brizy_Admin_Blocks_Main::CP_SAVED,
+			Brizy_Admin_Templates::CP_TEMPLATE,
+			Brizy_Admin_Popups_Main::CP_POPUP
+		];
+
+		if ( in_array( $post->post_type, $excluded ) ) {
+			return $emptyContent . $versionTime;
+		}
+
+		if ( $noFilters ) {
+			$content = $post->post_content;
+		} else {
+			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $post, null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
 			$context->setProvider( $placeholderProvider );
 			$extractor = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 
-			list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content );
+			list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $this->get_compiled_page()->getPageContent() );
 
 			$replacer = new \BrizyPlaceholders\Replacer( $placeholderProvider );
 			$content  = $replacer->replaceWithExtractedData( $placeholders, $placeholderInstances, $content, $context );
 
 			$content = $extractor->stripPlaceholders( $content );
-			$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost() );
-
-			$wpdb->update(
-				$wpdb->posts,
-				[ 'post_content' => ( $content ? $content : $emptyContent ) . $version ],
-				[ 'ID' => $this->getWpPostId() ],
-				[ '%s' ]
-			);
+			$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post );
 		}
 
-		$this->createUid();
+		$content = strpos( $content, 'brz-root__container' ) ? preg_replace( '/<!-- version:\d+ -->/', '', $content ) : $emptyContent;
+
+		return $content . $versionTime;
 	}
 
 	/**

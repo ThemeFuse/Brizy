@@ -264,7 +264,7 @@ class Brizy_Public_AssetEnqueueManager {
 				'brizy_content',
 				$asset->getContent(),
 				$this->project,
-				apply_filters('brizy_asset_manager_post',$post),
+				apply_filters( 'brizy_asset_manager_post', $post ),
 				$context
 			);
 
