@@ -187,7 +187,7 @@ class Brizy_Public_AssetEnqueueManager {
 	}
 
 	private function enqueueStyleAsset( Asset $asset ) {
-		$handle = $this->getHandle( $asset );
+		$handle = $this->getHandle( $asset, 'css' );
 		switch ( $asset->getType() ) {
 			case Asset::TYPE_INLINE:
 				wp_register_style( $handle, false, [], BRIZY_VERSION );
@@ -204,7 +204,7 @@ class Brizy_Public_AssetEnqueueManager {
 	}
 
 	private function enqueueScriptAsset( Asset $asset ) {
-		$handle = $this->getHandle( $asset );
+		$handle = $this->getHandle( $asset, 'js' );
 		switch ( $asset->getType() ) {
 			case Asset::TYPE_INLINE:
 				wp_register_script( $handle, false, [], BRIZY_VERSION, true );
@@ -233,8 +233,8 @@ class Brizy_Public_AssetEnqueueManager {
 	 *
 	 * @return string
 	 */
-	private function getHandle( Asset $asset ) {
-		return Brizy_Editor::prefix() . '-asset-' . $asset->getName() . '-' . $asset->getScore();
+	private function getHandle( Asset $asset, $type) {
+		return Brizy_Editor::prefix() . '-asset-' . $asset->getName() . '-' . $asset->getScore() . '-' . $type;
 	}
 
 	private function replacePlaceholders( AssetGroup $ag, $post, $context ) {
@@ -264,7 +264,7 @@ class Brizy_Public_AssetEnqueueManager {
 				'brizy_content',
 				$asset->getContent(),
 				$this->project,
-				$post,
+				apply_filters( 'brizy_asset_manager_post', $post ),
 				$context
 			);
 
