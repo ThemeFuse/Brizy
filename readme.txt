@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.8
 Requires PHP: 5.6.20
-Stable tag: 2.3.13
+Stable tag: 2.3.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,13 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.14 - 2021-09-06 =
+* Fixed: Icons in the Tabs element
+* Fixed: Cover images for the Video element
+* Fixed: CSS in Countdown element 
+* Improved: Brizy works better with caching plugins 
+* Fixed: Some default options values in the builder 
 
 = 2.3.13 - 2021-08-26 =
 * Fixed:  Editor for Internal Popup

@@ -20,7 +20,7 @@ trait Brizy_Editor_Asset_AttachmentAware {
 					FROM {$posts_table}
 						LEFT JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
 					WHERE  
-						( ({$meta_table}.meta_key = 'brizy_post_uid' OR {$meta_table}.meta_key = 'brizy_attachment_uid') AND {$meta_table}.meta_value = %s )
+						( {$meta_table}.meta_key = 'brizy_post_uid' AND {$meta_table}.meta_value = %s )
 						AND {$posts_table}.post_type = 'attachment'
 						AND {$posts_table}.post_status = 'inherit'
 					GROUP BY {$posts_table}.ID

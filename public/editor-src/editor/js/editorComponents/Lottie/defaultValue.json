@@ -10,7 +10,10 @@
 
     "loop": "on",
     "autoplay": "on",
-    "direction": 1
+    "direction": 1,
+
+    "offsetX": 0,
+    "offsetY": 0
   },
 
   "link": {
