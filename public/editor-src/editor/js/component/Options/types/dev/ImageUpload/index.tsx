@@ -64,7 +64,7 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
       {label}
       <ImageSetter<string>
         className={className}
-        onlyPointer={!config?.edit}
+        onlyPointer={!(config?.edit ?? true)}
         showPointer={value.extension !== "svg" && (config?.pointer ?? true)}
         extension={value.extension}
         x={value.x}

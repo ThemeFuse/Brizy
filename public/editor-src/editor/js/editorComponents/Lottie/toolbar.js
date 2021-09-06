@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { toolbarLinkAnchor, toolbarLinkExternal } from "visual/utils/toolbar";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device, component }) {
   const dvk = key => defaultValueKey({ v, key, device });
@@ -119,7 +119,9 @@ export function getItems({ v, device, component }) {
             {
               id: "anchor",
               label: t("Block"),
-              options: [toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP })]
+              options: [
+                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+              ]
             },
             {
               id: "popup",
@@ -128,7 +130,7 @@ export function getItems({ v, device, component }) {
                 {
                   id: "linkPopup",
                   type: "promptAddPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${v.linkPopup}`,
                   value: {

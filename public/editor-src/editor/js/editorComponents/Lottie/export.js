@@ -14,7 +14,6 @@ export default function($node) {
     const speed = node.getAttribute("data-anim-speed");
     const autoplay = node.getAttribute("data-anim-autoplay");
     const direction = node.getAttribute("data-anim-direction");
-
     const animation = Lottie.loadAnimation({
       container: node,
       renderer: "svg",

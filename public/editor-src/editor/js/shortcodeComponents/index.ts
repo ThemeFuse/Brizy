@@ -56,6 +56,7 @@ import Twitter from "./pro/Twitter";
 import Lottie from "./pro/Lottie";
 import Table from "./pro/Table";
 import StoryStarRating from "./pro/story/StoryStarRating";
+import StoryLottie from "./pro/story/StoryLottie";
 
 export const base = [
   { component: Text, pro: false },
@@ -106,7 +107,8 @@ const baseStory = [
   { component: StoryCounter, pro: false },
   { component: StoryShape, pro: false },
   { component: StoryForm2, pro: false },
-  { component: StoryStarRating, pro: true }
+  { component: StoryStarRating, pro: true },
+  { component: StoryLottie, pro: true }
 ];
 
 const grid = [

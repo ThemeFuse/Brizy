@@ -1548,7 +1548,7 @@ body {
 .brz:not(.brz-ed) .brz-story .brz-story-linked,
 .brz:not(.brz-ed) .brz-story .brz-forms2,
 .brz:not(.brz-ed) .brz-story .brz-embed-code,
-.brz:not(.brz-ed) .brz-story .brz-richtext a {
+.brz:not(.brz-ed) .brz-story .brz-rich-text a {
   pointer-events: initial; }
 
 .brz:not(.brz-ed) .brz-story > .brz-slick-slider:not(.slick-initialized) {
@@ -4929,6 +4929,11 @@ b {
     .brz .brz-starrating .brz-starrating-style2-container .brz-starrating-icon-wrap {
       -ms-flex-item-align: center;
           align-self: center; }
+
+.brz .brz-lottie-anim {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
 
 .brz .brz-search-container {
   display: -webkit-box;
