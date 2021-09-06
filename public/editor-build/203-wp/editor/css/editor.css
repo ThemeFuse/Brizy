@@ -313,7 +313,7 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-story>.brz-slick-slider>.slick-list>.slick-track>.slick-current{opacity:1;-webkit-transition:all .2s;transition:all .2s;-webkit-transform:scale(1);transform:scale(1)}
 .brz:not(.brz-ed) .brz-story .brz-container{font-size:37.5vh}
 .brz:not(.brz-ed) .brz-story .brz-wrapper{pointer-events:none}
-.brz:not(.brz-ed) .brz-story .brz-embed-code,.brz:not(.brz-ed) .brz-story .brz-forms2,.brz:not(.brz-ed) .brz-story .brz-map,.brz:not(.brz-ed) .brz-story .brz-richtext a,.brz:not(.brz-ed) .brz-story .brz-story-linked,.brz:not(.brz-ed) .brz-story .brz-video,.brz:not(.brz-ed) .brz-story a.brz-a{pointer-events:initial}
+.brz:not(.brz-ed) .brz-story .brz-embed-code,.brz:not(.brz-ed) .brz-story .brz-forms2,.brz:not(.brz-ed) .brz-story .brz-map,.brz:not(.brz-ed) .brz-story .brz-rich-text a,.brz:not(.brz-ed) .brz-story .brz-story-linked,.brz:not(.brz-ed) .brz-story .brz-video,.brz:not(.brz-ed) .brz-story a.brz-a{pointer-events:initial}
 .brz:not(.brz-ed) .brz-story>.brz-slick-slider:not(.slick-initialized){display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
 .brz:not(.brz-ed) .brz-story>.brz-slick-slider:not(.slick-initialized)>.brz-section__content{height:75vh;max-width:37.5vh;min-width:320px;min-height:533px;max-height:100%;-webkit-transform:translateZ(0);transform:translateZ(0)}
 .brz:not(.brz-ed) .brz-story>.brz-slick-slider{padding-top:80px}
@@ -973,6 +973,7 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-starrating .brz-starrating-style2-container{padding:2px 9px;display:-webkit-box;display:-ms-flexbox;display:flex}
 .brz .brz-starrating .brz-starrating-style2-container .brz-starrating-text{-ms-flex-item-align:center;align-self:center}
 .brz .brz-starrating .brz-starrating-style2-container .brz-starrating-icon-wrap{-ms-flex-item-align:center;align-self:center}
+.brz .brz-lottie-anim{display:-webkit-box;display:-ms-flexbox;display:flex}
 .brz .brz-search-container{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;overflow:visible}
 .brz .brz-search-container--minimal{overflow:hidden}
 .brz .brz-search-container--minimal .brz-search-form{padding:0 15px}

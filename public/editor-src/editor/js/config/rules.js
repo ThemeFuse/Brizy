@@ -337,6 +337,20 @@ export default {
     offsetYSuffix: "%",
     offsetYAlignment: "top"
   },
+  "story-lottie": {
+    width: 60,
+    widthSuffix: "%",
+
+    elementPosition: "fixed",
+
+    offsetX: 20,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 34,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
+  },
   "posts--column": {
     width: 100
   },

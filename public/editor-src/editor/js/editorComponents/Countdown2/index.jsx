@@ -9,13 +9,7 @@ import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
-import {
-  style,
-  styleItems,
-  styleNumber,
-  styleTitle,
-  styleMessage
-} from "./styles";
+import { style, styleMessage } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { getTime, formatDate } from "./utils";
 import BoxResizer from "visual/component/BoxResizer";
@@ -141,8 +135,6 @@ class Countdown2 extends EditorComponent {
 
   renderPart(name) {
     const v = this.getValue();
-    const vs = this.getStylesValue();
-    const vd = this.getDefaultValue();
 
     const className = classnames(
       "brz-countdown2__item",
@@ -150,37 +142,16 @@ class Countdown2 extends EditorComponent {
       {
         "brz-countdown2_custom":
           v.bgColorOpacity === 0 && v.borderColorOpacity === 0
-      },
-      css(
-        `${this.constructor.componentId}-bg`,
-        `${this.getId()}-bg`,
-        styleItems(v, vs, vd)
-      )
-    );
-    const classNameNumber = classnames(
-      "brz-countdown2__number",
-      css(
-        `${this.constructor.componentId}-number`,
-        `${this.getId()}-number`,
-        styleNumber(v, vs, vd)
-      )
-    );
-    const classNameTitle = classnames(
-      "brz-countdown2__label",
-      css(
-        `${this.constructor.componentId}-title`,
-        `${this.getId()}-title`,
-        styleTitle(v, vs, vd)
-      )
+      }
     );
 
     const propertyName = `${name}Label`;
     return (
       <div key={name} className={className}>
-        <div ref={this[name]} className={classNameNumber}>
+        <div ref={this[name]} className="brz-countdown2__number">
           00
         </div>
-        <div className={classNameTitle}>
+        <div className="brz-countdown2__label">
           <TextEditor
             value={v[propertyName]}
             onChange={this.handleTextChange.bind(null, propertyName)}

@@ -37,21 +37,25 @@ export function getItems({ v }) {
                     };
                   }
                 },
-                v.iconName === "" && {
-                  id: "iconPosition",
-                  type: "radioGroup-dev",
-                  disabled: true
-                },
-                v.iconName === "" && {
-                  id: "groupIconSizesPicker",
-                  type: "group-dev",
-                  disabled: true
-                },
-                v.iconName === "" && {
-                  id: "iconSpacing",
-                  type: "slider-dev",
-                  disabled: true
-                }
+                ...(v.iconName === ""
+                  ? [
+                      {
+                        id: "iconPosition",
+                        type: "radioGroup-dev",
+                        disabled: true
+                      },
+                      {
+                        id: "groupIconSizesPicker",
+                        type: "group-dev",
+                        disabled: true
+                      },
+                      {
+                        id: "iconSpacing",
+                        type: "slider-dev",
+                        disabled: true
+                      }
+                    ]
+                  : [])
               ]
             }
           ]
