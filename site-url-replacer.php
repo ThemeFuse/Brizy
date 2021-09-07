@@ -8,9 +8,13 @@ class Brizy_SiteUrlReplacer {
 			$url = home_url();
 		}
 
-		$pattern = str_replace( [ '/', '.' ], [ '\/', '\.' ], str_replace( [ 'https', 'http' ], '', $url ) );
+		$pattern = str_replace( [ 'https://', 'http://', 'www.', '/', '.' ], [ '', '', '', '\/', '\.' ], $url );
 
-		return preg_replace( "/(http|https){$pattern}/i", Brizy_Config::SITE_URL_PLACEHOLDER, $content );
+		// http://brizy.local/my-post/
+		// https://brizy.local/my-post/
+		// http://www.brizy.local/my-post/
+		// https://www.brizy.local/my-post/
+		return preg_replace( "/(http|https)(:\/\/)(www.)?({$pattern})/i", Brizy_Config::SITE_URL_PLACEHOLDER, $content );
 	}
 
 	static public function restoreSiteUrl( $content, $url = null ) {
