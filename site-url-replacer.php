@@ -8,11 +8,9 @@ class Brizy_SiteUrlReplacer {
 			$url = home_url();
 		}
 
-		$pattern = str_replace( array( '/', '.' ), array( '\/', '\.' ), $url );
+		$pattern = str_replace( [ '/', '.' ], [ '\/', '\.' ], str_replace( [ 'https', 'http' ], '', $url ) );
 
-		$content = preg_replace( "/{$pattern}/i", Brizy_Config::SITE_URL_PLACEHOLDER, $content );
-
-		return $content;
+		return preg_replace( "/(http|https){$pattern}/i", Brizy_Config::SITE_URL_PLACEHOLDER, $content );
 	}
 
 	static public function restoreSiteUrl( $content, $url = null ) {
