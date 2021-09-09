@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.8
+Tested up to: 5.8.1
 Requires PHP: 5.6.20
-Stable tag: 2.3.14
+Stable tag: 2.3.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.15 - 2021-09-09 =
+* Fixed: Broken home page url 
+* Fixed: Asset manager for pages that contains popups
 
 = 2.3.14 - 2021-09-06 =
 * Fixed: Icons in the Tabs element

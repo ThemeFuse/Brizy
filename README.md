@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.8<br>
+Tested up to: 5.8.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.14<br>
+Stable tag: 2.3.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.15 - 2021-09-09
+* Fixed: Broken home page url 
+* Fixed: Asset manager for pages that contains popups
 
 ### 2.3.14 - 2021-09-06
 * Fixed: Icons in the Tabs element
