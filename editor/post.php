@@ -606,7 +606,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function isCompiledWithCurrentVersion() {
 		$proVersion = defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null;
-		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version()===$proVersion;
+		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version()===$proVersion && $this->plugin_version===BRIZY_VERSION;
 	}
 
 	/**
