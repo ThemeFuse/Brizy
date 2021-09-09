@@ -111,11 +111,13 @@ class Brizy_Public_AssetEnqueueManager {
 				$this->replacePlaceholders( $ourGroup, $editorPost->getWpPost(), 'head' );
 			}
 
-			$others = apply_filters( 'brizy_pro_head_assets', [], $editorPost );
+			$_others = apply_filters( 'brizy_pro_head_assets', [], $editorPost );
 
-			foreach ( $others as &$otherGroup ) {
+			foreach ( $_others as &$otherGroup ) {
 				$this->replacePlaceholders( $otherGroup, $editorPost->getWpPost(), 'body' );
 			}
+
+			$others = array_merge($others,$_others);
 		}
 
 		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
@@ -140,11 +142,13 @@ class Brizy_Public_AssetEnqueueManager {
 				$this->replacePlaceholders( $ourGroup, $editorPost->getWpPost(), 'body' );
 			}
 
-			$others = apply_filters( 'brizy_pro_body_assets', [], $editorPost );
+			$_others = apply_filters( 'brizy_pro_body_assets', [], $editorPost );
 
-			foreach ( $others as &$otherGroup ) {
+			foreach ( $_others as &$otherGroup ) {
 				$this->replacePlaceholders( $otherGroup, $editorPost->getWpPost(), 'body' );
 			}
+
+			$others = array_merge($others,$_others);
 		}
 
 		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
