@@ -121,7 +121,7 @@ trait Brizy_Editor_Asset_StaticFileTrait {
 		}
 		$bpost = Brizy_Editor_Post::get( $post_id );
 
-		update_post_meta( $attachmentId, 'brizy_post_uid', $bpost->getUid() );
+		add_post_meta( $attachmentId, 'brizy_post_uid', $bpost->getUid() );
 
 		return $attachmentId;
 	}

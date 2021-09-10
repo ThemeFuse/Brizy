@@ -25,7 +25,6 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 			session_write_close();
 
 			try {
-				// Set artificially high because GD uses uncompressed images in memory.
 				$attachment = $this->getAttachment( $vars[ $ENDPOINT ] );
 
 				if ( ! $attachment ) {

@@ -565,10 +565,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		global $wpdb;
 
 		$prepare = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} p 
-								JOIN {$wpdb->postmeta} pm  ON 
-								pm.post_id=p.ID and 
-								meta_key='brizy_post_uid' and 
-								meta_value='%s'   
+								JOIN {$wpdb->postmeta} pm  ON pm.post_id=p.ID and meta_key='brizy_post_uid' and meta_value='%s'
+								WHERE p.post_type <> 'attachment'   
 								ORDER BY p.ID DESC
 								LIMIT 1", array( $uid, ) );
 
