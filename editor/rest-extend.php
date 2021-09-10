@@ -16,7 +16,9 @@ class Brizy_Editor_RestExtend {
 				'get_callback'    => function ( $page ) {
 					$uid = get_post_meta( $page['id'], 'brizy_post_uid', true );
 
-					return $this->get_page_attachments( $uid );
+					if($uid)
+						return $this->get_page_attachments( $uid );
+					return [];
 				},
 				'update_callback' => function ( $karma, $comment_obj ) {
 					return true;
