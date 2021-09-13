@@ -17,7 +17,7 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	 * @param $type
 	 * @param $uid
 	 *
-	 * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed|null
+	 * @return Brizy_Editor_Block|Brizy_Editor_Post|Brizy_Editor_Popup|mixed|null
 	 * @throws Exception
 	 * @todo:  refactor this as a single sql query
 	 *
@@ -34,12 +34,12 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 		) );
 
 		if ( isset( $entities[0] ) ) {
-			$block = $this->convertWpPostToEntity( $entities[0] );
+			$entity = $this->convertWpPostToEntity( $entities[0] );
 		} else {
-			$block = null;
+			$entity = null;
 		}
 
-		return $block;
+		return $entity;
 	}
 
 	/**
@@ -73,7 +73,7 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	protected function createEntityByType( $uid, $type, $status = 'publish' ) {
 
 	    if($this->getEntityUidAndType($uid,$type)) {
-	        throw new Exception('Duplicate block uid. Please refresh the page and try again');
+	        throw new Exception('Duplicate entity uid. Please refresh the page and try again');
         }
 
 		$name  = md5( time() );

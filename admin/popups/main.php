@@ -21,7 +21,7 @@ class Brizy_Admin_Popups_Main {
 	public function initialize() {
 		add_action( 'brizy_after_enabled_for_post', [ $this, 'afterBrizyEnabledForPopup' ] );
 
-		if ( is_admin() ) {
+		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		} else {
 			if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {

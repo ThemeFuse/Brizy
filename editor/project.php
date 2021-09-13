@@ -102,7 +102,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_Project|mixed
 	 * @throws Exception
 	 */
-	public static function get( $apost = null ) {
+	public static function get( $apost = null, $uid=null ) {
 
 		$wp_post_id = $apost;
 		if ( $apost instanceof WP_Post ) {

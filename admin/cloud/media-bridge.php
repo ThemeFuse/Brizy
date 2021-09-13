@@ -96,5 +96,4 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		return $this;
 	}
 
-
 }

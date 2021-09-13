@@ -171,7 +171,7 @@ class Brizy_Admin_Fonts_Manager {
 		$font = $this->getFont( $uid );
 
 		if ( $font ) {
-			throw new Exception( 'This font already exists' );
+			throw new Brizy_Admin_Fonts_Exception_DuplicateFont( 'This font already exists' );
 		}
 
 		// Need to require these files

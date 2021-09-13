@@ -54,7 +54,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 		return current_user_can( 'edit_posts' );
 	}
 
-    static public function get($postId)
+    static public function get($postId,$uid=null)
     {
         $type = get_post_type($postId);
 
@@ -62,13 +62,13 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 
             case Brizy_Admin_Blocks_Main::CP_GLOBAL:
             case Brizy_Admin_Blocks_Main::CP_SAVED:
-                return Brizy_Editor_Block::get($postId);
+                return Brizy_Editor_Block::get($postId,$uid);
 
             default:
             case 'page':
             case 'post':
             case Brizy_Admin_Popups_Main::CP_POPUP:
-                return Brizy_Editor_Post::get($postId);
+                return Brizy_Editor_Post::get($postId,$uid);
         }
     }
 
