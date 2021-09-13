@@ -16,27 +16,40 @@ rm -rf vendor
 # delete all files that are not needed in the final build
 echo -e "\nDelete all dev files"
 echo -e "-----------------------------------------------------------------------------"
+echo -e "Clean vendor folder"
+(  find ./vendor -type d -iname "tests" &&
+   find ./vendor -type d -iname "test" &&
+   find ./vendor -type d -iname "docs" &&
+   find ./vendor -type d -name "doc" &&
+   find ./vendor -type d -name ".git" &&
+   find ./vendor -name "*.md" &&
+   find ./vendor -name "composer.json" &&
+   find ./vendor -name "composer.lock" &&
+   find ./vendor -name "changelog.txt" &&
+   find ./vendor -name "changelog.md" &&
+   find ./vendor -name "phpcs.*" &&
+   find ./vendor -name "*.dist" &&
+   find ./vendor -name ".github" &&
+   find ./vendor -name "Dockerfile" &&
+   find ./vendor -name ".travis.yml" &&
+   find ./vendor -name ".gitignore" ) | xargs --no-run-if-empty rm -rf
 
-find . -type f -name "*.dev.php" -delete
-rm -rf ./public/editor-src
-rm -rf ./.phpunit*
-rm -rf ./.env*  .idea
-rm -rf ./.github
-rm -rf ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh ./vendor/twig/twig/test
-rm -rf ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc
-rm -rf ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf
-rm -rf ./vendor/select2/select2/docs
-rm -rf ./vendor/select2/select2/tests
-rm -rf ./vendor/shortpixel/shortpixel-php/test
-rm -rf ./vendor/shortpixel/shortpixel-php/examples
-rm -rf ./vendor/enshrined/svg-sanitize/tests/
-rm -rf ./vendor/bagrinsergiu/brizy-migration-utils/tests/
-( find ./ -type d -name ".git" && find ./ -name ".gitignore" && find ./ -name ".gitmodules" && find ./vendor -name "*.md" && find ./ -name "composer.json" && find ./ -name "composer.lock" && find ./ -name ".travis.yml" && find ./ -name "phpunit.xml.dist" ) | xargs rm -rf
-find . -type d -name ".git"  | xargs rm -rf
-find . -name ".gitignore" | xargs rm -rf
-find . -name ".gitmodules" | xargs rm -rf
-rm -rf ./Jenkinsfile
-
-
-
-
+echo -e "Clean plugin root folder"
+rm -rf ./public/editor-src \
+       ./.phpunit* \
+       ./.env* \
+       .idea \
+       ./.github \
+       ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh ./vendor/twig/twig/test \
+       ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc \
+       ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf \
+       ./vendor/shortpixel/shortpixel-php/examples \
+       ./vendor/bagrinsergiu/brizy-migration-utils/tests/ \
+       ./Jenkinsfile \
+       ./.gitignore \
+       ./.gitmodules \
+       ./.git \
+       ./composer.* \
+       ./.travis.yml \
+       ./*.dev.php \
+       ./jenkins
