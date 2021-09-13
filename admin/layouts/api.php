@@ -77,7 +77,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 				$this->error( 404, __( 'There are no layouts to be archived' ) );
 			}
 
-			$zipPath     = "Layouts-" . date( DATE_ATOM ) . ".zip";
+			$zipPath     = "Layout-" . date( DATE_ATOM ) . ".zip";
 			$fontManager = new Brizy_Admin_Fonts_Manager();
 			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
 				$fontManager,

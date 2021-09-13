@@ -113,10 +113,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			switch ( $this->param( 'type' ) ) {
 				case 'popup':
-					$zipPath = "Popups-" . date( DATE_ATOM ) . ".zip";
+					$zipPath = "Popup-" . date( DATE_ATOM ) . ".zip";
 					break;
 				default:
-					$zipPath = "Blocks-" . date( DATE_ATOM ) . ".zip";
+					$zipPath = "Block-" . date( DATE_ATOM ) . ".zip";
 					break;
 			}
 
