@@ -53,6 +53,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	 */
 	public function createZip( $archiveItems, $fileName ) {
 
+		wp_raise_memory_limit( 'image' );
+
 		// create archive folder
 		$outZipPath = $this->prepareArchiveFilepath( $fileName );
 
@@ -105,6 +107,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	}
 
 	public function createFromZip( $zipPath ) {
+
+		wp_raise_memory_limit( 'image' );
 
 		global $wpdb;
 		if ( ! file_exists( $zipPath ) ) {
