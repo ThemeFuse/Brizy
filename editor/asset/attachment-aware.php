@@ -11,20 +11,17 @@ trait Brizy_Editor_Asset_AttachmentAware {
 
 		global $wpdb;
 
-		$posts_table = $wpdb->posts;
-		$meta_table  = $wpdb->postmeta;
-
 		return $wpdb->get_var( $wpdb->prepare(
 			"SELECT 
-						{$posts_table}.ID
-					FROM {$posts_table}
-						LEFT JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
+						p.ID
+					FROM {$wpdb->posts} p
+						LEFT JOIN {$wpdb->postmeta} m ON ( p.ID = m.post_id )
 					WHERE  
-						( {$meta_table}.meta_key = 'brizy_post_uid' AND {$meta_table}.meta_value = %s )
-						AND {$posts_table}.post_type = 'attachment'
-						AND {$posts_table}.post_status = 'inherit'
-					GROUP BY {$posts_table}.ID
-					ORDER BY {$posts_table}.post_date DESC",
+						( m.meta_key = 'brizy_attachment_uid' AND m.meta_value = %s )
+						AND p.post_type = 'attachment'
+						AND p.post_status = 'inherit'
+					GROUP BY p.ID
+					ORDER BY p.post_date DESC",
 			$media_name
 		) );
 	}

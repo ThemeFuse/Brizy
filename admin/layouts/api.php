@@ -16,6 +16,8 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 	const CREATE_LAYOUT_ACTION = '-create-layout';
 	const UPDATE_LAYOUT_ACTION = '-update-layout';
 	const DELETE_LAYOUT_ACTION = '-delete-layout';
+	const DOWNLOAD_LAYOUTS = '-download-layouts';
+	const UPLOAD_LAYOUTS = '-upload-layouts';
 
 	/**
 	 * @return Brizy_Admin_Layouts_Api
@@ -36,11 +38,65 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 
 	protected function initializeApiActions() {
 		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
+		add_action( $pref . self::DOWNLOAD_LAYOUTS, array( $this, 'actionDownloadLayouts' ) );
 		add_action( $pref . self::GET_LAYOUT_BY_UID_ACTION, array( $this, 'actionGetLayoutByUid' ) );
 		add_action( $pref . self::GET_LAYOUTS_ACTION, array( $this, 'actionGetLayouts' ) );
 		add_action( $pref . self::CREATE_LAYOUT_ACTION, array( $this, 'actionCreateLayout' ) );
 		add_action( $pref . self::UPDATE_LAYOUT_ACTION, array( $this, 'actionUpdateLayout' ) );
 		add_action( $pref . self::DELETE_LAYOUT_ACTION, array( $this, 'actionDeleteLayout' ) );
+	}
+
+	public function actionDownloadLayouts() {
+		$this->verifyNonce( self::nonce );
+
+		if ( ! $this->param( 'uid' ) ) {
+			$this->error( 400, 'Invalid layout uid param' );
+		}
+
+		try {
+			$bockManager = new Brizy_Admin_Layouts_Manager();
+			$uids        = [];
+			// this is not a very eficien solution if you have a big array of uids
+
+			$explode = explode( ',', $this->param( 'uid' ) );
+			$items   = array_map( function ( $auid ) use ( $uids, $bockManager ) {
+				list( $uid, $isPro ) = explode( ':', $auid );
+				$uids[] = $uid;
+				$item   = new Brizy_Editor_Zip_ArchiveItem( $uid, $isPro );
+
+				if ( $post = $bockManager->getEntity( $uid ) ) {
+					$item->setPost( $post );
+
+					return $item;
+				}
+
+				return null;
+			}, $explode );
+			$items = array_filter( $items );
+			if ( count( $items ) == 0 ) {
+				$this->error( 404, __( 'There are no layouts to be archived' ) );
+			}
+
+			$zipPath     = "Layout-" . date( DATE_ATOM ) . ".zip";
+			$fontManager = new Brizy_Admin_Fonts_Manager();
+			$zip         = new Brizy_Editor_Zip_Archiver( Brizy_Editor_Project::get(),
+				$fontManager,
+				BRIZY_EDITOR_VERSION );
+			$zipPath     = $zip->createZip( $items, $zipPath );
+
+			header( "Pragma: public" );
+			header( "Expires: 0" );
+			header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
+			header( "Cache-Control: private", false );
+			header( "Content-Type: application/octet-stream" );
+			header( "Content-Disposition: attachment; filename=\"" . basename( $zipPath ) . "\";" );
+			header( "Content-Transfer-Encoding: binary" );
+
+			echo file_get_contents( $zipPath );
+			exit;
+		} catch ( Exception $exception ) {
+			$this->error( 400, $exception->getMessage() );
+		}
 	}
 
 	public function actionGetLayoutByUid() {
@@ -80,7 +136,10 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 
 			$layouts = $layoutManager->getEntities( array() );
-			$layouts = apply_filters( 'brizy_get_layouts', $layoutManager->createResponseForEntities( $layouts, $fields ), $fields, $layoutManager );
+			$layouts = apply_filters( 'brizy_get_layouts',
+				$layoutManager->createResponseForEntities( $layouts, $fields ),
+				$fields,
+				$layoutManager );
 			$this->success( $layouts );
 
 		} catch ( Exception $exception ) {
