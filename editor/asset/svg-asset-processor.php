@@ -76,7 +76,7 @@ class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_Proce
 						INNER JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
 					WHERE 
 						{$meta_table}.meta_key = 'brizy_attachment_uid' 
-						AND {$meta_table}.meta_value = %s )
+						AND {$meta_table}.meta_value = %s 
 						AND {$posts_table}.post_type = 'attachment'
 					GROUP BY {$posts_table}.ID
 					ORDER BY {$posts_table}.post_date DESC",
