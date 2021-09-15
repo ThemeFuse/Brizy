@@ -13,21 +13,8 @@ class Brizy_Admin_PanelPostContent {
 	}
 
 	protected function __construct() {
-		add_filter( 'wp_insert_post_data',           [ $this, 'wp_insert_post_data' ], 10, 2 );
 		add_action( 'rest_request_before_callbacks', [ $this, 'rest_request_before_callbacks' ] );
 		add_filter( 'content_edit_pre',              [ $this, 'content_edit_pre' ], 10, 2 );
-	}
-
-	public function wp_insert_post_data( $data, $postarr ) {
-
-		// Do not run when the page is updated from editor, only from wp dashboard
-		if ( wp_doing_ajax() || $postarr['post_type'] == 'revision' ) {
-			return $data;
-		}
-
-		$data['post_content'] = $this->get_compiled_html( $postarr['ID'], $data['post_content'] );
-
-		return $data;
 	}
 
 	public function rest_request_before_callbacks( $response ){
