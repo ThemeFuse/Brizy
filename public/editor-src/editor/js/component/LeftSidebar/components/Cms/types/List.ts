@@ -23,6 +23,7 @@ export interface Cloud {
   taxesInfoUrl: string;
   shopChannel: string;
   taxesMainCategoryId: string;
+  notificationApi: Authorize;
 }
 
 export type Context = Cloud;

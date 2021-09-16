@@ -23,6 +23,8 @@
   "style": {
     "iconPosition": "left",
 
+    "verticalAlign": "top",
+
     "iconSpacing": 20,
     "iconSpacingSuffix": null,
 

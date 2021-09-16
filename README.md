@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.15<br>
+Stable tag: 2.3.16<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,19 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.16 - 2021-09-16
+* New: Added vertical align for icon in IconBox 
+* New: Import and Export for Saved blocks 
+* Improved: Page loading speed on preview when you have custom fonts on your page
+* Fixed: CSS with theme Zita for wooPrice 
+* Fixed: Popups on Text links
+* Fixed: Block screenshots not looking properly in Chrome
+* Fixed: Text element with Google translate extensions 
+* Fixed: Image light-box 
+* Fixed: False positives malware File Found notifications
+* Fixed: Some bugs with meta brizy_post_uid on attachments
+* Fixed: Cache related issue when the page appeared broken in preview
 
 ### 2.3.15 - 2021-09-09
 * Fixed: Broken home page url 

@@ -2,12 +2,21 @@ import React from "react";
 import Notification from "cogo-toast";
 import EditorIcon from "visual/component/EditorIcon";
 
+const toastId = "ct-container";
+
 const getToastContainer = container => {
   let rootContainer = null;
 
   if (container) {
-    rootContainer = document.createElement("div");
-    rootContainer.id = "ct-container";
+    const toastContainer = container.querySelector(`#${toastId}`);
+
+    if (toastContainer) {
+      rootContainer = toastContainer;
+    } else {
+      rootContainer = document.createElement("div");
+      rootContainer.id = toastId;
+    }
+
     container.append(rootContainer);
   }
 

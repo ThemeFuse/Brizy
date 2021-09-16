@@ -1,6 +1,6 @@
 export * from "./index-legacy.wp";
 
-import Config from "visual/global/Config";
+import Config, { WP } from "visual/global/Config";
 import { persistentRequest, request2 } from "./index-legacy";
 import * as Obj from "visual/utils/reader/object";
 import * as Arr from "visual/utils/reader/array";
@@ -22,7 +22,10 @@ import {
   GetTerms,
   GetPosts,
   GetDynamicContent,
-  GetPostTaxonomies
+  GetPostTaxonomies,
+  UploadSavedBlocks,
+  UploadSavedLayouts,
+  UploadSavedPopups
 } from "./types";
 import {
   makeBlockMeta,
@@ -151,7 +154,7 @@ export const updateBlockScreenshot: UpdateScreenshot = ({
     });
 };
 
-// saved blocks
+//#region saved blocks
 
 export const getSavedBlocks: GetSavedBlocksMeta = () => {
   const { getSavedBlockList } = Config.get("wp").api;
@@ -205,7 +208,71 @@ export const deleteSavedBlock: DeleteSavedBlockById = uid => {
   });
 };
 
-// saved layouts
+export const uploadSaveBlocks: UploadSavedBlocks = async files => {
+  const config = Config.getAll() as WP;
+  const {
+    api: { url, hash, uploadBlocks }
+  } = config.wp;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("files[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("hash", hash);
+  formData.append("action", uploadBlocks);
+
+  const r = await request2(url, { method: "POST", body: formData });
+  const rj = await r.json();
+
+  if (rj.success && rj.data.errors && rj.data.success) {
+    return {
+      errors: rj.data.errors,
+      success: rj.data.success.map(parseSavedBlock)
+    };
+  }
+
+  throw rj;
+};
+
+//#endregion
+
+//#region saved popups
+
+export const uploadSavePopups: UploadSavedPopups = async files => {
+  const config = Config.getAll() as WP;
+  const {
+    api: { url, hash, uploadBlocks }
+  } = config.wp;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("files[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("hash", hash);
+  formData.append("action", uploadBlocks);
+
+  const r = await request2(url, { method: "POST", body: formData });
+  const rj = await r.json();
+
+  if (rj.success && rj.data.errors && rj.data.success) {
+    return {
+      errors: rj.data.errors,
+      success: rj.data.success.map(parseSavedBlock)
+    };
+  }
+
+  throw rj;
+};
+
+//#endregion
+
+//#region saved layouts
 
 export const getSavedLayouts: GetSavedLayoutsMeta = () => {
   const { getLayoutList } = Config.get("wp").api;
@@ -258,6 +325,37 @@ export const deleteSavedLayout: DeleteSavedLayoutById = uid => {
     data: { uid, action: deleteLayout }
   });
 };
+
+export const uploadSaveLayouts: UploadSavedLayouts = async files => {
+  const config = Config.getAll() as WP;
+  const {
+    api: { url, hash, uploadBlocks }
+  } = config.wp;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("files[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("hash", hash);
+  formData.append("action", uploadBlocks);
+
+  const r = await request2(url, { method: "POST", body: formData });
+  const rj = await r.json();
+
+  if (rj.success && rj.data.errors && rj.data.success) {
+    return {
+      errors: rj.data.errors,
+      success: rj.data.success.map(parseSavedLayout)
+    };
+  }
+
+  throw rj;
+};
+
+//#endregion
 
 export const getAuthors: GetAuthors = async ({
   include = [],

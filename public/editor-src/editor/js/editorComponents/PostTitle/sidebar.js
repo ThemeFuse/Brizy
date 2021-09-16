@@ -29,6 +29,7 @@ export function getItems() {
     {
       id: "settingsTabs",
       type: "tabs-dev",
+      devices: "desktop",
       config: {
         align: "start"
       },

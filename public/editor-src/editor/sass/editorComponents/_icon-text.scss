@@ -22,6 +22,8 @@
   }
 
   .brz-icon__container {
+    display: flex;
+
     min-width: auto;
     .brz-ed-box__resizer {
       height: fit-content;

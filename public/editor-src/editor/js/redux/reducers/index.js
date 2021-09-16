@@ -123,6 +123,10 @@ export function fonts(state = {}, action) {
     case DELETE_FONTS: {
       const fonts = action.payload;
 
+      if (!fonts || fonts.length === 0) {
+        return state;
+      }
+
       return { ...state, ...fonts };
     }
     case IMPORT_STORY:

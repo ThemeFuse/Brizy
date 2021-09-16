@@ -121,7 +121,10 @@ const Component = ({ config }: Props): ReactElement => {
         projectId: fromNumber(config.project.id),
         shopChannel: "shopChannel",
         taxesInfoUrl: "taxesInfoUrl",
-        taxesMainCategoryId: "taxesMainCategoryId"
+        taxesMainCategoryId: "taxesMainCategoryId",
+        notificationApi: token
+          ? { __type: "withToken", token, uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl }
       });
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);

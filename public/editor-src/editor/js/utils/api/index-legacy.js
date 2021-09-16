@@ -54,9 +54,9 @@ export function persistentRequest(ajaxSettings) {
       error(jqXHR) {
         const status = jqXHR.status;
 
-        // 0   - offline
-        // 503 - service unavailable
-        if (status === 0 || status === 503) {
+        // 0      - offline
+        // >= 500 - server unavailable
+        if (status === 0 || status >= 500) {
           this.failedAttempts++;
           window.onbeforeunload = this.onbeforeunload;
 

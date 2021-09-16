@@ -50,8 +50,10 @@ export type PromptBlocksState = {
   currentTab: PromptTabsId;
 };
 
+export type BlockTypes = "BLOCK" | "LAYOUT" | "POPUP";
+
 export type BlockCategory = {
-  id: string;
+  id: BlockTypes;
   title: string;
   icon: string;
 };
