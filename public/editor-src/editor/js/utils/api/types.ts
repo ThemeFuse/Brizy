@@ -15,7 +15,8 @@ export type GetDynamicContent = (args: {
 
 //#endregion
 
-// Screenshot
+//#region Screenshots
+
 export type CreateScreenshot = (
   data: ScreenshotData
 ) => Promise<{ id: string }>;
@@ -27,7 +28,10 @@ type ScreenshotData = {
   blockType: "normal" | "global" | "saved" | "layout";
 };
 
-// saved blocks
+//#endregion
+
+//#region Saved blocks
+
 export type GetSavedBlocksMeta = () => Promise<SavedBlockMeta[]>;
 export type GetSavedBlockById = (id: string) => Promise<SavedBlock>;
 export type CreateSavedBlock = (
@@ -45,8 +49,29 @@ export type SavedBlockMeta = {
     type: BlockMetaType;
   };
 };
+export interface UploadSavedBlocksData {
+  errors: { uid: string; message: string }[];
+  success: SavedBlock[];
+}
+export type UploadSavedBlocks = (
+  file: FileList
+) => Promise<UploadSavedBlocksData>;
 
-// saved layouts
+//#endregion
+
+//#region Saved popups
+
+export type UploadSavedPopups = (
+  file: FileList
+) => Promise<{
+  errors: { uid: string; message: string }[];
+  success: SavedBlock[];
+}>;
+
+//#endregion
+
+//#region Saved layouts
+
 export type GetSavedLayoutsMeta = () => Promise<SavedLayoutMeta[]>;
 export type GetSavedLayoutById = (id: string) => Promise<SavedLayout>;
 export type CreateSavedLayout = (
@@ -63,6 +88,17 @@ export type SavedLayoutMeta = {
     extraFontStyles: Array<{ id: string }>;
   };
 };
+
+export interface UploadSavedLayoutsData {
+  errors: { uid: string; message: string }[];
+  success: SavedLayout[];
+}
+
+export type UploadSavedLayouts = (
+  file: FileList
+) => Promise<UploadSavedLayoutsData>;
+
+//#endregion
 
 export type GetTerms = (
   taxonomy: string

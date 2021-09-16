@@ -1,6 +1,7 @@
 import React, { Component, ComponentType } from "react";
 import produce from "immer";
 import { connect } from "react-redux";
+import { match } from "fp-utilities";
 import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
 import {
@@ -10,7 +11,12 @@ import {
 } from "visual/redux/selectors";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { SavedBlockMeta, SavedLayoutMeta } from "visual/utils/api/types";
+import {
+  SavedBlockMeta,
+  SavedLayoutMeta,
+  UploadSavedBlocks,
+  UploadSavedLayouts
+} from "visual/utils/api/types";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import {
   BlockMetaType,
@@ -30,15 +36,24 @@ import {
   deleteSavedBlock,
   getSavedLayouts,
   getSavedLayoutById,
-  deleteSavedLayout
+  deleteSavedLayout,
+  uploadSaveBlocks,
+  uploadSavePopups,
+  uploadSaveLayouts
 } from "visual/utils/api";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
-import { BlockCategory, PromptBlock, PromptBlockTemplate } from "../types";
+import {
+  BlockCategory,
+  PromptBlock,
+  PromptBlockTemplate,
+  BlockTypes
+} from "../types";
 import Blocks from "./Blocks";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
-
-type BlockTypes = "BLOCK" | "LAYOUT" | "POPUP";
+import { IS_WP } from "visual/utils/env";
+import { getError, isLayout, isPopup, isBlock } from "../common/utils";
+import { ShowSuccessError } from "./Notification";
 
 export type ApiBlockMetaWithType = (SavedLayoutMeta | SavedBlockMeta) & {
   type: BlockTypes;
@@ -71,6 +86,8 @@ type LibraryState = {
   loading: boolean;
   blocks: BlocksThumbs;
   types: BlockCategory[];
+  importLoading: boolean;
+  exportLoading: boolean;
 };
 
 type GetAssets = {
@@ -111,8 +128,12 @@ class Library extends Component<
     search: "",
     blocks: [],
     loading: true,
+    importLoading: false,
+    exportLoading: false,
     types: getBlocksType(this.props.type)
   };
+
+  unMount = false;
 
   async componentDidMount(): Promise<void> {
     const blocks =
@@ -120,18 +141,22 @@ class Library extends Component<
         ? await this.getBlocks()
         : await this.getPopups();
 
-    this.setState({
-      blocks,
-      loading: false
-    });
+    if (!this.unMount) {
+      this.setState({
+        blocks,
+        loading: false
+      });
+    }
   }
 
-  async componentDidUpdate(
-    nextProps: LibraryProps & LibraryStateProps
-  ): Promise<void> {
+  componentDidUpdate(nextProps: LibraryProps & LibraryStateProps): void {
     if (nextProps.isAuthorized !== this.props.isAuthorized) {
       this.updateBlocks();
     }
+  }
+
+  componentWillUnmount(): void {
+    this.unMount = true;
   }
 
   updateBlocks = async (): Promise<void> => {
@@ -140,7 +165,9 @@ class Library extends Component<
         ? await this.getBlocks()
         : await this.getPopups();
 
-    this.setState({ blocks });
+    if (!this.unMount) {
+      this.setState({ blocks });
+    }
   };
 
   async getBlocks(): Promise<BlocksThumbs> {
@@ -208,8 +235,10 @@ class Library extends Component<
     const { data, meta } = await getSavedLayoutById(uid);
     const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    onAddBlocks({ fonts, extraFontStyles, blocks: data.items });
-    onClose();
+    if (!this.unMount) {
+      onAddBlocks({ fonts, extraFontStyles, blocks: data.items });
+      onClose();
+    }
   }
 
   async handleAddBlock(uid: string): Promise<void> {
@@ -217,8 +246,10 @@ class Library extends Component<
     const { data, meta } = await getSavedBlockById(uid);
     const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
-    onClose();
+    if (!this.unMount) {
+      onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
+      onClose();
+    }
   }
 
   async handleAddPopup(uid: string): Promise<void> {
@@ -226,8 +257,10 @@ class Library extends Component<
     const { data, meta } = await getSavedBlockById(uid);
     const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
-    onClose();
+    if (!this.unMount) {
+      onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
+      onClose();
+    }
   }
 
   handleLoadingBlock(uid: string, loading: boolean): void {
@@ -311,6 +344,48 @@ class Library extends Component<
     }));
   };
 
+  handleImport = async (files: FileList, type: BlockTypes): Promise<void> => {
+    this.setState({ importLoading: true });
+    const fetch = match(
+      [isBlock, (): ReturnType<UploadSavedBlocks> => uploadSaveBlocks(files)],
+      [isPopup, (): ReturnType<UploadSavedBlocks> => uploadSavePopups(files)],
+      [isLayout, (): ReturnType<UploadSavedLayouts> => uploadSaveLayouts(files)]
+    );
+
+    try {
+      const data = await fetch(type);
+
+      if (data.success.length) {
+        await this.updateBlocks();
+        ShowSuccessError(data, type);
+      }
+
+      if (!this.unMount) {
+        this.setState({ importLoading: false });
+
+        data.errors.forEach(({ message }) => {
+          ToastNotification.error(message, {
+            toastContainer: window.parent.document.body
+          });
+        });
+      }
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
+
+      if (!this.unMount) {
+        this.setState({ importLoading: false }, () => {
+          const message = getError(e);
+
+          ToastNotification.error(message, {
+            toastContainer: window.parent.document.body
+          });
+        });
+      }
+    }
+  };
+
   makeThumbsData(block: SavedBlockMeta | SavedLayoutMeta): BlockThumbs {
     const { url, width, height } = blockThumbnailData(block);
 
@@ -324,7 +399,14 @@ class Library extends Component<
   }
 
   render(): React.ReactElement {
-    const { loading, blocks, types, search } = this.state;
+    const {
+      loading,
+      blocks,
+      types,
+      search,
+      importLoading,
+      exportLoading
+    } = this.state;
     const { type, HeaderSlotLeft, showSearch } = this.props;
     const hasWhiteLabel = getWhiteLabel();
 
@@ -335,12 +417,17 @@ class Library extends Component<
         items={blocks}
         types={types}
         showSearch={showSearch}
-        showSync={!hasWhiteLabel}
+        sidebarSync={!hasWhiteLabel}
+        thumbnailSync={IS_WP}
+        thumbnailDownload={IS_WP}
         search={search}
+        importLoading={importLoading}
+        exportLoading={exportLoading}
         HeaderSlotLeft={HeaderSlotLeft}
         onSuccessSync={this.updateBlocks}
         onChange={this.handleAddItems}
         onDelete={this.handleDeleteItem}
+        onImport={IS_WP ? this.handleImport : undefined}
       />
     );
   }

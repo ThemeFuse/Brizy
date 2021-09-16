@@ -6,8 +6,10 @@ import EditorIcon from "visual/component/EditorIcon";
 class Button extends Component {
   static defaultProps = {
     className: "",
-    type: "",
+    type: "button", // button | link
     color: "gray", // gray | tail | red | default
+    href: undefined,
+    target: undefined,
     size: 1, // 1, 2, 3
     rightIcon: "",
     leftIcon: "",
@@ -19,12 +21,15 @@ class Button extends Component {
   render() {
     const {
       className: _className,
+      type,
       size,
       color,
       rightIcon,
       leftIcon,
       loading,
       disabled,
+      href,
+      target,
       children,
       onClick
     } = this.props;
@@ -40,18 +45,24 @@ class Button extends Component {
       { "brz-ed-btn--disabled": disabled }
     );
 
-    return (
+    const content = loading ? (
+      <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+    ) : (
+      <React.Fragment>
+        {leftIcon && <EditorIcon icon={leftIcon} />}
+        {children}
+        {rightIcon && <EditorIcon icon={rightIcon} />}
+      </React.Fragment>
+    );
+
+    return type === "button" ? (
       <button className={className} onClick={onClick}>
-        {loading ? (
-          <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-        ) : (
-          <React.Fragment>
-            {leftIcon && <EditorIcon icon={leftIcon} />}
-            {children}
-            {rightIcon && <EditorIcon icon={rightIcon} />}
-          </React.Fragment>
-        )}
+        {content}
       </button>
+    ) : (
+      <a href={href} target={target} className={className} onClick={onClick}>
+        {content}
+      </a>
     );
   }
 }

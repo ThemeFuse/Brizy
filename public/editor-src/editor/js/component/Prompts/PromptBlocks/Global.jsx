@@ -132,7 +132,7 @@ class Global extends Component {
             />
           </HeaderSlotLeft>
         )}
-        <div className="brz-ed-popup-two-body__content">
+        <div className="brz-ed-popup-two-body__content brz-flex-xs-column">
           <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
             {this.state.search !== "" ? (
               <p className="brz-ed-popup-two-blocks__grid-clear-text">

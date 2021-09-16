@@ -4,8 +4,6 @@ $containers-width: map-get($container-max-widths, "lg");
 // Desktop
 .brz-container,
 .brz-container__wrap {
-  margin-left: auto;
-  margin-right: auto;
   width: 100%;
 }
 .brz-container {

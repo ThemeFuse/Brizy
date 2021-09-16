@@ -167,6 +167,7 @@ class RichText extends EditorComponent {
 
     return classNames(
       "brz-rich-text",
+      { notranslate: IS_EDITOR },
       v.className,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd)),
       cssDCStyle

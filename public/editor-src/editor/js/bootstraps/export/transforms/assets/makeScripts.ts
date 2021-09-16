@@ -28,7 +28,8 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
       type: "file",
       url: assetUrl("editor/js/preview.js"),
       attr: {
-        class: "brz-script brz-script-preview"
+        class: "brz-script brz-script-preview",
+        defer: "true"
       }
     },
     pro: false
@@ -40,7 +41,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
     score: MAIN_INIT_SCORE,
     content: {
       type: "inline",
-      content: `jQuery(document).ready(function() { window.Brz.emit("init.dom", jQuery(document.body)); });`,
+      content: `document.addEventListener('DOMContentLoaded', () => window.Brz.emit("init.dom", jQuery(document.body)));`,
       attr: {
         class: "brz-script brz-script-emit"
       }
@@ -62,6 +63,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
         url: assetUrl(`editor/js/${name}.js`),
         attr: {
           class: "brz-script brz-script-preview-lib",
+          defer: "true",
           "data-group": name
         }
       },
@@ -106,7 +108,8 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
         type: "file",
         url: `${proUrls.assets}/js/preview.pro.js`,
         attr: {
-          class: "brz-script brz-script-preview-pro"
+          class: "brz-script brz-script-preview-pro",
+          defer: "true"
         }
       },
       pro: true
@@ -124,7 +127,8 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
           type: "file",
           url: `${proUrls.assets}/js/${name}.pro.js`,
           attr: {
-            class: `brz-script brz-script-preview-lib-pro`,
+            class: "brz-script brz-script-preview-lib-pro",
+            defer: "true",
             "data-group": name
           }
         },

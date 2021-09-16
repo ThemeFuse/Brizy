@@ -15,3 +15,4 @@ export { default as SectionPopup2 } from "./SectionPopup2/export.js";
 export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/export.js";
 export { default as Story } from "./Story/export";
 export { default as Protected } from "./ProtectedPage/export.ts";
+export { default as Image } from "./Image/export.js";

@@ -106,7 +106,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
     const { fonts } = data;
     let popupId: string;
 
-    if (fonts) {
+    if (fonts?.length) {
       dispatch(addFonts(fonts));
     }
 

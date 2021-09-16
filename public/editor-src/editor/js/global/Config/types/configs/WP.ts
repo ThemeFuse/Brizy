@@ -13,6 +13,18 @@ export interface Prop {
   ruleMatches: Rule[];
   postType: string;
   postTypes: { name: string; label: string }[];
+  api: {
+    [k: string]: unknown;
+    url: string;
+    hash: string;
+    getSavedBlockList: string;
+    getSavedBlockByUid: string;
+    uploadBlocks: string;
+    downloadBlocks: string;
+    downloadLayouts: string;
+
+    // TODO: need completed it
+  };
 }
 
 export interface WP extends ConfigCommon {

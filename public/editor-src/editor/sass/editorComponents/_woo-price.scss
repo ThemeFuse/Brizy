@@ -4,34 +4,34 @@
   justify-content: inherit;
   width: 100%;
 
-  & > div {
+  > div {
     font-size: 0;
 
-    & > .brz-price-none {
+    > .brz-price-none {
       margin: 0;
       font-size: 16px;
     }
-  }
 
-  .price {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin: 0;
+    > p.price {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0;
 
-    del {
-      opacity: 1 !important;
+      del {
+        opacity: 1 !important;
 
-      .amount {
-        display: block;
+        .amount {
+          display: block;
+        }
       }
-    }
-    ins {
-      background: transparent;
-      text-decoration: none;
+      ins {
+        background: transparent;
+        text-decoration: none;
 
-      .amount {
-        display: block;
+        .amount {
+          display: block;
+        }
       }
     }
   }

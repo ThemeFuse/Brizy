@@ -1,22 +1,35 @@
-import React, { Component, ComponentType, ReactElement } from "react";
+import React, {
+  ChangeEvent,
+  Component,
+  ComponentType,
+  CSSProperties,
+  ReactElement
+} from "react";
 import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
-import Config from "visual/global/Config";
+import classnames from "classnames";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import EditorIcon from "visual/component/EditorIcon";
+import { ArrayType } from "visual/utils/array/types";
 import SearchInput from "../common/SearchInput";
 import ThumbnailGrid from "../common/ThumbnailGrid";
 import DataFilter from "../common/DataFilter";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import CloudConnect from "./CloudConnect";
 import { BlockCategory } from "../types";
-import { ApiBlockMetaWithType, BlocksThumbs, BlockThumbs } from "./index";
+import { ApiBlockMetaWithType, BlocksThumbs } from "./index";
+import Button from "../../common/Button";
+import { Footer } from "../common/Footer";
 
-type BlocksProps = {
+export interface Props {
   type: "normal" | "popup";
   showSearch: boolean;
-  showSync: boolean;
+  sidebarSync: boolean;
+  thumbnailSync?: boolean;
+  thumbnailDownload?: boolean;
+  importLoading?: boolean;
+  exportLoading?: boolean;
   search: string;
   loading: boolean;
   items: BlocksThumbs;
@@ -25,25 +38,29 @@ type BlocksProps = {
   onChange: (b: ApiBlockMetaWithType) => void;
   onDelete: (b: ApiBlockMetaWithType) => void;
   onSync?: (b: ApiBlockMetaWithType) => void;
-  onSuccessSync: () => void;
-};
+  onExport?: (i: string[], type: BlockCategory["id"]) => void;
+  onImport?: (f: FileList, type: BlockCategory["id"]) => void;
+  onSuccessSync: VoidFunction;
+}
 
-type BlocksFilter = {
-  type: string;
+interface BlocksFilter {
+  type: BlockCategory["id"];
   search: string;
-};
+}
 
-type Counters = {
+interface Counters {
   [k: string]: number;
+}
+
+const scrollStyle: CSSProperties = {
+  flex: 1
 };
 
-const isWP = Boolean(Config.get("wp"));
-
-class Blocks extends Component<BlocksProps> {
-  static defaultProps: BlocksProps = {
+class Blocks extends Component<Props> {
+  static defaultProps: Props = {
     type: "normal",
     showSearch: true,
-    showSync: true,
+    sidebarSync: true,
     search: "",
     loading: false,
     items: [],
@@ -51,21 +68,25 @@ class Blocks extends Component<BlocksProps> {
     HeaderSlotLeft: Component,
     onChange: _.noop,
     onDelete: _.noop,
-    onSync: _.noop,
     onSuccessSync: _.noop
   };
 
-  currentType: null | string = null;
+  importRef = React.createRef<HTMLInputElement>();
+
+  currentFilter: BlocksFilter = {
+    type: this.props.types[0]?.id ?? "BLOCK",
+    search: ""
+  };
 
   getDefaultFilter = _.memoize(
     (types: BlockCategory[]): BlocksFilter => ({
-      type: types.length ? types[0].id : "",
+      type: types.length ? types[0].id : "BLOCK",
       search: ""
     })
   );
 
-  getActiveType(types: BlockCategory[]): string {
-    return this.currentType || types[0].id;
+  getActiveType(types: BlockCategory[]): BlockCategory["id"] {
+    return this.currentFilter.type || types[0].id;
   }
 
   getTypesCounters = (): Counters => {
@@ -82,7 +103,7 @@ class Blocks extends Component<BlocksProps> {
   };
 
   filterData = (
-    item: ApiBlockMetaWithType & BlockThumbs,
+    item: ArrayType<BlocksThumbs>,
     currentFilter: BlocksFilter
   ): boolean => {
     const typeMatch = currentFilter.type === item.type;
@@ -96,6 +117,35 @@ class Blocks extends Component<BlocksProps> {
     return typeMatch && searchMatch;
   };
 
+  handleImport = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { types, onImport } = this.props;
+    const files = e.target.files;
+
+    if (files?.length && typeof onImport === "function") {
+      const type = this.getActiveType(types);
+      const node = this.importRef.current;
+
+      onImport(files, type);
+
+      // reset value after input have some files
+      if (node) {
+        node.value = "";
+      }
+    }
+  };
+
+  handleExport = (): void => {
+    const { items, types, onExport } = this.props;
+    if (typeof onExport === "function") {
+      const type = this.getActiveType(types);
+      const blockIds = items
+        .filter(item => this.filterData(item, this.currentFilter))
+        .map(block => block.uid);
+
+      onExport(blockIds, type);
+    }
+  };
+
   renderLoading(): ReactElement {
     return (
       <div className="brz-ed-popup-two-body__content brz-ed-popup-two-body__content--loading">
@@ -105,13 +155,14 @@ class Blocks extends Component<BlocksProps> {
   }
 
   renderEmpty(): ReactElement {
-    const { type, types, search } = this.props;
+    const { type, types, search, onImport } = this.props;
     const activeType = this.getActiveType(types);
     const style = {
       width: activeType === "LAYOUT" ? "524px" : "322px"
     };
     let gifImg = "editor/img/save_toolbar.gif";
     let message = t("Nothing here yet, save a block first.");
+    const showImport = typeof onImport === "function";
 
     if (type === "popup") {
       gifImg = "editor/img/save_popups_toolbar.gif";
@@ -124,7 +175,7 @@ class Blocks extends Component<BlocksProps> {
     }
 
     return (
-      <div className="brz-ed-popup-two-body__content">
+      <div className="brz-ed-popup-two-body__content brz-flex-xs-column">
         <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
           {search !== "" ? (
             <p className="brz-ed-popup-two-blocks__grid-clear-text">
@@ -145,25 +196,100 @@ class Blocks extends Component<BlocksProps> {
             </>
           )}
         </div>
+
+        {showImport && (
+          <Footer alignX="middle" alignY="middle">
+            {this.renderImport()}
+          </Footer>
+        )}
       </div>
     );
   }
 
   renderItems(items: BlocksThumbs): ReactElement {
-    const { onChange, onDelete, onSync } = this.props;
+    const {
+      thumbnailSync,
+      thumbnailDownload,
+      onChange,
+      onDelete,
+      onExport,
+      onImport
+    } = this.props;
+    const showImport = typeof onImport === "function";
+    const showExport = typeof onExport === "function";
+    const showImportExport = showImport || showExport;
 
     return (
-      <div className="brz-ed-popup-two-body__content">
-        <Scrollbars>
+      <div className="brz-ed-popup-two-body__content brz-flex-xs-column">
+        <Scrollbars style={scrollStyle}>
           <ThumbnailGrid
-            showSync={isWP}
+            showSync={thumbnailSync}
+            showDownload={thumbnailDownload}
             data={items}
             onThumbnailAdd={onChange}
             onThumbnailRemove={onDelete}
-            onThumbnailSync={onSync}
           />
         </Scrollbars>
+        {showImportExport && (
+          <Footer alignX="middle" alignY="middle">
+            {showExport && this.renderExport()}
+            {showImport && this.renderImport()}
+          </Footer>
+        )}
       </div>
+    );
+  }
+
+  renderImport(): ReactElement {
+    const { importLoading, types } = this.props;
+    const activeType = this.getActiveType(types);
+    const className = classnames(
+      "brz-label brz-ed-popup-two-body__content--import",
+      { "brz-pointer-events-none": importLoading }
+    );
+    const text =
+      activeType === "POPUP"
+        ? t("Import New Popup")
+        : activeType === "BLOCK"
+        ? t("Import New Block")
+        : t("Import New Layout");
+
+    return (
+      <label className={className}>
+        <Button type="link" color="teal" loading={importLoading} size={2}>
+          {text}
+        </Button>
+        <input
+          ref={this.importRef}
+          hidden
+          className="brz-input"
+          type="file"
+          accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+          onChange={this.handleImport}
+        />
+      </label>
+    );
+  }
+
+  renderExport(): ReactElement {
+    const { exportLoading, types } = this.props;
+    const activeType = this.getActiveType(types);
+    const text =
+      activeType === "POPUP"
+        ? t("Export All Popups")
+        : activeType === "BLOCK"
+        ? t("Export All Blocks")
+        : t("Export All Layouts");
+
+    return (
+      <Button
+        color="gray"
+        loading={exportLoading}
+        size={2}
+        onClick={this.handleExport}
+      >
+        {text}
+      </Button>
     );
   }
 
@@ -173,22 +299,18 @@ class Blocks extends Component<BlocksProps> {
       items,
       types,
       showSearch,
-      showSync,
+      sidebarSync,
       HeaderSlotLeft,
       onSuccessSync
     } = this.props;
 
     return (
-      <DataFilter
+      <DataFilter<ArrayType<BlocksThumbs>, BlocksFilter>
         data={items}
         filterFn={this.filterData}
         defaultFilter={this.getDefaultFilter(types)}
       >
-        {(
-          filteredThumbnails: BlocksThumbs,
-          currentFilter: BlocksFilter,
-          setFilter: (p: Partial<BlocksFilter>) => void
-        ): ReactElement => {
+        {(filteredThumbnails, currentFilter, setFilter): ReactElement => {
           return (
             <>
               {showSearch && (
@@ -198,6 +320,7 @@ class Blocks extends Component<BlocksProps> {
                     value={currentFilter.search}
                     onChange={(value: string): void => {
                       setFilter({ search: value });
+                      this.currentFilter.search = value;
                     }}
                   />
                 </HeaderSlotLeft>
@@ -209,14 +332,14 @@ class Blocks extends Component<BlocksProps> {
                     lists={types}
                     counters={this.getTypesCounters()}
                     value={currentFilter.type}
-                    onChange={(value: string): void => {
+                    onChange={(value: BlocksFilter["type"]): void => {
                       setFilter({ type: value });
-                      this.currentType = value;
+                      this.currentFilter.type = value;
                     }}
                   />
                 </SidebarOption>
 
-                {showSync && (
+                {sidebarSync && (
                   <SidebarOption separator={true}>
                     <CloudConnect onSuccessSync={onSuccessSync} />
                   </SidebarOption>

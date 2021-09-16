@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover > div > .price": {
+    ".brz &&:hover > div > p.price": {
       standart: [
         "cssStyleElementWOOPriceColumn",
         "cssStyleTypography2FontFamily",

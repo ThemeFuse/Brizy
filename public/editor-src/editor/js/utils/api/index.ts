@@ -27,7 +27,10 @@ import {
   GetSavedBlockById,
   GetSavedBlocksMeta,
   UpdateScreenshot,
-  GetDynamicContent
+  GetDynamicContent,
+  UploadSavedBlocks,
+  UploadSavedLayouts,
+  UploadSavedPopups
 } from "./types";
 
 const paginationData = {
@@ -96,7 +99,7 @@ export const updateBlockScreenshot: UpdateScreenshot = ({ id, base64 }) => {
   }).then(r => r.json());
 };
 
-// saved blocks
+//#region saved blocks
 
 export const getSavedBlocks: GetSavedBlocksMeta = () => {
   const requestData = {
@@ -165,7 +168,23 @@ export const deleteSavedBlock: DeleteSavedBlockById = id => {
   });
 };
 
-// saved layouts
+export const uploadSaveBlocks: UploadSavedBlocks = () => {
+  // Right now in CLOud don't implemented this functionality
+  return Promise.reject("Not implemented");
+};
+
+//#endregion
+
+//#region saved popups
+
+export const uploadSavePopups: UploadSavedPopups = () => {
+  // Right now in CLOud don't implemented this functionality
+  return Promise.reject("Not implemented");
+};
+
+//#endregion
+
+//#region saved layouts
 
 export const getSavedLayouts: GetSavedLayoutsMeta = () => {
   const requestData = {
@@ -231,3 +250,10 @@ export const deleteSavedLayout: DeleteSavedLayoutById = id => {
     url: `${apiUrl}/layouts/${id}`
   });
 };
+
+export const uploadSaveLayouts: UploadSavedLayouts = () => {
+  // Right now in CLOud don't implemented this functionality
+  return Promise.reject("Not implemented");
+};
+
+//#endregion

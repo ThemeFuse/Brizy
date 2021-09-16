@@ -7,7 +7,8 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-icon__container": {
       standart: [
         "cssStyleElementIconBoxMarginLeft",
-        "cssStyleElementIconBoxMarginRight"
+        "cssStyleElementIconBoxMarginRight",
+        "cssStyleFlexVerticalAlign"
       ]
     }
   };
