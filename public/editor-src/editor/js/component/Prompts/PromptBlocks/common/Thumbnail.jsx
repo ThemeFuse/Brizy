@@ -13,6 +13,7 @@ import { IS_STORY } from "visual/utils/models";
 import { ProInfo } from "visual/component/ProInfo";
 import { IS_PRO } from "visual/utils/env";
 import Config from "visual/global/Config";
+import { DownloadBlock } from "./DownloadBlock";
 
 const { upgradeToPro } = Config.get("urls");
 
@@ -32,11 +33,9 @@ class Thumbnail extends Component {
     animation: false,
     isLayout: false,
     isAuthorized: false,
-    showSync: false,
     onAdd: _.noop,
     onRemove: _.noop,
-    onImageLoaded: _.noop,
-    onSync: _.noop
+    onImageLoaded: _.noop
   };
 
   static propTypes = {
@@ -46,6 +45,7 @@ class Thumbnail extends Component {
     isLayout: PropTypes.bool,
     isAuthorized: PropTypes.bool,
     showSync: PropTypes.bool,
+    showDownload: PropTypes.bool,
     onAdd: PropTypes.func,
     onRemove: PropTypes.func,
     onImageLoaded: PropTypes.func,
@@ -250,9 +250,12 @@ class Thumbnail extends Component {
       const className = classnames("brz-ed-popup-two-block-sync", {
         "brz-ed-popup-two-block-sync--uploaded": synchronized
       });
+      const title = synchronized
+        ? t("Block is synchronized")
+        : t("Block will be synchronized");
 
       return (
-        <div className={className} onClick={this.handleSync}>
+        <div title={title} className={className} onClick={this.handleSync}>
           <EditorIcon
             icon={synchronized ? "nc-check-circle-on" : "nc-reverse-glyph"}
           />
@@ -269,10 +272,16 @@ class Thumbnail extends Component {
     );
   }
 
+  renderDownloadIcon() {
+    const { uid, type } = this.props.data;
+    return <DownloadBlock id={uid} type={type} />;
+  }
+
   render() {
     const {
       isLayout,
       showSync,
+      showDownload,
       data: { blank, showRemoveIcon, pro, loading, inactive, renderWrapper }
     } = this.props;
     const blockIsPro = !IS_PRO && pro;
@@ -301,7 +310,12 @@ class Thumbnail extends Component {
         {content}
         {showRemoveIcon && this.renderRemoveIcon()}
         {loading && this.renderLoading()}
-        {showSync && this.renderSyncIcon()}
+        {(showSync || showDownload) && !isBlank && (
+          <div className="brz-ed-popup-two-block__bottom-control">
+            {showDownload && this.renderDownloadIcon()}
+            {showSync && this.renderSyncIcon()}
+          </div>
+        )}
       </div>
     );
   }

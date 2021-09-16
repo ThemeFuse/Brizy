@@ -21,6 +21,7 @@ export interface LayoutData {
   pages: Page[];
   styles?: Style[];
   pro: boolean;
+  keywords: string;
 }
 
 export interface Category {

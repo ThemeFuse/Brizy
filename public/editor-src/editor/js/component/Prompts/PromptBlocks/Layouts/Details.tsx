@@ -79,7 +79,8 @@ class Details extends Component<AllProps, State> {
       color: "",
       cat: [],
       pages: [],
-      pro: false
+      pro: false,
+      keywords: ""
     },
     onClose: _.noop,
     onAddBlocks: _.noop,

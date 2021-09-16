@@ -23,13 +23,13 @@ class Brizy_Admin_Popups_Main {
 
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
-		} else {
-			if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
-				add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
-				add_action( 'wp_head',            [ $this, 'wpHeadAppentPopupHtml' ] );
-				add_action( 'wp_footer',          [ $this, 'wpFooterAppentPopupHtml' ] );
-				add_filter( 'body_class',         [ $this, 'bodyClassFrontend' ], 11 );
-			}
+		}
+
+		if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
+			add_action( 'wp_head', [ $this, 'wpHeadAppentPopupHtml' ] );
+			add_action( 'wp_footer', [ $this, 'wpFooterAppentPopupHtml' ] );
+			add_filter( 'body_class', [ $this, 'bodyClassFrontend' ], 11 );
 		}
 	}
 

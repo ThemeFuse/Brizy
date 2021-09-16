@@ -226,7 +226,12 @@ export interface ExtraFontStyle {
 // Shortcodes
 
 export type Shortcode = {
-  component: ElementModel;
+  component: {
+    icon: string;
+    id: string;
+    resolve: ElementModel;
+    title: string;
+  };
   pro: boolean;
 };
 

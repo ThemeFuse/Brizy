@@ -4,17 +4,18 @@
   // Button
   &__button {
     position: absolute;
-    top: -7px;
+    top: -0.44em;
     z-index: z("cloneable-bar") + 1;
-    width: 16px;
-    height: 16px;
+    width: 1em;
+    height: 1em;
+    font-size: 16px;
     border-radius: 16px;
     opacity: 0;
     visibility: hidden;
-    font-size: 7px;
     background-color: #999;
     color: #fff;
-    transition: 0.2s linear transform, 0.2s linear opacity;
+    transition: 0.2s linear font-size, 0.2s linear opacity;
+    will-change: font-size;
     cursor: pointer;
 
     &:after {
@@ -34,14 +35,10 @@
     }
 
     &--top-right {
-      right: -7px;
+      right: -0.44em;
     }
     &--top-left {
-      left: -7px;
-    }
-    &:hover,
-    &--active {
-      transform: scale(1.75);
+      left: -0.44em;
     }
 
     // Row Special Case (show border on button hover)
@@ -50,13 +47,22 @@
         border-style: dotted;
       }
     }
-
     .brz-icon-svg {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-0.5em, -0.5em);
       line-height: 1;
+      font-size: 8px;
+      transition: 0.2s linear font-size, 0.2s linear opacity;
+    }
+    &:hover,
+    &--active {
+      font-size: 28px;
+
+      .brz-icon-svg {
+        font-size: 14px;
+      }
     }
   }
 
@@ -231,7 +237,6 @@
   .brz-ed-border__button {
     opacity: 1;
     visibility: visible;
-    font-size: 8px;
     pointer-events: all;
   }
 

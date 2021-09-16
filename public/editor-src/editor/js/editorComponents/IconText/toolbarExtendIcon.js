@@ -42,8 +42,35 @@ export function getItems({ device }) {
       position: 90,
       devices: "desktop",
       choices: [
-        { icon: "nc-hrz-align-left", title: t("Align"), value: "left" },
-        { icon: "nc-hrz-align-right", title: t("Align"), value: "right" }
+        {
+          icon: "nc-hrz-align-left",
+          title: t("Horizontal Align"),
+          value: "left"
+        },
+        {
+          icon: "nc-hrz-align-right",
+          title: t("Horizontal Align"),
+          value: "right"
+        }
+      ]
+    },
+    {
+      id: "verticalAlign",
+      type: "toggle-dev",
+      position: 90,
+      devices: "desktop",
+      choices: [
+        { icon: "nc-ver-align-top", title: t("Vertical Align"), value: "top" },
+        {
+          icon: "nc-ver-align-middle",
+          title: t("Vertical Align"),
+          value: "center"
+        },
+        {
+          icon: "nc-ver-align-bottom",
+          title: t("Vertical Align"),
+          value: "bottom"
+        }
       ]
     },
     toolbarDisabledAdvancedSettings({ device })

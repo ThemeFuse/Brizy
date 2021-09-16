@@ -11,7 +11,10 @@ import EditorIcon from "visual/component/EditorIcon";
 import DataFilter from "../common/DataFilter";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import SearchInput from "../common/SearchInput";
-import ThumbnailGrid from "../common/ThumbnailGrid";
+import ThumbnailGrid, {
+  ThumbnailProps,
+  Data as ThumbnailData
+} from "../common/ThumbnailGrid";
 import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
 import { templateThumbnailUrl } from "visual/utils/templates";
 import { assetUrl } from "visual/utils/asset";
@@ -28,6 +31,8 @@ import {
   Filter,
   Category
 } from "./types";
+
+interface Data extends ThumbnailData, LayoutData {}
 
 export interface Props {
   type: "stories" | "templates";
@@ -77,7 +82,7 @@ export default class List extends Component<Props, State> {
     return await data.json();
   }
 
-  filterFn = (item: Page, cf: Filter): boolean => {
+  filterFn = (item: LayoutData, cf: Filter): boolean => {
     const categoryMatch =
       cf.category === "*" || item.cat.includes(Number(cf.category));
     const searchMatch =
@@ -153,12 +158,7 @@ export default class List extends Component<Props, State> {
   renderThumbnail = ({
     data,
     ...props
-  }: {
-    data: LayoutData;
-    showSync: boolean;
-    onAdd: (d: LayoutData) => void;
-    onRemove: VoidFunction;
-  }): ReactElement => {
+  }: ThumbnailProps<Data>): ReactElement => {
     const { type } = this.props;
 
     if (type === "stories" && data.blank) {
@@ -209,23 +209,19 @@ export default class List extends Component<Props, State> {
       .filter(({ hidden }) => hidden !== true);
 
     return (
-      <DataFilter
+      <DataFilter<Data, Filter>
         data={thumbnails}
         filterFn={this.filterFn}
         defaultFilter={defaultFilter}
       >
-        {(
-          filteredThumbnails: typeof thumbnails,
-          currentFilter: Filter,
-          setFilter: (f: Partial<Filter>) => boolean
-        ): ReactElement => (
+        {(filteredThumbnails, currentFilter, setFilter): ReactElement => (
           <>
             {showSearch &&
               this.renderSlotLeft(
                 <SearchInput
                   className="brz-ed-popup-two-header__search"
                   value={currentFilter.search}
-                  onChange={(value: string): boolean =>
+                  onChange={(value: string): void =>
                     setFilter({ search: value })
                   }
                 />
@@ -238,7 +234,7 @@ export default class List extends Component<Props, State> {
                     lists={categories}
                     value={currentFilter.category}
                     counters={countersSectionBlocks}
-                    onChange={(value: string): boolean =>
+                    onChange={(value: string): void =>
                       setFilter({ category: value })
                     }
                   />
@@ -249,7 +245,7 @@ export default class List extends Component<Props, State> {
             <div className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts">
               <Scrollbars>
                 {filteredThumbnails.length > 0 ? (
-                  <ThumbnailGrid
+                  <ThumbnailGrid<Data>
                     data={filteredThumbnails}
                     ThumbnailComponent={this.renderThumbnail}
                     onThumbnailAdd={this.handleThumbnailAdd}

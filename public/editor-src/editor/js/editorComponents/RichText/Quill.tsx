@@ -165,7 +165,6 @@ class QuillComponent extends React.Component<Props> {
       this.save(quill.root.innerHTML);
     });
 
-
     this.quill = quill;
     // we add just one listener for all instances
     // because otherwise we would end up with tens of

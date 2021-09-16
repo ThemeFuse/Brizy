@@ -8,6 +8,7 @@
   &__content {
     position: relative;
     flex-direction: column;
+    align-items: center;
     width: 100%;
 
     > .brz-bg {
@@ -56,6 +57,9 @@
   > .brz-section__menu-item {
     position: relative;
     z-index: z("section-menu");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   &--animated {
     position: fixed;
@@ -91,6 +95,9 @@
   &--fixed > .brz-section__menu-item,
   &-sticky-item {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -111,6 +118,7 @@
 .brz-footer {
   position: relative;
   flex-direction: column;
+  align-items: center;
 
   & > .brz-container {
     position: relative;

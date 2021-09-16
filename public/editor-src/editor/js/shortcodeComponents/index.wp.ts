@@ -159,19 +159,12 @@ const config = ((): Shortcodes => {
     };
   }
 
-  if (IS_PAGE) {
-    return {
-      ...nonWP,
-      base: baseWP,
-      single: singleShortcodes,
-      wordpress: wordpressShortcodes,
-      woocommerce: woocommerceShortcodes
-    };
-  }
-
   return {
     ...nonWP,
-    base: baseWP
+    base: baseWP,
+    single: singleShortcodes,
+    wordpress: wordpressShortcodes,
+    woocommerce: woocommerceShortcodes
   };
 })();
 

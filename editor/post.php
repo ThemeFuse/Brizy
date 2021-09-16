@@ -365,6 +365,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$this->set_compiled_html_body( null );
 		$this->set_needs_compile( false );
 		$this->set_compiler_version( BRIZY_EDITOR_VERSION );
+		$this->set_plugin_version( BRIZY_VERSION );
 		$this->set_pro_plugin_version( defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null );
 		$this->setCompiledScripts( $compiledData['pageScripts'] );
 		$this->setCompiledStyles( $compiledData['pageStyles'] );
@@ -744,7 +745,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$this->set_needs_compile( metadata_exists( 'post', $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY ) ? (bool) get_post_meta( $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY, true ) : $data_needs_compile );
 			$this->set_editor_version( isset( $storage_post['editor_version'] ) ? $storage_post['editor_version'] : BRIZY_EDITOR_VERSION );
 			$this->set_compiler_version( isset( $storage_post['compiler_version'] ) ? $storage_post['compiler_version'] : BRIZY_EDITOR_VERSION );
-			$this->set_plugin_version( isset( $storage_post['plugin_version'] ) ? $storage_post['plugin_version'] : BRIZY_VERSION );
+			$this->set_plugin_version( isset( $storage_post['plugin_version'] ) ? $storage_post['plugin_version'] : null );
 			$this->set_pro_plugin_version( isset( $storage_post['pro_plugin_version'] ) ? $storage_post['pro_plugin_version'] : null );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
