@@ -35,8 +35,8 @@ class Brizy_Admin_Popups_Main {
 
 	public function enqueuePopupScripts() {
 		foreach ( $this->getMatchingBrizyPopups() as $popup ) {
-
-			if ( $popup->get_needs_compile() ) {
+			$needs_compile = !$popup->isCompiledWithCurrentVersion() || $popup->get_needs_compile();
+			if ( $needs_compile ) {
 				$popup->compile_page();
 				$popup->saveStorage();
 				$popup->savePost();
