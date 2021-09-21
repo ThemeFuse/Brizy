@@ -55,9 +55,7 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
         attr: {
           class: "brz-link brz-link-google",
           type: "text/css",
-          rel: "stylesheet",
-          media: "print",
-          onload: "this.media='all'"
+          rel: "stylesheet"
         }
       },
       pro: false
@@ -75,9 +73,7 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
         attr: {
           class: "brz-link brz-link-upload",
           type: "text/css",
-          rel: "stylesheet",
-          media: "print",
-          onload: "this.media='all'"
+          rel: "stylesheet"
         }
       },
       pro: false
@@ -242,8 +238,6 @@ export const makeStyles = (
         attr: {
           class: "brz-link brz-link-preview-lib",
           rel: "stylesheet",
-          media: "print",
-          onload: "this.media='all'",
           "data-group": name
         }
       },
@@ -307,8 +301,6 @@ export const makeStyles = (
           attr: {
             class: "brz-link brz-link-preview-lib-pro",
             rel: "stylesheet",
-            media: "print",
-            onload: "this.media='all'",
             "data-group": name
           }
         },
