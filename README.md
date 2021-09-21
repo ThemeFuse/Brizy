@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.16<br>
+Stable tag: 2.3.17<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.17 - 2021-09-21
+* Fixed: Revert optimization for assets, conflicts with plugins
+* Fixed: Recompile popups on update
 
 ### 2.3.16 - 2021-09-16
 * New: Added vertical align for icon in IconBox 
