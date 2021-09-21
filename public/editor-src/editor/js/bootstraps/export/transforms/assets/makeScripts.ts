@@ -28,8 +28,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
       type: "file",
       url: assetUrl("editor/js/preview.js"),
       attr: {
-        class: "brz-script brz-script-preview",
-        defer: "true"
+        class: "brz-script brz-script-preview"
       }
     },
     pro: false
@@ -63,7 +62,6 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
         url: assetUrl(`editor/js/${name}.js`),
         attr: {
           class: "brz-script brz-script-preview-lib",
-          defer: "true",
           "data-group": name
         }
       },
@@ -108,8 +106,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
         type: "file",
         url: `${proUrls.assets}/js/preview.pro.js`,
         attr: {
-          class: "brz-script brz-script-preview-pro",
-          defer: "true"
+          class: "brz-script brz-script-preview-pro"
         }
       },
       pro: true
@@ -127,8 +124,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
           type: "file",
           url: `${proUrls.assets}/js/${name}.pro.js`,
           attr: {
-            class: "brz-script brz-script-preview-lib-pro",
-            defer: "true",
+            class: `brz-script brz-script-preview-lib-pro`,
             "data-group": name
           }
         },
