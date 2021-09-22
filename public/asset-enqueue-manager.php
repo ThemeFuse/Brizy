@@ -9,6 +9,8 @@ class Brizy_Public_AssetEnqueueManager {
 	private $scripts = [];
 	private $styles = [];
 	private $enqueued = [];
+	private $mainJsHandle = null;
+	private $mainCssHandle = null;
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -120,8 +122,9 @@ class Brizy_Public_AssetEnqueueManager {
 			$others = array_merge($others,$_others);
 		}
 
-		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
-		$this->styles    = $assetAggregator->getAssetList();
+		$assetAggregator     = new AssetAggregator( array_merge( $ours, $others ) );
+		$this->styles        = $assetAggregator->getAssetList();
+		$this->mainCssHandle = $this->getMainFileHandle( 'styles' );
 
 		foreach ( $this->styles as $asset ) {
 			if ( $asset->getType() == Asset::TYPE_INLINE || $asset->getType() == Asset::TYPE_FILE ) {
@@ -135,8 +138,7 @@ class Brizy_Public_AssetEnqueueManager {
 		$others = [];
 
 		foreach ( $this->posts as $editorPost ) {
-			$postAssetGroup = null;
-			$scripts         = $editorPost->getCompiledScripts();
+			$scripts = $editorPost->getCompiledScripts();
 
 			if ( ! empty( $scripts['free'] ) ) {
 				$ours[] = $ourGroup = AssetGroup::instanceFromJsonData( $scripts['free'] );
@@ -152,8 +154,9 @@ class Brizy_Public_AssetEnqueueManager {
 			$others = array_merge($others,$_others);
 		}
 
-		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
-		$this->scripts   = $assetAggregator->getAssetList();
+		$assetAggregator    = new AssetAggregator( array_merge( $ours, $others ) );
+		$this->scripts      = $assetAggregator->getAssetList();
+		$this->mainJsHandle = $this->getMainFileHandle( 'scripts' );
 
 		foreach ( $this->scripts as $asset ) {
 			if ( $asset->getType() == Asset::TYPE_INLINE || $asset->getType() == Asset::TYPE_FILE ) {
@@ -196,9 +199,7 @@ class Brizy_Public_AssetEnqueueManager {
 		$handle = $this->getHandle( $asset, 'css' );
 		switch ( $asset->getType() ) {
 			case Asset::TYPE_INLINE:
-				wp_register_style( $handle, false, [], BRIZY_VERSION );
-				wp_enqueue_style( $handle );
-				wp_add_inline_style( $handle, $asset->getContent() );
+				wp_add_inline_style( $this->mainCssHandle, $asset->getContent() );
 				$this->enqueued[ $handle ] = $asset;
 				break;
 			case Asset::TYPE_FILE:
@@ -213,9 +214,7 @@ class Brizy_Public_AssetEnqueueManager {
 		$handle = $this->getHandle( $asset, 'js' );
 		switch ( $asset->getType() ) {
 			case Asset::TYPE_INLINE:
-				wp_register_script( $handle, false, [], BRIZY_VERSION, true );
-				wp_enqueue_script( $handle );
-				wp_add_inline_script( $handle, $asset->getContent() );
+				wp_add_inline_script( $this->mainJsHandle, $asset->getContent() );
 				$this->enqueued[ $handle ] = $asset;
 				break;
 			case Asset::TYPE_FILE:
@@ -278,5 +277,23 @@ class Brizy_Public_AssetEnqueueManager {
 		}
 
 		return $asset;
+	}
+
+	private function getMainFileHandle( $type ) {
+
+		if ( ! $this->{$type} ) {
+			return null;
+		}
+
+		$handle = null;
+
+		foreach ( $this->{$type} as $asset ) {
+			if ( $asset->getName() == 'main' ) {
+				$handle = $this->getHandle( $asset, ( $type == 'scripts' ? 'js' : 'css' ) );
+				break;
+			}
+		}
+
+		return $handle;
 	}
 }
