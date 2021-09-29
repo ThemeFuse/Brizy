@@ -172,12 +172,12 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	 * @return array
 	 * @throws Exception
 	 */
-	private function getFilterOptions( $source, $filter ) {
+	public function getFilterOptions( $source, $filter ) {
 
 		$imageEditor = wp_get_image_editor( $source );
 
-		if($imageEditor instanceof WP_Error) {
-			throw new Exception('No image editor returned');
+		if ( is_wp_error( $imageEditor ) ) {
+			throw new Exception( $imageEditor->get_error_message() );
 		}
 
 		parse_str( strtolower( $filter ), $output );
@@ -186,7 +186,7 @@ class Brizy_Editor_Asset_Crop_Cropper {
 		$configuration['originalSize'] = array_values( $imageEditor->get_size() );
 
 		$cropType = $this->getCropType( $filter );
-		// iW=555&iH=451&oX=0&oY=0&cW=555&cH=451
+
 		switch ( $cropType ) {
 			case self::BASIC_CROP_TYPE:
 				$configuration['requestedData']['imageWidth']  = (int) $output['iw'];
@@ -217,7 +217,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
 		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
 
-		// iW=555&iH=451&oX=0&oY=0&cW=555&cH=451
 		if ( preg_match( $regExBasic, $filter ) ) {
 			$cropType = self::BASIC_CROP_TYPE;
 		} elseif ( preg_match( $regExAdvanced, $filter ) ) {

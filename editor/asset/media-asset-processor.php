@@ -74,12 +74,10 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 					$postId = wp_is_post_revision( $postId ) ? wp_get_post_parent_id( $postId ) : $postId;
 				}
 
-				$croppedPath = $mediaCache->tryOptimizedPath( $mediaCache->getOriginalPath( $params[ $endpoint ] ), $params[ $endpoint_filter ], $postId );
-				$urlBuilder  = new Brizy_Editor_UrlBuilder( $project );
-				$croppedUrl  = str_replace( $urlBuilder->upload_path(), $urlBuilder->upload_url(), $croppedPath );
-				$content     = str_replace( $matches[0][ $i ], $croppedUrl, $content );
+				$croppedUrl = $mediaCache->tryOptimizedPath( $params[ $endpoint ], $params[ $endpoint_filter ], $postId );
+				$content    = str_replace( $matches[0][ $i ], $croppedUrl, $content );
 
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				continue;
 			}
 		}

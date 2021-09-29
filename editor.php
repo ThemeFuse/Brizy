@@ -555,4 +555,48 @@ class Brizy_Editor {
 
 		return self::$is_allowed_for_current_user;
 	}
+
+	/**
+	 * Get all image sizes.
+	 *
+	 * Retrieve available image sizes with data like `width`, `height` and `crop`.
+	 *
+	 * @return array An array of available image sizes.
+	 */
+	static public function get_all_image_sizes() {
+		global $_wp_additional_image_sizes;
+
+		$default_image_sizes = [ 'thumbnail', 'medium', 'medium_large', 'large' ];
+		$image_sizes         = [];
+
+		foreach ( $default_image_sizes as $size ) {
+			$image_sizes[ $size ] = [
+				'width'  => (int) get_option( $size . '_size_w' ),
+				'height' => (int) get_option( $size . '_size_h' ),
+				'crop'   => (bool) get_option( $size . '_crop' ),
+			];
+		}
+
+		if ( $_wp_additional_image_sizes ) {
+			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
+		}
+
+		/** This filter is documented in wp-admin/includes/media.php */
+		$image_sizes = apply_filters( 'image_size_names_choose', $image_sizes );
+
+		foreach ( $image_sizes as $sizeName => $sizeAttrs ) {
+			$label = ucwords( str_replace( '_', ' ', $sizeName ) );
+			if ( is_array( $sizeAttrs ) ) {
+				$label .= sprintf( ' - %d x %d', $sizeAttrs['width'], $sizeAttrs['height'] );
+			}
+
+			$image_sizes[ $sizeName ]['label'] = $label;
+		}
+
+		if ( ! array_key_exists( 'full', $image_sizes ) ) {
+			$image_sizes['full']['label'] = __( 'Original Size', 'brizy' );
+		}
+
+		return $image_sizes;
+	}
 }

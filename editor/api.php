@@ -38,6 +38,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_TERMS = '_get_terms';
     const AJAX_GET_TERMS_BY = '_get_terms_by';
     const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
+	const AJAX_GET_IMG_WP_SIZES = '_get_img_wp_sizes';
 
 
     /**
@@ -101,6 +102,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
         add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
         add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
+	    add_action( $p . self::AJAX_GET_IMG_WP_SIZES, [ $this, 'getImgWpSizes' ] );
         add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
     }
@@ -1078,5 +1080,43 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
         return $uid;
+    }
+
+	public function getImgWpSizes()
+    {
+	    $this->verifyNonce( self::nonce );
+
+	    $id  = $this->param( 'imgId' );
+		$out = [];
+
+		if ( ! $id ) {
+			$this->error( null, __( 'The image id is a required parameter', 'brizy' ) );
+		}
+
+	    if ( ! is_numeric( $id ) ) {
+		    $attachments = get_posts( [
+			    'meta_key'       => 'brizy_attachment_uid',
+			    'meta_value'     => $id,
+			    'post_type'      => 'attachment',
+			    'fields'         => 'ids',
+			    'posts_per_page' => 1
+		    ] );
+
+		    if ( empty( $attachments[0] ) ) {
+			    $this->error( null, sprintf( __( 'The image with uid "%s" does not exists.', 'brizy' ), $id ) );
+		    }
+
+		    $id = $attachments[0];
+	    }
+
+		foreach ( Brizy_Editor::get_all_image_sizes() as $sizeName => $sizeAttrs ) {
+			$out[] = [
+				'label' => $sizeAttrs['label'],
+				'name'  => $sizeName,
+				'url'   => wp_get_attachment_image_url( $id, $sizeName ),
+			];
+		}
+
+	    $this->success( $out );
     }
 }

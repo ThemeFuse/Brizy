@@ -113,8 +113,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	public function tryOptimizedPath( $originalPath, $size, $postId ) {
+	public function tryOptimizedPath( $uid, $size, $postId ) {
 
+		$originalPath       = $this->getOriginalPath( $uid );
 		$urlBuilder         = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $postId );
 		$resized_image_path = $this->buildPath( $urlBuilder->page_upload_path( "/assets/images/" . $size ), $this->basename( $originalPath ) );
 		$optimizedPath      = $this->buildPath( dirname( $resized_image_path ), 'optimized', $this->basename( $resized_image_path ) );
@@ -123,13 +124,30 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			return $optimizedPath;
 		}
 
+		if ( in_array( $size, get_intermediate_image_sizes() ) || $size == 'full' ) {
+			return $this->getImgUrlByWpSize( $uid, $size, $originalPath );
+		}
+
+		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
+		$options = $cropper->getFilterOptions( $originalPath, $size );
+
+		if (
+			$options['is_advanced'] === false
+			&&
+			$options['requestedData']['imageWidth'] > $options['originalSize'][0]
+			&&
+			in_array( $options['requestedData']['imageHeight'], [ 'any', '*', '0' ] )
+		) {
+			return $this->getImgUrlByWpSize( $uid, 'full', $originalPath );
+		}
+
 		$croppedPath = $this->getResizedMediaPath( $originalPath, $size );
 
 		if ( ! file_exists( $croppedPath ) ) {
 			throw new Exception( 'The image was not cropped yet.' );
 		}
 
-		return $croppedPath;
+		return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $croppedPath );
 	}
 
 	/**
@@ -141,13 +159,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function getResizedMediaPath( $originalPath, $size ) {
 
 		$pathinfo = pathinfo( $originalPath );
-		// iW=555&iH=451&oX=0&oY=0&cW=555&cH=451
-		// car-red-555x451x0x0x555x451x1627570218.jpg
-		// iW=594&iH=any
-		// car-red-594xanyx1627570218.jpeg
-		$size = strtolower( $size );
-		$size = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
-		$size = str_replace( '&', 'x', $size );
+		$size     = strtolower( $size );
+		$size     = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
+		$size     = str_replace( '&', 'x', $size );
 
 		$name = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
 
@@ -159,27 +173,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	public function getOriginalPath( $hash ) {
 
-		$id = null;
-
-		if ( is_numeric( $hash ) ) {
-			$id = $hash;
-		} else {
-			$attachments = get_posts( [
-				'meta_key'       => 'brizy_attachment_uid',
-				'meta_value'     => $hash,
-				'post_type'      => 'attachment',
-				'fields'         => 'ids',
-				'posts_per_page' => 1
-			] );
-
-			if ( isset( $attachments[0] ) ) {
-				$id = $attachments[0];
-			}
-		}
-
-		if ( ! $id ) {
-			throw new Exception( 'Media not found' );
-		}
+		$id = $this->getAttachmentId( $hash );
 
 		$file = get_attached_file( $id );
 
@@ -192,6 +186,48 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		return $file;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function getAttachmentId( $uid ) {
+		$id = null;
+
+		if ( is_numeric( $uid ) ) {
+			$id = $uid;
+		} else {
+			$attachments = get_posts( [
+				'meta_key'       => 'brizy_attachment_uid',
+				'meta_value'     => $uid,
+				'post_type'      => 'attachment',
+				'fields'         => 'ids',
+				'posts_per_page' => 1
+			] );
+
+			if ( isset( $attachments[0] ) ) {
+				$id = $attachments[0];
+			}
+		}
+
+		if ( ! $id ) {
+			throw new Exception( sprintf( 'There is no image with uid "%s"', $uid ) );
+		}
+
+		return $id;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function getImgUrlByWpSize( $uid, $size, $originalPath ) {
+		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
+
+		if ( ! $imgUrl ) {
+			$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $originalPath );
+		}
+
+		return $imgUrl;
 	}
 
 	public function basename( $originalPath ) {
