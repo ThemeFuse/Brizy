@@ -1109,9 +1109,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
 		foreach ( Brizy_Editor::get_all_image_sizes() as $sizeName => $sizeAttrs ) {
 			$out[] = [
-				'label' => $sizeAttrs['label'],
-				'name'  => $sizeName,
-				'url'   => wp_get_attachment_image_url( $id, $sizeName ),
+				'label'  => $sizeAttrs['label'],
+				'name'   => $sizeName,
+				'url'    => wp_get_attachment_image_url( $id, $sizeName ),
+				'width'  => $sizeAttrs['width'],
+				'height' => $sizeAttrs['height']
 			];
 		}
 
