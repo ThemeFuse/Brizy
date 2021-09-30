@@ -9,6 +9,8 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	private $url_builder;
 
+	private static $imgs = [];
+
 	/**
 	 * Brizy_Editor_CropCacheMedia constructor.
 	 *
@@ -124,7 +126,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			return $optimizedPath;
 		}
 
-		if ( in_array( $size, get_intermediate_image_sizes() ) || $size == 'full' ) {
+		if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
 			return $this->getImgUrlByWpSize( $uid, $size, $originalPath );
 		}
 
@@ -192,29 +194,47 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @throws Exception
 	 */
 	private function getAttachmentId( $uid ) {
-		$id = null;
 
 		if ( is_numeric( $uid ) ) {
-			$id = $uid;
-		} else {
-			$attachments = get_posts( [
-				'meta_key'       => 'brizy_attachment_uid',
-				'meta_value'     => $uid,
-				'post_type'      => 'attachment',
-				'fields'         => 'ids',
-				'posts_per_page' => 1
-			] );
-
-			if ( isset( $attachments[0] ) ) {
-				$id = $attachments[0];
-			}
+			return $uid;
 		}
 
-		if ( ! $id ) {
-			throw new Exception( sprintf( 'There is no image with uid "%s"', $uid ) );
+		if ( isset( self::$imgs[ $uid ] ) ) {
+			return self::$imgs[ $uid ]->ID;
 		}
 
-		return $id;
+		$img = get_posts( [
+			'meta_key'       => 'brizy_attachment_uid',
+			'meta_value'     => $uid,
+			'post_type'      => 'attachment',
+			'fields'         => 'ids',
+			'posts_per_page' => 10
+		] );
+
+		if ( empty( $img[0] ) ) {
+			throw new Exception( sprintf( 'There is no image with the uid "%s"', $uid ) );
+		}
+
+		return $img[0];
+	}
+
+	public function cacheImgs( $uids ) {
+
+		global $wpdb;
+
+		if ( ! $uids ) {
+			return;
+		}
+
+		$sql = "SELECT m.meta_value, p.ID FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} m ON ( p.ID = m.post_id ) WHERE m.meta_key = 'brizy_attachment_uid' AND m.meta_value IN (" . implode( ', ', array_fill( 0, count( $uids ), '%s' ) ) . ") AND p.post_type = 'attachment' ORDER BY p.post_date DESC";
+
+		$imgs = $wpdb->get_results( $wpdb->prepare( $sql, $uids ), OBJECT_K );
+
+		if ( ! $imgs ) {
+			return;
+		}
+
+		self::$imgs = array_merge( self::$imgs, $imgs );
 	}
 
 	/**

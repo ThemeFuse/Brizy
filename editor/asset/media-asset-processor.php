@@ -42,46 +42,72 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 		$project  = $context->getProject();
 
-		$endpoint        = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
-		$endpoint_post   = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST );
-		$endpoint_filter = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER );
+		$uidKey    = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		$postIdKey = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST );
+		$sizeKey   = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER );
 
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $uidKey . '=(.[^"\',\s)]*))/im', $content, $matches );
 
-		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
+		if ( empty( $matches[0] ) ) {
 			return $content;
 		}
 
-		foreach ( $matches[0] as $i => $url ) {
+		$uids = [];
 
-			$parsed_url = parse_url( html_entity_decode( $matches[0][ $i ] ) );
+		foreach ( $matches[0] as $url ) {
+			try {
+				$args = $this->getQueryArgs( $url );
+				$uid  = $args[ $uidKey ];
 
-			if ( ! isset( $parsed_url['query'] ) ) {
+				if ( ! is_numeric( $uid ) && ! in_array( $uid, $uids ) ) {
+					$uids[] = $uid;
+				}
+			} catch ( Exception $e ) {
 				continue;
 			}
+		}
 
-			parse_str( $parsed_url['query'], $params );
+		$mediaCache = new Brizy_Editor_CropCacheMedia( $project );
 
-			if ( ! isset( $params[ $endpoint ] ) ) {
-				continue;
-			}
+		$mediaCache->cacheImgs( $uids );
+
+		foreach ( $matches[0] as $url ) {
 
 			try {
-				$mediaCache = new Brizy_Editor_CropCacheMedia( $project );
-				$postId     = null;
+				$args   = $this->getQueryArgs( $url );
+				$postId = null;
 
-				if ( ! empty( $params[ $endpoint_post ] ) && $postId = $params[ $endpoint_post ] ) {
+				if ( ! empty( $args[ $postIdKey ] ) && $postId = $args[ $postIdKey ] ) {
 					$postId = wp_is_post_revision( $postId ) ? wp_get_post_parent_id( $postId ) : $postId;
 				}
 
-				$croppedUrl = $mediaCache->tryOptimizedPath( $params[ $endpoint ], $params[ $endpoint_filter ], $postId );
-				$content    = str_replace( $matches[0][ $i ], $croppedUrl, $content );
-
+				$croppedUrl = $mediaCache->tryOptimizedPath( $args[ $uidKey ], $args[ $sizeKey ], $postId );
+				$content    = str_replace( $url, $croppedUrl, $content );
 			} catch ( Exception $e ) {
 				continue;
 			}
 		}
 
 		return $content;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function getQueryArgs( $url ) {
+		$endpoint  = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		$parsedUrl = parse_url( html_entity_decode( $url ) );
+
+		if ( empty( $parsedUrl['query'] ) ) {
+			throw new Exception( 'The query does not exists.' );
+		}
+
+		parse_str( $parsedUrl['query'], $args );
+
+		if ( empty( $args[ $endpoint ] ) ) {
+			throw new Exception( 'Invalid query.' );
+		}
+
+		return $args;
 	}
 }

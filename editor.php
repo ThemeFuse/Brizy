@@ -566,10 +566,13 @@ class Brizy_Editor {
 	static public function get_all_image_sizes() {
 		global $_wp_additional_image_sizes;
 
-		$default_image_sizes = [ 'thumbnail', 'medium', 'medium_large', 'large' ];
-		$image_sizes         = [];
+		static $image_sizes = [];
 
-		foreach ( $default_image_sizes as $size ) {
+		if ( $image_sizes ) {
+			return $image_sizes;
+		}
+
+		foreach ( [ 'thumbnail', 'medium', 'medium_large', 'large' ] as $size ) {
 			$image_sizes[ $size ] = [
 				'width'  => (int) get_option( $size . '_size_w' ),
 				'height' => (int) get_option( $size . '_size_h' ),

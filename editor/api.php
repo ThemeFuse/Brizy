@@ -1105,9 +1105,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 		    $this->error( null, sprintf( __( 'The image with uid "%s" does not exists.', 'brizy' ), $uid ) );
 	    }
 
-	    $id = $attachments[0];
+	    $id       = $attachments[0];
+		$metadata = wp_get_attachment_metadata( $id );
+		$wpSizes  = Brizy_Editor::get_all_image_sizes();
 
-		foreach ( Brizy_Editor::get_all_image_sizes() as $sizeName => $sizeAttrs ) {
+		$wpSizes['full']['width']  = $metadata['width'];
+		$wpSizes['full']['height'] = $metadata['height'];
+
+		foreach ( $wpSizes as $sizeName => $sizeAttrs ) {
 			$out[] = [
 				'label'  => $sizeAttrs['label'],
 				'name'   => $sizeName,
