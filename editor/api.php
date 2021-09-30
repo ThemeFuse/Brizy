@@ -1086,28 +1086,26 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
 	    $this->verifyNonce( self::nonce );
 
-	    $id  = $this->param( 'imgId' );
-		$out = [];
+	    $uid  = $this->param( 'uid' );
+		$out  = [];
 
-		if ( ! $id ) {
-			$this->error( null, __( 'The image id is a required parameter', 'brizy' ) );
+		if ( ! $uid ) {
+			$this->error( null, __( 'The image uid is a required parameter', 'brizy' ) );
 		}
 
-	    if ( ! is_numeric( $id ) ) {
-		    $attachments = get_posts( [
-			    'meta_key'       => 'brizy_attachment_uid',
-			    'meta_value'     => $id,
-			    'post_type'      => 'attachment',
-			    'fields'         => 'ids',
-			    'posts_per_page' => 1
-		    ] );
+	    $attachments = get_posts( [
+		    'meta_key'       => 'brizy_attachment_uid',
+		    'meta_value'     => $uid,
+		    'post_type'      => 'attachment',
+		    'fields'         => 'ids',
+		    'posts_per_page' => 1
+	    ] );
 
-		    if ( empty( $attachments[0] ) ) {
-			    $this->error( null, sprintf( __( 'The image with uid "%s" does not exists.', 'brizy' ), $id ) );
-		    }
-
-		    $id = $attachments[0];
+	    if ( empty( $attachments[0] ) ) {
+		    $this->error( null, sprintf( __( 'The image with uid "%s" does not exists.', 'brizy' ), $uid ) );
 	    }
+
+	    $id = $attachments[0];
 
 		foreach ( Brizy_Editor::get_all_image_sizes() as $sizeName => $sizeAttrs ) {
 			$out[] = [
