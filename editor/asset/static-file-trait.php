@@ -145,7 +145,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
         if (file_exists($filename)) {
 
             $defaultHeaders = array(
-                'Content-Type' => $this->get_mime($filename, 1),
+                'Content-Type' => self::get_mime($filename, 1),
                 'Cache-Control' => 'max-age=600'
             );
 
@@ -179,7 +179,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
      *
      * @return mixed|string
      */
-    protected function get_mime($filename, $mode = 0)
+    public static function get_mime($filename, $mode = 0)
     {
 
         // mode 0 = full check
