@@ -59,7 +59,7 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 
 			// send headers
 			$headers                  = array();
-			$headers['Content-Type']  = $this->get_mime( $new_path, 1 );
+			$headers['Content-Type']  = self::get_mime( $new_path, 1 );
 			$headers['Cache-Control'] = 'max-age=600';
 
 			foreach ( $headers as $key => $val ) {

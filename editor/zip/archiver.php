@@ -301,7 +301,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 
 		return array(
 			'name'     => $basename,
-			'type'     => mime_content_type( $filePath ),
+			'type'     => Brizy_Public_AssetProxy::get_mime( $filePath ),
 			'tmp_name' => $filePath,
 			'error'    => 0,
 			'size'     => filesize( $filePath ),
