@@ -38,8 +38,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_TERMS = '_get_terms';
     const AJAX_GET_TERMS_BY = '_get_terms_by';
     const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
-	const AJAX_GET_IMG_WP_SIZES = '_get_img_wp_sizes';
-
 
     /**
      * @var Brizy_Editor_Post
@@ -102,7 +100,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
         add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
         add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
-	    add_action( $p . self::AJAX_GET_IMG_WP_SIZES, [ $this, 'getImgWpSizes' ] );
         add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
     }
@@ -1080,48 +1077,5 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
         return $uid;
-    }
-
-	public function getImgWpSizes()
-    {
-	    $this->verifyNonce( self::nonce );
-
-	    $uid  = $this->param( 'uid' );
-		$out  = [];
-
-		if ( ! $uid ) {
-			$this->error( null, __( 'The image uid is a required parameter', 'brizy' ) );
-		}
-
-	    $attachments = get_posts( [
-		    'meta_key'       => 'brizy_attachment_uid',
-		    'meta_value'     => $uid,
-		    'post_type'      => 'attachment',
-		    'fields'         => 'ids',
-		    'posts_per_page' => 1
-	    ] );
-
-	    if ( empty( $attachments[0] ) ) {
-		    $this->error( null, sprintf( __( 'The image with uid "%s" does not exists.', 'brizy' ), $uid ) );
-	    }
-
-	    $id       = $attachments[0];
-		$metadata = wp_get_attachment_metadata( $id );
-		$wpSizes  = Brizy_Editor::get_all_image_sizes();
-
-		$wpSizes['full']['width']  = $metadata['width'];
-		$wpSizes['full']['height'] = $metadata['height'];
-
-		foreach ( $wpSizes as $sizeName => $sizeAttrs ) {
-			$out[] = [
-				'label'  => $sizeAttrs['label'],
-				'name'   => $sizeName,
-				'url'    => wp_get_attachment_image_url( $id, $sizeName ),
-				'width'  => $sizeAttrs['width'],
-				'height' => $sizeAttrs['height']
-			];
-		}
-
-	    $this->success( $out );
     }
 }

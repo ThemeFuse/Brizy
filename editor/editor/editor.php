@@ -180,7 +180,7 @@ class Brizy_Editor_Editor_Editor
 			'prefix'          => Brizy_Editor::prefix(),
 			'cloud'           => $this->getCloudInfo(),
 			'editorVersion'   => BRIZY_EDITOR_VERSION,
-	        'imgSizes'        => $this->getImgSizes()
+	        'imageSizes'      => $this->getImgSizes()
 		);
 
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
@@ -1018,7 +1018,6 @@ class Brizy_Editor_Editor_Editor
 			'setFeaturedImage'           => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
 			'setFeaturedImageFocalPoint' => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
 			'removeFeaturedImage'        => $pref . Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
-			'getImgWpSizes'              => $pref . Brizy_Editor_API::AJAX_GET_IMG_WP_SIZES,
 			'getForm'                    => $pref . Brizy_Editor_Forms_Api::AJAX_GET_FORM,
 			'createForm'                 => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
 			'updateForm'                 => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
