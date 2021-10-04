@@ -151,7 +151,7 @@ class Brizy_Editor_Screenshot_Manager {
 	 */
 	protected function validateImageContent( $imageContent ) {
 		file_put_contents( $tmpFilePath = tempnam( get_temp_dir(), 'screen' ), $imageContent );
-		$mime = mime_content_type( $tmpFilePath );
+		$mime = Brizy_Public_AssetProxy::get_mime( $tmpFilePath );
 
 		if ( $mime !== 'image/jpeg' ) {
 			return false;

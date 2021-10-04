@@ -84,7 +84,7 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 		return array(
 			'name'     => basename( $url ),
-			'type'     => mime_content_type( $filePath ),
+			'type'     => Brizy_Public_AssetProxy::get_mime( $filePath ),
 			'tmp_name' => $filePath,
 			'error'    => 0,
 			'size'     => filesize( $filePath )
