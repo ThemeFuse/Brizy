@@ -81,7 +81,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @return string|null
 	 * @throws Exception
 	 */
-	public function crop_media( $originalPath, $size ) {
+	public function crop_media( $uid, $size ) {
+
+        $originalPath   = $this->getOriginalPath( $uid );
 
 		if ( ! $size ) {
 			throw new InvalidArgumentException( "Invalid crop filter" );
@@ -89,6 +91,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		if ( ! $originalPath ) {
 			throw new InvalidArgumentException( "Invalid crop filter" );
+		}
+
+        if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
+			return $this->getImgUrlByWpSize( $uid, $size, $originalPath, true );
 		}
 
 		$resizedImgPath = $this->getResizedMediaPath( $originalPath, $size );
@@ -240,11 +246,15 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	private function getImgUrlByWpSize( $uid, $size, $originalPath ) {
+	private function getImgUrlByWpSize( $uid, $size, $originalPath, $path = false ) {
 		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
 
 		if ( ! $imgUrl ) {
 			$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $originalPath );
+		}
+
+        if ( $path ) {
+			return str_replace( $this->url_builder->upload_url(), $this->url_builder->upload_path(), $imgUrl );
 		}
 
 		return $imgUrl;
