@@ -83,21 +83,15 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	public function crop_media( $uid, $size ) {
 
-        $originalPath   = $this->getOriginalPath( $uid );
-
 		if ( ! $size ) {
 			throw new InvalidArgumentException( "Invalid crop filter" );
 		}
 
-		if ( ! $originalPath ) {
-			throw new InvalidArgumentException( "Invalid crop filter" );
-		}
-
         if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
-			return $this->getImgUrlByWpSize( $uid, $size, $originalPath, true );
+			return $this->getImgUrlByWpSize( $uid, $size, true );
 		}
 
-		$resizedImgPath = $this->getResizedMediaPath( $originalPath, $size );
+		$resizedImgPath = $this->getResizedMediaPath( $uid, $size );
 
 		if ( file_exists( $resizedImgPath ) ) {
 			return $resizedImgPath;
@@ -109,7 +103,8 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new RuntimeException( sprintf( 'Directory "%s" was not created', $cropPath ) );
 		}
 
-		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
+		$cropper      = new Brizy_Editor_Asset_Crop_Cropper();
+		$originalPath = $this->getOriginalPath( $uid );
 
 		if ( ! $cropper->crop( $originalPath, $resizedImgPath, $size ) ) {
 			return $originalPath;
@@ -129,11 +124,11 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$optimizedPath      = $this->buildPath( dirname( $resized_image_path ), 'optimized', $this->basename( $resized_image_path ) );
 
 		if ( file_exists( $optimizedPath ) ) {
-			return $optimizedPath;
+			return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $optimizedPath );
 		}
 
 		if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
-			return $this->getImgUrlByWpSize( $uid, $size, $originalPath );
+			return $this->getImgUrlByWpSize( $uid, $size );
 		}
 
 		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
@@ -146,10 +141,10 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			&&
 			in_array( $options['requestedData']['imageHeight'], [ 'any', '*', '0' ] )
 		) {
-			return $this->getImgUrlByWpSize( $uid, 'full', $originalPath );
+			return $this->getImgUrlByWpSize( $uid, 'full' );
 		}
 
-		$croppedPath = $this->getResizedMediaPath( $originalPath, $size );
+		$croppedPath = $this->getResizedMediaPath( $uid, $size );
 
 		if ( ! file_exists( $croppedPath ) ) {
 			throw new Exception( 'The image was not cropped yet.' );
@@ -159,17 +154,19 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	}
 
 	/**
-	 * @param $originalPath
+	 * @param $uid
 	 * @param $size
 	 *
 	 * @return string
+	 * @throws Exception
 	 */
-	public function getResizedMediaPath( $originalPath, $size ) {
+	public function getResizedMediaPath( $uid, $size ) {
 
-		$pathinfo = pathinfo( $originalPath );
-		$size     = strtolower( $size );
-		$size     = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
-		$size     = str_replace( '&', 'x', $size );
+		$originalPath = $this->getOriginalPath( $uid );
+		$pathinfo     = pathinfo( $originalPath );
+		$size         = strtolower( $size );
+		$size         = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
+		$size         = str_replace( '&', 'x', $size );
 
 		$name = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
 
@@ -181,8 +178,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	public function getOriginalPath( $hash ) {
 
-		$id = $this->getAttachmentId( $hash );
-
+		$id   = $this->getAttachmentId( $hash );
 		$file = get_attached_file( $id );
 
 		if ( ! $file ) {
@@ -246,11 +242,11 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	private function getImgUrlByWpSize( $uid, $size, $originalPath, $path = false ) {
+	private function getImgUrlByWpSize( $uid, $size, $path = false ) {
 		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
 
 		if ( ! $imgUrl ) {
-			$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $originalPath );
+			$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $this->getOriginalPath( $uid ) );
 		}
 
         if ( $path ) {

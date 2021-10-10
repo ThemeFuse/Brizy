@@ -584,8 +584,10 @@ class Brizy_Editor {
 			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
 		}
 
-		/** This filter is documented in wp-admin/includes/media.php */
-		$image_sizes = apply_filters( 'image_size_names_choose', $image_sizes );
+		/** The filter image_size_names_choose is documented in wp-admin/includes/media.php */
+		$image_sizes = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function( $size ) {
+			return ! empty( $size['width'] ) && ! empty( $size['height'] );
+		} );
 
 		foreach ( $image_sizes as $sizeName => $sizeAttrs ) {
 			$label = ucwords( str_replace( '_', ' ', $sizeName ) );
