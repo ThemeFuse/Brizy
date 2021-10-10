@@ -141,7 +141,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			&&
 			in_array( $options['requestedData']['imageHeight'], [ 'any', '*', '0' ] )
 		) {
-			return $this->getImgUrlByWpSize( $uid, 'full' );
+			return $this->getImgUrlByWpSize( $uid, 'original' );
 		}
 
 		$croppedPath = $this->getResizedMediaPath( $uid, $size );
@@ -243,6 +243,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @throws Exception
 	 */
 	private function getImgUrlByWpSize( $uid, $size, $path = false ) {
+		$size   = $size == 'original' ? 'full' : $size;
 		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
 
 		if ( ! $imgUrl ) {
