@@ -110,6 +110,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'DS_LIVE_COMPOSER_VER' ) ) {
 			new Brizy_Compatibilities_LiveComposerPageBuilder();
 		}
+
+		if ( class_exists( 'Wp_Ultimo' ) ) {
+			new Brizy_Compatibilities_WpUltimo();
+		}
   }
 
 	public function after_setup_theme() {

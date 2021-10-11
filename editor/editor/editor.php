@@ -83,6 +83,7 @@ class Brizy_Editor_Editor_Editor
      */
     public function config($context = self::COMPILE_CONTEXT)
     {
+		do_action( 'brizy_create_editor_config_before' );
 
         $cachePostId = ($this->post ? $this->post->getWpPostId() : 0).'_'.$context;
         if (isset(self::$config[$cachePostId])) {
@@ -194,8 +195,11 @@ class Brizy_Editor_Editor_Editor
 
 
 
-        return self::$config[$cachePostId] = apply_filters('brizy_editor_config', $config, $context);
-    }
+         self::$config[$cachePostId] = apply_filters('brizy_editor_config', $config, $context);
+    do_action( 'brizy_create_editor_config_after' );
+
+	    return self::$config[ $cachePostId ];
+	}
 
     /**
      * @param $config
