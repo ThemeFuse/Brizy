@@ -102,7 +102,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 * @return Brizy_Editor_Project|mixed
 	 * @throws Exception
 	 */
-	public static function get( $apost = null, $uid=null ) {
+	public static function get( $apost = null, $uid = null ) {
 
 		$wp_post_id = $apost;
 		if ( $apost instanceof WP_Post ) {
@@ -165,6 +165,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 */
 	private static function createPost() {
 
+		global $wpdb;
 		$defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path( 'defaults.json' );
 
 		if ( ! file_exists( $defaultJsonPath ) ) {
@@ -197,22 +198,40 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 			'image-optimizer-settings' => array(),
 		);
 
-		$post_id = wp_insert_post( array(
-			'post_type'      => self::BRIZY_PROJECT,
-			'post_title'     => 'Brizy Project',
-			'post_status'    => 'publish',
-			'comment_status' => 'closed',
-			'ping_status'    => 'closed'
-		) );
+		try {
+			$wpdb->query( 'START TRANSACTION' );
+			$wpdb->insert( $wpdb->posts, [
+				'post_type'      => self::BRIZY_PROJECT,
+				'post_title'     => 'Brizy Project',
+				'post_status'    => 'publish',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+				'post_author'    => 0,
+				'post_content'   => '',
+				'post_excerpt'   => '',
+				'post_password'  => '',
+				'to_ping'        => '',
+				'pinged'         => '',
+				'post_parent'    => 0,
+				'menu_order'     => 0,
+				'guid'           => '',
+				'post_date'      => current_time( 'mysql' ),
+				'post_date_gmt'  => current_time( 'mysql', 1 ),
+			] );
+			$post_id = $wpdb->insert_id;
 
-		Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
+			$storage = Brizy_Editor_Storage_Project::instance( $post_id );
+			$storage->loadStorage( $project_data );
 
+			$wpdb->query( 'COMMIT' );
 
-		$storage = Brizy_Editor_Storage_Project::instance( $post_id );
-		$storage->loadStorage( $project_data );
+			Brizy_Logger::instance()->notice( 'Create new project', array( 'id' => $post_id ) );
 
-
-		return $post_id;
+			return $post_id;
+		} catch ( Exception $e ) {
+			$wpdb->query( 'ROLLBACK' );
+			throw $e;
+		}
 	}
 
 	/**
@@ -628,6 +647,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	/**
 	 * @param mixed $data
 	 *
+	 *
 	 * @return Brizy_Editor_Project
 	 */
 	public function setData( $data ) {
@@ -642,7 +662,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 		$encodedData = base64_encode( $data );
 
 		if ( $encodedData === false ) {
-			throw new Exception( 'Failed to base54 encode the project data' );
+			throw new Exception( 'Failed to base64 encode the project data' );
 		}
 
 		$this->setData( $encodedData );
