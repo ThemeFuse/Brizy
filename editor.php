@@ -599,7 +599,7 @@ class Brizy_Editor {
 		}
 
 		if ( ! array_key_exists( 'original', $image_sizes ) ) {
-			$image_sizes['original']['label'] = __( 'Original', 'brizy' );
+            $image_sizes = ['original'=>['label'=>__( 'Original', 'brizy' )]] + $image_sizes;
 		}
 
 		return $image_sizes;
