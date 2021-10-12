@@ -84,4 +84,8 @@ class Brizy_Config {
 		$host = $_ENV['COMPILER_DOWNLOAD_HOST'] ?? $_SERVER['COMPILER_DOWNLOAD_HOST'];
 		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
 	}
+
+	static public function getSupportUrl() {
+		return __bt( 'support-url', apply_filters( 'brizy_support_url', self::SUPPORT_URL ) );
+	}
 }
