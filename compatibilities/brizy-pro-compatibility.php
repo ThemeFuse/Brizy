@@ -8,6 +8,8 @@ class Brizy_Compatibilities_BrizyProCompatibility {
 			add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
 			add_action( 'admin_notices', [ $this, 'brizypro_upgrade_required' ] );
             add_action( 'brizy_allow_plugin_included', '__return_false' );
+            // Avoid fatal errors for pro versions older than 0.0.37
+			remove_action( 'plugins_loaded', 'brizy_pro_load' );
 		}
 	}
 
