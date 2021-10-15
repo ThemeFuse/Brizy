@@ -17,9 +17,7 @@ rm -rf vendor
 echo -e "\nDelete all dev files"
 echo -e "-----------------------------------------------------------------------------"
 echo -e "Clean vendor folder"
-(  find ./vendor -type d -iname "tests" &&
-   find ./vendor -type d -iname "test" &&
-   find ./vendor -type d -iname "docs" &&
+(  find ./vendor -type d -iname "docs" &&
    find ./vendor -type d -name "doc" &&
    find ./vendor -type d -name ".git" &&
    find ./vendor -name "*.md" &&
