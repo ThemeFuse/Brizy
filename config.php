@@ -81,10 +81,14 @@ class Brizy_Config {
 	}
 
 	static public function getFontsUrl() {
-		return  "https://www.brizy.cloud/fonts/wp?path=%s";
+		return "https://www.brizy.cloud/fonts/wp?path=%s";
 	}
 
 	static public function getCompilerDownloadUrl() {
-		return  'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
+		return 'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
+	}
+
+	static public function getSupportUrl() {
+		return __bt( 'support-url', apply_filters( 'brizy_support_url', self::SUPPORT_URL ) );
 	}
 }
