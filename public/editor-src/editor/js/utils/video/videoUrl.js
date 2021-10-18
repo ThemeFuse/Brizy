@@ -19,7 +19,8 @@ const getYouTubeOptions = (
     wmode: "transparent",
     enablejsapi: 1,
     loop: 0,
-    rel: Number(suggestedVideo)
+    rel: Number(suggestedVideo),
+    ...(autoplay ? { mute: 1 } : {})
   };
 
   if (loop) {
@@ -48,7 +49,8 @@ const getVimeoOptions = (
       autopause: false,
       portrait: intro,
       controls,
-      loop: Number(loop)
+      loop: Number(loop),
+      ...(autoplay === true ? { muted: 1 } : {})
     },
     anchor: `#t=${Number(start)}s`
   };

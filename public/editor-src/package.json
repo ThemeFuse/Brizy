@@ -83,6 +83,8 @@
     "@types/classnames": "^2.2.11",
     "@types/events": "^3.0.0",
     "@types/fuzzy-search": "^2.1.0",
+    "@types/imagesloaded": "^4.1.2",
+    "@types/isotope-layout": "^3.0.9",
     "@types/jest": "^25.1.2",
     "@types/jquery": "^3.3.31",
     "@types/nanoid": "^2.1.0",

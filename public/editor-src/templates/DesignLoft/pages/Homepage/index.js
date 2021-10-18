@@ -5675,7 +5675,7 @@ module.exports = {
                                         _styles: ["richText"],
 
                                         text:
-                                          '<p class="brz-text-lg-center brz-lh-lg-1_5 brz-lh-sm-im-1_5 brz-lh-xs-im-1_5 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-lexend_deca brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-13 brz-fs-sm-im-13 brz-fs-xs-im-13"><span class="brz-cp-color7" style="opacity: 0.8;">Shop Collection Landing Page&nbsp;/&nbsp;© 2019&nbsp;/&nbsp;Made with Brizy</span></p>'
+                                          '<p class="brz-text-lg-center brz-lh-lg-1_5 brz-lh-sm-im-1_5 brz-lh-xs-im-1_5 brz-ls-lg-0 brz-ls-sm-im-0 brz-ls-xs-im-0 brz-ff-lexend_deca brz-fw-lg-400 brz-fw-sm-im-400 brz-fw-xs-im-400 brz-fs-lg-13 brz-fs-sm-im-13 brz-fs-xs-im-13"><span class="brz-cp-color7" style="opacity: 0.8;">Shop Collection Landing Page&nbsp;/&nbsp;© 2019&nbsp;/&nbsp;Made with Love</span></p>'
                                       }
                                     }
                                   ],

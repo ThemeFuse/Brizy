@@ -20,7 +20,7 @@ import { blocksDataSelector } from "visual/redux/selectors";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import Quill from "./Quill";
 import toolbarConfigFn from "./toolbar";
-import sidebarConfigFn from "./sidebar";
+import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
@@ -355,7 +355,6 @@ class RichText extends EditorComponent {
       popups: this.tmpPopups || v.popups
     };
     const toolbarConfig = toolbarConfigFn(newV, this.handleChange);
-    const sidebarConfig = sidebarConfigFn(newV, this.handleChange);
 
     const showPopulationHelper =
       !getCurrentTooltip() && (prepopulation !== null || population);

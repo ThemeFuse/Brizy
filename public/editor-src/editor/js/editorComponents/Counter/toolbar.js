@@ -14,6 +14,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 export function getItems({ v, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device });
 
+  const { type } = v;
   const richTextDC = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.richText
@@ -23,8 +24,8 @@ export function getItems({ v, device, context }) {
     dvv("colorPalette")
   );
 
-  const isRadial = v.type === "radial";
-  const isSimple = v.type === "simple";
+  const isRadial = type === "radial";
+  const isSimple = type === "simple";
 
   return [
     {
@@ -56,7 +57,7 @@ export function getItems({ v, device, context }) {
                   type: "number-dev",
                   label: t("Start"),
                   devices: "desktop",
-                  disabled: v.type !== "simple",
+                  disabled: type !== "simple",
                   config: {
                     size: "short",
                     min: -1000000,
@@ -72,8 +73,8 @@ export function getItems({ v, device, context }) {
                   devices: "desktop",
                   config: {
                     size: "short",
-                    min: -1000000,
-                    max: 1000000,
+                    min: isSimple ? -1000000 : 0,
+                    max: isSimple ? 1000000 : 100,
                     spinner: false
                   },
                   population: richTextDC
@@ -83,7 +84,7 @@ export function getItems({ v, device, context }) {
                   label: t("Width"),
                   type: "slider-dev",
                   devices: "desktop",
-                  disabled: v.type === "simple" || v.type === "pie",
+                  disabled: isSimple || type === "pie",
                   config: {
                     min: 1,
                     max: 32
@@ -175,7 +176,7 @@ export function getItems({ v, device, context }) {
         size: device === "desktop" ? "large" : "auto",
         title: t("Typography")
       },
-      disabled: v.type === "empty" || v.type === "pie",
+      disabled: type === "empty" || type === "pie",
       position: 70,
       options: [
         {
@@ -214,7 +215,7 @@ export function getItems({ v, device, context }) {
                   id: "color",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled: v.type === "empty" || v.type === "pie"
+                  disabled: type === "empty" || type === "pie"
                 }
               ]
             },
@@ -225,7 +226,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "fillColor",
                   type: "colorPicker-dev",
-                  disabled: v.type === "simple",
+                  disabled: isSimple,
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -237,7 +238,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "strokeColor",
                   type: "colorPicker-dev",
-                  disabled: v.type === "simple",
+                  disabled: isSimple,
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -254,13 +255,13 @@ export function getItems({ v, device, context }) {
         title: t("Settings")
       },
       position: 110,
-      disabled: v.type === "simple" || IS_STORY,
+      disabled: isSimple || IS_STORY,
       options: [
         {
           id: "width",
           label: t("Size"),
           type: "slider-dev",
-          disabled: v.type === "simple",
+          disabled: isSimple,
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -283,7 +284,7 @@ export function getItems({ v, device, context }) {
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
-      disabled: v.type !== "simple" && !IS_STORY,
+      disabled: !isSimple && !IS_STORY,
       title: t("Settings"),
       roles: ["admin"],
       icon: "nc-cog"

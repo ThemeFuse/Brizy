@@ -47,7 +47,6 @@ export default function($node) {
 
 function formatNumber(number, separator) {
   var splitNum;
-  number = Math.abs(number);
   number = number.toFixed(0);
   splitNum = number.split(".");
   splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
@@ -68,6 +67,9 @@ function animate(value) {
   var $figures = $(elem).find(".brz-counter-figures .brz-counter-numbers");
   var $chart = $(elem).find(".brz-counter-pie-chart");
 
+  const endNumber = Number(value.end);
+  const end = $chart.length ? endNumber : Math.max(0, Math.min(100, endNumber));
+
   var step = function(countNum) {
     $figures.text(formatNumber(countNum, separator));
     $chart &&
@@ -75,9 +77,7 @@ function animate(value) {
   };
 
   $({ countNum: Number(value.start) }).animate(
-    {
-      countNum: Number(value.end)
-    },
+    { countNum: end },
     {
       duration: Number(value.duration * 1000),
       easing: "linear",
@@ -87,7 +87,7 @@ function animate(value) {
       },
 
       complete: function() {
-        step(value.end);
+        step(end);
       }
     }
   );

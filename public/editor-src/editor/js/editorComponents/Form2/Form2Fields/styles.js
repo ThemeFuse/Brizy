@@ -97,7 +97,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleElementForm2FieldsSelectBoxShadow"
       ]
     },
-    ".brz &&:hover .brz-forms2__select-item:not(:last-child)": {
+    ".brz &&:hover .brz-forms2__select-item": {
       standart: ["cssStyleElementForm2FieldsSelectBorder"]
     }
   };

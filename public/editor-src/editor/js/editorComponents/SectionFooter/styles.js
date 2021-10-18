@@ -66,7 +66,7 @@ export function styleSection(v, vs, vd) {
   };
 
   if (IS_EDITOR) {
-    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipBlock");
+    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipFlex");
 
     // Added offset for toolbar when uses marginTop in negative value
     styles[".brz &&:hover .brz-ed-collapsible"] = {

@@ -5,7 +5,12 @@ import { imageUrl, svgUrl } from "visual/utils/image";
 
 const isWP = Config.get("wp");
 
-const linkClassNames = ["link--anchor", "link--external", "is-empty"];
+const linkClassNames = [
+  "link--anchor",
+  "link--external",
+  "link--popup",
+  "is-empty"
+];
 
 const isSVG = extension => extension === "svg";
 

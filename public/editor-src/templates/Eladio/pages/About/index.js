@@ -4,10 +4,704 @@ module.exports = {
   thumbnailHeight: 1937,
   title: "About",
   keywords: "about, testimonials, team, video, business, tabs",
-  cat: [0, 1, 3],
-  pro: true,
+  cat: [100, 0, 1, 3],
+  pro: false,
   resolve: {
     blocks: [
+      {
+        type: "SectionHeader",
+        value: {
+          _styles: ["sectionHeader"],
+          items: [
+            {
+              type: "SectionHeaderItem",
+              value: {
+                _styles: ["sectionHeaderItem"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
+                                    {
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        imageWidth: 133,
+                                        imageHeight: 41,
+                                        imageSrc:
+                                          "9a6719976ff9da9bb932336a82f0d903.png",
+                                        height: 100,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        imagePopulation: "",
+                                        tabletPositionX: 52,
+                                        tabletPositionY: 56,
+                                        tabletHeight: 100,
+                                        _id:
+                                          "wouaqandeoleydlpwazftdortsgzkyfonwgm",
+                                        width: 85,
+                                        widthSuffix: "%",
+                                        heightSuffix: "%",
+                                        tabletWidth: 75,
+                                        tabletWidthSuffix: "%",
+                                        tabletHeightSuffix: "%",
+                                        mobileWidth: 28,
+                                        mobileWidthSuffix: "%",
+                                        mobileHeightSuffix: "%",
+                                        imageExtension: "png"
+                                      }
+                                    }
+                                  ],
+                                  horizontalAlign: "left",
+                                  mobileHorizontalAlign: "center",
+                                  _id: "rhouosrhqboglxxfanwvpdntwfrqeyavbgsi",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
+                                }
+                              }
+                            ],
+                            width: 10,
+                            verticalAlign: "center",
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 0,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            paddingType: "grouped",
+                            paddingSuffix: "px",
+                            paddingRight: 0,
+                            paddingLeft: 0,
+                            tabletWidth: 26.4,
+                            _id: "clyyugdeendrmcjbbwhomioefciokadjlhyt",
+                            mobileWidth: 100
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--WPNavigation"],
+                                  items: [
+                                    {
+                                      type: "WPNavigation",
+                                      value: {
+                                        _id:
+                                          "imsxpqpuesvvzzsdavgcksubplzmxgylxdxm",
+                                        menuName:
+                                          "0efe842c25b313e4c7e71594e75f1954ac7cb3df6521d390841560f239fd17cc",
+                                        colorHex: "#33344b",
+                                        colorOpacity: 1,
+                                        tempColorOpacity: 1,
+                                        colorPalette: "color8",
+                                        tempColorPalette: "",
+                                        tabsState: "tabNormal",
+                                        hoverColorHex: "#FFFFFF",
+                                        hoverColorOpacity: 1,
+                                        tempHoverColorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        tempHoverColorPalette: "",
+                                        activeColorHex: "#FFFFFF",
+                                        activeColorOpacity: 1,
+                                        tempActiveColorOpacity: 1,
+                                        activeColorPalette: "color3",
+                                        tempActiveColorPalette: "",
+                                        fontStyle: "button",
+                                        itemPadding: 60,
+                                        itemPaddingSuffix: "px",
+                                        tabletItemPadding: 25,
+                                        tabletItemPaddingSuffix: "px",
+                                        tabletFontStyle: "button",
+                                        mobileToggleMenu: "on",
+                                        mobileFontStyle: "button"
+                                      }
+                                    }
+                                  ],
+                                  _id: "xufsgwaisakoqxtdjoqbjrlwfweoslscdzbr",
+                                  paddingType: "ungrouped",
+                                  paddingRightSuffix: "%",
+                                  tempPaddingRightSuffix: "%",
+                                  paddingSuffix: "px",
+                                  tempPaddingSuffix: "px",
+                                  paddingRight: 15,
+                                  tempPaddingRight: 15
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 90,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            tabletWidth: 57.8,
+                            _id: "cqspxnywtcbvxzcvunmgwcqvdnhjtvdjqksr",
+                            mobileWidth: 100
+                          }
+                        }
+                      ],
+                      tabsState: "tabNormal",
+                      tabsCurrentElement: "tabCurrentElement",
+                      tabsColor: "tabOverlay",
+                      _id: "zyauechjfrthvuhzxcsfvfpfaxghyfigiaua"
+                    }
+                  }
+                ],
+                paddingType: "ungrouped",
+                paddingTop: 10,
+                paddingBottom: 10,
+                padding: 10,
+                bgColorHex: "#ffffff",
+                bgColorOpacity: 0,
+                bgColorPalette: "",
+                tempBgColorOpacity: 1,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 15,
+                tabletPaddingBottom: 15,
+                tabletPadding: 50,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 15,
+                mobilePaddingBottom: 15,
+                mobilePadding: 25,
+                containerType: "fullWidth",
+                mobileBgColorHex: "#ffffff",
+                mobileBgColorOpacity: 1,
+                mobileBgColorPalette: "color2",
+                boxShadow: "on",
+                boxShadowBlur: 6,
+                boxShadowColorOpacity: 0.1,
+                boxShadowColorHex: "#000000",
+                boxShadowColorPalette: "",
+                boxShadowVertical: 0,
+                _id: "uwfmjfbnsggscfcnixhqeircudtaqwzcyquf",
+                paddingRight: 100,
+                paddingRightSuffix: "px",
+                tempPaddingRightSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                tempPaddingRight: 100,
+                paddingLeft: 100,
+                paddingLeftSuffix: "px",
+                tempPaddingLeftSuffix: "px",
+                tempPaddingLeft: 100,
+                tabsState: "tabNormal",
+                tabsCurrentElement: "tabCurrentElement",
+                tabsColor: "tabOverlay",
+                tempBgColorPalette: "",
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                borderWidthType: "ungrouped",
+                borderBottomWidth: 1,
+                tempBorderBottomWidth: 1,
+                tempBorderTopWidth: 0,
+                tempBorderRightWidth: 0,
+                tempBorderLeftWidth: 0,
+                borderWidth: 8,
+                borderStyle: "solid",
+                borderColorOpacity: 0.27,
+                borderColorPalette: "color8",
+                tempBorderColorPalette: "color8",
+                borderTopWidth: 0,
+                borderRightWidth: 0,
+                borderLeftWidth: 0,
+                borderColorHex: "#ffffff",
+                tempBorderColorOpacity: 0.27,
+                bgColorType: "gradient",
+                gradientActivePointer: "startPointer",
+                gradientLinearDegree: 0,
+                gradientStartPointer: 0,
+                gradientFinishPointer: 72,
+                gradientColorPalette: "color1",
+                tempGradientColorPalette: "color1",
+                gradientColorOpacity: 0.34,
+                gradientColorHex: "#000000",
+                tempGradientColorOpacity: 0.34,
+                tempMobileBgColorPalette: "color2",
+                mobileBorderRadius: 0,
+                mobileGradientStartPointer: 0,
+                mobileGradientFinishPointer: 72,
+                mobileGradientActivePointer: "finishPointer",
+                mobileGradientColorPalette: "color2",
+                tempMobileGradientColorPalette: "color2",
+                mobileGradientColorOpacity: 1,
+                mobileBorderColorPalette: "color2",
+                tempMobileBorderColorPalette: "color2",
+                mobileBorderColorOpacity: 0.75,
+                mobileBorderStyle: "solid",
+                mobileBorderWidth: 8,
+                mobileBorderColorHex: "#000000",
+                tempMobileBorderColorOpacity: 0.75
+              }
+            },
+            {
+              type: "SectionHeaderStickyItem",
+              value: {
+                _styles: ["sectionHeaderStickyItem"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
+                                    {
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        imageWidth: 2129,
+                                        imageHeight: 457,
+                                        imageSrc:
+                                          "b731902c6bf15805972db395c1ec4670.png",
+                                        height: 100,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        imagePopulation: "",
+                                        resize: 75,
+                                        mobileResize: 30,
+                                        tabletPositionX: 52,
+                                        tabletPositionY: 56,
+                                        tabletHeight: 100,
+                                        tabletResize: 75,
+                                        _id:
+                                          "txefvwqemvohtbtzsmuceamxxtiwrhucmimw"
+                                      }
+                                    }
+                                  ],
+                                  horizontalAlign: "left",
+                                  mobileHorizontalAlign: "center",
+                                  _id: "aehbrzyrqywpmimygxdybebwuejqnwumyrnq"
+                                }
+                              }
+                            ],
+                            width: 18,
+                            verticalAlign: "center",
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 0,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            paddingType: "grouped",
+                            paddingSuffix: "px",
+                            paddingRight: 0,
+                            paddingLeft: 0,
+                            tabletWidth: 26.4,
+                            _id: "onfdnjqcmtclfwqsdcqintgmkdkunleupjus"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
+                                    {
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        menuSelected:
+                                          "10364db008ecd7620f56ffa943a57451",
+                                        fontSize: 18,
+                                        fontFamily: "roboto",
+                                        lineHeight: 1.5,
+                                        letterSpacing: 0,
+                                        fontWeight: 400,
+                                        fontStyle: "heading6",
+                                        itemPadding: 49,
+                                        itemPaddingRight: 49,
+                                        itemPaddingLeft: 49,
+                                        colorPalette: "color2",
+                                        colorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        colorHex: "#41444e",
+                                        tempColorOpacity: 1,
+                                        hoverColorHex: "#41444e",
+                                        hoverColorOpacity: 1,
+                                        mobileMMenu: "off",
+                                        mobileFontSize: 15,
+                                        mobileLineHeight: 1.5,
+                                        mobileLetterSpacing: 0,
+                                        mobileFontWeight: 700,
+                                        mobileFontStyle: "",
+                                        tabletMMenu: "off",
+                                        tabletFontSize: 17,
+                                        tabletLineHeight: 1.8,
+                                        tabletLetterSpacing: 0,
+                                        tabletFontWeight: 400,
+                                        tabletFontStyle: "heading6",
+                                        mobileMMenuSize: 23,
+                                        mMenuTitle: "Main Menu",
+                                        mMenu: "off",
+                                        mMenuSize: 23,
+                                        mMenuFontSize: 16,
+                                        mMenuFontFamily: "roboto",
+                                        mMenuLineHeight: 2.5,
+                                        mMenuLetterSpacing: 0,
+                                        mMenuFontWeight: 400,
+                                        mMenuFontStyle: "heading6",
+                                        mMenuBorderColorHex: "#ffffff",
+                                        mMenuBorderColorOpacity: 0.08,
+                                        mMenuBorderColorPalette: "color8",
+                                        mMenuTempBorderColorOpacity: 0.08,
+                                        mMenuBgColorPalette: "color2",
+                                        mMenuBgColorOpacity: 1,
+                                        mMenuBgColorHex: "#191b21",
+                                        mMenuTempBgColorOpacity: 1,
+                                        mMenuHoverColorPalette: "color3",
+                                        mMenuHoverColorOpacity: 1,
+                                        mMenuItemHorizontalAlign: "center",
+                                        tabletMMenuFontSize: 16,
+                                        tabletMMenuLineHeight: 2.5,
+                                        tabletMMenuLetterSpacing: 0,
+                                        tabletMMenuFontWeight: 400,
+                                        tabletMMenuFontStyle: "heading6",
+                                        mobileMMenuFontSize: 16,
+                                        mobileMMenuLineHeight: 2.5,
+                                        mobileMMenuLetterSpacing: 0,
+                                        mobileMMenuFontWeight: 400,
+                                        mobileMMenuFontStyle: "heading6",
+                                        tabletHorizontalAlign: "left",
+                                        mMenuPosition: "left",
+                                        tabletMMenuSize: 23,
+                                        subMenuBgColorHex: "#ffffff",
+                                        subMenuBgColorOpacity: 1,
+                                        subMenuBgColorPalette: "",
+                                        subMenuTempBgColorOpacity: 1,
+                                        subMenuHoverBgColorHex: "#ffffff",
+                                        subMenuHoverBgColorOpacity: "#927474",
+                                        subMenuBorderColorHex: "#000000",
+                                        subMenuBorderColorOpacity: 0.08,
+                                        subMenuBorderColorPalette: "",
+                                        subMenuTempBorderColorOpacity: 0.08,
+                                        subMenuHoverBorderColorHex: "#000000",
+                                        subMenuHoverBorderColorOpacity: 0.08,
+                                        subMenuColorPalette: "color2",
+                                        subMenuColorOpacity: 1,
+                                        subMenuHoverColorPalette: "color3",
+                                        mMenuColorPalette: "color8",
+                                        subMenuFontSize: 15,
+                                        subMenuFontFamily: "roboto",
+                                        subMenuLineHeight: 1.3,
+                                        subMenuLetterSpacing: 0,
+                                        subMenuFontWeight: 400,
+                                        subMenuFontStyle: "heading6",
+                                        subMenuHoverBorderColorPalette: "",
+                                        subMenuTempHoverBorderColorOpacity: 0.08,
+                                        subMenuHoverColorOpacity: 1,
+                                        mMenuColorHex: "#ffffff",
+                                        mMenuColorOpacity: 1,
+                                        mMenuTempColorOpacity: 1,
+                                        mMenuHoverColorHex: "#ffffff",
+                                        tabletSubMenuFontStyle: "button",
+                                        mobileSubMenuFontStyle: "button",
+                                        mobileItemPadding: 20,
+                                        mobileItemPaddingRight: 20,
+                                        mobileItemPaddingLeft: 20,
+                                        tabletItemPadding: 15,
+                                        tabletItemPaddingRight: 15,
+                                        tabletItemPaddingLeft: 15,
+                                        _id:
+                                          "yuokvxxwegvyuftgilecqioqsmfsgilrhmjx"
+                                      }
+                                    }
+                                  ],
+                                  showOnMobile: "on",
+                                  showOnTablet: "on",
+                                  tabletHorizontalAlign: "right",
+                                  mobileMarginTop: 0,
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMargin: 0,
+                                  _id: "kqjxzdskhlkrmsyhpfjfajzwbkffvqkcjdzj"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 64,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            tabletWidth: 45.9,
+                            _id: "nuzqtakdedcqeycxjxqbfmcmhgnxrcddvnhz"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
+                                    {
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        menuSelected:
+                                          "0be046c538e24d8deda6760af5baaf07",
+                                        mMenu: "on",
+                                        horizontalAlign: "right",
+                                        mMenuSize: 23,
+                                        mMenuIconColorPalette: "color2",
+                                        mMenuIconColorHex: "",
+                                        mMenuIconColorOpacity: 1,
+                                        mMenuPosition: "right",
+                                        mMenuItemHorizontalAlign: "center",
+                                        mMenuFontSize: 16,
+                                        mMenuFontFamily: "roboto",
+                                        mMenuLineHeight: 2.5,
+                                        mMenuLetterSpacing: 0,
+                                        mMenuFontWeight: 400,
+                                        mMenuFontStyle: "heading6",
+                                        mMenuBorderColorHex: "#ffffff",
+                                        mMenuBorderColorOpacity: 0.08,
+                                        mMenuBorderColorPalette: "",
+                                        mMenuTempBorderColorOpacity: 0.08,
+                                        mMenuTitle: "Secondary Links",
+                                        mMenuHoverColorPalette: "color3",
+                                        mMenuHoverColorOpacity: 1,
+                                        mMenuBgColorPalette: "color2",
+                                        mMenuBgColorOpacity: 1,
+                                        tabletHorizontalAlign: "right",
+                                        mobileHorizontalAlign: "center",
+                                        tabletMMenuFontSize: 16,
+                                        tabletMMenuLineHeight: 2.5,
+                                        tabletMMenuLetterSpacing: 0,
+                                        tabletMMenuFontWeight: 400,
+                                        tabletMMenuFontStyle: "heading6",
+                                        mobileMMenuFontSize: 16,
+                                        mobileMMenuLineHeight: 2.5,
+                                        mobileMMenuLetterSpacing: 0,
+                                        mobileMMenuFontWeight: 400,
+                                        mobileMMenuFontStyle: "heading6",
+                                        mMenuColorPalette: "color8",
+                                        mMenuColorOpacity: 1,
+                                        tabletMMenuIconColorPalette: "color2",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: null,
+                                        _id:
+                                          "ulhnhspxgokguplytzofympzuqmuuninztaj"
+                                      }
+                                    }
+                                  ],
+                                  _id: "jiahwfgengzeolhwybuftqxnvlfgzsuojzhz"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 18,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            tabletWidth: 26.8,
+                            showOnTablet: "on",
+                            showOnMobile: "on",
+                            _id: "darycopqlzqhalmxvfamziqbdvdftzqudrsf"
+                          }
+                        }
+                      ],
+                      _id: "pdmgwnigiepqxpocsotyhrocwlrzfppmfjht"
+                    }
+                  }
+                ],
+                bgImageWidth: 0,
+                bgImageHeight: 0,
+                bgImageSrc: "",
+                bgPositionX: 50,
+                bgPositionY: 50,
+                bgPopulation: "",
+                bgColorOpacity: 1,
+                tempBgColorOpacity: 1,
+                bgColorHex: "#ffffff",
+                bgColorPalette: "",
+                _id: "mohuiraoljlenugwnyhexiyrcfknaryqqdqw"
+              }
+            }
+          ],
+          type: "static",
+          _id: "mcagdoupgmrndewloocxphdwzizcfqdbgynw",
+          _thumbnailSrc: 5742893,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 33,
+          _thumbnailTime: 1633354218559
+        },
+        blockId: "block2kit14955"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "oyeiqxesycyjdhgfptahecwfdlsznpijxvim",
+                            text:
+                              '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color8">HOME  -  ABOUT</span></p>'
+                          }
+                        }
+                      ],
+                      _id: "njtbdvgngqpmlshqbwbwhddawfupjnjllmjt",
+                      marginBottomSuffix: "px",
+                      marginBottom: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      mobileMarginBottomSuffix: "px",
+                      mobileMarginBottom: 0,
+                      mobileMargin: 0,
+                      mobileMarginSuffix: "px"
+                    }
+                  },
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "qndzqrdppvhgnxgwaczbmjjesfefneuzmrqd",
+                            text:
+                              '<p class="brz-ls-lg-0 brz-fw-lg-700 brz-lh-lg-1_3 brz-fs-lg-70 brz-ft-google brz-ff-oswald brz-fss-lg-px brz-text-lg-center brz-tp-sm-heading2 brz-tp-xs-heading2"><span class="brz-cp-color8">ABOUT US</span></p>'
+                          }
+                        }
+                      ],
+                      _id: "gbpwkteheekqomiihxsswnzehjkzuxhxpklp",
+                      paddingType: "ungrouped",
+                      paddingRight: 100,
+                      paddingRightSuffix: "px",
+                      tempPaddingRightSuffix: "px",
+                      paddingSuffix: "px",
+                      tempPaddingSuffix: "px",
+                      tempPaddingRight: 100,
+                      paddingLeft: 100,
+                      paddingLeftSuffix: "px",
+                      tempPaddingLeftSuffix: "px",
+                      tempPaddingLeft: 100,
+                      marginTopSuffix: "px",
+                      marginTop: 0,
+                      margin: 0,
+                      marginSuffix: "px",
+                      tabletMarginTopSuffix: "px",
+                      tabletMarginTop: 0,
+                      tabletMargin: 0,
+                      tabletMarginSuffix: "px"
+                    }
+                  }
+                ],
+                _id: "vfkfdthkydejbfgumcjfarhgovyvajbouvnh",
+                paddingType: "ungrouped",
+                paddingTop: 200,
+                paddingBottom: 70,
+                bgImageWidth: 1894,
+                bgImageHeight: 972,
+                bgImageExtension: "jpg",
+                bgImageSrc: "c2cc1fac6758302bc2a481738b07169c.jpg",
+                bgColorOpacity: 0,
+                tempBgColorOpacity: 1,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0,
+                bgPositionX: 67,
+                bgPositionY: 19,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 151,
+                tabletBgPositionX: 49,
+                tabletBgPositionY: 0,
+                tabletBorderRadius: 0
+              }
+            }
+          ],
+          _id: "fzyiqgfqzrsywkukqxybcrcbfbotcvlcuefu",
+          marginType: "ungrouped",
+          marginTopSuffix: "px",
+          marginTop: -120,
+          margin: 0,
+          marginSuffix: "px",
+          _thumbnailSrc: 5713140,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 132,
+          _thumbnailTime: 1633354221859,
+          slider: "off",
+          sliderArrowsColorHex: "#FFFFFF",
+          sliderArrowsColorOpacity: 1,
+          tempSliderArrowsColorOpacity: 1,
+          sliderArrowsColorPalette: "color8",
+          tempSliderArrowsColorPalette: "",
+          tabsState: "tabNormal",
+          hoverSliderArrowsColorHex: "#FFFFFF",
+          hoverSliderArrowsColorOpacity: 1,
+          tempHoverSliderArrowsColorOpacity: 1,
+          hoverSliderArrowsColorPalette: "color7",
+          tempHoverSliderArrowsColorPalette: "",
+          sliderDots: "none",
+          sliderArrows: "heavy",
+          tabletMarginTopSuffix: "px",
+          tabletMarginTop: -100,
+          tabletMargin: 0,
+          tabletMarginSuffix: "px"
+        },
+        blockId: "Kit2Blank000Light"
+      },
       {
         type: "Section",
         value: {
@@ -31,6 +725,68 @@ module.exports = {
                               {
                                 type: "Wrapper",
                                 value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "pcjxnbodsliokazhlgtshjvtktwueahmgoyj",
+                                        text:
+                                          '<p class="brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color7">GET TO KNOW US</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "gzxjousmaztnxajwtupznurdzarnnspwzalc",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "qrjaffwlbwtsqfeqolrvltihryslerhflsnd",
+                                        text:
+                                          '<p class="brz-tp-lg-heading2 brz-tp-sm-heading3 brz-tp-xs-heading2"><span class="brz-cp-color2">BUILD BETTER WEBSITE ALOT QUICKER WITH MEIPALY AGENCY</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "xtpvbdecyyjjlkmpyzqvhdnlhquuqlkkrixv"
+                                }
+                              }
+                            ],
+                            _id: "tlaiywupjjmheegvpjfilbqwceaexticjckl",
+                            paddingRight: 45,
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingRight: 45,
+                            width: 48.6
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
                                   _styles: ["wrapper", "wrapper--image"],
                                   items: [
                                     {
@@ -38,25 +794,783 @@ module.exports = {
                                       value: {
                                         _styles: ["image"],
                                         _id:
-                                          "iwoigcmwhsapllkypcbzqjhlpqnllmdbjklj",
+                                          "erzdkdzbobuvuuwqokjtdqjyagbrigbmttuf",
+                                        imageWidth: 829,
+                                        imageHeight: 554,
                                         imageSrc:
-                                          "a8df13bf4d6583feda5586b1baa2ced5.svg",
-                                        imageExtension: "svg",
-                                        imageWidth: 300,
-                                        imageHeight: 92,
-                                        width: 100,
-                                        height: 100,
-                                        heightSuffix: "%"
+                                          "96df3128498da1507fbef6d0792f51d7.jpg",
+                                        imageExtension: "jpg",
+                                        width: 90,
+                                        height: 150,
+                                        positionX: 63,
+                                        positionY: 28,
+                                        imagePopulation: "",
+                                        heightSuffix: "%",
+                                        zoom: 111,
+                                        zoomSuffix: "",
+                                        widthSuffix: "%",
+                                        boxShadow: "on",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowColorOpacity: 0.3,
+                                        tempBoxShadowColorOpacity: 0.3,
+                                        boxShadowBlur: 35,
+                                        tempBoxShadowBlur: 35,
+                                        boxShadowSpread: 5,
+                                        tempBoxShadowSpread: 5,
+                                        boxShadowVertical: 0,
+                                        tempBoxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowHorizontal: 0,
+                                        mobileWidth: 100,
+                                        mobileWidthSuffix: "%"
                                       }
                                     }
                                   ],
-                                  _id: "golkyqscuvciwcrkoufjnikxwbihvpktyzgg"
+                                  _id: "dyindziahijqlipmhuhtlpzfbvsoyvzewgqf",
+                                  horizontalAlign: "right",
+                                  mobileHorizontalAlign: "left",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0
                                 }
                               }
                             ],
-                            _id: "bfcebvutcelmkimmkcrhneksjaqrnatmhzdo",
-                            width: 7.2,
-                            verticalAlign: "center",
+                            _id: "jdcasyxdncelnieirmahawpkqhjebuyruaci",
+                            width: 51.4
+                          }
+                        }
+                      ],
+                      _id: "joxtfuxuuiemleimsbgieolqyayrjbxwkwvt",
+                      mobileReverseColumns: "off"
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
+                                    {
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        _id:
+                                          "ywdcnreoeamuwebgynimhfpkaxasbppbmsww",
+                                        imageWidth: 834,
+                                        imageHeight: 557,
+                                        imageSrc:
+                                          "db6203f3774b91abe446109917998813.jpg",
+                                        imageExtension: "jpg",
+                                        width: 100,
+                                        height: 90,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        imagePopulation: "",
+                                        heightSuffix: "%",
+                                        zoom: 111,
+                                        zoomSuffix: "",
+                                        widthSuffix: "%",
+                                        boxShadow: "on",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowColorOpacity: 0.3,
+                                        tempBoxShadowColorOpacity: 0.3,
+                                        boxShadowBlur: 35,
+                                        tempBoxShadowBlur: 35,
+                                        boxShadowSpread: 5,
+                                        tempBoxShadowSpread: 5,
+                                        boxShadowVertical: 0,
+                                        tempBoxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowHorizontal: 0
+                                      }
+                                    }
+                                  ],
+                                  _id: "naytxvslrwjiauetosvoohhctlekvrdenrzt",
+                                  horizontalAlign: "right"
+                                }
+                              }
+                            ],
+                            _id: "yahpoculkjbsrkjktuorlhavezffalfgulkc",
+                            width: 68.3,
+                            marginType: "ungrouped",
+                            marginTopSuffix: "%",
+                            marginTop: -30,
+                            margin: 0,
+                            marginSuffix: "px",
+                            tabletMarginTopSuffix: "%",
+                            tabletMarginTop: -20,
+                            tabletMargin: 0,
+                            tabletMarginSuffix: "px",
+                            showOnMobile: "off"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "qtzbwsteibaaqpduvzrgihbrtszdyfufnwqw",
+                                        text:
+                                          '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><strong class="brz-cp-color2">COMPANY STARTED</strong></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "wxaqqwjkvtqyfiodogimmynemwwilkqsvxmi",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        _id:
+                                          "kbglycdfffxauoilrmhbknkdiiyudbmfhvxp",
+                                        text:
+                                          '<p class="brz-tp-sm-heading2 brz-ls-lg-0 brz-lh-lg-1_1 brz-fw-lg-400 brz-ft-google brz-ff-oswald brz-fs-lg-110 brz-fss-lg-px brz-tp-xs-heading1"><span class="brz-cp-color2">1990</span></p>'
+                                      }
+                                    }
+                                  ],
+                                  _id: "ykmzgodllegurjwdrxubvjvwlezlqqnbpsll",
+                                  marginTopSuffix: "px",
+                                  marginTop: 0,
+                                  margin: 0,
+                                  marginSuffix: "px",
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0,
+                                  mobileMargin: 0,
+                                  mobileMarginSuffix: "px"
+                                }
+                              }
+                            ],
+                            _id: "pprcsxusslwhhglzydscryvqeabqqcgzxmyw",
+                            width: 31.7,
+                            verticalAlign: "bottom",
+                            paddingLeft: 100,
+                            paddingLeftSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingLeft: 100,
+                            tabletPaddingLeft: 100,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tempTabletPaddingLeft: 100
+                          }
+                        }
+                      ],
+                      _id: "adkwgfjdmhyymgurjrjdbatfrzhyjgwubkdb"
+                    }
+                  }
+                ],
+                _id: "spohjzjonsiaisujptvzyqatjsrghnmuijwd",
+                paddingType: "ungrouped",
+                paddingTop: 100,
+                paddingBottom: 100
+              }
+            }
+          ],
+          _id: "htfzvnqpbajxzoebbpzyebkcronfcmazdwkl",
+          _thumbnailSrc: 5713166,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 319,
+          _thumbnailTime: 1633354224458
+        },
+        blockId: "Kit2Blank000Light"
+      },
+      {
+        type: "Section",
+        value: {
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                items: [
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--richText"],
+                      items: [
+                        {
+                          type: "RichText",
+                          value: {
+                            _styles: ["richText"],
+                            _id: "ehqnyumlnkukkyechmyljecxzyqueinvfklp",
+                            text:
+                              '<p class="brz-tp-sm-heading3 brz-text-lg-left brz-tp-lg-heading3 brz-tp-xs-heading3"><span class="brz-cp-color8">PLAYERS REVIEWS</span></p>'
+                          }
+                        }
+                      ],
+                      _id: "nlpkuvaxbibsdjitqtkmflwmgratzugmcqfr"
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--image"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Image",
+                                                  value: {
+                                                    _styles: ["image"],
+                                                    _id:
+                                                      "taeirpqfdvtsucigegcvrhgpltblpgorlskd",
+                                                    imageWidth: 79,
+                                                    imageHeight: 79,
+                                                    imageSrc:
+                                                      "a36e76ce426637fa3797afab70d504c7.jpg",
+                                                    imageExtension: "jpg",
+                                                    width: 60,
+                                                    height: 104,
+                                                    positionX: 50,
+                                                    positionY: 50,
+                                                    imagePopulation: "",
+                                                    heightSuffix: "%",
+                                                    widthSuffix: "%",
+                                                    tabsState: "tabNormal",
+                                                    hoverBorderStyle: "solid",
+                                                    tempHoverBorderStyle:
+                                                      "solid",
+                                                    hoverBorderColorHex:
+                                                      "#66738d",
+                                                    hoverBorderColorOpacity: 1,
+                                                    tempHoverBorderColorOpacity: 1,
+                                                    hoverBorderColorPalette:
+                                                      "color3",
+                                                    tempHoverBorderColorPalette:
+                                                      "",
+                                                    hoverBorderWidthType:
+                                                      "grouped",
+                                                    hoverBorderWidth: 6,
+                                                    tempHoverBorderWidth: 6,
+                                                    hoverBorderTopWidth: 6,
+                                                    tempHoverBorderTopWidth: 4,
+                                                    hoverBorderRightWidth: 6,
+                                                    tempHoverBorderRightWidth: 4,
+                                                    hoverBorderBottomWidth: 6,
+                                                    tempHoverBorderBottomWidth: 4,
+                                                    hoverBorderLeftWidth: 6,
+                                                    tempHoverBorderLeftWidth: 4,
+                                                    borderStyle: "solid",
+                                                    tempBorderStyle: "solid",
+                                                    borderColorHex: "#66738d",
+                                                    borderColorOpacity: 1,
+                                                    tempBorderColorOpacity: 1,
+                                                    borderColorPalette:
+                                                      "color3",
+                                                    tempBorderColorPalette: "",
+                                                    borderWidthType: "grouped",
+                                                    borderWidth: 6,
+                                                    tempBorderWidth: 6,
+                                                    borderTopWidth: 6,
+                                                    tempBorderTopWidth: 4,
+                                                    borderRightWidth: 6,
+                                                    tempBorderRightWidth: 4,
+                                                    borderBottomWidth: 6,
+                                                    tempBorderBottomWidth: 4,
+                                                    borderLeftWidth: 6,
+                                                    tempBorderLeftWidth: 4
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "lyhmrifbcedvwlwpzszygczpagvmvpgymgca",
+                                              horizontalAlign: "left"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "crbwqotcadczazjcsfhogrpjtydgfjkvvyor",
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span class="brz-cp-color8">SHIRLEY SMITH</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "tlkwuobkcplocxbnihpsjqgugukapulztktp",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "zuedzuddafnbzkweihwmsbmghjchejanhfag",
+                                                    text:
+                                                      '<p class="brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color7">DIRECTOR</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "mecsrmmdhiulgpdfeloiaekrhsypddbgkpfh",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "polytxmclzkzkssivfxulewpyhragemzbmki",
+                                        width: 33.3,
+                                        paddingLeft: 0,
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingType: "grouped",
+                                        padding: 0,
+                                        paddingTop: 0,
+                                        paddingRight: 0,
+                                        paddingBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        marginType: "ungrouped",
+                                        marginRightSuffix: "px",
+                                        marginRight: 10,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        mobileWidth: 32
+                                      }
+                                    },
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--image"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Image",
+                                                  value: {
+                                                    _styles: ["image"],
+                                                    _id:
+                                                      "qehnfliwjqeslzxnyzwpsrzwerzufsdsyult",
+                                                    imageWidth: 79,
+                                                    imageHeight: 79,
+                                                    imageSrc:
+                                                      "35a132306c1ea30181fcb75500923808.jpg",
+                                                    imageExtension: "jpg",
+                                                    width: 60,
+                                                    height: 104,
+                                                    positionX: 50,
+                                                    positionY: 50,
+                                                    imagePopulation: "",
+                                                    heightSuffix: "%",
+                                                    widthSuffix: "%",
+                                                    tabsState: "tabNormal",
+                                                    hoverBorderStyle: "none",
+                                                    tempHoverBorderStyle:
+                                                      "solid",
+                                                    hoverBorderColorHex:
+                                                      "#66738d",
+                                                    hoverBorderColorOpacity: 0,
+                                                    tempHoverBorderColorOpacity: 1,
+                                                    hoverBorderColorPalette: "",
+                                                    tempHoverBorderColorPalette:
+                                                      "",
+                                                    hoverBorderWidthType:
+                                                      "grouped",
+                                                    hoverBorderWidth: 0,
+                                                    tempHoverBorderWidth: 6,
+                                                    hoverBorderTopWidth: 0,
+                                                    tempHoverBorderTopWidth: 6,
+                                                    hoverBorderRightWidth: 0,
+                                                    tempHoverBorderRightWidth: 6,
+                                                    hoverBorderBottomWidth: 0,
+                                                    tempHoverBorderBottomWidth: 6,
+                                                    hoverBorderLeftWidth: 0,
+                                                    tempHoverBorderLeftWidth: 6,
+                                                    borderStyle: "none",
+                                                    tempBorderStyle: "solid",
+                                                    borderColorHex: "#66738d",
+                                                    borderColorOpacity: 0,
+                                                    tempBorderColorOpacity: 1,
+                                                    borderColorPalette: "",
+                                                    tempBorderColorPalette: "",
+                                                    borderWidthType: "grouped",
+                                                    borderWidth: 0,
+                                                    tempBorderWidth: 6,
+                                                    borderTopWidth: 0,
+                                                    tempBorderTopWidth: 6,
+                                                    borderRightWidth: 0,
+                                                    tempBorderRightWidth: 6,
+                                                    borderBottomWidth: 0,
+                                                    tempBorderBottomWidth: 6,
+                                                    borderLeftWidth: 0,
+                                                    tempBorderLeftWidth: 6
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "hpfdtnxxupwtdnrshesrvlyivmirfdocrbtm",
+                                              horizontalAlign: "left"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "yzenmfrlsszlgtvkkieuhgzicxkxbkmerzuz",
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span class="brz-cp-color8">MIKE HARDSON</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "wfesoppwgylcxrjiaokiroboumrsuzwtzito",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "earbhyfatdltmbbebxmlguezysnhdvjgskbq",
+                                                    text:
+                                                      '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">CO-FOUNDER</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "fkamraciakbcgkmgvuhrfgrmsewzeabcfyif",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "sojjdqmlhotzdxmzskrvqcqjisqnjgenqaxm",
+                                        width: 33.3,
+                                        paddingLeft: 0,
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingType: "grouped",
+                                        padding: 0,
+                                        paddingTop: 0,
+                                        paddingRight: 0,
+                                        paddingBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        marginType: "ungrouped",
+                                        marginRightSuffix: "px",
+                                        marginRight: 10,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        mobileWidth: 32
+                                      }
+                                    },
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--image"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Image",
+                                                  value: {
+                                                    _styles: ["image"],
+                                                    _id:
+                                                      "unygbksvpcnpdxufxxwvczfcwfdqaqxmkvou",
+                                                    imageWidth: 79,
+                                                    imageHeight: 79,
+                                                    imageSrc:
+                                                      "2cd5e5a57c918cca0f7d215adb2edcd0.jpg",
+                                                    imageExtension: "jpg",
+                                                    width: 60,
+                                                    height: 104,
+                                                    positionX: 50,
+                                                    positionY: 50,
+                                                    imagePopulation: "",
+                                                    heightSuffix: "%",
+                                                    widthSuffix: "%",
+                                                    tabsState: "tabNormal",
+                                                    hoverBorderStyle: "none",
+                                                    tempHoverBorderStyle:
+                                                      "solid",
+                                                    hoverBorderColorHex:
+                                                      "#66738d",
+                                                    hoverBorderColorOpacity: 0,
+                                                    tempHoverBorderColorOpacity: 1,
+                                                    hoverBorderColorPalette: "",
+                                                    tempHoverBorderColorPalette:
+                                                      "",
+                                                    hoverBorderWidthType:
+                                                      "grouped",
+                                                    hoverBorderWidth: 0,
+                                                    tempHoverBorderWidth: 6,
+                                                    hoverBorderTopWidth: 0,
+                                                    tempHoverBorderTopWidth: 6,
+                                                    hoverBorderRightWidth: 0,
+                                                    tempHoverBorderRightWidth: 6,
+                                                    hoverBorderBottomWidth: 0,
+                                                    tempHoverBorderBottomWidth: 6,
+                                                    hoverBorderLeftWidth: 0,
+                                                    tempHoverBorderLeftWidth: 6,
+                                                    borderStyle: "none",
+                                                    tempBorderStyle: "solid",
+                                                    borderColorHex: "#66738d",
+                                                    borderColorOpacity: 0,
+                                                    tempBorderColorOpacity: 1,
+                                                    borderColorPalette: "",
+                                                    tempBorderColorPalette: "",
+                                                    borderWidthType: "grouped",
+                                                    borderWidth: 0,
+                                                    tempBorderWidth: 6,
+                                                    borderTopWidth: 0,
+                                                    tempBorderTopWidth: 6,
+                                                    borderRightWidth: 0,
+                                                    tempBorderRightWidth: 6,
+                                                    borderBottomWidth: 0,
+                                                    tempBorderBottomWidth: 6,
+                                                    borderLeftWidth: 0,
+                                                    tempBorderLeftWidth: 6
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "qdsgucvhzxnqcgggdtohxamfulcddcxboneg",
+                                              horizontalAlign: "left"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "iindhmkxbpnzniywkzdaichoiittuluhicug",
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span class="brz-cp-color8">JESSICA COX</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "buzybiscmplagswdrojquyrcdxlzjbkrqfqm",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "vtaafivbvxofqhwocsrijlemzjhbgfedhvnl",
+                                                    text:
+                                                      '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">MANAGER</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "swspvfpijyvemnepmdvfodhemkohmhrvmbgf",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "imfeazsfizszoxcsddmiasvzyahgjltuazzv",
+                                        width: 33.4,
+                                        paddingLeft: 0,
+                                        paddingLeftSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        paddingSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        paddingType: "grouped",
+                                        padding: 0,
+                                        paddingTop: 0,
+                                        paddingRight: 0,
+                                        paddingBottom: 0,
+                                        paddingTopSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        marginType: "ungrouped",
+                                        marginRightSuffix: "px",
+                                        marginRight: 10,
+                                        margin: 0,
+                                        marginSuffix: "px",
+                                        mobileWidth: 32
+                                      }
+                                    }
+                                  ],
+                                  _id: "isfxqwhdznjsqigefstpjxjgxbcquctdlmhg"
+                                }
+                              }
+                            ],
+                            _id: "zsmjjbgrcrqwkyonjfkfebcxtatwcqhgvnlf",
+                            width: 39,
                             paddingType: "grouped",
                             padding: 0,
                             paddingTop: 0,
@@ -73,654 +1587,370 @@ module.exports = {
                             tempPaddingRightSuffix: "px",
                             tempPaddingBottomSuffix: "px",
                             tempPaddingLeftSuffix: "px",
-                            tabletPaddingType: "grouped",
-                            tabletPadding: 0,
-                            tabletPaddingTop: 0,
-                            tabletPaddingRight: 0,
-                            tabletPaddingBottom: 0,
-                            tabletPaddingLeft: 0,
-                            tabletPaddingSuffix: "px",
-                            tabletPaddingTopSuffix: "px",
-                            tabletPaddingRightSuffix: "px",
-                            tabletPaddingBottomSuffix: "px",
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            tempTabletPaddingTopSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tempTabletPaddingBottomSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletWidth: 12.1,
-                            mobileWidth: 27
-                          }
-                        },
-                        {
-                          type: "Column",
-                          value: {
-                            _styles: ["column"],
-                            items: [
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--menu"],
-                                  items: [
-                                    {
-                                      type: "Menu",
-                                      value: {
-                                        _styles: ["menu"],
-                                        _id:
-                                          "wevrfvuacvcfagnmdyqxpunlulcnvpbyqiap",
-                                        menuSelected:
-                                          "b4a639abbd3e165444a42968c173ffd923a0aeec42f3bc204e1f975168238b7e",
-                                        colorHex: "#000000",
-                                        colorOpacity: 1,
-                                        tempColorOpacity: 1,
-                                        colorPalette: "color8",
-                                        tempColorPalette: "",
-                                        tabsState: "tabNormal",
-                                        hoverColorHex: "#000000",
-                                        hoverColorOpacity: 1,
-                                        tempHoverColorOpacity: 1,
-                                        hoverColorPalette: "color3",
-                                        tempHoverColorPalette: "",
-                                        activeColorHex: "#FFFFFF",
-                                        activeColorOpacity: 1,
-                                        tempActiveColorOpacity: 1,
-                                        activeColorPalette: "color3",
-                                        tempActiveColorPalette: "",
-                                        itemPadding: 50,
-                                        itemPaddingRight: 50,
-                                        itemPaddingLeft: 50,
-                                        tabletMMenuSize: 25,
-                                        tabletMMenuSizeSuffix: "",
-                                        tabletMMenuIconColorPalette: "color8",
-                                        tabletMMenuIconColorHex: "",
-                                        tabletMMenuIconColorOpacity: null,
-                                        tabletMMenu: "off",
-                                        mobileMMenuSize: 30,
-                                        mobileMMenuSizeSuffix: "",
-                                        mobileMMenuIconColorPalette: "color8",
-                                        mobileMMenuIconColorHex: "",
-                                        mobileMMenuIconColorOpacity: null,
-                                        subMenuColorPalette: "color8",
-                                        subMenuColorOpacity: 1,
-                                        subMenuHoverColorPalette: "color3",
-                                        mMenuColorPalette: "color8",
-                                        mMenuHoverColorPalette: "color3",
-                                        subMenuBgColorPalette: "color2",
-                                        subMenuBgColorOpacity: 1,
-                                        subMenuHoverBgColorPalette: "color2",
-                                        mMenuBgColorPalette: "color2",
-                                        subMenuHoverColorOpacity: 1
-                                      }
-                                    }
-                                  ],
-                                  _id: "ldgzagyjcdrohtwmempxprqizgpgxkzzpgng"
-                                }
-                              }
-                            ],
-                            _id: "zueazlcuuzlygbqklcdaqjfgyfbikqxfllfr",
-                            width: 84.5,
-                            tabletWidth: 75.8,
-                            mobileWidth: 46
-                          }
-                        },
-                        {
-                          type: "Column",
-                          value: {
-                            _styles: ["column"],
-                            items: [
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--menu"],
-                                  items: [
-                                    {
-                                      type: "Menu",
-                                      value: {
-                                        _styles: ["menu"],
-                                        _id:
-                                          "ruxksvskhahvxwaqorjmepomhstsjrpkilbe",
-                                        menuSelected:
-                                          "b4a639abbd3e165444a42968c173ffd923a0aeec42f3bc204e1f975168238b7e",
-                                        mMenu: "on",
-                                        mMenuIconColorPalette: "color8",
-                                        mMenuIconColorHex: "",
-                                        mMenuIconColorOpacity: 1,
-                                        mMenuSize: 24,
-                                        mMenuSizeSuffix: "",
-                                        tabletMMenuSize: 25,
-                                        tabletMMenuSizeSuffix: "",
-                                        mobileMMenuSize: 30,
-                                        mobileMMenuSizeSuffix: "",
-                                        mMenuColorPalette: "color8",
-                                        mMenuColorOpacity: 1,
-                                        mMenuBgColorPalette: "color2",
-                                        mMenuBgColorOpacity: 1,
-                                        mMenuHoverColorPalette: "color3",
-                                        mMenuHoverColorOpacity: 1
-                                      }
-                                    }
-                                  ],
-                                  _id: "xetlfhratixcflqoivjxgezwosovrwveqeed",
-                                  horizontalAlign: "right"
-                                }
-                              }
-                            ],
-                            _id: "ldwopkmzwnoieoeeqthpdyshgbxwhaivgbfd",
-                            width: 8.3,
-                            tabletWidth: 12,
-                            tabletPaddingRight: 0,
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            mobileWidth: 27
-                          }
-                        }
-                      ],
-                      _id: "aeiqxjlumkuixwbbdpyihspbmvsotqrduqkh"
-                    }
-                  }
-                ],
-                _id: "gbmmaeltrudcwyhskuinmwbdwxsazvkroomh",
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                paddingTop: 15,
-                tempPaddingTop: 10,
-                paddingRight: 100,
-                paddingRightSuffix: "px",
-                tempPaddingRightSuffix: "px",
-                tempPaddingRight: 100,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                paddingBottom: 10,
-                tempPaddingBottom: 10,
-                paddingLeft: 100,
-                paddingLeftSuffix: "px",
-                tempPaddingLeftSuffix: "px",
-                tempPaddingLeft: 100,
-                containerType: "fullWidth",
-                paddingType: "ungrouped",
-                tabletPaddingType: "ungrouped",
-                tabletPaddingTop: 15,
-                tabletPaddingBottom: 15,
-                mobilePaddingType: "ungrouped",
-                mobilePaddingTop: 15,
-                mobilePaddingBottom: 15,
-                bgColorPalette: "",
-                tempBgColorPalette: "color6",
-                bgColorOpacity: 0,
-                borderRadius: 0,
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                tempBorderTopLeftRadius: 0,
-                tempBorderTopRightRadius: 0,
-                tempBorderBottomLeftRadius: 0,
-                tempBorderBottomRightRadius: 0,
-                bgColorType: "gradient",
-                gradientActivePointer: "startPointer",
-                gradientLinearDegree: 0,
-                gradientStartPointer: 0,
-                gradientFinishPointer: 78,
-                gradientColorPalette: "color2",
-                tempGradientColorPalette: "color2",
-                gradientColorOpacity: 0.3,
-                gradientColorHex: "#000000",
-                tempGradientColorOpacity: 0.3,
-                bgColorHex: "#f4f4f4",
-                tempBgColorOpacity: 1,
-                borderWidth: 1,
-                borderTopWidth: 0,
-                borderRightWidth: 0,
-                borderBottomWidth: 1,
-                borderLeftWidth: 0,
-                tempBorderWidth: 1,
-                tempBorderTopWidth: 0,
-                tempBorderRightWidth: 0,
-                tempBorderBottomWidth: 1,
-                tempBorderLeftWidth: 0,
-                borderStyle: "solid",
-                borderColorOpacity: 0.2,
-                borderColorPalette: "color8",
-                tempBorderColorPalette: "color8",
-                borderColorHex: "#ffffff",
-                tempBorderColorOpacity: 0.2,
-                borderWidthType: "ungrouped"
-              }
-            }
-          ],
-          _id: "ghsotcjfveznqtzgzigkiboidryearjrzcxp",
-          _thumbnailSrc: 6774102,
-          _thumbnailWidth: 600,
-          _thumbnailHeight: 30,
-          _thumbnailTime: 1623232671220,
-          zIndex: 50,
-          zIndexSuffix: ""
-        },
-        blockId: "Kit2Blank000Light"
-      },
-      {
-        type: "Section",
-        value: {
-          _styles: ["section"],
-          items: [
-            {
-              type: "SectionItem",
-              value: {
-                _styles: ["section-item"],
-                items: [
-                  {
-                    type: "Wrapper",
-                    value: {
-                      _styles: ["wrapper", "wrapper--richText"],
-                      items: [
-                        {
-                          type: "RichText",
-                          value: {
-                            _styles: ["richText"],
-                            _id: "ihbtpyggwhwfqlnutnuphbfdmmiqaisikiju",
-                            text:
-                              '<p class="brz-tp-lg-paragraph brz-text-lg-center" data-generated-css="brz-css-nymoq" data-uniq-id="naffi"><span class="brz-cp-color8">HOME - ABOUT</span></p>'
-                          }
-                        }
-                      ],
-                      _id: "zldyseptfdqpjfqrgcpufjhilyzbebsptdxc",
-                      marginBottomSuffix: "px",
-                      marginBottom: 0,
-                      margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginBottomSuffix: "px",
-                      tabletMarginBottom: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginBottomSuffix: "px",
-                      mobileMarginBottom: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
-                    }
-                  },
-                  {
-                    type: "Wrapper",
-                    value: {
-                      _styles: ["wrapper", "wrapper--richText"],
-                      items: [
-                        {
-                          type: "RichText",
-                          value: {
-                            _styles: ["richText"],
-                            _id: "olgieicsqiuvrskhlmsfceaxtvqmdluwpgop",
-                            text:
-                              '<p class="brz-fs-xs-52 brz-lh-xs-1_3 brz-ls-xs-0 brz-fw-xs-400 brz-fss-xs-px brz-text-lg-center brz-tp-lg-empty brz-fs-lg-70 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-0 brz-lh-lg-1_3 brz-ff-oswald brz-ft-google brz-fss-sm-px brz-fw-sm-400 brz-ls-sm-0 brz-lh-sm-1_3 brz-fs-sm-60" data-generated-css="brz-css-uoirh" data-uniq-id="cuded"><strong class="brz-cp-color8">ABOUT US</strong></p>'
-                          }
-                        }
-                      ],
-                      _id: "rjnutxmmbsvnvomjkendelkbhwmlbpwvkmxy",
-                      marginBottomSuffix: "px",
-                      marginBottom: 0,
-                      margin: 0,
-                      marginSuffix: "px",
-                      marginTopSuffix: "px",
-                      marginTop: 0
-                    }
-                  }
-                ],
-                _id: "oqimnifvsadiasnqtcrisxqipbuwigvftxbl",
-                bgImageWidth: 1894,
-                bgImageHeight: 972,
-                bgImageExtension: "jpg",
-                bgImageSrc: "f42f1d7bf40a5079dbd4464e08f88358.jpg",
-                bgColorOpacity: 0,
-                tempBgColorOpacity: 1,
-                borderRadius: 0,
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                tempBorderTopLeftRadius: 0,
-                tempBorderTopRightRadius: 0,
-                tempBorderBottomLeftRadius: 0,
-                tempBorderBottomRightRadius: 0,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                paddingTop: 200,
-                tempPaddingTop: 200,
-                paddingBottom: 100,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                tempPaddingBottom: 100,
-                bgPositionX: 47,
-                bgPositionY: 16,
-                tabletPaddingTop: 150,
-                tabletPaddingTopSuffix: "px",
-                tempTabletPaddingTopSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tempTabletPaddingTop: 150,
-                mobilePaddingTop: 150,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                tempMobilePaddingTop: 150,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingBottom: 50,
-                tempMobilePaddingBottom: 50
-              }
-            }
-          ],
-          _id: "apmsrzptlxrsnrqivhwiljhqslppqjjbptfy",
-          marginType: "ungrouped",
-          marginTopSuffix: "%",
-          marginTop: -5,
-          margin: 0,
-          marginSuffix: "px",
-          _thumbnailSrc: 6767764,
-          _thumbnailWidth: 600,
-          _thumbnailHeight: 138,
-          _thumbnailTime: 1626700030160,
-          tabletMarginTopSuffix: "%",
-          tabletMarginTop: -12,
-          tabletMargin: 0,
-          tabletMarginSuffix: "px",
-          mobileMarginTopSuffix: "%",
-          mobileMarginTop: -24,
-          mobileMargin: 0,
-          mobileMarginSuffix: "px"
-        },
-        blockId: "Kit2Blank000Light"
-      },
-      {
-        type: "Section",
-        value: {
-          _styles: ["section"],
-          items: [
-            {
-              type: "SectionItem",
-              value: {
-                _styles: ["section-item"],
-                items: [
-                  {
-                    type: "Row",
-                    value: {
-                      _styles: ["row", "hide-row-borders", "padding-0"],
-                      items: [
-                        {
-                          type: "Column",
-                          value: {
-                            _styles: ["column"],
-                            items: [
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--richText"],
-                                  items: [
-                                    {
-                                      type: "RichText",
-                                      value: {
-                                        _styles: ["richText"],
-                                        _id:
-                                          "mfbjkggrmxtptxnpdzmmdupiusymhplorrbl",
-                                        text:
-                                          '<p class="brz-tp-lg-abovetitle brz-text-lg-left" data-generated-css="brz-css-zwall" data-uniq-id="uotix"><span class="brz-cp-color7">GET TO KNOW US</span></p>'
-                                      }
-                                    }
-                                  ],
-                                  _id: "onwbiasmczvlklgmwyrqyhtmtfslhrraiogl",
-                                  marginBottomSuffix: "px",
-                                  marginBottom: 0,
-                                  margin: 0,
-                                  marginSuffix: "px",
-                                  tabletMarginBottomSuffix: "px",
-                                  tabletMarginBottom: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
-                                }
-                              },
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--richText"],
-                                  items: [
-                                    {
-                                      type: "RichText",
-                                      value: {
-                                        _styles: ["richText"],
-                                        _id:
-                                          "qvxaurcqxeynrojitacchygxgqegscvlytdx",
-                                        text:
-                                          '<p class="brz-tp-lg-heading2 brz-text-lg-left" data-uniq-id="udrnz" data-generated-css="brz-css-vdwsl"><span class="brz-cp-color2">BUILD BETTER WEBSITE ALOT QUICKER WITH MEIPALY AGENCY</span></p>'
-                                      }
-                                    }
-                                  ],
-                                  _id: "ltfkqygttkfncijtlgubnsijnzcdkqawcbaj",
-                                  marginTopSuffix: "px",
-                                  marginTop: 0,
-                                  margin: 0,
-                                  marginSuffix: "px",
-                                  tabletMarginTopSuffix: "px",
-                                  tabletMarginTop: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
-                                }
-                              }
-                            ],
-                            _id: "zzebbryhhkiavzzbcslzfxielyatxeywkovk",
-                            width: 55,
-                            paddingLeft: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
-                            paddingRight: 100,
-                            tempPaddingRight: 100,
-                            mobileMarginTopSuffix: "px",
-                            mobileMarginTop: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px"
-                          }
-                        },
-                        {
-                          type: "Column",
-                          value: {
-                            _styles: ["column"],
-                            items: [
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--image"],
-                                  items: [
-                                    {
-                                      type: "Image",
-                                      value: {
-                                        _styles: ["image"],
-                                        _id:
-                                          "echwzqjrowgqsximemaarejgjdpkskuzulwi",
-                                        imageSrc:
-                                          "cdcb53914e3ed7ccd9f1fe43831f7f86.jpg",
-                                        imageExtension: "jpg",
-                                        imageWidth: 829,
-                                        imageHeight: 554,
-                                        width: 100,
-                                        height: 152,
-                                        heightSuffix: "%",
-                                        boxShadow: "on",
-                                        tempBoxShadow: "on",
-                                        boxShadowColorHex: "#000000",
-                                        boxShadowColorPalette: "",
-                                        tempBoxShadowColorPalette: "",
-                                        boxShadowColorOpacity: 0.31,
-                                        tempBoxShadowColorOpacity: 0.31,
-                                        boxShadowBlur: 35,
-                                        tempBoxShadowBlur: 35,
-                                        boxShadowSpread: 5,
-                                        tempBoxShadowSpread: 5,
-                                        boxShadowVertical: 2,
-                                        tempBoxShadowVertical: 2,
-                                        boxShadowHorizontal: 1,
-                                        tempBoxShadowHorizontal: 1,
-                                        positionX: 60,
-                                        positionY: 42
-                                      }
-                                    }
-                                  ],
-                                  _id: "bxhbmqesuzzpdvbiwtthgahtetnujhtkchls",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
-                                }
-                              }
-                            ],
-                            _id: "ysuxshreerjyquynxvnxdxdypahorwquhwcc",
-                            width: 45,
-                            paddingLeft: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            paddingRight: 0,
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
-                            tabletPaddingTop: 0,
-                            tabletPaddingTopSuffix: "px",
-                            tempTabletPaddingTopSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            tabletPaddingRight: 0,
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tabletPaddingType: "grouped",
-                            tabletPadding: 0,
-                            tabletPaddingBottom: 0,
-                            tabletPaddingLeft: 0,
-                            tabletPaddingBottomSuffix: "px",
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingBottomSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            mobileMarginBottomSuffix: "px",
-                            mobileMarginBottom: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px",
-                            mobilePaddingLeftSuffix: "px",
-                            tempMobilePaddingLeftSuffix: "px",
-                            mobilePaddingSuffix: "px",
-                            tempMobilePaddingSuffix: "px",
-                            mobilePaddingLeft: 50,
-                            tempMobilePaddingLeft: 50
-                          }
-                        }
-                      ],
-                      _id: "vjdctvhskwewywwipjnswhwttjzrpbmaglzn"
-                    }
-                  },
-                  {
-                    type: "Row",
-                    value: {
-                      _styles: ["row", "hide-row-borders", "padding-0"],
-                      items: [
-                        {
-                          type: "Column",
-                          value: {
-                            _styles: ["column"],
-                            items: [
-                              {
-                                type: "Wrapper",
-                                value: {
-                                  _styles: ["wrapper", "wrapper--image"],
-                                  items: [
-                                    {
-                                      type: "Image",
-                                      value: {
-                                        _styles: ["image"],
-                                        _id:
-                                          "fxwwwjmebpaobbscmvoduzsejofzhwximxtl",
-                                        imageSrc:
-                                          "8f5c8544249980b704ae195f7206faef.jpg",
-                                        imageExtension: "jpg",
-                                        imageWidth: 834,
-                                        imageHeight: 557,
-                                        width: 100,
-                                        height: 100,
-                                        heightSuffix: "%",
-                                        boxShadow: "on",
-                                        tempBoxShadow: "on",
-                                        boxShadowColorHex: "#000000",
-                                        boxShadowColorPalette: "",
-                                        tempBoxShadowColorPalette: "",
-                                        boxShadowColorOpacity: 0.31,
-                                        tempBoxShadowColorOpacity: 0.31,
-                                        boxShadowBlur: 35,
-                                        tempBoxShadowBlur: 35,
-                                        boxShadowSpread: 5,
-                                        tempBoxShadowSpread: 5,
-                                        boxShadowVertical: 2,
-                                        tempBoxShadowVertical: 2,
-                                        boxShadowHorizontal: 1,
-                                        tempBoxShadowHorizontal: 1,
-                                        positionX: 60,
-                                        positionY: 42
-                                      }
-                                    }
-                                  ],
-                                  _id: "qgdhtsxzkucmpzewzllngpzrdtctwdiatyui",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
-                                }
-                              }
-                            ],
-                            _id: "hplqiwoozexmmnofjykandppkxnpzrveaafo",
-                            width: 67.7,
-                            paddingLeft: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            paddingRight: 0,
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
+                            className: "",
+                            elementPosition: "relative",
+                            customAttributes: "",
+                            customAttributesPopulation: null,
+                            borderStyle: "solid",
+                            tempBorderStyle: "solid",
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
+                            borderWidthType: "grouped",
+                            borderWidth: 0,
+                            borderTopWidth: 0,
+                            borderRightWidth: 0,
+                            borderBottomWidth: 0,
+                            borderLeftWidth: 0,
+                            tempBorderWidth: 4,
+                            tempBorderTopWidth: 4,
+                            tempBorderRightWidth: 4,
+                            tempBorderBottomWidth: 4,
+                            tempBorderLeftWidth: 4,
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
+                            borderRadiusType: "grouped",
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            tempBorderRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
+                            bgColorType: "solid",
+                            gradientActivePointer: "startPointer",
+                            gradientStartPointer: 0,
+                            gradientFinishPointer: 100,
+                            gradientType: "linear",
+                            gradientLinearDegree: 90,
+                            gradientRadialDegree: 90,
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
+                            bgColorHex: "#000000",
+                            bgColorOpacity: 0,
+                            bgColorPalette: "",
+                            tempBgColorOpacity: 1,
+                            tempBgColorPalette: "",
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
+                            gradientColorHex: "#009900",
+                            gradientColorOpacity: 1,
+                            gradientColorPalette: "",
+                            tempGradientColorOpacity: 1,
+                            tempGradientColorPalette: "",
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
+                            borderColorHex: "#66738d",
+                            borderColorOpacity: 0,
+                            borderColorPalette: "",
+                            tempBorderColorOpacity: 1,
+                            tempBorderColorPalette: "",
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
+                            boxShadow: "",
+                            tempBoxShadow: "on",
+                            boxShadowColorHex: "#000000",
+                            boxShadowColorOpacity: 1,
+                            boxShadowColorPalette: "",
+                            tempBoxShadowColorOpacity: 1,
+                            tempBoxShadowColorPalette: "",
+                            boxShadowBlur: 0,
+                            boxShadowSpread: 0,
+                            boxShadowVertical: 0,
+                            boxShadowHorizontal: 0,
+                            tempBoxShadowBlur: 4,
+                            tempBoxShadowSpread: 0,
+                            tempBoxShadowVertical: 2,
+                            tempBoxShadowHorizontal: 1,
+                            hoverBoxShadow: null,
+                            tempHoverBoxShadow: null,
+                            hoverBoxShadowColorHex: null,
+                            hoverBoxShadowColorOpacity: null,
+                            hoverBoxShadowColorPalette: null,
+                            tempHoverBoxShadowColorPalette: null,
+                            tempHoverBoxShadowColorOpacity: null,
+                            hoverBoxShadowBlur: null,
+                            hoverBoxShadowSpread: null,
+                            hoverBoxShadowVertical: null,
+                            hoverBoxShadowHorizontal: null,
+                            tempHoverBoxShadowBlur: null,
+                            tempHoverBoxShadowSpread: null,
+                            tempHoverBoxShadowVertical: null,
+                            tempHoverBoxShadowHorizontal: null,
+                            hoverTransition: 50,
+                            hoverTransitionSuffix: null,
+                            verticalAlign: "top",
+                            tempPaddingType: "ungrouped",
+                            tempPadding: 15,
+                            tempPaddingTop: 5,
+                            tempPaddingRight: 15,
+                            tempPaddingBottom: 5,
+                            tempPaddingLeft: 15,
+                            hoverPaddingType: null,
+                            tempHoverPaddingType: null,
+                            hoverPadding: null,
+                            hoverPaddingTop: null,
+                            hoverPaddingRight: null,
+                            hoverPaddingBottom: null,
+                            hoverPaddingLeft: null,
+                            tempHoverPadding: null,
+                            tempHoverPaddingTop: null,
+                            tempHoverPaddingRight: null,
+                            tempHoverPaddingBottom: null,
+                            tempHoverPaddingLeft: null,
+                            hoverPaddingSuffix: null,
+                            hoverPaddingTopSuffix: null,
+                            hoverPaddingRightSuffix: null,
+                            hoverPaddingBottomSuffix: null,
+                            hoverPaddingLeftSuffix: null,
+                            tempHoverPaddingSuffix: null,
+                            tempHoverPaddingTopSuffix: null,
+                            tempHoverPaddingRightSuffix: null,
+                            tempHoverPaddingBottomSuffix: null,
+                            tempHoverPaddingLeftSuffix: null,
                             marginType: "ungrouped",
-                            marginTopSuffix: "%",
-                            marginTop: -35,
                             margin: 0,
+                            marginTop: 0,
+                            marginRight: 10,
+                            marginBottom: 0,
+                            marginLeft: 0,
                             marginSuffix: "px",
-                            tabletPaddingLeft: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
+                            marginTopSuffix: "px",
+                            marginRightSuffix: "px",
+                            marginBottomSuffix: "px",
+                            marginLeftSuffix: "px",
+                            customClassName: "",
+                            customCSS: "",
+                            customID: "",
+                            cssIDPopulation: "",
+                            cssClassPopulation: "",
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletBoxShadow: null,
+                            tempTabletBoxShadow: null,
+                            tabletBoxShadowColorHex: null,
+                            tabletBoxShadowColorOpacity: null,
+                            tabletBoxShadowColorPalette: null,
+                            tempTabletBoxShadowColorPalette: null,
+                            tempTabletBoxShadowColorOpacity: null,
+                            tabletBoxShadowBlur: null,
+                            tabletBoxShadowSpread: null,
+                            tabletBoxShadowVertical: null,
+                            tabletBoxShadowHorizontal: null,
+                            tempTabletBoxShadowBlur: null,
+                            tempTabletBoxShadowSpread: null,
+                            tempTabletBoxShadowVertical: null,
+                            tempTabletBoxShadowHorizontal: null,
+                            tabletVerticalAlign: null,
+                            tabletPaddingType: "ungrouped",
+                            tempTabletPaddingType: "ungrouped",
+                            tabletPadding: 15,
+                            tabletPaddingTop: 5,
+                            tabletPaddingRight: 15,
+                            tabletPaddingBottom: 5,
+                            tabletPaddingLeft: 15,
+                            tempTabletPadding: 15,
+                            tempTabletPaddingTop: 5,
+                            tempTabletPaddingRight: 15,
+                            tempTabletPaddingBottom: 5,
+                            tempTabletPaddingLeft: 15,
                             tabletPaddingSuffix: "px",
+                            tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
                             tempTabletPaddingSuffix: "px",
-                            tabletMarginTopSuffix: "%",
-                            tabletMarginTop: -27,
+                            tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletMarginType: "ungrouped",
                             tabletMargin: 0,
+                            tabletMarginTop: 0,
+                            tabletMarginRight: 0,
+                            tabletMarginBottom: 0,
+                            tabletMarginLeft: 0,
                             tabletMarginSuffix: "px",
-                            mobileMarginTopSuffix: "%",
-                            mobileMarginTop: -30,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px",
-                            mobilePaddingRightSuffix: "px",
-                            tempMobilePaddingRightSuffix: "px",
+                            tabletMarginTopSuffix: "px",
+                            tabletMarginRightSuffix: "px",
+                            tabletMarginBottomSuffix: "px",
+                            tabletMarginLeftSuffix: "px",
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileBoxShadow: null,
+                            tempMobileBoxShadow: null,
+                            mobileBoxShadowColorHex: null,
+                            mobileBoxShadowColorOpacity: null,
+                            mobileBoxShadowColorPalette: null,
+                            tempMobileBoxShadowColorPalette: null,
+                            tempMobileBoxShadowColorOpacity: null,
+                            mobileBoxShadowBlur: null,
+                            mobileBoxShadowSpread: null,
+                            mobileBoxShadowVertical: null,
+                            mobileBoxShadowHorizontal: null,
+                            tempMobileBoxShadowBlur: null,
+                            tempMobileBoxShadowSpread: null,
+                            tempMobileBoxShadowVertical: null,
+                            tempMobileBoxShadowHorizontal: null,
+                            mobileVerticalAlign: null,
+                            mobilePaddingType: "ungrouped",
+                            tempMobilePaddingType: "ungrouped",
+                            mobilePadding: 0,
+                            mobilePaddingTop: 0,
+                            mobilePaddingRight: 0,
+                            mobilePaddingBottom: 0,
+                            mobilePaddingLeft: 0,
+                            tempMobilePadding: 0,
+                            tempMobilePaddingTop: 0,
+                            tempMobilePaddingRight: 0,
+                            tempMobilePaddingBottom: 0,
+                            tempMobilePaddingLeft: 0,
                             mobilePaddingSuffix: "px",
+                            mobilePaddingTopSuffix: "px",
+                            mobilePaddingRightSuffix: "px",
+                            mobilePaddingBottomSuffix: "px",
+                            mobilePaddingLeftSuffix: "px",
                             tempMobilePaddingSuffix: "px",
-                            mobilePaddingRight: 50,
-                            tempMobilePaddingRight: 50
+                            tempMobilePaddingTopSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            tempMobilePaddingBottomSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobileMarginType: "ungrouped",
+                            mobileMargin: 10,
+                            mobileMarginTop: 0,
+                            mobileMarginRight: 0,
+                            mobileMarginBottom: 0,
+                            mobileMarginLeft: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginTopSuffix: "px",
+                            mobileMarginRightSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginLeftSuffix: "px",
+                            showOnTablet: "off"
                           }
                         },
                         {
@@ -738,27 +1968,17 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "vgwkzhkwjfjbuyaytchakrncyaapcujqwlkr",
+                                          "lcolkefkyllanvyrtxihqmlgwycrswbcqhaf",
                                         text:
-                                          '<p data-generated-css="brz-css-vmcqc" data-uniq-id="csvtv" class="brz-tp-lg-abovetitle"><strong class="brz-cp-color2">COMPANY STARTED</strong></p>'
+                                          '<p class="brz-tp-sm-paragraph brz-tp-xs-paragraph brz-ff-oswald brz-ft-google brz-fss-lg-px brz-fs-lg-24 brz-fw-lg-300 brz-ls-lg-0_5 brz-lh-lg-1_7"><span class="brz-cp-color6">“This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch. There are many variations of passages of available, but the majority have suffered alteration in some form by injected humour.”</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "mtfaabutuegxsfcqbaaxmisitzwgdxxfsdve",
-                                  marginBottomSuffix: "px",
-                                  marginBottom: 0,
-                                  margin: 0,
-                                  marginSuffix: "px",
+                                  _id: "zhhjqnyihbluorrqovlfecviurwmnqcoxsfg",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
-                                  tabletMarginBottomSuffix: "px",
-                                  tabletMarginBottom: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  margin: 0,
+                                  marginSuffix: "px"
                                 }
                               },
                               {
@@ -771,2702 +1991,44 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "cgvrcjpnvvpksovlgslqejxvmogmviucenot",
+                                          "utgewposwmezcasgsgzeewxdvzoxfjxsuwdy",
                                         text:
-                                          '<p data-generated-css="brz-css-tyabi" data-uniq-id="gijyz" class="brz-tp-lg-empty brz-ff-oswald brz-ft-google brz-fs-lg-100 brz-fss-lg-px brz-fw-lg-400 brz-ls-lg-0 brz-lh-lg-1_3 brz-fs-sm-100 brz-fss-sm-px brz-fw-sm-400 brz-ls-sm-0 brz-lh-sm-1 brz-fs-xs-100 brz-fss-xs-px brz-fw-xs-400 brz-ls-xs-0 brz-lh-xs-1"><span class="brz-cp-color2">1990</span></p>'
+                                          '<p class="brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color7">25 NOV, 2018</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "msfsegxpfdhprkzszrmetbaoylrditnuhuvf",
-                                  marginBottomSuffix: "px",
-                                  marginBottom: 0,
-                                  margin: 0,
-                                  marginSuffix: "px",
-                                  marginTopSuffix: "px",
-                                  marginTop: 0,
-                                  tabletMarginTopSuffix: "px",
-                                  tabletMarginTop: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
+                                  _id: "qlxwbxdsvttezsuyofynrczuzfvriusummjg"
                                 }
                               }
                             ],
-                            _id: "asoaptzdlhxwdmysrjztatgmfzbysdavrxxx",
-                            width: 32.3,
-                            verticalAlign: "bottom",
-                            paddingLeft: 100,
+                            _id: "leuygmuhoyucxaypeuhbzzkiebvlbvzpanyd",
+                            width: 61,
                             paddingLeftSuffix: "px",
                             tempPaddingLeftSuffix: "px",
                             paddingSuffix: "px",
                             tempPaddingSuffix: "px",
-                            tempPaddingLeft: 100
+                            paddingLeft: 35,
+                            tempPaddingLeft: 35,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            tempPaddingTopSuffix: "px",
+                            tabletWidth: 100,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            tabletPaddingSuffix: "px",
+                            tempTabletPaddingSuffix: "px"
                           }
                         }
                       ],
-                      _id: "xrknmogqyuzfltfpebxwwuegtdncyrmdjilx"
+                      _id: "wybdcwxpditalrrdfuzswxigsgewzalehmrq"
                     }
                   }
                 ],
-                _id: "vppvafnlaxodvtuzxcdvdleoudxvhpabhbif",
-                paddingTop: 100,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                tempPaddingTop: 100,
-                paddingBottom: 100,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                tempPaddingBottom: 100,
-                tabletPaddingTopSuffix: "px",
-                tempTabletPaddingTopSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tabletPaddingTop: 75,
-                tempTabletPaddingTop: 75,
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingBottom: 75,
-                tempTabletPaddingBottom: 75,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                mobilePaddingTop: 50,
-                tempMobilePaddingTop: 50,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingBottom: 50,
-                tempMobilePaddingBottom: 50
-              }
-            }
-          ],
-          _id: "ihcgqsvzwcslfuwmnpnksimctspedxknhmyz",
-          _thumbnailSrc: 6767800,
-          _thumbnailWidth: 600,
-          _thumbnailHeight: 335,
-          _thumbnailTime: 1626700034281
-        },
-        blockId: "Kit2Blank000Light"
-      },
-      {
-        type: "Section",
-        value: {
-          _styles: ["section"],
-          items: [
-            {
-              type: "SectionItem",
-              value: {
-                _styles: ["section-item"],
-                items: [
-                  {
-                    type: "Wrapper",
-                    value: {
-                      _styles: ["wrapper", "wrapper--richText"],
-                      items: [
-                        {
-                          type: "RichText",
-                          value: {
-                            _styles: ["richText"],
-                            _id: "wmeawstkbacwmvyojzdmhlzjceyhtffyrwzb",
-                            text:
-                              '<p class="brz-tp-lg-heading2 brz-text-lg-justify" data-uniq-id="seqoc" data-generated-css="brz-css-buagu"><span class="brz-cp-color8">PLAYERS REVIEWS</span></p>'
-                          }
-                        }
-                      ],
-                      _id: "kynacrdhuduqqnynmomsxsiggitoygoeufle",
-                      marginTopSuffix: "px",
-                      marginTop: 0,
-                      margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginTopSuffix: "px",
-                      tabletMarginTop: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginTopSuffix: "px",
-                      mobileMarginTop: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
-                    }
-                  },
-                  {
-                    type: "Wrapper",
-                    value: {
-                      _styles: ["wrapper", "wrapper--carousel"],
-                      items: [
-                        {
-                          type: "Carousel",
-                          value: {
-                            _styles: ["carousel"],
-                            items: [
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Row",
-                                                  value: {
-                                                    _styles: [
-                                                      "row",
-                                                      "hide-row-borders",
-                                                      "padding-0"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "odfclpmcyhfgujbonaxmazefaeudcsdhwxfj",
-                                                                      imageSrc:
-                                                                        "2b251ea371b57108c6f71e603b54ccbd.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 90,
-                                                                      imageHeight: 93,
-                                                                      width: 60,
-                                                                      height: 104,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%",
-                                                                      borderStyle:
-                                                                        "solid",
-                                                                      tempBorderStyle:
-                                                                        "solid",
-                                                                      borderColorHex:
-                                                                        "#66738d",
-                                                                      borderColorOpacity: 1,
-                                                                      tempBorderColorOpacity: 1,
-                                                                      borderColorPalette:
-                                                                        "color3",
-                                                                      tempBorderColorPalette:
-                                                                        "",
-                                                                      borderWidthType:
-                                                                        "grouped",
-                                                                      borderWidth: 6,
-                                                                      tempBorderWidth: 6,
-                                                                      borderTopWidth: 6,
-                                                                      tempBorderTopWidth: 4,
-                                                                      borderRightWidth: 6,
-                                                                      tempBorderRightWidth: 4,
-                                                                      borderBottomWidth: 6,
-                                                                      tempBorderBottomWidth: 4,
-                                                                      borderLeftWidth: 6,
-                                                                      tempBorderLeftWidth: 4
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "illuseqwhdaacqfiuglykacdpmajziytwspe",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "kdqnzkjlndxfkvrihohduguizmiogalxsuon",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-uniq-id="gwayj" data-generated-css="brz-css-qxqxz"><span class="brz-cp-color8">SHIRLEY SMITH</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "rkqxqxlevqadgtqnrziglrlmlpgzbcnkyxkz",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "bmnzzlimibzkupbmxaenmbyzhfiwedvuvqwt",
-                                                                      text:
-                                                                        '<p data-generated-css="brz-css-yapui" data-uniq-id="zgwbe" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">DIRECTOR</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "deicueenryrnyqnutpoygwoxuukfmcryokyb",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "skydwrjbisprxobtnjhwgddpdvfkfjuwnmfa",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "wcdomrsnmoabczjvebilbhccpdlsrzlhmgem",
-                                                                      imageSrc:
-                                                                        "41ea48351b9c7622ae09418a70e28ecf.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 82,
-                                                                      imageHeight: 82,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "rnkpwhirwtndhcooezwkgqzlwhlfejilokfp",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "zauazpijpwlpfthdpzlyafnecqgotsasmvuo",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-cbzbe" data-uniq-id="zwexe"><span class="brz-cp-color8">MIKE HARDSON</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "lbrxooueimxnqvqrfczqqheendzlgawoorfg",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "rghveazlykptbgropuqcjmvoglzsihvancns",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="bkekb" data-generated-css="brz-css-teesm"><span class="brz-cp-color7">CO-FOUNDER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "notqbaxhhkypndmtjpqfbawjhjvivzgokcvt",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "ssrmupvtrpjwbirpjrsoxafdvpmkmaylglec",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "lkiiotmjlkbcxyclqrcqlybhfnzgatpcyjnc",
-                                                                      imageSrc:
-                                                                        "13187a1d4ae23831b08c85853a03d3c6.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 83,
-                                                                      imageHeight: 83,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "swcezibnddbdeyxwllqynpjnifbjhwvqyhgq",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "lcbyxhbeqeebhexkcuakauucstsbivgoqbks",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-rkzqp" data-uniq-id="gvvfl"><span class="brz-cp-color8">JESSICA COX</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "yuyksquhckmbnnlqmqsdfowvopvayvyrzngd",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "johrxfijzpfewassgwrdiqcjmcoqyypkshir",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="pgtya" data-generated-css="brz-css-mlbbz"><span class="brz-cp-color7">MANAGER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "tjvpwdfjteecllnfxllbumhtjipfxvjqgvmh",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "hjyhivpxrudkuxltpwbkluertsqdeqnyaesw",
-                                                          width: 33.4,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "nyvhptjzxilmvhjwravjmcootvlijuuyxtmr"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "vnqjrtxjahywdgjuicbsgcudoxguzornsbcp",
-                                              width: 34,
-                                              paddingLeft: 0,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
-                                              paddingBottom: 0,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
-                                              paddingTop: 0,
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              tabletPaddingLeft: 0,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletWidth: 40.2
-                                            }
-                                          },
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "tlhehmvdwrndasvylcrimogiefrftzquxxup",
-                                                          text:
-                                                            '<p class="brz-fs-xs-20 brz-lh-xs-1_3 brz-ls-xs-0 brz-fw-xs-300 brz-fss-xs-px brz-lh-sm-1_3 brz-ls-sm-0 brz-fw-sm-300 brz-fss-sm-px brz-fs-sm-22 brz-ft-google brz-ff-oswald brz-tp-lg-empty brz-lh-lg-1_7 brz-fs-lg-24 brz-fss-lg-px brz-fw-lg-300 brz-ls-lg-0_5" data-uniq-id="desww" data-generated-css="brz-css-apvcd"><span class="brz-cp-color8">“This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch. There are many variations of passages of available, but the majority have suffered alteration in some form by injected humour.”</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "lwhztdnimsqcjbuzpszxcemupcuvlyttrpki"
-                                                  }
-                                                },
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "wliliwmtfswpbtdemrpzytubyfxbiupnjdbq",
-                                                          text:
-                                                            '<p data-uniq-id="wffse" data-generated-css="brz-css-zvtqr" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">25 NOV, 2018</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "bgmrnzdkffzfvfjdpufdqtiwqsiwygdroall"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "gnpkivjjryhrbasdogbopsyokhditvymomdq",
-                                              width: 66,
-                                              verticalAlign: "center",
-                                              tabletWidth: 58.8,
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px"
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "bnsjdzidzohxdalispnubzlwsfcufmsigvpy"
-                                      }
-                                    }
-                                  ],
-                                  _id: "tvjlcpkuyhedkoirkukiddtfpmdqrobgxorn",
-                                  width: 100,
-                                  paddingBottom: 0,
-                                  paddingBottomSuffix: "px",
-                                  tempPaddingBottomSuffix: "px",
-                                  paddingSuffix: "px",
-                                  tempPaddingSuffix: "px",
-                                  paddingLeft: 0,
-                                  paddingLeftSuffix: "px",
-                                  tempPaddingLeftSuffix: "px",
-                                  tabletPaddingLeft: 0,
-                                  tabletPaddingLeftSuffix: "px",
-                                  tempTabletPaddingLeftSuffix: "px",
-                                  tabletPaddingSuffix: "px",
-                                  tempTabletPaddingSuffix: "px"
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Row",
-                                                  value: {
-                                                    _styles: [
-                                                      "row",
-                                                      "hide-row-borders",
-                                                      "padding-0"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "wcpsdhowjmopsvzqqvbzpxggwwdxuyoruskt",
-                                                                      imageSrc:
-                                                                        "2b251ea371b57108c6f71e603b54ccbd.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 90,
-                                                                      imageHeight: 93,
-                                                                      width: 60,
-                                                                      height: 104,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%",
-                                                                      borderStyle:
-                                                                        "none",
-                                                                      tempBorderStyle:
-                                                                        "solid",
-                                                                      borderColorHex:
-                                                                        "#66738d",
-                                                                      borderColorOpacity: 0,
-                                                                      tempBorderColorOpacity: 1,
-                                                                      borderColorPalette:
-                                                                        "",
-                                                                      tempBorderColorPalette:
-                                                                        "color3",
-                                                                      borderWidthType:
-                                                                        "grouped",
-                                                                      borderWidth: 0,
-                                                                      tempBorderWidth: 6,
-                                                                      borderTopWidth: 0,
-                                                                      tempBorderTopWidth: 6,
-                                                                      borderRightWidth: 0,
-                                                                      tempBorderRightWidth: 6,
-                                                                      borderBottomWidth: 0,
-                                                                      tempBorderBottomWidth: 6,
-                                                                      borderLeftWidth: 0,
-                                                                      tempBorderLeftWidth: 6
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "yirvcpmkxhafscrsluotqghxesnbxideujik",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "ittuuplbczhxuhuitxytettirvnukdtormnk",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-uniq-id="gwayj" data-generated-css="brz-css-qxqxz"><span class="brz-cp-color8">SHIRLEY SMITH</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "krfxblrvjtfwkfxfhxlmghblrinuutnlrqzm",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "xukalbrgyfuoblehzewekeunfbkwydivuzhg",
-                                                                      text:
-                                                                        '<p data-generated-css="brz-css-yapui" data-uniq-id="zgwbe" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">DIRECTOR</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "hpbmgettytopfmfjunxvjenhesacxywxzqdb",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "qmvzhtjlvyptobmtimqzqiaitbctamwgaoxa",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "hukulpswuzmgsdqnmnggavwqftukewblfwfb",
-                                                                      imageSrc:
-                                                                        "41ea48351b9c7622ae09418a70e28ecf.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 82,
-                                                                      imageHeight: 82,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%",
-                                                                      borderStyle:
-                                                                        "solid",
-                                                                      tempBorderStyle:
-                                                                        "solid",
-                                                                      borderColorHex:
-                                                                        "#66738d",
-                                                                      borderColorOpacity: 1,
-                                                                      tempBorderColorOpacity: 1,
-                                                                      borderColorPalette:
-                                                                        "color3",
-                                                                      tempBorderColorPalette:
-                                                                        "",
-                                                                      borderWidthType:
-                                                                        "grouped",
-                                                                      borderWidth: 6,
-                                                                      tempBorderWidth: 6,
-                                                                      borderTopWidth: 6,
-                                                                      tempBorderTopWidth: 4,
-                                                                      borderRightWidth: 6,
-                                                                      tempBorderRightWidth: 4,
-                                                                      borderBottomWidth: 6,
-                                                                      tempBorderBottomWidth: 4,
-                                                                      borderLeftWidth: 6,
-                                                                      tempBorderLeftWidth: 4
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "vmjkpvzfrwskrclqbwzmltvbsceupmazompo",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "rbecrvbnksojvopdrscecgjfwvwrzxcfladp",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-cbzbe" data-uniq-id="zwexe"><span class="brz-cp-color8">MIKE HARDSON</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "oqmpeyofzznrdpxfcqyhwkviaqrdouxuolzk",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "xaompcykxggkzqeuwekprldzlnlzbnqkaaff",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="bkekb" data-generated-css="brz-css-teesm"><span class="brz-cp-color7">CO-FOUNDER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "nnzmucvmcemhujjebrpxtphpjxnjugqlqxcf",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "jtrakytfajjctnnpwmwqjyifammhdjkwvbfk",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "jkcdcqqwfqampzoyyeejbyzsejorfcoarvgo",
-                                                                      imageSrc:
-                                                                        "13187a1d4ae23831b08c85853a03d3c6.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 83,
-                                                                      imageHeight: 83,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "pkfkamzanfkxsiitpiszmrsahsbwzbfzkocm",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "csqfnnwewfpeyfseeyoctufveivapsaidfoh",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-rkzqp" data-uniq-id="gvvfl"><span class="brz-cp-color8">JESSICA COX</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "uhkjybottsikvvkwswqqxyfvzocycjzanvhw",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "nhumxlchpgeytjyflivhwbnawvwrzuuhanpv",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="pgtya" data-generated-css="brz-css-mlbbz"><span class="brz-cp-color7">MANAGER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "cnnubibgvgpcpztgvbkioejtbbxkidnwncxz",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "ltxlkdehmtmayzzjoowtuhgjnhnuhxiwknxn",
-                                                          width: 33.4,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "smxuimrufvbrwuwlxiasvhtdjrbeckdaamnw"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "zxeqfbgjlerszpyzzkmyffhmkuohwcikmlte",
-                                              width: 34,
-                                              paddingLeft: 0,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
-                                              paddingBottom: 0,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
-                                              paddingTop: 0,
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              tabletPaddingLeft: 0,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletWidth: 40.2
-                                            }
-                                          },
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "tbripsisdnvzqcgjnygaktutilrddjkmiapp",
-                                                          text:
-                                                            '<p class="brz-fs-sm-22 brz-lh-sm-1_3 brz-ls-sm-0 brz-fw-sm-300 brz-fss-sm-px brz-ft-google brz-ff-oswald brz-lh-lg-1_3 brz-ls-lg-0 brz-fw-lg-300 brz-fss-lg-px brz-fs-lg-24 brz-tp-lg-empty brz-fss-xs-px brz-fw-xs-300 brz-ls-xs-0 brz-lh-xs-1_3 brz-fs-xs-20" data-uniq-id="jotrh" data-generated-css="brz-css-qptnv"><span class="brz-cp-color8">“This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch. There are many variations of passages of available, but the majority have suffered alteration in some form by injected humour.”</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "tpqjybopukjthsvguwngzpakttesaszhqcya"
-                                                  }
-                                                },
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "ghcjsrkptgczjhnrdqxswmuhgfrmjjuqzluu",
-                                                          text:
-                                                            '<p data-uniq-id="wffse" data-generated-css="brz-css-zvtqr" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">25 NOV, 2018</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "ibhyhzgvyegegjecwanpvbwvlmxaiisittrv"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "eblqcgomnsqlxduceouwbonqfwkgmwgegpky",
-                                              width: 66,
-                                              verticalAlign: "center",
-                                              tabletWidth: 58.8,
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px"
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "zqinyxdbedfcnfxpkjvdjlznxkgyosenfuyd"
-                                      }
-                                    }
-                                  ],
-                                  _id: "kgcjrotuwojfykpzwtbvfjuojjpvnoffcpoy",
-                                  width: 100,
-                                  paddingBottom: 0,
-                                  paddingBottomSuffix: "px",
-                                  tempPaddingBottomSuffix: "px",
-                                  paddingSuffix: "px",
-                                  tempPaddingSuffix: "px",
-                                  paddingLeft: 0,
-                                  paddingLeftSuffix: "px",
-                                  tempPaddingLeftSuffix: "px",
-                                  tabletPaddingLeft: 0,
-                                  tabletPaddingLeftSuffix: "px",
-                                  tempTabletPaddingLeftSuffix: "px",
-                                  tabletPaddingSuffix: "px",
-                                  tempTabletPaddingSuffix: "px"
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Row",
-                                                  value: {
-                                                    _styles: [
-                                                      "row",
-                                                      "hide-row-borders",
-                                                      "padding-0"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "klgbzycpifaaflljqlpdfdpvtguzobdnytkd",
-                                                                      imageSrc:
-                                                                        "2b251ea371b57108c6f71e603b54ccbd.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 90,
-                                                                      imageHeight: 93,
-                                                                      width: 60,
-                                                                      height: 104,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%",
-                                                                      borderStyle:
-                                                                        "none",
-                                                                      tempBorderStyle:
-                                                                        "solid",
-                                                                      borderColorHex:
-                                                                        "#66738d",
-                                                                      borderColorOpacity: 0,
-                                                                      tempBorderColorOpacity: 1,
-                                                                      borderColorPalette:
-                                                                        "",
-                                                                      tempBorderColorPalette:
-                                                                        "color3",
-                                                                      borderWidthType:
-                                                                        "grouped",
-                                                                      borderWidth: 0,
-                                                                      tempBorderWidth: 6,
-                                                                      borderTopWidth: 0,
-                                                                      tempBorderTopWidth: 6,
-                                                                      borderRightWidth: 0,
-                                                                      tempBorderRightWidth: 6,
-                                                                      borderBottomWidth: 0,
-                                                                      tempBorderBottomWidth: 6,
-                                                                      borderLeftWidth: 0,
-                                                                      tempBorderLeftWidth: 6
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "zpssriaxashvpfvzczaemyeggrkafvsdqcnw",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "hmqsrbiozaskmgzivemrttlcmezkrjzlnzmc",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-uniq-id="gwayj" data-generated-css="brz-css-qxqxz"><span class="brz-cp-color8">SHIRLEY SMITH</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "dnxwutynghirzpcujztguwsqwlvsbkzrztcn",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "xseuzuaqegvkwlxlafebknpmaqiremciwzhe",
-                                                                      text:
-                                                                        '<p data-generated-css="brz-css-yapui" data-uniq-id="zgwbe" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">DIRECTOR</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "afwnvixmowvngtucbwlcakkgajjqmvqqqqeb",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "ezjgulhzvfvlupbjmjhmuxwysakdjemvphss",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "iippygwujqmgmdvusyxoebzwvzxrdjhchuwa",
-                                                                      imageSrc:
-                                                                        "41ea48351b9c7622ae09418a70e28ecf.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 82,
-                                                                      imageHeight: 82,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%"
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "yyoxjxqedtqfsgkmbeexgtmnnsmjyqehnqvo",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "ajvtrjypwavyimksqausktclzdrxmyowoarj",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-cbzbe" data-uniq-id="zwexe"><span class="brz-cp-color8">MIKE HARDSON</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "utltrniukxrudpnppjppovhejtlvlapssmdi",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "krksodwslisryceeslqxbjbcfzjfipepzbtq",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="bkekb" data-generated-css="brz-css-teesm"><span class="brz-cp-color7">CO-FOUNDER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "ghdzybwxrdhshpwficjpbttpzpnkcampyaje",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "jgxfwwmnthcyaydplkhikilsmkkmyquehikd",
-                                                          width: 33.3,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      },
-                                                      {
-                                                        type: "Column",
-                                                        value: {
-                                                          _styles: ["column"],
-                                                          items: [
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--image"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "Image",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "image"
-                                                                      ],
-                                                                      _id:
-                                                                        "gzysctokdmufevnxtaestcjzwpzxigrsmhcd",
-                                                                      imageSrc:
-                                                                        "13187a1d4ae23831b08c85853a03d3c6.jpg",
-                                                                      imageExtension:
-                                                                        "jpg",
-                                                                      imageWidth: 83,
-                                                                      imageHeight: 83,
-                                                                      width: 60,
-                                                                      height: 107,
-                                                                      heightSuffix:
-                                                                        "%",
-                                                                      widthSuffix:
-                                                                        "%",
-                                                                      tabletWidth: 90,
-                                                                      tabletHeight: 100,
-                                                                      tabletHeightSuffix:
-                                                                        "%",
-                                                                      tabletWidthSuffix:
-                                                                        "%",
-                                                                      borderStyle:
-                                                                        "solid",
-                                                                      tempBorderStyle:
-                                                                        "solid",
-                                                                      borderColorHex:
-                                                                        "#66738d",
-                                                                      borderColorOpacity: 1,
-                                                                      tempBorderColorOpacity: 1,
-                                                                      borderColorPalette:
-                                                                        "color3",
-                                                                      tempBorderColorPalette:
-                                                                        "",
-                                                                      borderWidthType:
-                                                                        "grouped",
-                                                                      borderWidth: 6,
-                                                                      tempBorderWidth: 6,
-                                                                      borderTopWidth: 6,
-                                                                      tempBorderTopWidth: 4,
-                                                                      borderRightWidth: 6,
-                                                                      tempBorderRightWidth: 4,
-                                                                      borderBottomWidth: 6,
-                                                                      tempBorderBottomWidth: 4,
-                                                                      borderLeftWidth: 6,
-                                                                      tempBorderLeftWidth: 4
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "wjebzmrtfjzzdzeqrhgxemsofbmdjoithpie",
-                                                                horizontalAlign:
-                                                                  "left",
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "awwvrbluacibdobwnzsvcjqkmazadoslhciz",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-rkzqp" data-uniq-id="gvvfl"><span class="brz-cp-color8">JESSICA COX</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "sgxiohnwutfqbocsnqipqabjnrgxpaahsldo",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px"
-                                                              }
-                                                            },
-                                                            {
-                                                              type: "Wrapper",
-                                                              value: {
-                                                                _styles: [
-                                                                  "wrapper",
-                                                                  "wrapper--richText"
-                                                                ],
-                                                                items: [
-                                                                  {
-                                                                    type:
-                                                                      "RichText",
-                                                                    value: {
-                                                                      _styles: [
-                                                                        "richText"
-                                                                      ],
-                                                                      _id:
-                                                                        "nddkhqvrsbthmvfmlszfvmpdctssvmgzjshe",
-                                                                      text:
-                                                                        '<p class="brz-tp-lg-abovetitle" data-uniq-id="pgtya" data-generated-css="brz-css-mlbbz"><span class="brz-cp-color7">MANAGER</span></p>'
-                                                                    }
-                                                                  }
-                                                                ],
-                                                                _id:
-                                                                  "hwauzwwamwxcewgkkwaflzoqdqjtaeoyhccd",
-                                                                marginTopSuffix:
-                                                                  "px",
-                                                                marginTop: 0,
-                                                                margin: 0,
-                                                                marginSuffix:
-                                                                  "px",
-                                                                marginBottomSuffix:
-                                                                  "px",
-                                                                marginBottom: 0,
-                                                                tabletMarginTopSuffix:
-                                                                  "px",
-                                                                tabletMarginTop: 0,
-                                                                tabletMargin: 0,
-                                                                tabletMarginSuffix:
-                                                                  "px",
-                                                                tabletMarginBottomSuffix:
-                                                                  "px",
-                                                                tabletMarginBottom: 0,
-                                                                mobileMarginTopSuffix:
-                                                                  "px",
-                                                                mobileMarginTop: 0,
-                                                                mobileMargin: 0,
-                                                                mobileMarginSuffix:
-                                                                  "px",
-                                                                mobileMarginBottomSuffix:
-                                                                  "px",
-                                                                mobileMarginBottom: 0
-                                                              }
-                                                            }
-                                                          ],
-                                                          _id:
-                                                            "osigpoizpaygoyvqnhjipytpoupldbgezvms",
-                                                          width: 33.4,
-                                                          paddingTop: 0,
-                                                          paddingRight: 0,
-                                                          paddingTopSuffix:
-                                                            "px",
-                                                          tempPaddingTopSuffix:
-                                                            "px",
-                                                          paddingSuffix: "px",
-                                                          tempPaddingSuffix:
-                                                            "px",
-                                                          paddingRightSuffix:
-                                                            "px",
-                                                          tempPaddingRightSuffix:
-                                                            "px",
-                                                          paddingBottom: 0,
-                                                          paddingBottomSuffix:
-                                                            "px",
-                                                          tempPaddingBottomSuffix:
-                                                            "px",
-                                                          paddingLeft: 0,
-                                                          padding: 0,
-                                                          paddingLeftSuffix:
-                                                            "px",
-                                                          tempPaddingLeftSuffix:
-                                                            "px",
-                                                          marginType:
-                                                            "ungrouped",
-                                                          marginRightSuffix:
-                                                            "px",
-                                                          marginRight: 10,
-                                                          margin: 0,
-                                                          marginSuffix: "px",
-                                                          tabletPaddingTop: 0,
-                                                          tabletPadding: 0,
-                                                          tabletPaddingTopSuffix:
-                                                            "px",
-                                                          tempTabletPaddingTopSuffix:
-                                                            "px",
-                                                          tabletPaddingSuffix:
-                                                            "px",
-                                                          tempTabletPaddingSuffix:
-                                                            "px",
-                                                          tabletPaddingBottom: 0,
-                                                          tabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tempTabletPaddingBottomSuffix:
-                                                            "px",
-                                                          tabletPaddingLeft: 0,
-                                                          tabletPaddingLeftSuffix:
-                                                            "px",
-                                                          tempTabletPaddingLeftSuffix:
-                                                            "px",
-                                                          mobileWidth: 33.3,
-                                                          mobileMarginTopSuffix:
-                                                            "px",
-                                                          mobileMarginTop: 0,
-                                                          mobileMargin: 10,
-                                                          mobileMarginSuffix:
-                                                            "px"
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "sksfdczokjwcrrttfdtfylrllidociosnzuv"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "suaukglmamyrptponebgjzzubbnylhrhkavp",
-                                              width: 34,
-                                              paddingLeft: 0,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
-                                              paddingBottom: 0,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
-                                              paddingTop: 0,
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              tabletPaddingLeft: 0,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletWidth: 40.2
-                                            }
-                                          },
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "ppgkzlzdmsjrnajnygisgkfpocgaqknwyhoc",
-                                                          text:
-                                                            '<p class="brz-fs-sm-22 brz-lh-sm-1_3 brz-ls-sm-0 brz-fw-sm-300 brz-fss-sm-px brz-ft-google brz-ff-oswald brz-lh-lg-1_3 brz-ls-lg-0 brz-fw-lg-300 brz-fss-lg-px brz-fs-lg-24 brz-tp-lg-empty brz-fss-xs-px brz-fw-xs-300 brz-ls-xs-0 brz-lh-xs-1_3 brz-fs-xs-20" data-uniq-id="olefp" data-generated-css="brz-css-ndbdb"><span class="brz-cp-color8">“This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch. There are many variations of passages of available, but the majority have suffered alteration in some form by injected humour.”</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "gqmlndrfjpgvjedadfnledayiuehtjtuugoe"
-                                                  }
-                                                },
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--richText"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "RichText",
-                                                        value: {
-                                                          _styles: ["richText"],
-                                                          _id:
-                                                            "dexbbojajtwaoljlndbwlkgwlepdurthpdzy",
-                                                          text:
-                                                            '<p data-uniq-id="wffse" data-generated-css="brz-css-zvtqr" class="brz-tp-lg-abovetitle"><span class="brz-cp-color7">25 NOV, 2018</span></p>'
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "wovbxcdcsvqnixfvotxbdjqxicqaxhpfbvlx"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "fatlbwvuxryagxaazporstblbrkfpdavflbr",
-                                              width: 66,
-                                              verticalAlign: "center",
-                                              tabletWidth: 58.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "cnyhrizmoptkghufvmyteuxrcryzuqiolruf"
-                                      }
-                                    }
-                                  ],
-                                  _id: "zfryxjspyqxmgvqfdekxoalinbpwxfkffych",
-                                  width: 100,
-                                  paddingBottom: 0,
-                                  paddingBottomSuffix: "px",
-                                  tempPaddingBottomSuffix: "px",
-                                  paddingSuffix: "px",
-                                  tempPaddingSuffix: "px",
-                                  paddingLeft: 0,
-                                  paddingLeftSuffix: "px",
-                                  tempPaddingLeftSuffix: "px",
-                                  tabletPaddingLeft: 0,
-                                  tabletPaddingLeftSuffix: "px",
-                                  tempTabletPaddingLeftSuffix: "px",
-                                  tabletPaddingSuffix: "px",
-                                  tempTabletPaddingSuffix: "px"
-                                }
-                              }
-                            ],
-                            _id: "jdsohvckshcjieabcczcwxwrpsirmbyvqerg",
-                            sliderPaddingRight: 10,
-                            sliderPaddingRightSuffix: "px",
-                            sliderPadding: 0,
-                            sliderPaddingLeft: 0,
-                            sliderPaddingLeftSuffix: "px",
-                            sliderArrows: "none",
-                            slidesToShow: 1,
-                            slidesToShowSuffix: "",
-                            sliderDotsColorHex: "#000000",
-                            sliderDotsColorOpacity: 1,
-                            tempSliderDotsColorOpacity: 1,
-                            sliderDotsColorPalette: "color7",
-                            tempSliderDotsColorPalette: "",
-                            sliderPaddingTop: 5,
-                            sliderPaddingTopSuffix: "px",
-                            tabletSliderPaddingBottom: 30,
-                            tabletSliderPaddingBottomSuffix: "px",
-                            tabletSliderPadding: 0,
-                            tabletSlidesToShow: 1,
-                            tabletSlidesToShowSuffix: "",
-                            mobileSliderPaddingTop: 0,
-                            mobileSliderPaddingTopSuffix: "px",
-                            mobileSliderPadding: 0,
-                            mobileSliderPaddingBottom: 20,
-                            mobileSliderPaddingBottomSuffix: "px"
-                          }
-                        }
-                      ],
-                      _id: "gcadyrpdeayvkwoflyfdxzgjqdwgpzgcgyvp",
-                      tabletMarginTopSuffix: "px",
-                      tabletMarginTop: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginBottomSuffix: "px",
-                      mobileMarginBottom: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
-                    }
-                  }
-                ],
-                _id: "bkxlvrmjyxypkjatnwlsazpncetbvbchpvug",
-                bgImageWidth: 1894,
-                bgImageHeight: 543,
-                bgImageExtension: "jpg",
-                bgImageSrc: "2ac9f76478daa49b82dc93dfd31ea4aa.jpg",
+                _id: "vigbfpbktwhaoeejkgyyigwhfpnveofxxsfw",
+                bgColorPalette: "",
+                tempBgColorPalette: "color4",
                 bgColorOpacity: 0,
-                tempBgColorOpacity: 1,
                 borderRadius: 0,
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
@@ -3477,36 +2039,24 @@ module.exports = {
                 tempBorderBottomLeftRadius: 0,
                 tempBorderBottomRightRadius: 0,
                 paddingType: "ungrouped",
-                paddingBottom: 65,
-                tabletPaddingType: "ungrouped",
-                tabletPaddingTop: 75,
-                tabletPaddingBottom: 45,
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tempTabletPaddingBottom: 45,
-                tabletBgPositionX: 82,
-                tabletBgPositionY: 65,
-                tabletBorderRadius: 0,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                mobilePaddingBottom: 20,
-                tempMobilePaddingBottom: 20,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingTop: 50,
-                tempMobilePaddingTop: 50
+                paddingTop: 75,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 38,
+                bgImageWidth: 1894,
+                bgImageHeight: 738,
+                bgImageExtension: "jpg",
+                bgImageSrc: "e46fbb626a2f090e6624e8e43a6129ee.jpg",
+                tempBgColorOpacity: 0.9,
+                bgColorHex: "#e62b4a",
+                paddingBottom: 100
               }
             }
           ],
-          _id: "efsghlcoanorliizamegkdkdemyqehyjpsiw",
-          _thumbnailSrc: 6765772,
+          _id: "iavhmtcdlakonhdeoglbftxtymzahntynsmq",
+          _thumbnailSrc: 8233615,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 161,
-          _thumbnailTime: 1623617448992
+          _thumbnailHeight: 147,
+          _thumbnailTime: 1633354227231
         },
         blockId: "Kit2Blank000Light"
       },
@@ -3520,6 +2070,27 @@ module.exports = {
               value: {
                 _styles: ["section-item"],
                 items: [
+                  {
+                    type: "Wrapper",
+                    value: {
+                      _styles: ["wrapper", "wrapper--spacer"],
+                      items: [
+                        {
+                          type: "Spacer",
+                          value: {
+                            _styles: ["spacer"],
+                            _id: "uovlspqvulxcpriaulnbcwhgbzccxgunrucj",
+                            height: 50,
+                            heightSuffix: "",
+                            tabletHeight: 40,
+                            tabletHeightSuffix: ""
+                          }
+                        }
+                      ],
+                      _id: "dvwspgavnskprqyufrenyzinctepqvqzngnc",
+                      showOnMobile: "off"
+                    }
+                  },
                   {
                     type: "Row",
                     value: {
@@ -3540,25 +2111,17 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "xszqgmlpxsmcttqaskyyufczljowwggexopj",
+                                          "snfpmnxvfbhzucmbobowrylbmsubovoltlci",
                                         text:
-                                          '<p class="brz-text-lg-justify brz-tp-lg-abovetitle" data-generated-css="brz-css-vzisl" data-uniq-id="ucylw"><span class="brz-cp-color7">DON’T MISS OUT OUR LATEST UPDATES</span></p>'
+                                          '<p class="brz-tp-lg-abovetitle brz-tp-sm-heading5 brz-text-xs-center brz-tp-xs-heading4"><span class="brz-cp-color7">DON’T MISS OUT OUR LATEST UPDATES</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "wiyitkdwjvuyeedkhtzzyplxqenjswgcvzba",
+                                  _id: "oivlrlavsosgbtrvclwvrafwhvgqsoghkdup",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
-                                  marginSuffix: "px",
-                                  tabletMarginBottomSuffix: "px",
-                                  tabletMarginBottom: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  marginSuffix: "px"
                                 }
                               },
                               {
@@ -3571,46 +2134,29 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "poetzkewyxblsbbrimhiqklkfpxhaonvyttn",
+                                          "qtdektbxmisftvnslyulbgaaswzcznqhaqec",
                                         text:
-                                          '<p class="brz-text-lg-justify brz-tp-lg-heading2" data-uniq-id="pnzpg" data-generated-css="brz-css-wredm"><span class="brz-cp-color2">SUBSCRIBE US</span></p>'
+                                          '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading2 brz-text-xs-center"><span class="brz-cp-color2">SUBSCRIBE US</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "mseditmepzfvsdgnmaaqqvnfrdaycwhbfqsm",
+                                  _id: "uppiaesscuzbvmkjyhyhflswcrkuzpqrhbgk",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
-                                  marginSuffix: "px",
-                                  tabletMarginTopSuffix: "px",
-                                  tabletMarginTop: 0,
-                                  tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  marginSuffix: "px"
                                 }
                               }
                             ],
-                            _id: "kdimfejrnqgblnqljadkdacxcpbckqhzzbpb",
-                            width: 41,
+                            _id: "utiezgnslqtffdyrzfprdbxlupyclfrunjjs",
+                            width: 35,
                             paddingLeft: 0,
                             paddingLeftSuffix: "px",
                             tempPaddingLeftSuffix: "px",
                             paddingSuffix: "px",
                             tempPaddingSuffix: "px",
-                            tabletPaddingLeft: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            mobileMarginTopSuffix: "px",
-                            mobileMarginTop: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px",
-                            mobileMarginBottomSuffix: "px",
-                            mobileMarginBottom: 0
+                            verticalAlign: "center",
+                            tabletWidth: 32.2
                           }
                         },
                         {
@@ -3636,18 +2182,18 @@ module.exports = {
                                                   type: "Form2Field",
                                                   value: {
                                                     type: "Email",
-                                                    label: "Email Address",
+                                                    label: "Enter your email",
                                                     required: "on",
                                                     options: [
                                                       "Option 1",
                                                       "Option 2"
                                                     ],
                                                     _id:
-                                                      "tpzwadyltrkullnddlvchhjmctpwlcapcaqw",
+                                                      "ifmjwaxcdomiiuxdttbjmloimndwqttstzsp",
                                                     width: 65,
                                                     widthSuffix: "",
                                                     placeholder:
-                                                      "Email Address",
+                                                      "Enter your email",
                                                     tabletWidth: 100,
                                                     tabletWidthSuffix: "",
                                                     mobileWidth: 100,
@@ -3656,17 +2202,13 @@ module.exports = {
                                                 }
                                               ],
                                               _id:
-                                                "bmiijtvcmnvziljvmtqdhhnrjpnjiemdkjtj",
+                                                "jyamthycmnllfxqcciksscjrrwsnlwepabum",
+                                              fontStyle: "heading5",
                                               bgColorHex: "#ffffff",
                                               bgColorOpacity: 1,
                                               tempBgColorOpacity: 1,
                                               bgColorPalette: "color6",
                                               tempBgColorPalette: "",
-                                              colorHex: "#818181",
-                                              colorOpacity: 1,
-                                              tempColorOpacity: 1,
-                                              colorPalette: "color7",
-                                              tempColorPalette: "",
                                               borderColorHex: "#dcdee1",
                                               borderColorOpacity: 0,
                                               tempBorderColorOpacity: 1,
@@ -3681,24 +2223,7 @@ module.exports = {
                                               tempBorderTopWidth: 1,
                                               tempBorderRightWidth: 1,
                                               tempBorderBottomWidth: 1,
-                                              tempBorderLeftWidth: 1,
-                                              fontStyle: "subtitle",
-                                              size: "large",
-                                              paddingTop: 20,
-                                              paddingRight: 30,
-                                              paddingBottom: 20,
-                                              paddingLeft: 30,
-                                              tabletFontStyle: "subtitle",
-                                              tabletSize: "large",
-                                              tabletPaddingTop: 20,
-                                              tabletPaddingRight: 30,
-                                              tabletPaddingBottom: 20,
-                                              tabletPaddingLeft: 30,
-                                              mobileSize: "large",
-                                              mobilePaddingTop: 20,
-                                              mobilePaddingRight: 30,
-                                              mobilePaddingBottom: 20,
-                                              mobilePaddingLeft: 30
+                                              tempBorderLeftWidth: 1
                                             }
                                           },
                                           {
@@ -3706,151 +2231,109 @@ module.exports = {
                                             value: {
                                               _styles: ["button", "submit"],
                                               _id:
-                                                "dofzotqanglykonourwybhrrcwlpyrvyxahr",
-                                              text: "SUBSCRIBE NOW",
+                                                "pbmtndkjwziiimblbtreaeaiywxopgrigxag",
                                               iconName: "",
                                               iconType: "",
-                                              size: "custom",
-                                              fontSize: 16,
-                                              paddingTB: 20,
-                                              paddingTop: 20,
-                                              paddingBottom: 20,
-                                              tempPaddingTB: 20,
-                                              tempPaddingTop: 20,
-                                              tempPaddingBottom: 20,
-                                              paddingRL: 42,
+                                              borderWidth: 0,
+                                              tempBorderWidth: 2,
                                               paddingRight: 42,
                                               paddingLeft: 42,
-                                              tempPaddingRL: 42,
-                                              tempPaddingRight: 42,
-                                              tempPaddingLeft: 42,
-                                              borderRadius: 0,
-                                              borderWidth: 0,
                                               borderRadiusType: "custom",
-                                              tempBorderRadiusType: "custom",
                                               fillType: "filled",
+                                              borderRadius: 0,
                                               borderColorOpacity: 0,
                                               borderColorPalette: 0,
                                               bgColorOpacity: 1,
-                                              bgColorPalette: "color2",
+                                              bgColorPalette: "color1",
                                               hoverBgColorOpacity: 1,
-                                              hoverBorderColorOpacity: 0.8,
+                                              tempBorderRadiusType: "custom",
+                                              hoverBorderColorOpacity: 1,
                                               tempBorderRadius: 0,
-                                              tempBorderWidth: 2,
-                                              boxShadowBlur: 0,
-                                              tempBoxShadowBlur: 0,
-                                              boxShadowSpread: 0,
-                                              tempBoxShadowSpread: 0,
-                                              boxShadowVertical: 0,
-                                              tempBoxShadowVertical: 0,
-                                              boxShadowHorizontal: 5,
-                                              tempBoxShadowHorizontal: 5,
-                                              boxShadow: "on",
-                                              boxShadowColorOpacity: 1,
+                                              text: "SUBSCRIBE NOW",
+                                              size: "custom",
+                                              fontSize: 16,
+                                              paddingTB: 18,
+                                              paddingTop: 18,
+                                              paddingBottom: 18,
+                                              tempPaddingTB: 18,
+                                              tempPaddingTop: 18,
+                                              tempPaddingBottom: 18,
+                                              paddingRL: 42,
+                                              tempPaddingRL: 42,
+                                              tempPaddingRight: 42,
+                                              tempPaddingLeft: 42,
+                                              tempBgColorPalette: "color1",
+                                              tempBorderColorPalette: 0,
+                                              hoverBgColorHex: "#e62b4a",
+                                              tempHoverBgColorOpacity: 1,
+                                              hoverBgColorPalette: "color3",
+                                              tempHoverBgColorPalette: "color3",
+                                              hoverBorderColorHex: "#000000",
+                                              hoverBorderColorPalette: "color1",
+                                              tempHoverBorderColorPalette: "",
                                               boxShadowColorPalette: "color3",
                                               tempBoxShadowColorPalette:
                                                 "color3",
-                                              tempBgColorPalette: "color2",
-                                              tempBorderColorPalette: 0,
-                                              hoverBgColorPalette: "color3",
-                                              hoverBorderColorPalette: "",
-                                              tempHoverBorderColorPalette: "",
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 1,
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBorderColorHex: "#e62b4a",
+                                              boxShadowColorOpacity: 1,
+                                              boxShadow: "on",
+                                              boxShadowBlur: 0,
+                                              boxShadowSpread: 0,
+                                              boxShadowVertical: 0,
+                                              boxShadowHorizontal: 5,
+                                              tempBoxShadowBlur: 0,
+                                              tempBoxShadowSpread: 0,
+                                              tempBoxShadowVertical: 0,
+                                              tempBoxShadowHorizontal: 5,
                                               hoverBoxShadowColorPalette:
-                                                "color2",
+                                                "color1",
                                               tempHoverBoxShadowColorPalette:
-                                                "color2",
+                                                "color1",
                                               hoverBoxShadowColorOpacity: 1,
                                               hoverBoxShadow: "on",
                                               hoverBoxShadowBlur: 0,
                                               hoverBoxShadowSpread: 0,
                                               hoverBoxShadowVertical: 0,
-                                              hoverBoxShadowHorizontal: 5,
-                                              tabletSize: "large",
-                                              tabletFontSize: 13,
-                                              tabletPaddingTB: 19,
-                                              tabletPaddingTop: 19,
-                                              tabletPaddingBottom: 19,
-                                              tempTabletPaddingTB: 19,
-                                              tempTabletPaddingTop: 19,
-                                              tempTabletPaddingBottom: 19,
-                                              tabletPaddingRL: 44,
-                                              tabletPaddingRight: 44,
-                                              tabletPaddingLeft: 44,
-                                              tempTabletPaddingRL: 44,
-                                              tempTabletPaddingRight: 44,
-                                              tempTabletPaddingLeft: 44,
-                                              tabletBorderRadius: 0,
-                                              mobileSize: "custom",
-                                              mobileFontSize: 13,
-                                              mobilePaddingTB: 19,
-                                              mobilePaddingTop: 19,
-                                              mobilePaddingBottom: 19,
-                                              tempMobilePaddingTB: 19,
-                                              tempMobilePaddingTop: 19,
-                                              tempMobilePaddingBottom: 19,
-                                              mobilePaddingRL: 44,
-                                              mobilePaddingRight: 44,
-                                              mobilePaddingLeft: 44,
-                                              tempMobilePaddingRL: 44,
-                                              tempMobilePaddingRight: 44,
-                                              tempMobilePaddingLeft: 44,
-                                              mobileBorderRadius: 0
+                                              hoverBoxShadowHorizontal: 5
                                             }
                                           }
                                         ],
                                         _id:
-                                          "mobalaibuhusywfutgsdamgjvglovqfygpjb",
-                                        submitWidth: 35,
+                                          "hqskrchwgghisyizuszwnzzbdxnbcbtztupz",
+                                        submitWidth: 34,
                                         submitWidthSuffix: "%",
-                                        tabletSubmitWidth: 50,
+                                        tabletSubmitWidth: 100,
                                         tabletSubmitWidthSuffix: "%",
-                                        tabletHorizontalAlign: "center",
-                                        mobileSubmitWidth: 99,
+                                        mobileSubmitWidth: 100,
                                         mobileSubmitWidthSuffix: "%"
                                       }
                                     }
                                   ],
-                                  _id: "whhiuisrrigtptujiuawprfgurjwmbzwzknd",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  _id: "cwhhfbqrlrwpdqskonkwobixmdeyfvojgchg"
                                 }
                               }
                             ],
-                            _id: "qusxpedlolqeletvfaepznwtcmseilbvwohy",
-                            width: 59,
-                            paddingRight: 5,
+                            _id: "siqhgpaddrdsgqideswuxffmuqbotajahnza",
+                            width: 65,
+                            verticalAlign: "center",
+                            paddingRight: 0,
                             paddingRightSuffix: "px",
                             tempPaddingRightSuffix: "px",
                             paddingSuffix: "px",
                             tempPaddingSuffix: "px",
-                            verticalAlign: "center",
-                            tabletPaddingRight: 0,
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            mobileMarginBottomSuffix: "px",
-                            mobileMarginBottom: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px",
-                            tempPaddingRight: 5
+                            tabletWidth: 67.7
                           }
                         }
                       ],
-                      _id: "ijkhelounsubtvgtzpjsobrrmottyvwntdlp"
+                      _id: "lkjpdqxiiwhqjkumiswhkvngygccfnxhjtmo"
                     }
                   }
                 ],
-                _id: "mdgzsveedgigwahqhwatyynsmhpxkpiwxtco",
+                _id: "jmtsvplmofrhufalvgjggftzcszxhbittpto",
                 paddingType: "ungrouped",
-                paddingTop: 90,
-                paddingBottom: 90,
+                paddingTop: 15,
+                containerSize: 100,
+                containerSizeSuffix: "",
+                paddingBottom: 70,
                 borderWidthType: "ungrouped",
                 borderBottomWidth: 1,
                 tempBorderBottomWidth: 1,
@@ -3866,8 +2349,6 @@ module.exports = {
                 borderBottomRightRadius: 0,
                 borderColorOpacity: 0.35,
                 borderColorPalette: "color7",
-                borderColorHex: "#818181",
-                tempBorderColorOpacity: 0.35,
                 tempBorderColorPalette: "color7",
                 borderTopWidth: 0,
                 borderRightWidth: 0,
@@ -3876,35 +2357,18 @@ module.exports = {
                 tempBorderTopRightRadius: 0,
                 tempBorderBottomLeftRadius: 0,
                 tempBorderBottomRightRadius: 0,
+                borderColorHex: "#818181",
+                tempBorderColorOpacity: 0.35,
                 tabletPaddingType: "ungrouped",
-                tabletPaddingTop: 65,
-                tabletPaddingTopSuffix: "px",
-                tempTabletPaddingTopSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tempTabletPaddingTop: 65,
-                tabletPaddingBottom: 65,
-                mobilePaddingType: "ungrouped",
-                mobilePaddingTop: 50,
-                mobilePaddingBottom: 50,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                tempPaddingTop: 90,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                tempMobilePaddingTop: 50
+                tabletPaddingTop: 15
               }
             }
           ],
-          _id: "wdvitcbzzsbxedustsprbviapjyghdqtbfov",
-          _thumbnailSrc: 6767819,
+          _id: "hovqcknwobhaolxttmcsgcuuhcepobnnnhxq",
+          _thumbnailSrc: 5713173,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 93,
-          _thumbnailTime: 1623617452976
+          _thumbnailHeight: 78,
+          _thumbnailTime: 1633354229636
         },
         blockId: "Kit2Blank000Light"
       },
@@ -3927,25 +2391,17 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "brmdtxjdjkmndvywcqjtnbvysejukbwsqkci",
+                            _id: "octfzxgtpmkmximgxurffwedbwmwaassamqq",
                             text:
-                              '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-uffxx" data-uniq-id="zupdb"><span class="brz-cp-color7">MEAT THE TEAM </span></p>'
+                              '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle brz-text-lg-center"><span class="brz-cp-color7">OUR PORTFOLIO</span></p>'
                           }
                         }
                       ],
-                      _id: "rlzevycgtlaaprznoorthmgmdjjzufwlojvv",
+                      _id: "lzeqjrhdohlbbunwflwfybujvgksqfhtbqeb",
                       marginBottomSuffix: "px",
                       marginBottom: 0,
                       margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginBottomSuffix: "px",
-                      tabletMarginBottom: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginBottomSuffix: "px",
-                      mobileMarginBottom: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
+                      marginSuffix: "px"
                     }
                   },
                   {
@@ -3957,25 +2413,17 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "sxxptdvwqhcnokpbzyxudyntqaxaougqxsyg",
+                            _id: "gnqpmuclvvfsllflvlzsaiilwkjaivaqfhlf",
                             text:
-                              '<p class="brz-tp-lg-heading2 brz-text-lg-center" data-uniq-id="dabrv" data-generated-css="brz-css-kswnn"><span class="brz-cp-color2">EXPERT PEOPLE</span></p>'
+                              '<p class="brz-tp-sm-heading2 brz-text-lg-center brz-tp-lg-heading2 brz-tp-xs-heading2"><span class="brz-cp-color2">EXPERT PEOPLE</span></p>'
                           }
                         }
                       ],
-                      _id: "eswlrwzmwvbvxtevwlaazfhapaxhcubsjnhg",
+                      _id: "vxhvptbqgfhehalubjzzlhcxjrszfuphzxas",
                       marginTopSuffix: "px",
                       marginTop: 0,
                       margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginTopSuffix: "px",
-                      tabletMarginTop: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginTopSuffix: "px",
-                      mobileMarginTop: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
+                      marginSuffix: "px"
                     }
                   },
                   {
@@ -3987,24 +2435,23 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "iozthldaisheatbaedohtftuiubvzugkexob",
+                            _id: "sizlbkqpevushftptnlwgvfkygqbyeuiuqgd",
                             text:
-                              '<p class="brz-tp-lg-paragraph brz-text-lg-center" data-generated-css="brz-css-tsdnp" data-uniq-id="ckdmn"><span class="brz-cp-color7">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>'
+                              '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color7">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>'
                           }
                         }
                       ],
-                      _id: "dihuokmieazpsdxhggimbxdhecckyosdopfv",
+                      _id: "mmohinziovuhoqarrejjwlglgwzjwjibtueq",
                       paddingType: "ungrouped",
                       paddingRightSuffix: "%",
                       tempPaddingRightSuffix: "%",
-                      paddingSuffix: "px",
-                      tempPaddingSuffix: "px",
-                      paddingRight: 38,
-                      tempPaddingRight: 38,
+                      paddingRight: 35,
+                      padding: 0,
                       paddingLeftSuffix: "%",
                       tempPaddingLeftSuffix: "%",
-                      paddingLeft: 38,
-                      tempPaddingLeft: 38
+                      paddingLeft: 35,
+                      tempPaddingRight: 35,
+                      tempPaddingLeft: 35
                     }
                   },
                   {
@@ -4016,336 +2463,168 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-                            _id: "ygwszgwmysxpchawphzxfmahoayyxlcobjtm",
+                            _id: "rvdnkftktuzgcxdfujzfxifpoghvmtlzkkyn",
                             height: 30,
-                            heightSuffix: "px",
-                            tabletHeight: 10,
-                            tabletHeightSuffix: "px"
+                            heightSuffix: ""
                           }
                         }
                       ],
-                      _id: "umwaougijzegzgsqqjmgoonzszsqiygotpyr",
-                      showOnTablet: "on",
+                      _id: "sdwdziwiqrmwmvwgltxfeooznvpdszfesxwl",
                       showOnMobile: "off"
                     }
                   },
                   {
-                    type: "Wrapper",
+                    type: "Row",
                     value: {
-                      _styles: ["wrapper", "wrapper--carousel"],
+                      _styles: ["row", "hide-row-borders", "padding-0"],
                       items: [
                         {
-                          type: "Carousel",
+                          type: "Column",
                           value: {
-                            _styles: ["carousel"],
+                            _styles: ["column", "column--carousel"],
                             items: [
                               {
-                                type: "Column",
+                                type: "Row",
                                 value: {
-                                  _styles: ["column", "column--carousel"],
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
                                   items: [
                                     {
-                                      type: "Row",
+                                      type: "Column",
                                       value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
+                                        _styles: ["column"],
                                         items: [
                                           {
-                                            type: "Column",
+                                            type: "Wrapper",
                                             value: {
-                                              _styles: ["column"],
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                              ],
                                               items: [
                                                 {
-                                                  type: "Wrapper",
+                                                  type: "Spacer",
                                                   value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "mrmbulpypnvcezobngybjghrlptyghfwxqeh",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
+                                                    _styles: ["spacer"],
                                                     _id:
-                                                      "xlrnoxucaenwszrpcfgcwqtpoedancdtwmvo"
+                                                      "hbcctrmbmwwtfghzewtmfamwetenhgdjtcsr",
+                                                    height: 400,
+                                                    heightSuffix: ""
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "xlugzkgngqmhgamelczvatuznfektrpqglbc",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 361,
-                                              bgImageHeight: 412,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "484fea6cddaa75cd1e67bba1e216018f.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 23,
-                                              bgPositionY: 38,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0
+                                                "gwpbzplmzxwhxxzvonprrsteajzfjudryixi"
                                             }
                                           }
                                         ],
                                         _id:
-                                          "lqcbzbjwelhcqhuedjdxsiqrbydakjqrnwwy"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "bzkzhrpzlpkubhyhsgcabzmjgagcwssnivor",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "opmrteijkdjtradgjluivbzbmdrsuljthiaa",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "vrguwbwrkgbdwimxqjbzvwcjibslvzjtpdfq",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "uwhlykazxolqrlzgyagjilywvvxoivuykgpw",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "qlgzvewabsadnngwfxkzjfuolekyowulwlby",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "rdfzpzoraymbxnbrjdhvngsvevwoboynbsfd",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "xlakvgqpdajkykgjfcjykipfbyrxjrexxfma",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "fjrnfhoffpwfewapkjbtlznkwjqdzzohiqjk",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
+                                          "zpggcyvygsahxltmvsmuorporzjpbijgwptn",
+                                        width: 100,
+                                        bgImageWidth: 332,
+                                        bgImageHeight: 409,
+                                        bgImageExtension: "jpg",
+                                        bgImageSrc:
+                                          "0ea1a929a85141e35b1a82f5e68072bd.jpg",
+                                        bgColorOpacity: 0,
+                                        tempBgColorOpacity: 1,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        bgPositionX: 0,
+                                        bgPositionY: 48,
+                                        hoverBgColorPalette: "color3",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBgColorOpacity: 0.6,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 0.6
                                       }
                                     }
                                   ],
-                                  _id: "cciuztsdtgeubkglurailnweibbxwklimlfu",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
+                                  _id: "uevozettoyjnwelnsjocdvjoeebnqklqrwql"
                                 }
                               },
                               {
-                                type: "Column",
+                                type: "Row",
                                 value: {
-                                  _styles: ["column", "column--carousel"],
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
                                   items: [
                                     {
-                                      type: "Row",
+                                      type: "Column",
                                       value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
+                                        _styles: ["column"],
                                         items: [
                                           {
-                                            type: "Column",
+                                            type: "Wrapper",
                                             value: {
-                                              _styles: ["column"],
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
                                               items: [
                                                 {
-                                                  type: "Wrapper",
+                                                  type: "RichText",
                                                   value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "canmttqaojmufknbafwgecrptbedetpjffuz",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
+                                                    _styles: ["richText"],
                                                     _id:
-                                                      "tfrfdpyxzcxlbbcpdrwpirrgpyzjfrzwdnzh"
+                                                      "ezsguoqdqqwhsryesqwnczlsznaagnnaapzi",
+                                                    text:
+                                                      '<p class="brz-tp-lg-heading5 brz-text-lg-center brz-tp-sm-heading5 brz-tp-xs-heading4"><span class="brz-cp-color2">KEVIN SMITH</span></p>'
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "kqyvvelmxjukklxznsxpfqclsjywyplcfsix",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 449,
-                                              bgImageHeight: 708,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "acd5cdd9d6fc5d6e4910ce11a155af28.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 48,
-                                              bgPositionY: 32,
+                                                "voakavnudsmzjzlcxsekkjbhsyvgcmholcnf"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "qzpawfpfylbijdrvpnakezhgzizdcvvinvbg",
+                                                    text:
+                                                      '<p class="brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph brz-text-lg-center"><span class="brz-cp-color7">CO FOUNDER</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "ybnlfhdikmbxsvbkrttidivssazhtmomgikt",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              tabletMarginTopSuffix: "px",
+                                              tabletMarginTop: 0,
+                                              tabletMargin: 0,
+                                              tabletMarginSuffix: "px",
+                                              tabletMarginBottomSuffix: "px",
+                                              tabletMarginBottom: 0,
                                               mobileMarginTopSuffix: "px",
                                               mobileMarginTop: 0,
                                               mobileMargin: 0,
@@ -4353,1168 +2632,1618 @@ module.exports = {
                                               mobileMarginBottomSuffix: "px",
                                               mobileMarginBottom: 0
                                             }
-                                          }
-                                        ],
-                                        _id:
-                                          "xiqbdldictzkxmexshajoeqceyxehhydpcru"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "azneshjiguaabtxsnjjiawtziloxliurikma",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "hmgfpxkanglrtullsmxdgmnkxwyqzuwyhfpp",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "aimeipzvzhznnpjksteguohfqjvacrnftpig",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "etebmqxwgsbvuoackaztqcahxlzseegfdlzr",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "ezwawzxkwbgxbvzwpgrapzbjddozadwcbiob",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
                                           },
                                           {
-                                            type: "Icon",
+                                            type: "Cloneable",
                                             value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "bzksokhnxkngvflpwzjhoznjkwqzpniziweq",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "mikszaxevponiyiuhdlbmovdfbcuflltvrbc",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "guucpbjlnrqbwiemmqcujtmklbbwajlwbqkr",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
-                                      }
-                                    }
-                                  ],
-                                  _id: "hyrfsczanmyrsxeanfehfibsmtazluymgxsi",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
+                                              _styles: [
+                                                "wrapper-clone",
+                                                "wrapper-clone--icon"
+                                              ],
                                               items: [
                                                 {
-                                                  type: "Wrapper",
+                                                  type: "Icon",
                                                   value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "ratpyutobqnnrarrgzcwmkmvrkaxbooiwgki",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
+                                                    _styles: ["icon"],
                                                     _id:
-                                                      "egscgixdsqmavdtktidnnrkcznvcfyryfosu"
+                                                      "kzetezepkppxwqfxamtdyzutublsuhifcynn",
+                                                    name: "logo-fb-simple",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "iweiohwgopljkvxnvxzyhsxyciizgxpiesha",
+                                                    name: "logo-twitter",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "xgneojmgsyzkbeuxfmtwwcjonzrxtbszhoxb",
+                                                    name: "logo-youtube",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "kejoaopgishyvcxnsjcawmenvcdplxztyvbr",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 444,
-                                              bgImageHeight: 638,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "119eb2c73e46196b272cd3103d0c46a3.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 50,
-                                              bgPositionY: 3,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0
+                                                "miyctiedptdjplydepdqnefwnygrospcpoid",
+                                              itemPadding: 15,
+                                              itemPaddingRight: 15,
+                                              itemPaddingLeft: 15
                                             }
                                           }
                                         ],
                                         _id:
-                                          "rrmhfuimhvhnroswkwxvehctpdyhhbnqowut"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "deuutnwlosiyhbneofvzcnbrflyclbwlcfij",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "dbhvqvsnzcgcbxiivzgibnmkebhsuzezhhqx",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "tvhfoahknpdimpcspquqsdrkhgsdimbpkwlo",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "wheihiofznnmltxgrkmvshpzsiinnrucpafd",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "gxasnfpavstucbmkeqnxdjetuyeeluaazvyk",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "raidkkmanmkodfpfqpwrmvrgerhjddlqjkku",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "cibyfbltikqeythbwgcwqurgtiypgqtwsnys",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "erejlcsvabahuzwswuiqmvcsheehqzqsvtbw",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
+                                          "yejlgycelicgytxngltkcmooxenxvvelinha",
+                                        width: 100
                                       }
                                     }
                                   ],
-                                  _id: "denwrxvidhgbuscbvathwlntznticcooxfoz",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "vzfjclitblwefrlqiwvyepjqfeqqjntynhtd",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "dugsawxannncdxtbcjralhibekowzjxacvtm"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "vdclgntwbimaxsdjgjzcsirhdgprcfmnxhdm",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 390,
-                                              bgImageHeight: 452,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "bef9eeb83d8c5702c3085c5fb4ff3435.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 48,
-                                              bgPositionY: 32,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "laciyrhenvhaoahuxwrnlfdhlpcwblhhnxqx"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "kvfxwfnuxptwiixmbjjpkwaorttqhvynwwsq",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "kljbsgjlxyknughuyecbtprqilwdbmkkmppv",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "oagozulcimnzgcihizzjnencwqjteznxbpde",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "oxsistpfiqstnefehcjyfkgtxaidujywnplc",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "rzsujbdvvkybbympmoynpnsyxyxtnhwmxosy",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "jkaiaqmnktdxzawumpuccqjcricmswgzhhob",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "hmrrwnasbxciicbsxaylqtvkmayusrxlusul",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "rxugjebvfbbricwjcjgbwqhrruydtfeudpzf",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
-                                      }
-                                    }
-                                  ],
-                                  _id: "iaugagovrecybostfcuateualqovnccmuopu",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "mpaqnvlntiqkggcuvrlumsebnojpgzsmguhc",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "rvojzsqpeudzpnufywmvuqbsxvgrpexkpego"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "mtlsfpttbsrxojekozixhrphmfkjmyshomib",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 414,
-                                              bgImageHeight: 613,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "0d49ae47425d39677753a74987963911.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 100,
-                                              bgPositionY: 11,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "ocqtrqzlicyudgbrgxctlbmmiihogaetsjir"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "tyyspgprqwjdgiczvdztmrgpmyikqiiwbyqd",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "yogfxlfamojnnpvunjhkukiazerhzwfkawdi",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "ssezojlovgpneantoulfidbxqxztchvssjwz",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "klicbzmaornjszhheomproiwshrslsryurzh",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "qwjmyevrtmjyyodzdmqfxttvsxpiuqlahqjm",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "jcnolrvbnlxfveriedahvpthklxkugzjmhcu",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "ojtyaeaihrgkfbmtmkzceaxtgxnhyazbbvcd",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "cingdgrirhbfuarbklxkzzkygduxlwzkxuav",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
-                                      }
-                                    }
-                                  ],
-                                  _id: "pdonfcoducxfreiitybjeufcacrskkjvuchd",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
-                                }
-                              },
-                              {
-                                type: "Column",
-                                value: {
-                                  _styles: ["column", "column--carousel"],
-                                  items: [
-                                    {
-                                      type: "Row",
-                                      value: {
-                                        _styles: [
-                                          "row",
-                                          "hide-row-borders",
-                                          "padding-0"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Column",
-                                            value: {
-                                              _styles: ["column"],
-                                              items: [
-                                                {
-                                                  type: "Wrapper",
-                                                  value: {
-                                                    _styles: [
-                                                      "wrapper",
-                                                      "wrapper--spacer"
-                                                    ],
-                                                    items: [
-                                                      {
-                                                        type: "Spacer",
-                                                        value: {
-                                                          _styles: ["spacer"],
-                                                          _id:
-                                                            "hbwtwckjgqosyhayjvgfawrhpvcjomcewvrf",
-                                                          height: 400,
-                                                          heightSuffix: "px",
-                                                          tabletHeight: 250
-                                                        }
-                                                      }
-                                                    ],
-                                                    _id:
-                                                      "tgwdeukwuajkefeaoygzvsevobgdpurxlqdr"
-                                                  }
-                                                }
-                                              ],
-                                              _id:
-                                                "ddxsfysurfekwlgugmyiwoqbgmbiivttrweu",
-                                              width: 100,
-                                              hoverBgColorPalette: "color3",
-                                              tempHoverBgColorPalette: "color3",
-                                              hoverBgColorOpacity: 0.6,
-                                              mobilePaddingRight: 0,
-                                              mobilePaddingLeft: 0,
-                                              hoverBgColorHex: "#e62b4a",
-                                              tempHoverBgColorOpacity: 0.6,
-                                              bgImageWidth: 414,
-                                              bgImageHeight: 613,
-                                              bgImageExtension: "jpg",
-                                              bgImageSrc:
-                                                "0d49ae47425d39677753a74987963911.jpg",
-                                              bgColorOpacity: 0,
-                                              tempBgColorOpacity: 1,
-                                              borderRadius: 0,
-                                              borderTopLeftRadius: 0,
-                                              borderTopRightRadius: 0,
-                                              borderBottomLeftRadius: 0,
-                                              borderBottomRightRadius: 0,
-                                              tempBorderTopLeftRadius: 0,
-                                              tempBorderTopRightRadius: 0,
-                                              tempBorderBottomLeftRadius: 0,
-                                              tempBorderBottomRightRadius: 0,
-                                              bgPositionX: 100,
-                                              bgPositionY: 11,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "usixnvmuxxwzsvmujzetrcoigbzaywvzbcvj"
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "nppqajjaxkgyzbgjvrczvrehixexmhcfpyki",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-heading5" data-generated-css="brz-css-tppag" data-uniq-id="ufgyi"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "pooqediksplervdrhqeazvctnzdthafoyvnp",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 5,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 15
-                                      }
-                                    },
-                                    {
-                                      type: "Wrapper",
-                                      value: {
-                                        _styles: [
-                                          "wrapper",
-                                          "wrapper--richText"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "RichText",
-                                            value: {
-                                              _styles: ["richText"],
-                                              _id:
-                                                "wxpyjvxcpjnsucxekwnogemnycuccyjopdqr",
-                                              text:
-                                                '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-rtpop" data-uniq-id="liynl"><span class="brz-cp-color7">GENERAL MANAGER</span></p>'
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "fiiwttijbpzzwzrkvrywvqnjlhwyeompwtpg",
-                                        marginTopSuffix: "px",
-                                        marginTop: 0,
-                                        margin: 0,
-                                        marginSuffix: "px",
-                                        marginBottomSuffix: "px",
-                                        marginBottom: 0,
-                                        tabletMarginTopSuffix: "px",
-                                        tabletMarginTop: 0,
-                                        tabletMargin: 0,
-                                        tabletMarginSuffix: "px",
-                                        tabletMarginBottomSuffix: "px",
-                                        tabletMarginBottom: 0,
-                                        mobileMarginTopSuffix: "px",
-                                        mobileMarginTop: 0,
-                                        mobileMargin: 0,
-                                        mobileMarginSuffix: "px",
-                                        mobileMarginBottomSuffix: "px",
-                                        mobileMarginBottom: 0
-                                      }
-                                    },
-                                    {
-                                      type: "Cloneable",
-                                      value: {
-                                        _styles: [
-                                          "wrapper-clone",
-                                          "wrapper-clone--icon"
-                                        ],
-                                        items: [
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "hyojqgzkazgsascunstylmognnzqvovpozni",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "gpafmfxxffuuqwgcazcseapvjgrunnnykteh",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          },
-                                          {
-                                            type: "Icon",
-                                            value: {
-                                              _styles: ["icon"],
-                                              _id:
-                                                "lukmnwcoxglkuuwbkthmunaeznbupmrfosov",
-                                              size: "custom",
-                                              customSize: 16,
-                                              borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
-                                              hoverColorPalette: "color2",
-                                              hoverColorOpacity: 0.8
-                                            }
-                                          }
-                                        ],
-                                        _id:
-                                          "bfaenpvcgkpewocrxnljvyxxuhpagdbprtwn",
-                                        itemPadding: 15,
-                                        itemPaddingRight: 15,
-                                        itemPaddingLeft: 15
-                                      }
-                                    }
-                                  ],
-                                  _id: "btkwvcvoocwanubvjmsjuehqcnjcgdivejae",
-                                  width: 100,
-                                  mobileMarginRightSuffix: "px",
-                                  mobileMarginRight: 30,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileMarginLeftSuffix: "px",
-                                  mobileMarginLeft: 30,
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
+                                  _id: "khttzpynkmzsbodennclbytmjgvmudeeqxtz"
                                 }
                               }
                             ],
-                            _id: "zvvrixjmytopktyjwikpnybohzjdfqsrfuak",
-                            sliderPaddingRight: 0,
-                            sliderPaddingRightSuffix: "px",
-                            sliderPadding: 0,
-                            sliderPaddingLeft: 0,
-                            sliderPaddingLeftSuffix: "px",
-                            sliderPaddingTop: 5,
-                            sliderPaddingTopSuffix: "px",
-                            slidesToShow: 5,
-                            slidesToShowSuffix: "",
-                            sliderArrows: "none",
-                            sliderDots: "square",
-                            tabletSlidesToShow: 3,
-                            tabletSlidesToShowSuffix: "",
-                            tabletSliderPaddingBottom: 50,
-                            tabletSliderPaddingBottomSuffix: "px",
-                            tabletSliderPadding: 0,
-                            mobileSliderPaddingBottom: 40,
-                            mobileSliderPaddingBottomSuffix: "px",
-                            mobileSliderPadding: 0,
-                            sliderPaddingBottom: 60,
-                            sliderPaddingBottomSuffix: "px"
+                            _id: "llvphqcgytixcdirrpdlinzxlnzepgwnxazg",
+                            width: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column", "column--carousel"],
+                            items: [
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Spacer",
+                                                  value: {
+                                                    _styles: ["spacer"],
+                                                    _id:
+                                                      "zykpapvxqeoenivgtkfanwpyuktammsgpjgn",
+                                                    height: 400,
+                                                    heightSuffix: ""
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "zryapyifbwinhkibmszuqveohtmbdgqedbzf"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "uzhlporphbrzhjprqaeknxlpnoshejcjlnym",
+                                        width: 100,
+                                        bgImageWidth: 370,
+                                        bgImageHeight: 409,
+                                        bgImageExtension: "jpg",
+                                        bgImageSrc:
+                                          "90ee218385fb1f25cbffbeac1a71af8c.jpg",
+                                        bgColorOpacity: 0,
+                                        tempBgColorOpacity: 1,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        bgPositionX: 0,
+                                        bgPositionY: 48,
+                                        hoverBgColorPalette: "color3",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBgColorOpacity: 0.6,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 0.6
+                                      }
+                                    }
+                                  ],
+                                  _id: "huxvmrbzmdovulwoommowmffmfhelrspzfny"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "xhlxmlaxwmqpsyavxpakydpyozmfnqmnsmvv",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-lg-heading5 brz-tp-sm-heading5 brz-tp-xs-heading4"><span class="brz-cp-color2">JESSICA BROWN</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "jueyynvxxazdyltwiwlwvvaucoicctfpuqps"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "exdtcfyjujahwvwvrytjaokczkorbdcvuokj",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">GENERAL MANAGER</span></p>',
+                                                    customCSS: "",
+                                                    width: 100,
+                                                    widthSuffix: "%"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "yzzrrcnafgyyagxrgyevvltiwlyzbahxvlmd",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              className: "",
+                                              customAttributes: "",
+                                              customAttributesPopulation: null,
+                                              horizontalAlign: "center",
+                                              width: 30,
+                                              widthSuffix: "%",
+                                              height: null,
+                                              heightSuffix: "%",
+                                              tabletWidth: null,
+                                              tabletWidthSuffix: null,
+                                              tabletHeight: null,
+                                              tabletHeightSuffix: null,
+                                              tabletElementWidthType: null,
+                                              tabletOffsetX: null,
+                                              tabletOffsetXSuffix: null,
+                                              tabletOffsetXAlignment: null,
+                                              tabletOffsetY: null,
+                                              tabletOffsetYSuffix: null,
+                                              tabletOffsetYAlignment: null,
+                                              tabletElementPosition: null,
+                                              mobileWidth: null,
+                                              mobileWidthSuffix: null,
+                                              mobileHeight: null,
+                                              mobileHeightSuffix: null,
+                                              mobileElementWidthType: null,
+                                              mobileOffsetX: null,
+                                              mobileOffsetXSuffix: null,
+                                              mobileOffsetXAlignment: null,
+                                              mobileOffsetY: null,
+                                              mobileOffsetYSuffix: null,
+                                              mobileOffsetYAlignment: null,
+                                              mobileElementPosition: null,
+                                              paddingType: "grouped",
+                                              tempPaddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              tempPadding: 0,
+                                              tempPaddingTop: 0,
+                                              tempPaddingRight: 0,
+                                              tempPaddingBottom: 0,
+                                              tempPaddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              hoverPaddingType: null,
+                                              tempHoverPaddingType: null,
+                                              hoverPadding: null,
+                                              hoverPaddingTop: null,
+                                              hoverPaddingRight: null,
+                                              hoverPaddingBottom: null,
+                                              hoverPaddingLeft: null,
+                                              tempHoverPadding: null,
+                                              tempHoverPaddingTop: null,
+                                              tempHoverPaddingRight: null,
+                                              tempHoverPaddingBottom: null,
+                                              tempHoverPaddingLeft: null,
+                                              hoverPaddingSuffix: null,
+                                              hoverPaddingTopSuffix: null,
+                                              hoverPaddingRightSuffix: null,
+                                              hoverPaddingBottomSuffix: null,
+                                              hoverPaddingLeftSuffix: null,
+                                              tempHoverPaddingSuffix: null,
+                                              tempHoverPaddingTopSuffix: null,
+                                              tempHoverPaddingRightSuffix: null,
+                                              tempHoverPaddingBottomSuffix: null,
+                                              tempHoverPaddingLeftSuffix: null,
+                                              marginType: "ungrouped",
+                                              marginRight: 0,
+                                              marginLeft: 0,
+                                              marginRightSuffix: "px",
+                                              marginLeftSuffix: "px",
+                                              customClassName: "",
+                                              customID: "",
+                                              cssIDPopulation: "",
+                                              cssClassPopulation: "",
+                                              tabletHorizontalAlign: null,
+                                              tabletPaddingType: "grouped",
+                                              tempTabletPaddingType: "grouped",
+                                              tabletPadding: 0,
+                                              tabletPaddingTop: 0,
+                                              tabletPaddingRight: 0,
+                                              tabletPaddingBottom: 0,
+                                              tabletPaddingLeft: 0,
+                                              tempTabletPadding: 0,
+                                              tempTabletPaddingTop: 0,
+                                              tempTabletPaddingRight: 0,
+                                              tempTabletPaddingBottom: 0,
+                                              tempTabletPaddingLeft: 0,
+                                              tabletPaddingSuffix: "px",
+                                              tabletPaddingTopSuffix: "px",
+                                              tabletPaddingRightSuffix: "px",
+                                              tabletPaddingBottomSuffix: "px",
+                                              tabletPaddingLeftSuffix: "px",
+                                              tempTabletPaddingSuffix: "px",
+                                              tempTabletPaddingTopSuffix: "px",
+                                              tempTabletPaddingRightSuffix:
+                                                "px",
+                                              tempTabletPaddingBottomSuffix:
+                                                "px",
+                                              tempTabletPaddingLeftSuffix: "px",
+                                              tabletMarginType: "ungrouped",
+                                              tabletMargin: 0,
+                                              tabletMarginTop: 0,
+                                              tabletMarginRight: 0,
+                                              tabletMarginBottom: 0,
+                                              tabletMarginLeft: 0,
+                                              tabletMarginSuffix: "px",
+                                              tabletMarginTopSuffix: "px",
+                                              tabletMarginRightSuffix: "px",
+                                              tabletMarginBottomSuffix: "px",
+                                              tabletMarginLeftSuffix: "px",
+                                              mobileHorizontalAlign: null,
+                                              mobilePaddingType: "grouped",
+                                              tempMobilePaddingType: "grouped",
+                                              mobilePadding: 0,
+                                              mobilePaddingTop: 0,
+                                              mobilePaddingRight: 0,
+                                              mobilePaddingBottom: 0,
+                                              mobilePaddingLeft: 0,
+                                              tempMobilePadding: 0,
+                                              tempMobilePaddingTop: 0,
+                                              tempMobilePaddingRight: 0,
+                                              tempMobilePaddingBottom: 0,
+                                              tempMobilePaddingLeft: 0,
+                                              mobilePaddingSuffix: "px",
+                                              mobilePaddingTopSuffix: "px",
+                                              mobilePaddingRightSuffix: "px",
+                                              mobilePaddingBottomSuffix: "px",
+                                              mobilePaddingLeftSuffix: "px",
+                                              tempMobilePaddingSuffix: "px",
+                                              tempMobilePaddingTopSuffix: "px",
+                                              tempMobilePaddingRightSuffix:
+                                                "px",
+                                              tempMobilePaddingBottomSuffix:
+                                                "px",
+                                              tempMobilePaddingLeftSuffix: "px",
+                                              mobileMarginType: "ungrouped",
+                                              mobileMargin: 0,
+                                              mobileMarginTop: 0,
+                                              mobileMarginRight: 0,
+                                              mobileMarginBottom: 0,
+                                              mobileMarginLeft: 0,
+                                              mobileMarginSuffix: "px",
+                                              mobileMarginTopSuffix: "px",
+                                              mobileMarginRightSuffix: "px",
+                                              mobileMarginBottomSuffix: "px",
+                                              mobileMarginLeftSuffix: "px"
+                                            }
+                                          },
+                                          {
+                                            type: "Cloneable",
+                                            value: {
+                                              _styles: [
+                                                "wrapper-clone",
+                                                "wrapper-clone--icon"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "kysmiilitaxqiqdghgubbrglnyzdhhopgait",
+                                                    name: "logo-fb-simple",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "uqdupdkznnudmbnperybfgganvhoxzrwhsaz",
+                                                    name: "logo-twitter",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "qvgbzwmfvmgdqfsrdyeqybcbxzfgezsytyut",
+                                                    name: "logo-youtube",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "qahzybjwptlidkqtzcozsphmzrpedbzsiqhg",
+                                              itemPadding: 15,
+                                              itemPaddingRight: 15,
+                                              itemPaddingLeft: 15
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "ygkkvedtvapfcmxaddnpxsovupxhgdygzjvd",
+                                        width: 100
+                                      }
+                                    }
+                                  ],
+                                  _id: "yktdyiubbplryfovgtwtpgrteqoluasipbon"
+                                }
+                              }
+                            ],
+                            _id: "fqjlrnsabbphwqisqixlsnwiiibgcxcouydx",
+                            width: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column", "column--carousel"],
+                            items: [
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Spacer",
+                                                  value: {
+                                                    _styles: ["spacer"],
+                                                    _id:
+                                                      "bhrpvxisvedfnartuayfaoyylopkcdmtyvhp",
+                                                    height: 400,
+                                                    heightSuffix: ""
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "wfqlrwxgxddkcufrhverzkbuhkmojlmtffgm"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "fnngabiefniniugixweucgyvpkqugalezkur",
+                                        width: 100,
+                                        bgImageWidth: 370,
+                                        bgImageHeight: 409,
+                                        bgImageExtension: "jpg",
+                                        bgImageSrc:
+                                          "f1e763faae62bb31d971f0f23c13c986.jpg",
+                                        bgColorOpacity: 0,
+                                        tempBgColorOpacity: 1,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        bgPositionX: 0,
+                                        bgPositionY: 48,
+                                        hoverBgColorPalette: "color3",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBgColorOpacity: 0.6,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 0.6
+                                      }
+                                    }
+                                  ],
+                                  _id: "hwynxyuycisyibyolcvlfhlgyppfcnjqolsp"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "dowxuepnkgxisbduqfbbygtwslmtahskfbyc",
+                                                    text:
+                                                      '<p class="brz-tp-sm-heading5 brz-tp-lg-heading5 brz-text-lg-center brz-tp-xs-heading4"><span class="brz-cp-color2">MIKE HARDSON</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "rjfxscaipgtnmmewseawtdbxqiepjvaajspu"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "zuqwauleysnunmeuosodqoutgkhddfxnswnm",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">SENIOR DESIGNER</span></p>',
+                                                    customCSS: "",
+                                                    width: 100,
+                                                    widthSuffix: "%"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "aaqlhzyuhsqjvdimtaouvbvnzdrhewlhhumy",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              className: "",
+                                              customAttributes: "",
+                                              customAttributesPopulation: null,
+                                              horizontalAlign: "center",
+                                              width: 30,
+                                              widthSuffix: "%",
+                                              height: null,
+                                              heightSuffix: "%",
+                                              tabletWidth: null,
+                                              tabletWidthSuffix: null,
+                                              tabletHeight: null,
+                                              tabletHeightSuffix: null,
+                                              tabletElementWidthType: null,
+                                              tabletOffsetX: null,
+                                              tabletOffsetXSuffix: null,
+                                              tabletOffsetXAlignment: null,
+                                              tabletOffsetY: null,
+                                              tabletOffsetYSuffix: null,
+                                              tabletOffsetYAlignment: null,
+                                              tabletElementPosition: null,
+                                              mobileWidth: null,
+                                              mobileWidthSuffix: null,
+                                              mobileHeight: null,
+                                              mobileHeightSuffix: null,
+                                              mobileElementWidthType: null,
+                                              mobileOffsetX: null,
+                                              mobileOffsetXSuffix: null,
+                                              mobileOffsetXAlignment: null,
+                                              mobileOffsetY: null,
+                                              mobileOffsetYSuffix: null,
+                                              mobileOffsetYAlignment: null,
+                                              mobileElementPosition: null,
+                                              paddingType: "grouped",
+                                              tempPaddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              tempPadding: 0,
+                                              tempPaddingTop: 0,
+                                              tempPaddingRight: 0,
+                                              tempPaddingBottom: 0,
+                                              tempPaddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              hoverPaddingType: null,
+                                              tempHoverPaddingType: null,
+                                              hoverPadding: null,
+                                              hoverPaddingTop: null,
+                                              hoverPaddingRight: null,
+                                              hoverPaddingBottom: null,
+                                              hoverPaddingLeft: null,
+                                              tempHoverPadding: null,
+                                              tempHoverPaddingTop: null,
+                                              tempHoverPaddingRight: null,
+                                              tempHoverPaddingBottom: null,
+                                              tempHoverPaddingLeft: null,
+                                              hoverPaddingSuffix: null,
+                                              hoverPaddingTopSuffix: null,
+                                              hoverPaddingRightSuffix: null,
+                                              hoverPaddingBottomSuffix: null,
+                                              hoverPaddingLeftSuffix: null,
+                                              tempHoverPaddingSuffix: null,
+                                              tempHoverPaddingTopSuffix: null,
+                                              tempHoverPaddingRightSuffix: null,
+                                              tempHoverPaddingBottomSuffix: null,
+                                              tempHoverPaddingLeftSuffix: null,
+                                              marginType: "ungrouped",
+                                              marginRight: 0,
+                                              marginLeft: 0,
+                                              marginRightSuffix: "px",
+                                              marginLeftSuffix: "px",
+                                              customClassName: "",
+                                              customID: "",
+                                              cssIDPopulation: "",
+                                              cssClassPopulation: "",
+                                              tabletHorizontalAlign: null,
+                                              tabletPaddingType: "grouped",
+                                              tempTabletPaddingType: "grouped",
+                                              tabletPadding: 0,
+                                              tabletPaddingTop: 0,
+                                              tabletPaddingRight: 0,
+                                              tabletPaddingBottom: 0,
+                                              tabletPaddingLeft: 0,
+                                              tempTabletPadding: 0,
+                                              tempTabletPaddingTop: 0,
+                                              tempTabletPaddingRight: 0,
+                                              tempTabletPaddingBottom: 0,
+                                              tempTabletPaddingLeft: 0,
+                                              tabletPaddingSuffix: "px",
+                                              tabletPaddingTopSuffix: "px",
+                                              tabletPaddingRightSuffix: "px",
+                                              tabletPaddingBottomSuffix: "px",
+                                              tabletPaddingLeftSuffix: "px",
+                                              tempTabletPaddingSuffix: "px",
+                                              tempTabletPaddingTopSuffix: "px",
+                                              tempTabletPaddingRightSuffix:
+                                                "px",
+                                              tempTabletPaddingBottomSuffix:
+                                                "px",
+                                              tempTabletPaddingLeftSuffix: "px",
+                                              tabletMarginType: "ungrouped",
+                                              tabletMargin: 0,
+                                              tabletMarginTop: 0,
+                                              tabletMarginRight: 0,
+                                              tabletMarginBottom: 0,
+                                              tabletMarginLeft: 0,
+                                              tabletMarginSuffix: "px",
+                                              tabletMarginTopSuffix: "px",
+                                              tabletMarginRightSuffix: "px",
+                                              tabletMarginBottomSuffix: "px",
+                                              tabletMarginLeftSuffix: "px",
+                                              mobileHorizontalAlign: null,
+                                              mobilePaddingType: "grouped",
+                                              tempMobilePaddingType: "grouped",
+                                              mobilePadding: 0,
+                                              mobilePaddingTop: 0,
+                                              mobilePaddingRight: 0,
+                                              mobilePaddingBottom: 0,
+                                              mobilePaddingLeft: 0,
+                                              tempMobilePadding: 0,
+                                              tempMobilePaddingTop: 0,
+                                              tempMobilePaddingRight: 0,
+                                              tempMobilePaddingBottom: 0,
+                                              tempMobilePaddingLeft: 0,
+                                              mobilePaddingSuffix: "px",
+                                              mobilePaddingTopSuffix: "px",
+                                              mobilePaddingRightSuffix: "px",
+                                              mobilePaddingBottomSuffix: "px",
+                                              mobilePaddingLeftSuffix: "px",
+                                              tempMobilePaddingSuffix: "px",
+                                              tempMobilePaddingTopSuffix: "px",
+                                              tempMobilePaddingRightSuffix:
+                                                "px",
+                                              tempMobilePaddingBottomSuffix:
+                                                "px",
+                                              tempMobilePaddingLeftSuffix: "px",
+                                              mobileMarginType: "ungrouped",
+                                              mobileMargin: 0,
+                                              mobileMarginTop: 0,
+                                              mobileMarginRight: 0,
+                                              mobileMarginBottom: 0,
+                                              mobileMarginLeft: 0,
+                                              mobileMarginSuffix: "px",
+                                              mobileMarginTopSuffix: "px",
+                                              mobileMarginRightSuffix: "px",
+                                              mobileMarginBottomSuffix: "px",
+                                              mobileMarginLeftSuffix: "px"
+                                            }
+                                          },
+                                          {
+                                            type: "Cloneable",
+                                            value: {
+                                              _styles: [
+                                                "wrapper-clone",
+                                                "wrapper-clone--icon"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "jcbvtlhsuvvymnrhzepztqlilnenqrhefekr",
+                                                    name: "logo-fb-simple",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "nyrelegabeapgopzqjzphmujxgibrmnefeue",
+                                                    name: "logo-twitter",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "sfgyolqblkatoittbvfnkjkeldqjjxxdgfez",
+                                                    name: "logo-youtube",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "rpapnxoriwdjvlalcopdwipdrgcsxaolywvr",
+                                              itemPadding: 15,
+                                              itemPaddingRight: 15,
+                                              itemPaddingLeft: 15
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "ihyprssihivvoaloxvrxyudsmskbppbitcak",
+                                        width: 100
+                                      }
+                                    }
+                                  ],
+                                  _id: "dyumbnjbftrffnzeostfvsrrsqtianidtdqd"
+                                }
+                              }
+                            ],
+                            _id: "cisbbmkmmpsojabshjdflrbogypzrlmqodcx",
+                            width: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column", "column--carousel"],
+                            items: [
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Spacer",
+                                                  value: {
+                                                    _styles: ["spacer"],
+                                                    _id:
+                                                      "wzsilgpbwzpkjpvkeejivwbchbgfmrrobzgs",
+                                                    height: 400,
+                                                    heightSuffix: ""
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "mkdmknzmbbzixwjkicljayiomploekklnjkj"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "iryinvsnhlwmhqqkgmmomqrdvkpednpvmqfv",
+                                        width: 100,
+                                        bgImageWidth: 370,
+                                        bgImageHeight: 409,
+                                        bgImageExtension: "jpg",
+                                        bgImageSrc:
+                                          "7139db233674f7a25d7455599e26212e.jpg",
+                                        bgColorOpacity: 0,
+                                        tempBgColorOpacity: 1,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        bgPositionX: 0,
+                                        bgPositionY: 48,
+                                        hoverBgColorPalette: "color3",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBgColorOpacity: 0.6,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 0.6
+                                      }
+                                    }
+                                  ],
+                                  _id: "fzpevnvwkkivfksyahrwpeaxcfxoiuxtfbrv"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "xinlawevdtqxlfdkbpkvlaaldrazzcxgskys",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-lg-heading5 brz-tp-sm-heading5 brz-tp-xs-heading4"><span class="brz-cp-color2">ROSE FORD</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "nydikkpdensxyeglqjgocyqsevrzczavsuos"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "dokmtvvvxceblcnsnsqwbfamvzirlawdiqix",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">MARKETING MANAGER</span></p>',
+                                                    customCSS: "",
+                                                    width: 100,
+                                                    widthSuffix: "%"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "ovjdkkgrhaxembtoqnhwqfvcaskktimzwcir",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              className: "",
+                                              customAttributes: "",
+                                              customAttributesPopulation: null,
+                                              horizontalAlign: "center",
+                                              width: 30,
+                                              widthSuffix: "%",
+                                              height: null,
+                                              heightSuffix: "%",
+                                              tabletWidth: null,
+                                              tabletWidthSuffix: null,
+                                              tabletHeight: null,
+                                              tabletHeightSuffix: null,
+                                              tabletElementWidthType: null,
+                                              tabletOffsetX: null,
+                                              tabletOffsetXSuffix: null,
+                                              tabletOffsetXAlignment: null,
+                                              tabletOffsetY: null,
+                                              tabletOffsetYSuffix: null,
+                                              tabletOffsetYAlignment: null,
+                                              tabletElementPosition: null,
+                                              mobileWidth: null,
+                                              mobileWidthSuffix: null,
+                                              mobileHeight: null,
+                                              mobileHeightSuffix: null,
+                                              mobileElementWidthType: null,
+                                              mobileOffsetX: null,
+                                              mobileOffsetXSuffix: null,
+                                              mobileOffsetXAlignment: null,
+                                              mobileOffsetY: null,
+                                              mobileOffsetYSuffix: null,
+                                              mobileOffsetYAlignment: null,
+                                              mobileElementPosition: null,
+                                              paddingType: "grouped",
+                                              tempPaddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              tempPadding: 0,
+                                              tempPaddingTop: 0,
+                                              tempPaddingRight: 0,
+                                              tempPaddingBottom: 0,
+                                              tempPaddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              hoverPaddingType: null,
+                                              tempHoverPaddingType: null,
+                                              hoverPadding: null,
+                                              hoverPaddingTop: null,
+                                              hoverPaddingRight: null,
+                                              hoverPaddingBottom: null,
+                                              hoverPaddingLeft: null,
+                                              tempHoverPadding: null,
+                                              tempHoverPaddingTop: null,
+                                              tempHoverPaddingRight: null,
+                                              tempHoverPaddingBottom: null,
+                                              tempHoverPaddingLeft: null,
+                                              hoverPaddingSuffix: null,
+                                              hoverPaddingTopSuffix: null,
+                                              hoverPaddingRightSuffix: null,
+                                              hoverPaddingBottomSuffix: null,
+                                              hoverPaddingLeftSuffix: null,
+                                              tempHoverPaddingSuffix: null,
+                                              tempHoverPaddingTopSuffix: null,
+                                              tempHoverPaddingRightSuffix: null,
+                                              tempHoverPaddingBottomSuffix: null,
+                                              tempHoverPaddingLeftSuffix: null,
+                                              marginType: "ungrouped",
+                                              marginRight: 0,
+                                              marginLeft: 0,
+                                              marginRightSuffix: "px",
+                                              marginLeftSuffix: "px",
+                                              customClassName: "",
+                                              customID: "",
+                                              cssIDPopulation: "",
+                                              cssClassPopulation: "",
+                                              tabletHorizontalAlign: null,
+                                              tabletPaddingType: "grouped",
+                                              tempTabletPaddingType: "grouped",
+                                              tabletPadding: 0,
+                                              tabletPaddingTop: 0,
+                                              tabletPaddingRight: 0,
+                                              tabletPaddingBottom: 0,
+                                              tabletPaddingLeft: 0,
+                                              tempTabletPadding: 0,
+                                              tempTabletPaddingTop: 0,
+                                              tempTabletPaddingRight: 0,
+                                              tempTabletPaddingBottom: 0,
+                                              tempTabletPaddingLeft: 0,
+                                              tabletPaddingSuffix: "px",
+                                              tabletPaddingTopSuffix: "px",
+                                              tabletPaddingRightSuffix: "px",
+                                              tabletPaddingBottomSuffix: "px",
+                                              tabletPaddingLeftSuffix: "px",
+                                              tempTabletPaddingSuffix: "px",
+                                              tempTabletPaddingTopSuffix: "px",
+                                              tempTabletPaddingRightSuffix:
+                                                "px",
+                                              tempTabletPaddingBottomSuffix:
+                                                "px",
+                                              tempTabletPaddingLeftSuffix: "px",
+                                              tabletMarginType: "ungrouped",
+                                              tabletMargin: 0,
+                                              tabletMarginTop: 0,
+                                              tabletMarginRight: 0,
+                                              tabletMarginBottom: 0,
+                                              tabletMarginLeft: 0,
+                                              tabletMarginSuffix: "px",
+                                              tabletMarginTopSuffix: "px",
+                                              tabletMarginRightSuffix: "px",
+                                              tabletMarginBottomSuffix: "px",
+                                              tabletMarginLeftSuffix: "px",
+                                              mobileHorizontalAlign: null,
+                                              mobilePaddingType: "grouped",
+                                              tempMobilePaddingType: "grouped",
+                                              mobilePadding: 0,
+                                              mobilePaddingTop: 0,
+                                              mobilePaddingRight: 0,
+                                              mobilePaddingBottom: 0,
+                                              mobilePaddingLeft: 0,
+                                              tempMobilePadding: 0,
+                                              tempMobilePaddingTop: 0,
+                                              tempMobilePaddingRight: 0,
+                                              tempMobilePaddingBottom: 0,
+                                              tempMobilePaddingLeft: 0,
+                                              mobilePaddingSuffix: "px",
+                                              mobilePaddingTopSuffix: "px",
+                                              mobilePaddingRightSuffix: "px",
+                                              mobilePaddingBottomSuffix: "px",
+                                              mobilePaddingLeftSuffix: "px",
+                                              tempMobilePaddingSuffix: "px",
+                                              tempMobilePaddingTopSuffix: "px",
+                                              tempMobilePaddingRightSuffix:
+                                                "px",
+                                              tempMobilePaddingBottomSuffix:
+                                                "px",
+                                              tempMobilePaddingLeftSuffix: "px",
+                                              mobileMarginType: "ungrouped",
+                                              mobileMargin: 0,
+                                              mobileMarginTop: 0,
+                                              mobileMarginRight: 0,
+                                              mobileMarginBottom: 0,
+                                              mobileMarginLeft: 0,
+                                              mobileMarginSuffix: "px",
+                                              mobileMarginTopSuffix: "px",
+                                              mobileMarginRightSuffix: "px",
+                                              mobileMarginBottomSuffix: "px",
+                                              mobileMarginLeftSuffix: "px"
+                                            }
+                                          },
+                                          {
+                                            type: "Cloneable",
+                                            value: {
+                                              _styles: [
+                                                "wrapper-clone",
+                                                "wrapper-clone--icon"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "bmqzldevrmydaidohjsbepouxrkhllmlawpz",
+                                                    name: "logo-fb-simple",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "bhpwdmriirxwnjungzjjmohrkwvznuzbvaug",
+                                                    name: "logo-twitter",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "ngzvkdztafnzpbmvevunujybssbdrhhkfwlp",
+                                                    name: "logo-youtube",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "xqwjlklzcixuiuiurgmicvvdrhbfcknrzont",
+                                              itemPadding: 15,
+                                              itemPaddingRight: 15,
+                                              itemPaddingLeft: 15
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "cpllaxbjwahuasralxzbhpwulydilrdlskfa",
+                                        width: 100
+                                      }
+                                    }
+                                  ],
+                                  _id: "iagabflnhbbhcbtdzjgitrjinvdqaaeevsyx"
+                                }
+                              }
+                            ],
+                            _id: "wlbvgooqedcorzgqpachtuxycsnlbmxtldnb",
+                            width: 20
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column", "column--carousel"],
+                            items: [
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--spacer"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Spacer",
+                                                  value: {
+                                                    _styles: ["spacer"],
+                                                    _id:
+                                                      "rgobwntzvbwdlabpkezulezaploliwqkkrqb",
+                                                    height: 400,
+                                                    heightSuffix: ""
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "fdctegodgbchhrdvmqgpgovvdrxxfzyfvvia"
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "npbqcxnrxezaejmyjxfvsdaqedlhagrwthom",
+                                        width: 100,
+                                        bgImageWidth: 332,
+                                        bgImageHeight: 409,
+                                        bgImageExtension: "jpg",
+                                        bgImageSrc:
+                                          "022d7d8b957421fc1c5f99c49f89e819.jpg",
+                                        bgColorOpacity: 0,
+                                        tempBgColorOpacity: 1,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        mobilePaddingRight: 0,
+                                        mobilePaddingLeft: 0,
+                                        bgPositionX: 0,
+                                        bgPositionY: 48,
+                                        hoverBgColorPalette: "color3",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBgColorOpacity: 0.6,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 0.6
+                                      }
+                                    }
+                                  ],
+                                  _id: "syiwlrfkfyrrznxymzavwlndnperemqrosya"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "qcdqshbpuczuxbqxzhyxztzgmosaipfzhvvb",
+                                                    text:
+                                                      '<p class="brz-tp-sm-heading5 brz-tp-lg-heading5 brz-text-lg-center brz-tp-xs-heading4"><span class="brz-cp-color2">JOHN ALBERT</span></p>'
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "fczfbdyealsnzwurgpuqplrkayzqsdkefips"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    _id:
+                                                      "pejxftlpdhuifoaokzuiifdkguzaoygiaebn",
+                                                    text:
+                                                      '<p class="brz-text-lg-center brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-abovetitle"><span class="brz-cp-color7">BRAND OFFICER</span></p>',
+                                                    customCSS: "",
+                                                    width: 100,
+                                                    widthSuffix: "%"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "usjxipbpdyvkmhjrdrmoqgrrpiaiqrsqvlvs",
+                                              marginTopSuffix: "px",
+                                              marginTop: 0,
+                                              margin: 0,
+                                              marginSuffix: "px",
+                                              marginBottomSuffix: "px",
+                                              marginBottom: 0,
+                                              className: "",
+                                              customAttributes: "",
+                                              customAttributesPopulation: null,
+                                              horizontalAlign: "center",
+                                              width: 30,
+                                              widthSuffix: "%",
+                                              height: null,
+                                              heightSuffix: "%",
+                                              tabletWidth: null,
+                                              tabletWidthSuffix: null,
+                                              tabletHeight: null,
+                                              tabletHeightSuffix: null,
+                                              tabletElementWidthType: null,
+                                              tabletOffsetX: null,
+                                              tabletOffsetXSuffix: null,
+                                              tabletOffsetXAlignment: null,
+                                              tabletOffsetY: null,
+                                              tabletOffsetYSuffix: null,
+                                              tabletOffsetYAlignment: null,
+                                              tabletElementPosition: null,
+                                              mobileWidth: null,
+                                              mobileWidthSuffix: null,
+                                              mobileHeight: null,
+                                              mobileHeightSuffix: null,
+                                              mobileElementWidthType: null,
+                                              mobileOffsetX: null,
+                                              mobileOffsetXSuffix: null,
+                                              mobileOffsetXAlignment: null,
+                                              mobileOffsetY: null,
+                                              mobileOffsetYSuffix: null,
+                                              mobileOffsetYAlignment: null,
+                                              mobileElementPosition: null,
+                                              paddingType: "grouped",
+                                              tempPaddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              tempPadding: 0,
+                                              tempPaddingTop: 0,
+                                              tempPaddingRight: 0,
+                                              tempPaddingBottom: 0,
+                                              tempPaddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              hoverPaddingType: null,
+                                              tempHoverPaddingType: null,
+                                              hoverPadding: null,
+                                              hoverPaddingTop: null,
+                                              hoverPaddingRight: null,
+                                              hoverPaddingBottom: null,
+                                              hoverPaddingLeft: null,
+                                              tempHoverPadding: null,
+                                              tempHoverPaddingTop: null,
+                                              tempHoverPaddingRight: null,
+                                              tempHoverPaddingBottom: null,
+                                              tempHoverPaddingLeft: null,
+                                              hoverPaddingSuffix: null,
+                                              hoverPaddingTopSuffix: null,
+                                              hoverPaddingRightSuffix: null,
+                                              hoverPaddingBottomSuffix: null,
+                                              hoverPaddingLeftSuffix: null,
+                                              tempHoverPaddingSuffix: null,
+                                              tempHoverPaddingTopSuffix: null,
+                                              tempHoverPaddingRightSuffix: null,
+                                              tempHoverPaddingBottomSuffix: null,
+                                              tempHoverPaddingLeftSuffix: null,
+                                              marginType: "ungrouped",
+                                              marginRight: 0,
+                                              marginLeft: 0,
+                                              marginRightSuffix: "px",
+                                              marginLeftSuffix: "px",
+                                              customClassName: "",
+                                              customID: "",
+                                              cssIDPopulation: "",
+                                              cssClassPopulation: "",
+                                              tabletHorizontalAlign: null,
+                                              tabletPaddingType: "grouped",
+                                              tempTabletPaddingType: "grouped",
+                                              tabletPadding: 0,
+                                              tabletPaddingTop: 0,
+                                              tabletPaddingRight: 0,
+                                              tabletPaddingBottom: 0,
+                                              tabletPaddingLeft: 0,
+                                              tempTabletPadding: 0,
+                                              tempTabletPaddingTop: 0,
+                                              tempTabletPaddingRight: 0,
+                                              tempTabletPaddingBottom: 0,
+                                              tempTabletPaddingLeft: 0,
+                                              tabletPaddingSuffix: "px",
+                                              tabletPaddingTopSuffix: "px",
+                                              tabletPaddingRightSuffix: "px",
+                                              tabletPaddingBottomSuffix: "px",
+                                              tabletPaddingLeftSuffix: "px",
+                                              tempTabletPaddingSuffix: "px",
+                                              tempTabletPaddingTopSuffix: "px",
+                                              tempTabletPaddingRightSuffix:
+                                                "px",
+                                              tempTabletPaddingBottomSuffix:
+                                                "px",
+                                              tempTabletPaddingLeftSuffix: "px",
+                                              tabletMarginType: "ungrouped",
+                                              tabletMargin: 0,
+                                              tabletMarginTop: 0,
+                                              tabletMarginRight: 0,
+                                              tabletMarginBottom: 0,
+                                              tabletMarginLeft: 0,
+                                              tabletMarginSuffix: "px",
+                                              tabletMarginTopSuffix: "px",
+                                              tabletMarginRightSuffix: "px",
+                                              tabletMarginBottomSuffix: "px",
+                                              tabletMarginLeftSuffix: "px",
+                                              mobileHorizontalAlign: null,
+                                              mobilePaddingType: "grouped",
+                                              tempMobilePaddingType: "grouped",
+                                              mobilePadding: 0,
+                                              mobilePaddingTop: 0,
+                                              mobilePaddingRight: 0,
+                                              mobilePaddingBottom: 0,
+                                              mobilePaddingLeft: 0,
+                                              tempMobilePadding: 0,
+                                              tempMobilePaddingTop: 0,
+                                              tempMobilePaddingRight: 0,
+                                              tempMobilePaddingBottom: 0,
+                                              tempMobilePaddingLeft: 0,
+                                              mobilePaddingSuffix: "px",
+                                              mobilePaddingTopSuffix: "px",
+                                              mobilePaddingRightSuffix: "px",
+                                              mobilePaddingBottomSuffix: "px",
+                                              mobilePaddingLeftSuffix: "px",
+                                              tempMobilePaddingSuffix: "px",
+                                              tempMobilePaddingTopSuffix: "px",
+                                              tempMobilePaddingRightSuffix:
+                                                "px",
+                                              tempMobilePaddingBottomSuffix:
+                                                "px",
+                                              tempMobilePaddingLeftSuffix: "px",
+                                              mobileMarginType: "ungrouped",
+                                              mobileMargin: 0,
+                                              mobileMarginTop: 0,
+                                              mobileMarginRight: 0,
+                                              mobileMarginBottom: 0,
+                                              mobileMarginLeft: 0,
+                                              mobileMarginSuffix: "px",
+                                              mobileMarginTopSuffix: "px",
+                                              mobileMarginRightSuffix: "px",
+                                              mobileMarginBottomSuffix: "px",
+                                              mobileMarginLeftSuffix: "px"
+                                            }
+                                          },
+                                          {
+                                            type: "Cloneable",
+                                            value: {
+                                              _styles: [
+                                                "wrapper-clone",
+                                                "wrapper-clone--icon"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "xjbtwwpmvjskjkflnznlygoftnmrfgtaejck",
+                                                    name: "logo-fb-simple",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "buzmwornhdvebwscuiuqgitdkoxpljsvowut",
+                                                    name: "logo-twitter",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                },
+                                                {
+                                                  type: "Icon",
+                                                  value: {
+                                                    _styles: ["icon"],
+                                                    _id:
+                                                      "vsxopklriogbuaxsgqnihmgdueyacenvpxow",
+                                                    name: "logo-youtube",
+                                                    type: "glyph",
+                                                    size: "custom",
+                                                    customSize: 16,
+                                                    borderRadius: 0,
+                                                    hoverColorPalette: "color2",
+                                                    hoverColorOpacity: 0.8
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "sdavpenejvqlrfnocdjvnwmwjmhovatboqmd",
+                                              itemPadding: 15,
+                                              itemPaddingRight: 15,
+                                              itemPaddingLeft: 15
+                                            }
+                                          }
+                                        ],
+                                        _id:
+                                          "zkgfjyrajmebhodltmzfecloehbzxqkreccq",
+                                        width: 100
+                                      }
+                                    }
+                                  ],
+                                  _id: "rbjgtxirxunyremuinvvwnuqykjxpoiyqdpj"
+                                }
+                              }
+                            ],
+                            _id: "oboqknztwzmfpnkqcildozhjfybzldqcpztg",
+                            width: 20
                           }
                         }
                       ],
-                      _id: "tvpchkucduhdlfoswaquhtbhrkkhpvupcglr"
+                      _id: "dcilcjuyyzlvbwvwfszduatozjusiewcdmql"
                     }
                   }
                 ],
-                _id: "zuonstavznhescgdpwmiyjcmtbrwkbqkvpiq",
+                _id: "oskaqxpdojzubivusdavkrnkujkcfuqzjdrl",
                 containerType: "fullWidth",
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tabletPaddingBottom: 25,
-                tempTabletPaddingBottom: 25,
-                mobilePaddingBottom: 0,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                paddingTop: 90,
-                tempPaddingTop: 90,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                paddingBottom: 90,
-                tempPaddingBottom: 90,
-                mobilePaddingType: "ungrouped",
-                mobilePaddingTop: 40,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                tempMobilePaddingTop: 40
+                paddingType: "ungrouped",
+                paddingBottom: 80,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 35
               }
             }
           ],
-          _id: "srlwyetnfdzqhoefetjflxnwucgesfldhqxg",
-          _thumbnailSrc: 6755147,
+          _id: "cprengrbiqzywzmzmjxfnsbtltkpgfnxzxxj",
+          _thumbnailSrc: 8233642,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 325,
-          _thumbnailTime: 1623617553489
+          _thumbnailHeight: 290,
+          _thumbnailTime: 1633354239361
         },
         blockId: "Kit2Blank000Light"
       },
@@ -5548,12 +4277,13 @@ module.exports = {
                                       value: {
                                         _styles: ["video"],
                                         _id:
-                                          "fgpbomyjqkvejyxndqocjvicjtftfypymvlz",
+                                          "hkzeccjrgvjebvthjmncmvtpsitjtffzukzd",
                                         coverImageSrc:
-                                          "3534821afc0e3de708d747bf2d0e6839.jpg",
+                                          "3f9bff37aaf647cf6485a1c6215b1e7f.jpg",
                                         coverImageExtension: "jpg",
                                         coverImageWidth: 937,
                                         coverImageHeight: 688,
+                                        ratio: "3:2",
                                         bgColorHex: "#e62b4a",
                                         bgColorOpacity: 1,
                                         tempBgColorOpacity: 1,
@@ -5564,23 +4294,24 @@ module.exports = {
                                         tempColorOpacity: 1,
                                         colorPalette: "color8",
                                         tempColorPalette: "color8",
+                                        iconSize: 91,
+                                        iconSizeWidth: 91,
+                                        iconSizeHeight: 91,
                                         tabsState: "tabNormal",
-                                        hoverColorHex: "#FFFFFF",
-                                        hoverColorOpacity: 1,
-                                        tempHoverColorOpacity: 1,
-                                        hoverColorPalette: "color3",
-                                        tempHoverColorPalette: "color8",
                                         hoverBgColorHex: "#FFFFFF",
                                         hoverBgColorOpacity: 1,
                                         tempHoverBgColorOpacity: 1,
                                         hoverBgColorPalette: "color8",
                                         tempHoverBgColorPalette: "",
-                                        tabletSize: 99,
-                                        ratio: "3:2"
+                                        hoverColorHex: "#FFFFFF",
+                                        hoverColorOpacity: 1,
+                                        tempHoverColorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        tempHoverColorPalette: "color8"
                                       }
                                     }
                                   ],
-                                  _id: "gelxttskwcxviyricfhcovqnarixuapexpqx",
+                                  _id: "gaypdcyydmbsnabqllwdmbzxqwoadesrwmvt",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -5593,52 +4324,54 @@ module.exports = {
                                   tabletMarginSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginBottom: 0,
-                                  tabletHorizontalAlign: "right",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
+                                  mobileMarginBottomSuffix: "px",
+                                  mobileMarginBottom: 0,
                                   mobileMargin: 0,
                                   mobileMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0
+                                  mobileMarginTopSuffix: "px",
+                                  mobileMarginTop: 0
                                 }
                               }
                             ],
-                            _id: "veblyfrrvmrtlrnmomcdppedljypzchnfvwc",
-                            paddingTopSuffix: "px",
-                            tempPaddingTopSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            paddingTop: 0,
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
-                            paddingRight: 0,
-                            paddingBottomSuffix: "px",
-                            tempPaddingBottomSuffix: "px",
-                            paddingBottom: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingLeft: 0,
+                            _id: "tedemdhzqbszqvbupcdhlsffolyjyhtpycly",
+                            paddingType: "grouped",
                             padding: 0,
-                            tabletPaddingLeft: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            paddingSuffix: "px",
+                            paddingTopSuffix: "px",
+                            paddingRightSuffix: "px",
+                            paddingBottomSuffix: "px",
+                            paddingLeftSuffix: "px",
+                            tempPaddingSuffix: "px",
+                            tempPaddingTopSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            tempPaddingBottomSuffix: "px",
+                            tempPaddingLeftSuffix: "px",
+                            tabletPaddingType: "grouped",
                             tabletPadding: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            tabletPaddingBottom: 0,
-                            tabletPaddingBottomSuffix: "px",
-                            tempTabletPaddingBottomSuffix: "px",
-                            tabletPaddingRight: 0,
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
                             tabletPaddingTop: 0,
+                            tabletPaddingRight: 0,
+                            tabletPaddingBottom: 0,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingSuffix: "px",
                             tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
                             tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
                             mobileMarginTopSuffix: "px",
                             mobileMarginTop: 0,
                             mobileMargin: 0,
                             mobileMarginSuffix: "px",
-                            verticalAlign: "center"
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0
                           }
                         },
                         {
@@ -5656,13 +4389,13 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "hjoqtkyqhaxvtsfaotkhaxdiiltqxdwbpiqe",
+                                          "dutvmnxwpvgddedpvcpoqmuoeeqxnxqbdqdr",
                                         text:
-                                          '<p class="brz-tp-lg-abovetitle brz-text-lg-left" data-uniq-id="ervpx" data-generated-css="brz-css-kcthr"><span class="brz-cp-color7">THE ONLY DESIGN YOU NEED</span></p>'
+                                          '<p class="brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color7">THE ONLY DESIGN YOU NEED</span> </p>'
                                       }
                                     }
                                   ],
-                                  _id: "aznedpkflkpgvubpgxrtyglfbazqkutunuzf",
+                                  _id: "wcljfutmdhqbjhwtmoymvostsqjdapyvhguw",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -5670,11 +4403,7 @@ module.exports = {
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginBottom: 0,
                                   tabletMargin: 0,
-                                  tabletMarginSuffix: "px",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  tabletMarginSuffix: "px"
                                 }
                               },
                               {
@@ -5687,25 +4416,23 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "nimyuxsdffpsztvvqakopldtyghypozolhuv",
+                                          "upxmfuwvosylpayxjrzwlhgehpbupabvurcd",
                                         text:
-                                          '<p class="brz-tp-lg-heading2 brz-text-lg-left" data-generated-css="brz-css-ozofk" data-uniq-id="tubfi"><span class="brz-cp-color2">MAKE AMAZING WEBSITES WITHOUT TOUCHING CODE</span></p>'
+                                          '<p class="brz-tp-sm-heading3 brz-tp-lg-heading2 brz-tp-xs-heading3"><span class="brz-cp-color2">MAKE AMAZING WEBSITES WITHOUT TOUCHING CODE </span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "ecpiyxzkpnfqbhgtyavqtsvtgqrsltxsnxey",
-                                  marginTopSuffix: "px",
-                                  marginTop: 0,
+                                  _id: "uqtospylkfmkhzbqkjgqtzlphbfitsqspugx",
+                                  marginBottomSuffix: "px",
+                                  marginBottom: 0,
                                   margin: 0,
                                   marginSuffix: "px",
                                   tabletMarginTopSuffix: "px",
                                   tabletMarginTop: 0,
                                   tabletMargin: 0,
                                   tabletMarginSuffix: "px",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0
                                 }
                               },
                               {
@@ -5718,15 +4445,14 @@ module.exports = {
                                       value: {
                                         _styles: ["spacer"],
                                         _id:
-                                          "vwxgacyacuihyxacntkofnejlnrllcqatzfo",
-                                        height: 20,
-                                        heightSuffix: "px",
-                                        mobileHeight: 10,
-                                        mobileHeightSuffix: "px"
+                                          "tmhupuetaqmhtfohyadycpehhebxyreviejh",
+                                        height: 30,
+                                        heightSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "rabvouhieerymfwdbhtentccynabphrtdwpi",
+                                  _id: "nnmswwawhszeivzvhbrxbvxfnmmxatohzogi",
+                                  showOnTablet: "off",
                                   showOnMobile: "off"
                                 }
                               },
@@ -5740,135 +4466,98 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "dfryfimvfjfevpsyehtgeklecxpsudcftavc",
+                                          "fkjnsxakolceqhqdxswwrqsvjayybqsltexr",
                                         text:
-                                          '<p class="brz-tp-lg-paragraph" data-uniq-id="vjien" data-generated-css="brz-css-ulkml"><span class="brz-cp-color7">Tincidunt elit magnis nulla facilisis sagittis maecenas. Sapien nunc amet ultrices, dolores sit ipsum velit purus aliquet, massa fringilla leo orci. Lorem ipsum dolors sit amet elit magnis amet ultrices purus aliquet.</span></p>'
+                                          '<p class="brz-tp-paragraph"><span class="brz-cp-color7">Tincidunt elit magnis nulla facilisis sagittis maecenas. Sapien nunc amet ultrices, dolores sit ipsum velit purus aliquet, massa fringilla leo orci. Lorem ipsum dolors sit amet elit magnis amet ultrices purus aliquet.</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "pftjsdqifkmjihsfjytsdqllrumscirtbbjt",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px"
+                                  _id: "iubssowzxqgdtpmhaowphrjzglndltbttuoo"
                                 }
                               }
                             ],
-                            _id: "qcnmbomplvxaagaxrztvaptiknhposzeuxxt",
-                            verticalAlign: "center",
+                            _id: "hfdjirlhrsuxwarqeqviecrqkaoidheltgrg",
+                            bgColorPalette: "color6",
+                            tempBgColorPalette: "color6",
+                            bgColorOpacity: 1,
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                            tempBorderTopLeftRadius: 0,
+                            tempBorderTopRightRadius: 0,
+                            tempBorderBottomLeftRadius: 0,
+                            tempBorderBottomRightRadius: 0,
+                            mobilePaddingRight: 25,
+                            mobilePaddingLeft: 25,
                             paddingRightSuffix: "%",
                             tempPaddingRightSuffix: "%",
                             paddingRight: 35,
                             tempPaddingRight: 35,
+                            verticalAlign: "center",
+                            paddingLeft: 130,
                             paddingLeftSuffix: "px",
                             tempPaddingLeftSuffix: "px",
-                            paddingLeft: 130,
                             tempPaddingLeft: 130,
-                            mobileMarginBottomSuffix: "px",
-                            mobileMarginBottom: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px",
+                            mobilePaddingType: "grouped",
+                            mobilePaddingSuffix: "px",
+                            mobilePaddingTopSuffix: "px",
+                            mobilePaddingRightSuffix: "px",
+                            mobilePaddingBottomSuffix: "px",
+                            mobilePaddingLeftSuffix: "px",
+                            tempMobilePaddingSuffix: "px",
+                            tempMobilePaddingTopSuffix: "px",
+                            tempMobilePaddingRightSuffix: "px",
+                            tempMobilePaddingBottomSuffix: "px",
+                            tempMobilePaddingLeftSuffix: "px",
+                            mobilePadding: 25,
+                            mobilePaddingTop: 25,
+                            mobilePaddingBottom: 25,
+                            tempMobilePadding: 25,
+                            tempMobilePaddingTop: 25,
+                            tempMobilePaddingRight: 25,
+                            tempMobilePaddingBottom: 25,
+                            tempMobilePaddingLeft: 25,
                             mobileMarginTopSuffix: "px",
                             mobileMarginTop: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletPaddingLeft: 25,
-                            tempTabletPaddingLeft: 25,
-                            tabletPaddingTopSuffix: "px",
-                            tempTabletPaddingTopSuffix: "px",
-                            tabletPaddingTop: 25,
-                            tempTabletPaddingTop: 25,
-                            tabletPaddingBottomSuffix: "px",
-                            tempTabletPaddingBottomSuffix: "px",
-                            tabletPaddingBottom: 25,
-                            tempTabletPaddingBottom: 25,
-                            mobilePaddingLeftSuffix: "px",
-                            tempMobilePaddingLeftSuffix: "px",
-                            mobilePaddingLeft: 15,
-                            tempMobilePaddingLeft: 15,
-                            mobilePaddingRightSuffix: "px",
-                            tempMobilePaddingRightSuffix: "px",
-                            mobilePaddingSuffix: "px",
-                            tempMobilePaddingSuffix: "px",
-                            mobilePaddingRight: 15,
-                            tempMobilePaddingRight: 15
+                            mobileMargin: 0,
+                            mobileMarginSuffix: "px",
+                            mobileMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0
                           }
                         }
                       ],
-                      _id: "cavcqlyiwiivqiqxaiahzouuqnufsycfrclg"
+                      _id: "cuqcqydlbyvniofefkinvkwpwydsjvptidtn"
                     }
                   }
                 ],
-                _id: "vafnuooueyecjbebvhcpwaqbbymszjftmzjl",
-                bgColorPalette: "color6",
-                tempBgColorPalette: "color6",
-                bgColorOpacity: 1,
-                borderRadius: 0,
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                tempBorderTopLeftRadius: 0,
-                tempBorderTopRightRadius: 0,
-                tempBorderBottomLeftRadius: 0,
-                tempBorderBottomRightRadius: 0,
+                _id: "hmlpniwnixljwsswohclhilrolgyhfpnpasx",
                 containerType: "fullWidth",
-                paddingType: "grouped",
-                padding: 0,
+                paddingType: "ungrouped",
                 paddingTop: 0,
-                paddingRight: 0,
                 paddingBottom: 0,
-                paddingLeft: 0,
-                paddingSuffix: "px",
                 paddingTopSuffix: "px",
-                paddingRightSuffix: "px",
-                paddingBottomSuffix: "px",
-                paddingLeftSuffix: "px",
-                tempPaddingSuffix: "px",
                 tempPaddingTopSuffix: "px",
-                tempPaddingRightSuffix: "px",
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                padding: 0,
+                paddingBottomSuffix: "px",
                 tempPaddingBottomSuffix: "px",
-                tempPaddingLeftSuffix: "px",
-                tabletPaddingTop: 0,
-                tabletPadding: 0,
-                tabletPaddingTopSuffix: "px",
-                tempTabletPaddingTopSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tabletPaddingBottom: 0,
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingLeft: 0,
-                tabletPaddingLeftSuffix: "px",
-                tempTabletPaddingLeftSuffix: "px",
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                mobilePaddingTop: 0,
-                tempMobilePaddingTop: 50,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingBottom: 50,
-                tempMobilePaddingBottom: 50,
-                tabletPaddingRight: 0,
-                tabletPaddingRightSuffix: "px",
-                tempTabletPaddingRightSuffix: "px",
-                mobilePadding: 0,
-                mobilePaddingRight: 0,
-                mobilePaddingRightSuffix: "px",
-                tempMobilePaddingRightSuffix: "px",
-                mobilePaddingLeft: 0,
-                mobilePaddingLeftSuffix: "px",
-                tempMobilePaddingLeftSuffix: "px"
+                tabletPaddingType: "ungrouped",
+                tabletPaddingBottom: 15,
+                tabletPaddingTop: 15,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 15,
+                mobilePaddingBottom: 15
               }
             }
           ],
-          _id: "bnsnlxlwjivgkzovztyympmublqaxpyfuiyd",
-          _thumbnailSrc: 6767861,
+          _id: "kozmhrrrnbnrovxbmtjxuzstvqldupqtwsmi",
+          _thumbnailSrc: 5713178,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 199,
-          _thumbnailTime: 1623617476547
+          _thumbnailHeight: 200,
+          _thumbnailTime: 1633354241856
         },
         blockId: "Kit2Blank000Light"
       },
@@ -5891,25 +4580,17 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "ubjqbgirpwenzdifqokzjqaqbrffvpfoqbtc",
+                            _id: "pmzdefadhnyytvfceuedppkbfviffayzgrkz",
                             text:
-                              '<p class="brz-text-lg-center brz-tp-lg-abovetitle" data-generated-css="brz-css-hmqwx" data-uniq-id="xbbqc"><span class="brz-cp-color7">OUR BENEFITS</span></p>'
+                              '<p class="brz-text-lg-center brz-tp-lg-abovetitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color7">OUR BENEFITS</span></p>'
                           }
                         }
                       ],
-                      _id: "amjkzdytbgvmkyqcbsrmhdrxogbryhkbvvoj",
+                      _id: "lmkbpxmwewqbjdmhpqshgfiysksnvgyisksk",
                       marginBottomSuffix: "px",
                       marginBottom: 0,
                       margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginBottomSuffix: "px",
-                      tabletMarginBottom: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginBottomSuffix: "px",
-                      mobileMarginBottom: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
+                      marginSuffix: "px"
                     }
                   },
                   {
@@ -5921,25 +4602,17 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "melkgplznwaqawbisiyteakpybrdqfbzigle",
+                            _id: "ktlrixzpyyrbtjgsvzybyxnajwvjatulrbkn",
                             text:
-                              '<p class="brz-tp-lg-heading2 brz-text-lg-center" data-uniq-id="inzzh" data-generated-css="brz-css-nsruf"><span class="brz-cp-color2">WHY CHOOSE US</span></p>'
+                              '<p class="brz-tp-sm-heading2 brz-tp-lg-heading2 brz-text-lg-center brz-tp-xs-heading2"><span class="brz-cp-color2">WHY CHOOSE US</span></p>'
                           }
                         }
                       ],
-                      _id: "yzopdkdbtiwynewmrlvmnpjfvjxifoiqwgyy",
+                      _id: "uibrinolwqfzmbugfkiqzlklchyqypakknpw",
                       marginTopSuffix: "px",
                       marginTop: 0,
                       margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginTopSuffix: "px",
-                      tabletMarginTop: 0,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px",
-                      mobileMarginTopSuffix: "px",
-                      mobileMarginTop: 0,
-                      mobileMargin: 0,
-                      mobileMarginSuffix: "px"
+                      marginSuffix: "px"
                     }
                   },
                   {
@@ -5951,24 +4624,23 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "yjrdluihofqfnqanqvxcdjemrvhsazkayhcn",
+                            _id: "isaexiggamklyxcroeoejbbmteeycgduisyq",
                             text:
-                              '<p class="brz-tp-lg-paragraph brz-text-lg-center" data-generated-css="brz-css-tsdnp" data-uniq-id="ckdmn"><span class="brz-cp-color7">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>'
+                              '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color7">We are committed to providing our customers with exceptional service while offering our employees the best training.</span></p>'
                           }
                         }
                       ],
-                      _id: "kkzoeyjprpqcgkqgqhjoebibjnxqkmpkbppi",
+                      _id: "vcwyxhffzqiefachipqelecnpzrwomvwvfhl",
                       paddingType: "ungrouped",
                       paddingRightSuffix: "%",
                       tempPaddingRightSuffix: "%",
-                      paddingSuffix: "px",
-                      tempPaddingSuffix: "px",
-                      paddingRight: 28,
-                      tempPaddingRight: 28,
+                      paddingRight: 30,
+                      padding: 0,
                       paddingLeftSuffix: "%",
                       tempPaddingLeftSuffix: "%",
-                      paddingLeft: 28,
-                      tempPaddingLeft: 28
+                      paddingLeft: 30,
+                      tempPaddingRight: 30,
+                      tempPaddingLeft: 30
                     }
                   },
                   {
@@ -5980,15 +4652,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-                            _id: "jqoffwjkmgomazvurbdffanjoiglipmibmyr",
+                            _id: "ocucvrhorrbxibdatkwmsjqttttbpqmrvuck",
                             height: 20,
-                            heightSuffix: "px",
-                            mobileHeight: 10,
-                            mobileHeightSuffix: "px"
+                            heightSuffix: ""
                           }
                         }
                       ],
-                      _id: "rjppzfgmfzzhsobhnrqtvboxtpbfjpahhitq"
+                      _id: "jhoddsncqakhrwwsqimqsaczmtxkkuewlwxx",
+                      showOnMobile: "off"
                     }
                   },
                   {
@@ -6033,25 +4704,41 @@ module.exports = {
                                                         value: {
                                                           _styles: ["spacer"],
                                                           _id:
-                                                            "jfdksftdrerdihkjppfieabexqfkqyfrkosd",
-                                                          mobileHeight: 200,
-                                                          mobileHeightSuffix:
-                                                            "px"
+                                                            "jsrzexfyirgaztmclcwaqfzhclimvxgjqdgd",
+                                                          height: 200,
+                                                          heightSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "veublapweqmawgnvytnwhzwqeijuoguugsxd"
+                                                      "yijwjxqwaxghjquvdrkmdzearqllyibvlmem"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "jdqdjylwshvqilwwvvusdzwkvwjazigxlnhn",
-                                              bgImageWidth: 640,
-                                              bgImageHeight: 427,
+                                                "fluiaasashgipalcrssfymodinhmdkakglej",
+                                              width: 38.1,
+                                              paddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              bgImageWidth: 470,
+                                              bgImageHeight: 364,
                                               bgImageExtension: "jpg",
                                               bgImageSrc:
-                                                "8bea53ab6ba1b0c2a2b18c707020352f.jpg",
+                                                "d29bca4e4e0dd6fb4a4f81404c9f2c0d.jpg",
                                               bgColorOpacity: 0,
                                               tempBgColorOpacity: 1,
                                               borderRadius: 0,
@@ -6065,19 +4752,8 @@ module.exports = {
                                               tempBorderBottomRightRadius: 0,
                                               mobilePaddingRight: 0,
                                               mobilePaddingLeft: 0,
-                                              width: 38.1,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileBgPositionX: 50,
-                                              mobileBgPositionY: 21,
-                                              mobileBorderRadius: 0,
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0,
-                                              tabletBgPositionX: 32,
-                                              tabletBgPositionY: 49,
-                                              tabletBorderRadius: 0
+                                              bgPositionX: 31,
+                                              bgPositionY: 47
                                             }
                                           },
                                           {
@@ -6098,14 +4774,14 @@ module.exports = {
                                                         value: {
                                                           _styles: ["richText"],
                                                           _id:
-                                                            "dsrhzltzrhpvhzvomjkrszgchelhiobexkzr",
+                                                            "zzwgwqqkmtbfpzxxqxfgbpronemdntjkybth",
                                                           text:
-                                                            '<p class="brz-tp-lg-paragraph" data-uniq-id="yhmzj" data-generated-css="brz-css-nenwi"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.</span></p>'
+                                                            '<p class="brz-tp-paragraph"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. </span></p>'
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "ompnsrsyipdurqzremlvkwkeznrjpajfnhph"
+                                                      "xjpkmgqfsjupjqkslqbzbptjmgyfimrotzzn"
                                                   }
                                                 },
                                                 {
@@ -6129,13 +4805,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "qkpllugztnubqvbfpeiytwbibeyjrtlczgiq",
+                                                                  "cxqpvaiktaomsijzbezjmvmikblgxdfjrnmr",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6146,33 +4827,28 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "ivxummcugbddenhcnxaprrupnjujxjjofjii",
+                                                                  "scbomgnlxjbenxtgqyomjylzfgrxgrrncfmo",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="mcpwn" data-generated-css="brz-css-lnqqj"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "kdfpkyfxjvassnpqbzdwommzuiyodkdpteht",
+                                                            "lskawfrabiiitvglfliiepzaeoaukeqvbgbz",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "xtcbuhqgwcykgsrzilolhvilsoowruwgicwe",
+                                                      "eqerxzwrxixsftdrmelbgsksuqnssvdtelap",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5,
+                                                    mobileMarginBottom: 0,
                                                     mobileMargin: 0,
                                                     mobileMarginSuffix: "px"
                                                   }
@@ -6198,13 +4874,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "zsmpbkxmjqbvsjhbhqxcldplwpfuhirptubv",
+                                                                  "remdiybdxdhdstcbfampcrjyipsmpvfszdhc",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6215,41 +4896,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "xqzgvqxgoqzkgripjfbannjrrkhwlppxgyvb",
+                                                                  "vaqjfgrqsknrmsfljmievclvzekwguepvvyq",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-hcgrw" data-uniq-id="bkrhr"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "inbhcaagdunfpbualfnluktyihwtjcuorrou",
+                                                            "asorgwyzialirjdopxpburumlmkjjiwqecxz",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "bvjultqvsuhtwawkenxppfhrtltsticctbuh",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "wmslxzuwuoaqcegrysotpzegprzxvpkrjmvg",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6273,13 +4943,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "eymzgeftouxarqmqmdoxsoegmwcsusyjuocg",
+                                                                  "jqgmpoubcsurvpcvfnopzczjikeebdtczxkx",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6290,41 +4965,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "ofltzheaumvfreusvvksjtnxlezfyuxqseus",
+                                                                  "uelvqrivgvxpptjodilaisawbkmxntqbzxno",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="yarej" data-generated-css="brz-css-semll"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "dcoyfaohuundpzkwbprhqfuelcmdabyetnum",
+                                                            "qsrigchjxacixueybqgexfrtbvdrjgmsgcft",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "bqbaytbvqxvvkkusslggsdttkufansunzkkd",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "owtnpgwbtallgekkovfnyfpkjudgeerqbcca",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6348,13 +5012,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "lchufuoeaaavmdpfrjkelsdlbyldvsoscnnx",
+                                                                  "pijkfrtkahkskztfbafrjhqlrfognsqhbvnt",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6365,41 +5034,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "dffatwyajbldqcbxtvktoollgvmfyiohekii",
+                                                                  "gswvvvjmqawsgpheqjilqipwbndkagseiram",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="chdrt" data-generated-css="brz-css-ndrsj"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "xvfangxoefbnwqavpyjtchveuwgsksjosdml",
+                                                            "obfzmnpsannkrdhiqodypdwwfofggmrnlqie",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "mbohpzfgxprofhliavvfpkjujnetasgkdnfb",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "tadvupwhgyfsvzkhvnmnjwzitfroowfrluaz",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6423,13 +5081,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "yqbpfjeiazodgztlycdeaadwvdegtbrjqoky",
+                                                                  "yojfnbwowvoeosimnqgmiabhullnzsksjmwb",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6440,41 +5103,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "nrizevfoiufomfzdnmhhqikdslbliolbfqdx",
+                                                                  "gebolgmlqjxmlfsoiinqcgiugqmbdblehuoj",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="fsehv" data-generated-css="brz-css-tkljc"><span class="brz-cp-color7">Payroll integration</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Payroll integration</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "ezmicscoccndxtmuaabvgygiziyjzcottbnt",
+                                                            "dzwrepkrahwwieyspdahfedfmounpiyogwns",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "afwvuvxfawujucsdjpovlxtawfdqpkwbqdce",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "wytmeuvrxwfhmctvqinavpfuirpeyocrhhqt",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6498,13 +5150,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "tnwccehcvpnjieslkjdqgaoxusgxfxdctrjb",
+                                                                  "fuohlgdggzthlqoawzzhallxtqaxwtvhbhux",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6515,110 +5172,60 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "zuvfhbsevnjjbfzdoratdtfglvhbbcjiahso",
+                                                                  "bzlbapznqcejuozzuddvglbqegkxapgcmfnn",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="qtalp" data-generated-css="brz-css-janwd"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "nwozepnkxlwaihcdfeuzdwiyksystbvqyhtl",
+                                                            "txlrqsvwghrzwghjwlmjivzgfpflknwnaxvg",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "ghxjpsvacxhaphqoudjcjppxeelguspvjaky",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
-                                                    margin: 0,
-                                                    marginSuffix: "px",
+                                                      "kqinffsvtgssvdfpdymvqknrckimcunlylzu",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 10,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
-                                                    mobileMarginBottomSuffix:
-                                                      "px",
-                                                    mobileMarginBottom: 5
+                                                    marginBottom: 0,
+                                                    margin: 0,
+                                                    marginSuffix: "px"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "rgngcmmyjasdyutpupvanmnlfbpjpmazhpqm",
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
+                                                "qpltpesqyjvzkiljbnhvmdtwajdfxnnbyshf",
+                                              paddingType: "ungrouped",
+                                              padding: 0,
                                               paddingTop: 35,
-                                              tempPaddingTop: 35,
-                                              paddingRightSuffix: "px",
-                                              tempPaddingRightSuffix: "px",
                                               paddingRight: 55,
-                                              tempPaddingRight: 55,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
                                               paddingBottom: 45,
-                                              tempPaddingBottom: 45,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
                                               paddingLeft: 55,
-                                              tempPaddingLeft: 55,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
                                               width: 61.9,
-                                              tabletPaddingTopSuffix: "px",
-                                              tempTabletPaddingTopSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletPaddingTop: 15,
-                                              tempTabletPaddingTop: 15,
-                                              tabletPaddingRightSuffix: "px",
-                                              tempTabletPaddingRightSuffix:
-                                                "px",
-                                              tabletPaddingRight: 25,
-                                              tempTabletPaddingRight: 25,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingLeft: 25,
-                                              tempTabletPaddingLeft: 25,
-                                              tabletPaddingBottomSuffix: "px",
-                                              tempTabletPaddingBottomSuffix:
-                                                "px",
-                                              tabletPaddingBottom: 20,
-                                              tempTabletPaddingBottom: 20,
-                                              mobilePaddingLeftSuffix: "px",
-                                              tempMobilePaddingLeftSuffix: "px",
-                                              mobilePaddingSuffix: "px",
-                                              tempMobilePaddingSuffix: "px",
-                                              mobilePaddingLeft: 20,
-                                              tempMobilePaddingLeft: 20,
-                                              mobilePaddingRightSuffix: "px",
-                                              tempMobilePaddingRightSuffix:
-                                                "px",
-                                              mobilePaddingRight: 20,
-                                              tempMobilePaddingRight: 20,
-                                              mobilePaddingBottomSuffix: "px",
-                                              tempMobilePaddingBottomSuffix:
-                                                "px",
-                                              mobilePaddingBottom: 10,
-                                              tempMobilePaddingBottom: 10
+                                              tempPaddingLeft: 55,
+                                              tempPaddingTop: 35,
+                                              tempPaddingBottom: 45,
+                                              tempPaddingRight: 55
                                             }
                                           }
                                         ],
                                         _id:
-                                          "qnpamavabdcbfgymapkvwxbbcysrznvlbars"
+                                          "nlqhpilgnmvmqhaxmjuofywjxdkenldnznjp"
                                       }
                                     }
                                   ],
-                                  _id: "ezwgrvjnzdwtouufmiyugisncjsggeqlpdov"
+                                  _id: "mikvqbotnglmdvmbnbfjbefggkakykohoulr"
                                 }
                               },
                               {
@@ -6653,25 +5260,41 @@ module.exports = {
                                                         value: {
                                                           _styles: ["spacer"],
                                                           _id:
-                                                            "mttbmervbqcvvpueszmtqxhhmpfpqeivlobl",
-                                                          mobileHeight: 200,
-                                                          mobileHeightSuffix:
-                                                            "px"
+                                                            "zazuqfpnqgrxbvavfngbejfgzgbvvqqrtwrd",
+                                                          height: 200,
+                                                          heightSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "tdhhivgvftyejhwpxvxaugfnmdrwyzapfjya"
+                                                      "zkkegwbhnkxzjtdedeyqtxtfrrrucyulscrb"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "judrnvnzecpbxpuacpjaouxxssfzadcqmhfc",
-                                              bgImageWidth: 520,
-                                              bgImageHeight: 390,
+                                                "xangpojpkgzwcoeysvblopwijljclmewkwug",
+                                              width: 38.1,
+                                              paddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              bgImageWidth: 470,
+                                              bgImageHeight: 364,
                                               bgImageExtension: "jpg",
                                               bgImageSrc:
-                                                "ac388e5348fbdc1b862b553dded035d2.jpg",
+                                                "d29bca4e4e0dd6fb4a4f81404c9f2c0d.jpg",
                                               bgColorOpacity: 0,
                                               tempBgColorOpacity: 1,
                                               borderRadius: 0,
@@ -6685,19 +5308,8 @@ module.exports = {
                                               tempBorderBottomRightRadius: 0,
                                               mobilePaddingRight: 0,
                                               mobilePaddingLeft: 0,
-                                              width: 38.1,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileBgPositionX: 50,
-                                              mobileBgPositionY: 21,
-                                              mobileBorderRadius: 0,
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0,
-                                              tabletBgPositionX: 52,
-                                              tabletBgPositionY: 45,
-                                              tabletBorderRadius: 0
+                                              bgPositionX: 31,
+                                              bgPositionY: 47
                                             }
                                           },
                                           {
@@ -6718,14 +5330,14 @@ module.exports = {
                                                         value: {
                                                           _styles: ["richText"],
                                                           _id:
-                                                            "bwzgianvvzplhlfmmjcxhnwhmqwwormylydr",
+                                                            "xijorbgdcaacvdfuyufogxxfdwafwgqgulyv",
                                                           text:
-                                                            '<p class="brz-tp-lg-paragraph" data-uniq-id="yhmzj" data-generated-css="brz-css-nenwi"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.</span></p>'
+                                                            '<p class="brz-tp-paragraph"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. </span></p>'
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "sbwqtdlockdsgxicowcbowmjzskaepbsjtfy"
+                                                      "broakoxeplypnekcaxxegekclyvpqyzrcipq"
                                                   }
                                                 },
                                                 {
@@ -6749,13 +5361,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "qbexibxbdvnvksldicyowksauofonqfzufeb",
+                                                                  "tgqghlczvqtxgmwzgajruzmgnzqicyktetyc",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6766,33 +5383,28 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "hjkhufgbmfawzfaizbdidlolyweplnnuwvdk",
+                                                                  "iwkxuuppgtfspagfxcetcpctggckpmxduizp",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="mcpwn" data-generated-css="brz-css-lnqqj"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "ewpjaphqfgoirpuycefzigtuuooyalqaqxyo",
+                                                            "zkredzmyadnmcjtkkicknkbqqnrfrpolwqmi",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "lakumyvgxkqzkyevnswggpeierbqgdtgtvud",
+                                                      "mzixduoolnfxdilmkoktyvdenkeyqnaeznhp",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5,
+                                                    mobileMarginBottom: 0,
                                                     mobileMargin: 0,
                                                     mobileMarginSuffix: "px"
                                                   }
@@ -6818,13 +5430,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "xalhjqplxnmuerftkugifgizxyyjphkspign",
+                                                                  "wvyhmirjrddwdpqyhawnetkykmkfqeeayiua",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6835,41 +5452,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "dqjoqurmaunairlojxljipuenqywdjwdiggv",
+                                                                  "ejmgahhcsvrntickioxyscjvvmkrxovuwnot",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-hcgrw" data-uniq-id="bkrhr"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "yfnirqeifyhwquxfuuflhqxsduqabzumihhx",
+                                                            "usdfnwbfnmlrjdyebofqniswiyeueezyyefb",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "wseoypzrerqqmhftusznszmcrnixulwljinw",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "pkmcdykywwqxuigwnzregpnelejyhbyfygen",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6893,13 +5499,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "fqixkzmpwrjgphbodvcvgrgdmyojbpwhbhvm",
+                                                                  "cooiiwfflvmznnayteqguglceekvpffmastu",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6910,41 +5521,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "otbwcxljukmopjfizgwipzbsurxfumldnazz",
+                                                                  "nfwxjngcyetejyxhmfuadkgydsxwqjcjixub",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="yarej" data-generated-css="brz-css-semll"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "vmdetrfrwcebgsgwmesvoufqmreqndremzdh",
+                                                            "yqoyyavoudfffwrrchloecrbrgwskdbifrpq",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "kgwpoazvmrrrleaoyvidpkxsqzgntuqlqkbr",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "yndfdrzmatghlajmrsmozovoamnavlzdpbpn",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -6968,13 +5568,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "dysgtjdlvmnceznmicqkotuvwjbxjwqubjya",
+                                                                  "dcraloqlxevrdyvtaybdjinfpdxyrefayoko",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -6985,41 +5590,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "igcmwrftnfwljzojpzzpezipaqzhyqhgsxbt",
+                                                                  "frtodrxqtelplozepyxbuoqlzljsesjixfnc",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="chdrt" data-generated-css="brz-css-ndrsj"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "kqkqqfsecznrevmwbkcivgrskqdxegzeaiol",
+                                                            "qrvzpwhunddsyhpamawcovvevadphfxztcdg",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "gtmhnbfbmxcstxlplhdpxdoqukrmtdvsirtx",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "brbufszwseyxyiqxmeynxkwoghmfttnietxu",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7043,13 +5637,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "ehipudaasuihygfbrjjcsezvwmjjhqpkunme",
+                                                                  "rturxxlguxpqobuguzyfybbownmmylechvrr",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7060,41 +5659,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "mqiuspjzaopyicjgzcsuupzxektueiasxfmp",
+                                                                  "acfxmcpslqiyjjdnxqgojwwhgwfsnhgkmwif",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="fsehv" data-generated-css="brz-css-tkljc"><span class="brz-cp-color7">Payroll integration</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Payroll integration</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "yicxecyfsnolhnosphnomtuutijimhvmwjqq",
+                                                            "tyxgadcaeidknnxvqxqglkxlfohsbdgrcqvd",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "voelswbcwdyvcbsasjrjlajbbdkixwpaleon",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "nqhoslhusguivasgtfjwglxetiupvuyjyokh",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7118,13 +5706,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "fcmylbheowpeuuizhalzoqyjdzzyxoqicaiz",
+                                                                  "xmmbdjzbwqdukulruucaxpjqouowrehcerhs",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7135,110 +5728,60 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "dvjvhkwngeqcvoectvvcwrpsvrlueworvafh",
+                                                                  "innsuvbpuvqjpfoikwokvghfalxjtjhuxtnw",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="qtalp" data-generated-css="brz-css-janwd"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "gcconizrdefosbcpfhubtivfvdhtfgawwgjr",
+                                                            "fpeyvsjyehrdmibudgyliajahqrtokzpriyn",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "euxtfjplmqstgsmmxrftiodovmsatwvenssr",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
-                                                    margin: 0,
-                                                    marginSuffix: "px",
+                                                      "vbsyaaacbscbozdnmqzixrepvicckomjbcpw",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 10,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
-                                                    mobileMarginBottomSuffix:
-                                                      "px",
-                                                    mobileMarginBottom: 5
+                                                    marginBottom: 0,
+                                                    margin: 0,
+                                                    marginSuffix: "px"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "whkhejwvzbbbsijfqhzwipmmsfciwbqdcqfn",
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
+                                                "gpwgikxeyuuogfceqrwaquokgyosoidhvath",
+                                              paddingType: "ungrouped",
+                                              padding: 0,
                                               paddingTop: 35,
-                                              tempPaddingTop: 35,
-                                              paddingRightSuffix: "px",
-                                              tempPaddingRightSuffix: "px",
                                               paddingRight: 55,
-                                              tempPaddingRight: 55,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
                                               paddingBottom: 45,
-                                              tempPaddingBottom: 45,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
                                               paddingLeft: 55,
-                                              tempPaddingLeft: 55,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
                                               width: 61.9,
-                                              tabletPaddingTopSuffix: "px",
-                                              tempTabletPaddingTopSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletPaddingTop: 15,
-                                              tempTabletPaddingTop: 15,
-                                              tabletPaddingRightSuffix: "px",
-                                              tempTabletPaddingRightSuffix:
-                                                "px",
-                                              tabletPaddingRight: 25,
-                                              tempTabletPaddingRight: 25,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingLeft: 25,
-                                              tempTabletPaddingLeft: 25,
-                                              tabletPaddingBottomSuffix: "px",
-                                              tempTabletPaddingBottomSuffix:
-                                                "px",
-                                              tabletPaddingBottom: 20,
-                                              tempTabletPaddingBottom: 20,
-                                              mobilePaddingLeftSuffix: "px",
-                                              tempMobilePaddingLeftSuffix: "px",
-                                              mobilePaddingSuffix: "px",
-                                              tempMobilePaddingSuffix: "px",
-                                              mobilePaddingLeft: 20,
-                                              tempMobilePaddingLeft: 20,
-                                              mobilePaddingRightSuffix: "px",
-                                              tempMobilePaddingRightSuffix:
-                                                "px",
-                                              mobilePaddingRight: 20,
-                                              tempMobilePaddingRight: 20,
-                                              mobilePaddingBottomSuffix: "px",
-                                              tempMobilePaddingBottomSuffix:
-                                                "px",
-                                              mobilePaddingBottom: 10,
-                                              tempMobilePaddingBottom: 10
+                                              tempPaddingLeft: 55,
+                                              tempPaddingTop: 35,
+                                              tempPaddingBottom: 45,
+                                              tempPaddingRight: 55
                                             }
                                           }
                                         ],
                                         _id:
-                                          "isapwzcpblwifcpmahterbvgrnszpyohekxu"
+                                          "acdusuozczjauvgnjzlackdmuqyryjjjwfig"
                                       }
                                     }
                                   ],
-                                  _id: "necwkwrnsqmhcyyxxxaemujceagtgtjpauwc"
+                                  _id: "dbmjgtnvsdtwkvlsvzgzbonbflxshsltreho"
                                 }
                               },
                               {
@@ -7273,25 +5816,41 @@ module.exports = {
                                                         value: {
                                                           _styles: ["spacer"],
                                                           _id:
-                                                            "wqftsqppsnzuibcekvswsbreebshdcjbewlb",
-                                                          mobileHeight: 200,
-                                                          mobileHeightSuffix:
-                                                            "px"
+                                                            "btrhqjclowewgbwflnnjorlzsmnczkqveufd",
+                                                          height: 200,
+                                                          heightSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "aommvqwxkzbttccdljwgtkgeqxtiqhfwfitt"
+                                                      "ynhxtmxqvspizxsptkaopjomfcqtrpaybttz"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "knxhlapuwvajmqjdcnjktpocwwnnvcnqvdlv",
-                                              bgImageWidth: 478,
-                                              bgImageHeight: 320,
+                                                "slfmrkmliawnzlsmufzbamthrpottgdrdfrd",
+                                              width: 38.1,
+                                              paddingType: "grouped",
+                                              padding: 0,
+                                              paddingTop: 0,
+                                              paddingRight: 0,
+                                              paddingBottom: 0,
+                                              paddingLeft: 0,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
+                                              bgImageWidth: 470,
+                                              bgImageHeight: 364,
                                               bgImageExtension: "jpg",
                                               bgImageSrc:
-                                                "283b3c63737e349ada8c3a2b1bf13ae5.jpg",
+                                                "d29bca4e4e0dd6fb4a4f81404c9f2c0d.jpg",
                                               bgColorOpacity: 0,
                                               tempBgColorOpacity: 1,
                                               borderRadius: 0,
@@ -7305,21 +5864,8 @@ module.exports = {
                                               tempBorderBottomRightRadius: 0,
                                               mobilePaddingRight: 0,
                                               mobilePaddingLeft: 0,
-                                              width: 38.1,
-                                              mobileMarginTopSuffix: "px",
-                                              mobileMarginTop: 0,
-                                              mobileMargin: 0,
-                                              mobileMarginSuffix: "px",
-                                              mobileBgPositionX: 50,
-                                              mobileBgPositionY: 21,
-                                              mobileBorderRadius: 0,
-                                              mobileMarginBottomSuffix: "px",
-                                              mobileMarginBottom: 0,
-                                              tabletBgPositionX: 65,
-                                              tabletBgPositionY: 51,
-                                              tabletBorderRadius: 0,
-                                              bgPositionX: 67,
-                                              bgPositionY: 43
+                                              bgPositionX: 31,
+                                              bgPositionY: 47
                                             }
                                           },
                                           {
@@ -7340,14 +5886,14 @@ module.exports = {
                                                         value: {
                                                           _styles: ["richText"],
                                                           _id:
-                                                            "efcmbcydrrzbtjfmxetyyaxqmbdhowwkienp",
+                                                            "faabakwatcumkyqtafphtczlvfolixxgmuud",
                                                           text:
-                                                            '<p class="brz-tp-lg-paragraph" data-uniq-id="yhmzj" data-generated-css="brz-css-nenwi"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.</span></p>'
+                                                            '<p class="brz-tp-paragraph"><span class="brz-cp-color7">There are many variations of passages of lorem ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. </span></p>'
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "lqsxfwgpfugjsbwxzcjeyksuyrcmnrycfqdc"
+                                                      "azihkacfcqeeabmqpsprllsyzahjxykxgftz"
                                                   }
                                                 },
                                                 {
@@ -7371,13 +5917,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "ewogkkxybsbbubfymswbyabeimfxytabzmtl",
+                                                                  "vixrlazngprweqxkgevxyctydphmkebbkfyc",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7388,33 +5939,28 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "zpnwuwbladbvnhffnxysarqzcxvcgazvcels",
+                                                                  "jaomlkhrsfqomjkalcoackjugnzdheygxjrc",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="mcpwn" data-generated-css="brz-css-lnqqj"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Self-contained, state-of-the-art time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "trlzajfowfkkawhruimqupledwfyqceyclpx",
+                                                            "fihglhxqlbetunmyjkivevnzmtfmmvkancjo",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "evqsokrbykidrygwkxagmctziltcgiiyqgqz",
+                                                      "ictjhbtbmicsaiuhxhzsksktellpcdmkxgut",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5,
+                                                    mobileMarginBottom: 0,
                                                     mobileMargin: 0,
                                                     mobileMarginSuffix: "px"
                                                   }
@@ -7440,13 +5986,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "riecjewkwhyvptstljzvocibigrcmuomiqeh",
+                                                                  "uwxtsdzqfcmvzijtkwmylayrsqzhrpadyioq",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7457,41 +6008,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "obnmtaslidypwkkobniokmpfovaycxjmhzxb",
+                                                                  "kmjopnamjobtgbqidnntxrgodoalxejgcwxg",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-hcgrw" data-uniq-id="bkrhr"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Scalability of up to 500 employees per time clock</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "pwiffuhupxnyjtyikgfpkcbanwrdmodxvvtj",
+                                                            "hcjvayvuyiofzgffnzlwxokvycbwadjmhgni",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "mxuhqzvlsmyxqwqxsgppyigurhdwaqoyffic",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "eltafwtnfedgcagnfahfhsnrdqmycksykdkt",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7515,13 +6055,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "byzszkfcpfjrnypvhvpkzhlfbevolarcvbti",
+                                                                  "fqwcrsjormpitgkqyuvbzjnflbnnzgunmgdr",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7532,41 +6077,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "tdxfzbcfamboymgfffzdmgyaiocaojyhnvqo",
+                                                                  "idyuocshimkecpsaegobgnqwhvcsndoltwgz",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="yarej" data-generated-css="brz-css-semll"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">The ability to connect up to 32 time clocks</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "fcttlwipdyzekrxmtrfrlegvqvwoulyigsaz",
+                                                            "bsljvyxqpghxwzzoewoazmsdgdvtzplgplhh",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "tpiccdikzkjqterwxmidgjqdgkilcxswyqiv",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "yffkhqmwgnwgvetodgsmhprigfhavekyqtrt",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7590,13 +6124,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "fqoxqyowbaomoedfemyhfencmtfaibxhklll",
+                                                                  "xklkktexlyutapwgzwfktbfwthpboneemxym",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7607,41 +6146,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "kzgnnrrgrkvmzclbtcvxogtflktzcleszzci",
+                                                                  "dtktscffnyiqnstfpmlminerraqqhcqdpiih",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="chdrt" data-generated-css="brz-css-ndrsj"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Employee self-enrollment</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "oqzotzuhmjtxkdddfwcmoiubyrrzbyqypjvv",
+                                                            "uzbrndjbclcnezxccmfbdmzqrxungrxqwyuw",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "slbkxxrvmxwaixmyidsmhgmifqsvwbjrvdcj",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "yxcdcsmkxmstelzsfffnrlrsakundjqkvedy",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7665,13 +6193,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "vzovipiojfppmsedsmdyfdzwivujgdzyuzzp",
+                                                                  "amomhzjupwwbginodqejahwbdwcgwucatqtn",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7682,41 +6215,30 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "gkfveffeupdtxgvnugpyraoyxzrgzlbepehq",
+                                                                  "fulmqevrpgbhelynzdsddywyyqtoavwwgtew",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="fsehv" data-generated-css="brz-css-tkljc"><span class="brz-cp-color7">Payroll integration</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Payroll integration</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "nozzcyfzzmeljdcxgyuyeudnbkcaztjjfbnc",
+                                                            "iwenexkkvivhoxraxrleyzlojrvchxubvrhc",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "dggdeiucirnpkawylhwdnczjibttktihoesg",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
+                                                      "dlnqxgxqntwrxhskuajmdmdkcivjsqvlxfxz",
+                                                    marginBottomSuffix: "px",
+                                                    marginBottom: 0,
                                                     margin: 0,
                                                     marginSuffix: "px",
-                                                    marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 5,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
                                                     mobileMarginBottomSuffix:
                                                       "px",
-                                                    mobileMarginBottom: 5
+                                                    mobileMarginBottom: 0,
+                                                    mobileMargin: 0,
+                                                    mobileMarginSuffix: "px"
                                                   }
                                                 },
                                                 {
@@ -7740,13 +6262,18 @@ module.exports = {
                                                                   "iconText--icon"
                                                                 ],
                                                                 _id:
-                                                                  "hxqytuisnqistdfmlktqhchdhbspyfxachkm",
+                                                                  "jnrvastjiihwaxsptjpozygcenzxakuvlwcv",
                                                                 name:
                                                                   "check-square-09",
                                                                 type: "glyph",
                                                                 size: "custom",
                                                                 customSize: 19,
-                                                                borderRadius: 0
+                                                                borderRadius: 0,
+                                                                hoverColorHex:
+                                                                  "#e62b4a",
+                                                                hoverColorOpacity: 1,
+                                                                hoverColorPalette:
+                                                                  "color3"
                                                               }
                                                             },
                                                             {
@@ -7757,264 +6284,142 @@ module.exports = {
                                                                   "iconText--text"
                                                                 ],
                                                                 _id:
-                                                                  "cwpobrcpodalmzbxeeaoldayxrtrcavvzbza",
+                                                                  "xdoowrflvreemkwprthklddzkfhaysyahimz",
                                                                 text:
-                                                                  '<p class="brz-tp-lg-paragraph" data-uniq-id="qtalp" data-generated-css="brz-css-janwd"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
+                                                                  '<p class="brz-tp-paragraph brz-mt-xs-8"><span class="brz-cp-color7">Built-in backup camera to verify failed punches</span></p>'
                                                               }
                                                             }
                                                           ],
                                                           _id:
-                                                            "uqcltmvveodmgsimfppepprvhebsgmklxdxv",
+                                                            "wmwpetkeksmkniqfepabtuurcjixsnwsncqt",
                                                           iconSpacing: 10,
                                                           iconSpacingSuffix: ""
                                                         }
                                                       }
                                                     ],
                                                     _id:
-                                                      "kkvxnhankfsnmxcgvrigfpbckxwqalldgilw",
-                                                    marginTopSuffix: "px",
-                                                    marginTop: 5,
-                                                    margin: 0,
-                                                    marginSuffix: "px",
+                                                      "imhvgtpabwwzommirsrtgtcqnucwdfdjwhfy",
                                                     marginBottomSuffix: "px",
-                                                    marginBottom: 5,
-                                                    tabletMarginTopSuffix: "px",
-                                                    tabletMarginTop: 5,
-                                                    tabletMargin: 0,
-                                                    tabletMarginSuffix: "px",
-                                                    tabletMarginBottomSuffix:
-                                                      "px",
-                                                    tabletMarginBottom: 10,
-                                                    mobileMarginTopSuffix: "px",
-                                                    mobileMarginTop: 5,
-                                                    mobileMargin: 0,
-                                                    mobileMarginSuffix: "px",
-                                                    mobileMarginBottomSuffix:
-                                                      "px",
-                                                    mobileMarginBottom: 5
+                                                    marginBottom: 0,
+                                                    margin: 0,
+                                                    marginSuffix: "px"
                                                   }
                                                 }
                                               ],
                                               _id:
-                                                "tkpcukmlonrofiytfjmslhujeepoggihkkkz",
-                                              paddingTopSuffix: "px",
-                                              tempPaddingTopSuffix: "px",
-                                              paddingSuffix: "px",
-                                              tempPaddingSuffix: "px",
+                                                "ljuniitagpncxykrhshdhoiadjgmyvtiweow",
+                                              paddingType: "ungrouped",
+                                              padding: 0,
                                               paddingTop: 35,
-                                              tempPaddingTop: 35,
-                                              paddingRightSuffix: "px",
-                                              tempPaddingRightSuffix: "px",
                                               paddingRight: 55,
-                                              tempPaddingRight: 55,
-                                              paddingBottomSuffix: "px",
-                                              tempPaddingBottomSuffix: "px",
                                               paddingBottom: 45,
-                                              tempPaddingBottom: 45,
-                                              paddingLeftSuffix: "px",
-                                              tempPaddingLeftSuffix: "px",
                                               paddingLeft: 55,
-                                              tempPaddingLeft: 55,
+                                              paddingSuffix: "px",
+                                              paddingTopSuffix: "px",
+                                              paddingRightSuffix: "px",
+                                              paddingBottomSuffix: "px",
+                                              paddingLeftSuffix: "px",
+                                              tempPaddingSuffix: "px",
+                                              tempPaddingTopSuffix: "px",
+                                              tempPaddingRightSuffix: "px",
+                                              tempPaddingBottomSuffix: "px",
+                                              tempPaddingLeftSuffix: "px",
                                               width: 61.9,
-                                              tabletPaddingTopSuffix: "px",
-                                              tempTabletPaddingTopSuffix: "px",
-                                              tabletPaddingSuffix: "px",
-                                              tempTabletPaddingSuffix: "px",
-                                              tabletPaddingTop: 15,
-                                              tempTabletPaddingTop: 15,
-                                              tabletPaddingRightSuffix: "px",
-                                              tempTabletPaddingRightSuffix:
-                                                "px",
-                                              tabletPaddingRight: 25,
-                                              tempTabletPaddingRight: 25,
-                                              tabletPaddingLeftSuffix: "px",
-                                              tempTabletPaddingLeftSuffix: "px",
-                                              tabletPaddingLeft: 25,
-                                              tempTabletPaddingLeft: 25,
-                                              tabletPaddingBottomSuffix: "px",
-                                              tempTabletPaddingBottomSuffix:
-                                                "px",
-                                              tabletPaddingBottom: 20,
-                                              tempTabletPaddingBottom: 20,
-                                              mobilePaddingLeftSuffix: "px",
-                                              tempMobilePaddingLeftSuffix: "px",
-                                              mobilePaddingSuffix: "px",
-                                              tempMobilePaddingSuffix: "px",
-                                              mobilePaddingLeft: 20,
-                                              tempMobilePaddingLeft: 20,
-                                              mobilePaddingRightSuffix: "px",
-                                              tempMobilePaddingRightSuffix:
-                                                "px",
-                                              mobilePaddingRight: 20,
-                                              tempMobilePaddingRight: 20,
-                                              mobilePaddingBottomSuffix: "px",
-                                              tempMobilePaddingBottomSuffix:
-                                                "px",
-                                              mobilePaddingBottom: 10,
-                                              tempMobilePaddingBottom: 10
+                                              tempPaddingLeft: 55,
+                                              tempPaddingTop: 35,
+                                              tempPaddingBottom: 45,
+                                              tempPaddingRight: 55
                                             }
                                           }
                                         ],
                                         _id:
-                                          "tqlwiqutwkwlyymgcfsysrospgjaoapvppae"
+                                          "eiblzecbequmkrqqosgsoksdmydkzkabtqmj"
                                       }
                                     }
                                   ],
-                                  _id: "rvgseknefrrhpkzoikvwmrwqhmhoehqtrvvc"
+                                  _id: "fzxekfsttlkujrsuxqyjgkppewmdubizperx"
                                 }
                               }
                             ],
-                            _id: "gqfwjfpekfkwcemnvrlpcopnfoxleckfereq",
+                            _id: "zkvopvzcrzrlhrmqunwqzrlppvcvjlgolpex",
                             activeTab: 2,
                             horizontalAlign: "center",
                             fontStyle: "heading6",
-                            colorHex: "#73777f",
-                            colorOpacity: 0.7,
-                            tempColorOpacity: 0.7,
-                            colorPalette: "color2",
-                            tempColorPalette: "color8",
-                            tabsState: "tabNormal",
-                            hoverColorHex: "#000000",
-                            hoverColorOpacity: 0.7,
-                            tempHoverColorOpacity: 0.7,
-                            hoverColorPalette: "color3",
-                            tempHoverColorPalette: "color8",
-                            hoverBgColorHex: "#ffffff",
-                            hoverBgColorOpacity: 1,
-                            tempHoverBgColorOpacity: 1,
-                            hoverBgColorPalette: "color6",
-                            tempHoverBgColorPalette: "",
-                            hoverBorderStyle: "solid",
-                            tempHoverBorderStyle: "solid",
-                            hoverBorderColorHex: "#dcdee1",
-                            hoverBorderColorOpacity: 0.04,
-                            tempHoverBorderColorOpacity: 0.04,
-                            hoverBorderColorPalette: "",
-                            tempHoverBorderColorPalette: "",
-                            hoverBorderWidthType: "grouped",
-                            hoverBorderWidth: 2,
-                            tempHoverBorderWidth: 2,
-                            hoverBorderTopWidth: 2,
-                            tempHoverBorderTopWidth: 2,
-                            hoverBorderRightWidth: 2,
-                            tempHoverBorderRightWidth: 2,
-                            hoverBorderBottomWidth: 2,
-                            tempHoverBorderBottomWidth: 2,
-                            hoverBorderLeftWidth: 2,
-                            tempHoverBorderLeftWidth: 2,
-                            borderStyle: "solid",
+                            borderStyle: "none",
                             tempBorderStyle: "solid",
                             borderColorHex: "#dcdee1",
-                            borderColorOpacity: 0.02,
-                            tempBorderColorOpacity: 0,
+                            borderColorOpacity: 0,
+                            tempBorderColorOpacity: 1,
                             borderColorPalette: "",
                             tempBorderColorPalette: "",
                             borderWidthType: "grouped",
-                            borderWidth: 2,
+                            borderWidth: 0,
                             tempBorderWidth: 2,
-                            borderTopWidth: 2,
+                            borderTopWidth: 0,
                             tempBorderTopWidth: 2,
-                            borderRightWidth: 2,
+                            borderRightWidth: 0,
                             tempBorderRightWidth: 2,
-                            borderBottomWidth: 2,
+                            borderBottomWidth: 0,
                             tempBorderBottomWidth: 2,
-                            borderLeftWidth: 2,
+                            borderLeftWidth: 0,
                             tempBorderLeftWidth: 2,
+                            navStyle: "style-2",
                             bgColorHex: "#ffffff",
                             bgColorOpacity: 1,
                             tempBgColorOpacity: 1,
                             bgColorPalette: "color6",
                             tempBgColorPalette: "",
-                            paddingRight: 0,
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
+                            colorHex: "#000000",
+                            colorOpacity: 1,
+                            tempColorOpacity: 1,
+                            colorPalette: "color2",
+                            tempColorPalette: "color8",
+                            tabsState: "tabNormal",
+                            hoverColorHex: "#e62b4a",
+                            hoverColorOpacity: 1,
+                            tempHoverColorOpacity: 1,
+                            hoverColorPalette: "color3",
+                            tempHoverColorPalette: "color8",
+                            activeColorHex: "#000000",
+                            activeColorOpacity: 1,
+                            tempActiveColorOpacity: 1,
+                            activeColorPalette: "color3",
+                            tempActiveColorPalette: "color8",
                             paddingLeftSuffix: "px",
                             tempPaddingLeftSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
                             paddingLeft: 0,
+                            paddingRightSuffix: "px",
+                            tempPaddingRightSuffix: "px",
+                            paddingRight: 0,
                             padding: 0,
-                            activeBgColorHex: "#e62b4a",
-                            activeBgColorOpacity: 1,
-                            tempActiveBgColorOpacity: 1,
-                            activeBgColorPalette: "color2",
-                            tempActiveBgColorPalette: "",
-                            activeColorHex: "#FFFFFF",
-                            activeColorOpacity: 0.98,
-                            tempActiveColorOpacity: 0.98,
-                            activeColorPalette: "color8",
-                            tempActiveColorPalette: "color8",
-                            tabletFontStyle: "heading6",
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            tabletPaddingRight: 0,
-                            tabletPadding: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletPaddingLeft: 0,
-                            mobileFontStyle: "heading6",
-                            mobilePaddingRightSuffix: "px",
-                            tempMobilePaddingRightSuffix: "px",
-                            mobilePaddingSuffix: "px",
-                            tempMobilePaddingSuffix: "px",
-                            mobilePaddingRight: 0,
-                            mobilePadding: 0,
-                            mobilePaddingLeftSuffix: "px",
-                            tempMobilePaddingLeftSuffix: "px",
-                            mobilePaddingLeft: 0,
-                            navStyle: "style-2",
+                            verticalMode: "off",
                             spacingAfter: 15,
                             spacingAfterSuffix: "",
-                            spacing: 15,
-                            spacingSuffix: ""
+                            spacing: 25,
+                            spacingSuffix: "",
+                            tabletFontStyle: "heading5",
+                            mobileFontStyle: "heading4"
                           }
                         }
                       ],
-                      _id: "atvtygihuzfimgzoqtxwkyrjdzwvqzgtcowd"
+                      _id: "jhgbtqdugjlbshrhzizsiauwrtlfndozqtfm"
                     }
                   }
                 ],
-                _id: "sbmwavrmfyivoubgguktrzwkavmxzieiyutz",
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                mobilePaddingTop: 50,
-                tempMobilePaddingTop: 50,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingBottom: 50,
-                tempMobilePaddingBottom: 50,
-                tabletPaddingTopSuffix: "px",
-                tempTabletPaddingTopSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tabletPaddingTop: 75,
-                tempTabletPaddingTop: 75,
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingBottom: 75,
-                tempTabletPaddingBottom: 75,
+                _id: "yukeghimucqtvypnsfqtnzbdkmyugxyfesko",
+                paddingType: "ungrouped",
                 paddingTop: 100,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                tempPaddingTop: 100,
-                paddingBottom: 100,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                tempPaddingBottom: 100
+                paddingBottom: 100
               }
             }
           ],
-          _id: "dkibdfpbzgiguspznzymdsdruruhyvsdtqny",
-          _thumbnailSrc: 6768180,
+          _id: "hnvespmdktgbmoopauhtulxfngbxuuosomna",
+          _thumbnailSrc: 5683365,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 315,
-          _thumbnailTime: 1623617492404
+          _thumbnailHeight: 308,
+          _thumbnailTime: 1633354245650
         },
         blockId: "Kit2Blank000Light"
       },
@@ -8048,33 +6453,20 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "fwiywremeoolbkfgnncdglbtfykhvxfhtnsw",
+                                          "eaxdodsyyufgyfwvvpzofcnhnaipqpnwabqu",
                                         text:
-                                          '<p data-generated-css="brz-css-wjkge" data-uniq-id="pvogk" class="brz-tp-lg-heading2 brz-text-xs-center"><span class="brz-cp-color8">LET\'S GET YOUR PROJECT STARTED!</span></p>'
+                                          '<p class="brz-tp-lg-heading2 brz-tp-sm-heading3 brz-tp-xs-heading4"><span class="brz-cp-color8">LET\'S GET YOUR PROJECT STARTED!</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "ygrcoqwspzieebtvrbiaigobbzepfjcemeso"
+                                  _id: "plyhcrztmzvyjzuaeveyjobitheitqmkffgx"
                                 }
                               }
                             ],
-                            _id: "vpqfacbbubkmuyiyljlaxiogxbuipuoqxlal",
-                            paddingLeft: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            verticalAlign: "center",
+                            _id: "cgclikawaxtudqvhtppfshpzlxbcluheyhor",
                             width: 63.7,
-                            tabletPaddingLeft: 0,
-                            tabletPaddingLeftSuffix: "px",
-                            tempTabletPaddingLeftSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
-                            mobileMarginTopSuffix: "px",
-                            mobileMarginTop: 0,
-                            mobileMargin: 0,
-                            mobileMarginSuffix: "px"
+                            verticalAlign: "center",
+                            mobileWidth: 53
                           }
                         },
                         {
@@ -8095,35 +6487,44 @@ module.exports = {
                                       value: {
                                         _styles: ["button"],
                                         _id:
-                                          "huuimxrqazrvaeirwfzxyvqxnlxcqzymmsus",
+                                          "nuoedhmleuutzzbtgrkjjvlhvnjiwshlykwx",
                                         text: "CONTACT US",
                                         iconName: "",
                                         iconType: "",
-                                        size: "custom",
-                                        fontSize: 16,
-                                        paddingTB: 19,
-                                        paddingTop: 19,
-                                        paddingBottom: 19,
-                                        tempPaddingTB: 19,
-                                        tempPaddingTop: 19,
-                                        tempPaddingBottom: 19,
-                                        paddingRL: 44,
-                                        paddingRight: 44,
-                                        paddingLeft: 44,
-                                        tempPaddingRL: 44,
-                                        tempPaddingRight: 44,
-                                        tempPaddingLeft: 44,
+                                        size: "medium",
+                                        fontSize: 12,
+                                        paddingTB: 14,
+                                        paddingTop: 14,
+                                        paddingBottom: 14,
+                                        tempPaddingTB: 14,
+                                        tempPaddingTop: 14,
+                                        tempPaddingBottom: 14,
+                                        paddingRL: 42,
+                                        paddingRight: 42,
+                                        paddingLeft: 42,
+                                        tempPaddingRL: 42,
+                                        tempPaddingRight: 42,
+                                        tempPaddingLeft: 42,
                                         borderRadius: 0,
                                         borderWidth: 0,
-                                        borderRadiusType: "custom",
-                                        tempBorderRadiusType: "custom",
-                                        fillType: "filled",
-                                        borderColorOpacity: 0,
-                                        borderColorPalette: 0,
+                                        bgColorPalette: "color1",
+                                        tempBgColorPalette: "color1",
                                         bgColorOpacity: 1,
-                                        bgColorPalette: "color2",
+                                        borderRadiusType: "custom",
+                                        fillType: "filled",
+                                        borderColorPalette: 0,
+                                        tempBorderColorPalette: "color1",
                                         hoverBgColorOpacity: 1,
+                                        hoverBgColorHex: "#e62b4a",
+                                        tempHoverBgColorOpacity: 1,
+                                        hoverBgColorPalette: "color8",
+                                        tempHoverBgColorPalette: "color3",
+                                        hoverBorderColorHex: "#e62b4a",
+                                        hoverBorderColorPalette: "",
+                                        tempHoverBorderColorPalette: "",
                                         hoverBorderColorOpacity: 0.8,
+                                        tempBorderRadiusType: "custom",
+                                        borderColorOpacity: 0,
                                         tempBorderRadius: 0,
                                         tempBorderWidth: 2,
                                         boxShadowBlur: 0,
@@ -8138,97 +6539,41 @@ module.exports = {
                                         boxShadowColorOpacity: 1,
                                         boxShadowColorPalette: "color8",
                                         tempBoxShadowColorPalette: "color8",
-                                        tempBgColorPalette: "color2",
-                                        tempBorderColorPalette: 0,
-                                        hoverBgColorHex: "#e62b4a",
-                                        tempHoverBgColorOpacity: 1,
-                                        hoverBgColorPalette: "color8",
-                                        tempHoverBgColorPalette: "color3",
-                                        hoverBorderColorHex: "#e62b4a",
-                                        hoverBorderColorPalette: "",
-                                        tempHoverBorderColorPalette: "",
-                                        hoverBoxShadowColorPalette: "color2",
+                                        hoverBoxShadowColorPalette: "color1",
                                         tempHoverBoxShadowColorPalette:
-                                          "color2",
+                                          "color1",
                                         hoverBoxShadowColorOpacity: 1,
                                         hoverBoxShadow: "on",
                                         hoverBoxShadowBlur: 0,
                                         hoverBoxShadowSpread: 0,
                                         hoverBoxShadowVertical: 0,
                                         hoverBoxShadowHorizontal: 5,
-                                        tabletSize: "large",
-                                        tabletFontSize: 13,
-                                        tabletPaddingTB: 19,
-                                        tabletPaddingTop: 19,
-                                        tabletPaddingBottom: 19,
-                                        tempTabletPaddingTB: 19,
-                                        tempTabletPaddingTop: 19,
-                                        tempTabletPaddingBottom: 19,
-                                        tabletPaddingRL: 44,
-                                        tabletPaddingRight: 44,
-                                        tabletPaddingLeft: 44,
-                                        tempTabletPaddingRL: 44,
-                                        tempTabletPaddingRight: 44,
-                                        tempTabletPaddingLeft: 44,
-                                        tabletBorderRadius: 0,
-                                        mobileSize: "large",
-                                        mobileFontSize: 13,
-                                        mobilePaddingTB: 19,
-                                        mobilePaddingTop: 19,
-                                        mobilePaddingBottom: 19,
-                                        tempMobilePaddingTB: 19,
-                                        tempMobilePaddingTop: 19,
-                                        tempMobilePaddingBottom: 19,
-                                        mobilePaddingRL: 44,
-                                        mobilePaddingRight: 44,
-                                        mobilePaddingLeft: 44,
-                                        tempMobilePaddingRL: 44,
-                                        tempMobilePaddingRight: 44,
-                                        tempMobilePaddingLeft: 44,
-                                        mobileBorderRadius: 0,
                                         hoverColorPalette: "color2",
                                         hoverColorOpacity: 1
                                       }
                                     }
                                   ],
-                                  _id: "kvlppbuhhrpbmxnlprxmxxapuyujvqyflguc",
-                                  horizontalAlign: "right",
-                                  mobileMarginBottomSuffix: "px",
-                                  mobileMarginBottom: 0,
-                                  mobileMargin: 0,
-                                  mobileMarginSuffix: "px",
-                                  mobileHorizontalAlign: "center",
-                                  mobileMarginTopSuffix: "px",
-                                  mobileMarginTop: 0
+                                  _id: "jjwmgxaeudtsbisxrheqjgbexmulsrwhsxvg",
+                                  horizontalAlign: "right"
                                 }
                               }
                             ],
-                            _id: "amjkycbkdtpftbtrvtmhqflcmccetoqnlupz",
+                            _id: "tztoowkqivxawrmclnvdyulfjyuuznsmgpsa",
                             width: 36.3,
-                            paddingRight: 5,
-                            paddingRightSuffix: "px",
-                            tempPaddingRightSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
-                            tabletPaddingRight: 0,
-                            tabletPaddingRightSuffix: "px",
-                            tempTabletPaddingRightSuffix: "px",
-                            tabletPaddingSuffix: "px",
-                            tempTabletPaddingSuffix: "px",
                             verticalAlign: "center",
-                            tempPaddingRight: 5
+                            mobileWidth: 44.3
                           }
                         }
                       ],
-                      _id: "vpucjmwynoicctuoxjtxizvipmdycypbwutt"
+                      _id: "yllbswpzvgnfxxjumpptsoergybajusjhzal"
                     }
                   }
                 ],
-                _id: "hsfcvdeoygoldlotfepowgixydovbolsiprs",
+                _id: "carnyeychedagwuomeqwjnmynzvcckkexrth",
                 bgImageWidth: 1894,
                 bgImageHeight: 310,
                 bgImageExtension: "jpg",
-                bgImageSrc: "35cd3057cb327a1b7e6c384f7f3efc2d.jpg",
+                bgImageSrc: "8b122b0dd825bd13e4bc5fb1a454ca1b.jpg",
                 bgColorOpacity: 0,
                 tempBgColorOpacity: 1,
                 borderRadius: 0,
@@ -8240,37 +6585,19 @@ module.exports = {
                 tempBorderTopRightRadius: 0,
                 tempBorderBottomLeftRadius: 0,
                 tempBorderBottomRightRadius: 0,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
+                bgPositionX: 53,
+                bgPositionY: 100,
+                paddingType: "ungrouped",
                 paddingTop: 90,
-                tempPaddingTop: 90,
-                paddingBottomSuffix: "px",
-                tempPaddingBottomSuffix: "px",
-                paddingBottom: 90,
-                tempPaddingBottom: 90,
-                mobilePaddingTopSuffix: "px",
-                tempMobilePaddingTopSuffix: "px",
-                mobilePaddingSuffix: "px",
-                tempMobilePaddingSuffix: "px",
-                mobilePaddingTop: 40,
-                tempMobilePaddingTop: 40,
-                mobilePaddingBottomSuffix: "px",
-                tempMobilePaddingBottomSuffix: "px",
-                mobilePaddingBottom: 40,
-                tempMobilePaddingBottom: 40,
-                mobileBgPositionX: 37,
-                mobileBgPositionY: 47,
-                mobileBorderRadius: 0
+                paddingBottom: 90
               }
             }
           ],
-          _id: "rqgryvdcbszomavpsprkyxaadwmebjjyzepw",
-          _thumbnailSrc: 6762016,
+          _id: "lansgzcshyaqiviwyhsarqbhalokocdgobgv",
+          _thumbnailSrc: 5671572,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 87,
-          _thumbnailTime: 1623617504068
+          _thumbnailHeight: 86,
+          _thumbnailTime: 1633354247988
         },
         blockId: "Kit2Blank000Light"
       },
@@ -8304,22 +6631,23 @@ module.exports = {
                                       value: {
                                         _styles: ["image"],
                                         _id:
-                                          "lsnukcwrwgmhoispxtynogzlmntpmnlirnub",
+                                          "mrquiqhvgmtwotmwrxsiazkuogrpkdvlvzdl",
+                                        imageWidth: 133,
+                                        imageHeight: 41,
                                         imageSrc:
-                                          "d20d19eefb047674efa5d5833106d59f.svg",
-                                        imageExtension: "svg",
-                                        imageWidth: 300,
-                                        imageHeight: 92,
-                                        width: 36,
-                                        height: 99,
+                                          "07b22bf97a46ea64aefe711fcf931dff.png",
+                                        imageExtension: "png",
+                                        width: 31,
+                                        height: 100,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        imagePopulation: "",
                                         heightSuffix: "%",
-                                        mobileWidth: 28,
-                                        mobileHeight: 99,
-                                        mobileHeightSuffix: "%"
+                                        widthSuffix: "%"
                                       }
                                     }
                                   ],
-                                  _id: "dktkkgtbhofojpsjkgvnhezpsspwfpmpssui",
+                                  _id: "foyudmqpymsgltejgxvutbjnrjtozjjkonjn",
                                   horizontalAlign: "left"
                                 }
                               },
@@ -8333,13 +6661,13 @@ module.exports = {
                                       value: {
                                         _styles: ["spacer"],
                                         _id:
-                                          "pwkizkpsxczpyfqskqvtsvbewbkwkqtsaqiu",
+                                          "gcsotynpmvcucjzhddtimjqumemwrnazjghm",
                                         height: 10,
-                                        heightSuffix: "px"
+                                        heightSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "ekajpkyssikeldwjkeicwubpupqwguotnagg"
+                                  _id: "fnkcdktqzbykwnbuilspmmjvajdqeljtjpmr"
                                 }
                               },
                               {
@@ -8352,25 +6680,23 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "djdljfxlnoezojblgucmxqhhsldrgkmnlyyj",
+                                          "premqkpxelqrpigztpmzeofkstalfsmednfg",
                                         text:
-                                          '<p data-generated-css="brz-css-uzdjj" data-uniq-id="kineu" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">Welcome to our web design agency. Lorem ipsum is simply free text dolor sit amet consectetur adipisicing elit. Tempore corrupti temporibus fuga earum asperiores, alias excepturi sit mpedit fugit laudantium.</span></p>'
+                                          '<p class="brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle"><span style="color: rgb(170, 170, 170);">Welcome to our web design agency. Lorem ipsum is simply free text dolor sit amet consectetur adipisicing elit. Tempore corrupti temporibus fuga earum asperiores, alias excepturi sit mpedit fugit laudantium.</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "xcwjpmepkfykcclrmootyuxzyifhpwfkloqp"
+                                  _id: "xhqwhvherlbaxitwaseofgaziyfzuedbvcfu",
+                                  paddingType: "ungrouped"
                                 }
                               }
                             ],
-                            _id: "aqmoiktouygjkcpbkxgpozqyvhvyqxnbikem",
-                            width: 43,
-                            paddingLeft: 0,
-                            paddingLeftSuffix: "px",
-                            tempPaddingLeftSuffix: "px",
-                            paddingSuffix: "px",
-                            tempPaddingSuffix: "px",
+                            _id: "maaobiqcmtgqxqfadesutqkylpeweersxvwo",
+                            width: 43.4,
                             paddingRightSuffix: "px",
                             tempPaddingRightSuffix: "px",
+                            paddingSuffix: "px",
+                            tempPaddingSuffix: "px",
                             paddingRight: 200,
                             tempPaddingRight: 200
                           }
@@ -8390,13 +6716,13 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "keyhragnjhcjwltazwqgbssgwmmrvdakmkra",
+                                          "eashddlvkrnysllxwnjbsdjwxmgnhinoadak",
                                         text:
-                                          '<p data-generated-css="brz-css-kqmvi" data-uniq-id="hweoz" class="brz-tp-lg-heading6"><span class="brz-cp-color8">CONTACT</span></p>'
+                                          '<p class="brz-tp-lg-heading6 brz-tp-sm-paragraph brz-tp-xs-paragraph"><span class="brz-cp-color8">CONTACT</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "csulczcsxbvngnslchcjmdocwkfyxooxyeja"
+                                  _id: "bbohlcahlasrubpscrpusixhvuwlyblusaid"
                                 }
                               },
                               {
@@ -8409,13 +6735,13 @@ module.exports = {
                                       value: {
                                         _styles: ["spacer"],
                                         _id:
-                                          "nnfgcwhjlivcvvzohzmbsmmwvpmhggynqhpx",
+                                          "enbmfjpnaleesgiedrnykllxthfiwlemqfof",
                                         height: 10,
-                                        heightSuffix: "px"
+                                        heightSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "tbdpkufogdkpyrqwiusejcygoqrelfkaremz"
+                                  _id: "slmqirmceloqrzsosuntjbthlmievtxmbrpy"
                                 }
                               },
                               {
@@ -8428,13 +6754,13 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "iemcvulzovrdbgquqlwzypqcqpwnxzqnuqni",
+                                          "pbwhqerdltymkpzgcgpzrqzrkrrynlrqdjvk",
                                         text:
-                                          '<p data-uniq-id="prbgn" data-generated-css="brz-css-mknsh" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">66 Broklyn Street, New York</span></p><p data-generated-css="brz-css-qqyuu" data-uniq-id="zrppl" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">United States of America</span> </p>'
+                                          '<p class="brz-tp-lg-subtitle brz-tp-xs-paragraph brz-tp-sm-paragraph"><span style="color: rgb(170, 170, 170);">66 Broklyn Street, New York </span></p><p class="brz-tp-lg-subtitle brz-tp-xs-paragraph brz-tp-sm-paragraph"><span style="color: rgb(170, 170, 170);">United States of America</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "otdejupqbjspksoxuioysjdpchqfemquzwem"
+                                  _id: "sfesayeymfvoffpbpipphcwfysrkswgcpymc"
                                 }
                               },
                               {
@@ -8447,23 +6773,19 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "lyrdwylsamewrqajxofzrtbkziddnkvftdcj",
+                                          "gnukzudykcmfsfwupcvykpnekrmxfwqunfrg",
                                         text:
-                                          '<p class="brz-tp-lg-subtitle" data-uniq-id="utrxc" data-generated-css="brz-css-uioce"><span class="brz-cp-color7">P: 666 888 000</span></p><p class="brz-tp-xs-subtitle brz-tp-lg-subtitle" data-generated-css="brz-css-uqdly" data-uniq-id="bjauv"><span class="brz-cp-color7">E: needhelp@meipaly.com</span></p>'
+                                          '<p class="brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle"><span style="color: rgb(170, 170, 170);">P: 666 888 000 </span></p><p class="brz-tp-sm-paragraph brz-tp-xs-paragraph brz-tp-lg-subtitle"><span style="color: rgb(170, 170, 170);">E: needhelp@meipaly.com</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "dghwpqtzwigkphowhbxrfskwdsanigftczqa",
-                                  marginTopSuffix: "px",
-                                  marginTop: 20,
-                                  margin: 0,
-                                  marginSuffix: "px"
+                                  _id: "eexhqjhoqlqxzcssqyaemzbywqhjkjsozpjx"
                                 }
                               }
                             ],
-                            _id: "rwxkstaqjxaeexhbbgmjglmuksmoglpkosea",
-                            width: 31,
-                            mobileWidth: 60
+                            _id: "cknhcmcfdnmdlhbmnvtcolnzvqaluasbpysc",
+                            width: 32.3,
+                            mobileWidth: 55.3
                           }
                         },
                         {
@@ -8481,13 +6803,13 @@ module.exports = {
                                       value: {
                                         _styles: ["richText"],
                                         _id:
-                                          "tjryjjpwvhrgbsyfktuxiiknfhuherrqgrir",
+                                          "xneyzcfjbfeychaitgvrdrpcoltkfjfbikho",
                                         text:
-                                          '<p class="brz-tp-lg-heading6" data-uniq-id="rncqp" data-generated-css="brz-css-goqnc"><span class="brz-cp-color8">SOCIAL</span></p>'
+                                          '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-heading6"><span class="brz-cp-color8">SOCIAL</span></p>'
                                       }
                                     }
                                   ],
-                                  _id: "kmkbterizqqbncmucvwgfqmahmfouftazuon"
+                                  _id: "skfuzigggrkxtqctqbwzdcvcokrzzrpawwbs"
                                 }
                               },
                               {
@@ -8500,13 +6822,13 @@ module.exports = {
                                       value: {
                                         _styles: ["spacer"],
                                         _id:
-                                          "jdgyhlcifprjhiubdxqeqtkmktjeqgbpbuvl",
+                                          "cpygpvkktmtsequvlfsmtdugciqffckurdmw",
                                         height: 10,
-                                        heightSuffix: "px"
+                                        heightSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "iskaeqyvzffoqmbfwddmxnihfjaedzwmwaqd"
+                                  _id: "athpwptauwpbjilpzaqyplxdxqostqjzblpk"
                                 }
                               },
                               {
@@ -8527,12 +6849,12 @@ module.exports = {
                                                 "iconText--icon"
                                               ],
                                               _id:
-                                                "zfrejokjptvmjcmedhvennsliqjcogpilrfv",
+                                                "kwnpjptftqkpyrtahpiasrmtswavwhcnpyog",
+                                              name: "logo-twitter",
+                                              type: "glyph",
                                               size: "custom",
                                               customSize: 16,
                                               borderRadius: 0,
-                                              name: "logo-fb-simple",
-                                              type: "glyph",
                                               colorPalette: "color8",
                                               colorOpacity: 1
                                             }
@@ -8545,22 +6867,22 @@ module.exports = {
                                                 "iconText--text"
                                               ],
                                               _id:
-                                                "lrodjrgfsmnbsynubfygzxmgoyfrlvotmuci",
+                                                "josyuyantojadzmmhqyawroendbmebmiehze",
                                               text:
-                                                '<p data-uniq-id="gbmxj" data-generated-css="brz-css-lyjdo" class="brz-tp-lg-subtitle"><span class="brz-cp-color7">Facebook </span></p>'
+                                                '<p class="brz-tp-lg-subtitle brz-tp-sm-paragraph brz-tp-xs-paragraph"><span style="color: rgb(170, 170, 170);">Twitter</span></p>'
                                             }
                                           }
                                         ],
                                         _id:
-                                          "bytqpgyujerbvtaarwflotsdbyewkorafnwd",
+                                          "kxcnvydvotynaoljihcpbulzgnrsratzcucj",
                                         iconSpacing: 10,
                                         iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "bhqtbvcfbznriyfvomjzmhkcdygsymvliljr",
+                                  _id: "gasboasxitdqtjevwqpqsgakgdhakmwsnnhl",
                                   marginBottomSuffix: "px",
-                                  marginBottom: 5,
+                                  marginBottom: 0,
                                   margin: 0,
                                   marginSuffix: "px"
                                 }
@@ -8583,12 +6905,12 @@ module.exports = {
                                                 "iconText--icon"
                                               ],
                                               _id:
-                                                "imlswzuarchjhnkghudzidtfzugmbzwcglww",
+                                                "topgwnxocdtsjcpzlcwdeotuknlyrgvekiov",
+                                              name: "logo-fb-simple",
+                                              type: "glyph",
                                               size: "custom",
                                               customSize: 16,
                                               borderRadius: 0,
-                                              name: "logo-twitter",
-                                              type: "glyph",
                                               colorPalette: "color8",
                                               colorOpacity: 1
                                             }
@@ -8601,26 +6923,24 @@ module.exports = {
                                                 "iconText--text"
                                               ],
                                               _id:
-                                                "zzxqwhktuzkubwnsypybylelxcglonnlhsnx",
+                                                "eepnvrgabtsleuzgqnsgwdtlzaxcflrfwgnx",
                                               text:
-                                                '<p class="brz-tp-lg-subtitle" data-generated-css="brz-css-zxubb" data-uniq-id="ofduw"><span class="brz-cp-color7">Twitter</span></p>'
+                                                '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-subtitle"><span style="color: rgb(170, 170, 170);">Facebook</span></p>'
                                             }
                                           }
                                         ],
                                         _id:
-                                          "uwglxolaoczfbgtvyosjluagvqgriexrcwny",
+                                          "yqzfvqmcexqbmnoxbknndttlidoeswtktcqm",
                                         iconSpacing: 10,
                                         iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "paqjakvjvznojbomqpduvdnmjapeeooiknng",
-                                  marginTopSuffix: "px",
-                                  marginTop: 5,
-                                  margin: 0,
-                                  marginSuffix: "px",
+                                  _id: "vipdxkmkvghwmjwmpdtpcjfwuzyypyjbypmd",
                                   marginBottomSuffix: "px",
-                                  marginBottom: 5
+                                  marginBottom: 0,
+                                  margin: 0,
+                                  marginSuffix: "px"
                                 }
                               },
                               {
@@ -8641,12 +6961,12 @@ module.exports = {
                                                 "iconText--icon"
                                               ],
                                               _id:
-                                                "ayoetpbrdhrjsvckpombayhckzvfenipkooh",
+                                                "jmhzaacgpatasnfimcsbazovvezmhsqhnfpj",
+                                              name: "logo-youtube",
+                                              type: "glyph",
                                               size: "custom",
                                               customSize: 16,
                                               borderRadius: 0,
-                                              name: "logo-youtube",
-                                              type: "glyph",
                                               colorPalette: "color8",
                                               colorOpacity: 1
                                             }
@@ -8659,36 +6979,30 @@ module.exports = {
                                                 "iconText--text"
                                               ],
                                               _id:
-                                                "zgbfqcnsojxelrlalfbljmefrjadnteshblw",
+                                                "jphlyelraynjjjyjgxgmqzsojakyvteqdeoz",
                                               text:
-                                                '<p class="brz-tp-lg-subtitle" data-generated-css="brz-css-jzadr" data-uniq-id="qedir"><span class="brz-cp-color7">Youtube</span></p>'
+                                                '<p class="brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-subtitle"><span style="color: rgb(170, 170, 170);">Youtube</span></p>'
                                             }
                                           }
                                         ],
                                         _id:
-                                          "nacrmbehobmeauhixuuiduejfldkpswzywuj",
+                                          "hqgpjzwvwtjbpxylppyxuhczljpqzhpadeyu",
                                         iconSpacing: 10,
                                         iconSpacingSuffix: ""
                                       }
                                     }
                                   ],
-                                  _id: "nglvlpbdibwlethyxulnoduaezpcuifqazcl",
-                                  marginTopSuffix: "px",
-                                  marginTop: 5,
-                                  margin: 0,
-                                  marginSuffix: "px",
-                                  marginBottomSuffix: "px",
-                                  marginBottom: 5
+                                  _id: "lhozabpxsvwrwjotlqwgogdoiuktexmkppht"
                                 }
                               }
                             ],
-                            _id: "nvpujtkrfytqkvkpqekhicansosaqanatebe",
-                            width: 26,
-                            mobileWidth: 40
+                            _id: "tgxqzjyogevscupiydiznfkuutpituxbclvb",
+                            width: 24.3,
+                            mobileWidth: 39.5
                           }
                         }
                       ],
-                      _id: "kztjjjnyhmseklybaqjxmhjcqhgykghoqtyv"
+                      _id: "ccuqmrmpybezwxvjfezzeqjpmewwegrixpag"
                     }
                   },
                   {
@@ -8700,17 +7014,16 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-                            _id: "frudepuggnlbpjsjhgwscfgjqsnbebstczcl",
+                            _id: "ypyxzlamyirfbespteqrokifvtoonelvfprq",
                             height: 70,
-                            heightSuffix: "px",
-                            tabletHeight: 40,
-                            tabletHeightSuffix: "px",
-                            mobileHeight: 20,
-                            mobileHeightSuffix: "px"
+                            heightSuffix: "",
+                            tabletHeight: 30,
+                            tabletHeightSuffix: ""
                           }
                         }
                       ],
-                      _id: "dzojkkeggfagmbtyjormqcqqigdkmxitvrkx"
+                      _id: "tbctwimaczyjqbviwophxaopithxlbzlmqii",
+                      showOnMobile: "off"
                     }
                   },
                   {
@@ -8722,14 +7035,14 @@ module.exports = {
                           type: "Line",
                           value: {
                             _styles: ["line"],
-                            _id: "cxjntvgwkbtiadcyzfrjmkvzlbiuduuwdmsz",
-                            width: 100,
+                            _id: "gzsclrlrwjuyodomuqicbaydmozszxyswnyt",
+                            width: 98,
                             widthSuffix: "%",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
                             borderColorHex: "#73777f",
-                            borderColorOpacity: 0.35,
-                            tempBorderColorOpacity: 0.35,
+                            borderColorOpacity: 0.33,
+                            tempBorderColorOpacity: 0.33,
                             borderColorPalette: "color7",
                             tempBorderColorPalette: "color7",
                             borderWidthType: "grouped",
@@ -8746,15 +7059,11 @@ module.exports = {
                           }
                         }
                       ],
-                      _id: "pckicwkcjwczprgkuctsnxnveepjxsbqnmje",
+                      _id: "zjlqlskybanzghtsgedhzeltitxftlxmwasx",
                       marginBottomSuffix: "px",
                       marginBottom: 20,
                       margin: 0,
-                      marginSuffix: "px",
-                      tabletMarginBottomSuffix: "px",
-                      tabletMarginBottom: 20,
-                      tabletMargin: 0,
-                      tabletMarginSuffix: "px"
+                      marginSuffix: "px"
                     }
                   },
                   {
@@ -8766,21 +7075,23 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-                            _id: "fcqsctfushjwapnjhbjwuutabofwbrxlrpwf",
+                            _id: "dzjkfrcqjfjkzkuadknudmztmqwnqkhdupda",
                             text:
-                              '<p class="brz-tp-lg-subtitle brz-text-lg-center" data-uniq-id="pecli" data-generated-css="brz-css-xqdzm"><span class="brz-cp-color7">© COPYRIGHT 2021, ALL RIGHTS RESERVED</span></p>'
+                              '<p class="brz-text-xs-left brz-tp-xs-paragraph brz-tp-sm-paragraph brz-tp-lg-subtitle brz-text-lg-center" data-uniq-id="lvnmv" data-generated-css="brz-css-hpapf"><span style="color: rgb(170, 170, 170);">© COPYRIGHT 2021, ALL RIGHTS RESERVED</span></p>'
                           }
                         }
                       ],
-                      _id: "wziwafvdibndyoctqqowtwjbmgbxbgoixuoo"
+                      _id: "ytbzrqydyttkkuwsouvlixqgucmfdgwdzlif"
                     }
                   }
                 ],
-                _id: "rxjcyztdsxurggwdqslifcbnqgcptowxclop",
+                _id: "crgqkqmmgdnvhowiojryjpbvglrhusdiomdt",
+                paddingType: "ungrouped",
+                paddingBottom: 30,
                 bgImageWidth: 1894,
-                bgImageHeight: 543,
+                bgImageHeight: 738,
                 bgImageExtension: "jpg",
-                bgImageSrc: "e13ea3b02ca370335c25ec46d237bceb.jpg",
+                bgImageSrc: "5cdefbf9f507665175dab5a3b3ff4dd5.jpg",
                 bgColorOpacity: 0,
                 tempBgColorOpacity: 1,
                 borderRadius: 0,
@@ -8792,35 +7103,26 @@ module.exports = {
                 tempBorderTopRightRadius: 0,
                 tempBorderBottomLeftRadius: 0,
                 tempBorderBottomRightRadius: 0,
-                paddingTop: 100,
-                paddingTopSuffix: "px",
-                tempPaddingTopSuffix: "px",
-                paddingSuffix: "px",
-                tempPaddingSuffix: "px",
-                tempPaddingTop: 100,
+                bgPositionX: 50,
+                bgPositionY: 76,
                 paddingBottomSuffix: "px",
                 tempPaddingBottomSuffix: "px",
-                paddingBottom: 30,
-                tempPaddingBottom: 30,
+                paddingSuffix: "px",
+                tempPaddingSuffix: "px",
+                tempPaddingBottom: 20,
+                paddingTop: 101,
                 tabletPaddingType: "ungrouped",
-                tabletPaddingTop: 65,
-                tabletPaddingBottomSuffix: "px",
-                tempTabletPaddingBottomSuffix: "px",
-                tabletPaddingSuffix: "px",
-                tempTabletPaddingSuffix: "px",
-                tabletPaddingBottom: 20,
-                tempTabletPaddingBottom: 20,
-                mobileBgPositionX: 87,
-                mobileBgPositionY: 45,
-                mobileBorderRadius: 0
+                tabletPaddingBottom: 15,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingBottom: 15
               }
             }
           ],
-          _id: "xqmoffkbutglwhobjifkkznjvlzwxkfoyrcq",
-          _thumbnailSrc: 6766929,
+          _id: "hzsvvictrcquwobbkrwlcpqjvutgennbaohb",
+          _thumbnailSrc: 5742807,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 156,
-          _thumbnailTime: 1623175903304
+          _thumbnailHeight: 155,
+          _thumbnailTime: 1633354250794
         },
         blockId: "Kit2Blank000Light"
       }

@@ -18,6 +18,9 @@
 
     "tagName": "span",
 
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
+
     "fontStyle": "heading2",
     "fontFamilyType": "google",
     "fontSize": 56,
@@ -85,7 +88,6 @@
 
     "className": "",
     "customCSS": "",
-    "tagName": "span",
 
     "tabletFontStyle": "heading2",
     "tabletFontFamilyType": null,

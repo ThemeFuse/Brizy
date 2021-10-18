@@ -150,6 +150,12 @@
     }
   }
 
+  &__select-list {
+    .brz-forms2__select-item:not(:last-child) {
+      border-bottom-width: 0;
+    }
+  }
+
   // Form Alert
   &__alert {
     min-height: 55px;
@@ -186,6 +192,7 @@
       font: inherit;
       display: inherit;
       align-items: inherit;
+      justify-content: inherit;
       width: 100%;
       cursor: pointer;
     }
@@ -250,10 +257,13 @@
       margin: 0;
       padding: 12px 24px;
       font-size: 16px;
-      height: 48px;
       line-height: 1.5;
+      height: auto;
       cursor: pointer;
       background-color: inherit;
+    }
+    &-results__option:not(:last-child) {
+      border-bottom-width: 0;
     }
     .selection,
     &-container {

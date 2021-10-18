@@ -43,6 +43,8 @@ import {
   ActionMakeGlobalBlockToPopup
 } from "visual/redux/actions2";
 import { Screenshot, GlobalBlock, Block } from "visual/types";
+import Prompts from "visual/component/Prompts";
+import { getOptions } from "visual/component/ConditionsComponent";
 
 const getOpenedPopupId = (): string => {
   let id = "";
@@ -177,6 +179,17 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
                 : makeNormalToGlobalBlock(globalBlock);
 
               popupId && openPopupById(popupId);
+
+              Prompts.open({
+                prompt: "conditions",
+                mode: "single",
+                props: {
+                  options: getOptions(
+                    this.props.blockType === "normal" ? "block" : "popup",
+                    this.props.value._id
+                  )
+                }
+              });
             } else {
               throw r;
             }

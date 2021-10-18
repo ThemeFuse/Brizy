@@ -1928,7 +1928,7 @@ module.exports = {
                                         _id:
                                           "vvohmskccdyxwukpvggvhgoqavwtpnsjluwv",
                                         text:
-                                          '<p class="brz-tp-heading2"><span class="brz-cp-color2">About  Brizy Agency</span></p>'
+                                          '<p class="brz-tp-heading2"><span class="brz-cp-color2">About  Our Agency</span></p>'
                                       }
                                     }
                                   ],

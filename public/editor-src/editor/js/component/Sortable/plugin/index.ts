@@ -11,7 +11,20 @@ import {
   rectCenter,
   pointRelative
 } from "./utils";
+import {
+  findClosestSortable as findClosestSortableT,
+  SortableBox as SortableBoxT
+} from "./findClosestSortable";
 import { SortablePluginOptions, GlobalState } from "./types";
+
+interface SortableBox extends SortableBoxT {
+  el: Element;
+}
+
+const findClosestSortable = findClosestSortableT({
+  nearEdgeTest: 3,
+  nearEdgeThreshold: 10
+});
 
 const defaults: SortablePluginOptions = {
   acceptElements: [],
@@ -89,7 +102,6 @@ export default class SortablePlugin {
       return false;
     });
     globalState.sortableInfo.set(this.el, {
-      depth: elementDepth(this.el),
       zIndex: zIndex,
       isGrid: this.options.isGrid,
       acceptElements: this.options.acceptElements ?? []
@@ -542,35 +554,22 @@ export default class SortablePlugin {
   }
 
   findClosestSortable(x: number, y: number): Element | undefined {
-    // get the most deep sortable that contains the point
-    const closest = globalState.dragInfo.receiverSortables?.reduce<{
-      node: Element | undefined;
-      depth: number;
-      zIndex: number;
-    }>(
-      (acc, node) => {
+    const sortableBoxes: SortableBox[] =
+      globalState.dragInfo.receiverSortables?.flatMap(node => {
         const sortableInfo = globalState.sortableInfo.get(node);
 
-        if (sortableInfo && isInsideRect(x, y, node.getBoundingClientRect())) {
-          const zIndex = sortableInfo.zIndex;
-          const depth = sortableInfo.depth;
+        return sortableInfo
+          ? {
+              el: node,
+              rect: node.getBoundingClientRect(),
+              depth: elementDepth(node),
+              zIndex: sortableInfo.zIndex,
+              type: sortableInfo.isGrid ? "horizontal" : "vertical"
+            }
+          : [];
+      }) ?? [];
 
-          if (
-            zIndex > acc.zIndex ||
-            (zIndex === acc.zIndex && depth > acc.depth)
-          ) {
-            acc.node = node;
-            acc.depth = depth;
-            acc.zIndex = zIndex;
-          }
-        }
-
-        return acc;
-      },
-      { node: undefined, depth: -1, zIndex: -1 }
-    );
-
-    return closest?.node;
+    return findClosestSortable(sortableBoxes, { x, y })?.el;
   }
 
   findClosestElement(

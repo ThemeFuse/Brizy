@@ -7085,7 +7085,7 @@ module.exports = {
                                         _id:
                                           "ciweqsufiopdnpjcwjyvgoxunvpjrzxzjomd",
                                         text:
-                                          '<p class="brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color8">©2021 Brizy Page Builder. All Rights Reserved.</span></p>'
+                                          '<p class="brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color8">©2021 Page Builder. All Rights Reserved.</span></p>'
                                       }
                                     }
                                   ],

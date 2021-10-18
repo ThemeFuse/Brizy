@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  min-width: 0;
 
   &__input {
     font-family: $font-family-1;

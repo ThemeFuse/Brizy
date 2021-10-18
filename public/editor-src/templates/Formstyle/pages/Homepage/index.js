@@ -5213,7 +5213,7 @@ module.exports = {
                           value: {
                             _styles: ["richText"],
                             text:
-                              '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color2" style="opacity: 0.6;">Landing Page Template&nbsp;&nbsp;© 2019 Made with Brizy</span></p>'
+                              '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color2" style="opacity: 0.6;">Landing Page Template&nbsp;&nbsp;© 2019 Made with Love</span></p>'
                           }
                         }
                       ]

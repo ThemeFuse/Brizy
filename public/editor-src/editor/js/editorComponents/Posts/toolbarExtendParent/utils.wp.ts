@@ -163,10 +163,7 @@ export const tagsFilterLoad = (value: string) => async (
     });
     // select only tags
     const tags = taxonomies.filter(
-      taxonomy =>
-        taxonomy.public &&
-        !taxonomy.hierarchical &&
-        taxonomy.name !== "post_format"
+      taxonomy => taxonomy.public && taxonomy.name !== "post_format"
     );
 
     return tags.map(({ name, labels }) => ({

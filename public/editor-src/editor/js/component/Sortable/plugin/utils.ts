@@ -87,6 +87,22 @@ export function rectCenter(rect: Rect): { x: number; y: number } {
   };
 }
 
+export function shrinkRect(
+  rect: Rect,
+  by: number,
+  sides: "all" | "top-bottom" | "left-right" = "all"
+): Rect {
+  const tb = sides === "all" || sides === "top-bottom";
+  const lr = sides === "all" || sides === "left-right";
+
+  return {
+    top: tb ? rect.top + by : rect.top,
+    bottom: tb ? rect.bottom - by : rect.bottom,
+    left: lr ? rect.left + by : rect.left,
+    right: lr ? rect.right - by : rect.right
+  };
+}
+
 export function clamp(value: number, min: number, max: number): number {
   if (value < min) {
     return min;

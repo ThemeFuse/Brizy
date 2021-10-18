@@ -2244,7 +2244,7 @@ module.exports = {
                           value: {
                             _styles: ["richText"],
                             text:
-                              '<p class="brz-text-lg-center brz-tp-heading5"><span class="brz-cp-color2">contact@brizy.com</span></p>',
+                              '<p class="brz-text-lg-center brz-tp-heading5"><span class="brz-cp-color2">contact@office.com</span></p>',
                             _id: "qgztdpuqbgrvurpnnlmpiqedvqyymkbvrwju"
                           }
                         }

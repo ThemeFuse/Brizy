@@ -3,9 +3,11 @@ import $ from "jquery";
 export default function($node) {
   $node.find(".brz-switcher").each(function() {
     const $this = $(this);
-    const $switcherNav = $this.find(".brz-switcher__nav");
-    const $switcherNavItems = $this.find(".brz-switcher__nav--item");
-    const $switcherContent = $this.find(".brz-switcher__content--tab");
+    const $switcherNav = $this.find("> .brz-switcher__nav");
+    const $switcherNavItems = $this.find(
+      "> .brz-switcher__nav .brz-switcher__nav--item"
+    );
+    const $switcherContent = $this.find("> .brz-switcher__content--tab");
 
     $switcherNavItems.on("click", function() {
       $switcherNav.toggleClass("brz-switcher__nav--active");
@@ -20,7 +22,9 @@ export default function($node) {
     });
 
     // style 2
-    const $switcherNavControl = $this.find(".brz-switcher__nav2--control");
+    const $switcherNavControl = $this.find(
+      "> .brz-switcher__nav2 .brz-switcher__nav2--control"
+    );
 
     $switcherNavControl.on("click", function() {
       $switcherNavControl.toggleClass("brz-switcher__nav2--control--active");
