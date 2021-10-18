@@ -60,8 +60,7 @@ module.exports = {
                                         mobileWidthSuffix: "%",
                                         mobileHeightSuffix: "%",
                                         linkType: "external",
-                                        linkExternal:
-                                          "https://fixit.brizy.site/",
+                                        linkExternal: "https://google.com/",
                                         linkPopulation: "",
                                         linkExternalType: "linkExternal"
                                       }

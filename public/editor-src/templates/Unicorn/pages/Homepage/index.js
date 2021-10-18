@@ -36,18 +36,19 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ktrftoriifvpmtvwusdnbosyvicmjncjyyqf",
                                         text:
                                           '<p class="brz-tp-heading3 brz-text-xs-center"><strong class="brz-cp-color8">unicorn</strong><strong class="brz-cp-color3">. </strong></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "dwzocvddnkixddxnuhxytdpkhdtdmbavdurf",
                                   mobileMarginType: "grouped"
                                 }
                               }
                             ],
-
+                            _id: "wjyskfornmtomsmshjazruqhyzgvwqkzbpcl",
                             width: 20,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -79,7 +80,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "bqlhpbxlqfnpmmqbczzojdqbtluynmiuvead",
                                         text: "Features",
                                         size: "small",
                                         fontSize: 11,
@@ -156,7 +158,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "hqduiyejvwwoyrycyfhqehuilycnzmmizzqq",
                                         text: "Gallery",
                                         size: "small",
                                         fontSize: 11,
@@ -352,7 +355,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "utmmhgitjcqeauifyjrkwljuxvbcxymohmsc",
                                         text: "Pricing",
                                         size: "small",
                                         fontSize: 11,
@@ -545,7 +549,8 @@ module.exports = {
                                         paddingBottomSuffix: "px",
                                         paddingLeftSuffix: "px",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderTopWidth: 2,
                                         borderRightWidth: 2,
@@ -555,29 +560,82 @@ module.exports = {
                                         tempBorderRightWidth: 2,
                                         tempBorderBottomWidth: 2,
                                         tempBorderLeftWidth: 2,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         tempBoxShadow: "on",
                                         tempBoxShadowBlur: 0,
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 0,
                                         tempBoxShadowHorizontal: 0,
-
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
                                         hoverTransition: 30,
                                         tabletPaddingSuffix: "px",
                                         tabletPaddingTopSuffix: "px",
                                         tabletPaddingRightSuffix: "px",
                                         tabletPaddingBottomSuffix: "px",
                                         tabletPaddingLeftSuffix: "px",
-
+                                        tabletBgColorType: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
                                         mobilePaddingSuffix: "px",
                                         mobilePaddingTopSuffix: "px",
                                         mobilePaddingRightSuffix: "px",
                                         mobilePaddingBottomSuffix: "px",
-                                        mobilePaddingLeftSuffix: "px"
+                                        mobilePaddingLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "etauqpoayjkbyixhhnxvheshssikykhtdojv",
                                   horizontalAlign: "left",
                                   itemPadding: 40,
                                   itemPaddingRight: 40,
@@ -600,7 +658,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "agvvalvvelnklzgbeokhfzjtijkactcruekr",
                             width: 46.6,
                             tabletWidth: 54.2,
                             mobileWidth: 100,
@@ -631,7 +689,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "hyfyrlilhmlogwqjuizlaxnifeadbdzkzbtp",
                                         text: "Login",
                                         size: "small",
                                         fontSize: 11,
@@ -710,7 +769,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "lchtconpwzxcltdefvconbxviahzkjfsieaa",
                                         text: "Sign Up",
                                         size: "small",
                                         fontSize: 11,
@@ -771,7 +831,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "bekxbmzmcydsaaqmthcwbtpexecjyiwrktzl",
                                   horizontalAlign: "right",
                                   itemPadding: 30,
                                   itemPaddingRight: 30,
@@ -783,7 +843,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "akjfsantztpcbnznedqftsjroexpedhngudr",
                             width: 33.4,
                             tabletWidth: 22,
                             tabletPaddingRight: 0,
@@ -800,7 +860,8 @@ module.exports = {
                             mobileMargin: 10
                           }
                         }
-                      ]
+                      ],
+                      _id: "dvicgerrwrsmpkbwwegbfopfkmmwdzmovzlg"
                     }
                   },
                   {
@@ -812,14 +873,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "kjrhijsaosebicbezpgteqtxtrtgpizyglso",
                             height: 80,
                             tabletHeight: 35,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "leejplxlujpxojckolisaxcfctreyakgdhbx",
                       showOnTablet: "on",
                       showOnMobile: "off"
                     }
@@ -843,13 +904,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "hkuztxosjhrtcpooncmbwnmcjoemlbwjfewm",
                                         text:
                                           '<p class="brz-tp-heading1 brz-text-xs-center"><span class="brz-cp-color8">Unlock the full potential of data</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "ddwxqqvrdzzmnznycznnlmtdbjgdixztelwe",
                                   tabletPaddingType: "ungrouped",
                                   paddingRightSuffix: "px",
                                   tabletPaddingRight: 15,
@@ -867,13 +929,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "rdztehcgmbknqpjtvktebxdmzxwfwqgzreoa",
                                         text:
                                           '<p class="brz-text-xs-center brz-tp-subtitle brz-mt-lg-10 brz-mb-lg-10 brz-mt-sm-0 brz-mb-sm-0"><span class="brz-cp-color6">Unicorn offers smart, insightful, AI-driven analytics.&nbsp;</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "lczaczhhpkrtdlxavshgspzudakipusxdiuw",
                                   marginRightSuffix: "px",
                                   marginRight: 0,
                                   margin: 0,
@@ -903,7 +966,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "zjdtoeuztxmjfptojoopgxzoibrxpykpxpjp",
                                         text: "START FOR FREE",
                                         iconName: "",
                                         iconType: "",
@@ -981,13 +1045,13 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "hdimtsgkhycltljtkxhaxwczvndcozppwhsn",
                                   horizontalAlign: "left",
                                   mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-
+                            _id: "cgcmhfjlhjeoshxuddjbydxszpcprtahmysq",
                             width: 39,
                             verticalAlign: "center",
                             tabsState: "tabNormal",
@@ -1021,7 +1085,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "kydobocnzkqhvfqvnrbundtlnlpeohljvmfd",
                                         imageWidth: 1568,
                                         imageHeight: 955,
                                         imageSrc:
@@ -1053,13 +1118,13 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "ulyhezdnpijfnznkfuujrsibevclquhfgdjq",
                                   horizontalAlign: "right",
                                   mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-
+                            _id: "wtdjotgcizkxqmhajqvrwegplyhubvnevcut",
                             width: 61,
                             tabletWidth: 57.3,
                             paddingRight: 20,
@@ -1094,12 +1159,12 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "igdmclvldbvzbtezdklxnffwzatfdxpffidf",
                       mobileReverseColumns: "on"
                     }
                   }
                 ],
-
+                _id: "pkaglllhsbbzejvhrmawihqnhbxsrsjhtzxi",
                 tabsState: "tabNormal",
                 tabsCurrentElement: "tabCurrentElement",
                 tabsColor: "tabOverlay",
@@ -1142,11 +1207,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "uxwidubyiclzhljftvpxyuiwbulgnintwvqs",
           _thumbnailSrc: 169022,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 215,
-          _thumbnailTime: 1579692345530
+          _thumbnailHeight: 217,
+          _thumbnailTime: 1631620008931
         },
         blockId: "Blank000Light"
       },
@@ -1169,13 +1234,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "xltgqysngcrwwiiyztbdejbpaztylemtobys",
                             text:
                               '<p class="brz-text-lg-center brz-tp-heading2"><span class="brz-cp-color2">Be alerted in real-time about anomalies in campaign data</span></p>'
                           }
                         }
                       ],
-
+                      _id: "pnidgtynfqkeveabvhafaofzrautdlzvgpse",
                       marginRightSuffix: "%",
                       marginRight: 25,
                       margin: 0,
@@ -1200,13 +1265,13 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "tkpbzzqwhsubezkwitlyhdhthusrayurbcsy",
                             height: 20,
                             tabletHeight: 10
                           }
                         }
                       ],
-
+                      _id: "ldamwubknbgykhyqfpifdxkwoeoebxhooabh",
                       showOnTablet: "on",
                       showOnMobile: "off"
                     }
@@ -1230,7 +1295,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "hcvcbmqmogewbfklpfogzdasiuuiwsvuxkbj",
                                         imageWidth: 259,
                                         imageHeight: 209,
                                         imageSrc:
@@ -1243,7 +1309,8 @@ module.exports = {
                                         mobileResize: 80
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "ikpshrhtzjtktfoqghqubcilfvhwufcoqqib"
                                 }
                               },
                               {
@@ -1255,13 +1322,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "vdbdeuqqopctavosmnqazojqfytfzbhpjjcw",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-heading5"><span class="brz-cp-color2">Anomaly Detection</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "ephstszqcosdtokudshjtlvkwvunliujfvhb",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -1277,18 +1345,19 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ydocggipewnighiiqdjmfwoeksykhcnzegdb",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color7">Join 12,000+ users who love to use our product becuase it helps them get tasks out of the way quicker.</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "qqtosegwqjoizddkphynnvpkembqdaxhqicj",
                                   mobilePaddingType: "ungrouped"
                                 }
                               }
                             ],
-
+                            _id: "xhtxxliqzwqrzaouuolllobwmkekhkouqffm",
                             width: 33.3,
                             tabsState: "",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1301,7 +1370,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -1313,7 +1383,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -1325,7 +1405,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -1333,25 +1423,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -1383,7 +1491,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -1411,7 +1565,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -1456,7 +1656,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "hwmkhtygcyqtdudiqtihgfrbuommiwuicxss",
                                         imageWidth: 259,
                                         imageHeight: 209,
                                         imageSrc:
@@ -1491,12 +1692,60 @@ module.exports = {
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 2,
                                         tempBoxShadowHorizontal: 1,
-
-                                        mobileResize: 80
+                                        hoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        tabletResize: null,
+                                        tabletZoom: null,
+                                        tabletWidth: null,
+                                        tabletHeight: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        mobileResize: 80,
+                                        mobileZoom: null,
+                                        mobileWidth: null,
+                                        mobileHeight: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "yfusukbapcmtrthavkgypjkmhupxmrtbvcor",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -1522,7 +1771,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -1545,7 +1794,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -1579,13 +1828,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "munlpgqepwobuhcpfpdktdbwuywuyznlswhn",
                                         text:
                                           '<p class="brz-tp-heading5 brz-text-lg-center"><span class="brz-cp-color2">Audience Segmentation</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "zvsljtvkobszdbpgiinnhefostpthttnuczh",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -1601,16 +1851,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "mxymxhskfkxinjtwgaxofmshgihsgbmfaifk",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-paragraph"><span class="brz-cp-color7">Be careful what you believe because that is what you will experience. Your belief system is a mechanism.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "idhiclcgxfedoddkmbnvyjwxoulyxouvghdx"
                                 }
                               }
                             ],
-
+                            _id: "enofzlznwujugyirtjjkcodilrobzczwgoje",
                             width: 33.3,
                             tabsState: "",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1623,7 +1875,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -1635,7 +1888,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -1647,7 +1910,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -1655,25 +1928,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -1705,7 +1996,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -1733,7 +2070,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -1778,7 +2161,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "aygryyygleqccqlqlwnsljufqfxafqxdcsys",
                                         imageWidth: 259,
                                         imageHeight: 209,
                                         imageSrc:
@@ -1790,7 +2174,8 @@ module.exports = {
                                         resize: 80
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "pepjtsjjthtpbvxomnhvegqwldbrxhxaqnen"
                                 }
                               },
                               {
@@ -1802,13 +2187,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "nhniufooxsancyyjkknphozhdesbilbqqfyg",
                                         text:
                                           '<p class="brz-tp-heading5 brz-text-lg-center"><span class="brz-cp-color2">Reporting &amp; Goals</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "zjcqgewwtdofngxzwzkkupfqkatjcvlaqjpw",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -1824,16 +2210,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "xovdjgvtwzutlqodwmbguolymaecaoqowaqd",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-paragraph"><span class="brz-cp-color7">Point of Sale hardware, the till at a shop check out, has become very complex over the past ten years.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "zooqowfhhzmunjchxupgpvajxsyzzqmordmo"
                                 }
                               }
                             ],
-
+                            _id: "fnwbnxbxvoifgjympqkrnjzpwohyopngokcy",
                             width: 33.4,
                             tabsState: "",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1846,7 +2234,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -1858,7 +2247,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -1870,7 +2269,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -1878,25 +2287,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -1928,7 +2355,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -1956,7 +2429,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -1987,7 +2506,8 @@ module.exports = {
                             tempBoxShadow: "on"
                           }
                         }
-                      ]
+                      ],
+                      _id: "unxqykwhcqiboxbrudpkywtetgkfjordlorr"
                     }
                   },
                   {
@@ -1999,13 +2519,13 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "vzcsceujnhzeqwefzdcqevkhujvssuepupya",
                             height: 20,
                             tabletHeight: 10
                           }
                         }
                       ],
-
+                      _id: "sbqrzvelrvsckszaqlnmmfmdoytwfvnkdhqi",
                       showOnTablet: "on"
                     }
                   },
@@ -2018,7 +2538,7 @@ module.exports = {
                           type: "Button",
                           value: {
                             _styles: ["button"],
-
+                            _id: "cntwlmyiparyrbkwmdyhjvffsizfiemhhmfd",
                             text: "MORE FEATURES",
                             fillType: "outline",
                             tempFillType: "outline",
@@ -2100,12 +2620,12 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "darnvwgofyvaqsyyonlcxodegywncgzqcadt",
                       showOnTablet: "on"
                     }
                   }
                 ],
-
+                _id: "jfdnbjnwsgfgiygnxuxarppumhnwmwfswlii",
                 paddingType: "ungrouped",
                 paddingTop: 50,
                 paddingBottom: 90,
@@ -2121,11 +2641,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "oxxuerahhqwwwqqekdsubwjllqzchfuhfaml",
           _thumbnailSrc: 169067,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 228,
-          _thumbnailTime: 1579692349319,
+          _thumbnailHeight: 229,
+          _thumbnailTime: 1631620012231,
           anchorName: "Features"
         },
         blockId: "Blank000Light"
@@ -2159,7 +2679,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "jefxlwhcvcleccvpmaseutrrbhqgrotubdgw",
                                         imageWidth: 1206,
                                         imageHeight: 808,
                                         imageSrc:
@@ -2192,14 +2713,14 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "vmufajpinjxyybgmgiemmscriahkwodvvzjw",
                                   horizontalAlign: "left",
                                   tabletHorizontalAlign: "center",
                                   mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-
+                            _id: "wzxnuaabxetsejonxbgfwhfizgykuxkjsfrc",
                             tabsCurrentElement: "tabCurrentElement",
                             tabsColor: "tabOverlay",
                             tabsState: "tabNormal",
@@ -2231,13 +2752,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "wpuvalckkauvivyxqunaamznuidkqutpkevk",
                                         text:
                                           '<p class="brz-tp-heading2 brz-text-sm-center"><span class="brz-cp-color2">Define goals for traffic, conversions, and ROI.</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "gprapsjjwhcauxaegblwzydjtoxphhdtzvri",
                                   tabletPaddingType: "ungrouped",
                                   paddingRightSuffix: "px",
                                   tabletPaddingRight: 60,
@@ -2256,13 +2778,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "pdwdhygbityunrjycjolpzmtibdxulvvypnc",
                                         text:
                                           '<p class="brz-tp-subtitle brz-mt-lg-5 brz-mb-lg-5 brz-text-sm-center"><span class="brz-cp-color7">Color is so powerful that it can persuade, motivate, inspire and touch people’s soft spot – the heart.</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "jsrsnxncsrzaioydlhqdbpuexavnpwdvxfuw",
                                   tabletPaddingType: "ungrouped",
                                   paddingRightSuffix: "px",
                                   tabletPaddingRight: 50,
@@ -2281,12 +2804,13 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "yzcvqrmivlgqsondzaqurqcjnycrgkjxikdo",
                                         height: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "kosgxuqemwfeobiaggnvnkrwhrrewgmhesbm",
                                   showOnTablet: "off",
                                   showOnMobile: "on"
                                 }
@@ -2325,7 +2849,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "moybnrmlhzjpahwfnvtjvgcheltiqtmbxqql",
                                                           name: "security",
                                                           type: "glyph",
                                                           fillType: "outline",
@@ -2389,19 +2914,25 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "pzawljjrxpnrphblfwqdmfzcqhkcqkiudlfy",
                                                           text:
                                                             '<p class="brz-tp-heading5 brz-mt-lg-8"><strong class="brz-cp-color2">Secure &amp; Reliable</strong></p><p class="brz-mt-lg-8 brz-tp-heading6 brz-fw-xs-400"><span class="brz-cp-color7">100% encrypted from the client to the cloud. There\'s no way for us or anyone. </span></p>'
                                                         }
                                                       }
-                                                    ]
+                                                    ],
+                                                    _id:
+                                                      "jdhytncbnktdscmpaxcbdjxjqobgcnktpqjv"
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "fcfphpguwbgvifckomdvqfehrthujmlamktx"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "zqcipfvcuuodzqsmptvhzvycayktsstkgikt",
                                         paddingLeft: 0,
                                         paddingLeftSuffix: "px",
                                         padding: 15,
@@ -2438,7 +2969,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "xfdtygfyoefpmvfgiyeojgvynmgaqwcrikmw",
                                                           name: "priority-low",
                                                           type: "glyph",
                                                           fillType: "outline",
@@ -2502,19 +3034,25 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "qyugmpmgojpfjlioluqikhcyzcnmkiqvamgc",
                                                           text:
                                                             '<p class="brz-tp-heading5 brz-mt-lg-8"><strong class="brz-cp-color2">React Faster</strong></p><p class="brz-tp-heading6 brz-mt-lg-8 brz-fw-xs-400"><span class="brz-cp-color7">Another title for this article can be “How to write an ad that will be immediately thrown.</span></p>'
                                                         }
                                                       }
-                                                    ]
+                                                    ],
+                                                    _id:
+                                                      "bduzahrlwvjrvxeeoizzbdffxcdflfpyerov"
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "atxdsrzgtqdhesymimxtqsltytzhnroftnsu"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "hthzgjtzvnqfdfwauhkbtczbwiyzonsqjfhw",
                                         paddingLeft: 0,
                                         paddingLeftSuffix: "px",
                                         padding: 15,
@@ -2526,7 +3064,8 @@ module.exports = {
                                         width: 50
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "vampzlkzwbyfdrjazpkxqeepswbjgjyjdrzu"
                                 }
                               },
                               {
@@ -2538,12 +3077,13 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "ikxnqeknclxtbgggvtwbdlibqosygtdxqmem",
                                         height: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "ustzbtduqxyhsizzsdfhrsxqfgciexcjjdlb",
                                   showOnTablet: "off",
                                   showOnMobile: "on"
                                 }
@@ -2560,7 +3100,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "vampstmrsgpommzxtrkynfyauovxsmcasdil",
                                         text: "GET STARTED FOR FREE",
                                         iconName: "",
                                         iconType: "",
@@ -2638,14 +3179,14 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "sbenadwbfupjjvskwbdehvydnhqevyovbzhk",
                                   horizontalAlign: "left",
                                   tabletHorizontalAlign: "center",
                                   mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-
+                            _id: "bostkntohofvdafdgtmxkfhvljusqppasctp",
                             paddingRight: 0,
                             paddingRightSuffix: "px",
                             padding: 15,
@@ -2672,11 +3213,12 @@ module.exports = {
                             mobilePaddingType: "ungrouped"
                           }
                         }
-                      ]
+                      ],
+                      _id: "hltbkvgljaamxeasnxrixsgtjbhiidkuzwzl"
                     }
                   }
                 ],
-
+                _id: "boyjzumhvpzwauyquzkcnhalkbamsbisdfrn",
                 tabsColor: "tabOverlay",
                 bgColorPalette: "color5",
                 tempBgColorPalette: "color5",
@@ -2701,11 +3243,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "kgmzejsxwoexjlkuicwyzbemcyickyitqmfu",
           _thumbnailSrc: 169089,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 194,
-          _thumbnailTime: 1579692353004,
+          _thumbnailHeight: 195,
+          _thumbnailTime: 1631620020587,
           anchorName: "video"
         },
         blockId: "Blank000Light"
@@ -2739,18 +3281,19 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "lyihisceoirzkhwfumavmtqwhseiuosczpcq",
                                         text:
                                           '<p class="brz-tp-heading2 brz-text-xs-center"><span class="brz-cp-color2">Interface gallery</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "iqmkrlkvhfemtrqdoqsmjnsvmcnlljasgkqh",
                                   tabletMarginType: "grouped"
                                 }
                               }
                             ],
-
+                            _id: "uchhonsfkzdnxeqshiphrjxosjymtiqangxr",
                             width: 50,
                             tabletPaddingLeft: 50,
                             tabletPaddingLeftSuffix: "px",
@@ -2783,7 +3326,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "upetsoaxeeistfzxxtbkgzhgmtdletwfsnkv",
                                               name: "zoom-2",
                                               type: "glyph",
                                               size: "custom",
@@ -2805,21 +3349,24 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "icujlaazoubsdeqgfdtgjhwrqlxylalbcsrt",
                                               text:
                                                 '<p class="brz-tp-paragraph brz-text-xs-justify"><span class="brz-cp-color8">Click images to zoom</span></p>'
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "olwwvhhllqaxuekpqiljaafshsxujozjewqh",
                                         iconSpacing: 12
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "ywhpfchfrfexptbzyowlxkrgolhyczfhkucd"
                                 }
                               }
                             ],
-
+                            _id: "ypoxxofzqxgnvjlrflnneqdxmhsvyxjevrvq",
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
                             tabsColor: "tabOverlay",
@@ -2836,7 +3383,8 @@ module.exports = {
                             showOnMobile: "off"
                           }
                         }
-                      ]
+                      ],
+                      _id: "wmvjbxnylmvnxgmuktfdnfocvnlfjwuhsvmz"
                     }
                   },
                   {
@@ -2848,13 +3396,13 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "oteawqsyhzfsojtujtdaqauvaaejwggygknr",
                             height: 20,
                             tabletHeight: 10
                           }
                         }
                       ],
-
+                      _id: "miyfourpxhqafkozxanmzavecksghvdardzc",
                       showOnTablet: "on",
                       showOnMobile: "off"
                     }
@@ -2878,7 +3426,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "phjpatouzdfwppjoijkhupookyaeotgpxclq",
                                         imageWidth: 480,
                                         imageHeight: 360,
                                         imageSrc:
@@ -2911,7 +3460,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "rpoudglrejhdkqplmzjlbubwxhndpqwacikq",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -2929,14 +3478,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "nmhztomjjfgdrmibdwzmajysbhxjdabwbdgy",
                                         height: 48,
                                         tabletHeight: 10,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "nqssjrllenygmrwfietzuianqtproephcurc",
                                   showOnTablet: "off",
                                   showOnMobile: "on"
                                 }
@@ -2950,13 +3500,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "cnzuhkdrmfqzlhoudltisvfjhiivvprqwjfk",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-button"><strong class="brz-cp-color2">DASHBOARD</strong></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "guolltozvbxovtdmcogqvhnavxvdljvixqjr",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -2964,7 +3515,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "jxlzoyjpbhdcsqpntslxkmwtmlhayarobisk",
                             width: 25,
                             paddingType: "grouped",
                             padding: 0,
@@ -2999,7 +3550,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "mfcxyqkqfrfomfluuylilksxlgjwkjurlamc",
                                         imageWidth: 240,
                                         imageHeight: 180,
                                         imageSrc:
@@ -3036,12 +3588,59 @@ module.exports = {
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 11,
                                         tempBoxShadowHorizontal: 0,
-
-                                        tabletResize: 80
+                                        hoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        tabletResize: 80,
+                                        tabletZoom: null,
+                                        tabletWidth: null,
+                                        tabletHeight: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        mobileZoom: null,
+                                        mobileWidth: null,
+                                        mobileHeight: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "ijcxsikdfvlmedezyzrvuhmstqedjmpjmusw",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -3067,7 +3666,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3090,7 +3689,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3124,7 +3723,8 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "orainzigoqfjgxopbanivstmrihdyncepqym",
                                         height: 30,
                                         className: "",
                                         tabletHeight: 10,
@@ -3132,7 +3732,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "jhjivacpvgvacmzxfqlnipnztnivfuscpted",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -3158,7 +3758,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3181,7 +3781,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3217,14 +3817,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "nvlqipvehrsbwgwvkbarrlmbluwqdpijtxen",
                                         text:
                                           '<p class="brz-tp-button brz-text-lg-center"><strong class="brz-cp-color2">ANALYTICS</strong></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "psiivknncexzhceuwdktlskzwwbppqnwnghl",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -3250,7 +3851,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3273,7 +3874,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3299,7 +3900,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "xmtsdbqtvpedmckrebjwzoucjhbelpqiahoe",
                             width: 25,
                             paddingType: "grouped",
                             padding: 0,
@@ -3315,7 +3916,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -3327,7 +3929,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -3339,7 +3951,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -3347,25 +3969,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingTopSuffix: "px",
@@ -3395,7 +4035,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -3423,7 +4109,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -3468,7 +4200,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "nfwlvbcqjcstgrfqtbonoyzbzadrziwuqcji",
                                         imageWidth: 240,
                                         imageHeight: 180,
                                         imageSrc:
@@ -3505,12 +4238,59 @@ module.exports = {
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 11,
                                         tempBoxShadowHorizontal: 0,
-
-                                        tabletResize: 80
+                                        hoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        tabletResize: 80,
+                                        tabletZoom: null,
+                                        tabletWidth: null,
+                                        tabletHeight: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        mobileZoom: null,
+                                        mobileWidth: null,
+                                        mobileHeight: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "dxxidjlysxrqryjglbciozqrbmnceingjlwn",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -3536,7 +4316,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3559,7 +4339,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3593,7 +4373,8 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "lazvddtacrblwomqdtotefanydbtjzdohdge",
                                         height: 30,
                                         className: "",
                                         tabletHeight: 10,
@@ -3601,7 +4382,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "ouydbyvhyhlhhyszjyeyqdptmdviizcmmtzo",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -3627,7 +4408,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3650,7 +4431,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3686,14 +4467,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ludehtjdimgfxzdomfwfrxqhktfxukzbykwd",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-button"><strong class="brz-cp-color2">IN-DEPTH CHARTS</strong></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "ctqnsifexqgkpfasdmxiedflhftorjweaaer",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -3719,7 +4501,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3742,7 +4524,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3768,7 +4550,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "eknjnmlijboudqndpsbjirhayoanihhruqjf",
                             width: 25,
                             paddingType: "grouped",
                             padding: 0,
@@ -3784,7 +4566,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -3796,7 +4579,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -3808,7 +4601,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -3816,25 +4619,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingTopSuffix: "px",
@@ -3864,7 +4685,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 20,
@@ -3892,7 +4759,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -3937,7 +4850,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "hircjwvyhfhlpaahomuaaxzshuotujvswkgq",
                                         imageWidth: 240,
                                         imageHeight: 180,
                                         imageSrc:
@@ -3974,12 +4888,59 @@ module.exports = {
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 11,
                                         tempBoxShadowHorizontal: 0,
-
-                                        tabletResize: 80
+                                        hoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        tabletResize: 80,
+                                        tabletZoom: null,
+                                        tabletWidth: null,
+                                        tabletHeight: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        mobileZoom: null,
+                                        mobileWidth: null,
+                                        mobileHeight: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "tcwulizjyehikcmlldjpqqkbnqdexelxwcfm",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -4005,7 +4966,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -4028,7 +4989,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -4062,7 +5023,8 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "golqyvzfylhpjxkhxxblfewpduqywalxaseg",
                                         height: 30,
                                         className: "",
                                         tabletHeight: 10,
@@ -4070,7 +5032,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "xuoeydsgrzjasgxrhugkuzncppulhowmrtfn",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -4096,7 +5058,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -4119,7 +5081,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -4155,14 +5117,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "oqolixvlmctfdnyymhpedkiooyioaubvlzdr",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-button"><strong class="brz-cp-color2">REVENUE ANALYTICS</strong></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "nckoaldpckidshjelcdxxxlncgnfrwpiydyz",
                                   marginTopSuffix: "px",
                                   marginTop: 0,
                                   margin: 0,
@@ -4188,7 +5151,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -4211,7 +5174,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -4237,7 +5200,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "avpuhwrkqvkqzmdfktqczailafwepmhchoia",
                             width: 25,
                             paddingType: "grouped",
                             padding: 0,
@@ -4253,7 +5216,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -4265,7 +5229,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -4277,7 +5251,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -4285,25 +5269,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingTopSuffix: "px",
@@ -4333,7 +5335,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 20,
@@ -4361,7 +5409,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -4392,11 +5486,12 @@ module.exports = {
                             tempBoxShadow: "on"
                           }
                         }
-                      ]
+                      ],
+                      _id: "hsjhcueadnpgowrksyqufdniupeifzuwwhqc"
                     }
                   }
                 ],
-
+                _id: "lfvbkblkmcgckmjgzioyfoavqsuvmuvrgaxo",
                 tabsColor: "tabOverlay",
                 bgColorPalette: "color4",
                 tempBgColorPalette: "color4",
@@ -4428,11 +5523,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "lzizwrlujbcalzpzfoxqyyuioibwtrxfosgi",
           _thumbnailSrc: 169119,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 172,
-          _thumbnailTime: 1579197476172,
+          _thumbnailHeight: 150,
+          _thumbnailTime: 1631620024007,
           anchorName: "gallery"
         },
         blockId: "Blank000Light"
@@ -4456,12 +5551,13 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "mzzmbylefgbpdfbrxsvdblxybvfekoidsaep",
                             height: 32,
                             mobileHeight: 110
                           }
                         }
-                      ]
+                      ],
+                      _id: "pycuekhrsrtgsrqfypghjinwglvvlpxxxxki"
                     }
                   },
                   {
@@ -4483,13 +5579,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "xirpvfdgeitbwmztnxkmrjwopdmjravlgszp",
                                         text:
                                           '<p class="brz-tp-subtitle"><span class="brz-cp-color7">We’re offering a </span><span class="brz-cp-color8">Free 14-day trial</span><span class="brz-cp-color7"> for Unicorn Software. Our PRO plans best suits businesses that want to improve their bottom line and increase ROI.</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "oykxqyhymqfvgljkhbeytbyypysxwwfwitfa",
                                   tabletPaddingType: "ungrouped",
                                   paddingRightSuffix: "px",
                                   tabletPaddingRight: 80,
@@ -4506,13 +5603,14 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "blvjxhserrzswxsnprrqmqunfeqzqdedfeoc",
                                         height: 20,
                                         tabletHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "lvyfzgxmdjriytckhtpgrepfrtmqhophdxry",
                                   showOnTablet: "on",
                                   showOnMobile: "on"
                                 }
@@ -4543,7 +5641,8 @@ module.exports = {
                                                   type: "Image",
                                                   value: {
                                                     _styles: ["image"],
-
+                                                    _id:
+                                                      "wplkmdbibddbjemmlnjfljgoertnnsfvlnnn",
                                                     imageWidth: 92,
                                                     imageHeight: 68,
                                                     imageSrc:
@@ -4558,12 +5657,14 @@ module.exports = {
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "ovrezxsbfxqbolkxlxbvjcuksperibbmixla",
                                               horizontalAlign: "left"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "kchymbysiabealrxslccvdnamjgyhropqadk",
                                         width: 17.9,
                                         tabsState: "tabNormal",
                                         tabsCurrentElement: "tabCurrentElement",
@@ -4594,7 +5695,8 @@ module.exports = {
                                                   type: "Image",
                                                   value: {
                                                     _styles: ["image"],
-
+                                                    _id:
+                                                      "zwmfllxqayagnynklajstzdbhqehxzzufpwr",
                                                     imageWidth: 92,
                                                     imageHeight: 68,
                                                     imageSrc:
@@ -4632,12 +5734,60 @@ module.exports = {
                                                     tempBoxShadowSpread: 0,
                                                     tempBoxShadowVertical: 2,
                                                     tempBoxShadowHorizontal: 1,
-
-                                                    tabletResize: 50
+                                                    hoverBoxShadow: null,
+                                                    hoverBoxShadowColorHex: null,
+                                                    hoverBoxShadowColorOpacity: null,
+                                                    hoverBoxShadowColorPalette: null,
+                                                    tempHoverBoxShadowColorPalette: null,
+                                                    tempHoverBoxShadowColorOpacity: null,
+                                                    hoverBoxShadowBlur: null,
+                                                    hoverBoxShadowSpread: null,
+                                                    hoverBoxShadowVertical: null,
+                                                    hoverBoxShadowHorizontal: null,
+                                                    tempHoverBoxShadowBlur: null,
+                                                    tempHoverBoxShadowSpread: null,
+                                                    tempHoverBoxShadowVertical: null,
+                                                    tempHoverBoxShadowHorizontal: null,
+                                                    tabletResize: 50,
+                                                    tabletZoom: null,
+                                                    tabletWidth: null,
+                                                    tabletHeight: null,
+                                                    tabletBoxShadow: null,
+                                                    tabletBoxShadowColorHex: null,
+                                                    tabletBoxShadowColorOpacity: null,
+                                                    tabletBoxShadowColorPalette: null,
+                                                    tempTabletBoxShadowColorPalette: null,
+                                                    tempTabletBoxShadowColorOpacity: null,
+                                                    tabletBoxShadowBlur: null,
+                                                    tabletBoxShadowSpread: null,
+                                                    tabletBoxShadowVertical: null,
+                                                    tabletBoxShadowHorizontal: null,
+                                                    tempTabletBoxShadowBlur: null,
+                                                    tempTabletBoxShadowSpread: null,
+                                                    tempTabletBoxShadowVertical: null,
+                                                    tempTabletBoxShadowHorizontal: null,
+                                                    mobileZoom: null,
+                                                    mobileWidth: null,
+                                                    mobileHeight: null,
+                                                    mobileBoxShadow: null,
+                                                    mobileBoxShadowColorHex: null,
+                                                    mobileBoxShadowColorOpacity: null,
+                                                    mobileBoxShadowColorPalette: null,
+                                                    tempMobileBoxShadowColorPalette: null,
+                                                    tempMobileBoxShadowColorOpacity: null,
+                                                    mobileBoxShadowBlur: null,
+                                                    mobileBoxShadowSpread: null,
+                                                    mobileBoxShadowVertical: null,
+                                                    mobileBoxShadowHorizontal: null,
+                                                    tempMobileBoxShadowBlur: null,
+                                                    tempMobileBoxShadowSpread: null,
+                                                    tempMobileBoxShadowVertical: null,
+                                                    tempMobileBoxShadowHorizontal: null
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "tubuorfkhbrjjmjnuwewzdcwbhivjafxwhml",
                                               horizontalAlign: "left",
                                               className: "",
                                               paddingType: "grouped",
@@ -4663,7 +5813,7 @@ module.exports = {
                                               marginBottomSuffix: "px",
                                               marginLeftSuffix: "px",
                                               customClassName: "",
-
+                                              tabletHorizontalAlign: null,
                                               tabletPaddingType: "grouped",
                                               tabletPadding: 0,
                                               tabletPaddingTop: 0,
@@ -4686,7 +5836,7 @@ module.exports = {
                                               tabletMarginRightSuffix: "px",
                                               tabletMarginBottomSuffix: "px",
                                               tabletMarginLeftSuffix: "px",
-
+                                              mobileHorizontalAlign: null,
                                               mobilePaddingType: "grouped",
                                               mobilePadding: 0,
                                               mobilePaddingTop: 0,
@@ -4712,7 +5862,8 @@ module.exports = {
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "mopftgusyhfrgrcxmiawrvpnnufgheekunwi",
                                         width: 17.9,
                                         tabsState: "",
                                         tabsCurrentElement: "tabCurrentElement",
@@ -4724,7 +5875,8 @@ module.exports = {
                                         className: "",
                                         borderStyle: "solid",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderWidth: 0,
                                         borderTopWidth: 0,
@@ -4736,7 +5888,17 @@ module.exports = {
                                         tempBorderRightWidth: 4,
                                         tempBorderBottomWidth: 4,
                                         tempBorderLeftWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
                                         borderRadius: 0,
                                         borderTopLeftRadius: 0,
@@ -4748,7 +5910,17 @@ module.exports = {
                                         tempBorderTopRightRadius: 0,
                                         tempBorderBottomRightRadius: 0,
                                         tempBorderBottomLeftRadius: 0,
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -4756,25 +5928,43 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         bgColorOpacity: 0,
                                         bgColorPalette: "",
                                         tempBgColorOpacity: 1,
                                         tempBgColorPalette: "",
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         borderColorOpacity: 0,
                                         borderColorPalette: "",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         verticalAlign: "top",
                                         paddingType: "ungrouped",
@@ -4808,7 +5998,53 @@ module.exports = {
                                         tempBoxShadowColorOpacity: 1,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -4836,7 +6072,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 0,
@@ -4884,7 +6166,8 @@ module.exports = {
                                                   type: "Image",
                                                   value: {
                                                     _styles: ["image"],
-
+                                                    _id:
+                                                      "meihmbqvdnqssuzddlmgvsebzlmuliatydzv",
                                                     imageWidth: 92,
                                                     imageHeight: 68,
                                                     imageSrc:
@@ -4922,12 +6205,60 @@ module.exports = {
                                                     tempBoxShadowSpread: 0,
                                                     tempBoxShadowVertical: 2,
                                                     tempBoxShadowHorizontal: 1,
-
-                                                    tabletResize: 50
+                                                    hoverBoxShadow: null,
+                                                    hoverBoxShadowColorHex: null,
+                                                    hoverBoxShadowColorOpacity: null,
+                                                    hoverBoxShadowColorPalette: null,
+                                                    tempHoverBoxShadowColorPalette: null,
+                                                    tempHoverBoxShadowColorOpacity: null,
+                                                    hoverBoxShadowBlur: null,
+                                                    hoverBoxShadowSpread: null,
+                                                    hoverBoxShadowVertical: null,
+                                                    hoverBoxShadowHorizontal: null,
+                                                    tempHoverBoxShadowBlur: null,
+                                                    tempHoverBoxShadowSpread: null,
+                                                    tempHoverBoxShadowVertical: null,
+                                                    tempHoverBoxShadowHorizontal: null,
+                                                    tabletResize: 50,
+                                                    tabletZoom: null,
+                                                    tabletWidth: null,
+                                                    tabletHeight: null,
+                                                    tabletBoxShadow: null,
+                                                    tabletBoxShadowColorHex: null,
+                                                    tabletBoxShadowColorOpacity: null,
+                                                    tabletBoxShadowColorPalette: null,
+                                                    tempTabletBoxShadowColorPalette: null,
+                                                    tempTabletBoxShadowColorOpacity: null,
+                                                    tabletBoxShadowBlur: null,
+                                                    tabletBoxShadowSpread: null,
+                                                    tabletBoxShadowVertical: null,
+                                                    tabletBoxShadowHorizontal: null,
+                                                    tempTabletBoxShadowBlur: null,
+                                                    tempTabletBoxShadowSpread: null,
+                                                    tempTabletBoxShadowVertical: null,
+                                                    tempTabletBoxShadowHorizontal: null,
+                                                    mobileZoom: null,
+                                                    mobileWidth: null,
+                                                    mobileHeight: null,
+                                                    mobileBoxShadow: null,
+                                                    mobileBoxShadowColorHex: null,
+                                                    mobileBoxShadowColorOpacity: null,
+                                                    mobileBoxShadowColorPalette: null,
+                                                    tempMobileBoxShadowColorPalette: null,
+                                                    tempMobileBoxShadowColorOpacity: null,
+                                                    mobileBoxShadowBlur: null,
+                                                    mobileBoxShadowSpread: null,
+                                                    mobileBoxShadowVertical: null,
+                                                    mobileBoxShadowHorizontal: null,
+                                                    tempMobileBoxShadowBlur: null,
+                                                    tempMobileBoxShadowSpread: null,
+                                                    tempMobileBoxShadowVertical: null,
+                                                    tempMobileBoxShadowHorizontal: null
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "tmbsdxihfodbqshenkmrnzyuyduuhvrjohll",
                                               horizontalAlign: "left",
                                               className: "",
                                               paddingType: "grouped",
@@ -4953,7 +6284,7 @@ module.exports = {
                                               marginBottomSuffix: "px",
                                               marginLeftSuffix: "px",
                                               customClassName: "",
-
+                                              tabletHorizontalAlign: null,
                                               tabletPaddingType: "grouped",
                                               tabletPadding: 0,
                                               tabletPaddingTop: 0,
@@ -4976,7 +6307,7 @@ module.exports = {
                                               tabletMarginRightSuffix: "px",
                                               tabletMarginBottomSuffix: "px",
                                               tabletMarginLeftSuffix: "px",
-
+                                              mobileHorizontalAlign: null,
                                               mobilePaddingType: "grouped",
                                               mobilePadding: 0,
                                               mobilePaddingTop: 0,
@@ -5002,7 +6333,8 @@ module.exports = {
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "tsvzhtewlyyfkqrssyaqazkkulxpnwuwkens",
                                         width: 17.9,
                                         tabsState: "",
                                         tabsCurrentElement: "tabCurrentElement",
@@ -5014,7 +6346,8 @@ module.exports = {
                                         className: "",
                                         borderStyle: "solid",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderWidth: 0,
                                         borderTopWidth: 0,
@@ -5026,7 +6359,17 @@ module.exports = {
                                         tempBorderRightWidth: 4,
                                         tempBorderBottomWidth: 4,
                                         tempBorderLeftWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
                                         borderRadius: 0,
                                         borderTopLeftRadius: 0,
@@ -5038,7 +6381,17 @@ module.exports = {
                                         tempBorderTopRightRadius: 0,
                                         tempBorderBottomRightRadius: 0,
                                         tempBorderBottomLeftRadius: 0,
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -5046,25 +6399,43 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         bgColorOpacity: 0,
                                         bgColorPalette: "",
                                         tempBgColorOpacity: 1,
                                         tempBgColorPalette: "",
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         borderColorOpacity: 0,
                                         borderColorPalette: "",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         verticalAlign: "top",
                                         paddingType: "ungrouped",
@@ -5098,7 +6469,53 @@ module.exports = {
                                         tempBoxShadowColorOpacity: 1,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -5126,7 +6543,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 0,
@@ -5174,17 +6637,20 @@ module.exports = {
                                                   type: "Spacer",
                                                   value: {
                                                     _styles: ["spacer"],
-
+                                                    _id:
+                                                      "cufdsvhsrxdvxyqkkdnoutpoiwhtyuhvnjrw",
                                                     height: 20
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "skmwvxxhhohhxmpiiwvhpoackrnqxrkwkruy",
                                               showOnMobile: "off"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "vbvyfxogunqakirbncpezehhkzcrtcogivdc",
                                         width: 46.3,
                                         verticalAlign: "center",
                                         tabsState: "tabNormal",
@@ -5193,7 +6659,8 @@ module.exports = {
                                         showOnMobile: "off"
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "sgxsoizkvhhvtpfxqprhypppamgflwqfxicj"
                                 }
                               },
                               {
@@ -5205,13 +6672,14 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "iwhemlmhubxjnxozmqnkvpvbbodtpmrmqtcc",
                                         height: 20,
                                         tabletHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "iqoijeigyhyjszczsjtskngcluolmkwhaaet",
                                   showOnTablet: "on",
                                   showOnMobile: "on"
                                 }
@@ -5225,12 +6693,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "vsiyzgwheufgcavdbdjgpxepeiqzejypsdos",
                                         text:
                                           '<p class="brz-tp-paragraph"><span class="brz-cp-color8">No Credit Card needed to start trial:</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "ozynasvwagaknmdlyoeicznzbrjglludznxs"
                                 }
                               },
                               {
@@ -5245,7 +6715,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "kebaniqeftqpuqcopclkxttoudgnprbkjgns",
                                         text: "START FOR FREE",
                                         iconName: "",
                                         iconType: "",
@@ -5322,7 +6793,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "awpjczaaddtwgftmmhinpauaognhdbyuuzza",
                                   horizontalAlign: "left",
                                   marginTopSuffix: "px",
                                   tabletMarginTop: 20,
@@ -5333,7 +6804,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "saiuidmtghixvxkccpevnblzwdkvkupjkfmq",
                             paddingRight: 20,
                             paddingRightSuffix: "%",
                             padding: 15,
@@ -5394,16 +6865,20 @@ module.exports = {
                                                   type: "RichText",
                                                   value: {
                                                     _styles: ["richText"],
-
+                                                    _id:
+                                                      "hqrrmqnmdpkrkyyresgmvkmbpyryuwlmhfhh",
                                                     text:
                                                       '<p class="brz-tp-heading1"><span class="brz-cp-color8">$49</span></p>'
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "vblmvfsfabroiotaqhawxcjeysczsjcjtdwi"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "urasrfgrejdwsvqagizjfpazmbaczkkysqnx",
                                         width: 41.3,
                                         paddingLeft: 0,
                                         paddingLeftSuffix: "px",
@@ -5437,16 +6912,20 @@ module.exports = {
                                                   type: "RichText",
                                                   value: {
                                                     _styles: ["richText"],
-
+                                                    _id:
+                                                      "awcvccadwykreaajrwimhzbiqlojlkjfsyqn",
                                                     text:
                                                       '<p class="brz-tp-heading5"><span class="brz-cp-color8">/ mo.</span></p>'
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "cqpldcvxhzslummtcmciohqhslybcpycgvwj"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "qlcpcqzryzmfhdbtuwooqvximcfbgsvlpdbt",
                                         width: 58.7,
                                         tabsState: "tabNormal",
                                         tabsCurrentElement: "tabCurrentElement",
@@ -5461,7 +6940,8 @@ module.exports = {
                                         tabletPadding: 15
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "raffctkzdehfihhobcfkxmjyqnetjgmcfzmb"
                                 }
                               },
                               {
@@ -5481,7 +6961,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "fhffrzaesymjuznlixpmgujjsiblybcyjycv",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -5590,10 +7071,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -5603,21 +7089,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "jcwlvwkjoeyefbbliaqekxyiyumieavuangb",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Free Custom Domain</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "aeupgrryvedmrdkbcnbidtjjqlfxvmnftael",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "bawczljbiqdfqlktgowxqwajcmkdbnritdxr",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -5643,7 +7131,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -5666,7 +7154,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -5708,7 +7196,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "ygnkkgnpvgsfdcsgvybgslpemgbxdqkwrswn",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -5817,10 +7306,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -5830,21 +7324,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "hfprnlizbembiqzbdjkhlhqsafpcjwbeexyw",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Full Security</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "qlvdacmvjwyjfdsciamsjetqsfrktiqczpvr",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "wqwwgjzafqjqacfftlpbyrbmcqznwodpacml",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -5870,7 +7366,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -5893,7 +7389,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -5935,7 +7431,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "yduyxgkkexlbkrzuduydcfvkbmgvvbvflmmp",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -6044,10 +7541,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -6057,21 +7559,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "gosoglkfqhgghytysmobssizsvjdhemdqhpb",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">24/7 Support</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "xxmfjbyovnpqlwmxpkntkmjlvcvsubqlgpev",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "rkixqgnzefinkrzozgqtjzkwozrdqkuunxnq",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -6097,7 +7601,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -6120,7 +7624,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -6162,7 +7666,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "hoovfgbhgtcbcxofbcsfhrwrxvgzppcygxyn",
                                               name: "fat-remove",
                                               type: "glyph",
                                               size: "custom",
@@ -6182,18 +7687,20 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "echakqlqvpqrwkhjquugcobxvxyyrqiiieos",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">E-Commerce Integration</span></p>'
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "bjxrvkbgacgkflyiekyxzcwdgnjfimkurpaf",
                                         iconSpacing: 5
                                       }
                                     }
                                   ],
-
+                                  _id: "kqjkyzzdoqfyedkmgdgubepouzkkykufhzsk",
                                   marginBottomSuffix: "px",
                                   marginBottom: 10,
                                   margin: 0,
@@ -6217,7 +7724,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "iixvjssdurjpmbdwrnngipkejuuamlndmsih",
                                               name: "fat-remove",
                                               type: "glyph",
                                               size: "custom",
@@ -6326,10 +7834,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -6339,21 +7852,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "jxttgnonvpsevgsisrfoevzvbvjdfiatbcjm",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Mobile Version</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "adallljwueihpifieofzpkouddtifkpumtvb",
                                         iconSpacing: 5,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "sjqzbkqlydkklaewjksijmupnoipbqtyyjxj",
                                   marginBottomSuffix: "px",
                                   marginBottom: 10,
                                   margin: 0,
@@ -6379,7 +7894,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -6402,7 +7917,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -6436,13 +7951,14 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "efstehledoxldmhsonmfvrvdikwlsoiveyxv",
                                         height: 15,
                                         tabletHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "thrcosvbubckqlqrkwynhljlbqgkjookzqmp",
                                   showOnTablet: "on",
                                   showOnMobile: "on"
                                 }
@@ -6459,7 +7975,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "igbkvtnvvhuovvsxrrmsyiqmrpxftyudeqjh",
                                         text: "CHOOSE PLAN",
                                         iconName: "",
                                         iconType: "",
@@ -6534,12 +8051,12 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "bdubewcocvivymftcgqxsgkkadvfmydhjinf",
                                   horizontalAlign: "left"
                                 }
                               }
                             ],
-
+                            _id: "ypfzdcskeqnshfehqpuourwwovlmcglzakiu",
                             width: 25,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -6587,16 +8104,20 @@ module.exports = {
                                                   type: "RichText",
                                                   value: {
                                                     _styles: ["richText"],
-
+                                                    _id:
+                                                      "iugyrbrkyqivocdloffjpyyragnaijesmxdh",
                                                     text:
                                                       '<p class="brz-tp-heading1"><span class="brz-cp-color8">$99</span></p>'
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "tpcqxkzqufrvfpenibuuiunbtgqwxqunzozq"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "xsrgepdabdzfmvetxgfeehdeoelqwgttbqfs",
                                         width: 41.2,
                                         paddingLeft: 0,
                                         paddingLeftSuffix: "px",
@@ -6611,7 +8132,8 @@ module.exports = {
                                         className: "",
                                         borderStyle: "solid",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderWidth: 0,
                                         borderTopWidth: 0,
@@ -6623,7 +8145,17 @@ module.exports = {
                                         tempBorderRightWidth: 4,
                                         tempBorderBottomWidth: 4,
                                         tempBorderLeftWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
                                         borderRadius: 0,
                                         borderTopLeftRadius: 0,
@@ -6635,7 +8167,17 @@ module.exports = {
                                         tempBorderTopRightRadius: 0,
                                         tempBorderBottomRightRadius: 0,
                                         tempBorderBottomLeftRadius: 0,
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -6643,25 +8185,43 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         bgColorOpacity: 0,
                                         bgColorPalette: "",
                                         tempBgColorOpacity: 1,
                                         tempBgColorPalette: "",
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         borderColorOpacity: 0,
                                         borderColorPalette: "",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         verticalAlign: "top",
                                         paddingType: "ungrouped",
@@ -6693,7 +8253,53 @@ module.exports = {
                                         tempBoxShadowColorOpacity: 1,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -6721,7 +8327,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 0,
@@ -6769,16 +8421,20 @@ module.exports = {
                                                   type: "RichText",
                                                   value: {
                                                     _styles: ["richText"],
-
+                                                    _id:
+                                                      "kqofpgmwahbjzbumjojvcbrrfdpojwotpssj",
                                                     text:
                                                       '<p class="brz-tp-heading5"><span class="brz-cp-color8">/ mo.</span></p>'
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "dkpkpjgssqezpccoptmlgymbzonovlgpmeop"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "lemzdckbmwuhweukslvddvjsxyidofvpnnbe",
                                         width: 58.8,
                                         tabsState: "",
                                         tabsCurrentElement: "tabCurrentElement",
@@ -6791,7 +8447,8 @@ module.exports = {
                                         className: "",
                                         borderStyle: "solid",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderWidth: 0,
                                         borderTopWidth: 0,
@@ -6803,7 +8460,17 @@ module.exports = {
                                         tempBorderRightWidth: 4,
                                         tempBorderBottomWidth: 4,
                                         tempBorderLeftWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
                                         borderRadius: 0,
                                         borderTopLeftRadius: 0,
@@ -6815,7 +8482,17 @@ module.exports = {
                                         tempBorderTopRightRadius: 0,
                                         tempBorderBottomRightRadius: 0,
                                         tempBorderBottomLeftRadius: 0,
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -6823,25 +8500,43 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         bgColorOpacity: 0,
                                         bgColorPalette: "",
                                         tempBgColorOpacity: 1,
                                         tempBgColorPalette: "",
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         borderColorOpacity: 0,
                                         borderColorPalette: "",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         paddingType: "ungrouped",
                                         paddingTop: 5,
@@ -6874,7 +8569,53 @@ module.exports = {
                                         tempBoxShadowColorOpacity: 1,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -6902,7 +8643,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 0,
@@ -6933,7 +8720,8 @@ module.exports = {
                                         tempBoxShadow: "on"
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "alasezeyxzkvgwvpxqyadgwyeateicmeritu"
                                 }
                               },
                               {
@@ -6953,7 +8741,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "hydkmaryglpfqifxpbmlcsidlfxfrbyhbxta",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -7062,10 +8851,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -7075,21 +8869,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "gerndoovmhbmrrwnyobrmxuhekxqfsowqvnw",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Free Custom Domain</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "lzsrkdiltyrsrznamegxqyxixtiuulktjlgd",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "igdvfnjewrxsiuuufkbflpeugeewlwwnlixp",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -7115,7 +8911,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -7138,7 +8934,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -7180,7 +8976,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "hpyzrddqrabizmeiiaslwsdjqbbwfyelfsph",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -7289,10 +9086,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -7302,21 +9104,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "ldocgjzynyyvmqmdcsblbnvuaeywqiuogcos",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Full Security</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "luwqgwwahqwmdmuaqbcveksnlllllgsyvvnd",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "ioyfrkkddirrhemvhilfqxqfrliyhrwkjgip",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -7342,7 +9146,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -7365,7 +9169,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -7407,7 +9211,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "oqhabiwsujftjrigbisganmdiwlpvosivwly",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -7516,10 +9321,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -7529,21 +9339,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "nesacotwalebrurqgttafylykqkmuzkhsfgn",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">24/7 Support</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "rphdzednwkoihhltsnlvkzvfkmkljjmafknd",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "jifxaubjgfezcfellqcynxmbveegqchekjvy",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -7569,7 +9381,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -7592,7 +9404,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -7634,7 +9446,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "mxnchqoxckdhiysygvyofimxeprekcdzmdtm",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -7743,10 +9556,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -7756,21 +9574,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "zdlwvkkgwozgbpxtizknzprlxoqjmfogtcwz",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">E-Commerce Integration</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "bfwxypyzouahkragnbmmdxljddnaalmfmtrp",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "irnmrdjwiykdnhpzmpnucwrwmhwhusyfsjbv",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -7796,7 +9616,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -7819,7 +9639,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -7861,7 +9681,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "cuocdtwqpeaawcqghnwlkcytxwxvecfcdmqw",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -7970,10 +9791,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -7983,21 +9809,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "nnfzdeztirloxvxtkoyiowuwtptouqymjjnn",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Mobile Version</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "ujtyrveiqnockjkuqwfqanpmtobledycnedr",
                                         iconSpacing: 10,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "ujgcwixeddanpndwrcmgyvouvtnujgithqco",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -8023,7 +9851,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -8046,7 +9874,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -8080,13 +9908,14 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "ryliviqpqehalbieoojcsksgcaewrxqimtfm",
                                         height: 15,
                                         tabletHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "hpfjwrtwbbzzhcmeqhwslshgraofghfyqrxe",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -8103,7 +9932,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "tnbecgqetnetuoxvpzkqgktutlwafndudxef",
                                         text: "CHOOSE PLAN",
                                         iconName: "",
                                         iconType: "",
@@ -8178,18 +10008,19 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "hsfxwinnkhflyiqlhugtakkjvfgiepuqmtff",
                                   horizontalAlign: "left"
                                 }
                               }
                             ],
-
+                            _id: "avjydpzbdgdokbbdzkuisnvqnuvprbmvaieh",
                             width: 25,
                             tabletWidth: 49.1,
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -8201,7 +10032,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -8213,7 +10054,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -8221,25 +10072,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -8276,7 +10145,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -8304,7 +10219,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -8338,7 +10299,8 @@ module.exports = {
                             tempBoxShadow: "on"
                           }
                         }
-                      ]
+                      ],
+                      _id: "gnevueqwmmkmjrztpfaibhlvwnuudwlhmhsq"
                     }
                   },
                   {
@@ -8350,14 +10312,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "yvanpulwnxblhpndmfrgnithbhjgxptzznbp",
                             height: 56,
                             tabletHeight: 15,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "fyyhgrrytcnyqannrhwnhfgdpxbsllxpwwdr",
                       showOnTablet: "on",
                       showOnMobile: "on"
                     }
@@ -8371,7 +10333,7 @@ module.exports = {
                           type: "Line",
                           value: {
                             _styles: ["line"],
-
+                            _id: "qaydiegwydrpndukewmeejhevbdhjcawgnpp",
                             width: 97,
                             borderWidth: 1,
                             borderColorHex: "#768a9d",
@@ -8381,7 +10343,8 @@ module.exports = {
                             tempBorderColorPalette: "color7"
                           }
                         }
-                      ]
+                      ],
+                      _id: "uzugermgdstmyrcgudzoxqmwedbznqrdzvhc"
                     }
                   },
                   {
@@ -8393,14 +10356,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "fxryeqecpefnjevzwdhqoqthdkudophsgjma",
                             tabletHeight: 10,
                             height: 35,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "opqkgocmsheocjnekjcvymccbgxwummshhau",
                       showOnTablet: "on",
                       showOnMobile: "on"
                     }
@@ -8424,20 +10387,23 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "jxnwnllncbezgsgljdikdjdlhjqncberpuin",
                                         text:
                                           '<p class="brz-tp-paragraph"><span class="brz-cp-color7">We’ll make sure to only send intersting info, no crappy content or marketing fluff. Just the good stuff, promise!</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "qhvszvlmbyorxmqelkcctqvqflyxdpfwvwea"
                                 }
                               }
                             ],
-
+                            _id: "vqtdvgnvnwgcejrgjqifwzgnkkygvatgabib",
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -8449,7 +10415,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -8461,7 +10437,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -8469,25 +10455,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -8524,7 +10528,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -8552,7 +10602,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -8616,14 +10712,16 @@ module.exports = {
                                                       "Option 1",
                                                       "Option 2"
                                                     ],
-
+                                                    _id:
+                                                      "zttydnqfwkrecggonwqvidsodpuogxelodiu",
                                                     placeholder:
                                                       "Email Address",
                                                     width: 82
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "bvaxopztwhnpzmqhizvuakdwbondmgagzoxb",
                                               fontStyle: "paragraph",
                                               tabsState: "",
                                               tabsColor: "",
@@ -8672,7 +10770,8 @@ module.exports = {
                                             type: "Button",
                                             value: {
                                               _styles: ["button", "submit"],
-
+                                              _id:
+                                                "orqxbfmfrdgqvpaehjzcphzsdcugfzsnyrfo",
                                               text: "",
                                               iconSize: "large",
                                               iconCustomSize: 32,
@@ -8705,7 +10804,8 @@ module.exports = {
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "pwdsriooyyzcdselnhcwiysmrjkgjspdlhhk",
                                         submitWidth: 10,
                                         tabletPadding: 5,
                                         tabletPaddingRight: 5,
@@ -8717,15 +10817,17 @@ module.exports = {
                                         mobilePaddingLeft: 5
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "uhoqmflnpoosgfnaaywguwtmewggkyjzppnc"
                                 }
                               }
                             ],
-
+                            _id: "afyiewhvdageybdivhnfdnnqalbxkuomrpen",
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -8737,7 +10839,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -8749,7 +10861,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -8757,25 +10879,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "center",
                             paddingType: "ungrouped",
@@ -8812,7 +10952,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -8840,7 +11026,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -8878,7 +11110,8 @@ module.exports = {
                             tempMobilePaddingSuffix: "px"
                           }
                         }
-                      ]
+                      ],
+                      _id: "nkesuwwftddxopokkthfytoykqspncqonqrw"
                     }
                   },
                   {
@@ -8890,14 +11123,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "nttyqkcnzodczaoxbsmqcypfcrbfccwlsgki",
                             height: 25,
                             tabletHeight: 10,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "snkvnskchswnoqyxldsedhxboerqwyhjdbwt",
                       showOnTablet: "off",
                       showOnMobile: "off"
                     }
@@ -8911,7 +11144,7 @@ module.exports = {
                           type: "Line",
                           value: {
                             _styles: ["line"],
-
+                            _id: "hhxdmmwssjtjmuxpftloustvfrgnplovdcla",
                             width: 97,
                             borderWidth: 1,
                             borderColorHex: "#768a9d",
@@ -8922,7 +11155,7 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "fkhbuixabrkbeioetqjqfpfmxzgsludyrlnu",
                       tabletMarginType: "grouped"
                     }
                   },
@@ -8935,14 +11168,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "zrnjmhectkervyrqploojlcdrmdqjqpmubvt",
                             height: 42,
                             tabletHeight: 10,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "zlulxeyutyyartavhsekwxnyrbesvlrwbspy",
                       showOnTablet: "off",
                       showOnMobile: "on"
                     }
@@ -8966,18 +11199,19 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "mahrekfotfwacvithnczoercsukysteiytks",
                                         text:
                                           '<p class="brz-text-xs-center brz-tp-heading3"><strong class="brz-cp-color8">unicorn</strong><strong class="brz-cp-color3">.</strong></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "dirdwhtbqkikghpgkmbuzphizigxrwowgnrc",
                                   mobileMarginType: "grouped"
                                 }
                               }
                             ],
-
+                            _id: "tfrwjzcbkdgfbovgkieuuzhhxxrdyelsipec",
                             width: 25,
                             tabsState: "",
                             tabsCurrentElement: "tabCurrentElement",
@@ -8987,7 +11221,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -8999,7 +11234,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -9011,7 +11256,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -9019,25 +11274,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             paddingType: "ungrouped",
                             padding: 15,
@@ -9073,7 +11346,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 5,
@@ -9101,7 +11420,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -9149,7 +11514,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "nrqfjmdtehzoyzumsoqqdiqjhuuhkhedgskz",
                                         text: "Design",
                                         size: "small",
                                         fontSize: 11,
@@ -9344,7 +11710,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "pmakwgxwxwepxywmxnfbuwolqpmkjrbelnxl",
                                         text: "Features",
                                         size: "small",
                                         fontSize: 11,
@@ -9537,7 +11904,8 @@ module.exports = {
                                         paddingBottomSuffix: "px",
                                         paddingLeftSuffix: "px",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderTopWidth: 2,
                                         borderRightWidth: 2,
@@ -9547,32 +11915,86 @@ module.exports = {
                                         tempBorderRightWidth: 2,
                                         tempBorderBottomWidth: 2,
                                         tempBorderLeftWidth: 2,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         tempBoxShadow: "on",
                                         tempBoxShadowBlur: 0,
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 0,
                                         tempBoxShadowHorizontal: 0,
-
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
                                         hoverTransition: 50,
                                         tabletPaddingSuffix: "px",
                                         tabletPaddingTopSuffix: "px",
                                         tabletPaddingRightSuffix: "px",
                                         tabletPaddingBottomSuffix: "px",
                                         tabletPaddingLeftSuffix: "px",
-
+                                        tabletBgColorType: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
                                         mobilePaddingSuffix: "px",
                                         mobilePaddingTopSuffix: "px",
                                         mobilePaddingRightSuffix: "px",
                                         mobilePaddingBottomSuffix: "px",
-                                        mobilePaddingLeftSuffix: "px"
+                                        mobilePaddingLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     },
                                     {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "eyfduiipmiarppafcgzzdxukqullhzuebghf",
                                         text: "Pricing",
                                         size: "small",
                                         fontSize: 11,
@@ -9765,7 +12187,8 @@ module.exports = {
                                         paddingBottomSuffix: "px",
                                         paddingLeftSuffix: "px",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderTopWidth: 2,
                                         borderRightWidth: 2,
@@ -9775,32 +12198,86 @@ module.exports = {
                                         tempBorderRightWidth: 2,
                                         tempBorderBottomWidth: 2,
                                         tempBorderLeftWidth: 2,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         tempBoxShadow: "on",
                                         tempBoxShadowBlur: 0,
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 0,
                                         tempBoxShadowHorizontal: 0,
-
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
                                         hoverTransition: 50,
                                         tabletPaddingSuffix: "px",
                                         tabletPaddingTopSuffix: "px",
                                         tabletPaddingRightSuffix: "px",
                                         tabletPaddingBottomSuffix: "px",
                                         tabletPaddingLeftSuffix: "px",
-
+                                        tabletBgColorType: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
                                         mobilePaddingSuffix: "px",
                                         mobilePaddingTopSuffix: "px",
                                         mobilePaddingRightSuffix: "px",
                                         mobilePaddingBottomSuffix: "px",
-                                        mobilePaddingLeftSuffix: "px"
+                                        mobilePaddingLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     },
                                     {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "nijpqnyyghckgzdccjsoffvdbvaljurehwva",
                                         text: "About",
                                         size: "small",
                                         fontSize: 11,
@@ -9993,7 +12470,8 @@ module.exports = {
                                         paddingBottomSuffix: "px",
                                         paddingLeftSuffix: "px",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         borderTopWidth: 2,
                                         borderRightWidth: 2,
@@ -10003,29 +12481,82 @@ module.exports = {
                                         tempBorderRightWidth: 2,
                                         tempBorderBottomWidth: 2,
                                         tempBorderLeftWidth: 2,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         tempBoxShadow: "on",
                                         tempBoxShadowBlur: 0,
                                         tempBoxShadowSpread: 0,
                                         tempBoxShadowVertical: 0,
                                         tempBoxShadowHorizontal: 0,
-
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
                                         hoverTransition: 50,
                                         tabletPaddingSuffix: "px",
                                         tabletPaddingTopSuffix: "px",
                                         tabletPaddingRightSuffix: "px",
                                         tabletPaddingBottomSuffix: "px",
                                         tabletPaddingLeftSuffix: "px",
-
+                                        tabletBgColorType: null,
+                                        tabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
                                         mobilePaddingSuffix: "px",
                                         mobilePaddingTopSuffix: "px",
                                         mobilePaddingRightSuffix: "px",
                                         mobilePaddingBottomSuffix: "px",
-                                        mobilePaddingLeftSuffix: "px"
+                                        mobilePaddingLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null
                                       }
                                     }
                                   ],
-
+                                  _id: "ngchexuidmljnpechlcsssyuqkympadogneb",
                                   horizontalAlign: "center",
                                   itemPadding: 60,
                                   itemPaddingRight: 60,
@@ -10039,7 +12570,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "oxjjtabykyokyqahjrdpcfnyapweuiqlmzmd",
                             width: 50,
                             verticalAlign: "center",
                             tabsState: "tabNormal",
@@ -10068,7 +12599,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "wgqygnmkvtiegsdetnknffsptdunxgymqsvl",
                                         name: "logo-twitter",
                                         type: "glyph",
                                         size: "custom",
@@ -10085,7 +12617,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "eboxodgajqxyclidzngnolwiejwdikxavrrz",
                                         name: "logo-facebook",
                                         type: "glyph",
                                         size: "custom",
@@ -10102,7 +12635,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "ddqtqiqnxdmmhabhtcjqkxbytixxusfqklac",
                                         name: "logo-youtube",
                                         type: "glyph",
                                         size: "custom",
@@ -10116,7 +12650,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "ccqrcrekhsmrbvlnipfvkdtamxjgpoaosnrw",
                                   itemPadding: 30,
                                   itemPaddingRight: 30,
                                   itemPaddingLeft: 30,
@@ -10125,7 +12659,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "jdrnehybuqvyvlhcygzsgjbnmqbikjakfoxm",
                             width: 25,
                             tabletWidth: 21.2,
                             verticalAlign: "center",
@@ -10142,7 +12676,8 @@ module.exports = {
                             paddingLeftSuffix: "px"
                           }
                         }
-                      ]
+                      ],
+                      _id: "emumhmggceoiejckaaqraezffdtucfozrvyv"
                     }
                   },
                   {
@@ -10154,7 +12689,7 @@ module.exports = {
                           type: "Line",
                           value: {
                             _styles: ["line"],
-
+                            _id: "rqcbxefqsjghjgyirobowkfeoqfugbhocjrt",
                             width: 16,
                             borderColorPalette: "color4",
                             tempBorderColorPalette: "color4",
@@ -10165,7 +12700,8 @@ module.exports = {
                             mobileWidth: 51
                           }
                         }
-                      ]
+                      ],
+                      _id: "qjcmrhutafunljimrmctmsnambqraxqdagzs"
                     }
                   },
                   {
@@ -10177,13 +12713,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "ayyygvzciqfwlkaoodzoayyuyvhwrozfavlt",
                             text:
-                              '<p class="brz-text-lg-center brz-tp-heading6 brz-fw-xs-400 brz-fs-xs-13"><span class="brz-cp-color6" style="opacity: 0.5;">Software Landing Page&nbsp;|&nbsp;© Made with </span><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22https%3A%2F%2Fwww.brizy.io%2F%22%2C%22externalBlank%22%3A%22on%22%2C%22externalRel%22%3A%22on%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D" class="link--external brz-cp-color6" style="opacity: 0.5;">Brizy Builder</a></p>'
+                              '<p class="brz-fs-xs-13 brz-fw-xs-400 brz-tp-heading6 brz-text-lg-center"><span class="brz-cp-color6" style="opacity: 0.5;">Software Landing Page&nbsp;|&nbsp;© Made with </span><a data-href="" class="link--external brz-cp-color6" style="opacity: 0.5;">Unicorn Builder</a></p>'
                           }
                         }
                       ],
-
+                      _id: "rswrmxzxfrjpmlozxrcuddpgeciiwziqktfi",
                       marginTopSuffix: "px",
                       marginTop: 20,
                       margin: 0,
@@ -10191,7 +12727,7 @@ module.exports = {
                     }
                   }
                 ],
-
+                _id: "zjttlmejnbtixvrrwudtagrpkpjulkowuzpq",
                 tabsColor: "tabOverlay",
                 bgColorPalette: "color2",
                 tempBgColorPalette: "color2",
@@ -10232,7 +12768,7 @@ module.exports = {
               }
             }
           ],
-
+          _id: "vadjufwcmbgllrmkgfoqrhhswkxrarybrhoc",
           _thumbnailSrc: 169116,
           _thumbnailWidth: 600,
           _thumbnailHeight: 427,

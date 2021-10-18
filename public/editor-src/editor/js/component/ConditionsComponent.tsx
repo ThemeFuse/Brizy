@@ -34,6 +34,82 @@ type Options = {
   onChange?: (data: ChangeCallbackData) => void;
 }[];
 
+export function getOptions(
+  type: "block" | "popup" | undefined,
+  value: string
+): Options {
+  let options: Options = [];
+
+  switch (type) {
+    case "block": {
+      const state = getStore().getState();
+      const globalBlocks = globalBlocksSelector(state);
+      const { rules } = globalBlocks[value] as GlobalBlock;
+
+      options = [
+        {
+          id: "rules",
+          type: "rules",
+          icon: "nc-eye-17",
+          label: t("Conditions"),
+          title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
+          value: rules,
+          onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
+            getStore().dispatch(
+              updateGBRules({
+                data: {
+                  rules,
+                  id: value
+                },
+                meta
+              })
+            );
+          }
+        }
+      ];
+      break;
+    }
+    case "popup": {
+      options = [
+        {
+          id: "triggers",
+          type: "triggers",
+          icon: "nc-triggers",
+          label: t("Triggers"),
+          title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
+        }
+      ];
+
+      if (!IS_EXTERNAL_POPUP) {
+        // ts-ignore added because cms's getRulesList method is expecting
+        // CollectionItemId, wp is expecting nothing
+        const asyncGetValue = IS_CLOUD
+          ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
+          : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            (): Promise<Rule[]> => getRulesList();
+
+        options.push({
+          id: "rules",
+          type: "rules",
+          icon: "nc-eye-17",
+          label: t("Conditions"),
+          title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
+          asyncGetValue,
+          onChange: data => {
+            getStore().dispatch(updatePopupRules(data));
+          }
+        });
+      }
+      break;
+    }
+    default:
+      console.error("type should be given!!!");
+  }
+
+  return options;
+}
+
 export const ConditionsComponent: React.FC<{
   value: string;
   type?: "block" | "popup";
@@ -44,7 +120,7 @@ export const ConditionsComponent: React.FC<{
       prompt: "conditions",
       mode: "single",
       props: {
-        options: getOptions()
+        options: getOptions(type, value)
       }
     });
   };
@@ -52,79 +128,6 @@ export const ConditionsComponent: React.FC<{
   return React.cloneElement(React.Children.only(children), {
     onMouseDown: handleMouseDown
   });
-
-  function getOptions(): Options {
-    let options: Options = [];
-
-    switch (type) {
-      case "block": {
-        const state = getStore().getState();
-        const globalBlocks = globalBlocksSelector(state);
-        const { rules } = globalBlocks[value] as GlobalBlock;
-
-        options = [
-          {
-            id: "rules",
-            type: "rules",
-            icon: "nc-eye-17",
-            label: t("Conditions"),
-            title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
-            value: rules,
-            onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
-              getStore().dispatch(
-                updateGBRules({
-                  data: {
-                    rules,
-                    id: value
-                  },
-                  meta
-                })
-              );
-            }
-          }
-        ];
-        break;
-      }
-      case "popup": {
-        options = [
-          {
-            id: "triggers",
-            type: "triggers",
-            icon: "nc-triggers",
-            label: t("Triggers"),
-            title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
-          }
-        ];
-
-        if (!IS_EXTERNAL_POPUP) {
-          // ts-ignore added because cms's getRulesList method is expecting
-          // CollectionItemId, wp is expecting nothing
-          const asyncGetValue = IS_CLOUD
-            ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
-            : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              (): Promise<Rule[]> => getRulesList();
-
-          options.push({
-            id: "rules",
-            type: "rules",
-            icon: "nc-eye-17",
-            label: t("Conditions"),
-            title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
-            asyncGetValue,
-            onChange: data => {
-              getStore().dispatch(updatePopupRules(data));
-            }
-          });
-        }
-        break;
-      }
-      default:
-        console.error("type should be given!!!");
-    }
-
-    return options;
-  }
 };
 
 export default ConditionsComponent;

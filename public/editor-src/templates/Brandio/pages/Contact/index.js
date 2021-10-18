@@ -9412,7 +9412,7 @@ module.exports = {
                       _styles: ["richText"],
                       _id: "folefdzueawcgwxlqbkypaztxdmjiihjrhwy",
                       text:
-                        '<p class="brz-tp-lg-heading6 brz-text-lg-center" data-generated-css="brz-css-upzfr" data-uniq-id="gducf"><span class="brz-cp-color7" style="opacity: 0.86;">©2021 Brizy Page Builder. All Rights Reserved.</span></p>'
+                        '<p class="brz-tp-lg-heading6 brz-text-lg-center" data-generated-css="brz-css-upzfr" data-uniq-id="gducf"><span class="brz-cp-color7" style="opacity: 0.86;">©2021 Page Builder. All Rights Reserved.</span></p>'
                     }
                   }
                 ],

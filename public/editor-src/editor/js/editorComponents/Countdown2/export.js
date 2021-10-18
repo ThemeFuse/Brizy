@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { getTime, formatDate } from "./utils";
 
 export default function($node) {
   $node.find(".brz-countdown2").each(function() {
@@ -20,7 +21,15 @@ export default function($node) {
 
     var $message = $this.find(".brz-countdown2-message");
 
-    var endTime = $this.attr("data-end");
+    const date = $this.attr("data-end");
+    const hours = $this.attr("data-hours");
+    const minutes = $this.attr("data-minutes");
+
+    const newDate = date.split("/");
+    const convertedDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`;
+
+    const endTime = getTime(formatDate(convertedDate, "m/d/Y"), hours, minutes);
+
     var timezone = $this.attr("data-timezone");
     var linkAction = $this.attr("data-link-type");
     var redirect = $this.attr("data-redirect");

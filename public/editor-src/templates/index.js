@@ -1,3 +1,15 @@
+const Taxi = require("./Taxi");
+const Payss = require("./Payss");
+const Spirit = require("./Spirit");
+const SEOAgency = require("./SEOAgency");
+const Adventure = require("./Adventure");
+const TheFarm = require("./TheFarm");
+const Codesk = require("./Codesk");
+const Festival = require("./Festival");
+const MealsOnWheels = require("./MealsOnWheels");
+const PhotoCourse = require("./PhotoCourse");
+const Oapee = require("./Oapee");
+const Lodiz = require("./Lodiz");
 const Brandio = require("./Brandio");
 const Corpio = require("./Corpio");
 const DroneX = require("./DroneX");
@@ -110,6 +122,18 @@ const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
+    Taxi,
+    Payss,
+    Spirit,
+    SEOAgency,
+    Adventure,
+    TheFarm,
+    Codesk,
+    Festival,
+    MealsOnWheels,
+    PhotoCourse,
+    Oapee,
+    Lodiz,
     Brandio,
     Corpio,
     DroneX,

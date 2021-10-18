@@ -34,7 +34,9 @@
 .brz-image__gallery-filter__item:last-child {
   margin-right: 0 !important;
 }
-
+.mfp-close {
+  background-color: transparent !important;
+}
 .mfp-arrow:hover,
 .mfp-close:hover {
   background-color: transparent;

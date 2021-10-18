@@ -4,7 +4,9 @@ import { collapse, expand } from "./utils";
 export default function($node) {
   $node.find(".brz-accordion").each(function() {
     const _this = this;
-    const $accordionNavItems = $(_this).find(".brz-accordion__nav");
+    const $accordionNavItems = $(_this).find(
+      "> .brz-accordion__item > .brz-accordion__nav"
+    );
     const $accordionFilter = $(_this).find(".brz-accordion__filter-wrapper");
     const $collapsible = $accordionNavItems.attr("data-collapsible");
     const duration = Number(_this.dataset.duration || 0);
@@ -15,7 +17,7 @@ export default function($node) {
     $accordionNavItems.on("click", function() {
       const activeClassName = "brz-accordion__item--active";
       const $item = $(this).closest(".brz-accordion__item");
-      const $itemContent = $item.find(".brz-accordion__content");
+      const $itemContent = $item.find("> .brz-accordion__content");
       const itemIndex = $accordionFilter.length
         ? $item.index() - 1
         : $item.index();
@@ -52,7 +54,7 @@ export default function($node) {
         // animation
         $item
           .siblings()
-          .find(".brz-accordion__content")
+          .find("> .brz-accordion__content")
           .each((idx, node) => {
             const activeNode = node.closest(".brz-accordion__item--active");
 

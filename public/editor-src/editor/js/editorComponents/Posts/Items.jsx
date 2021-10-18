@@ -38,6 +38,16 @@ export default class Items extends EditorArrayComponent {
     return stringifyAttributes(this.props.loopTagsAttributes);
   }
 
+  getLoopItemFilter() {
+    const { loopTagsAttributes, showFilter } = this.props;
+
+    if (loopTagsAttributes && showFilter) {
+      return `{{brizy_dc_post_terms taxonomy="${loopTagsAttributes.tax}"}}`;
+    }
+
+    return undefined;
+  }
+
   handleSortableAcceptElements = from => {
     const meta = this.props.meta;
 
@@ -67,13 +77,11 @@ export default class Items extends EditorArrayComponent {
   };
 
   renderItemWrapper(item, itemKey) {
-    const { showFilter } = this.props;
-
     return (
       <div
         key={itemKey}
         className="brz-posts__item"
-        data-filter={showFilter ? "{{brizy_dc_post_tags}}" : undefined}
+        data-filter={this.getLoopItemFilter()}
       >
         {item}
       </div>
@@ -89,20 +97,24 @@ export default class Items extends EditorArrayComponent {
       "brz-ul brz-posts__filter",
       `brz-posts__filter--${filterStyle}`
     );
-    const itemClassName = classnames(
-      "brz-li brz-posts__filter__item",
-      `brz-posts__filter__item--${filterStyle}`
-    );
 
     return (
       allTags.length > 1 && (
         <div className="brz-posts__filter-wrapper">
           <ul className={listClassName}>
-            {allTags.map((tag, index) => (
-              <Toolbar key={index} {...toolbarExtendFilter}>
-                <li className={itemClassName}>{tag.name}</li>
-              </Toolbar>
-            ))}
+            {allTags.map((tag, index) => {
+              const itemClassName = classnames(
+                "brz-li brz-posts__filter__item",
+                `brz-posts__filter__item--${filterStyle}`,
+                { "brz-posts-filter__item--active": index === 0 }
+              );
+
+              return (
+                <Toolbar key={index} {...toolbarExtendFilter}>
+                  <li className={itemClassName}>{tag.name}</li>
+                </Toolbar>
+              );
+            })}
           </ul>
         </div>
       )

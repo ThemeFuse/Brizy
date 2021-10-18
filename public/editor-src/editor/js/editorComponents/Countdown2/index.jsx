@@ -32,8 +32,6 @@ class Countdown2 extends EditorComponent {
     this.patchValue({ [propertyName]: value });
   };
 
-  endDate = this.getEndDate();
-
   days = React.createRef();
   hours = React.createRef();
   minutes = React.createRef();
@@ -53,7 +51,7 @@ class Countdown2 extends EditorComponent {
       return ("0" + number).slice(-2);
     };
 
-    this.initPlugin({
+    this.initPlugin(v, {
       onTick: ({ days, hours, minutes, seconds }) => {
         const newV = this.getValue();
         if (newV.showDays === "on") {
@@ -73,13 +71,15 @@ class Countdown2 extends EditorComponent {
   }
 
   componentDidUpdate(prevProps) {
+    const v = this.getValue();
+
     const countDownKeys = ["date", "hours", "minutes", "timeZone"];
     const oldDbValue = _.pick(prevProps.dbValue, ...countDownKeys);
     const newDbValue = _.pick(this.props.dbValue, ...countDownKeys);
 
     if (!_.isEqual(oldDbValue, newDbValue)) {
-      this.endDate = this.getEndDate();
-      this.initPlugin();
+      this.endDate = this.getEndDate(v);
+      this.initPlugin(v);
     }
   }
 
@@ -87,8 +87,8 @@ class Countdown2 extends EditorComponent {
     jQuery(this.countdown).countdown2("destroy");
   }
 
-  getEndDate() {
-    const { date, hours, minutes } = this.getValue();
+  getEndDate(v) {
+    const { date, hours, minutes } = v;
 
     const newDate = date.split("/");
     const convertedDate = `${newDate[1]}/${newDate[0]}/${newDate[2]}`;
@@ -96,22 +96,19 @@ class Countdown2 extends EditorComponent {
     return getTime(formatDate(convertedDate, "m/d/Y"), hours, minutes);
   }
 
-  initPlugin(options = null) {
-    const { timeZone } = this.getValue();
-
-    const timeZoneOffset = timeZone * 60 * 1000;
+  initPlugin(v, options = null) {
+    const timeZoneOffset = v.timeZone * 60 * 1000;
 
     jQuery(this.countdown).countdown2({
       now: Date.now(),
-      endDate: this.endDate,
+      endDate: this.getEndDate(v),
       timeZoneOffset: timeZoneOffset,
       tickInterval: 1000,
       ...options
     });
   }
 
-  renderParts() {
-    const v = this.getValue();
+  renderParts(v) {
     const list = ["days", "hours", "minutes", "seconds"];
 
     const content = list
@@ -127,15 +124,13 @@ class Countdown2 extends EditorComponent {
               :
             </span>
           ) : null;
-        return [this.renderPart(type), separator];
+        return [this.renderPart(v, type), separator];
       });
 
     return <div className="brz-countdown2-parts">{content}</div>;
   }
 
-  renderPart(name) {
-    const v = this.getValue();
-
+  renderPart(v, name) {
     const className = classnames(
       "brz-countdown2__item",
       `brz-countdown2__${name}`,
@@ -184,38 +179,20 @@ class Countdown2 extends EditorComponent {
       )
     );
 
-    const { timeZone, linkType, messageText, messageRedirect, actions } = v;
+    const { messageText, actions } = v;
 
     const resizerRestrictions = {
       width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       },
       mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
       }
     };
 
@@ -227,14 +204,6 @@ class Countdown2 extends EditorComponent {
           <Wrapper
             {...this.makeWrapperProps({
               className: className,
-              attributes: {
-                "data-end": this.endDate,
-                "data-timezone": timeZone,
-                "data-link-type": linkType,
-                "data-redirect": messageRedirect,
-                "data-message": messageText,
-                "data-action": actions
-              },
               ref: el => {
                 this.countdown = el;
               }
@@ -247,7 +216,7 @@ class Countdown2 extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={resizerRestrictions}
             >
-              {this.renderParts()}
+              {this.renderParts(v)}
               {actions === "showMessage" && (
                 <div className={classNameMessage}>{messageText}</div>
               )}
@@ -255,6 +224,53 @@ class Countdown2 extends EditorComponent {
           </Wrapper>
         </CustomCSS>
       </Toolbar>
+    );
+  }
+
+  renderForView(v, vs, vd) {
+    const className = classnames(
+      "brz-countdown2",
+      `brz-countdown2-${v.style}`,
+      css(
+        `${this.constructor.componentId}-container`,
+        `${this.getId()}-container`,
+        style(v, vs, vd)
+      )
+    );
+    const classNameMessage = classnames(
+      "brz-countdown2-message",
+      css(
+        `${this.constructor.componentId}-message`,
+        `${this.getId()}-message`,
+        styleMessage(v, vs, vd)
+      )
+    );
+
+    const { timeZone, linkType, messageText, messageRedirect, actions } = v;
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: className,
+            attributes: {
+              "data-end": v.date,
+              "data-hours": v.hours,
+              "data-minutes": v.minutes,
+              "data-timezone": timeZone,
+              "data-link-type": linkType,
+              "data-redirect": messageRedirect,
+              "data-message": messageText,
+              "data-action": actions
+            }
+          })}
+        >
+          {this.renderParts(v)}
+          {actions === "showMessage" && (
+            <div className={classNameMessage}>{messageText}</div>
+          )}
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }

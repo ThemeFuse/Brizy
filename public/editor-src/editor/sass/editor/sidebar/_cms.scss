@@ -9,8 +9,12 @@
   background: $body-bg;
 
   .brz-iframe.brz-cms {
-    width: 100%;
+    width: 90%;
     height: 100%;
+
+    @media screen and (max-width: 1300px) {
+      width: 100%;
+    }
 
     &.brz-loading {
       visibility: hidden;

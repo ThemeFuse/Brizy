@@ -301,7 +301,8 @@ export {
   cssStyleVisibleEditorDisplayNoneOrBlock,
   cssStyleVisibleEditorDisplayNoneOrInlineFlex,
   cssStyleVisibleMode,
-  cssStyleShowMembershipBlock
+  cssStyleShowMembershipBlock,
+  cssStyleShowMembershipFlex
 } from "./cssStyleVisible";
 
 // Filter
@@ -958,16 +959,12 @@ export {
   cssStyleElementMenuSubMenuCurrentColor,
   cssStyleElementMenuSubMenuCurrentBgColor,
   cssStyleElementMenuSubMenuCurrentBoxShadow,
-  cssStyleMenuDropdownBeforePositionLeft,
-  cssStyleMenuDropdownBeforePositionRight,
   cssStyleMenuDropdownPosition,
   cssStyleMenuDropdownPositionLeft,
   cssStyleMenuDropdownPositionRight,
   cssStyleMenuFirstDropdownPosition,
   cssStyleMenuFirstDropdownPositionLeft,
-  cssStyleMenuFirstDropdownPositionRight,
-  cssStyleMenuFirstDropdownBeforePositionLeft,
-  cssStyleMenuFirstDropdownBeforePositionRight
+  cssStyleMenuFirstDropdownPositionRight
 } from "./cssStyleElementMenu";
 
 // MegaMenu

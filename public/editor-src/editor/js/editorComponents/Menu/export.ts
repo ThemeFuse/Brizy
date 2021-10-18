@@ -7,7 +7,10 @@ import {
 } from "@popperjs/core";
 import { uuid } from "visual/utils/uuid";
 import { DeviceMode } from "visual/types";
+import { BrizyProLibs } from "visual/types/global";
 import { LibsPro } from "visual/libs";
+import { decodeFromString } from "visual/utils/string";
+import { getParentMegaMenuUid } from "./utils";
 
 interface Settings {
   widths?: {
@@ -23,6 +26,10 @@ interface Settings {
 
 const $rootContainer = $(document).find(".brz-root__container");
 const megaMenus = new Map<string, HTMLElement>();
+const dropdowns = new Map<
+  InstanceType<Required<BrizyProLibs>["Dropdown"]>,
+  Settings
+>();
 
 const getCurrentDevice = (): DeviceMode => {
   const { innerWidth } = window;
@@ -41,7 +48,6 @@ const getCurrentDevice = (): DeviceMode => {
 let lastCurrentDevice = getCurrentDevice();
 
 const getPopperPlacement = (
-  item: HTMLElement,
   settings: Settings,
   device: DeviceMode
 ): PopperPlacement => {
@@ -50,11 +56,10 @@ const getPopperPlacement = (
 };
 
 const getPopperModifiers = (
-  item: HTMLElement,
   settings: Settings,
   device: DeviceMode
 ): PopperOptions["modifiers"] => {
-  const initialPlacement = getPopperPlacement(item, settings, device);
+  const initialPlacement = getPopperPlacement(settings, device);
   const mode = settings.mods?.[device];
   const fallbackPlacements =
     mode === "horizontal"
@@ -126,46 +131,6 @@ const getMegaMenuWidth = (
   return `${calcWidth}px`;
 };
 
-const setOpen = (
-  popper: PopperInstance,
-  target: HTMLElement,
-  megaMenuUid: string
-): VoidFunction => (): void => {
-  const tooltip = megaMenus.get(megaMenuUid);
-
-  if (tooltip) {
-    tooltip.dataset.opened = "true";
-    tooltip.style.display = "block";
-    target.classList.add("brz-menu__item--opened");
-
-    // update popper instance
-    // have problems with display none | block
-    popper.update().then(() => {
-      const offsetSpace = 20;
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      if (windowHeight < tooltipRect.top) {
-        const diffHeight = tooltipRect.top - windowHeight;
-        const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
-        tooltip.style.maxHeight = `${maxHeight}px`;
-        tooltip.style.overflow = "auto";
-      }
-      if (windowHeight < tooltipRect.bottom) {
-        const diffHeight = tooltipRect.bottom - windowHeight;
-        const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
-        tooltip.style.maxHeight = `${maxHeight}px`;
-        tooltip.style.overflow = "auto";
-      }
-
-      // show tooltip
-      requestAnimationFrame(() => {
-        tooltip.classList.add("brz-mega-menu__portal--opened");
-      });
-    });
-  }
-};
-
 const setClose = (megaMenuUid: string): void => {
   const tooltip = megaMenus.get(megaMenuUid);
 
@@ -183,6 +148,74 @@ const setClose = (megaMenuUid: string): void => {
     if (openedItem) {
       openedItem.classList.remove("brz-menu__item--opened");
     }
+  }
+};
+
+const closeOpenedMegaMenu = (exceptions?: string[]): void => {
+  megaMenus.forEach((megaMenu, megaMenuUid) => {
+    if (
+      megaMenu.dataset.opened === "true" &&
+      !exceptions?.includes(megaMenuUid)
+    ) {
+      setClose(megaMenuUid);
+    }
+  });
+};
+
+const setOpen = (
+  popper: PopperInstance,
+  target: HTMLElement,
+  megaMenuUid: string
+): VoidFunction => (): void => {
+  const tooltip = megaMenus.get(megaMenuUid);
+
+  if (tooltip) {
+    const exceptionUids = [megaMenuUid];
+    const parentMegaMenuUid = getParentMegaMenuUid(target);
+
+    if (parentMegaMenuUid) {
+      exceptionUids.push(parentMegaMenuUid);
+    }
+
+    closeOpenedMegaMenu(exceptionUids);
+
+    tooltip.dataset.opened = "true";
+    tooltip.style.display = "block";
+    target.classList.add("brz-menu__item--opened");
+
+    requestAnimationFrame(() => {
+      const tooltipSettings = tooltip.dataset.settings ?? "";
+      const settings = JSON.parse(decodeURIComponent(tooltipSettings));
+      const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
+      tooltip.style.width = "100%";
+      tooltip.style.maxWidth = maxWidth;
+
+      // update popper instance
+      // have problems with display none | block
+      popper.update().then(() => {
+        const offsetSpace = 20;
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (windowHeight < tooltipRect.top) {
+          const diffHeight = tooltipRect.top - windowHeight;
+          const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
+          tooltip.style.maxHeight = `${maxHeight}px`;
+          tooltip.style.overflow = "auto";
+        }
+        if (windowHeight < tooltipRect.bottom) {
+          const diffHeight = tooltipRect.bottom - windowHeight;
+          const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
+          tooltip.style.maxHeight = `${maxHeight}px`;
+          tooltip.style.overflow = "auto";
+        }
+
+        // show tooltip
+        requestAnimationFrame(() => {
+          tooltip.classList.add("brz-mega-menu__portal--opened");
+        });
+      });
+    });
   }
 };
 
@@ -214,12 +247,9 @@ const mouseMove = ({ target }: Event): void => {
       // Deep Mega Menu
 
       // 1 - hover on megaMenu-portal
-      const parentMegaMenu = target.closest(".brz-mega-menu__portal");
+      const parentMenuUid = getParentMegaMenuUid(target);
 
-      if (parentMegaMenu) {
-        // 2 - get megaMenu-portal uid
-        const parentMenuUid = parentMegaMenu.getAttribute("data-mega-menu-uid");
-
+      if (parentMenuUid) {
         // 3 - get menu item that opened megaMenu-portal with same uid
         const menuItemByTarget = document.querySelector(
           `[data-mega-menu-open-uid="${parentMenuUid}"]`
@@ -263,7 +293,6 @@ const appendItemToRoot = (item: HTMLElement, root: HTMLElement): void => {
 };
 
 const init = (item: HTMLElement, root: HTMLElement): void => {
-  // @ts-expect-error
   const { CreatePopper } = LibsPro;
 
   if (!CreatePopper) {
@@ -315,64 +344,29 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
 
   const dataSettings = megaMenu.dataset.settings ?? "";
   const settings = JSON.parse(decodeURIComponent(dataSettings));
-  const megaMenuMaxWidth = getMegaMenuWidth(item, settings, device);
 
-  if (parseInt(megaMenuMaxWidth) > 0) {
-    megaMenu.style.width = "100%";
-    megaMenu.style.maxWidth = megaMenuMaxWidth;
-
-    // for desktop and tablet megaMenu appended to root
-    if (device === "tablet" || device === "desktop") {
-      appendItemToRoot(item, root);
-    }
-
-    const reference = getPopperReference(item, settings, device);
-
-    if (reference) {
-      const popperSettings = {
-        placement: getPopperPlacement(item, settings, device),
-        modifiers: getPopperModifiers(item, settings, device)
-      };
-      const popper: PopperInstance = CreatePopper(
-        reference,
-        megaMenu,
-        popperSettings
-      );
-      const temporaryUid = item.getAttribute("data-mega-menu-open-uid") ?? "";
-
-      // @ts-expect-error
-      item.popper = popper;
-      item.addEventListener("mouseenter", setOpen(popper, item, temporaryUid));
-    }
-  }
-};
-
-const update = (item: HTMLElement, root: HTMLElement): void => {
-  const device = lastCurrentDevice;
-  let megaMenu = item.querySelector<HTMLElement>(".brz-mega-menu__portal");
-
-  // nothing to do for mobile with inside megaMenu
-  if (device === "mobile" && megaMenu) {
-    return;
+  // for desktop and tablet megaMenu appended to root
+  if (device === "tablet" || device === "desktop") {
+    appendItemToRoot(item, root);
   }
 
-  // find megaMenu in the root
-  const megaMenuUid = item.getAttribute("data-mega-menu-open-uid") ?? "";
-  megaMenu = root.querySelector<HTMLElement>(
-    `[data-mega-menu-uid="${megaMenuUid}"]`
-  );
+  const reference = getPopperReference(item, settings, device);
 
-  if (megaMenu) {
-    const dataSettings = megaMenu.dataset.settings ?? "";
-    const settings = JSON.parse(decodeURIComponent(dataSettings));
-
-    // update maxWidth & recalculate popper
-    megaMenu.style.maxWidth = getMegaMenuWidth(item, settings, device);
+  if (reference) {
+    const popperSettings = {
+      placement: getPopperPlacement(settings, device),
+      modifiers: getPopperModifiers(settings, device)
+    };
+    const popper: PopperInstance = CreatePopper(
+      reference,
+      megaMenu,
+      popperSettings
+    );
+    const temporaryUid = item.getAttribute("data-mega-menu-open-uid") ?? "";
 
     // @ts-expect-error
-    const popper: PopperInstance | undefined = item.popper;
-
-    popper?.update();
+    item.popper = popper;
+    item.addEventListener("mouseenter", setOpen(popper, item, temporaryUid));
   }
 };
 
@@ -389,16 +383,20 @@ const resize = (root: HTMLElement): VoidFunction => (): void => {
     itemMegaMenus.forEach(item => {
       init(item, root);
     });
-  } else {
-    itemMegaMenus.forEach(item => {
-      update(item, root);
-    });
+
+    for (const [dropdown, settings] of dropdowns) {
+      dropdown.update({
+        disabled: {
+          position: device !== "desktop"
+        },
+        placement: getPopperPlacement(settings, lastCurrentDevice)
+      });
+    }
   }
 };
 
 export default function($node: JQuery): void {
-  // @ts-expect-error
-  const { MMenu } = LibsPro;
+  const { MMenu, Dropdown } = LibsPro;
 
   if (!MMenu) {
     return;
@@ -509,10 +507,12 @@ export default function($node: JQuery): void {
             }
           }
         };
+        // @ts-expect-error: No types for MMenu
         menu = new MMenu(mmenuId, options, config);
         break;
       }
       default: {
+        // @ts-expect-error: No types for MMenu
         menu = new MMenu(mmenuId, options);
         break;
       }
@@ -584,7 +584,6 @@ export default function($node: JQuery): void {
 
       if (megaMenu) {
         const temporaryUid = uuid();
-        const debounceMouseMove = debounce(mouseMove, 150);
 
         node.setAttribute("data-mega-menu-open-uid", temporaryUid);
         megaMenu.setAttribute("data-mega-menu-uid", temporaryUid);
@@ -592,9 +591,41 @@ export default function($node: JQuery): void {
 
         // Initialize
         init(node, root);
-
-        window.addEventListener("resize", resize(root));
-        document.addEventListener("mousemove", debounceMouseMove);
       }
     });
+
+  if (Dropdown) {
+    root
+      .querySelectorAll<HTMLElement>(".brz-menu__item-dropdown")
+      .forEach(node => {
+        const device = lastCurrentDevice;
+        const content = [...node.children].find(node =>
+          node.classList.contains("brz-menu__dropdown")
+        );
+
+        if (content instanceof HTMLElement) {
+          const dataSettings = content.dataset.settings ?? "";
+          const settings = decodeFromString<Settings>(dataSettings);
+
+          const dropdown = new Dropdown(node, content, {
+            placement: getPopperPlacement(settings, device),
+            offset: 5,
+            disabled: {
+              position: device !== "desktop"
+            },
+            onOpen: (): void => {
+              const uid = getParentMegaMenuUid(node);
+              closeOpenedMegaMenu(uid ? [uid] : undefined);
+            }
+          });
+
+          dropdowns.set(dropdown, settings);
+        }
+      });
+  }
+
+  const debounceMouseMove = debounce(mouseMove, 150);
+
+  window.addEventListener("resize", resize(root));
+  document.addEventListener("mousemove", debounceMouseMove);
 }
