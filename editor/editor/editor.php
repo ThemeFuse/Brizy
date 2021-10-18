@@ -132,11 +132,7 @@ class Brizy_Editor_Editor_Editor
                 'upgradeToPro' =>
                     apply_filters('brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL),
 
-				'support'          =>
-					__bt(
-						'support-url',
-						apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL )
-					),
+				'support'          => Brizy_Config::getSupportUrl(),
 				'pluginSettings'   => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
 				'dashboardNavMenu' => admin_url( 'nav-menus.php' ),
 				'customFile'       => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),

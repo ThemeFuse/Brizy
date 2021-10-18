@@ -77,6 +77,10 @@ class Brizy_Editor {
 	 */
 	private function __construct() {
 
+		// make sure the project is created
+		// do not remove this.. we force the project creation here.
+		$project = Brizy_Editor_Project::get();
+
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
 
 		add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );

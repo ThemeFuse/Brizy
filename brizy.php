@@ -51,7 +51,12 @@ function brizy_load() {
 		return;
 	}
 
-	$instance = Brizy_Editor::get();
+	try {
+		$instance = Brizy_Editor::get();
+    } catch (Exception $e) {
+		add_action( 'admin_notices', 'brizy_fail_notices' );
+		return;
+    }
 
 	if ( apply_filters( 'brizy_allow_plugin_included', true ) ) {
 		do_action( 'brizy_plugin_included' );
@@ -74,6 +79,24 @@ function brizy_notices() {
     </div>
 	<?php
 }
+
+function brizy_fail_notices() {
+	?>
+    <div class="notice notice-error is-dismissible">
+        <p>
+			<?php
+			printf(
+				__( '%1$s failed to start. Please contact the support <a href="%s">here</a>.', 'brizy' ),
+				__bt( 'brizy', 'Brizy' ),
+				apply_filters( 'brizy_support_url', Brizy_Config::getSupportUrl() ),
+				strtoupper( __bt( 'brizy', 'Brizy' ) )
+			);
+			?>
+        </p>
+    </div>
+	<?php
+}
+
 
 function brizy_upgrade_completed( $upgrader_object, $options ) {
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
